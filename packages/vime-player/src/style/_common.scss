@@ -1,0 +1,71 @@
+// ==========================================================================
+// Color
+// ==========================================================================
+
+$color-dark: #313131;
+
+$color-gray-100: rgba(#000, 0.1);
+$color-gray-200: rgba(#000, 0.27);
+$color-gray-300: rgba(#000, 0.38);
+$color-gray-400: rgba(#000, 0.54);
+$color-gray-500: rgba(#000, 0.64);
+$color-gray-600: rgba(#000, 0.7);
+$color-gray-700: rgba(#000, 0.87);
+
+$color-white-100: rgba(#fff, 0.1);
+$color-white-200: rgba(#fff, 0.27);
+$color-white-300: rgba(#fff, 0.38);
+$color-white-400: rgba(#fff, 0.54);
+$color-white-500: rgba(#fff, 0.64);
+$color-white-600: rgba(#fff, 0.7);
+$color-white-700: rgba(#fff, 0.87);
+
+// ==========================================================================
+// Font
+// ==========================================================================
+
+$font-size-small: var(--fontSizeSmall, 14px);
+$font-size-medium: var(--fontSizeMedium, 16px);
+$font-size-large: var(--fontSizeLarge, 18px);
+$font-size-extra-large: var(--fontSizeExtraLarge, 21px);
+
+$font-weight-light: var(--fontWeightLight, 300);
+$font-weight-regular: var(--fontWeightRegular, 400);
+$font-weight-bold: var(--fontWeightBold, 500);
+
+// ==========================================================================
+// Breakpoint
+// ==========================================================================
+
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+
+$bp-xs-max: ($bp-sm - 1);
+$bp-sm-max: ($bp-md - 1);
+$bp-md-max: ($bp-lg - 1);
+
+// ==========================================================================
+// Control
+// ==========================================================================
+
+$control-icon-size: 18px;
+$control-spacing: 10px;
+$control-padding: ($control-spacing * 0.7);
+
+$range-thumb-height: 13px;
+$range-track-height: 3px;
+$range-track-focused-height: 5px;
+
+// ==========================================================================
+// Time
+// ==========================================================================
+
+$time-font-size: $font-size-small;
+$time-font-weight: $font-weight-regular;
+
+// ==========================================================================
+// Menu
+// ==========================================================================
+
+$menu-item-font-size: $font-size-small;

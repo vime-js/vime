@@ -1,0 +1,264 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components Menu should look structurally correct given backButton: toMatchRenderedWithContextSnapshot 1`] = `
+<div>
+  <ul
+    aria-hidden="true"
+    class="svelte-198rwkb hidden"
+    role="menu"
+  >
+    <li
+      aria-label="Back Button"
+      class="svelte-ppdapn back"
+      role="menuitem"
+    >
+      <button
+        class="control svelte-1b8bwgw"
+        type="button"
+      >
+         
+         
+        <span
+          class="svelte-ppdapn"
+        >
+          <span
+            class="svelte-ppdapn"
+          >
+            Back Button
+          </span>
+           
+          <span
+            class="screenReader svelte-ppdapn"
+          >
+            Go back to previous menu
+          </span>
+           
+        </span>
+      </button>
+    </li>
+     
+  </ul>
+  
+</div>
+`;
+
+exports[`components Menu should look structurally correct given menu items: toMatchRenderedWithContextSnapshot 1`] = `
+<div>
+  <ul
+    aria-hidden="true"
+    class="svelte-198rwkb hidden"
+    role="menu"
+  >
+     
+    
+    <li
+      aria-controls="menu-1"
+      aria-expanded="false"
+      aria-haspopup="true"
+      aria-label="#1"
+      class="svelte-ppdapn forward"
+      role="menuitem"
+    >
+      <button
+        class="control svelte-1b8bwgw"
+        type="button"
+      >
+         
+         
+        <span
+          class="svelte-ppdapn"
+        >
+          <span
+            class="svelte-ppdapn"
+          >
+            #1
+          </span>
+           
+           
+          <span
+            class="value svelte-ppdapn"
+          >
+            #1
+          </span>
+        </span>
+      </button>
+    </li>
+    
+    
+    <li
+      aria-controls="menu-2"
+      aria-expanded="false"
+      aria-haspopup="true"
+      aria-label="#2"
+      class="svelte-ppdapn forward"
+      role="menuitem"
+    >
+      <button
+        class="control svelte-1b8bwgw"
+        type="button"
+      >
+         
+         
+        <span
+          class="svelte-ppdapn"
+        >
+          <span
+            class="svelte-ppdapn"
+          >
+            #2
+          </span>
+           
+           
+          <span
+            class="value svelte-ppdapn"
+          >
+            #2
+          </span>
+        </span>
+      </button>
+    </li>
+    
+  </ul>
+  
+</div>
+`;
+
+exports[`components Menu should look structurally correct given menu radio items: toMatchRenderedWithContextSnapshot 1`] = `
+<div>
+  <ul
+    aria-hidden="true"
+    class="svelte-198rwkb hidden"
+    role="menu"
+  >
+    <li
+      aria-label="Back Button"
+      class="svelte-ppdapn back"
+      role="menuitem"
+    >
+      <button
+        class="control svelte-1b8bwgw"
+        type="button"
+      >
+         
+         
+        <span
+          class="svelte-ppdapn"
+        >
+          <span
+            class="svelte-ppdapn"
+          >
+            Back Button
+          </span>
+           
+          <span
+            class="screenReader svelte-ppdapn"
+          >
+            Go back to previous menu
+          </span>
+           
+        </span>
+      </button>
+    </li>
+     
+    
+    <li
+      aria-checked="false"
+      aria-label="#1"
+      class="svelte-puzrus"
+      role="menuitemradio"
+    >
+      <button
+        class="control svelte-1b8bwgw"
+        type="button"
+      >
+         
+         
+        <span
+          class="svelte-puzrus"
+        >
+          <span
+            class="checkmarkContainer svelte-puzrus"
+          >
+            <span
+              class="checkmark svelte-puzrus"
+            />
+          </span>
+           
+          <span
+            class="title svelte-puzrus"
+          >
+            #1
+          </span>
+           
+          <span
+            class="badgeContainer svelte-puzrus"
+          >
+            <span
+              class="badge svelte-puzrus"
+            >
+              #1
+            </span>
+          </span>
+        </span>
+      </button>
+    </li>
+    
+    
+    <li
+      aria-checked="false"
+      aria-label="#2"
+      class="svelte-puzrus"
+      role="menuitemradio"
+    >
+      <button
+        class="control svelte-1b8bwgw"
+        type="button"
+      >
+         
+         
+        <span
+          class="svelte-puzrus"
+        >
+          <span
+            class="checkmarkContainer svelte-puzrus"
+          >
+            <span
+              class="checkmark svelte-puzrus"
+            />
+          </span>
+           
+          <span
+            class="title svelte-puzrus"
+          >
+            #2
+          </span>
+           
+          <span
+            class="badgeContainer svelte-puzrus"
+          >
+            <span
+              class="badge svelte-puzrus"
+            >
+              #2
+            </span>
+          </span>
+        </span>
+      </button>
+    </li>
+    
+  </ul>
+  
+</div>
+`;
+
+exports[`components Menu should look structurally correct: toMatchRenderedSnapshot 1`] = `
+<div>
+  <ul
+    aria-hidden="true"
+    class="svelte-198rwkb hidden"
+    role="menu"
+  >
+     
+  </ul>
+</div>
+`;

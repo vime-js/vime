@@ -1,0 +1,233 @@
+  @import './common';
+  
+  // --------------------------------------------------------------
+  // Slider input[type="range"]
+  // --------------------------------------------------------------
+
+  $range-thumb-active-shadow-width: 2px;
+
+  $range-thumb-bg: #fff;
+  $range-thumb-border: 2px solid transparent;
+  $range-thumb-shadow: 0 0 1px $color-gray-100, 0 0 0 1px $color-gray-200;
+  $range-max-height: ($range-thumb-active-shadow-width * 2) + $range-thumb-height;
+
+  $video-range-track-bg: $color-white-200;
+  $video-range-fill-bg: var(--theme, #fff);
+
+  $audio-range-fill-bg: var(--theme, $color-dark);
+  $audio-range-track-bg: $color-gray-100;
+  $audio-range-thumb-shadow-color: $color-gray-100;
+
+  @mixin range-thumb-active($color: rgba($range-thumb-bg, 0.5)) {
+    box-shadow: $range-thumb-shadow, 0 0 0 $range-thumb-active-shadow-width $color;
+  }
+
+  @mixin range-track() {
+    background: transparent;
+    border: 0;
+    border-radius: ($range-track-height / 2);
+    height: $range-track-height;
+    transition: box-shadow 0.3s ease;
+    user-select: none;
+  }
+
+  @mixin range-thumb() {
+    opacity: 0;
+    background: $range-thumb-bg;
+    border: 0;
+    border-radius: 100%;
+    box-shadow: $range-thumb-shadow;
+    height: $range-thumb-height;
+    position: relative;
+    transition: all 0.2s ease;
+    width: $range-thumb-height;
+  }
+
+  :global(.vime input[type='range']) {
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0;
+    border-radius: ($range-thumb-height * 2);
+
+    // Color is used in JS to populate lower fill for WebKit
+    color: $video-range-fill-bg;
+    display: block;
+    height: $range-track-height;
+    margin: 0;
+    padding: 0;
+    transition: box-shadow 0.3s ease;
+    width: 100%;
+
+    &::-webkit-slider-runnable-track {
+      @include range-track();
+
+      background-image: linear-gradient(to right,
+      currentColor var(--value, 0%),
+      transparent var(--value, 0%));
+    }
+
+    &::-webkit-slider-thumb {
+      @include range-thumb();
+      
+      -webkit-appearance: none;
+      margin-top: -(($range-thumb-height - $range-track-height) / 2);
+    }
+
+    &::-moz-range-track {
+      @include range-track();
+    }
+
+    &::-moz-range-thumb {
+      @include range-thumb();
+    }
+
+    &::-moz-range-progress {
+      background: currentColor;
+      border-radius: ($range-track-height / 2);
+      height: $range-track-height;
+    }
+
+    &::-ms-track {
+      @include range-track();
+
+      color: transparent;
+    }
+
+    &::-ms-fill-upper {
+      @include range-track();
+    }
+
+    &::-ms-fill-lower {
+      @include range-track();
+
+      background: currentColor;
+    }
+
+    &::-ms-thumb {
+      @include range-thumb();
+
+      // For some reason, Edge uses the -webkit margin above
+      margin-top: 0;
+    }
+
+    &::-ms-tooltip {
+      display: none;
+    }
+
+    &:hover {
+      &::-webkit-slider-runnable-track {
+        height: $range-track-focused-height;
+      }
+
+      &::-moz-range-track {
+        height: $range-track-focused-height;
+      }
+
+      &::-ms-track {
+        height: $range-track-focused-height;
+      }
+
+      &::-ms-fill-upper {
+        height: $range-track-focused-height;
+      }
+
+      &::-ms-fill-lower {
+        height: $range-track-focused-height;
+      }
+
+      &::-webkit-slider-thumb {
+        opacity: 1;
+      }
+
+      &::-moz-range-thumb {
+        opacity: 1;
+      }
+
+      &::-ms-thumb {
+        opacity: 1;
+      }
+    }
+
+    &:focus {
+      outline: 0;
+
+      &::-webkit-slider-runnable-track {
+        outline: 0;
+        height: $range-track-focused-height;
+      }
+
+      &::-moz-range-track {
+        outline: 0;
+        height: $range-track-focused-height;
+      }
+
+      &::-ms-track {
+        outline: 0;
+        height: $range-track-focused-height;
+      }
+    }
+
+    &::-moz-focus-outer {
+      border: 0;
+    }
+  }
+
+  :global(.vime.video input[type='range']) {
+    color: $video-range-fill-bg;
+
+    &::-webkit-slider-runnable-track {
+      background-color: $video-range-track-bg;
+    }
+
+    &::-moz-range-track {
+      background-color: $video-range-track-bg;
+    }
+
+    &::-ms-track {
+      background-color: $video-range-track-bg;
+    }
+
+    &:active {
+      &::-webkit-slider-thumb {
+        @include range-thumb-active();
+      }
+
+      &::-moz-range-thumb {
+        @include range-thumb-active();
+      }
+
+      &::-ms-thumb {
+        @include range-thumb-active();
+      }
+    }
+  }
+
+  :global(.vime.audio input[type='range']) {
+    color: $audio-range-fill-bg;
+
+    &::-webkit-slider-runnable-track {
+      background-color: $audio-range-track-bg;
+    }
+
+    &::-moz-range-track {
+      background-color: $audio-range-track-bg;
+    }
+
+    &::-ms-track {
+      background-color: $audio-range-track-bg;
+    }
+
+    &:active {
+      &::-webkit-slider-thumb {
+        @include range-thumb-active($audio-range-thumb-shadow-color);
+      }
+
+      &::-moz-range-thumb {
+        @include range-thumb-active($audio-range-thumb-shadow-color);
+      }
+
+      &::-ms-thumb {
+        @include range-thumb-active($audio-range-thumb-shadow-color);
+      }
+    }
+  }

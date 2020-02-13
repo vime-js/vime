@@ -1,0 +1,3 @@
+plugins:
+  - removeAttrs:
+     attrs: "*:(stroke|fill):((?!^none$).)*"
