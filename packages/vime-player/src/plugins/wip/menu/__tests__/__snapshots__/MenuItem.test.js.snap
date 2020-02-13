@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components MenuItem should look structurally correct with back arrow: toMatchRenderedWithContextSnapshot 1`] = `
+<div>
+  <li
+    aria-label="Title"
+    class="svelte-ppdapn back"
+    role="menuitem"
+  >
+    <button
+      class="control svelte-1b8bwgw"
+      type="button"
+    >
+       
+       
+      <span
+        class="svelte-ppdapn"
+      >
+        <span
+          class="svelte-ppdapn"
+        >
+          Title
+        </span>
+         
+        <span
+          class="screenReader svelte-ppdapn"
+        >
+          Go back to previous menu
+        </span>
+         
+      </span>
+    </button>
+  </li>
+  
+</div>
+`;
+
+exports[`components MenuItem should look structurally correct with forward arrow: toMatchRenderedWithContextSnapshot 1`] = `
+<div>
+  <li
+    aria-controls="menu"
+    aria-haspopup="true"
+    aria-label="Title"
+    class="svelte-ppdapn forward"
+    role="menuitem"
+  >
+    <button
+      class="control svelte-1b8bwgw"
+      type="button"
+    >
+       
+       
+      <span
+        class="svelte-ppdapn"
+      >
+        <span
+          class="svelte-ppdapn"
+        >
+          Title
+        </span>
+         
+         
+      </span>
+    </button>
+  </li>
+  
+</div>
+`;

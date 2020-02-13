@@ -1,0 +1,22 @@
+{
+  "name": "@vime/core",
+  "description": "Vime core",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "svelte": "src/index.js",
+  "license": "MIT",
+  "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
+  "homepage": "https://github.com/vime-js/vime#readme",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/core",
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "keywords": [
+    "vime",
+    "core",
+    "vime-core"
+  ],
+  "files": [
+    "src"
+  ]
+}
