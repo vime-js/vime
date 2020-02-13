@@ -1,0 +1,27 @@
+sudo: false
+language: node_js
+cache:
+  yarn: true
+  directories:
+    - "~/.npm"
+notifications:
+  email: false
+node_js:
+  - '12'
+env:
+  global:
+    - PATH=$HOME/.yarn/bin:$PATH
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+install: yarn
+script: commitlint-travis
+jobs:
+  include:
+  - stage: release
+    node_js: '12'
+    deploy:
+      provider: script
+      script: yarn lint:js && yarn test:update && npx codecov && yarn release
+      skip_cleanup: true
+branches:
+  only: master

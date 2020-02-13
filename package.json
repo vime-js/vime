@@ -1,0 +1,109 @@
+{
+  "name": "vime",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10",
+    "npm": ">= 6",
+    "yarn": ">= 1 < 2"
+  },
+  "scripts": {
+    "storybook": "start-storybook -p 6006 -s ./static",
+    "toc": "doctoc README.md",
+    "build": "yarn clean:build && cross-env NODE_ENV=production && lerna run build",
+    "build:dev": "yarn clean:build && cross-env NODE_ENV=development && lerna run build",
+    "clean:node": "rimraf node_modules packages/*/node_modules",
+    "clean:build": "rimraf packages/*/dist",
+    "lint:js": "eslint packages --fix --ext .js,.svelte",
+    "setup": "yarn clean:node && yarn && lerna bootstrap --hoist",
+    "test": "jest packages/*/src/",
+    "test:watch": "yarn test --watch",
+    "test:update": "yarn test --updateSnapshot --coverage",
+    "release": "yarn validate && lerna publish --silent",
+    "validate": "yarn lint && yarn test && yarn build"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.8.4",
+    "core-js": "^3.6.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-modules": "^0.1.2",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@commitlint/config-lerna-scopes": "^8.2.0",
+    "@commitlint/travis-cli": "^8.3.5",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-replace": "^2.3.1",
+    "@storybook/svelte": "^5.3.12",
+    "@testing-library/jest-dom": "^5.1.1",
+    "@testing-library/svelte": "^1.10.0",
+    "@types/jest": "^25.1.2",
+    "autoprefixer": "^9.7.4",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^25.1.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-async-to-promises": "^0.8.15",
+    "canvas": "^2.6.1",
+    "codecov": "^3.5.0",
+    "conventional-changelog-cli": "^2.0.23",
+    "cross-env": "^7.0.0",
+    "doctoc": "^1.4.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-svelte3": "^2.7.3",
+    "jest": "^25.1.0",
+    "jest-environment-jsdom-fifteen": "^1.0.1",
+    "jest-svelte-events": "^1.0.5",
+    "jest-svg-transformer": "^1.0.0",
+    "jest-watch-typeahead": "^0.4.2",
+    "lerna": "^3.20.2",
+    "lint-staged": "^10.0.7",
+    "node-sass": "^4.13.1",
+    "postcss-custom-properties": "^9.0.2",
+    "prettier": "^1.18.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.31.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-svelte": "^5.1.1",
+    "rollup-plugin-svg": "^2.0.0",
+    "rollup-plugin-terser": "^5.2.0",
+    "svelte": "^3.18.2",
+    "svelte-jester": "^1.0.3",
+    "svelte-loader": "^2.13.6",
+    "svelte-preprocess": "^3.4.0",
+    "svg-inline-loader": "^0.8.0",
+    "webpack": "^4.41.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "README.md": [
+      "yarn toc",
+      "prettier --parser markdown --write"
+    ],
+    "packages/*/*.{js,svelte}": [
+      "yarn lint"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional",
+      "@commitlint/config-lerna-scopes"
+    ]
+  }
+}
