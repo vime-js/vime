@@ -1,11 +1,5 @@
 import { is_object } from './unit'
 
-export const get_deep = (obj, path) => {
-  let a = obj
-  path.split('.').forEach(c => { a = a && a[c] })
-  return a
-}
-
 export function parse_json (json, onFail) {
   try {
     return JSON.parse(json)

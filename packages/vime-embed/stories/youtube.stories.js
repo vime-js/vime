@@ -1,5 +1,5 @@
 import CenterView from './views/CenterView.svelte'
-import { YouTubeLite, YouTube } from '../index'
+import { YouTubeLite, YouTube } from '../src'
 
 export default { title: 'YouTube' }
 

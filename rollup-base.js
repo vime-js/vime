@@ -10,27 +10,32 @@ import sveltePreprocess from 'svelte-preprocess'
 
 const mode = process.env.NODE_ENV
 const dev = mode === 'development'
-const basePath = process.env.cwd()
-const outputDir = `${basePath}dist/`
+const basePath = process.cwd()
+const outputDir = `${basePath}/dist/`
 const modernOutputDir = outputDir + 'modern/'
 const legacyOutputDir = outputDir + 'legacy/'
+let hasOutputCSS = false
 
 export const plugins = ({ legacy = false, externalCSS = false } = {}) => {
   return [
     nodeResolve({
-      dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
+      dedupe: importee => 
+        importee === 'svelte' || 
+        importee.startsWith('svelte/') ||
+        importee.startsWith('@vime/core') ||
+        importee.startsWith('@vime/utils')
     }),
     commonjs(),
     svg(),
     svelte({
       dev,
       preprocess: sveltePreprocess({
-        postcss: require('./postcss.config')(legacy)
+        postcss: require('../../postcss.config')(legacy)
       }),
-      css: (!dev && externalCSS && hasOutputCSS) ? () => {} : (css) => {
+      css: (!dev && externalCSS && !hasOutputCSS) ? css => {
         css.write(`${outputDir}/vime.css`)
         hasOutputCSS = true
-      }
+      } : () => {}
     }),
     // Run babel when in production.
     !dev && babel({
@@ -72,10 +77,35 @@ export const plugins = ({ legacy = false, externalCSS = false } = {}) => {
   ]
 }
 
-export const chunkedBuild = (chunks, format, pluginOpts = {}) => ({
-  input: {
-    embed: allEntry
-  },
+const manualChunks = chunks => {
+  return id => {
+    if (id.includes('node_modules')) {
+      const directories = id.split(path.sep)
+      const name = directories[directories.lastIndexOf('node_modules') + 1]
+      // Production
+      if (name.match(/^@vime\/utils/)) return 'vime-utils'
+      if (name.match(/^@vime\/core/)) return 'vime-core'
+      if (name.match(/^svelte/)) return 'vime-internals'
+      return name
+    }
+    
+    // Local
+    if (id.includes('packages/vime-utils')) return 'vime-utils'
+    if (id.includes('packages/vime-core')) return 'vime-core'
+
+    // Additional chunks packages might specify.
+    const chunk = chunks && chunks(id)
+    if (chunk) return chunk
+  }
+}
+
+export const chunkedBuild = ({
+  input,
+  chunks, 
+  format = 'esm', 
+  pluginOpts = {} 
+} = {}) => ({
+  input,
   output: {
     dir: (format !== 'esm') ? `${legacyOutputDir}${format}` : modernOutputDir,
     format,
@@ -83,20 +113,29 @@ export const chunkedBuild = (chunks, format, pluginOpts = {}) => ({
     chunkFileNames: `[name].${format}.js`
   },
   plugins: plugins({ legacy: (format !== 'esm'), ...pluginOpts }),
-  manualChunks: chunks
+  manualChunks: manualChunks(chunks)
 })
 
-export const legacyBuild = (name, input, fileName, pluginOpts = {}) => ({
+export const legacyBuild = ({ 
+  input, 
+  name = 'Vime', 
+  fileName, 
+  pluginOpts = {} 
+} = {}) => ({
   input,
   output: {
     name: name,
-    file: legacyOutputDir + `${fileName}.umd.js`,
+    file: legacyOutputDir + `${fileName || name}.umd.js`,
     format: 'umd'
   },
   plugins: plugins({ legacy: true, ...pluginOpts })
 })
 
-export const modernBuild = (input, fileName, pluginOpts = {}) => ({
+export const modernBuild = ({ 
+  input, 
+  fileName, 
+  pluginOpts = {} 
+} = {}) => ({
   input,
   output: {
     file: modernOutputDir + `${fileName}.esm.js`,

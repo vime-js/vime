@@ -16,12 +16,13 @@ describe('components', () => {
     })
 
     const render = props => {
-      const results = renderWithContext({
-        currentTime: 0,
-        locale: null,
-        Component: Tracks,
-        ...props
-      })
+      // const results = renderWithContext({
+      //   currentTime: 0,
+      //   locale: null,
+      //   Component: Tracks,
+      //   ...props
+      // })
+      const results = {}
       listen(results.component, Object.values(Event))
       return results
     }

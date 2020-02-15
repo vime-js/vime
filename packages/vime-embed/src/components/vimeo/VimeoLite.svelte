@@ -18,8 +18,7 @@
 
 <script>
   import { tick } from 'svelte'
-  import { deferred } from '../../utils/promise'
-  import { decode_json } from '../../utils/decode'
+  import { deferred, decode_json } from '@vime/utils'
   import VideoEmbed from '../VideoEmbed.svelte'
 
   let src

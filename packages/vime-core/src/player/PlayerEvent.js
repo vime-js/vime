@@ -6,6 +6,7 @@ const PlayerEvent = Object.freeze({
   PLAYBACK_READY: 'playbackready',
   PAUSE: 'pause',
   PLAY: 'play',
+  SRC_CHANGE: 'srcchange',
   DURATION_CHANGE: 'durationchange',
   TIME_UPDATE: 'timeupdate',
   PLAYBACK_STARTED: 'playbackstarted',
