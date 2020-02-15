@@ -1,5 +1,3 @@
-import { SvelteComponent } from 'svelte/internal'
-
 export const is_null = input => input === null || typeof input === 'undefined'
 export const is_object = input => get_constructor(input) === Object
 export const is_number = input => get_constructor(input) === Number && !Number.isNaN(input)
@@ -7,10 +5,6 @@ export const is_string = input => get_constructor(input) === String
 export const is_boolean = input => get_constructor(input) === Boolean
 export const is_function = input => get_constructor(input) === Function
 export const is_array = input => Array.isArray(input)
-
-export const is_svelte_component = input => Boolean(
-  input && is_instance_of(input.prototype, SvelteComponent)
-)
 
 export const is_empty = input => is_null(input) ||
     ((is_string(input) || is_array(input)) && !input.length) ||

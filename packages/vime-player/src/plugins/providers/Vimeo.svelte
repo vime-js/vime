@@ -126,7 +126,9 @@
   }
 
   export const setMuted = isMuted => { vmPlayer.setMuted(isMuted) }
-  export const setPaused = isPaused => { isPaused ? vmPlayer.pause() : vmPlayer.play().catch(() => {}) }
+  export const setPaused = isPaused => {
+    isPaused ? vmPlayer.pause() : vmPlayer.play().catch(() => {})
+  }
   export const setVolume = newVolume => { vmPlayer.setVolume(newVolume / 100) }
 
   export const setPlaybackRate = newPlaybackRate => {

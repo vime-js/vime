@@ -1,29 +1,25 @@
 {
-  "name": "@vime/core",
-  "description": "Vime core",
+  "name": "@vime/utils",
+  "description": "Vime utilities",
   "version": "1.0.0",
   "main": "src/index.js",
   "module": "src/index.js",
-  "svelte": "src/index.js",
   "license": "MIT",
   "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
   "homepage": "https://github.com/vime-js/vime#readme",
-  "repository": "https://github.com/vime-js/vime/tree/master/packages/core",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/utils",
   "bugs": {
     "url": "https://github.com/vime-js/vime/issues"
   },
   "keywords": [
     "vime",
-    "core",
+    "utils",
+    "utilities",
     "video",
     "audio",
-    "player",
-    "vime-core"
+    "player"
   ],
   "files": [
     "src"
-  ],
-  "dependencies": {
-    "@vime/utils": "^1.0.0"
-  }
+  ]
 }

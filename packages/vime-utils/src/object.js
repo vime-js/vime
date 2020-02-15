@@ -1,4 +1,4 @@
-import { is_object, is_array } from '~utils/unit'
+import { is_object, is_array } from './unit'
 
 export const create_prop = (object, key, descriptor) => Object.defineProperty(
   object, key, descriptor

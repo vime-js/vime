@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 /* eslint-disable import/no-mutable-exports */
 
-import { onDestroy } from 'svelte'
-import { listen } from 'svelte/internal'
+import { listen, element } from 'svelte/internal'
 import { is_function } from './unit'
+import { try_on_svelte_destroy } from './svelte'
 
 export const IS_CLIENT = typeof window !== 'undefined'
 export const UA = (IS_CLIENT && window.navigator.userAgent.toLowerCase())
@@ -19,7 +19,7 @@ export const ORIGIN = (window.location.protocol !== 'file:')
   ? `${window.location.protocol} // ${window.location.hostname}`
   : null
 
-export const watch_touch = (cb) => {
+export const watch_touch = cb => {
   if (!IS_CLIENT) return
 
   let lastTouchTime = 0
@@ -37,7 +37,7 @@ export const watch_touch = (cb) => {
     cb(false)
   }, true)
 
-  onDestroy(() => {
+  try_on_svelte_destroy(() => {
     e1()
     e2()
   })
@@ -45,37 +45,36 @@ export const watch_touch = (cb) => {
 
 // Reduced motion iOS & MacOS setting
 // @see https://webkit.org/blog/7551/responsive-design-for-motion/
-export let is_reduced_motion_preferred = false
-if (IS_CLIENT) {
-  is_reduced_motion_preferred = 'matchMedia' in window &&
-                                window.matchMedia('(prefers-reduced-motion)').matches
+export const is_reduced_motion_preferred = () => IS_CLIENT &&
+  'matchMedia' in window &&
+  window.matchMedia('(prefers-reduced-motion)').matches
+
+export const can_play_hls_natively = () => {
+  if (!IS_CLIENT) return false
+  const video = element('video')
+  return video.canPlayType('application/vnd.apple.mpegurl')
 }
 
-export let can_play_hls_natively = false
-if (IS_CLIENT) {
-  const video = document.createElement('video')
-  can_play_hls_natively = video.canPlayType('application/vnd.apple.mpegurl')
+// Chrome
+// @see https://developers.google.com/web/updates/2018/10/watch-video-using-picture-in-picture
+export const can_use_pip_in_chrome = () => {
+  if (!IS_CLIENT) return false
+  const video = element('video')
+  return !!document.pictureInPictureEnabled && !video.disablePictureInPicture
 }
 
-export let can_use_pip = false
-export let can_use_pip_in_safari = false
-export let can_use_pip_in_chrome = false
-if (IS_CLIENT) {
-  const video = document.createElement('video')
-
-  // Safari
-  // iPhone safari appears to "support" PiP through the check, however PiP does not function.
-  // @see https://developer.apple.com/documentation/webkitjs/adding_picture_in_picture_to_your_safari_media_controls
-  can_use_pip_in_safari = video.webkitSupportsPresentationMode &&
-                          is_function(video.webkitSetPresentationMode) &&
-                          !IS_IPHONE
-
-  // Chrome
-  // @see https://developers.google.com/web/updates/2018/10/watch-video-using-picture-in-picture
-  can_use_pip_in_chrome = !!document.pictureInPictureEnabled && !video.disablePictureInPicture
-
-  can_use_pip = can_use_pip_in_chrome || can_use_pip_in_safari
+// Safari
+// iPhone safari appears to "support" PiP through the check, however PiP does not function.
+// @see https://developer.apple.com/documentation/webkitjs/adding_picture_in_picture_to_your_safari_media_controls
+export const can_use_pip_in_safari = () => {
+  if (!IS_CLIENT) return false
+  const video = element('video')
+  return video.webkitSupportsPresentationMode &&
+    is_function(video.webkitSetPresentationMode) &&
+    !IS_IPHONE
 }
+
+export const can_use_pip = () => can_use_pip_in_chrome() || can_use_pip_in_safari()
 
 /**
  * To detect autoplay, we create a video element and call play on it, if it is `paused` after
@@ -87,7 +86,7 @@ if (IS_CLIENT) {
 export const can_autoplay = (muted, playsinline = true) => {
   if (!IS_CLIENT) return false
 
-  const video = document.createElement('video')
+  const video = element('video')
 
   if (muted) {
     video.setAttribute('muted', '')

@@ -1,19 +1,11 @@
 <div class="container">
   <div class="component">
-    <svelte:component this={Component} {...$$props} on:seeking={onSeeking} on:seeked={onSeeked} />
+    <svelte:component this={Component} {...$$props} />
   </div>
 </div>
 
 <script>
   export let Component
-
-  const onSeeking = () => {
-    // console.log('seeking')
-  }
-
-  const onSeeked = () => {
-    // console.log('seeked')
-  }
 </script>
 
 <style>

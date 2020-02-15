@@ -22,7 +22,7 @@
     "src"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "",
     "svg:min": "svgo --config ./svgo.yml -f src/static/icons",
     "svg:sprite": "svgstore --inline -o src/static/vime.svg src/static/icons/*.svg"
   },

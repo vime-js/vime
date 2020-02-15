@@ -19,8 +19,7 @@
 
 <script>
   import { tick } from 'svelte'
-  import { deferred } from '../../utils/promise'
-  import { decode_json } from '../../utils/decode'
+  import { deferred, decode_json } from '@vime/utils'
   import VideoEmbed from '../VideoEmbed.svelte'
 
   let src
@@ -47,6 +46,8 @@
 
   export const getEmbed = () => embed
   export const getTitle = () => videoTitle
+  export const getIframe = () => embed.getIframe()
+  export const getSrc = () => embed.getSrc()
 
   export const sendCommand = async (command, args) => {
     await tick()

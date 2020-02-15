@@ -1,6 +1,6 @@
 <svelte:window on:message={onMessage} />
 
-<IntersectionObserver let:intersecting >
+<Lazy let:intersecting >
   {#if intersecting}
     <div use:setAspectRatio={aspectRatio || '16:9'}>
       <iframe
@@ -15,7 +15,7 @@
       ></iframe>
     </div>
   {/if}
-</IntersectionObserver>
+</Lazy>
 
 <script context="module">
   let idCount = 0
@@ -24,10 +24,8 @@
 
 <script>
   import { createEventDispatcher } from 'svelte'
-  import { prefetch, parse_url, add_params_to_url } from '../utils/url'
-  import { is_string } from '../utils/unit'
-  import setAspectRatio from '../actions/aspectRatio'
-  import IntersectionObserver from './IntersectionObserver.svelte'
+  import { is_string, prefetch, parse_url, add_params_to_url } from '@vime/utils'
+  import { aspectRatio as setAspectRatio, Lazy } from '@vime/core'
 
   let _src
   let iframe

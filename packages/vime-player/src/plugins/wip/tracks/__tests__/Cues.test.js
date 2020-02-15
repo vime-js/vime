@@ -1,7 +1,5 @@
 import { act } from '@testing-library/svelte'
-
 import { warn } from '~utils/debug'
-
 import Cues from '../Cues.svelte'
 
 jest.mock('~utils/debug.js')
@@ -35,12 +33,13 @@ describe('components', () => {
     })
 
     const render = props => {
-      const results = renderWithContext({
-        track: null,
-        currentTime: 0,
-        Component: Cues,
-        ...props
-      })
+      // const results = renderWithContext({
+      //   track: null,
+      //   currentTime: 0,
+      //   Component: Cues,
+      //   ...props
+      // })
+      const results = {}
       listen(results.component, Object.values(Event))
       return results
     }

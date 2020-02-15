@@ -12,6 +12,7 @@ yarn.lock
 .vs
 *.log
 *.cache
+lerna-debug.log
 
 packages/*/node_modules
 packages/*/lib

@@ -1,5 +1,5 @@
 import CenterView from './views/CenterView.svelte'
-import { DailymotionLite, Dailymotion } from '../index'
+import { DailymotionLite, Dailymotion } from '../src'
 
 export default { title: 'Dailymotion' }
 

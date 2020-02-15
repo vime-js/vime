@@ -23,5 +23,9 @@
   ],
   "scripts": {
     "build": "rollup -c"
+  },
+  "dependencies": {
+    "@vime/core": "^1.0.0",
+    "@vime/utils": "^1.0.0"
   }
 }

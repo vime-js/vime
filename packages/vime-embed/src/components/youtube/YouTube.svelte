@@ -14,7 +14,7 @@
 />
 
 <script context="module">
-  import VideoQuality from '../../VideoQuality'
+  import { VideoQuality } from '@vime/core'
 
   const ListType = Object.freeze({
     PLAYLIST: 'playlist',
@@ -45,60 +45,37 @@
 </script>
 
 <script>
-  import { afterUpdate } from 'svelte'
-  import { is_string, is_array } from '../../utils/unit'
-  import { map_store_to_component } from '../../utils/store'
-  import buildStore from '../../store'
+  import { is_string, is_array, map_store_to_component } from '@vime/utils'
+  import buildEmbedStore from '../../buildEmbedStore'
   import YouTubeLite from './YouTubeLite.svelte'
-
-  let internalTime = 0
 
   export let cookies = false
 
-  const _store = buildStore()
-  const store = _store.private
+  const store = buildEmbedStore()
   
-  const onPropsChange = map_store_to_component(_store.public)
+  const onPropsChange = map_store_to_component(store)
   $: onPropsChange($$props)
 
   const {
     lite, playsinline, controls,
     autoplay, params, loop,
-    videoId, aspectRatio, currentTime,
-    duration, volume, paused,
-    muted, playing, rate
+    videoId, aspectRatio, duration,
+    volume, paused, muted,
+    playing, internalTime
   } = store
 
-  export const isPlaylist = () => _isPlaylist
   export const hasContent = () => _hasContent
+  export const isPlaylist = () => _isPlaylist
   export const isLiveStream = () => _isLiveStream
-
-  export const getStore = () => _store.public
-  export const getSrc = () => $lite.getEmbed().getSrc()
-  export const getIframe = () => $lite.getEmbed().getIframe()
-
-  let _currentTimeLastUpdated
-  export const getCurrentTime = () => {
-    let time = $currentTime
-    if ($playing) {
-      const elapsedTime = (Date.now() / 1E3 - _currentTimeLastUpdated) * $rate
-      if (elapsedTime > 0) (time += Math.min(elapsedTime, 1))
-    }
-    return time
-  }
+  
+  export const canSetQuality = () => false
+  export const canSetPlaybackRate = () => true
+  export const seekTo = time => sendCommand(Command.SEEK_TO, [time])
 
   const sendCommand = (c, a) => $lite && $lite.sendCommand(c, a)
 
-  afterUpdate(() => {
-    if ($currentTime !== internalTime) {
-      internalTime = $currentTime
-      store.seeking.set(true)
-      sendCommand(Command.SEEK_TO, [$currentTime])
-    }
-  })
-
   const EventMap = {
-    onReady: () => { store.ready.set(true) }
+    onReady: () => store.ready.set(true)
   }
 
   // @see https://developers.google.com/youtube/iframe_api_reference#Playback_status
@@ -107,36 +84,28 @@
     1: () => store.playing.set(true),
     2: () => store.paused.set(true),
     3: () => store.buffering.set(true),
-    5: () => {
-      internalTime = 0
-      _currentTimeLastUpdated = 0
-      store.playbackReady.set(true)
-    }
+    5: () => store.playbackReady.set(true)
   }
 
   const onInfoUpdate = info => {
     if (!info) return
     if (info.currentTime) {
       const time = info.currentTime
-      if (Math.abs(internalTime - time) > 1) store.seeking.set(true)
-      $currentTime = time
-      internalTime = time
+      if (Math.abs($internalTime - time) > 1) store.seeking.set(true)
+      $internalTime = time
+      store.currentTime.set(time)
     }
-    if (info.currentTimeLastUpdated_) { _currentTimeLastUpdated = info.currentTimeLastUpdated_ }
     if (info.duration) $duration = info.duration
     if (info.volume) $volume = info.volume
     if (info.muted) $muted = info.muted
     if (info.availablePlaybackRates) store.rates.set(info.availablePlaybackRates)
     if (info.availableQualityLevels) store.qualities.set(info.availableQualityLevels)
     if (info.playbackQuality) store.quality.set(QualityMap[info.playbackQuality])
-    if (info.playbackRate) $rate = info.playbackRate
+    if (info.playbackRate) store.rate.set(info.playbackRate)
     if (info.videoLoadedFraction) store.buffered.set(info.videoLoadedFraction * $duration)
     if (info.videoData && info.videoData.title) store.title.set(info.videoData.title)
     if (info.playerState) StateMap[info.playerState] && StateMap[info.playerState]()
   }
-
-  // seekable
-  // playedRanges
 
   const onData = e => {
     const data = e.detail
@@ -164,13 +133,11 @@
   $: $params.autoplay = $autoplay ? 1 : 0
   $: $params.loop = $loop ? 1 : 0
 
+  // 1. set src when video id changes
+  // 2. set playback rate here
+  // 3. extendable for quality + rate (check canSet...)
+
   $: $paused ? sendCommand(Command.PAUSE) : sendCommand(Command.PLAY)
   $: $muted ? sendCommand(Command.MUTE) : sendCommand(Command.UNMUTE)
   $: sendCommand(Command.SET_VOLUME, [$volume])
-
-  $: console.log('paused', $paused)
-
-  setTimeout(() => {
-    $currentTime = 50
-  }, 1000)
 </script>
