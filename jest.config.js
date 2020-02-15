@@ -21,7 +21,6 @@ module.exports = {
     'js',
     'svelte'
   ],
-  testEnvironment: 'jest-environment-jsdom-fifteen',
   testEnvironmentOptions: {
     resources: 'usable'
   },
