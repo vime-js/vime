@@ -37,7 +37,7 @@
       "prettier --parser markdown --write"
     ],
     "packages/*/*.{js,svelte}": [
-      "yarn lint"
+      "yarn lint:js"
     ]
   },
   "commitlint": {
