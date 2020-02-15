@@ -3,7 +3,7 @@
     <img
       width="400"
       alt="vime"
-      src="https://raw.githubusercontent.com/vime-js/vime/master/brand/vime-logo-dark.svg"
+      src="https://raw.githubusercontent.com/vime-js/vime/master/static/brand/vime-logo-dark.svg?sanitize=true"
     />
   </a>
 
@@ -17,8 +17,6 @@ Description.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
 
 - [Intro](#intro)
 - [License](#license)
