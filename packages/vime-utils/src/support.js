@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable import/no-mutable-exports */
 
-import { listen, element } from 'svelte/internal'
+import { noop, listen, element } from 'svelte/internal'
 import { is_function } from './unit'
 import { try_on_svelte_destroy } from './svelte'
 
@@ -16,7 +16,7 @@ export const IS_IPHONE = (IS_CLIENT && /(iPhone|iPod)/gi.test(navigator.platform
 export const IS_MOBILE = (IS_IOS || IS_ANDROID)
 
 export const ORIGIN = (window.location.protocol !== 'file:')
-  ? `${window.location.protocol} // ${window.location.hostname}`
+  ? `${window.location.protocol}//${window.location.hostname}`
   : null
 
 export const watch_touch = cb => {
@@ -83,7 +83,7 @@ export const can_use_pip = () => can_use_pip_in_chrome() || can_use_pip_in_safar
  *
  * @see https://github.com/ampproject/amphtml/blob/9bc8756536956780e249d895f3e1001acdee0bc0/src/utils/video.js#L25
  */
-export const can_autoplay = (muted, playsinline = true) => {
+export const can_autoplay = (muted = true, playsinline = true) => {
   if (!IS_CLIENT) return false
 
   const video = element('video')
@@ -111,7 +111,7 @@ export const can_autoplay = (muted, playsinline = true) => {
 
   // Promise wrapped this way to catch both sync throws and async rejections.
   // More info: https://github.com/tc39/proposal-promise-try
-  new Promise(resolve => resolve(video.play())).catch(() => {})
+  new Promise(resolve => resolve(video.play())).catch(noop)
 
   return Promise.resolve(!video.paused)
 }

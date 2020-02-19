@@ -1,6 +1,6 @@
 <svelte:options accessors />
 
-<VideoEmbed
+<Embed
   {src}
   {title}
   {params}
@@ -19,7 +19,7 @@
 <script>
   import { tick } from 'svelte'
   import { deferred, decode_query_string } from '@vime/utils'
-  import VideoEmbed from '../VideoEmbed.svelte'
+  import Embed from '../Embed.svelte'
 
   let src
   let embed

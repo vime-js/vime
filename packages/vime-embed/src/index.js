@@ -1,5 +1,5 @@
-export { default as VideoEmbed } from './components/VideoEmbed.svelte'
+export { default as Embed } from './Embed.svelte'
 
-export * from './components/youtube'
-export * from './components/vimeo'
-export * from './components/dailymotion'
+export * from './youtube'
+export * from './vimeo'
+export * from './dailymotion'

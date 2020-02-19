@@ -1,6 +1,6 @@
 <svelte:options accessors />
 
-<VideoEmbed
+<Embed
   {src}
   {title}
   {params}
@@ -20,7 +20,7 @@
 <script>
   import { tick } from 'svelte'
   import { deferred, decode_json } from '@vime/utils'
-  import VideoEmbed from '../VideoEmbed.svelte'
+  import Embed from '../Embed.svelte'
 
   let src
   let embed
@@ -47,7 +47,8 @@
   export const getEmbed = () => embed
   export const getTitle = () => videoTitle
   export const getIframe = () => embed.getIframe()
-  export const getSrc = () => embed.getSrc()
+  export const getSrc = () => src
+  export const getSrcWithParams = () => embed.getSrc()
 
   export const sendCommand = async (command, args) => {
     await tick()
@@ -62,20 +63,19 @@
   const onLoad = () => embed.postMessage({ event: 'listening' })
   
   const onReload = () => {
-    ready.reject()
     ready = deferred()
     videoTitle = null
   }
 
   const extractVideoTitle = info => {
-    const title = info.videoData && info.videoData.title
+    const title = info && info.videoData && info.videoData.title
     if (title) videoTitle = title
   }
 
   const onData = e => {
     const data = e.detail
     if (data.event && data.event === 'onReady') ready.resolve()
-    if (!videoTitle && data.info) extractVideoTitle(data.info)
+    if (!videoTitle) extractVideoTitle(data.info)
   }
 
   $: title = `YouTube ${videoTitle || 'Video Player'}`

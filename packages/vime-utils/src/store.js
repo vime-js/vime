@@ -1,13 +1,22 @@
 import { onDestroy } from 'svelte'
 import { get, writable } from 'svelte/store'
-import { get_current_component, not_equal } from 'svelte/internal'
+import { noop, get_current_component, not_equal } from 'svelte/internal'
 import { create_prop, merge_deep } from './object'
 import { try_on_svelte_destroy, try_create_svelte_dispatcher } from './svelte'
 
+export const safe_unsubscribe = unsubscribe => {
+  let once = false
+  return () => {
+    if (once) return
+    unsubscribe()
+    once = true
+  }
+}
+
 export const subscribe = (store, cb) => {
-  const off = store.subscribe(cb)
-  try_on_svelte_destroy(off)
-  return off
+  const unsubscribe = safe_unsubscribe(store.subscribe(cb))
+  try_on_svelte_destroy(unsubscribe)
+  return unsubscribe
 }
 
 export const subscribe_and_dispatch = (store, event) => {
@@ -21,11 +30,15 @@ export const subscribe_and_dispatch_if_true = (store, event) => {
 }
 
 export const subscribe_until_true = (store, cb) => {
-  const off = subscribe(store, $v => {
-    $v && cb($v)
-    $v && off()
+  if (get(store)) {
+    cb()
+    return noop
+  }
+  const unsubscribe = subscribe(store, $v => {
+    $v && cb()
+    $v && unsubscribe()
   })
-  return off
+  return unsubscribe
 }
 
 export const private_writable = initialValue => ({

@@ -1,5 +1,5 @@
 const VideoQuality = Object.freeze({
-  UNKNOWN: 'unknown',
+  UNKNOWN: null,
   XXS: '144p',
   XS: '240p',
   S: '360p',

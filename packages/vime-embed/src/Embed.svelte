@@ -6,7 +6,7 @@
       <iframe
         {id}
         {title}
-        src={_src}
+        src={srcWithParams}
         frameborder="0"
         allowfullscreen="1"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -27,8 +27,8 @@
   import { is_string, prefetch, parse_url, add_params_to_url } from '@vime/utils'
   import { aspectRatio as setAspectRatio, Lazy } from '@vime/core'
 
-  let _src
   let iframe
+  let srcWithParams
   let hasLoaded = false
 
   // eslint-disable-next-line prefer-const
@@ -44,8 +44,8 @@
   export let decoder = () => null
 
   export const getId = () => id
-  export const getSrc = () => _src
   export const getIframe = () => iframe
+  export const getSrc = () => srcWithParams
 
   export const postMessage = (message, target = '*', transfer) => {
     if (!iframe || !iframe.contentWindow) return
@@ -64,12 +64,12 @@
     if (data) dispatch('data', data)
   }
 
-  $: _src = src ? add_params_to_url(src, params) : null
+  $: srcWithParams = src ? add_params_to_url(src, params) : null
   $: host = src ? `${parse_url(src).protocol}//${parse_url(src).hostname}` : null
-  $: (_src && hasLoaded) ? dispatch('reload') : (_src && (hasLoaded = true))
+  $: (srcWithParams && hasLoaded) ? dispatch('reload') : (srcWithParams && (hasLoaded = true))
   
-  $: if (_src && !iframe && !preconnected.includes(_src)) {
-    if (prefetch('preconnect', _src)) preconnected.push(_src)
+  $: if (srcWithParams && !iframe && !preconnected.includes(srcWithParams)) {
+    if (prefetch('preconnect', srcWithParams)) preconnected.push(srcWithParams)
   }
 
   // TODO: improve preconnections

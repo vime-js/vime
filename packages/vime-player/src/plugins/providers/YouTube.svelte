@@ -253,8 +253,6 @@
   export const getDuration = async () => ytPlayer.getDuration()
   export const getQualities = async () => Object.values(YOUTUBE_QUALITY_MAP)
   export const getPlaybackRates = async () => ytPlayer.getAvailablePlaybackRates()
-  export const supportsPiP = async () => false
-  export const supportsFullscreen = async () => true
 
   // --------------------------------------------------------------
   // Setters
