@@ -33,8 +33,7 @@
   },
   "lint-staged": {
     "README.md": [
-      "yarn toc",
-      "prettier --parser markdown --write"
+      "yarn toc"
     ],
     "packages/*/*.{js,svelte}": [
       "yarn lint:js"
@@ -93,7 +92,6 @@
     "lint-staged": "^10.0.7",
     "node-sass": "^4.13.1",
     "postcss-custom-properties": "^9.0.2",
-    "prettier": "^1.18.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.0",
