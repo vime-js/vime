@@ -41,15 +41,14 @@
   >
     % buffered
   </progress>
-  {#if Tooltip}
-    <Tooltip
-      {player}
-      title={tooltipTitle}
-      isActive={isTooltipActive}
-      noBounding
-      bind:this={tooltip}
-    />
-  {/if}  
+  <svelte:component 
+    {player}
+    title={tooltipTitle}
+    isActive={isTooltipActive}
+    noBounding
+    this={Tooltip}
+    bind:this={tooltip}
+  />
 </div>
 
 <script context="module">

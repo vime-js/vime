@@ -7,6 +7,7 @@ const PlayerEvent = Object.freeze({
   PAUSE: 'pause',
   PLAY: 'play',
   SRC_CHANGE: 'srcchange',
+  TITLE_CHANGE: 'titlechange',
   DURATION_CHANGE: 'durationchange',
   TIME_UPDATE: 'timeupdate',
   PLAYBACK_STARTED: 'playbackstarted',
@@ -15,10 +16,15 @@ const PlayerEvent = Object.freeze({
   RATES_CHANGE: 'rateschange',
   QUALITY_CHANGE: 'qualitychange',
   QUALITIES_CHANGE: 'qualitieschange',
+  FULLSCREEN_CHANGE: 'fullscreenchange',
+  MEDIA_TYPE_CHANGE: 'mediatypechange',
+  PIP_CHANGE: 'pipchange',
   VOLUME_CHANGE: 'volumechange',
   MUTE_CHANGE: 'mutechange',
   BUFFERING: 'buffering',
   BUFFERED: 'buffered',
+  REBUILD_START: 'rebuildstart',
+  REBUILD_END: 'rebuildend',
   ERROR: 'error'
 })
 

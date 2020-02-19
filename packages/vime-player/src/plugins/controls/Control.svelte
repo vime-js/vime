@@ -24,15 +24,14 @@
   bind:this={el}
 >
   <slot />
-  {#if Tooltip}
-    <Tooltip
-      {player}
-      {title}
-      id={tooltipID}
-      isActive={isFocused}
-      bind:this={tooltip}
-    />
-  {/if}
+  <svelte:component 
+    {player}
+    {title}
+    id={tooltipID}
+    isActive={isFocused}
+    this={Tooltip}
+    bind:this={tooltip}
+  />
 </button>
 
 <script context="module">

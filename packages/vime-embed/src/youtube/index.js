@@ -1,2 +1,2 @@
-export { default as YouTube } from './YouTube.svelte'
+export { default as YouTube } from './YouTube'
 export { default as YouTubeLite } from './YouTubeLite.svelte'
