@@ -1,6 +1,7 @@
 module.exports = {
   stories: [
-    '../packages/vime-embed/stories/*stories.js',
-    // '../packages/vime-player/stories/*.stories.js'
+    '../packages/vime-youtube/stories/*stories.js',
+    '../packages/vime-dailymotion/stories/*stories.js',
+    '../packages/vime-vimeo/stories/*stories.js'
   ]
 }

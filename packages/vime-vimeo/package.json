@@ -1,21 +1,23 @@
 {
-  "name": "@vime/embed",
-  "description": "",
+  "name": "@vime/vimeo",
+  "description": "Vime Vimeo Player",
   "version": "1.0.0",
-  "main": "dist/legacy/embed.umd.js",
-  "module": "dist/modern/embed.esm.js",
-  "unpkg": "dist/legacy/embed.umd.js",
+  "main": "dist/legacy/Vimeo.umd.js",
+  "module": "dist/modern/vimeo.esm.js",
+  "unpkg": "dist/legacy/Vimeo.umd.js",
   "svelte": "src/index.js",
   "license": "MIT",
   "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
   "homepage": "https://github.com/vime-js/vime#readme",
-  "repository": "https://github.com/vime-js/vime/tree/master/packages/embed",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/vime-vimeo",
   "bugs": {
     "url": "https://github.com/vime-js/vime/issues"
   },
   "keywords": [
     "vime",
-    "player"
+    "player",
+    "vimeo",
+    "embed"
   ],
   "files": [
     "dist",

@@ -20,7 +20,7 @@
 <script>
   import { tick } from 'svelte'
   import { deferred, decode_json } from '@vime/utils'
-  import Embed from '../Embed.svelte'
+  import { Embed } from '@vime/core'
 
   let src
   let embed

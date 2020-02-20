@@ -1,10 +1,9 @@
-const PlayerState = Object.freeze({
-  IDLE: 1,
-  CUED: 2,
-  PLAYING: 3,
-  PAUSED: 4,
-  BUFFERING: 5,
-  ENDED: 6
-})
-
+// Treeshaking safe.
+const PlayerState = function () {}
+PlayerState.IDLE = 1
+PlayerState.CUED = 2
+PlayerState.PLAYING = 3
+PlayerState.PAUSED = 4
+PlayerState.BUFFERING = 5
+PlayerState.ENDED = 6
 export default PlayerState

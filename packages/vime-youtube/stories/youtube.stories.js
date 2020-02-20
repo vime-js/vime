@@ -1,4 +1,4 @@
-import CenterView from './views/CenterView.svelte'
+import { CenterView } from '@vime/core'
 import { YouTubeLite, YouTube } from '../src'
 
 export default { title: 'YouTube' }
