@@ -1,6 +1,7 @@
 import { createEventDispatcher } from 'svelte'
 import { writable, derived, get, readable } from 'svelte/store'
-import { get_current_component } from 'svelte/internal'
+import { get_current_component, current_component } from 'svelte/internal'
+import { currentPlayer } from './globalStore'
 import PlayerEvent from './PlayerEvent'
 import MediaType from './MediaType'
 import VideoQuality from './VideoQuality'
@@ -16,7 +17,7 @@ import {
 } from '@vime/utils'
 
 // Player defaults used when the `src` changes or `resetStore`
-const defaults = {
+const playerDefaults = () => ({
   paused: true,
   playing: false,
   seeking: false,
@@ -37,20 +38,47 @@ const defaults = {
   playbackReady: false,
   mediaType: MediaType.NONE,
   live: false
-}
+})
 
-// TODO: add progress / state (stores + events), posterchange
-// const state = derived([], ()), nativeMode
+// posterchange -> should this be included???
 // $: shouldSetAspectRatio = _isVideo || !!poster
 
-const buildPlayerStore = () => {
+// $: if (_hasPlaybackEnded) {
+//   _state = PlayerState.ENDED
+//   dispatch(PlayerEvent.PLAYBACK_END)
+// } else if (_hasPlaybackStarted && isPaused) {
+//   _state = PlayerState.PAUSED
+//   dispatch(PlayerEvent.PAUSE)
+// } else if (_hasPlaybackStarted && _isBuffering) {
+//   _state = PlayerState.BUFFERING
+//   dispatch(PlayerEvent.BUFFERING)
+// } else if (_hasPlaybackStarted) {
+//   _state = PlayerState.PLAYING
+//   dispatch(PlayerEvent.PLAYING)
+// } else if (_isPlaybackReady) {
+//   _state = PlayerState.CUED
+//   dispatch(PlayerEvent.CUE)
+// } else {
+//   _state = PlayerState.IDLE
+// }
+
+
+const buildPlayerStore = player => {
+  const defaults = playerDefaults()
+
   const mediaType = writable(defaults.mediaType)
   const qualities = private_writable(defaults.qualities)
   const rates = private_writable(defaults.rates)
+  const currentTime = writable(defaults.currentTime)
+  const duration = private_writable(defaults.duration)
+  const buffered = private_writable(defaults.buffered)
 
   return {
     src: writable(null),
     mediaType,
+    currentTime,
+    duration,
+    buffered,
     audio: derived(mediaType, ($mediaType) => $mediaType === MediaType.AUDIO),
     video: derived(mediaType, ($mediaType) => $mediaType === MediaType.VIDEO),
     pipActive: writable(false),
@@ -65,8 +93,6 @@ const buildPlayerStore = () => {
     title: private_writable(defaults.title),
     paused: writable(defaults.paused),
     muted: writable(defaults.muted),
-    duration: private_writable(defaults.duration),
-    buffered: private_writable(defaults.buffered),
     qualities,
     quality: selectable(defaults.quality, qualities),
     canSetQuality: writable(false),
@@ -78,7 +104,6 @@ const buildPlayerStore = () => {
     buffering: private_writable(defaults.buffering),
     playing: private_writable(defaults.playing),
     seeking: private_writable(defaults.seeking),
-    currentTime: writable(defaults.currentTime),
     internalTime: private_writable(defaults.internalTime),
     volume: writable(defaults.volume),
     playbackReady: private_writable(defaults.playbackReady),
@@ -89,7 +114,21 @@ const buildPlayerStore = () => {
     autoplay: writable(false),
     loop: writable(false),
     canAutoplay: private_writable(false),
-    canMutedAutoplay: private_writable(false)
+    canMutedAutoplay: private_writable(false),
+    active: derived(currentPlayer, $currentPlayer => $currentPlayer === player),
+    progress: derived(
+      [currentTime, duration, buffered],
+      ([$currentTime, $duration, $buffered]) => ({
+        played: {
+          seconds: $currentTime,
+          percent: ($currentTime / $duration) * 100
+        },
+        buffered: {
+          seconds: $buffered,
+          percent: ($buffered / $duration) * 100
+        }
+      })
+    )
   }
 }
 
@@ -111,6 +150,8 @@ const dispatchPlayerEvents = store => {
   subscribe_and_dispatch(store.pipActive, PlayerEvent.PIP_CHANGE)
   subscribe_and_dispatch(store.mediaType, PlayerEvent.MEDIA_TYPE_CHANGE)
   subscribe_and_dispatch(store.fullscreenActive, PlayerEvent.FULLSCREEN_CHANGE)
+  subscribe_and_dispatch(store.progress, PlayerEvent.PROGRESS_UPDATE)
+  subscribe_and_dispatch(store.active, PlayerEvent.ACTIVE_CHANGE)
   subscribe_and_dispatch_if_true(store.buffering, PlayerEvent.BUFFERING)
   subscribe_and_dispatch_if_true(store.started, PlayerEvent.PLAYBACK_STARTED)
   subscribe_and_dispatch_if_true(store.ended, PlayerEvent.PLAYBACK_ENDED)
@@ -121,9 +162,13 @@ const dispatchPlayerEvents = store => {
   subscribe(store.paused, $p => $p ? dispatch(PlayerEvent.PAUSE) : dispatch(PlayerEvent.PLAY))
 }
 
-const resetStore = store => Object
-  .keys(defaults)
-  .forEach(prop => store[prop] && store[prop].set(defaults[prop]))
+const resetStore = store => {
+  const defaults = playerDefaults()
+
+  Object
+    .keys(defaults)
+    .forEach(prop => store[prop] && store[prop].set(defaults[prop]))
+}
 
 const fillStore = async store => {
   store.canAutoplay.set(await can_autoplay(false))
@@ -132,7 +177,7 @@ const fillStore = async store => {
 
 export const bindPlayerStoreToComponent = () => {
   const player = get_current_component()
-  const store = buildPlayerStore()
+  const store = buildPlayerStore(player)
   fillStore(store)
   dispatchPlayerEvents(store)
   const onPropsChange = map_store_to_component(store)

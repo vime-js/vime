@@ -1,4 +1,4 @@
-import CenterView from './views/CenterView.svelte'
+import { CenterView } from '@vime/core'
 import { DailymotionLite, Dailymotion } from '../src'
 
 export default { title: 'Dailymotion' }

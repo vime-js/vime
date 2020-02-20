@@ -25,7 +25,8 @@
 <script>
   import { createEventDispatcher } from 'svelte'
   import { is_string, prefetch, parse_url, add_params_to_url } from '@vime/utils'
-  import { aspectRatio as setAspectRatio, Lazy } from '@vime/core'
+  import { aspectRatio as setAspectRatio } from '../actions'
+  import Lazy from './Lazy.svelte'
 
   let iframe
   let srcWithParams
@@ -33,7 +34,7 @@
 
   // eslint-disable-next-line prefer-const
   idCount += 1
-  const id = `video-embed-${idCount}`
+  const id = `vime-embed-${idCount}`
   const dispatch = createEventDispatcher()
 
   export let src = null

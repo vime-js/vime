@@ -1,0 +1,33 @@
+{
+  "name": "@vime/dailymotion",
+  "description": "Vime Dailymotion Player",
+  "version": "1.0.0",
+  "main": "dist/legacy/Dailymotion.umd.js",
+  "module": "dist/modern/dailymotion.esm.js",
+  "unpkg": "dist/legacy/Dailymotion.umd.js",
+  "svelte": "src/index.js",
+  "license": "MIT",
+  "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
+  "homepage": "https://github.com/vime-js/vime#readme",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/vime-dailymotion",
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "keywords": [
+    "vime",
+    "player",
+    "dailymotion",
+    "embed"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "dependencies": {
+    "@vime/core": "^1.0.0",
+    "@vime/utils": "^1.0.0"
+  }
+}

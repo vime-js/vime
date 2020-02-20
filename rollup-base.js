@@ -16,6 +16,8 @@ const modernOutputDir = outputDir + 'modern/'
 const legacyOutputDir = outputDir + 'legacy/'
 let hasOutputCSS = false
 
+export const getFileName = id => path.parse(id).base.replace(path.extname(id), '')
+
 export const plugins = ({ legacy = false, externalCSS = false } = {}) => {
   return [
     nodeResolve({
@@ -138,7 +140,7 @@ export const modernBuild = ({
 } = {}) => ({
   input,
   output: {
-    file: modernOutputDir + `${fileName}.esm.js`,
+    file: modernOutputDir + `${fileName || getFileName(input)}.esm.js`,
     format: 'esm'
   },
   plugins: plugins(pluginOpts)

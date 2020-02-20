@@ -1,4 +1,4 @@
-import CenterView from './views/CenterView.svelte'
+import { CenterView } from '@vime/core'
 import { VimeoLite, Vimeo } from '../src'
 
 export default { title: 'Vimeo' }

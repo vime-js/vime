@@ -1,0 +1,33 @@
+{
+  "name": "@vime/youtube",
+  "description": "Vime YouTube Player",
+  "version": "1.0.0",
+  "main": "dist/legacy/YouTube.umd.js",
+  "module": "dist/modern/youtube.esm.js",
+  "unpkg": "dist/legacy/YouTube.umd.js",
+  "svelte": "src/index.js",
+  "license": "MIT",
+  "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
+  "homepage": "https://github.com/vime-js/vime#readme",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/vime-youtube",
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "keywords": [
+    "vime",
+    "player",
+    "youtube",
+    "embed"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "dependencies": {
+    "@vime/core": "^1.0.0",
+    "@vime/utils": "^1.0.0"
+  }
+}

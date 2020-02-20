@@ -8,7 +8,7 @@
   "license": "MIT",
   "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
   "homepage": "https://github.com/vime-js/vime#readme",
-  "repository": "https://github.com/vime-js/vime/tree/master/packages/core",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/vime-core",
   "bugs": {
     "url": "https://github.com/vime-js/vime/issues"
   },

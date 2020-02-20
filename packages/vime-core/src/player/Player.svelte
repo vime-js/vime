@@ -43,14 +43,12 @@
   import Lazy from '../components/Lazy.svelte'
   import PlayerEvent from './PlayerEvent'
   import { currentPlayer } from './globalStore'
-  import attachGlobalStore from './attachGlobalStore'
   import { is_function, map_store_to_component } from '@vime/utils'
   import { bindPlayerStoreToComponent } from './playerStore'
 
   let self = get_current_component()
   const dispatch = createEventDispatcher()
   
-  attachGlobalStore()
   onDestroy(() => { self = null })
 
   const { store, resetStore, onPropsChange } = bindPlayerStoreToComponent()

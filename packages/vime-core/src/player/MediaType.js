@@ -1,7 +1,6 @@
-const MediaType = Object.freeze({
-  NONE: 0,
-  AUDIO: 1,
-  VIDEO: 2
-})
-
+// Treeshaking safe.
+const MediaType = function () {}
+MediaType.NONE = 0
+MediaType.AUDIO = 1
+MediaType.VIDEO = 2
 export default MediaType
