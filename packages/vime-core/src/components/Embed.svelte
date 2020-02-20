@@ -1,13 +1,12 @@
 <svelte:window on:message={onMessage} />
 
-<Lazy let:intersecting >
+<Lazy let:intersecting>
   {#if intersecting}
-    <div use:setAspectRatio={aspectRatio || '16:9'}>
+    <div use:setAspectRatio={aspectRatio}>
       <iframe
         {id}
         {title}
         src={srcWithParams}
-        frameborder="0"
         allowfullscreen="1"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         on:load
@@ -24,9 +23,9 @@
 
 <script>
   import { createEventDispatcher } from 'svelte'
-  import { is_string, prefetch, parse_url, add_params_to_url } from '@vime/utils'
-  import { aspectRatio as setAspectRatio } from '../actions'
   import Lazy from './Lazy.svelte'
+  import { aspectRatio as setAspectRatio } from '../actions'
+  import { is_string, prefetch, parse_url, add_params_to_url } from '@vime/utils'
 
   let iframe
   let srcWithParams
@@ -40,13 +39,13 @@
   export let src = null
   export let title = null
   export let params = {}
-  export let aspectRatio = null
   export let preconnections = []
+  export let aspectRatio = null
   export let decoder = () => null
 
   export const getId = () => id
-  export const getIframe = () => iframe
   export const getSrc = () => srcWithParams
+  export const getIframe = () => iframe
 
   export const postMessage = (message, target = '*', transfer) => {
     if (!iframe || !iframe.contentWindow) return
@@ -81,12 +80,6 @@
 </script>
 
 <style>
-  div {
-    position: relative;
-    padding-bottom: 56.25%;
-    background: #000;
-  }
-
   iframe {
     position: absolute;
     top: 0;

@@ -9,9 +9,15 @@ export default function aspectRatio (node, aspectRatio) {
   }
 
   update(aspectRatio)
+  node.style.background = '#000'
+  node.style.position = 'relative'
 
   return {
     update,
-    destroy () { update(null) }
+    destroy () { 
+      update(null) 
+      node.style.background = null
+      node.style.position = null
+    }
   }
 }

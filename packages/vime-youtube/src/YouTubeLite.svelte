@@ -42,12 +42,11 @@
   export let params = {}
   export let videoId = null
   export let cookies = false
-  export let aspectRatio = null
+  export let aspectRatio = '16:9'
 
-  export const getEmbed = () => embed
+  export const getSrc = () => src
   export const getTitle = () => videoTitle
   export const getIframe = () => embed.getIframe()
-  export const getSrc = () => src
   export const getSrcWithParams = () => embed.getSrc()
 
   export const sendCommand = async (command, args) => {
@@ -62,8 +61,8 @@
 
   const onLoad = () => embed.postMessage({ event: 'listening' })
   
-  const onReload = () => {
-    ready = deferred()
+  const onReload = () => { 
+    ready = deferred() 
     videoTitle = null
   }
 

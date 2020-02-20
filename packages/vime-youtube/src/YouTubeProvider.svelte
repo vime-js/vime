@@ -1,20 +1,26 @@
-<svelte:options accessors />
-
 <YouTubeLite
   {videoId}
   {params}
   {cookies}
   {aspectRatio}
-  on:load
-  on:data
-  on:message
-  on:reload
   on:data={onData}
   bind:this={lite}
 />
 
 <script context="module">
   import { VideoQuality } from '@vime/core'
+  import { load_image } from '@vime/utils'
+
+  const getPoster = videoId => {
+    if (!videoId) return Promise.resolve(null)
+    const posterSrc = quality => `https://i.ytimg.com/vi/${videoId}/${quality}.jpg`
+    // We are testing a that the image has a min-width of 121px because if the thumbnail does
+    // not exist YouTube returns a blank/error image that is 120px wide.
+    return load_image(posterSrc('maxresdefault'), 121) // 1080p (no padding)
+      .catch(() => load_image(posterSrc('sddefault'), 121)) // 640p (padded 4:3)
+      .catch(() => load_image(posterSrc('hqdefault'), 121)) // 480p (padded 4:3)
+      .then(img => img.src || null)
+  }
 
   // @see https://developers.google.com/youtube/player_parameters#Selecting_Content_to_Play
   const ListType = Object.freeze({
@@ -90,25 +96,20 @@
   export const supportsFullscreen = () => true
 
   // @see https://developers.google.com/youtube/iframe_api_reference#Events
-  const EventMap = {
-    onReady: () => {
+  const onEvent = event => {
+    if (event === 'onReady') {
       dispatch(PlayerEvent.READY)
       dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, MediaType.VIDEO)
     }
   }
 
   // @see https://developers.google.com/youtube/iframe_api_reference#Playback_status
-  const StateMap = {
-    // Ended (0)
-    0: () => dispatch(PlayerEvent.ENDED),
-    // Playing (1)
-    1: () => dispatch(PlayerEvent.PLAYING),
-    // Paused (2)
-    2: () => dispatch(PlayerEvent.PAUSE),
-    // Buffering (3)
-    3: () => dispatch(PlayerEvent.BUFFERING, true),
-    // Video Cued (5)
-    5: () => {
+  const onStateChange = state => {
+    if (state === 0) dispatch(PlayerEvent.ENDED)
+    if (state === 1) dispatch(PlayerEvent.PLAYING)
+    if (state === 2) dispatch(PlayerEvent.PAUSE)
+    dispatch(PlayerEvent.BUFFERING, state === 3)
+    if (state === 5) {
       duration = 0
       internalTime = 0
       dispatch(PlayerEvent.PLAYBACK_READY)
@@ -119,39 +120,46 @@
     }
   }
 
+  const onTimeUpdate = time => {
+    // Unfortunately this can't detect anything when YT is paused until after the
+    // seeking has completed, no updates are received in between.
+    if (Math.abs(internalTime - time) > 1) dispatch(PlayerEvent.SEEKING)
+    internalTime = time
+    dispatch(PlayerEvent.TIME_UPDATE, time)
+  }
+
+  const onBuffered = async buffered => {
+    dispatch(PlayerEvent.BUFFERED, buffered)
+    await tick()
+    // If paused this is the only way to notify the player of seeked.
+    if (buffered > internalTime) dispatch(PlayerEvent.SEEKED)
+  }
+
   const onInfoUpdate = info => {
     if (!info) return
-    if (info.volume) dispatch(PlayerEvent.VOLUME_CHANGE, info.volume)
-    if (info.muted) dispatch(PlayerEvent.MUTE_CHANGE, info.muted)
-    if (info.availablePlaybackRates) dispatch(PlayerEvent.RATES_CHANGE, info.availablePlaybackRates)
-    if (info.playbackQuality) dispatch(PlayerEvent.QUALITY_CHANGE, QualityMap[info.playbackQuality])
-    if (info.playbackRate) dispatch(PlayerEvent.RATE_CHANGE, info.playbackRate)
-    if (info.videoLoadedFraction) dispatch(PlayerEvent.BUFFERED, info.videoLoadedFraction * duration)
-    if (info.videoData && info.videoData.title) {
-      dispatch(PlayerEvent.TITLE_CHANGE, info.videoData.title)
-    }
-    if (info.availableQualityLevels) {
-      dispatch(PlayerEvent.QUALITIES_CHANGE, info.availableQualityLevels)
-    }
-    if (info.currentTime) {
-      // Unfortunately this can't detect anything when YT is paused until after the
-      // seeking has completed, no updates are received in between.
-      if (Math.abs(internalTime - info.currentTime) > 1) dispatch(PlayerEvent.SEEKING)
-      internalTime = info.currentTime
-      dispatch(PlayerEvent.TIME_UPDATE, internalTime)
-    }
-    if (info.duration) {
-      duration = info.duration
-      dispatch(PlayerEvent.DURATION_CHANGE, duration)
-    }
-    if (info.playerState) StateMap[info.playerState] && StateMap[info.playerState]()
+    const {
+      volume, muted, availablePlaybackRates: rates,
+      playbackQuality: quality, playbackRate: rate, videoLoadedFraction: loadedFraction,
+      videoData, availableQualityLevels: qualities, currentTime, 
+      duration: _duration, playerState
+    } = info
+    if (playerState) onStateChange(playerState)
+    if (currentTime) onTimeUpdate(currentTime)
+    if (volume) dispatch(PlayerEvent.VOLUME_CHANGE, volume)
+    if (muted) dispatch(PlayerEvent.MUTE_CHANGE, muted)
+    if (rates) dispatch(PlayerEvent.RATES_CHANGE, rates)
+    if (qualities) dispatch(PlayerEvent.QUALITIES_CHANGE, qualities)
+    if (quality) dispatch(PlayerEvent.QUALITY_CHANGE, QualityMap[quality])
+    if (rate) dispatch(PlayerEvent.RATE_CHANGE, rate)
+    if (_duration) dispatch(PlayerEvent.DURATION_CHANGE, duration)
+    if (_duration) duration = _duration
+    if (loadedFraction) onBuffered(loadedFraction * duration)
+    if (videoData && videoData.title) dispatch(PlayerEvent.TITLE_CHANGE, videoData.title)
   }
 
   const onData = e => {
-    const data = e.detail
-    const event = data.event
-    const info = data.info
-    event && EventMap[event] && EventMap[event]()
+    const { event, info } = e.detail
+    event && onEvent(event)
     onInfoUpdate(info)
     // TODO: not sure how to map the error event.
   }
@@ -171,6 +179,7 @@
   $: (prevVideoId === videoId) ? onRebuild(params) : (prevVideoId = videoId)
   
   $: onSrcChange(videoId)
+  $: getPoster(videoId).then(poster => dispatch(PlayerEvent.POSTER_CHANGE, poster))
 
   // TODO: Maybe we just expose -> listType + list and playslist functionality
   // $: _hasList = is_string(params.listType) &&

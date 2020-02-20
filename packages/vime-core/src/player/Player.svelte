@@ -2,12 +2,9 @@
   {#if intersecting}
     <svelte:component
       {...props}
+      aspectRatio={$aspectRatio}
       this={Provider}
       bind:this={provider}
-      on:load
-      on:data
-      on:message
-      on:reload
       on:rebuildstart
       on:rebuildend
       on:error
@@ -21,10 +18,12 @@
       on:buffered={onBuffered}
       on:buffering={onBuffering}
       on:seeking={onSeeking}
+      on:seeked={onSeeked}
       on:ratechange={onRateChange}
       on:qualitychange={onQualityChange}
       on:pipchange={onPiPChange}
       on:fullscreenchange={onFullscreenChange}
+      on:posterchange={onPosterChange}
       on:srcchange={onSrcChange}
       on:titlechange={onTitleChange}
       on:mutechange={onMuteChange}
@@ -39,6 +38,7 @@
 
 <script>
   import { tick, createEventDispatcher, onDestroy, afterUpdate } from 'svelte'
+  import { get } from 'svelte/store'
   import { get_current_component } from 'svelte/internal'
   import Lazy from '../components/Lazy.svelte'
   import PlayerEvent from './PlayerEvent'
@@ -55,19 +55,16 @@
   $: onPropsChange($$props)
 
   const {
-    playsinline, canAutoplay, canMutedAutoplay,
-    paused, muted, autoplay, playbackReady,
-    started, ended, volume,
-    seeking, internalTime,
-    currentTime, autopause, nativeMode,
-    live, loop, buffered,
-    buffering, pipActive, rate,
-    quality, qualities, rates,
-    mediaType, duration, ready,
-    src, controls, title,
-    supportsPiP, supportsFullscreen, canSetPiP,
-    canSetFullscreen, fullscreenActive, canSetRate,
-    canSetQuality, playing
+    playsinline, paused, muted, 
+    ended, volume, seeking, 
+    internalTime, currentTime, nativeMode,
+    pipActive, rate, quality,
+    src, controls, supportsPiP, 
+    supportsFullscreen, canSetPiP, canSetFullscreen, 
+    fullscreenActive, canSetRate, canSetQuality, 
+    aspectRatio, buffering, canAutoplay,
+    canMutedAutoplay, buffered, autopause, 
+    autoplay, playing, started
   } = store
 
   let provider
@@ -92,8 +89,19 @@
   let _tempPlay = false
   let _tempPause = false
 
+  const cancelTempActions = async () => {
+    // Give some time for the provider to be set to it's original value before we receive
+    // event updates.
+    await tick()
+    setTimeout(() => {
+      _tempPause = false
+      _tempPlay = false
+      _tempMute = false
+    }, 100)
+  }
+
   const initiateTempPlayback = () => {
-    if (!$canAutoplay) return
+    if (!$canMutedAutoplay) return
     _tempMute = true
     _tempPlay = true
     $playsinline = true
@@ -108,15 +116,21 @@
   afterUpdate(() => {
     if (!provider || $seeking || ($currentTime === $internalTime)) return
     $internalTime = $currentTime
-    onSeeking()
     provider.setCurrentTime($currentTime)
   })
+
+  const onAutoplay = () => {
+    if (!$autoplay || (!$canAutoplay || !$canMutedAutoplay)) return
+    $paused = false
+    $playsinline = true
+    if (!$canAutoplay) $muted = true
+  }
 
   const onPlaybackReady = async () => {
     // Wait a tick incase of any src changes.
     await tick()
     onAutoplay()
-    $playbackReady = true
+    store.playbackReady.set(true)
   }
 
   const onRebuildEnd = async () => {
@@ -128,15 +142,8 @@
   }
 
   const onAutopause = () => {
-    if ((!$autopause) || !$currentPlayer || $currentPlayer === self) return
+    if (!$autopause || !$currentPlayer || $currentPlayer === self) return
     $currentPlayer.paused = true
-  }
-
-  const onAutoplay = () => {
-    if (!$autoplay || (!$canAutoplay || !$canMutedAutoplay)) return
-    $paused = false
-    $playsinline = true
-    if (!$canAutoplay) $muted = true
   }
 
   // If a provider fires a `pause` event before `seeking` we cancel it to not mess with our paused
@@ -149,43 +156,35 @@
     }, 100)
   }
 
-  const onPlaying = async () => {
+  const onPlaying = () => {
     $buffering = false
+    $started = true
+    onSeeked()
+    onAutopause()
+    $currentPlayer = self
     if ($nativeMode && !_tempPlay) $paused = false
+    if (!_tempPlay) $playing = true
     provider.setPaused($paused)
     provider.setMuted($muted)
-    if (!_tempPlay) {
-      $playing = true
-      $started = true
-      onAutopause()
-      $currentPlayer = self
-    }
-    // Give some time for the provider to be set to it's original value before we receive
-    // event updates.
-    await tick()
-    setTimeout(() => {
-      _tempPlay = false
-      _tempMute = false
-    }, 100)
+    cancelTempActions()
   }
 
   const onSeeking = () => {
     if ($seeking) return
     window.clearTimeout(firePauseTimer)
     $seeking = true
-    $buffering = true
     !$started ? initiateTempPlayback() : (_tempPause = true)
   }
 
   const onSeeked = () => {
     if (!$seeking || $buffering) return
     $seeking = false
-    _tempPause = false
     dispatch(PlayerEvent.SEEKED)
+    cancelTempActions()
   }
 
   const onRestart = async () => {
-    if ($live || !$ended) return
+    if (get(store.live) || !$ended) return
     $internalTime = 0
     $currentTime = 0
     $ended = true
@@ -195,7 +194,7 @@
   }
 
   const onLoop = async () => {
-    if ($live || !$loop) return
+    if (get(store.live) || !get(store.loop)) return
     await tick()
     onRestart()
   }
@@ -206,29 +205,26 @@
     onLoop()
   }
 
-  const onBuffered = e => {
-    $buffered = e.detail
-    $buffering = $buffered < $internalTime
-  }
-
-  const onProviderReady = () => { $ready = true }
+  const onBuffered = e => { $buffered = e.detail }
+  const onBuffering = e => { $buffering = e.detail }
+  const onProviderReady = () => { store.ready.set(true) }
   const onSrcChange = e => { $src = e.detail }
-  const onTitleChange = e => { $title = e.detail }
+  const onTitleChange = e => { store.title.set(e.detail) }
   const onRateChange = e => { $rate = e.detail }
   const onQualityChange = e => { $quality = e.detail }
   const onVolumeChange = e => { if ($nativeMode) $volume = e.detail }
-  const onBuffering = e => { $buffering = e.detail }
+  const onPosterChange = e => { store.poster.set(e.detail) }
   const onMuteChange = e => { if ($nativeMode && !_tempMute) $muted = e.detail }
-  const onQualitiesChange = e => { $qualities = e.detail }
-  const onRatesChange = e => { $rates = e.detail }
-  const onDurationChange = e => { $duration = e.detail }
+  const onQualitiesChange = e => { store.qualities.set(e.detail) }
+  const onRatesChange = e => { store.rates.set(e.detail) }
+  const onDurationChange = e => { store.duration.set(e.detail) }
   const onPiPChange = e => { $pipActive = e.detail }
   const onFullscreenChange = e => { $fullscreenActive = e.detail }
-  const onMediaTypeChange = e => { $mediaType = e.detail }
+  const onMediaTypeChange = e => { store.mediaType.set(e.detail) }
 
   const onProviderChange = () => {
     resetStore()
-    $ready = false
+    store.ready.set(false)
   }
 
   const _onSrcChange = () => {
@@ -259,7 +255,6 @@
   // State Updates
   // --------------------------------------------------------------
 
-  $: if ($seeking) onSeeked($buffering)
   $: if (provider) provider.setVolume($volume)
   $: if (provider) provider.setMuted($muted || _tempMute)
   $: if (provider) provider.setPaused(($paused || _tempPause) && !_tempPlay)
