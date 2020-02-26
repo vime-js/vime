@@ -11,8 +11,8 @@
   on:click
   on:keydown
   on:focuschange
-  on:focuschange="{e => { isFocused = e.detail }}"
-  on:highlightchange="{e => { showHighlight = e.detail }}"
+  on:focuschange="{e => { isFocused = e.detail; }}"
+  on:highlightchange="{e => { showHighlight = e.detail; }}"
   aria-label={$$props['aria-label']}
   aria-pressed={$$props['aria-pressed']}
   aria-haspopup={$$props['aria-haspopup']}
@@ -35,52 +35,52 @@
 </button>
 
 <script context="module">
-  let tooltipIDCount = 0
+  let tooltipIDCount = 0;
 </script>
 
 <script>
-  import { createEventDispatcher, onDestroy } from 'svelte'
-  import { focus, highlight } from '~utils/actions'
-  import { ID as TooltipsID } from '~plugins/tooltips/Tooltips.svelte'
+  import { createEventDispatcher, onDestroy } from 'svelte';
+  import { focus, highlight } from '~utils/actions';
+  import { ID as TooltipsID } from '~plugins/tooltips/Tooltips.svelte';
   
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
   // eslint-disable-next-line prefer-const
-  tooltipIDCount += 1
-  const tooltipID = `tooltip-${tooltipIDCount}`
+  tooltipIDCount += 1;
+  const tooltipID = `tooltip-${tooltipIDCount}`;
 
-  const dispatch = createEventDispatcher()
-  const plugins = player.getPluginsRegistry()
-  const { isTouch, isMobile } = player.getGlobalStore()
-  const { isAudio, isLiveStream, isCurrentPlayer } = player.getStore()
+  const dispatch = createEventDispatcher();
+  const plugins = player.getPluginsRegistry();
+  const { isTouch, isMobile } = player.getGlobalStore();
+  const { isAudio, isLiveStream, isCurrentPlayer } = player.getStore();
   
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let el
-  let isFocused = false
-  let showHighlight = false
+  let el;
+  let isFocused = false;
+  let showHighlight = false;
 
-  export let title
-  export let label
+  export let title;
+  export let label;
 
-  export const getEl = () => el
-  export const getTooltip = () => tooltip
+  export const getEl = () => el;
+  export const getTooltip = () => tooltip;
 
   // --------------------------------------------------------------
   // Tooltips Plugin
   // --------------------------------------------------------------
   
-  let tooltip
+  let tooltip;
 
-  $: tooltips = $plugins && $plugins[TooltipsID]
-  $: Tooltip = tooltips && tooltips.create()
-  $: if (tooltips && tooltip) tooltips.register(label, tooltip)
+  $: tooltips = $plugins && $plugins[TooltipsID];
+  $: Tooltip = tooltips && tooltips.create();
+  $: if (tooltips && tooltip) tooltips.register(label, tooltip);
 </script>
 
 <style type="text/scss">

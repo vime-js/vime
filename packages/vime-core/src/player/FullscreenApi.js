@@ -2,7 +2,7 @@
 
 const FullscreenApi = {
   prefixed: true
-}
+};
 
 const apiMap = [
   [
@@ -44,27 +44,27 @@ const apiMap = [
     'MSFullscreenError',
     '-ms-fullscreen'
   ]
-]
+];
 
-const specApi = apiMap[0]
-let browserApi
+const specApi = apiMap[0];
+let browserApi;
 
 // Determine the supported set of functions.
 for (let i = 0; i < apiMap.length; i++) {
   // Check for exitFullscreen function.
   if (apiMap[i][1] in document) {
-    browserApi = apiMap[i]
-    break
+    browserApi = apiMap[i];
+    break;
   }
 }
 
 // Map the browser API names to the spec API names.
 if (browserApi) {
   for (let i = 0; i < browserApi.length; i++) {
-    FullscreenApi[specApi[i]] = browserApi[i]
+    FullscreenApi[specApi[i]] = browserApi[i];
   }
 
-  FullscreenApi.prefixed = browserApi[0] !== specApi[0]
+  FullscreenApi.prefixed = browserApi[0] !== specApi[0];
 }
 
-export default FullscreenApi
+export default FullscreenApi;

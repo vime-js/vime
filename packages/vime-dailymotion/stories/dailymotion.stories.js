@@ -1,9 +1,9 @@
-import { CenterView } from '@vime/core'
-import { DailymotionLite, Dailymotion } from '../src'
+import { CenterView } from '@vime/core';
+import { DailymotionLite, Dailymotion } from '../src';
 
-export default { title: 'Dailymotion' }
+export default { title: 'Dailymotion' };
 
-const srcId = 'x3a9qe6'
+const srcId = 'x3a9qe6';
 
 export const Lite = () => ({
   Component: CenterView,
@@ -11,7 +11,7 @@ export const Lite = () => ({
     Component: DailymotionLite,
     srcId
   }
-})
+});
 
 export const Full = () => ({
   Component: CenterView,
@@ -19,4 +19,4 @@ export const Full = () => ({
     Component: Dailymotion,
     srcId
   }
-})
+});

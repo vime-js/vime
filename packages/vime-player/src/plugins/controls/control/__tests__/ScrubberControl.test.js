@@ -6,7 +6,7 @@ describe('components', () => {
       // accessiblity
       // tooltips
       it('', () => {
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

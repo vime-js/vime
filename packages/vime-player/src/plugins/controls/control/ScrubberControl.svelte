@@ -2,9 +2,9 @@
   on:mouseenter="{onSeeking}"
   on:mouseleave="{onSeeking}"
   on:mousemove={onSeeking}
-  on:touchmove={() => { slider.focus() }}
-  on:touchend={() => { slider.blur() }}
-  on:mouseleave="{() => { slider.blur() }}"
+  on:touchmove={() => { slider.focus(); }}
+  on:touchend={() => { slider.blur(); }}
+  on:mouseleave="{() => { slider.blur(); }}"
   bind:this={scrubber}
 >
   <input
@@ -52,91 +52,91 @@
 </div>
 
 <script context="module">
-  export const ID = 'vScrubberControl'
-  export const LABEL = 'seek'
+  export const ID = 'vScrubberControl';
+  export const LABEL = 'seek';
 </script>
 
 <script>
-  import { formatTime } from '~utils/formatters'
-  import { ID as PluginsID } from '~core/components/Plugins.svelte'
-  import { ID as TooltipsID } from '~plugins/tooltips/Tooltips.svelte'
+  import { formatTime } from '~utils/formatters';
+  import { ID as PluginsID } from '~core/components/Plugins.svelte';
+  import { ID as TooltipsID } from '~plugins/tooltips/Tooltips.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const { isTouch } = player.getGlobalStore()
-  const plugins = player.getRegistry().watch(PluginsID)
+  const { isTouch } = player.getGlobalStore();
+  const plugins = player.getRegistry().watch(PluginsID);
   
   const {
     i18n, isAudio, isVideo,
     isCurrentPlayer, currentTime, duration,
     buffered, isBuffering, icons
-  } = player.getStore()
+  } = player.getStore();
   
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let slider
-  let scrubber
-  let progressBar
+  let slider;
+  let scrubber;
+  let progressBar;
   
-  let tooltip
-  let tooltipTitle
-  let isTooltipActive
+  let tooltip;
+  let tooltipTitle;
+  let isTooltipActive;
 
-  export const getEl = () => scrubber
-  export const getSlider = () => slider
-  export const getTooltip = () => tooltip
-  export const getProgressBar = () => progressBar
+  export const getEl = () => scrubber;
+  export const getSlider = () => slider;
+  export const getTooltip = () => tooltip;
+  export const getProgressBar = () => progressBar;
 
-  $: if (slider) slider.value = $currentTime
-  $: if (slider) slider.style.setProperty('--value', `${($currentTime / $duration) * 100}%`)
+  $: if (slider) slider.value = $currentTime;
+  $: if (slider) slider.style.setProperty('--value', `${($currentTime / $duration) * 100}%`);
   
-  $: ariaDuration = Math.max(0, $duration)
+  $: ariaDuration = Math.max(0, $duration);
   
   $: scrubberLabel = $i18n.scrubberLabel
     .replace('{currentTime}', formatTime($currentTime))
-    .replace('{duration}', formatTime(ariaDuration))
+    .replace('{duration}', formatTime(ariaDuration));
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
-  const onSeek = e => { $currentTime = window.parseFloat(e.target.value) }
+  const onSeek = e => { $currentTime = window.parseFloat(e.target.value); };
   
   const onSeeking = e => {
-    if ($duration <= 0 || !tooltip) return
-    const rect = scrubber.getBoundingClientRect()
-    const percent = Math.max(0, Math.min(100, (100 / rect.width) * (e.pageX - rect.left)))
-    isTooltipActive = e.type !== 'mouseleave'
-    tooltipTitle = formatTime(($duration / 100) * percent)
-    setTooltipXPos(percent, (percent / 100) * rect.width)
-  }
+    if ($duration <= 0 || !tooltip) return;
+    const rect = scrubber.getBoundingClientRect();
+    const percent = Math.max(0, Math.min(100, (100 / rect.width) * (e.pageX - rect.left)));
+    isTooltipActive = e.type !== 'mouseleave';
+    tooltipTitle = formatTime(($duration / 100) * percent);
+    setTooltipXPos(percent, (percent / 100) * rect.width);
+  };
 
   const setTooltipXPos = (percent, value) => {
-    const rect = tooltip.getEl().getBoundingClientRect()
-    const bounds = scrubber.parentNode.getBoundingClientRect()
-    const scrubberRect = scrubber.getBoundingClientRect()
-    const leftOffset = scrubberRect.left - bounds.left
-    const rightOffset = bounds.right - scrubberRect.right
-    const leftLimit = bounds.left + leftOffset
-    const rightLimit = bounds.right - rightOffset
+    const rect = tooltip.getEl().getBoundingClientRect();
+    const bounds = scrubber.parentNode.getBoundingClientRect();
+    const scrubberRect = scrubber.getBoundingClientRect();
+    const leftOffset = scrubberRect.left - bounds.left;
+    const rightOffset = bounds.right - scrubberRect.right;
+    const leftLimit = bounds.left + leftOffset;
+    const rightLimit = bounds.right - rightOffset;
     if ((rect.left + percent > leftLimit) && (rect.right - (100 - percent) < rightLimit)) {
-      tooltip.getEl().style.left = `${value}px`
+      tooltip.getEl().style.left = `${value}px`;
     }
-  }
+  };
 
   // --------------------------------------------------------------
   // Tooltips Plugin
   // --------------------------------------------------------------
 
-  $: tooltips = $plugins && $plugins[TooltipsID]
-  $: Tooltip = tooltips && tooltips.create()
-  $: if (tooltips && tooltip && !tooltips.getTooltip(LABEL)) tooltips.register(LABEL, tooltip)
+  $: tooltips = $plugins && $plugins[TooltipsID];
+  $: Tooltip = tooltips && tooltips.create();
+  $: if (tooltips && tooltip && !tooltips.getTooltip(LABEL)) tooltips.register(LABEL, tooltip);
 </script>
 
 <style type="text/scss">

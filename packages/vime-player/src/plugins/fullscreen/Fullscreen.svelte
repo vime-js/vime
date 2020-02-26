@@ -1,30 +1,30 @@
 <script context="module">
-  export const ID = 'vFullscreen'
+  export const ID = 'vFullscreen';
 </script>
 
 <script>
-  import { listen } from 'svelte/internal'
-  import { onMount, onDestroy } from 'svelte'
-  import fs from './FullscreenApi'
+  import { listen } from 'svelte/internal';
+  import { onMount, onDestroy } from 'svelte';
+  import fs from './FullscreenApi';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const rootEl = player.getEl()
+  const rootEl = player.getEl();
   
   const {
     _isFullscreenSupported: isFullscreenSupported,
     isFullscreenEnabled, isFullscreenActive, errors
-  } = player.getStore()
+  } = player.getStore();
 
   // if rebuild can we reenter fullscreen??
 
   // also does the currentProvider support it? -> simple supports check??
-  $isFullscreenSupported = !!(fs.requestFullscreen && document[fs.fullscreenEnabled])
-  onDestroy(() => { $isFullscreenSupported = false })
+  $isFullscreenSupported = !!(fs.requestFullscreen && document[fs.fullscreenEnabled]);
+  onDestroy(() => { $isFullscreenSupported = false; });
 
   // --------------------------------------------------------------
   // Props
@@ -42,51 +42,51 @@
     // 1. can we go fullscreen using el -> includes video + controls
     // 2. can we go fullscreen using the provider -> native controls + setFullscreen
     // 3. fallback to viewport?
-  }
+  };
 
   export const exit = async () => {
-  }
+  };
 
-  export const el = () => document[fs.fullscreenElement]
+  export const el = () => document[fs.fullscreenElement];
 
-  $: isEnabled = $isFullscreenSupported && $isFullscreenEnabled
+  $: isEnabled = $isFullscreenSupported && $isFullscreenEnabled;
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
-  let errorOff
-  let changeOff
-  let isEventsBound = false
+  let errorOff;
+  let changeOff;
+  let isEventsBound = false;
 
-  const onChange = () => { $isFullscreenActive = !!el() }
-  const onError = e => { $errors = [...errors, e] }
+  const onChange = () => { $isFullscreenActive = !!el(); };
+  const onError = e => { $errors = [...errors, e]; };
 
   const onBindEvents = () => {
-    if (document[fs.fullscreenchange]) changeOff = listen(document, fs.fullscreenchange, onChange)
-    if (document[fs.fullscreenerror]) errorOff = listen(document, fs.fullscreenerror)
-    isEventsBound = true
-  }
+    if (document[fs.fullscreenchange]) changeOff = listen(document, fs.fullscreenchange, onChange);
+    if (document[fs.fullscreenerror]) errorOff = listen(document, fs.fullscreenerror);
+    isEventsBound = true;
+  };
 
   const onUnbindEvents = () => {
-    changeOff && changeOff()
-    errorOff && errorOff()
-    changeOff = null
-    errorOff = null
-    isEventsBound = false
-  }
+    changeOff && changeOff();
+    errorOff && errorOff();
+    changeOff = null;
+    errorOff = null;
+    isEventsBound = false;
+  };
 
-  onDestroy(onUnbindEvents)
+  onDestroy(onUnbindEvents);
 
   $: if (isEnabled && !isEventsBound) {
-    onBindEvents()
+    onBindEvents();
   } else if (!isEnabled && isEventsBound) {
-    onUnbindEvents()
+    onUnbindEvents();
   }
 
   $: if ((isEnabled && $isFullscreenActive) && !el()) {
-    enter()
+    enter();
   } else if (el()) {
-    exit()
+    exit();
   }
 </script>

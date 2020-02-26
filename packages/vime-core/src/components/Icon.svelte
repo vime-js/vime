@@ -3,7 +3,7 @@
 </svg>
 
 <script>
-  export let icon
+  export let icon;
 </script>
 
 <style>

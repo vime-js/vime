@@ -12,29 +12,29 @@
 />
 
 <script context="module">
-  export const ID = 'vFullscreenControl'
-  export const LABEL = 'toggleFullscreen'
+  export const ID = 'vFullscreenControl';
+  export const LABEL = 'toggleFullscreen';
 </script>
 
 <script>
-  import ToggleControl from './ToggleControl.svelte'
+  import ToggleControl from './ToggleControl.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
   const {
     icons, i18n, isFullscreenActive,
     isFullscreenSupported, isFullscreenEnabled
-  } = player.getStore()
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let toggle
+  let toggle;
 
-  export const getToggle = () => toggle
+  export const getToggle = () => toggle;
 </script>

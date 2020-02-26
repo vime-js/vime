@@ -1,24 +1,18 @@
-import { createEventDispatcher } from 'svelte'
-import { writable, derived, get, readable } from 'svelte/store'
-import { get_current_component, current_component } from 'svelte/internal'
-import { currentPlayer } from './globalStore'
-import PlayerEvent from './PlayerEvent'
-import PlayerState from './PlayerState'
-import MediaType from './MediaType'
-import VideoQuality from './VideoQuality'
+import { createEventDispatcher } from 'svelte';
+import { writable, derived, get, readable } from 'svelte/store';
+import { get_current_component, current_component } from 'svelte/internal';
+import { currentPlayer } from './globalStore';
+import PlayerEvent from './PlayerEvent';
+import PlayerState from './PlayerState';
+import MediaType from './MediaType';
+import VideoQuality from './VideoQuality';
 
 import {
-  is_array,
-  private_writable,
-  map_store_to_component,
-  can_autoplay,
-  selectable_if,
-  writable_if,
-  subscribe,
-  subscribe_and_dispatch,
-  subscribe_and_dispatch_if_true,
-  IS_MOBILE
-} from '@vime/utils'
+  is_array, is_string, private_writable,
+  map_store_to_component, can_autoplay, selectable_if,
+  writable_if, subscribe, subscribe_and_dispatch,
+  subscribe_and_dispatch_if_true, IS_MOBILE
+} from '@vime/utils';
 
 // Player defaults used when the `src` changes or `resetStore`
 const playerDefaults = () => ({
@@ -40,62 +34,66 @@ const playerDefaults = () => ({
   started: false,
   ended: false,
   pipActive: false,
+  mediaType: MediaType.NONE,
   fullscreenActive: false,
   playbackReady: false,
-  mediaType: MediaType.NONE,
   live: false
-})
+});
 
 const buildPlayerStore = player => {
-  const store = {}
-  const defaults = playerDefaults()
+  const store = {};
+  const defaults = playerDefaults();
 
-  store.src = writable(null)
-  store.srcId = writable(null)
-  store.origin = private_writable(null)
-  store.mediaType = writable(defaults.mediaType)
-  store.audio = derived(store.mediaType, ($mediaType) => $mediaType === MediaType.AUDIO)
-  store.video = derived(store.mediaType, ($mediaType) => $mediaType === MediaType.VIDEO)
-  store.qualities = private_writable(defaults.qualities)
-  store.rates = private_writable(defaults.rates)
-  store.currentTime = writable(defaults.currentTime)
-  store.duration = private_writable(defaults.duration)
-  store.buffered = private_writable(defaults.buffered)
-  store.started = private_writable(defaults.started)
-  store.ended = private_writable(defaults.ended)
-  store.buffering = private_writable(defaults.buffering)
-  store.paused = writable(defaults.paused)
-  store.playbackReady = private_writable(defaults.playbackReady)
-  store.canSetRate = writable(false)
-  store.canSetPoster = private_writable(false)
-  store.canSetPiP = private_writable(false)
-  store.canSetFullscreen = private_writable(false)
-  store.canSetQuality = writable(false)
-  store.poster = writable_if(defaults.poster, store.canSetPoster)
-  store.pipActive = writable_if(defaults.pipActive, store.canSetPiP)
-  store.supportsPiP = private_writable(false)
-  store.fullscreenActive = writable_if(defaults.fullscreenActive, store.canSetFullscreen)
-  store.supportsFullscreen = private_writable(false)
-  store.autopause = writable(true)
-  store.ready = private_writable(false)
-  store.nativeMode = private_writable(true)
-  store.title = private_writable(defaults.title)
-  store.muted = writable(defaults.muted)
-  store.quality = selectable_if(defaults.quality, store.qualities, store.canSetQuality)
-  store.rate = selectable_if(defaults.rate, store.rates, store.canSetRate)
-  store.playing = private_writable(defaults.playing)
-  store.seeking = private_writable(defaults.seeking)
-  store.internalTime = private_writable(defaults.internalTime)
-  store.volume = writable_if(defaults.volume, !IS_MOBILE)
-  store.live = writable(defaults.live)
-  store.aspectRatio = writable('16:9')
-  store.playsinline = writable(true)
-  store.controls = writable(true)
-  store.autoplay = writable(false)
-  store.loop = writable(false)
-  store.canAutoplay = private_writable(false)
-  store.canMutedAutoplay = private_writable(false)
-  store.active = derived(store.currentPlayer, $currentPlayer => $currentPlayer === player)
+  store.src = writable(null);
+  store.srcId = writable(null);
+  store.origin = private_writable(null);
+  store.mediaType = private_writable(defaults.mediaType);
+  store.audio = derived(store.mediaType, ($mediaType) => $mediaType === MediaType.AUDIO);
+  store.video = derived(store.mediaType, ($mediaType) => $mediaType === MediaType.VIDEO);
+  store.qualities = private_writable(defaults.qualities);
+  store.rates = private_writable(defaults.rates);
+  store.currentTime = writable(defaults.currentTime);
+  store.duration = private_writable(defaults.duration);
+  store.buffered = private_writable(defaults.buffered);
+  store.started = private_writable(defaults.started);
+  store.ended = private_writable(defaults.ended);
+  store.buffering = private_writable(defaults.buffering);
+  store.paused = writable(defaults.paused);
+  store.playbackReady = private_writable(defaults.playbackReady);
+  store.canSetRate = writable(false);
+  store.canSetPoster = private_writable(false);
+  store.canSetPiP = private_writable(false);
+  store.canSetFullscreen = private_writable(false);
+  store.canSetQuality = writable(false);
+  store.poster = writable_if(defaults.poster, store.canSetPoster);
+  store.pipActive = writable_if(defaults.pipActive, store.canSetPiP);
+  store.supportsPiP = private_writable(false);
+  store.fullscreenActive = writable_if(defaults.fullscreenActive, store.canSetFullscreen);
+  store.supportsFullscreen = private_writable(false);
+  store.autopause = writable(true);
+  store.ready = private_writable(false);
+  store.nativeMode = private_writable(true);
+  store.title = private_writable(defaults.title);
+  store.muted = writable(defaults.muted);
+  store.quality = selectable_if(defaults.quality, store.qualities, store.canSetQuality);
+  store.rate = selectable_if(defaults.rate, store.rates, store.canSetRate);
+  store.playing = private_writable(defaults.playing);
+  store.seeking = private_writable(defaults.seeking);
+  store.internalTime = private_writable(defaults.internalTime);
+  store.volume = writable_if(defaults.volume, !IS_MOBILE);
+  store.live = writable(defaults.live);
+  store.aspectRatio = writable('16:9');
+  store.playsinline = writable(true);
+  store.controls = writable(true);
+  store.autoplay = writable(false);
+  store.loop = writable(false);
+  store.canAutoplay = private_writable(false);
+  store.canMutedAutoplay = private_writable(false);
+  store.videoView = derived(
+    [store.poster, store.video, store.canSetPoster],
+    ([$poster, $canSetPoster, $video]) => ($canSetPoster && is_string($poster)) || $video
+  );
+  store.active = derived(store.currentPlayer, $currentPlayer => $currentPlayer === player);
   store.progress = derived(
     [store.currentTime, store.duration, store.buffered],
     ([$currentTime, $duration, $buffered]) => ({
@@ -108,83 +106,84 @@ const buildPlayerStore = player => {
         percent: ($buffered / $duration) * 100
       }
     })
-  )
+  );
   store.state = derived(
     [store.started, store.ended, store.paused, store.buffering, store.playbackReady],
     ([$started, $ended, $paused, $buffering, $playbackReady]) => {
       if ($ended) {
-        return PlayerState.ENDED
+        return PlayerState.ENDED;
       } else if ($started && $buffering) {
-        return PlayerState.BUFFERING
+        return PlayerState.BUFFERING;
       } else if ($started && $paused) {
-        return PlayerState.PAUSED
+        return PlayerState.PAUSED;
       } else if ($started) {
-        return PlayerState.PLAYING
+        return PlayerState.PLAYING;
       } else if ($playbackReady) {
-        return PlayerState.CUED
+        return PlayerState.CUED;
       } else {
-        return PlayerState.IDLE
+        return PlayerState.IDLE;
       }
     }
-  )
+  );
 
-  return store
-}
+  return store;
+};
 
 // NOTE: not all events are fired here, some are fired directly from the player.
 // Events not fired here: SEEKED, REPLAY, REBUILD_START, REBUILD_END.
 const dispatchPlayerEvents = store => {
-  const dispatch = createEventDispatcher()
-  subscribe_and_dispatch(store.src, PlayerEvent.SRC_CHANGE)
-  subscribe_and_dispatch(store.title, PlayerEvent.TITLE_CHANGE)
-  subscribe_and_dispatch(store.duration, PlayerEvent.DURATION_CHANGE)
-  subscribe_and_dispatch(store.currentTime, PlayerEvent.TIME_UPDATE)
-  subscribe_and_dispatch(store.rate, PlayerEvent.RATE_CHANGE)
-  subscribe_and_dispatch(store.rates, PlayerEvent.RATES_CHANGE)
-  subscribe_and_dispatch(store.quality, PlayerEvent.QUALITY_CHANGE)
-  subscribe_and_dispatch(store.qualities, PlayerEvent.QUALITIES_CHANGE)
-  subscribe_and_dispatch(store.volume, PlayerEvent.VOLUME_CHANGE)
-  subscribe_and_dispatch(store.origin, PlayerEvent.ORIGIN_CHANGE)
-  subscribe_and_dispatch(store.muted, PlayerEvent.MUTE_CHANGE)
-  subscribe_and_dispatch(store.poster, PlayerEvent.POSTER_CHANGE)
-  subscribe_and_dispatch(store.buffered, PlayerEvent.BUFFERED)
-  subscribe_and_dispatch(store.pipActive, PlayerEvent.PIP_CHANGE)
-  subscribe_and_dispatch(store.mediaType, PlayerEvent.MEDIA_TYPE_CHANGE)
-  subscribe_and_dispatch(store.fullscreenActive, PlayerEvent.FULLSCREEN_CHANGE)
-  subscribe_and_dispatch(store.state, PlayerEvent.STATE_CHANGE)
-  subscribe_and_dispatch(store.progress, PlayerEvent.PROGRESS)
-  subscribe_and_dispatch(store.active, PlayerEvent.ACTIVE_CHANGE)
-  subscribe_and_dispatch(store.buffering, PlayerEvent.BUFFERING)
-  subscribe_and_dispatch(store.live, PlayerEvent.LIVE)
-  subscribe_and_dispatch_if_true(store.started, PlayerEvent.PLAYBACK_START)
-  subscribe_and_dispatch_if_true(store.ended, PlayerEvent.PLAYBACK_END)
-  subscribe_and_dispatch_if_true(store.ready, PlayerEvent.READY)
-  subscribe_and_dispatch_if_true(store.playbackReady, PlayerEvent.PLAYBACK_READY)
-  subscribe_and_dispatch_if_true(store.seeking, PlayerEvent.SEEKING)
-  subscribe_and_dispatch_if_true(store.playing, PlayerEvent.PLAYING)
-  subscribe(store.paused, $p => $p ? dispatch(PlayerEvent.PAUSE) : dispatch(PlayerEvent.PLAY))
-}
+  const dispatch = createEventDispatcher();
+  subscribe_and_dispatch(store.src, PlayerEvent.SRC_CHANGE);
+  subscribe_and_dispatch(store.title, PlayerEvent.TITLE_CHANGE);
+  subscribe_and_dispatch(store.duration, PlayerEvent.DURATION_CHANGE);
+  subscribe_and_dispatch(store.currentTime, PlayerEvent.TIME_UPDATE);
+  subscribe_and_dispatch(store.rate, PlayerEvent.RATE_CHANGE);
+  subscribe_and_dispatch(store.rates, PlayerEvent.RATES_CHANGE);
+  subscribe_and_dispatch(store.quality, PlayerEvent.QUALITY_CHANGE);
+  subscribe_and_dispatch(store.qualities, PlayerEvent.QUALITIES_CHANGE);
+  subscribe_and_dispatch(store.videoView, PlayerEvent.VIEWING_MODE_CHANGE);
+  subscribe_and_dispatch(store.volume, PlayerEvent.VOLUME_CHANGE);
+  subscribe_and_dispatch(store.origin, PlayerEvent.ORIGIN_CHANGE);
+  subscribe_and_dispatch(store.muted, PlayerEvent.MUTE_CHANGE);
+  subscribe_and_dispatch(store.poster, PlayerEvent.POSTER_CHANGE);
+  subscribe_and_dispatch(store.buffered, PlayerEvent.BUFFERED);
+  subscribe_and_dispatch(store.pipActive, PlayerEvent.PIP_CHANGE);
+  subscribe_and_dispatch(store.mediaType, PlayerEvent.MEDIA_TYPE_CHANGE);
+  subscribe_and_dispatch(store.fullscreenActive, PlayerEvent.FULLSCREEN_CHANGE);
+  subscribe_and_dispatch(store.state, PlayerEvent.STATE_CHANGE);
+  subscribe_and_dispatch(store.progress, PlayerEvent.PROGRESS);
+  subscribe_and_dispatch(store.active, PlayerEvent.ACTIVE_CHANGE);
+  subscribe_and_dispatch(store.buffering, PlayerEvent.BUFFERING);
+  subscribe_and_dispatch(store.live, PlayerEvent.LIVE);
+  subscribe_and_dispatch_if_true(store.started, PlayerEvent.PLAYBACK_START);
+  subscribe_and_dispatch_if_true(store.ended, PlayerEvent.PLAYBACK_END);
+  subscribe_and_dispatch_if_true(store.ready, PlayerEvent.READY);
+  subscribe_and_dispatch_if_true(store.playbackReady, PlayerEvent.PLAYBACK_READY);
+  subscribe_and_dispatch_if_true(store.seeking, PlayerEvent.SEEKING);
+  subscribe_and_dispatch_if_true(store.playing, PlayerEvent.PLAYING);
+  subscribe(store.paused, $p => $p ? dispatch(PlayerEvent.PAUSE) : dispatch(PlayerEvent.PLAY));
+};
 
 const resetStore = store => {
-  const defaults = playerDefaults()
+  const defaults = playerDefaults();
   Object.keys(defaults)
-    .forEach(prop => store[prop] && store[prop].set(defaults[prop]))
-}
+    .forEach(prop => store[prop] && store[prop].set(defaults[prop]));
+};
 
 const fillStore = async store => {
-  store.canAutoplay.set(await can_autoplay(false))
-  store.canMutedAutoplay.set(await can_autoplay(true))
-}
+  store.canAutoplay.set(await can_autoplay(false));
+  store.canMutedAutoplay.set(await can_autoplay(true));
+};
 
 export const bindPlayerStoreToComponent = () => {
-  const player = get_current_component()
-  const store = buildPlayerStore(player)
-  fillStore(store)
-  dispatchPlayerEvents(store)
-  const onPropsChange = map_store_to_component(store)
+  const player = get_current_component();
+  const store = buildPlayerStore(player);
+  fillStore(store);
+  dispatchPlayerEvents(store);
+  const onPropsChange = map_store_to_component(store);
   return {
     store,
     onPropsChange,
     resetStore: () => resetStore(store)
-  }
-}
+  };
+};

@@ -4,32 +4,32 @@
 ></div>
 
 <script context="module">
-  export const LABEL = 'addNewLine'
+  export const LABEL = 'addNewLine';
 </script>
 
 <script>
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount, onDestroy } from 'svelte';
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let el
-  let nextControl
+  let el;
+  let nextControl;
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
   onMount(async () => {
-    nextControl = el.nextElementSibling
-    nextControl.style.marginLeft = 0
-  })
+    nextControl = el.nextElementSibling;
+    nextControl.style.marginLeft = 0;
+  });
 
   onDestroy(() => {
-    if (nextControl) nextControl.style.marginLeft = null
-    nextControl = null
-  })
+    if (nextControl) nextControl.style.marginLeft = null;
+    nextControl = null;
+  });
 </script>
 
 <style>

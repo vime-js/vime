@@ -14,34 +14,34 @@
 {/if}
 
 <script>
-  import { tick, createEventDispatcher } from 'svelte'
-  import { Icon } from '~core'
-  import Control from '../Control.svelte'
+  import { tick, createEventDispatcher } from 'svelte';
+  import { Icon } from '~core';
+  import Control from '../Control.svelte';
 
-  export let player
+  export let player;
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let control
+  let control;
 
-  export let label
-  export let isActive
-  export let activeTitle
-  export let inactiveTitle
-  export let activeIcon
-  export let inactiveIcon
-  export let isEnabled = true
+  export let label;
+  export let isActive;
+  export let activeTitle;
+  export let inactiveTitle;
+  export let activeIcon;
+  export let inactiveIcon;
+  export let isEnabled = true;
 
-  export const getControl = () => control
+  export const getControl = () => control;
 
-  $: icon = isActive ? activeIcon : inactiveIcon
-  $: title = isActive ? activeTitle : inactiveTitle
+  $: icon = isActive ? activeIcon : inactiveIcon;
+  $: title = isActive ? activeTitle : inactiveTitle;
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
-  const onToggle = () => { isActive = !isActive }
+  const onToggle = () => { isActive = !isActive; };
 </script>

@@ -4,15 +4,15 @@
 />
 
 <script context="module">
-  export const ID = 'vCurrentTime'
-  export const LABEL = 'displayCurrentTime'
+  export const ID = 'vCurrentTime';
+  export const LABEL = 'displayCurrentTime';
 </script>
 
 <script>
-  import { formatTime } from '~utils/formatters'
-  import Time from './Time.svelte'
+  import { formatTime } from '~utils/formatters';
+  import Time from './Time.svelte';
 
-  export let player
+  export let player;
 
-  const { currentTime, i18n } = player.getStore()
+  const { currentTime, i18n } = player.getStore();
 </script>

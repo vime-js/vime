@@ -6,13 +6,13 @@ import {
   Hls as HlsProvider,
   Dash as DashProvider,
   Boot
-} from '~src/main'
+} from '~src/main';
 
-import PlayerView from './views/PlayerView.svelte'
+import PlayerView from './views/PlayerView.svelte';
 
-export default { title: 'Desktop' }
+export default { title: 'Desktop' };
 
-const theme = '#f76d82'
+const theme = '#f76d82';
 
 export const Audio = () => ({
   Component: PlayerView,
@@ -20,7 +20,7 @@ export const Audio = () => ({
     src: '/media/audio/the-battle.mp3',
     plugins: [Html5Provider, Boot]
   }
-})
+});
 
 export const AudioWithPoster = () => ({
   Component: PlayerView,
@@ -29,7 +29,7 @@ export const AudioWithPoster = () => ({
     plugins: [Html5Provider, Boot],
     poster: '/media/video/poster.png'
   }
-})
+});
 
 export const ThemedAudio = () => ({
   Component: PlayerView,
@@ -37,7 +37,7 @@ export const ThemedAudio = () => ({
     ...Audio().props,
     theme
   }
-})
+});
 
 export const Video = () => ({
   Component: PlayerView,
@@ -78,7 +78,7 @@ export const Video = () => ({
       }
     ]
   }
-})
+});
 
 export const ThemedVideo = () => ({
   Component: PlayerView,
@@ -86,7 +86,7 @@ export const ThemedVideo = () => ({
     ...Video().props,
     theme
   }
-})
+});
 
 export const Youtube = () => ({
   Component: PlayerView,
@@ -95,7 +95,7 @@ export const Youtube = () => ({
     src: 'https://www.youtube.com/watch?v=R6MlUcmOul8',
     plugins: [YouTubeProvider, Boot]
   }
-})
+});
 
 export const Dailymotion = () => ({
   Component: PlayerView,
@@ -104,7 +104,7 @@ export const Dailymotion = () => ({
     src: 'https://www.dailymotion.com/video/x3a9qe6',
     plugins: [DailymotionProvider, Boot]
   }
-})
+});
 
 export const Vimeo = () => ({
   Component: PlayerView,
@@ -113,7 +113,7 @@ export const Vimeo = () => ({
     src: 'https://vimeo.com/154225711',
     plugins: [VimeoProvider, Boot]
   }
-})
+});
 
 export const Hls = () => ({
   Component: PlayerView,
@@ -122,7 +122,7 @@ export const Hls = () => ({
     poster: 'https://i.ytimg.com/vi/YvbgprhDDMM/maxresdefault.jpg',
     plugins: [HlsProvider, Boot]
   }
-})
+});
 
 export const Dash = () => ({
   Component: PlayerView,
@@ -130,7 +130,7 @@ export const Dash = () => ({
     src: 'http://dash.edgesuite.net/envivio/EnvivioDash3/manifest.mpd',
     plugins: [DashProvider, Boot]
   }
-})
+});
 
 export const Live = () => ({
   Component: PlayerView,
@@ -138,4 +138,4 @@ export const Live = () => ({
     src: 'http://livesim.dashif.org/livesim/testpic_2s/Manifest.mpd',
     plugins: [DashProvider, Boot]
   }
-})
+});

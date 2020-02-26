@@ -1,8 +1,8 @@
 <span>/</span>
 
 <script context="module">
-  export const ID = 'vTimeDivider'
-  export const LABEL = 'displayTimeDivider'
+  export const ID = 'vTimeDivider';
+  export const LABEL = 'displayTimeDivider';
 </script>
 
 <style type="text/scss">

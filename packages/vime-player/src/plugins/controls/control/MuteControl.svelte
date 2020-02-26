@@ -12,27 +12,27 @@
 />
 
 <script context="module">
-  export const ID = 'vMuteControl'
-  export const LABEL = 'toggleMute'
+  export const ID = 'vMuteControl';
+  export const LABEL = 'toggleMute';
 </script>
 
 <script>
-  import { get_volume_icon } from '~utils/icon'
-  import ToggleControl from './ToggleControl.svelte'
+  import { get_volume_icon } from '~utils/icon';
+  import ToggleControl from './ToggleControl.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const { icons, i18n, isMuted, volume } = player.getStore()
+  const { icons, i18n, isMuted, volume } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let toggle
+  let toggle;
 
-  export const getToggle = () => toggle
+  export const getToggle = () => toggle;
 </script>

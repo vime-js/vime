@@ -12,29 +12,29 @@
 />
 
 <script context="module">
-  export const ID = 'vCaptionsControl'
-  export const LABEL = 'toggleCaptions'
+  export const ID = 'vCaptionsControl';
+  export const LABEL = 'toggleCaptions';
 </script>
 
 <script>
-  import ToggleControl from './ToggleControl.svelte'
+  import ToggleControl from './ToggleControl.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
   const {
     icons, i18n, isCaptionsActive,
     isCaptionsSupported, isCaptionsEnabled
-  } = player.getStore()
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let toggle
+  let toggle;
 
-  export const getToggle = () => toggle
+  export const getToggle = () => toggle;
 </script>

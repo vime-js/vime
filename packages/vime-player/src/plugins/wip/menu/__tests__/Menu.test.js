@@ -1,10 +1,10 @@
-import Menu from '../Menu.svelte'
+import Menu from '../Menu.svelte';
 
 describe('components', () => {
   describe('Menu', () => {
     it('should look structurally correct', () => {
-      expect(Menu).toMatchRenderedSnapshot()
-    })
+      expect(Menu).toMatchRenderedSnapshot();
+    });
 
     it('should look structurally correct given backButton', () => {
       expect(Menu).toMatchRenderedWithContextSnapshot({
@@ -12,8 +12,8 @@ describe('components', () => {
           title: 'Back Button',
           onClick: () => {}
         }
-      })
-    })
+      });
+    });
 
     it('should look structurally correct given menu items', () => {
       expect(Menu).toMatchRenderedWithContextSnapshot({
@@ -37,8 +37,8 @@ describe('components', () => {
             onClick: () => {}
           }
         ]
-      })
-    })
+      });
+    });
 
     it('should look structurally correct given menu radio items', () => {
       expect(Menu).toMatchRenderedWithContextSnapshot({
@@ -50,7 +50,7 @@ describe('components', () => {
           { title: '#1', badge: '#1', isChecked: false, onClick: () => {} },
           { title: '#2', badge: '#2', isChecked: false, onClick: () => {} }
         ]
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

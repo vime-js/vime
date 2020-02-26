@@ -5,15 +5,15 @@
 </div>
 
 <script>
-  import { onMount } from 'svelte'
-  import Player from '../../core/Player.svelte'
+  import { onMount } from 'svelte';
+  import Player from '../../core/Player.svelte';
 
-  let player
-  let isAudio
+  let player;
+  let isAudio;
 
   onMount(() => {
-    ({ isAudio } = player.getStore())
-  })
+    ({ isAudio } = player.getStore());
+  });
 </script>
 
 <style>

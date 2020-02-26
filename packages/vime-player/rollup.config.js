@@ -1,19 +1,19 @@
-import path from 'path'
-import babel from 'rollup-plugin-babel'
-import commonjs from '@rollup/plugin-commonjs'
-import svg from 'rollup-plugin-svg'
-import nodeResolve from '@rollup/plugin-node-resolve'
-import replace from '@rollup/plugin-replace'
-import svelte from 'rollup-plugin-svelte'
-import { terser } from 'rollup-plugin-terser'
-import sveltePreprocess from 'svelte-preprocess'
+import path from 'path';
+import babel from 'rollup-plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
+import svg from 'rollup-plugin-svg';
+import nodeResolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import svelte from 'rollup-plugin-svelte';
+import { terser } from 'rollup-plugin-terser';
+import sveltePreprocess from 'svelte-preprocess';
 
-const mode = process.env.NODE_ENV
-const dev = mode === 'development'
-const entry = 'src/main.js'
-const outputDir = 'dist'
+const mode = process.env.NODE_ENV;
+const dev = mode === 'development';
+const entry = 'src/main.js';
+const outputDir = 'dist';
 
-let hasOutputCSS = false
+let hasOutputCSS = false;
 
 function basePlugins ({ legacy = false } = {}) {
   return [
@@ -28,8 +28,8 @@ function basePlugins ({ legacy = false } = {}) {
         postcss: require('./postcss.config')(legacy)
       }),
       css: (!dev && hasOutputCSS) ? () => {} : (css) => {
-        css.write(`${outputDir}/vime.css`)
-        hasOutputCSS = true
+        css.write(`${outputDir}/vime.css`);
+        hasOutputCSS = true;
       }
     }),
     // Run babel when in production.
@@ -69,24 +69,24 @@ function basePlugins ({ legacy = false } = {}) {
         comments: false
       }
     })
-  ]
+  ];
 }
 
 const manualChunks = id => {
   if (id.includes('node_modules')) {
-    const directories = id.split(path.sep)
-    const name = directories[directories.lastIndexOf('node_modules') + 1]
+    const directories = id.split(path.sep);
+    const name = directories[directories.lastIndexOf('node_modules') + 1];
     // Group svelte dependencies into a common chunk.
-    if (name.match(/^svelte/)) return 'vime-internals'
-    return name
+    if (name.match(/^svelte/)) return 'vime-internals';
+    return name;
   }
-  if (id.includes('src/utils')) return 'vime-utils'
-  if (id.includes('src/core/store')) return 'GlobalStore'
-  if (id.includes('src/lang')) return 'Language'
+  if (id.includes('src/utils')) return 'vime-utils';
+  if (id.includes('src/core/store')) return 'GlobalStore';
+  if (id.includes('src/lang')) return 'Language';
   if (id.includes('src/core') || id.includes('src/plugins')) {
-    return path.parse(id).base.replace('.svelte', '')
+    return path.parse(id).base.replace('.svelte', '');
   }
-}
+};
 
 // Modern (ES2015/ES6) ESM bundle.
 const modern = {
@@ -101,7 +101,7 @@ const modern = {
   },
   plugins: basePlugins(),
   manualChunks
-}
+};
 
 // Legacy (ES5) UMD bundles.
 const legacy = {
@@ -112,7 +112,7 @@ const legacy = {
     format: 'umd'
   },
   plugins: basePlugins({ legacy: true })
-}
+};
 
 // Legacy modules via System.js.
 // @see https://github.com/systemjs/systemjs.
@@ -128,6 +128,6 @@ const legacySystem = {
   },
   plugins: basePlugins({ legacy: true }),
   manualChunks
-}
+};
 
-export default [modern, legacy, legacySystem]
+export default [modern, legacy, legacySystem];

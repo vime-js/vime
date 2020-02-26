@@ -5,7 +5,7 @@
 {/if}
 
 <script context="module">
-  export const ID = 'vScrim'
+  export const ID = 'vScrim';
 </script>
 
 <script>
@@ -13,25 +13,25 @@
   // Setup
   // --------------------------------------------------------------
   
-  export let player
+  export let player;
 
-  const { isMobile } = player.getGlobalStore()
+  const { isMobile } = player.getGlobalStore();
   
   const {
     isVideo, hasPlaybackStarted, isPaused,
     isControlsActive
-  } = player.getStore()
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  export let resolve = true
-  export let isEnabled = false
-  export let isActive = false
+  export let resolve = true;
+  export let isEnabled = false;
+  export let isActive = false;
 
-  $: if (resolve) isEnabled = $isVideo
-  $: if (resolve) isActive = ($isMobile && $hasPlaybackStarted) && ($isPaused || $isControlsActive)
+  $: if (resolve) isEnabled = $isVideo;
+  $: if (resolve) isActive = ($isMobile && $hasPlaybackStarted) && ($isPaused || $isControlsActive);
 </script>
 
 <style type="text/scss">

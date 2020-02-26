@@ -10,15 +10,15 @@
 </li>
 
 <script>
-  import { createEventDispatcher } from 'svelte'
-  import MenuControl from './MenuControl.svelte'
+  import { createEventDispatcher } from 'svelte';
+  import MenuControl from './MenuControl.svelte';
 
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher();
 
-  export let title
-  export let value
-  export let group
-  export let badge = null
+  export let title;
+  export let value;
+  export let group;
+  export let badge = null;
 
-  $: isChecked = (group === value)
+  $: isChecked = (group === value);
 </script>

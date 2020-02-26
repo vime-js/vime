@@ -3,9 +3,9 @@
 </div>
 
 <script>
-  import { formatTime } from '~utils/formatters'
+  import { formatTime } from '~utils/formatters';
 
-  export let time
+  export let time;
 </script>
 
 <style type="text/scss">

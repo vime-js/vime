@@ -5,7 +5,7 @@
 </div>
 
 <script>
-  export let Component
+  export let Component;
 </script>
 
 <style>
@@ -22,7 +22,7 @@
 
   .component {
     width: 100%;
-    max-width: 1280px;
+    max-width: 960px;
     padding: 16px;
   }
 

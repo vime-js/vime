@@ -28,54 +28,54 @@
 </div>
 
 <script context="module">
-  export const ID = 'vVolumeControl'
-  export const LABEL = 'adjustVolume'
+  export const ID = 'vVolumeControl';
+  export const LABEL = 'adjustVolume';
 </script>
 
 <script>
-  import { tick, onDestroy } from 'svelte'
-  import { focus } from '~utils/actions'
-  import MuteControl from './MuteControl.svelte'
+  import { tick, onDestroy } from 'svelte';
+  import { focus } from '~utils/actions';
+  import MuteControl from './MuteControl.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const { isMobile } = player.getGlobalStore()
-  const { i18n, volume, isMuted } = player.getStore()
+  const { isMobile } = player.getGlobalStore();
+  const { i18n, volume, isMuted } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let el
-  let slider
-  let muteControl
-  let isFocused = false
-  let prevMuted = false
+  let el;
+  let slider;
+  let muteControl;
+  let isFocused = false;
+  let prevMuted = false;
 
-  export const getEl = () => el
-  export const getSlider = () => slider
-  export const getMuteControl = () => muteControl
+  export const getEl = () => el;
+  export const getSlider = () => slider;
+  export const getMuteControl = () => muteControl;
 
   const unmuteVolume = () => {
-    if (prevMuted && !$isMuted && $volume === 0) $volume = 30
-    prevMuted = $isMuted
-  }
+    if (prevMuted && !$isMuted && $volume === 0) $volume = 30;
+    prevMuted = $isMuted;
+  };
 
-  $: unmuteVolume($isMuted)
-  $: $isMuted = ($volume === 0)
-  $: currentVolume = $isMuted ? 0 : $volume
-  $: if (slider) slider.style.setProperty('--value', `${currentVolume}%`)
+  $: unmuteVolume($isMuted);
+  $: $isMuted = ($volume === 0);
+  $: currentVolume = $isMuted ? 0 : $volume;
+  $: if (slider) slider.style.setProperty('--value', `${currentVolume}%`);
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
-  const onVolumeChange = e => { $volume = window.parseInt(e.target.value) }
-  const onFocus = e => { isFocused = e.detail }
+  const onVolumeChange = e => { $volume = window.parseInt(e.target.value); };
+  const onFocus = e => { isFocused = e.detail; };
 </script>
 
 <style type="text/scss">

@@ -1,35 +1,35 @@
 <svelte:options accessors />
 
 <script context="module">
-  export const ID = 'vDblClickFullscreen'
+  export const ID = 'vDblClickFullscreen';
 </script>
 
 <script>
-  import { listen } from 'svelte/internal'
-  import { onMount, onDestroy } from 'svelte'
-  import { get_fullscreen_icon } from '~utils/icon'
-  import { ID as ActionDisplayId } from '~plugins/ActionDisplay.svelte'
+  import { listen } from 'svelte/internal';
+  import { onMount, onDestroy } from 'svelte';
+  import { get_fullscreen_icon } from '~utils/icon';
+  import { ID as ActionDisplayId } from '~plugins/ActionDisplay.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const { isMobile } = player.getGlobalStore()
+  const { isMobile } = player.getGlobalStore();
 
   const {
     icons, isFullscreenActive, isControlsEnabled,
     isFullscreenSupported, isFullscreenEnabled, isAudio,
     isPlaybackReady
-  } = player.getStore()
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  export let resolve = true
-  export let isEnabled = false
+  export let resolve = true;
+  export let isEnabled = false;
 
   $: if (resolve) {
     isEnabled = $isControlsEnabled &&
@@ -37,7 +37,7 @@
       $isFullscreenEnabled &&
       $isPlaybackReady &&
       !$isMobile &&
-      !$isAudio
+      !$isAudio;
   }
 
   // --------------------------------------------------------------
@@ -45,31 +45,31 @@
   // --------------------------------------------------------------
 
   const onToggle = () => {
-    $isFullscreenActive = !$isFullscreenActive
-    const icon = get_fullscreen_icon($icons, !$isFullscreenActive)
-    if (player[ActionDisplayId]) player[ActionDisplayId].run(icon)
-  }
+    $isFullscreenActive = !$isFullscreenActive;
+    const icon = get_fullscreen_icon($icons, !$isFullscreenActive);
+    if (player[ActionDisplayId]) player[ActionDisplayId].run(icon);
+  };
 
-  let dblClickOff
+  let dblClickOff;
   const onBindDblClick = () => {
     const onDblClick = e => {
     // TODO: this is probably not ideal, need a better solution.
-      const isInputNode = ['BUTTON', 'INPUT'].includes(e.target.nodeName)
-      if (!isInputNode) onToggle()
-    }
-    dblClickOff = listen(player.getEl(), 'dblclick', onDblClick)
-  }
+      const isInputNode = ['BUTTON', 'INPUT'].includes(e.target.nodeName);
+      if (!isInputNode) onToggle();
+    };
+    dblClickOff = listen(player.getEl(), 'dblclick', onDblClick);
+  };
 
   const onUnbindDblClick = () => {
-    dblClickOff && dblClickOff()
-    dblClickOff = null
-  }
+    dblClickOff && dblClickOff();
+    dblClickOff = null;
+  };
 
-  onDestroy(onUnbindDblClick)
+  onDestroy(onUnbindDblClick);
 
   $: if (isEnabled && !dblClickOff) {
-    onBindDblClick()
+    onBindDblClick();
   } else if (!isEnabled && dblClickOff) {
-    onUnbindDblClick()
+    onUnbindDblClick();
   }
 </script>

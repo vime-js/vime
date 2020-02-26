@@ -8,7 +8,7 @@ describe('components', () => {
       // click to play.
       // accessiblity
       it('', () => {
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});
