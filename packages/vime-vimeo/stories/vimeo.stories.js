@@ -3,13 +3,13 @@ import { VimeoLite, Vimeo } from '../src'
 
 export default { title: 'Vimeo' }
 
-const videoId = '154225711'
+const srcId = '154225711'
 
 export const Lite = () => ({
   Component: CenterView,
   props: {
     Component: VimeoLite,
-    videoId
+    srcId
   }
 })
 
@@ -17,6 +17,6 @@ export const Full = () => ({
   Component: CenterView,
   props: {
     Component: Vimeo,
-    videoId
+    srcId
   }
 })

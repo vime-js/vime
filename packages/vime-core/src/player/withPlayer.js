@@ -1,9 +1,11 @@
-import Player from './Player.svelte'
+import VimePlayer from './Player.svelte'
 
 export default function (Provider) {
-  return function withPlayer (options) {
+  function Player (options) {
     if (!options.props) options.props = {}
-    options.props.Provider = Provider
-    return new Player(options)
+    options.props.Provider = Provider.default
+    return new VimePlayer(options)
   }
+  Player.canPlay = Provider.canPlay
+  return Player
 }

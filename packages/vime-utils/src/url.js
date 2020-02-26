@@ -2,7 +2,7 @@ import { element } from 'svelte/internal'
 import { IS_CLIENT } from './support'
 import { is_null, is_array, is_object } from './unit'
 
-export const decode_uri_component = (component, fallback = '') => {
+export const try_decode_uri_component = (component, fallback = '') => {
   if (!IS_CLIENT) return fallback
   try {
     return window.decodeURIComponent(component)
@@ -19,11 +19,13 @@ export const parse_query_string = qs => {
   if (!qs) return params
   let match
   while ((match = QUERY_STRING_REGEX.exec(qs))) {
-    const name = decode_uri_component(match[1], match[1])
+    const name = try_decode_uri_component(match[1], match[1]).replace('[]', '')
     const value = match[2]
-      ? decode_uri_component(match[2].replace(/\+/g, ' '), match[2])
+      ? try_decode_uri_component(match[2].replace(/\+/g, ' '), match[2])
       : ''
-    params[name] = value
+    const currValue = params[name]
+    if (currValue && !is_array(currValue)) params[name] = [currValue]
+    currValue ? params[name].push(value) : (params[name] = value)
   }
   return params
 }

@@ -1,4 +1,4 @@
 import { withPlayer } from '@vime/core'
-import DailymotionProvider from './DailymotionProvider.svelte'
+import * as DailymotionProvider from './DailymotionProvider.svelte'
 
 export default withPlayer(DailymotionProvider)

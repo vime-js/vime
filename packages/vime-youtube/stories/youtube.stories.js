@@ -3,13 +3,13 @@ import { YouTubeLite, YouTube } from '../src'
 
 export default { title: 'YouTube' }
 
-const videoId = 'R6MlUcmOul8'
+const srcId = 'R6MlUcmOul8'
 
 export const Lite = () => ({
   Component: CenterView,
   props: {
     Component: YouTubeLite,
-    videoId
+    srcId
   }
 })
 
@@ -17,6 +17,6 @@ export const Full = () => ({
   Component: CenterView,
   props: {
     Component: YouTube,
-    videoId
+    srcId
   }
 })

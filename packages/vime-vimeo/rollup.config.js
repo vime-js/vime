@@ -1,10 +1,9 @@
-import path from 'path'
-
 import {
   chunkedBuild, modernBuild, legacyBuild, getFileName
 } from '../../rollup-base'
 
 const entry = 'src/index.js'
+const name = 'Vimeo'
 const lite = { input: 'src/VimeoLite.svelte' }
 const full = { input: 'src/Vimeo.js' }
 
@@ -20,6 +19,6 @@ export default [
 // export default [
 //   chunkedBuild({ input: { vimeo: entry }, chunks }),
 //   chunkedBuild({ input: { vimeo: entry }, format: 'system', chunks }),
-//   legacyBuild(lite),
-//   legacyBuild(full)
+//   legacyBuild({ ...lite, name }),
+//   legacyBuild({ ...full, name })
 // ]
