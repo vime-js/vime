@@ -1,9 +1,9 @@
-import Spinner from '../Spinner'
+import Spinner from '../Spinner';
 
 describe('components', () => {
   describe('Spinner', () => {
     it('should look structurally correct', () => {
-      expect(Spinner).toMatchRenderedSnapshot({ isActive: true })
-    })
-  })
-})
+      expect(Spinner).toMatchRenderedSnapshot({ isActive: true });
+    });
+  });
+});

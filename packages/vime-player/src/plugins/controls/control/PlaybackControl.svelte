@@ -11,26 +11,26 @@
 />
 
 <script context="module">
-  export const ID = 'vPlaybackControl'
-  export const LABEL = 'togglePlayback'
+  export const ID = 'vPlaybackControl';
+  export const LABEL = 'togglePlayback';
 </script>
 
 <script>
-  import ToggleControl from './ToggleControl.svelte'
+  import ToggleControl from './ToggleControl.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const { icons, i18n, isPaused } = player.getStore()
+  const { icons, i18n, isPaused } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let toggle
+  let toggle;
 
-  export const getToggle = () => toggle
+  export const getToggle = () => toggle;
 </script>

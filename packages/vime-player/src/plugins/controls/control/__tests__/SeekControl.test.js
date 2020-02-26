@@ -6,7 +6,7 @@ describe('components', () => {
       // pressing it shows correct totalDisplay (forward/backward)
       // accessiblity
       it('', () => {
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

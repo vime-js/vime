@@ -9,58 +9,58 @@
 {/if}
 
 <script context="module">
-  export const ID = 'vPoster'
+  export const ID = 'vPoster';
 </script>
 
 <script>
-  import { createEventDispatcher } from 'svelte'
-  import { aspectRatio as setAspectRatio } from '~utils/actions'
+  import { createEventDispatcher } from 'svelte';
+  import { aspectRatio as setAspectRatio } from '~utils/actions';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const logger = player.createLogger(ID)
-  const dispatch = createEventDispatcher()
+  const logger = player.createLogger(ID);
+  const dispatch = createEventDispatcher();
 
   const {
     poster: _poster, aspectRatio, isVideo,
     isAudio, hasPlaybackStarted, hasSeeked,
     src, Provider
-  } = player.getStore()
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let el
+  let el;
 
-  export let poster
-  export let resolve = true
-  export let isEnabled = true
-  export let isActive = false
+  export let poster;
+  export let resolve = true;
+  export let isEnabled = true;
+  export let isActive = false;
 
-  export const getEl = () => el
+  export const getEl = () => el;
 
   $: if (el) {
-    el.style.backgroundImage = poster ? `url('${poster.src || poster}')` : null
-    el.style.backgroundSize = poster ? (poster.size || 'contain') : null
+    el.style.backgroundImage = poster ? `url('${poster.src || poster}')` : null;
+    el.style.backgroundSize = poster ? (poster.size || 'contain') : null;
   }
 
-  $: if (resolve) poster = $_poster
-  $: if (resolve) isEnabled = $isVideo || !!$_poster
-  $: if (resolve) isActive = $isAudio || (!$hasPlaybackStarted && !$hasSeeked)
+  $: if (resolve) poster = $_poster;
+  $: if (resolve) isEnabled = $isVideo || !!$_poster;
+  $: if (resolve) isActive = $isAudio || (!$hasPlaybackStarted && !$hasSeeked);
 
   const onPosterLoadError = e => {
-    logger.warn(`failed to load poster for \`src\` [${$src}]`)
-    dispatch('error', e)
-  }
+    logger.warn(`failed to load poster for \`src\` [${$src}]`);
+    dispatch('error', e);
+  };
 
   // Get the poster if it's not set and a provider can provide it.
   $: if (resolve && !$_poster && $src && $Provider && $Provider.getPoster) {
-    $Provider.getPoster($src).then(p => { $_poster = p }).catch(e => onPosterLoadError(e))
+    $Provider.getPoster($src).then(p => { $_poster = p; }).catch(e => onPosterLoadError(e));
   }
 </script>
 

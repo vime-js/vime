@@ -1,9 +1,9 @@
-import { CenterView } from '@vime/core'
-import { VimeoLite, Vimeo } from '../src'
+import { CenterView } from '@vime/core';
+import { VimeoLite, Vimeo } from '../src';
 
-export default { title: 'Vimeo' }
+export default { title: 'Vimeo' };
 
-const srcId = '154225711'
+const srcId = '154225711';
 
 export const Lite = () => ({
   Component: CenterView,
@@ -11,7 +11,7 @@ export const Lite = () => ({
     Component: VimeoLite,
     srcId
   }
-})
+});
 
 export const Full = () => ({
   Component: CenterView,
@@ -19,4 +19,4 @@ export const Full = () => ({
     Component: Vimeo,
     srcId
   }
-})
+});

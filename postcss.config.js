@@ -15,4 +15,4 @@ module.exports = (legacy = false) => ({
     }),
     legacy && require('postcss-custom-properties')
   ].filter(Boolean)
-})
+});

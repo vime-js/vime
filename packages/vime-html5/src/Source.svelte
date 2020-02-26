@@ -13,7 +13,7 @@
 {/if}
 
 <script>
-  import { is_array } from '~utils/unit'
+  import { is_array } from '@vime/utils';
 
-  export let src
+  export let src;
 </script>

@@ -12,7 +12,7 @@
     <div></div>
     <div>{$i18n.settings}</div>
     <div>
-      <Control on:click="{() => { $isMenuActive = false }}">
+      <Control on:click="{() => { $isMenuActive = false; }}">
         {$i18n.close}
       </Control>
     </div>
@@ -21,7 +21,7 @@
     id={menuId}
     aria-hidden={!$isMenuActive}
     aria-labelledby={menuLabelledBy}
-    on:menuclose="{() => { $isMenuActive = false }}"
+    on:menuclose="{() => { $isMenuActive = false; }}"
     bind:ref={$settingsMenuRef}
   >
     <MenuItem
@@ -32,7 +32,7 @@
       isHidden={isCaptionsMenuActive || isQualityMenuActive}
       isDisabled={isSpeedMenuDisabled}
       on:valuechange={onPlaybackRateChange}
-      on:menuchange="{e => { isSpeedMenuActive = e.detail }}"
+      on:menuchange="{e => { isSpeedMenuActive = e.detail; }}"
     />
     <MenuItem
       title={$i18n.subtitlesCC}
@@ -42,7 +42,7 @@
       isDisabled={isCaptionsMenuDisabled}
       isHidden={isQualityMenuActive || isSpeedMenuActive}
       on:valuechange={onTrackChange}
-      on:menuchange="{e => { isCaptionsMenuActive = e.detail }}"
+      on:menuchange="{e => { isCaptionsMenuActive = e.detail; }}"
     />
     <MenuItem
       title={$i18n.quality}
@@ -52,73 +52,73 @@
       isHidden={isCaptionsMenuActive || isSpeedMenuActive}
       isDisabled={isQualityMenuDisabled}
       on:valuechange={onQualityChange}
-      on:menuchange="{e => { isQualityMenuActive = e.detail }}"
+      on:menuchange="{e => { isQualityMenuActive = e.detail; }}"
     />
   </Menu>
 </div>
 
 <script context="module">
-  import PluginRole from '~src/core/PluginRole'
+  import PluginRole from '~src/core/PluginRole';
 
-  export const ID = 'vTracks'
-  export const ROLE = PluginRole.SETTINGS
+  export const ID = 'vTracks';
+  export const ROLE = PluginRole.SETTINGS;
 
-  let menuIdCounter = 0
+  let menuIdCounter = 0;
 </script>
 
 <script>
-  import { getContext, createEventDispatcher } from 'svelte'
-  import { ctxKey } from '~src/context'
-  import { i18n, isMobile } from '~src/store'
-  import Menu from './Menu.svelte'
-  import MenuItem from './MenuItem.svelte'
-  import MenuItemRadio from './MenuItemRadio.svelte'
-  import Control from '~components/controls/control/Control.svelte'
+  import { getContext, createEventDispatcher } from 'svelte';
+  import { ctxKey } from '~src/context';
+  import { i18n, isMobile } from '~src/store';
+  import Menu from './Menu.svelte';
+  import MenuItem from './MenuItem.svelte';
+  import MenuItemRadio from './MenuItemRadio.svelte';
+  import Control from '~components/controls/control/Control.svelte';
 
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher();
 
-  const ctx = getContext(ctxKey)
-  const settingsMenuRef = ctx.settingsMenuRef
-  const isAudio = ctx.isAudio
-  const isVideo = ctx.isVideo
-  const isMenuActive = ctx.isMenuActive
-  const isCaptionsActive = ctx.isCaptionsActive
+  const ctx = getContext(ctxKey);
+  const settingsMenuRef = ctx.settingsMenuRef;
+  const isAudio = ctx.isAudio;
+  const isVideo = ctx.isVideo;
+  const isMenuActive = ctx.isMenuActive;
+  const isCaptionsActive = ctx.isCaptionsActive;
 
   // eslint-disable-next-line prefer-const
-  menuIdCounter += 1
-  const menuId = `settings-${menuIdCounter}`
-  const menuLabelledBy = `settings-control-${menuIdCounter}`
+  menuIdCounter += 1;
+  const menuId = `settings-${menuIdCounter}`;
+  const menuLabelledBy = `settings-control-${menuIdCounter}`;
 
-  let isCaptionsMenuActive = false
-  let isQualityMenuActive = false
-  let isSpeedMenuActive = false
+  let isCaptionsMenuActive = false;
+  let isQualityMenuActive = false;
+  let isSpeedMenuActive = false;
 
-  export let provider
-  export let track
-  export let quality
-  export let playbackRate
-  export let tracks = []
-  export let qualities = []
-  export let playbackRates = []
+  export let provider;
+  export let track;
+  export let quality;
+  export let playbackRate;
+  export let tracks = [];
+  export let qualities = [];
+  export let playbackRates = [];
 
-  const onQualityChange = e => dispatch('qualitychange', e.detail)
-  const onPlaybackRateChange = e => dispatch('playbackratechange', e.detail)
+  const onQualityChange = e => dispatch('qualitychange', e.detail);
+  const onPlaybackRateChange = e => dispatch('playbackratechange', e.detail);
   
   const onTrackChange = e => {
     if (e.detail === -1) {
-      $isCaptionsActive = false
-      return
+      $isCaptionsActive = false;
+      return;
     }
-    $isCaptionsActive = true
-    dispatch('trackchange', e.detail)
-  }
+    $isCaptionsActive = true;
+    dispatch('trackchange', e.detail);
+  };
 
-  $: isCaptionsMenuDisabled = tracks.length === 0
-  $: isQualityMenuDisabled = qualities.length === 0 || !provider || !provider.setQuality
-  $: isSpeedMenuDisabled = playbackRates.length === 1 || !provider || !provider.setPlaybackRate
+  $: isCaptionsMenuDisabled = tracks.length === 0;
+  $: isQualityMenuDisabled = qualities.length === 0 || !provider || !provider.setQuality;
+  $: isSpeedMenuDisabled = playbackRates.length === 1 || !provider || !provider.setPlaybackRate;
 
   $: isModalHeaderHidden = !$isMobile || !$isVideo ||
-    (isSpeedMenuActive || isQualityMenuActive || isCaptionsMenuActive)
+    (isSpeedMenuActive || isQualityMenuActive || isCaptionsMenuActive);
 
   $: captionOptions = ($isAudio || isCaptionsMenuDisabled) ? [] : [{
     title: $i18n.off,
@@ -126,18 +126,18 @@
   }, ...tracks.map((track, i) => ({
     title: track.label,
     value: i
-  }))]
+  }))];
 
   $: qualityOptions = $isAudio ? [] : qualities.map(quality => ({
     title: quality,
     value: quality,
     badge: (quality.slice(0, -1) >= 720) ? 'HD' : null
-  }))
+  }));
 
   $: speedOptions = (playbackRates.length === 1) ? [] : playbackRates.map(rate => ({
     title: (rate === 1) ? $i18n.normal : rate,
     value: rate
-  }))
+  }));
 </script>
 
 <style type="text/scss">

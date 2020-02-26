@@ -26,49 +26,49 @@
 </li>
 
 <script context="module">
-  let menuIdCounter = 0
+  let menuIdCounter = 0;
 </script>
 
 <script>
-  import { getContext, createEventDispatcher } from 'svelte'
-  import { ctxKey } from '~src/context'
-  import MenuOptions from './MenuOptions.svelte'
-  import MenuControl from './MenuControl.svelte'
+  import { getContext, createEventDispatcher } from 'svelte';
+  import { ctxKey } from '~src/context';
+  import MenuOptions from './MenuOptions.svelte';
+  import MenuControl from './MenuControl.svelte';
   
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher();
 
-  const ctx = getContext(ctxKey)
-  const isAudio = ctx.isAudio
+  const ctx = getContext(ctxKey);
+  const isAudio = ctx.isAudio;
 
   // eslint-disable-next-line prefer-const
-  menuIdCounter += 1
-  const id = `menuitem-${menuIdCounter}`
-  const menuId = `submenu-${menuIdCounter}`
+  menuIdCounter += 1;
+  const id = `menuitem-${menuIdCounter}`;
+  const menuId = `submenu-${menuIdCounter}`;
 
-  let isMenuActive = false
+  let isMenuActive = false;
 
-  export let title = null
-  export let value = null
-  export let emptyHint = ''
-  export let options = []
-  export let isHidden = false
-  export let isDisabled = false
+  export let title = null;
+  export let value = null;
+  export let emptyHint = '';
+  export let options = [];
+  export let isHidden = false;
+  export let isDisabled = false;
 
   const onToggleMenu = e => {
-    if (isDisabled || !hasOptions) return
-    isMenuActive = !isMenuActive
-    dispatch('menuchange', isMenuActive)
-  }
+    if (isDisabled || !hasOptions) return;
+    isMenuActive = !isMenuActive;
+    dispatch('menuchange', isMenuActive);
+  };
 
   const onMenuClose = e => {
-    isMenuActive = false
-    dispatch('menuchange', false)
-  }
+    isMenuActive = false;
+    dispatch('menuchange', false);
+  };
 
-  $: hasOptions = options.length > 0
-  $: canShowOptions = !isDisabled && !isMenuActive && hasOptions
-  $: currentOption = options.find(o => o.value === value)
-  $: hint = (!hasOptions || !currentOption) ? emptyHint : currentOption.title
+  $: hasOptions = options.length > 0;
+  $: canShowOptions = !isDisabled && !isMenuActive && hasOptions;
+  $: currentOption = options.find(o => o.value === value);
+  $: hint = (!hasOptions || !currentOption) ? emptyHint : currentOption.title;
 </script>
 
 <style type="text/scss">

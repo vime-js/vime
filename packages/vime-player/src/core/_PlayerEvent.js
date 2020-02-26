@@ -19,6 +19,6 @@ const PlayerEvent = Object.freeze({
   SHOW_CONTROLS: 'showcontrols',
   HIDE_CONTROLS: 'hidecontrols',
   ERROR: 'error'
-})
+});
 
-export default PlayerEvent
+export default PlayerEvent;

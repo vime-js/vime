@@ -17,30 +17,30 @@
 {/if} -->
 
 <script context="module">
-  export const ID = 'vSettingsControl'
-  export const LABEL = 'toggleSettings'
+  export const ID = 'vSettingsControl';
+  export const LABEL = 'toggleSettings';
 </script>
 
 <script>
-  import { tick } from 'svelte'
-  import { Icon } from '~core'
-  import Control from '../Control.svelte'
+  import { tick } from 'svelte';
+  import { Icon } from '~core';
+  import Control from '../Control.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const { i18n, icons } = player.getStore()
+  const { i18n, icons } = player.getStore();
   
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let control
+  let control;
 
-  export const getControl = () => control
+  export const getControl = () => control;
 
   // --------------------------------------------------------------
   // Events
@@ -55,8 +55,8 @@
   // Settings Plugin
   // --------------------------------------------------------------
 
-  let id
-  let menuId
+  let id;
+  let menuId;
 
   // settingsControl
   // const keyboardEvent = {

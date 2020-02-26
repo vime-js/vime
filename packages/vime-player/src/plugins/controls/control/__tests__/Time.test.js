@@ -1,4 +1,4 @@
-import Time from '../Time.svelte'
+import Time from '../Time.svelte';
 
 describe('components', () => {
   describe('Time', () => {
@@ -6,7 +6,7 @@ describe('components', () => {
       expect(Time).toMatchRenderedWithContextSnapshot({
         time: 0,
         ariaLabel: 'time'
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

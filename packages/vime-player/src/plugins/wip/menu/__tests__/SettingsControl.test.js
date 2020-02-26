@@ -7,7 +7,7 @@ describe('components', () => {
       // accessiblity
       // dig through menu and do the same.
       it('', () => {
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

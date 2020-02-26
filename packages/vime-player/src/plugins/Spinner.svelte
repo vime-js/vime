@@ -10,39 +10,39 @@
 {/if}
 
 <script context="module">
-  export const ID = 'vSpinner'
+  export const ID = 'vSpinner';
 </script>
 
 <script>
-  import { ID as ControlsId } from '~plugins/controls/Controls.svelte'
+  import { ID as ControlsId } from '~plugins/controls/Controls.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const { isVideo, isBuffering, isPlaybackReady, canInteract } = player.getStore()
-  const plugins = player.getPluginsRegistry()
+  const { isVideo, isBuffering, isPlaybackReady, canInteract } = player.getStore();
+  const plugins = player.getPluginsRegistry();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let el
+  let el;
 
-  export let resolve = true
-  export let isEnabled = false
-  export let isActive = false
+  export let resolve = true;
+  export let isEnabled = false;
+  export let isActive = false;
 
-  $: if (resolve) isEnabled = $isVideo
-  $: if (resolve) isActive = ($isBuffering || !$isPlaybackReady || !$canInteract)
+  $: if (resolve) isEnabled = $isVideo;
+  $: if (resolve) isActive = ($isBuffering || !$isPlaybackReady || !$canInteract);
 
   // --------------------------------------------------------------
   // Controls Plugin
   // --------------------------------------------------------------
 
-  $: if (el && $plugins[ControlsId]) $plugins[ControlsId].centerAssist(el)
+  $: if (el && $plugins[ControlsId]) $plugins[ControlsId].centerAssist(el);
 </script>
 
 <style type="text/scss">

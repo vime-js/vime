@@ -60,92 +60,92 @@
 {/if}
 
 <script context="module">
-  import { is_array } from '~utils/unit'
-  import { writable } from 'svelte/store'
-  import PluginRole from '~core/PluginRole'
+  import { is_array } from '~utils/unit';
+  import { writable } from 'svelte/store';
+  import PluginRole from '~core/PluginRole';
 
-  export const ID = 'vControls'
-  export const ROLE = PluginRole.CONTROLS
+  export const ID = 'vControls';
+  export const ROLE = PluginRole.CONTROLS;
 
-  export const LOWER_CONTROLS_ID = 'vLowerControls'
-  export const CENTER_CONTROLS_ID = 'vCenterControls'
-  export const UPPER_CONTROLS_ID = 'vUpperControls'
+  export const LOWER_CONTROLS_ID = 'vLowerControls';
+  export const CENTER_CONTROLS_ID = 'vCenterControls';
+  export const UPPER_CONTROLS_ID = 'vUpperControls';
 </script>
 
 <script>
-  import { listen } from 'svelte/internal'
-  import { tick, onMount, onDestroy } from 'svelte'
-  import Registry from '~core/Registry'
-  import ControlGroup from './ControlGroup.svelte'
+  import { listen } from 'svelte/internal';
+  import { tick, onMount, onDestroy } from 'svelte';
+  import Registry from '~core/Registry';
+  import ControlGroup from './ControlGroup.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const rootEl = player.getEl()
-  const { isMobile } = player.getGlobalStore()
+  const rootEl = player.getEl();
+  const { isMobile } = player.getGlobalStore();
 
   const {
     isAudio, isVideo, isPaused,
     isPlaybackReady, isLiveStream, mediaType,
     poster, isControlsEnabled, _isControlsActive: isControlsActive,
     canInteract
-  } = player.getStore()
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let el
+  let el;
   
-  let lowerEl
-  let centerEl
-  let upperEl
+  let lowerEl;
+  let centerEl;
+  let upperEl;
 
-  let lowerControlGroup
-  let centerControlGroup
-  let upperControlGroup
+  let lowerControlGroup;
+  let centerControlGroup;
+  let upperControlGroup;
   
-  let idleTimer = 0
-  let hideControlsTimeout
+  let idleTimer = 0;
+  let hideControlsTimeout;
 
-  let centerAssists = []
-  let lowerControlsHeight = 0
-  let upperControlsHeight = 0
+  let centerAssists = [];
+  let lowerControlsHeight = 0;
+  let upperControlsHeight = 0;
 
-  export let lower = []
-  export let center = []
-  export let upper = []
+  export let lower = [];
+  export let center = [];
+  export let upper = [];
 
-  export const getEl = () => el
-  export const getLowerEl = () => lowerEl
-  export const getCenterEl = () => centerEl
-  export const getUpperEl = () => upperEl
-  export const getLowerInstances = () => lowerControlGroup.getInstances()
-  export const getCenterInstances = () => centerControlGroup.getInstances()
-  export const getUpperInstances = () => upperControlGroup.getInstances()
+  export const getEl = () => el;
+  export const getLowerEl = () => lowerEl;
+  export const getCenterEl = () => centerEl;
+  export const getUpperEl = () => upperEl;
+  export const getLowerInstances = () => lowerControlGroup.getInstances();
+  export const getCenterInstances = () => centerControlGroup.getInstances();
+  export const getUpperInstances = () => upperControlGroup.getInstances();
 
   export const centerAssist = el => {
-    if (!centerAssists.includes(el)) centerAssists[centerAssists.length] = el
-    return () => { centerAssists = centerAssists.filter(e => e !== el) }
-  }
+    if (!centerAssists.includes(el)) centerAssists[centerAssists.length] = el;
+    return () => { centerAssists = centerAssists.filter(e => e !== el); };
+  };
 
   $: if (!$isPaused && !$isAudio && idleTimer) {
-    window.clearTimeout(hideControlsTimeout)
-    $isControlsActive = true
-    hideControlsTimeout = window.setTimeout(() => { $isControlsActive = false }, 2000)
+    window.clearTimeout(hideControlsTimeout);
+    $isControlsActive = true;
+    hideControlsTimeout = window.setTimeout(() => { $isControlsActive = false; }, 2000);
   } else {
-    window.clearTimeout(hideControlsTimeout)
-    $isControlsActive = $isPlaybackReady && $canInteract
+    window.clearTimeout(hideControlsTimeout);
+    $isControlsActive = $isPlaybackReady && $canInteract;
   }
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
-  const onShowControls = () => { idleTimer += 1 }
+  const onShowControls = () => { idleTimer += 1; };
 
   // Avoid trying to tab-focus a control that is out of view, causes the video to jump.
   const onKeyDown = e => {
@@ -153,38 +153,38 @@
       e.keyCode === 9 &&
       !$isControlsActive &&
       (document.activeElement === rootEl || el.contains(document.activeElement))
-    ) e.preventDefault()
-    idleTimer += 1
-  }
+    ) e.preventDefault();
+    idleTimer += 1;
+  };
 
   const onCenterAssist = () => centerAssists.forEach(el => {
-    const lowerControlsTopPadding = window.getComputedStyle(lowerEl).paddingTop
-    const upperControlsBottomPadding = window.getComputedStyle(upperEl).paddingBottom
-    el.style.paddingTop = `${upperControlsHeight - parseFloat(upperControlsBottomPadding)}px`
-    el.style.paddingBottom = `${lowerControlsHeight - parseFloat(lowerControlsTopPadding)}px`
-  })
+    const lowerControlsTopPadding = window.getComputedStyle(lowerEl).paddingTop;
+    const upperControlsBottomPadding = window.getComputedStyle(upperEl).paddingBottom;
+    el.style.paddingTop = `${upperControlsHeight - parseFloat(upperControlsBottomPadding)}px`;
+    el.style.paddingBottom = `${lowerControlsHeight - parseFloat(lowerControlsTopPadding)}px`;
+  });
 
   const onRemoveCenterAssist = () => centerAssists.forEach(el => {
-    el.style.paddingTop = null
-    el.style.paddingBottom = null
-  })
+    el.style.paddingTop = null;
+    el.style.paddingBottom = null;
+  });
 
   onMount(() => {
-    const showControlsEvents = ['focus', 'keydown', 'mousemove', 'touchstart']
-    showControlsEvents.forEach(event => onDestroy(listen(player.getEl(), event, onShowControls)))
-  })
+    const showControlsEvents = ['focus', 'keydown', 'mousemove', 'touchstart'];
+    showControlsEvents.forEach(event => onDestroy(listen(player.getEl(), event, onShowControls)));
+  });
 
   onDestroy(() => {
-    onRemoveCenterAssist()
-    centerAssists = []
-  })
+    onRemoveCenterAssist();
+    centerAssists = [];
+  });
 
-  $: if (centerEl) centerAssist(centerEl)
+  $: if (centerEl) centerAssist(centerEl);
 
   $: if ($isControlsActive && lowerEl && upperEl) {
-    onCenterAssist(lowerControlsHeight, upperControlsHeight)
+    onCenterAssist(lowerControlsHeight, upperControlsHeight);
   } else {
-    onRemoveCenterAssist()
+    onRemoveCenterAssist();
   }
 </script>
 

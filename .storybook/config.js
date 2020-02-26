@@ -10,4 +10,4 @@ addParameters({
       brandUrl: 'https://github.com/vime-js'
     })
   }
-})
+});

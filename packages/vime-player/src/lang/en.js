@@ -36,4 +36,4 @@ export default {
   pip: 'Picture-in-Picture',
   enterPiP: 'Miniplayer',
   exitPiP: 'Expand'
-}
+};

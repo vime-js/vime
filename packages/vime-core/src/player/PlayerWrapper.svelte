@@ -7,8 +7,8 @@
 </Lazy>
 
 <script>
-  import { Lazy } from '../components'
-  import { aspectRatio as setAspectRatio } from '../actions'
+  import { Lazy } from '../components';
+  import { aspectRatio as setAspectRatio } from '../actions';
 
-  export let aspectRatio = null
+  export let aspectRatio = null;
 </script>

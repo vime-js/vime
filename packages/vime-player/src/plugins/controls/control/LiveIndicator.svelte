@@ -3,14 +3,14 @@
 {/if}
 
 <script context="module">
-  export const ID = 'vLiveIndicator'
-  export const LABEL = 'liveStreamIndicator'
+  export const ID = 'vLiveIndicator';
+  export const LABEL = 'liveStreamIndicator';
 </script>
 
 <script>
-  export let player
+  export let player;
 
-  const { isLiveStream, i18n } = player.getStore()
+  const { isLiveStream, i18n } = player.getStore();
 </script>
 
 <style type="text/scss">

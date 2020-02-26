@@ -16,9 +16,9 @@
 </Menu>
 
 <script>
-  import Menu from './Menu.svelte'
-  import MenuItemRadio from './MenuItemRadio.svelte'
+  import Menu from './Menu.svelte';
+  import MenuItemRadio from './MenuItemRadio.svelte';
   
-  export let group
-  export let options
+  export let group;
+  export let options;
 </script>

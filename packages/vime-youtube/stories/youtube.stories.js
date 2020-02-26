@@ -1,9 +1,9 @@
-import { CenterView } from '@vime/core'
-import { YouTubeLite, YouTube } from '../src'
+import { CenterView } from '@vime/core';
+import { YouTubeLite, YouTube } from '../src';
 
-export default { title: 'YouTube' }
+export default { title: 'YouTube' };
 
-const srcId = 'R6MlUcmOul8'
+const srcId = 'R6MlUcmOul8';
 
 export const Lite = () => ({
   Component: CenterView,
@@ -11,7 +11,7 @@ export const Lite = () => ({
     Component: YouTubeLite,
     srcId
   }
-})
+});
 
 export const Full = () => ({
   Component: CenterView,
@@ -19,4 +19,4 @@ export const Full = () => ({
     Component: YouTube,
     srcId
   }
-})
+});

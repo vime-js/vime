@@ -17,53 +17,53 @@
 {/if}
 
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher } from 'svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const dispatch = createEventDispatcher()
-  const { isTouch } = player.getGlobalStore()
-  const { isAudio } = player.getStore()
+  const dispatch = createEventDispatcher();
+  const { isTouch } = player.getGlobalStore();
+  const { isAudio } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let el
-  const onTop = true
-  const onBottom = false
-  let growLeft = false
-  let growRight = false
+  let el;
+  const onTop = true;
+  const onBottom = false;
+  let growLeft = false;
+  let growRight = false;
 
-  export let id = null
-  export let title = ''
-  export let hint = null
-  export let isEnabled = true
-  export let isActive = false
-  export let showHint = true
-  export let noBounding = false
+  export let id = null;
+  export let title = '';
+  export let hint = null;
+  export let isEnabled = true;
+  export let isActive = false;
+  export let showHint = true;
+  export let noBounding = false;
 
-  export const getEl = () => el
+  export const getEl = () => el;
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
   const onBound = () => {
-    const rect = el.getBoundingClientRect()
-    const bounds = player.getEl().getBoundingClientRect()
-    growLeft = growLeft ? (rect.right - bounds.right) < rect.width : (rect.right - bounds.right) > 0
-    growRight = growRight ? (rect.left - bounds.left) < rect.width : (bounds.left - rect.left) > 0
-  }
+    const rect = el.getBoundingClientRect();
+    const bounds = player.getEl().getBoundingClientRect();
+    growLeft = growLeft ? (rect.right - bounds.right) < rect.width : (rect.right - bounds.right) > 0;
+    growRight = growRight ? (rect.left - bounds.left) < rect.width : (bounds.left - rect.left) > 0;
+  };
 
-  $: if (el && !noBounding) onBound(title, isActive)
+  $: if (el && !noBounding) onBound(title, isActive);
 
-  $: dispatch('isenabled', isEnabled)
-  $: dispatch('isactive', isActive)
+  $: dispatch('isenabled', isEnabled);
+  $: dispatch('isactive', isActive);
 </script>
 
 <style type="text/scss">

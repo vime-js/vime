@@ -6,40 +6,40 @@
   // eslint-disable-next-line max-len
   // @see https://github.com/sveltejs/svelte/blob/master/site/src/components/IntersectionObserver.svelte
 
-  import { onMount } from 'svelte'
+  import { onMount } from 'svelte';
   
-  let intersecting = false
+  let intersecting = false;
   
-  export let container
-  export let threshold = 0.75
+  export let container;
+  export let threshold = 0.75;
 
   onMount(() => {
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver(entries => {
-        intersecting = entries[0].isIntersecting
-        if (intersecting) observer.unobserve(container)
-      }, { threshold })
+        intersecting = entries[0].isIntersecting;
+        if (intersecting) observer.unobserve(container);
+      }, { threshold });
 
-      observer.observe(container)
-      return () => observer.unobserve(container)
+      observer.observe(container);
+      return () => observer.unobserve(container);
     }
 
     function onScroll () {
-      const rect = container.getBoundingClientRect()
+      const rect = container.getBoundingClientRect();
 
       intersecting = (
         rect.bottom > 0 &&
         rect.right > 0 &&
         (rect.top * (1 + threshold)) < window.innerHeight &&
         rect.left < window.innerWidth
-      )
+      );
 
-      if (intersecting) window.removeEventListener('scroll', onScroll)
+      if (intersecting) window.removeEventListener('scroll', onScroll);
     }
 
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  })
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  });
 </script>
 
 <style>

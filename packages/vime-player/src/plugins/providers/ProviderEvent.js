@@ -15,6 +15,6 @@ const ProviderEvent = Object.freeze({
   MUTE_CHANGE: 'mutechange',
   VOLUME_CHANGE: 'volumechange',
   ERROR: 'error'
-})
+});
 
-export default ProviderEvent
+export default ProviderEvent;

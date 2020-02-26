@@ -1,9 +1,9 @@
 export const deferred = () => {
-  let resolve, reject
-  // eslint-disable-next-line promise/param-names
+  let resolve; 
+  let reject;
   const promise = new Promise((res, rej) => {
-    resolve = res
-    reject = rej
-  })
-  return { promise, resolve, reject }
-}
+    resolve = res;
+    reject = rej;
+  });
+  return { promise, resolve, reject };
+};

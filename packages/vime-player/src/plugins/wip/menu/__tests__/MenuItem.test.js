@@ -1,4 +1,4 @@
-import MenuItem from '../MenuItem.svelte'
+import MenuItem from '../MenuItem.svelte';
 
 describe('components', () => {
   describe('MenuItem', () => {
@@ -7,14 +7,14 @@ describe('components', () => {
         title: 'Title',
         showForwardArrow: true,
         ariaControls: 'menu'
-      })
-    })
+      });
+    });
 
     it('should look structurally correct with back arrow', () => {
       expect(MenuItem).toMatchRenderedWithContextSnapshot({
         title: 'Title',
         showBackArrow: true
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

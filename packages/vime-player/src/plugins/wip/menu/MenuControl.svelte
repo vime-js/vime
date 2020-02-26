@@ -8,7 +8,7 @@
   use:focus
   use:highlight
   on:click
-  on:highlightchange="{e => { showHighlight = e.detail }}"
+  on:highlightchange="{e => { showHighlight = e.detail; }}"
   aria-label={title}
   aria-hidden={$$props['aria-hidden']}
   aria-checked={$$props['aria-checked']}
@@ -30,20 +30,20 @@
 </button>
 
 <script>
-  import { getContext } from 'svelte'
-  import { focus, highlight } from '~actions'
-  import { ctxKey } from '~src/context'
-  import { isTouch } from '~src/store'
-  import { Icon } from '~src/icons'
+  import { getContext } from 'svelte';
+  import { focus, highlight } from '~actions';
+  import { ctxKey } from '~src/context';
+  import { isTouch } from '~src/store';
+  import { Icon } from '~src/icons';
 
-  const ctx = getContext(ctxKey)
-  const isAudio = ctx.isAudio
+  const ctx = getContext(ctxKey);
+  const isAudio = ctx.isAudio;
 
-  let showHighlight = false
+  let showHighlight = false;
 
-  export let title
-  export let hint = null
-  export let badge = null
+  export let title;
+  export let hint = null;
+  export let badge = null;
 </script>
 
 <style type="text/scss">

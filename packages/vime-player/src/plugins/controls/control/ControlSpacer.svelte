@@ -1,7 +1,7 @@
 <div class="spacer"></div>
 
 <script context="module">
-  export const LABEL = 'addSpace'
+  export const LABEL = 'addSpace';
 </script>
 
 <style>

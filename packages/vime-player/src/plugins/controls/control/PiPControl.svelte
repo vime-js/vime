@@ -12,29 +12,29 @@
 />
 
 <script context="module">
-  export const ID = 'vPiPControl'
-  export const LABEL = 'togglePiP'
+  export const ID = 'vPiPControl';
+  export const LABEL = 'togglePiP';
 </script>
 
 <script>
-  import ToggleControl from './ToggleControl.svelte'
+  import ToggleControl from './ToggleControl.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
   const {
     icons, i18n, isPiPActive,
     isPiPSupported, isPiPEnabled
-  } = player.getStore()
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let toggle
+  let toggle;
 
-  export const getToggle = () => toggle
+  export const getToggle = () => toggle;
 </script>

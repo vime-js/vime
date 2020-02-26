@@ -1,11 +1,11 @@
-import { Video as DesktopVideo } from './desktop.stories'
+import { Video as DesktopVideo } from './desktop.stories';
 
-export default { title: 'Mobile' }
+export default { title: 'Mobile' };
 
 const onReady = player => {
-  const store = player.getStore()
-  store.isMobile.set(true)
-}
+  const store = player.getStore();
+  store.isMobile.set(true);
+};
 
 const createView = (Base, newProps = {}) => ({
   ...Base(),
@@ -14,8 +14,8 @@ const createView = (Base, newProps = {}) => ({
     ...newProps
     // onReady
   }
-})
+});
 
-export const Video = () => createView(DesktopVideo)
+export const Video = () => createView(DesktopVideo);
 
-export const InlineVideo = () => createView(DesktopVideo, { playsinline: true })
+export const InlineVideo = () => createView(DesktopVideo, { playsinline: true });

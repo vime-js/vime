@@ -8,7 +8,7 @@ describe('components', () => {
       // check tooltips.
       // accessiblity
       it('', () => {
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});

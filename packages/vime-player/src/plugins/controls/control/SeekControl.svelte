@@ -28,52 +28,52 @@
 </div>
 
 <script>
-  import { formatTime } from '~utils/formatters'
-  import { Icon } from '~core'
-  import Control from '../Control.svelte'
+  import { formatTime } from '~utils/formatters';
+  import { Icon } from '~core';
+  import Control from '../Control.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const { icons, i18n, currentTime, duration } = player.getStore()
+  const { icons, i18n, currentTime, duration } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let timer
-  let isDisabled
-  let accumulator = 0
+  let timer;
+  let isDisabled;
+  let accumulator = 0;
 
-  let el
-  let control
+  let el;
+  let control;
 
-  export let base = 0
-  export let isActive = false
+  export let base = 0;
+  export let isActive = false;
 
-  export const getEl = () => el
-  export const getControl = () => control
+  export const getEl = () => el;
+  export const getControl = () => control;
 
-  $: isForward = base > 0
-  $: isDisabled = isForward ? ($currentTime + base > $duration) : ($currentTime + base < 0)
+  $: isForward = base > 0;
+  $: isDisabled = isForward ? ($currentTime + base > $duration) : ($currentTime + base < 0);
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
   const onSeek = () => {
-    if (isDisabled) return
-    window.clearTimeout(timer)
-    accumulator += base
+    if (isDisabled) return;
+    window.clearTimeout(timer);
+    accumulator += base;
     timer = setTimeout(() => {
-      $currentTime = Math.max(0, Math.min($duration, $currentTime + accumulator))
-      accumulator = 0
-      timer = null
-    }, 600)
-  }
+      $currentTime = Math.max(0, Math.min($duration, $currentTime + accumulator));
+      accumulator = 0;
+      timer = null;
+    }, 600);
+  };
 </script>
 
 <style type="text/scss">

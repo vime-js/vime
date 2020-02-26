@@ -30,60 +30,60 @@
 {/if}
 
 <script context="module">
-  export const ID = 'vActionDisplay'
+  export const ID = 'vActionDisplay';
 </script>
 
 <script>
-  import { tick, onDestroy } from 'svelte'
-  import { Icon } from '~core'
-  import { ID as ControlsId } from '~plugins/controls/Controls.svelte'
+  import { tick, onDestroy } from 'svelte';
+  import { Icon } from '~core';
+  import { ID as ControlsId } from '~plugins/controls/Controls.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let player
+  export let player;
 
-  const plugins = player.getPluginsRegistry()
-  const { isMobile } = player.getGlobalStore()
-  const { isControlsEnabled, isPlaybackReady, isAudio } = player.getStore()
+  const plugins = player.getPluginsRegistry();
+  const { isMobile } = player.getGlobalStore();
+  const { isControlsEnabled, isPlaybackReady, isAudio } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let timer
-  let icon
-  let value
-  let iconRef
-  let show = false
+  let timer;
+  let icon;
+  let value;
+  let iconRef;
+  let show = false;
 
-  let valueContainer
-  let actionContainer
+  let valueContainer;
+  let actionContainer;
 
-  export let resolve = true
-  export let isEnabled = false
+  export let resolve = true;
+  export let isEnabled = false;
 
-  $: if (resolve) isEnabled = $isControlsEnabled && $isPlaybackReady && !$isMobile && !$isAudio
+  $: if (resolve) isEnabled = $isControlsEnabled && $isPlaybackReady && !$isMobile && !$isAudio;
 
   export const run = async (i, v = null) => {
-    icon = i
-    value = v
-    window.clearTimeout(timer)
-    show = false
-    await tick()
+    icon = i;
+    value = v;
+    window.clearTimeout(timer);
+    show = false;
+    await tick();
     // eslint-disable-next-line no-void
-    if (iconRef) void iconRef.offsetWidth // Trigger reflow
-    show = true
-    timer = setTimeout(() => { show = false }, 600)
-  }
+    if (iconRef) void iconRef.offsetWidth; // Trigger reflow
+    show = true;
+    timer = setTimeout(() => { show = false; }, 600);
+  };
 
   // --------------------------------------------------------------
   // Controls Plugin
   // --------------------------------------------------------------
 
-  $: if (valueContainer && $plugins[ControlsId]) $plugins[ControlsId].centerAssist(valueContainer)
-  $: if (actionContainer && $plugins[ControlsId]) $plugins[ControlsId].centerAssist(actionContainer)
+  $: if (valueContainer && $plugins[ControlsId]) $plugins[ControlsId].centerAssist(valueContainer);
+  $: if (actionContainer && $plugins[ControlsId]) $plugins[ControlsId].centerAssist(actionContainer);
 </script>
 
 <style type="text/scss">
