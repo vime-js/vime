@@ -4,43 +4,72 @@
   {src}
   {title}
   {params}
-  {decoder}
   {aspectRatio}
-  {preconnections}
+  origin={VM.ORIGIN}
+  decoder={DECODER}
+  preconnections={PRECONNECTIONS}
   on:load
   on:data
   on:message
-  on:reload
+  on:paramschange
   on:data={onData}
-  on:reload={onReload}
+  on:srcchange={onReload}
   bind:this={embed}
 />
 
-<script>
-  import { tick } from 'svelte'
-  import { deferred, decode_json } from '@vime/utils'
-  import { Embed } from '@vime/core'
+<script context="module">
+  import { decode_json } from '@vime/utils'
 
-  let src
-  let embed
-  let ready = deferred()
+  const VM = {
+    ORIGIN: 'https://player.vimeo.com',
+    Event: {
+      READY: 'ready',
+      ERROR: 'error'
+    },
+    Command: {
+      GET_VIDEO_TITLE: 'getVideoTitle'
+    }
+  }
 
-  const title = 'Vimeo - Video Player'
-  const decoder = decode_json
-  const blankVideoId = '390460225'
-
-  const preconnections = [
-    'https://player.vimeo.com',
+  const DECODER = decode_json
+  const BLANK_SRC_ID = '390460225'
+  
+  const PRECONNECTIONS = [
+    VM.ORIGIN,
     'https://i.vimeocdn.com',
     'https://f.vimeocdn.com',
     'https://fresnel.vimeocdn.com'
   ]
 
-  export let videoId = null
-  export let params = {}
-  export let aspectRatio = null
+  const Event = {
+    SRC_CHANGE: 'srcchange',
+    TITLE_CHANGE: 'titlechange',
+    ERROR: 'error'
+  }
+</script>
 
-  export const getEmbed = () => embed
+<script>
+  import { tick, onMount, createEventDispatcher } from 'svelte'
+  import { deferred } from '@vime/utils'
+  import { Embed } from '@vime/core'
+
+  const dispatch = createEventDispatcher()
+
+  let embed
+  let src = null
+  let videoTitle = ''
+  let ready = deferred()
+  let initialized = false
+
+  export let srcId = null
+  export let params = {}
+  export let aspectRatio = '16:9'
+
+  export const getSrc = () => src
+  export const getTitle = () => videoTitle
+  export const getOrigin = () => VM.ORIGIN
+  export const getIframe = () => embed.getIframe()
+  export const getSrcWithParams = () => embed.getSrc()
 
   export const sendCommand = async (command, args) => {
     await tick()
@@ -51,31 +80,49 @@
     })
   }
 
+  const buildSrc = () => {
+    const base = `${VM.ORIGIN}/video/`
+    const content = window.encodeURIComponent(srcId || BLANK_SRC_ID)
+    return `${base}${content}`
+  }
+
   const onReload = () => {
-    ready.reject()
     ready = deferred()
+    initialized = false
   }
 
-  const onData = e => {
+  const onSrcChange = () => { videoTitle = '' }
+
+  const _onData = e => {
     const data = e.detail
-
-    const isError = data && data.event === 'error'
-    const isReadyError = isError && data.data && data.data.method === 'ready'
-
-    if (isReadyError) {
-      const error = new Error(data.data.message)
-      error.name = data.data.name
+    if (!data) return
+    const event = data && data.event
+    const payload = data && data.data
+    if ((event === VM.Event.ERROR) && payload && payload.method === 'ready') {
+      const error = new Error(payload.message)
+      error.name = payload.name
       ready.reject(error)
-      return
+      dispatch(Event.ERROR, error)
+      initialized = true
     }
-
-    const isReadyEvent = data && data.event === 'ready'
-    if (isReadyEvent) ready.resolve()
+    if (event === VM.Event.READY) {
+      ready.resolve()
+      sendCommand(VM.Command.GET_VIDEO_TITLE)
+    }
+    if (data.method === VM.Command.GET_VIDEO_TITLE) {
+      videoTitle = data.value
+      initialized = true
+    }
   }
 
-  $: {
-    const vId = window.encodeURIComponent(videoId || blankVideoId)
-    const base = 'https://player.vimeo.com/video/'
-    src = `${base}${vId}`
-  }
+  $: src = buildSrc(srcId)
+  $: title = `Vimeo - ${videoTitle || 'Video Player'}`
+  $: onSrcChange(src)
+  $: onData = !initialized ? _onData : null
+
+  let mounted = false
+  onMount(() => { mounted = true })
+  
+  $: if (mounted) dispatch(Event.TITLE_CHANGE, videoTitle)
+  $: if (mounted) dispatch(Event.SRC_CHANGE, { id: srcId, src })
 </script>

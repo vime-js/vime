@@ -126,7 +126,7 @@ export const legacyBuild = ({
 } = {}) => ({
   input,
   output: {
-    name: name,
+    name,
     file: legacyOutputDir + `${fileName || name}.umd.js`,
     format: 'umd'
   },

@@ -1,10 +1,9 @@
-import path from 'path'
-
 import {
   chunkedBuild, modernBuild, legacyBuild, getFileName
 } from '../../rollup-base'
 
 const entry = 'src/index.js'
+const name = 'Dailymotion'
 const lite = { input: 'src/DailymotionLite.svelte' }
 const full = { input: 'src/Dailymotion.js' }
 
@@ -20,6 +19,7 @@ export default [
 // export default [
 //   chunkedBuild({ input: { dailymotion: entry }, chunks }),
 //   chunkedBuild({ input: { dailymotion: entry }, format: 'system', chunks }),
-//   legacyBuild(lite),
-//   legacyBuild(full)
+//   legacyBuild({ ...lite, name }),
+//   legacyBuild({ ...full, name })
 // ]
+

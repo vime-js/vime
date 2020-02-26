@@ -1,4 +1,4 @@
 import { withPlayer } from '@vime/core'
-import VimeoProvider from './VimeoProvider.svelte'
+import * as VimeoProvider from './VimeoProvider.svelte'
 
 export default withPlayer(VimeoProvider)

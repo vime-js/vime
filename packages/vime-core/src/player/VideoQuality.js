@@ -1,12 +1,12 @@
 // Treeshaking safe.
 const VideoQuality = function () {}
 VideoQuality.UNKNOWN = null
-VideoQuality.XXS = '144p'
-VideoQuality.XS = '240p'
-VideoQuality.S = '360p'
-VideoQuality.M = '480p'
-VideoQuality.L = '720p'
-VideoQuality.XL = '1080p'
-VideoQuality.XXL = '1440p'
-VideoQuality.MAX = '2160p'
+VideoQuality.XXS = 144
+VideoQuality.XS = 240
+VideoQuality.S = 360
+VideoQuality.M = 480
+VideoQuality.L = 720
+VideoQuality.XL = 1080
+VideoQuality.XXL = 1440
+VideoQuality.MAX = 2160
 export default VideoQuality

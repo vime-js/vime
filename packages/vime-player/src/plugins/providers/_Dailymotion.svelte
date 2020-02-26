@@ -7,8 +7,7 @@
 
   let dmPlayerIDCount = 0
 
-  // eslint-disable-next-line
-  const DAILYMOTION_URL = /^(?:(?:https?):)?(?:\/\/)?(?:www\.)?(?:(?:dailymotion\.com(?:\/embed)?\/video)|dai\.ly)\/([a-zA-Z0-9]+)(?:_[\w_-]+)?$/
+  const DAILYMOTION_URL = /%$/
 
   export const ID = 'vDailymotion'
   export const ROLE = PluginRole.PROVIDER

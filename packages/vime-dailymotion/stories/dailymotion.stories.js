@@ -3,13 +3,13 @@ import { DailymotionLite, Dailymotion } from '../src'
 
 export default { title: 'Dailymotion' }
 
-const videoId = 'x3a9qe6'
+const srcId = 'x3a9qe6'
 
 export const Lite = () => ({
   Component: CenterView,
   props: {
     Component: DailymotionLite,
-    videoId
+    srcId
   }
 })
 
@@ -17,6 +17,6 @@ export const Full = () => ({
   Component: CenterView,
   props: {
     Component: Dailymotion,
-    videoId
+    srcId
   }
 })

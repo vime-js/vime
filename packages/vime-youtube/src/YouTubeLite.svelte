@@ -4,34 +4,38 @@
   {src}
   {title}
   {params}
-  {decoder}
   {aspectRatio}
-  {preconnections}
+  {origin}
+  decoder={DECODER}
+  preconnections={PRECONNECTIONS}
   on:load
   on:data
   on:message
-  on:reload
+  on:paramschange
   on:load={onLoad}
   on:data={onData}
-  on:reload={onReload}
+  on:srcchange={onReload}
   bind:this={embed}
 />
 
-<script>
-  import { tick } from 'svelte'
-  import { deferred, decode_json } from '@vime/utils'
-  import { Embed } from '@vime/core'
+<script context="module">
+  import { decode_json } from '@vime/utils'
+  
+  const YT = {
+    Origin: {
+      WITH_COOKIES: 'https://www.youtube.com',
+      WITHOUT_COOKIES: 'https://www.youtube-nocookie.com'
+    },
+    Event: {
+      READY: 'onReady'
+    }
+  }
 
-  let src
-  let embed
-  let videoTitle
-  let ready = deferred()
+  const DECODER = decode_json
 
-  const decoder = decode_json
-
-  const preconnections = [
-    'https://www.youtube.com',
-    'https://www.youtube-nocookie.com',
+  const PRECONNECTIONS = [
+    YT.Origin.WITH_COOKIES,
+    YT.Origin.WITHOUT_COOKIES,
     'https://www.google.com',
     'https://googleads.g.doubleclick.net',
     'https://static.doubleclick.net',
@@ -39,12 +43,33 @@
     'https://i.ytimg.com'
   ]
 
+  const Event = {
+    TITLE_CHANGE: 'titlechange',
+    ORIGIN_CHANGE: 'originchange',
+    SRC_CHANGE: 'srcchange'
+  }
+</script>
+
+<script>
+  import { tick, onMount, createEventDispatcher } from 'svelte'
+  import { deferred } from '@vime/utils'
+  import { Embed } from '@vime/core'
+
+  const dispatch = createEventDispatcher()
+
+  let embed
+  let src = null
+  let videoTitle = ''
+  let ready = deferred()
+  let initialized = false
+
   export let params = {}
-  export let videoId = null
+  export let srcId = null
   export let cookies = false
   export let aspectRatio = '16:9'
 
   export const getSrc = () => src
+  export const getOrigin = () => origin
   export const getTitle = () => videoTitle
   export const getIframe = () => embed.getIframe()
   export const getSrcWithParams = () => embed.getSrc()
@@ -59,30 +84,50 @@
     })
   }
 
+  const buildSrc = () => {
+    if (!srcId) return null
+    const base = `${origin}/embed/`
+    const vId = window.encodeURIComponent(srcId || '')
+    return `${base}${vId}?enablejsapi=1`
+  }
+
   const onLoad = () => embed.postMessage({ event: 'listening' })
   
-  const onReload = () => { 
-    ready = deferred() 
-    videoTitle = null
+  const onReload = () => {
+    ready = deferred()
+    initialized = false
   }
 
-  const extractVideoTitle = info => {
-    const title = info && info.videoData && info.videoData.title
-    if (title) videoTitle = title
+  const onSrcChange = () => { videoTitle = '' }
+
+  const onVideoData = videoData => {
+    const { title } = videoData
+    if (title) {
+      videoTitle = title
+      initialized = true
+    }
   }
 
-  const onData = e => {
+  const onInfo = info => {
+    const { videoData } = info
+    if (videoData) onVideoData(videoData)
+  }
+
+  const _onData = e => {
     const data = e.detail
-    if (data.event && data.event === 'onReady') ready.resolve()
-    if (!videoTitle) extractVideoTitle(data.info)
+    if (data.event && data.event === YT.Event.READY) ready.resolve()
+    if (data.info) onInfo(data.info)
   }
 
   $: title = `YouTube ${videoTitle || 'Video Player'}`
-
-  $: {
-    const base = `https://www.youtube${cookies ? '' : '-nocookie'}.com/embed/`
-    const vId = window.encodeURIComponent(videoId || '')
-    const content = (videoId && videoId.length > 11) ? `live_stream?channel=${vId}&` : `${vId}?`
-    src = `${base}${content}enablejsapi=1`
-  }
+  $: origin = cookies ? YT.Origin.WITH_COOKIES : YT.Origin.WITHOUT_COOKIES
+  $: src = buildSrc(origin, srcId)
+  $: onData = !initialized ? _onData : null
+  
+  let mounted = false
+  onMount(() => { mounted = true })
+  
+  $: if (mounted) dispatch(Event.TITLE_CHANGE, videoTitle)
+  $: if (mounted) dispatch(Event.ORIGIN_CHANGE, origin)
+  $: if (mounted) dispatch(Event.SRC_CHANGE, { id: srcId, src })
 </script>

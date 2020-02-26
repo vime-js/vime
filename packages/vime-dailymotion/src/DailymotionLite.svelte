@@ -4,40 +4,65 @@
   {src}
   {title}
   {params}
-  {decoder}
   {aspectRatio}
-  {preconnections}
+  origin={DM.ORIGIN}
+  decoder={DECODER}
+  preconnections={PRECONNECTIONS}
   on:load
   on:data
   on:message
-  on:reload
+  on:paramschange
   on:data={onData}
-  on:reload={onReload}
+  on:srcchange={onReload}
   bind:this={embed}
 />
 
-<script>
-  import { tick } from 'svelte'
-  import { deferred, decode_query_string } from '@vime/utils'
-  import { Embed } from '@vime/core'
+<script context="module">
+  import { decode_query_string } from '@vime/utils'
 
-  let src
-  let embed
-  let ready = deferred()
+  const DM = {
+    ORIGIN: 'https://www.dailymotion.com',
+    Event: {
+      API_READY: 'apiready',
+      VIDEO_CHANGE: 'videochange'
+    }
+  }
 
-  const title = 'Dailymotion - Video Player'
-  const decoder = decode_query_string
+  const DECODER = decode_query_string
 
-  const preconnections = [
-    'https://www.dailymotion.com',
+  const PRECONNECTIONS = [
+    DM.ORIGIN,
     'https://static1.dmcdn.net'
   ]
 
-  export let videoId = null
-  export let params = {}
-  export let aspectRatio = null
+  const Event = {
+    SRC_CHANGE: 'srcchange',
+    TITLE_CHANGE: 'titlechange'
+  }
+</script>
 
-  export const getEmbed = () => embed
+<script>
+  import { tick, onMount, createEventDispatcher } from 'svelte'
+  import { deferred } from '@vime/utils'
+  import { Embed } from '@vime/core'
+
+  const dispatch = createEventDispatcher()
+
+  let embed
+  let src = null
+  let videoTitle = ''
+  let ready = deferred()
+  let initialized = false
+
+  export let srcId = null
+  export let params = {}
+  export let aspectRatio = '16:9'
+
+  export const getSrc = () => src
+  export const getTitle = () => videoTitle
+  export const getOrigin = () => DM.ORIGIN
+  export const getIframe = () => embed.getIframe()
+  export const getSrcWithParams = () => embed.getSrc()
 
   export const sendCommand = async (command, args) => {
     await tick()
@@ -48,19 +73,40 @@
     })
   }
 
+  const buildSrc = () => {
+    const vId = window.encodeURIComponent(srcId || '')
+    const base = `${DM.ORIGIN}/embed`
+    const content = srcId ? `/video/${vId}` : ''
+    return `${base}${content}?api=1`
+  }
+
   const onReload = () => {
-    ready.reject()
     ready = deferred()
+    initialized = false
   }
 
-  const onData = e => {
+  const onSrcChange = () => { videoTitle = '' }
+
+  const _onData = e => {
     const data = e.detail
-    if (data.event === 'apiready') ready.resolve()
+    const event = data.event
+    if (event === DM.Event.API_READY) {
+      ready.resolve()
+      initialized = true
+    }
+    if (event === DM.Event.VIDEO_CHANGE) {
+      videoTitle = data.title
+    }
   }
 
-  $: {
-    const vId = window.encodeURIComponent(videoId || '')
-    const base = 'https://www.dailymotion.com/embed'
-    src = `${base}${videoId ? `/video/${vId}` : ''}?api=1`
-  }
+  $: src = buildSrc(srcId)
+  $: title = `Dailymotion - ${videoTitle || 'Video Player'}`
+  $: onSrcChange(src)
+  $: onData = !initialized ? _onData : null
+
+  let mounted = false
+  onMount(() => { mounted = true })
+  
+  $: if (mounted) dispatch(Event.TITLE_CHANGE, videoTitle)
+  $: if (mounted) dispatch(Event.SRC_CHANGE, { id: srcId, src })
 </script>
