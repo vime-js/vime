@@ -84,6 +84,7 @@
   export let srcId = null;
 
   export const getEmbed = () => embed;
+  export const getEl = () => embed.getIframe();
 
   export const setPaused = paused => paused ? send(DM.Command.PAUSE) : send(DM.Command.PLAY);
   export const setPlaysinline = enabled => { /** noop */ };

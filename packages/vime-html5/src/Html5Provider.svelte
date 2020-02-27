@@ -2,7 +2,6 @@
   <audio
     {controls}
     {crossorigin}
-    bind:currentTime
     bind:this={audio}
   >
     <Source src={currentSrc} />
@@ -12,6 +11,8 @@
     {controls}
     {crossorigin}
     {poster}
+    preload="metadata"
+    bind:videoWidth
     playsinline={playsinline}
     playsInline={playsinline}
     x5-playsinline={playsinline}
@@ -19,7 +20,6 @@
     on:enterpictureinpicture={onEnterPiP}
     on:leavepictureinpicture={onExitPiP}
     on:webkitpresentationmodechanged={onPresentationModeChange}
-    bind:currentTime
     bind:this={video}
   >
     <Source src={currentSrc} />
@@ -29,7 +29,7 @@
 <script context="module">
   import { 
     is_instance_of, is_string, can_play_hls_natively,
-    is_array, can_use_pip 
+    is_array, is_object, can_use_pip , is_number
   } from '@vime/utils';
 
   const Html5 = {
@@ -42,6 +42,10 @@
     Url: {
       DROPBOX: /www\.dropbox\.com\/.+/
     },
+    WebkitPresentationMode: {
+      ACTIVE: 'picture-in-picture',
+      INACTIVE: 'inline'
+    },
     Event: {
       LOADED_METADATA: 'loadedmetadata',
       WAITING: 'waiting',
@@ -50,52 +54,66 @@
   };
 
   const isMediaStream = src => is_instance_of(src, window.MediaStream);
-  const isQualitiesSet = src => is_array(src) && src.every(mediaResource => mediaResource.quality);
+  const isQualitiesSet = src => is_array(src) && src.every(resource => is_number(resource.quality));
   const isDropboxUrl = src => is_string(src) && Html5.Url.DROPBOX.test(src);
   const isAudio = src => Html5.Ext.AUDIO.test(src);
-  const isVideo = src => {
-    return Html5.Ext.VIDEO.test(src) || (can_play_hls_natively() && Html5.Ext.HLS.test(src));
+  const isVideo = src => Html5.Ext.VIDEO.test(src) || 
+    (can_play_hls_natively() && Html5.Ext.HLS.test(src));
+
+  const extractResource = resource => {
+    if (is_string(resource) || isMediaStream(resource)) {
+      return resource;
+    } else if (is_object(resource)) {
+      return resource.src;
+    } else {
+      return '';
+    }
   };
 
-  const canPlayResource = resource => {
-    if (isMediaStream(resource)) return true;
-    const src = is_string(resource) ? resource : resource.src;
-    if (!is_string(src)) return false;
-    return isAudio(src) || isVideo(src);
-  };
+  const everySrc = (src, cb) => is_array(src) 
+    ? src.every(resource => cb(extractResource(resource)))
+    : cb(extractResource(src));
 
-  export const canPlay = (src, extensionCanPlay = () => false) => is_array(src)
-    ? src.some(resource => canPlayResource(resource) || extensionCanPlay(resource))
-    : canPlayResource(src) || extensionCanPlay(src);
+  export const canPlay = (src, extensionCanPlay = () => false) => isMediaStream(src) ||
+    everySrc(src, isAudio) ||
+    everySrc(src, isVideo);
 </script>
 
 <script>
-  import { createEventDispatcher } from 'svelte';
-  import { run_all, listen } from 'svelte/internal';
+  import { tick, createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { run_all, listen, raf } from 'svelte/internal';
   import Source from './Source.svelte';
   import { Disposal, PlayerEvent, MediaType } from '@vime/core';
-  import { is_function } from '@vime/utils';
+  
+  import { 
+    is_function, can_fullscreen_video_in_safari, can_use_pip_in_chrome,
+    can_use_pip_in_safari
+  } from '@vime/utils';
 
   const disposal = new Disposal();
   const dispatch = createEventDispatcher();
 
-  let currentTime = 0;
   let audio = null;
   let video = null;
   let prevMedia = null;
-  const poster = null;
+  let poster = null;
   let muted = false;
+  let quality = null;
   let controls = null;
   let playsinline = null;
   let crossorigin = null;
   let currentSrc = null;
-  const quality = null;
+  let ready = false;
+  let paused = true;
+  let videoWidth = 0;
 
   export let src;
+  export let aspectRatio = null;
 
+  export const getEl = () => media;
   export const getMedia = () => media;
 
-  export const setCurrentTime = time => { currentTime = time; };
+  export const setCurrentTime = time => { media.currentTime = time; };
   export const setMuted = isMuted => { muted = isMuted; };
   export const setPaused = paused => { paused ? media.pause() : media.play(); }; 
   export const setVolume = volume => { media.volume = parseFloat(volume / 100); };
@@ -104,16 +122,46 @@
   export const setControls = enabled => { controls = enabled || null; };
   export const setPlaysinline = enabled => { playsinline = enabled || null; };
   export const setNativeMode = nativeMode => { /** noop */ };
+  export const setQuality = newQuality => { quality = newQuality; };
+
+  export const setPoster = newPoster => {
+    if (poster === newPoster) return;
+    poster = newPoster || null;
+    if (poster) rebuild();
+  };
+
+  export const setPiP = active => {
+    if (!supportsPiP()) return;
+    let fn;
+    let isActive;
+    if (can_use_pip_in_chrome()) {
+      isActive = document.pictureInPictureElement;
+      fn = active ? video.requestPictureInPicture : video.exitPictureInPicture;
+    } else if (can_use_pip_in_safari()) {
+      isActive = (video.webkitPresentationMode === Html5.WebkitPresentationMode.ACTIVE);
+      fn = active 
+        ? () => video.webkitSetPresentationMode(Html5.WebkitPresentationMode.ACTIVE)
+        : () => video.webkitSetPresentationMode(Html5.WebkitPresentationMode.INACTIVE);
+    }
+    if ((active && !isActive) || (!active && isActive)) return fn();
+  };
 
   export const setFullscreen = active => {
-    active ? video.webkitEnterFullscreen() : video.webkitExitFullscreen();
+    const isActive = video.webkitDisplayingFullscreen;
+    if (active && !isActive) return video.webkitEnterFullscreen();
+    if (!active && isActive) return video.webkitExitFullscreen();
   };
 
   export const supportsPiP = () => can_use_pip();
-  
-  export const supportsFullscreen = () => video && 
-    video.webkitSupportsFullscreen &&
-    is_function(video.webkitEnterFullscreen);
+  export const supportsFullscreen = () => can_fullscreen_video_in_safari();
+
+  let timeRaf;
+  const cancelTimeUpdates = () => window.cancelAnimationFrame(timeRaf);
+  onDestroy(cancelTimeUpdates);
+  const getTimeUpdates = () => {
+    dispatch(PlayerEvent.TIME_UPDATE, media.currentTime);
+    timeRaf = raf(getTimeUpdates);
+  };
 
   const listenToMedia = (event, cb) => disposal.add(listen(media, event, cb));
   const forwardMediaEvent = (event, to, data) => listenToMedia(
@@ -127,22 +175,25 @@
     dispatch(PlayerEvent.BUFFERED, (end > duration) ? duration : end);
   };
 
+  onMount(() => dispatch(PlayerEvent.READY));
+
   const setupMediaListeners = () => {
     listenToMedia(Html5.Event.LOADED_METADATA, () => {
       onBuffered();
       dispatch(PlayerEvent.PLAYBACK_READY);
-      dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, video ? MediaType.VIDEO : MediaType.AUDIO);
       dispatch(PlayerEvent.RATES_CHANGE, Html5.PLAYBACK_RATES);
+      dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, video ? MediaType.VIDEO : MediaType.AUDIO);
+      ready = true;
     });
-    forwardMediaEvent(PlayerEvent.PLAY);
-    forwardMediaEvent(PlayerEvent.PAUSE);
+    listenToMedia(PlayerEvent.PROGRESS, onBuffered);
+    forwardMediaEvent(PlayerEvent.PLAY, null, () => { paused = false; });
+    forwardMediaEvent(PlayerEvent.PAUSE, null, () => { paused = true; });
     forwardMediaEvent(PlayerEvent.PLAYING);
     forwardMediaEvent(PlayerEvent.DURATION_CHANGE, null, () => media.duration);
     forwardMediaEvent(PlayerEvent.RATE_CHANGE, null, () => media.playbackRate);
-    // forwardMediaEvent(PlayerEvent.SEEKING)
-    // forwardMediaEvent(PlayerEvent.SEEKED)
-    listenToMedia(PlayerEvent.SEEKING, () => console.log('internal-seeking'));
-    forwardMediaEvent(PlayerEvent.SEEKED, PlayerEvent.BUFFERING, () => false);
+    forwardMediaEvent(PlayerEvent.SEEKING, PlayerEvent.TIME_UPDATE, () => media.currentTime);
+    forwardMediaEvent(PlayerEvent.SEEKING);
+    forwardMediaEvent(PlayerEvent.SEEKED);
     forwardMediaEvent(PlayerEvent.VOLUME_CHANGE, null, () => (media.volume * 100));
     forwardMediaEvent(PlayerEvent.VOLUME_CHANGE, PlayerEvent.MUTE_CHANGE, () => media.muted);
     forwardMediaEvent(Html5.Event.WAITING, PlayerEvent.BUFFERING);
@@ -156,21 +207,80 @@
   const onPresentationModeChange = e => {
     if (!can_use_pip()) return;
     const mode = video.webkitPresentationMode;
-    dispatch(PlayerEvent.PIP_CHANGE, (mode === 'picture-in-picture'));
+    dispatch(PlayerEvent.PIP_CHANGE, (mode === Html5.WebkitPresentationMode.ACTIVE));
+  };
+
+  const load = async () => {
+    // Wait for media to load.
+    await tick();
+    media.load();
+  };
+
+  const rebuild = async () => {
+    dispatch(PlayerEvent.REBUILD_START);
+    load();
+  };
+
+  const loadMediaStream = () => {
+    currentSrc = null;
+    try {
+      media.srcObject = src;
+    } catch (e) {
+      media.src = window.URL.createObjectURL(src);
+    }
+  };
+
+  const loadNewQuality = async () => {
+    currentSrc = src.filter(s => s.quality === quality);
+    // Wait for player store to reset.
+    await tick();
+    dispatch(PlayerEvent.QUALITIES_CHANGE, src.map(s => s.quality));
+    dispatch(PlayerEvent.QUALITY_CHANGE, quality);
+    rebuild();
+  };
+
+  const calcQuality = () => {
+    if (videoWidth <= 0) return;
+    let i = 0;
+    let newQuality = src[i].quality;
+    const [w, h] = aspectRatio.split(':');
+    const minQuality = videoWidth / (w/h);
+    while (i < (src.length - 1) && newQuality < minQuality) {
+      i += 1;
+      newQuality = src[i].quality;
+    }
+    quality = newQuality;
+  };
+
+  const loadNewSrc = () => {
+    const newSrc = isDropboxUrl(src)
+      ? src.replace('www.dropbox.com', 'dl.dropboxusercontent.com')
+      : src;
+    currentSrc = newSrc;
+    load();
   };
 
   const onSrcChange = () => {
-    currentSrc = src;
+    ready = false;
+    quality = null;
+    if (isMediaStream(src)) {
+      loadMediaStream();
+    } else if (!srcHasQualities) {
+      loadNewSrc();
+    }
   };
 
   $: media = audio || video;
   $: if (media) media.muted = muted;
 
-  $: onSrcChange(src);
-  $: shouldUseAudio = isAudio(currentSrc) && !is_string(poster);
-  $: shouldUseVideo = isVideo(currentSrc) || isMediaStream(currentSrc) || is_string(poster);
-  $: dispatch(PlayerEvent.TIME_UPDATE, currentTime);
-  $: console.log(currentTime);
+  $: onSrcChange(src, srcHasQualities);
+  $: srcHasQualities = video && isQualitiesSet(src);
+  $: if (srcHasQualities) calcQuality(videoWidth, aspectRatio);
+  $: if (is_number(quality)) loadNewQuality(quality);
+  $: shouldUseAudio = everySrc(src, isAudio) && !is_string(poster);
+  $: shouldUseVideo = everySrc(src, isVideo) || isMediaStream(src) || is_string(poster);
+  $: (ready && !paused) ? getTimeUpdates() : cancelTimeUpdates();
+  $: dispatch(PlayerEvent.CURRENT_SRC_CHANGE, currentSrc);
 
   // If media is initialized or changed (audio/video/false).
   $: if (prevMedia !== media) {
