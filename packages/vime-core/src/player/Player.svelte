@@ -344,8 +344,6 @@
     }
   };
 
-  // @see https://developers.google.com/web/updates/2018/10/watch-video-using-picture-in-picture
-  // @see https://developer.apple.com/documentation/webkitjs/adding_picture_in_picture_to_your_safari_media_controls
   export const enterPiP = () => onPiPRequest(true);
   export const exitPiP = () => onPiPRequest(false);
 
