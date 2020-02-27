@@ -12,6 +12,7 @@ PlayerEvent.REPLAY = 'replay';
 PlayerEvent.ORIGIN_CHANGE = 'originchange';
 PlayerEvent.ACTIVE_CHANGE = 'activechange';
 PlayerEvent.SRC_CHANGE = 'srcchange';
+PlayerEvent.CURRENT_SRC_CHANGE = 'currentsrcchange';
 PlayerEvent.TITLE_CHANGE = 'titlechange';
 PlayerEvent.DURATION_CHANGE = 'durationchange';
 PlayerEvent.TIME_UPDATE = 'timeupdate';

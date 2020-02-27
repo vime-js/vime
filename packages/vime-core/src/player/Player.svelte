@@ -1,8 +1,12 @@
-<PlayerWrapper aspectRatio={$videoView ? $aspectRatio : null} >
+<PlayerWrapper 
+  aspectRatio={$videoView ? $aspectRatio : null}
+  on:mount="{e => { playerWrapper = e.detail; }}"
+>
   <svelte:component
     {...props}
     src={$src}
     srcId={$srcId}
+    aspectRatio={$aspectRatio}
     this={Provider}
     bind:this={provider}
     on:error
@@ -25,6 +29,7 @@
     on:fullscreenchange={onFullscreenChange}
     on:posterchange={onPosterChange}
     on:srcchange={onSrcChange}
+    on:currentsrcchange={onCurrentSrcChange}
     on:titlechange={onTitleChange}
     on:mutechange={onMuteChange}
     on:volumechange={onVolumeChange}
@@ -63,17 +68,18 @@
     internalTime, currentTime, nativeMode,
     pipActive, rate, quality,
     src, srcId, controls,
-    supportsPiP, supportsFullscreen,
     canSetPiP, canSetFullscreen, fullscreenActive,
     canSetRate, canSetQuality, aspectRatio,
     buffering, canAutoplay, canMutedAutoplay,
     buffered, autopause, autoplay,
     playing, started, canSetPoster,
-    poster, playbackReady, videoView
+    poster, playbackReady, videoView,
+    qualities, rates, currentSrc
   } = store;
 
-  let provider;
   let props = {};
+  let provider;
+  let playerWrapper;
 
   onDestroy(() => { props = {}; });
 
@@ -142,7 +148,7 @@
     await tick();
     onAutoplay();
     $playbackReady = true;
-    if (rebuilding) onRebuild();
+    onRebuildEnd();
   };
 
   const onRebuildStart = () => {
@@ -150,13 +156,9 @@
     dispatch(PlayerEvent.REBUILD_START);
   };
 
-  const onRebuildEnd = () => {
+  const onRebuildEnd = async () => {
     if (!rebuilding) return;
     rebuilding = false;
-    dispatch(PlayerEvent.REBUILD_END);
-  };
-
-  const onRebuild = async () => {
     // Cancel any existing temp states as rebuild may be called multiple times.
     tempMute = false;
     tempPlay = false;
@@ -167,7 +169,7 @@
       provider.setCurrentTime($currentTime);
       return;
     }
-    onRebuildEnd();
+    dispatch(PlayerEvent.REBUILD_END);
   };
 
   const onAutopause = () => {
@@ -182,7 +184,6 @@
   let firePauseTimer;
   const onPause = () => {
     if (rebuilding) return;
-    console.log('pause');
     firePauseTimer = window.setTimeout(() => {
       if (nativeMode && !tempPause) $paused = true;
       if (!tempPause) $playing = false;
@@ -191,8 +192,6 @@
 
   const onSeeking = () => {
     if ($seeking || rebuilding) return;
-    console.log('seeking');
-    console.log($internalTime);
     window.clearTimeout(firePauseTimer);
     $seeking = true;
     !$started ? initiateTempPlayback() : (tempPause = true);
@@ -202,7 +201,6 @@
     if (!$seeking || rebuilding) return;
     // Wait a tick incase `seeking` and `seeked` are fired immediately after each other.
     await tick();
-    console.log('seeked');
     $seeking = false;
     dispatch(PlayerEvent.SEEKED);
     cancelTempAction(() => {
@@ -211,10 +209,7 @@
     if (e && is_number(e.detail)) onTimeUpdate(e);
   };
 
-  $: console.log('buffering', $buffering);
-
   const onPlaying = () => {
-    console.log('playing');
     $buffering = false;
     $started = true;
     onSeeked();
@@ -264,19 +259,20 @@
     if (!srcId && !src) { rebuilding = false; }
   };
 
+  const onCurrentSrcChange = e => { $currentSrc = e.detail; };
   const onBuffered = e => { $buffered = parseFloat(e.detail); };
   const onBuffering = e => { $buffering = is_boolean(e.detail) ? e.detail : true; };
   const onTitleChange = e => { store.title.set(e.detail); };
   const onLive = e => { store.live.set(e.detail); };
-  const onQualitiesChange = e => { store.qualities.set(e.detail); };
-  const onRatesChange = e => { store.rates.set(e.detail); };
+  const onQualitiesChange = e => { $qualities = e.detail; };
+  const onRatesChange = e => { $rates = e.detail; };
   const onOriginChange = e => { store.origin.set(e.detail); };
   const onDurationChange = e => { if (!rebuilding) store.duration.set(parseFloat(e.detail)); };
   const onPiPChange = e => { if (!rebuilding) $pipActive = e.detail; };
   const onFullscreenChange = e => { if (!rebuilding) $fullscreenActive = e.detail; };
   const onMediaTypeChange = e => { if (!rebuilding) store.mediaType.set(e.detail); };
   const onRateChange = e => { if (!rebuilding) store.rate.forceSet(parseFloat(e.detail)); };
-  const onPosterChange = e => { if (!rebuilding) store.poster.forceSet(e.detail); };
+  const onPosterChange = e => { if (!rebuilding) $poster = e.detail; };
   const onQualityChange = e => { if (!rebuilding) store.quality.forceSet(e.detail); };
   const onMuteChange = e => { if ($nativeMode && !tempMute && !rebuilding) $muted = e.detail; };
   
@@ -295,39 +291,21 @@
     onSrcReset();
     store.ready.set(false);
     store.origin.set(null);
+    if ($fullscreenActive) exitFullscreen();
   };
 
   $: onProviderChange(Provider);
-  $: onSrcReset($src);
-
-  // --------------------------------------------------------------
-  // Support
-  // --------------------------------------------------------------
-
-  // TODO: implement this.
-  // @see https://github.com/videojs/video.js/blob/master/src/js/player.js#L2722
-  // only video
-  // const checkFullscreenSupport = () => {
-  // }
-  
-  $: $supportsPiP = provider && provider.supportsPiP();
-  $: $supportsFullscreen = provider && provider.supportsFullscreen();
-  
-  $: $canSetPiP = $supportsPiP && is_function(provider.setPiP);
-  $: $canSetFullscreen = $supportsFullscreen && is_function(provider.setFullscreen);
-  $: $canSetRate = provider && $playbackReady && is_function(provider.setRate);
-  $: $canSetQuality = provider && is_function(provider.setQuality);
-  $: $canSetPoster = provider && is_function(provider.setPoster);
+  $: onSrcReset($currentSrc);
 
   // --------------------------------------------------------------
   // State Updates
   // --------------------------------------------------------------
 
-  $: if (provider && !$paused && $ended) onRestart();
-  $: if (provider && !rebuilding) provider.setMuted($muted || tempMute);
   $: if (provider) provider.setPlaysinline($playsinline);
   $: if (provider) provider.setControls($nativeMode && $controls);
   $: if (provider) provider.setNativeMode($nativeMode);
+  $: if (provider && !$paused && $ended) onRestart();
+  $: if (provider && !rebuilding && $playbackReady) provider.setMuted($muted || tempMute);
   
   $: if (provider && $playbackReady) {
     provider.setPaused(($paused || tempPause) && !tempPlay);
@@ -338,10 +316,74 @@
   $: (provider && !rebuilding && !updatingVolume && $playbackReady)
     ? provider.setVolume($volume)
     : (updatingVolume = false);
+ 
+  $: $canSetPoster = provider && is_function(provider.setPoster);
+  $: $canSetRate = provider && $playbackReady && $rates.length > 1 && is_function(provider.setRate);
+  $: $canSetQuality = provider && $qualities.length > 0 && is_function(provider.setQuality);
 
-  $: $canSetPiP && !rebuilding && provider.setPiP($pipActive);
-  $: $canSetFullscreen && !rebuilding && provider.setFullscreen($fullscreenActive);
-  $: $canSetPoster && provider.setPoster($poster);
+  $: $canSetPoster && !rebuilding && provider.setPoster($poster);
   $: $canSetRate && !rebuilding && provider.setRate($rate);
-  $: $canSetQuality && rebuilding && provider.setQuality($quality);
+  $: $canSetQuality && !rebuilding && provider.setQuality($quality);
+
+  const VIDEO_READY_ERROR = 'Must be a video view that is ready for playback.';
+  $: videoReady = $videoView && $playbackReady;
+
+  // --------------------------------------------------------------
+  // Picture in Picture
+  // --------------------------------------------------------------
+
+  const NO_PIP_SUPPORT_ERROR = 'Provider does not support PiP.';
+
+  const onPiPRequest = active => {
+    if (!videoReady) {
+      return Promise.reject(VIDEO_READY_ERROR);
+    } else if (!canPiP) {
+      return Promise.reject(NO_PIP_SUPPORT_ERROR);
+    } else {
+      return Promise.resolve(provider.setPiP(active));
+    }
+  };
+
+  // @see https://developers.google.com/web/updates/2018/10/watch-video-using-picture-in-picture
+  // @see https://developer.apple.com/documentation/webkitjs/adding_picture_in_picture_to_your_safari_media_controls
+  export const enterPiP = () => onPiPRequest(true);
+  export const exitPiP = () => onPiPRequest(false);
+
+  $: canPiP = provider && provider.supportsPiP() && is_function(provider.setPiP);
+  $: $canSetPiP = videoReady && canPiP;
+
+  // --------------------------------------------------------------
+  // Fullscreen
+  // --------------------------------------------------------------
+
+  import Fullscreen from './Fullscreen';
+
+  let fullscreen;
+
+  $: if (playerWrapper) {
+    fullscreen = new Fullscreen(playerWrapper);
+    fullscreen.onChange(active => { $fullscreenActive = active; });
+  }
+
+  const onFullscreenRequest = active => {
+    if (canFullscreen) {
+      return Promise.resolve(provider.setFullscreen(active));
+    } else {
+      fullscreen.requestFallback(active);
+      return Promise.resolve();
+    }
+  };
+
+  export const requestFullscreen = () => {
+    if (!videoReady) return Promise.reject(VIDEO_READY_ERROR);
+    return fullscreen.requestFullscreen().catch(() => onFullscreenRequest(true));
+  };
+
+  export const exitFullscreen = () => {
+    if (!videoReady) return Promise.reject(VIDEO_READY_ERROR);
+    return fullscreen.exitFullscreen().catch(() => onFullscreenRequest(false));
+  };
+
+  $: canFullscreen = provider && provider.supportsFullscreen() && is_function(provider.setFullscreen);
+  $: $canSetFullscreen = videoReady && ((fullscreen && fullscreen.supported()) || canFullscreen);
 </script>

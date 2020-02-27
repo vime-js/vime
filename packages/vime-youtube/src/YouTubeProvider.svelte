@@ -96,6 +96,7 @@
   export let cookies = false;
 
   export const getEmbed = () => embed;
+  export const getEl = () => embed.getIframe();
 
   export const setPaused = paused => paused ? send(YT.Command.PAUSE) : send(YT.Command.PLAY);
   export const setMuted = muted => muted ? send(YT.Command.MUTE) : send(YT.Command.UNMUTE);

@@ -41,6 +41,13 @@ export const watch_touch = cb => {
   });
 };
 
+// @see https://developer.apple.com/documentation/webkitjs/htmlvideoelement/1633500-webkitenterfullscreen
+export const can_fullscreen_video_in_safari = () => {
+  const video = element('video');
+  // !IS_CHROME to stop deprecated warnings.
+  return !IS_CHROME && is_function(video.webkitEnterFullscreen);
+};
+
 // Reduced motion iOS & MacOS setting
 // @see https://webkit.org/blog/7551/responsive-design-for-motion/
 export const is_reduced_motion_preferred = () => IS_CLIENT &&

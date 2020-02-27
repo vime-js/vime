@@ -66,16 +66,16 @@ export const mergeable = initialValue => {
   };
 };
 
-export const fallbackable = (initialValue, fallback) => {
+export const writable_with_fallback = (initialValue, fallback) => {
   const store = writable(initialValue);
   return {
     ...store,
-    set: v => v ? store.set(v) : store.set(get(fallback) || null)
+    subscribe: derived([store, fallback], ([$s, $f]) => $s || $f).subscribe
   };
 };
 
-export const private_fallbackable = (initialValue, fallback) => {
-  return make_store_private(fallbackable(initialValue, fallback));
+export const private_writable_with_fallback = (initialValue, fallback) => {
+  return make_store_private(writable_with_fallback(initialValue, fallback));
 };
 
 export const writable_if = (initialValue, condition) => {

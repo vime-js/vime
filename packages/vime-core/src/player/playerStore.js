@@ -11,7 +11,8 @@ import {
   is_array, is_string, private_writable,
   map_store_to_component, can_autoplay, selectable_if,
   writable_if, subscribe, subscribe_and_dispatch,
-  subscribe_and_dispatch_if_true, IS_MOBILE
+  subscribe_and_dispatch_if_true, IS_MOBILE,
+  private_writable_with_fallback
 } from '@vime/utils';
 
 // Player defaults used when the `src` changes or `resetStore`
@@ -26,16 +27,14 @@ const playerDefaults = () => ({
   duration: 0,
   buffered: 0,
   buffering: false,
-  poster: null,
   quality: VideoQuality.UNKNOWN,
   qualities: [],
   rate: 1,
   rates: [1],
   started: false,
   ended: false,
-  pipActive: false,
   mediaType: MediaType.NONE,
-  fullscreenActive: false,
+  pipActive: false,
   playbackReady: false,
   live: false
 });
@@ -46,10 +45,11 @@ const buildPlayerStore = player => {
 
   store.src = writable(null);
   store.srcId = writable(null);
+  store.currentSrc = private_writable_with_fallback(null, store.src);
   store.origin = private_writable(null);
   store.mediaType = private_writable(defaults.mediaType);
-  store.audio = derived(store.mediaType, ($mediaType) => $mediaType === MediaType.AUDIO);
-  store.video = derived(store.mediaType, ($mediaType) => $mediaType === MediaType.VIDEO);
+  store.audio = derived(store.mediaType, $mediaType => $mediaType === MediaType.AUDIO);
+  store.video = derived(store.mediaType, $mediaType => $mediaType === MediaType.VIDEO);
   store.qualities = private_writable(defaults.qualities);
   store.rates = private_writable(defaults.rates);
   store.currentTime = writable(defaults.currentTime);
@@ -65,11 +65,9 @@ const buildPlayerStore = player => {
   store.canSetPiP = private_writable(false);
   store.canSetFullscreen = private_writable(false);
   store.canSetQuality = writable(false);
-  store.poster = writable_if(defaults.poster, store.canSetPoster);
-  store.pipActive = writable_if(defaults.pipActive, store.canSetPiP);
-  store.supportsPiP = private_writable(false);
-  store.fullscreenActive = writable_if(defaults.fullscreenActive, store.canSetFullscreen);
-  store.supportsFullscreen = private_writable(false);
+  store.poster = writable(null);
+  store.pipActive = private_writable(defaults.pipActive);
+  store.fullscreenActive = private_writable(defaults.fullscreenActive);
   store.autopause = writable(true);
   store.ready = private_writable(false);
   store.nativeMode = private_writable(true);
@@ -90,7 +88,7 @@ const buildPlayerStore = player => {
   store.canAutoplay = private_writable(false);
   store.canMutedAutoplay = private_writable(false);
   store.videoView = derived(
-    [store.poster, store.video, store.canSetPoster],
+    [store.poster, store.canSetPoster, store.video],
     ([$poster, $canSetPoster, $video]) => ($canSetPoster && is_string($poster)) || $video
   );
   store.active = derived(store.currentPlayer, $currentPlayer => $currentPlayer === player);
@@ -134,6 +132,7 @@ const buildPlayerStore = player => {
 const dispatchPlayerEvents = store => {
   const dispatch = createEventDispatcher();
   subscribe_and_dispatch(store.src, PlayerEvent.SRC_CHANGE);
+  subscribe_and_dispatch(store.currentSrc, PlayerEvent.CURRENT_SRC_CHANGE);
   subscribe_and_dispatch(store.title, PlayerEvent.TITLE_CHANGE);
   subscribe_and_dispatch(store.duration, PlayerEvent.DURATION_CHANGE);
   subscribe_and_dispatch(store.currentTime, PlayerEvent.TIME_UPDATE);

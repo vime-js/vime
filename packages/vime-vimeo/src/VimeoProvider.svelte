@@ -102,6 +102,7 @@
   export let srcId = null;
 
   export const getEmbed = () => embed;
+  export const getEl = () => embed.getIframe();
 
   export const setPaused = paused => paused ? send(VM.Command.PAUSE) : send(VM.Command.PLAY);
   export const setMuted = muted => send(VM.Command.SET_MUTED, muted);
