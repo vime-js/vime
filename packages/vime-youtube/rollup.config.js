@@ -12,13 +12,10 @@ const chunks = id => {
 };
 
 export default [
-  modernBuild(lite),
-  modernBuild(full)
+  chunkedBuild({ input: { youtube: entry }, chunks }),
+  chunkedBuild({ input: { youtube: entry }, format: 'system', chunks }),
+  legacyBuild({ ...lite, name }),
+  legacyBuild({ ...full, name }),
+  modernBuild({ ...lite, fileName: 'FileSizeLite' }),
+  modernBuild({ ...full, fileName: 'FileSizeFull' })
 ];
-
-// export default [
-//   chunkedBuild({ input: { youtube: entry }, chunks }),
-//   chunkedBuild({ input: { youtube: entry }, format: 'system', chunks }),
-//   legacyBuild({ ...lite, name }),
-//   legacyBuild({ ...full, name })
-// ]

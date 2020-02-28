@@ -12,7 +12,7 @@ import {
   map_store_to_component, can_autoplay, selectable_if,
   writable_if, subscribe, subscribe_and_dispatch,
   subscribe_and_dispatch_if_true, IS_MOBILE,
-  private_writable_with_fallback
+  private_writable_with_fallback, indexable_if
 } from '@vime/utils';
 
 // Player defaults used when the `src` changes or `resetStore`
@@ -43,6 +43,16 @@ const buildPlayerStore = player => {
   const store = {};
   const defaults = playerDefaults();
 
+  store.canSetTrack = private_writable(false);
+  store.canSetTracks = private_writable(false);
+  store.canSetRate = private_writable(false);
+  store.canSetPoster = private_writable(false);
+  store.canSetPiP = private_writable(false);
+  store.canSetFullscreen = private_writable(false);
+  store.canSetQuality = private_writable(false);
+  store.canAutoplay = private_writable(false);
+  store.canMutedAutoplay = private_writable(false);
+
   store.src = writable(null);
   store.srcId = writable(null);
   store.currentSrc = private_writable_with_fallback(null, store.src);
@@ -60,14 +70,13 @@ const buildPlayerStore = player => {
   store.buffering = private_writable(defaults.buffering);
   store.paused = writable(defaults.paused);
   store.playbackReady = private_writable(defaults.playbackReady);
-  store.canSetRate = writable(false);
-  store.canSetPoster = private_writable(false);
-  store.canSetPiP = private_writable(false);
-  store.canSetFullscreen = private_writable(false);
-  store.canSetQuality = writable(false);
+  store.tracks = writable([]);
+  store.currentTrack = indexable_if(store.tracks, store.canSetTrack);
+  store.captionsActive = derived(store.currentTrack, $currentTrack => $currentTrack === -1);
+  store.activeCues = private_writable([]);
   store.poster = writable(null);
   store.pipActive = private_writable(defaults.pipActive);
-  store.fullscreenActive = private_writable(defaults.fullscreenActive);
+  store.fullscreenActive = private_writable(false);
   store.autopause = writable(true);
   store.ready = private_writable(false);
   store.nativeMode = private_writable(true);
@@ -85,8 +94,6 @@ const buildPlayerStore = player => {
   store.controls = writable(true);
   store.autoplay = writable(false);
   store.loop = writable(false);
-  store.canAutoplay = private_writable(false);
-  store.canMutedAutoplay = private_writable(false);
   store.videoView = derived(
     [store.poster, store.canSetPoster, store.video],
     ([$poster, $canSetPoster, $video]) => ($canSetPoster && is_string($poster)) || $video
@@ -134,6 +141,10 @@ const dispatchPlayerEvents = store => {
   subscribe_and_dispatch(store.src, PlayerEvent.SRC_CHANGE);
   subscribe_and_dispatch(store.currentSrc, PlayerEvent.CURRENT_SRC_CHANGE);
   subscribe_and_dispatch(store.title, PlayerEvent.TITLE_CHANGE);
+  subscribe_and_dispatch(store.tracks, PlayerEvent.TRACKS_CHANGE);
+  subscribe_and_dispatch(store.currentTrack, PlayerEvent.TRACK_CHANGE);
+  subscribe_and_dispatch(store.activeCues, PlayerEvent.CUE_CHANGE);
+  subscribe_and_dispatch(store.captionsActive, PlayerEvent.CAPTIONS_CHANGE);
   subscribe_and_dispatch(store.duration, PlayerEvent.DURATION_CHANGE);
   subscribe_and_dispatch(store.currentTime, PlayerEvent.TIME_UPDATE);
   subscribe_and_dispatch(store.rate, PlayerEvent.RATE_CHANGE);

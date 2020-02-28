@@ -87,18 +87,28 @@ export const writable_if = (initialValue, condition) => {
   };
 };
 
-export const indexable = (initialValue, bounds) => {
-  const store = writable(initialValue);
+export const indexable = (bounds) => {
+  const store = writable(-1);
   return {
     ...store,
     set: index => {
       const _bounds = safe_get(bounds);
-      if (!_bounds) {
+      if (!_bounds || _bounds.length === 0) {
         store.set(-1);
         return;
       }
-      if (index >= 0 && index < _bounds.length) store.set(index);
-    }
+      if (index >= -1 && index < _bounds.length) store.set(index);
+    },
+    forceSet: store.set
+  };
+};
+
+export const indexable_if = (bounds, condition) => {
+  const store = indexable(bounds);
+  return {
+    ...store,
+    set: index => safe_get(condition) && store.set(index),
+    forceSet: store.forceSet
   };
 };
 

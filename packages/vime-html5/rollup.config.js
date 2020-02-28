@@ -11,11 +11,8 @@ const chunks = id => {
 };
 
 export default [
-  modernBuild(player)
+  chunkedBuild({ input: { html5: entry }, chunks }),
+  chunkedBuild({ input: { html5: entry }, format: 'system', chunks }),
+  legacyBuild({ ...player, name }),
+  modernBuild({ ...player, fileName: 'FileSizeFull' })
 ];
-
-// export default [
-//   chunkedBuild({ input: { html5: entry }, chunks }),
-//   chunkedBuild({ input: { html5: entry }, format: 'system', chunks }),
-//   legacyBuild({ ...player, name })
-// ]

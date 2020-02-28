@@ -12,14 +12,11 @@ const chunks = id => {
 };
 
 export default [
-  modernBuild(lite),
-  modernBuild(full)
+  chunkedBuild({ input: { dailymotion: entry }, chunks }),
+  chunkedBuild({ input: { dailymotion: entry }, format: 'system', chunks }),
+  legacyBuild({ ...lite, name }),
+  legacyBuild({ ...full, name }),
+  modernBuild({ ...lite, fileName: 'FileSizeLite' }),
+  modernBuild({ ...full, fileName: 'FileSizeFull' })
 ];
-
-// export default [
-//   chunkedBuild({ input: { dailymotion: entry }, chunks }),
-//   chunkedBuild({ input: { dailymotion: entry }, format: 'system', chunks }),
-//   legacyBuild({ ...lite, name }),
-//   legacyBuild({ ...full, name })
-// ]
 

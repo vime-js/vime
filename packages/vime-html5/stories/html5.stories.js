@@ -27,6 +27,27 @@ export const Video = () => ({
   props: {
     Component: Html5,
     src: videoSrc,
-    poster
+    poster,
+    tracks: [
+      {
+        default: true,
+        kind: 'subtitles',
+        label: 'English',
+        srclang: 'en',
+        src: '/media/video/tracks/en.vtt'
+      },
+      {
+        kind: 'subtitles',
+        label: 'Spanish',
+        srclang: 'es',
+        src: '/media/video/tracks/es.vtt'
+      },
+      {
+        kind: 'subtitles',
+        label: 'French',
+        srclang: 'fr',
+        src: '/media/video/tracks/fr.vtt'
+      }
+    ]
   }
 });

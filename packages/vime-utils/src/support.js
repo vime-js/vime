@@ -74,7 +74,7 @@ export const can_use_pip_in_chrome = () => {
 export const can_use_pip_in_safari = () => {
   if (!IS_CLIENT) return false;
   const video = element('video');
-  return video.webkitSupportsPresentationMode &&
+  return is_function(video.webkitSupportsPresentationMode) &&
     is_function(video.webkitSetPresentationMode) &&
     !IS_IPHONE;
 };
