@@ -20,11 +20,16 @@ export default class Fullscreen {
 
   _setupChangeListener () {
     if (!this.supported()) return;
-    this._onChangeListener = listen(document, FullscreenApi.fullscreenchange, () => {
-      let active = document[FullscreenApi.fullscreenElement] === this._el;
-      if (!active && this._el.matches) active = this._el.matches(':' + FullscreenApi.fullscreen);
-      this._changed(active);
-    });
+    this._onChangeListener = listen(
+      document, FullscreenApi.fullscreenchange, 
+      () => this._changed(this.active())
+    );
+  }
+
+  active () {
+    let active = document[FullscreenApi.fullscreenElement] === this._el;
+    if (!active && this._el.matches) active = this._el.matches(':' + FullscreenApi.fullscreen);
+    return active;
   }
 
   supported () {
@@ -35,34 +40,20 @@ export default class Fullscreen {
     this._onChange = cb;
   }
 
-  requestFallback (active) {
-    if (!this._el) return;
-    const setPos = pos => this._el.style[pos] = active ? '0' : null;
-    this._el.style.position = active ? 'fixed' : null;
-    this._el.style.zIndex = active ? '9999' : null;
-    setPos('top');
-    setPos('left');
-    setPos('right');
-    setPos('bottom');
-    this._changed(active);
-  }
-
   requestFullscreen () {
-    if (this.supported()) {
-      const promise = this._el[FullscreenApi.requestFullscreen]();
-      if (promise) promise.then(() => this._changed(true), () => this._changed(false));
-      return promise;
-    }
-    return Promise.reject();
+    if (!this.supported()) return Promise.reject();
+    const promise = this._el[FullscreenApi.requestFullscreen]();
+    if (promise) promise.then(() => this._changed(true), () => this._changed(false));
+    if (!promise && !this.active()) return Promise.reject(promise);
+    return Promise.resolve(promise);
   }
   
   exitFullscreen () {
-    if (this.supported()) {
-      const promise = document[FullscreenApi.exitFullscreen]();
-      if (promise) promise.then(() => this._changed(false));
-      return promise;
-    }
-    return Promise.reject();
+    if (!this.supported()) return Promise.reject();
+    const promise = document[FullscreenApi.exitFullscreen]();
+    if (promise) promise.then(() => this._changed(false));
+    if (!promise && this.active()) return Promise.reject(promise);
+    return Promise.resolve(promise);
   }
 
   destroy () {

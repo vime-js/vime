@@ -38,6 +38,9 @@
     on:qualitieschange={onQualitiesChange}
     on:rateschange={onRatesChange}
     on:originchange={onOriginChange}
+    on:trackschange={onTracksChange}
+    on:trackchange={onTrackChange}
+    on:cuechange={onCueChange}
   />
 </PlayerWrapper>
 
@@ -67,14 +70,19 @@
     ended, volume, seeking,
     internalTime, currentTime, nativeMode,
     pipActive, rate, quality,
-    src, srcId, controls,
+    src, srcId, controls, 
+    aspectRatio, buffering, buffered, 
+    autopause, autoplay, playing, 
+    started, poster, playbackReady, 
+    videoView, qualities, rates, 
+    currentSrc, tracks, currentTrack
+  } = store;
+
+  const {
     canSetPiP, canSetFullscreen, fullscreenActive,
-    canSetRate, canSetQuality, aspectRatio,
-    buffering, canAutoplay, canMutedAutoplay,
-    buffered, autopause, autoplay,
-    playing, started, canSetPoster,
-    poster, playbackReady, videoView,
-    qualities, rates, currentSrc
+    canSetTracks, canSetTrack, canSetPoster,
+    canSetRate, canSetQuality, canAutoplay,
+    canMutedAutoplay
   } = store;
 
   let props = {};
@@ -275,6 +283,9 @@
   const onPosterChange = e => { if (!rebuilding) $poster = e.detail; };
   const onQualityChange = e => { if (!rebuilding) store.quality.forceSet(e.detail); };
   const onMuteChange = e => { if ($nativeMode && !tempMute && !rebuilding) $muted = e.detail; };
+  const onTrackChange = e => { store.currentTrack.forceSet(e.detail); };
+  const onTracksChange = e => { $tracks = e.detail; };
+  const onCueChange = e => { store.activeCues.set(e.detail); };
   
   const onVolumeChange = e => {
     if (!$nativeMode || rebuilding) return;
@@ -298,6 +309,17 @@
   $: onSrcReset($currentSrc);
 
   // --------------------------------------------------------------
+  // Support
+  // --------------------------------------------------------------
+
+  $: $canSetPoster = provider && is_function(provider.setPoster);
+  $: $canSetRate = provider && $playbackReady && $rates.length > 1 && is_function(provider.setRate);
+  $: $canSetQuality = provider && $qualities.length > 0 && is_function(provider.setQuality);
+
+  const VIDEO_NOT_READY_ERROR_MSG = 'Must be a video view that is ready for playback.';
+  $: videoReady = $videoView && $playbackReady;
+
+  // --------------------------------------------------------------
   // State Updates
   // --------------------------------------------------------------
 
@@ -306,6 +328,14 @@
   $: if (provider) provider.setNativeMode($nativeMode);
   $: if (provider && !$paused && $ended) onRestart();
   $: if (provider && !rebuilding && $playbackReady) provider.setMuted($muted || tempMute);
+
+  $: (provider && !rebuilding && !updatingVolume && $playbackReady)
+    ? provider.setVolume($volume)
+    : (updatingVolume = false);
+  
+  $: $canSetPoster && !rebuilding && provider.setPoster($poster);
+  $: $canSetRate && !rebuilding && provider.setRate($rate);
+  $: $canSetQuality && !rebuilding && provider.setQuality($quality);
   
   $: if (provider && $playbackReady) {
     provider.setPaused(($paused || tempPause) && !tempPlay);
@@ -313,42 +343,41 @@
     $paused = true;
   }
   
-  $: (provider && !rebuilding && !updatingVolume && $playbackReady)
-    ? provider.setVolume($volume)
-    : (updatingVolume = false);
+  // --------------------------------------------------------------
+  // Tracks
+  // --------------------------------------------------------------
+  
+  $: $canSetTrack = provider && $tracks.length > 0 && is_function(provider.setTrack);
+  $: $canSetTracks = provider && is_function(provider.setTracks);
+
+  $: $canSetTracks && !rebuilding && provider.setTracks($tracks);
+  $: $canSetTrack && !rebuilding && provider.setTrack($currentTrack);
+
+  $: if ($tracks.length === 0 || $currentTrack === -1) store.activeCues.set([]);
  
-  $: $canSetPoster = provider && is_function(provider.setPoster);
-  $: $canSetRate = provider && $playbackReady && $rates.length > 1 && is_function(provider.setRate);
-  $: $canSetQuality = provider && $qualities.length > 0 && is_function(provider.setQuality);
-
-  $: $canSetPoster && !rebuilding && provider.setPoster($poster);
-  $: $canSetRate && !rebuilding && provider.setRate($rate);
-  $: $canSetQuality && !rebuilding && provider.setQuality($quality);
-
-  const VIDEO_READY_ERROR = 'Must be a video view that is ready for playback.';
-  $: videoReady = $videoView && $playbackReady;
-
   // --------------------------------------------------------------
   // Picture in Picture
   // --------------------------------------------------------------
 
-  const NO_PIP_SUPPORT_ERROR = 'Provider does not support PiP.';
+  const NO_PIP_SUPPORT_ERROR_MSG = 'Provider does not support PiP.';
 
   const onPiPRequest = active => {
     if (!videoReady) {
-      return Promise.reject(VIDEO_READY_ERROR);
-    } else if (!canPiP) {
-      return Promise.reject(NO_PIP_SUPPORT_ERROR);
+      return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
+    } else if (!canProviderPiP) {
+      return Promise.reject(NO_PIP_SUPPORT_ERROR_MSG);
     } else {
-      return Promise.resolve(provider.setPiP(active));
+      const promise = provider.setPiP(active);
+      if (promise) promise.then(() => { $pipActive = true; }, () => { $pipActive = false; });
+      return Promise.resolve(promise);
     }
   };
 
-  export const enterPiP = () => onPiPRequest(true);
+  export const requestPiP = () => onPiPRequest(true);
   export const exitPiP = () => onPiPRequest(false);
 
-  $: canPiP = provider && provider.supportsPiP() && is_function(provider.setPiP);
-  $: $canSetPiP = videoReady && canPiP;
+  $: canProviderPiP = provider && provider.supportsPiP() && is_function(provider.setPiP);
+  $: $canSetPiP = videoReady && canProviderPiP;
 
   // --------------------------------------------------------------
   // Fullscreen
@@ -363,25 +392,23 @@
     fullscreen.onChange(active => { $fullscreenActive = active; });
   }
 
-  const onFullscreenRequest = active => {
-    if (canFullscreen) {
-      return Promise.resolve(provider.setFullscreen(active));
-    } else {
-      fullscreen.requestFallback(active);
-      return Promise.resolve();
-    }
+  const requestProviderFullscreen = (active, e) => {
+    if (!canProviderFullscreen) return Promise.reject(e);
+    const promise = provider.setFullscreen(active);
+    if (promise) promise.then(() => { $fullscreenActive = true; }, () => { $fullscreenActive = false; });
+    return Promise.resolve(promise);
   };
 
   export const requestFullscreen = () => {
-    if (!videoReady) return Promise.reject(VIDEO_READY_ERROR);
-    return fullscreen.requestFullscreen().catch(() => onFullscreenRequest(true));
+    if (!videoReady) return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
+    return fullscreen.requestFullscreen().catch(e => requestProviderFullscreen(true, e));
   };
 
   export const exitFullscreen = () => {
-    if (!videoReady) return Promise.reject(VIDEO_READY_ERROR);
-    return fullscreen.exitFullscreen().catch(() => onFullscreenRequest(false));
+    if (!videoReady) return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
+    return fullscreen.exitFullscreen().catch(e => requestProviderFullscreen(false, e));
   };
 
-  $: canFullscreen = provider && provider.supportsFullscreen() && is_function(provider.setFullscreen);
-  $: $canSetFullscreen = videoReady && ((fullscreen && fullscreen.supported()) || canFullscreen);
+  $: canProviderFullscreen = provider && provider.supportsFullscreen() && is_function(provider.setFullscreen);
+  $: $canSetFullscreen = videoReady && ((fullscreen && fullscreen.supported()) || canProviderFullscreen);
 </script>

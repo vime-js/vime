@@ -27,7 +27,10 @@
       SET_CURRENT_TIME: 'setCurrentTime',
       SET_PLAYBACK_RATE: 'setPlaybackRate',
       ADD_EVENT_LISTENER: 'addEventListener',
-      GET_CURRENT_TIME: 'getCurrentTime'
+      GET_CURRENT_TIME: 'getCurrentTime',
+      GET_TEXT_TRACKS: 'getTextTracks',
+      ENABLE_TEXT_TRACK: 'enableTextTrack',
+      DISABLE_TEXT_TRACK: 'disableTextTrack'
     },
     Event: {
       PLAY: PlayerEvent.PLAY,
@@ -40,10 +43,12 @@
       FINISH: 'finish',
       SEEKING: PlayerEvent.SEEKING,
       SEEKED: 'seek',
+      CUE_CHANGE: PlayerEvent.CUE_CHANGE,
       FULLSCREEN_CHANGE: PlayerEvent.FULLSCREEN_CHANGE,
       VOLUME_CHANGE: PlayerEvent.VOLUME_CHANGE,
       DURATION_CHANGE: PlayerEvent.DURATION_CHANGE,
       PLAYBACK_RATE_CHANGE: 'playbackratechange',
+      TEXT_TRACK_CHANGE: 'texttrackchange',
       ERROR: PlayerEvent.ERROR
     },
     EVENTS: [
@@ -61,6 +66,8 @@
       'ended',
       'bufferstart',
       'bufferend',
+      'texttrackchange',
+      PlayerEvent.CUE_CHANGE,
       PlayerEvent.PROGRESS,
       PlayerEvent.ERROR
     ]
@@ -88,6 +95,8 @@
   let embed;
   let seeking = false;
   let ready = false;
+  let tracks = [];
+  let currentTrack = -1;
   let internalTime = 0;
 
   const params = {
@@ -116,12 +125,23 @@
   export const supportsPiP = () => false;
   export const supportsFullscreen = () => true;
 
+  export const setTrack = index => {
+    if (index === -1) send(VM.Command.DISABLE_TEXT_TRACK);
+    if (index > -1) {
+      const { language, kind } = tracks[index];
+      send(VM.Command.ENABLE_TEXT_TRACK, { language, kind });
+    }
+    currentTrack = index;
+  };
+
   onMount(() => dispatch(PlayerEvent.ORIGIN_CHANGE, embed.getOrigin()));
 
   const onReload = () => {
     ready = false;
     seeking = false;
     internalTime = 0;
+    tracks = [];
+    currentTrack = -1;
   };
 
   const onRebuildStart = () => dispatch(PlayerEvent.REBUILD_START);
@@ -154,6 +174,11 @@
       onTimeUpdate(parseFloat(data.value));
       return;
     }
+    if (data.method === VM.Command.GET_TEXT_TRACKS) {
+      tracks = data.value || [];
+      currentTrack = tracks.findIndex(t => t.mode === 'showing');
+    }
+    if (!event) return;
     switch (event) {
       case VM.Event.READY:
         dispatch(PlayerEvent.READY);
@@ -163,6 +188,7 @@
         ready = true;
         dispatch(PlayerEvent.PLAYBACK_READY);
         dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, MediaType.VIDEO);
+        send(VM.Command.GET_TEXT_TRACKS);
         break;
       case VM.Event.PLAY:
         dispatch(PlayerEvent.PLAYING);
@@ -181,6 +207,12 @@
         break;
       case VM.Event.SEEKING:
         dispatch(PlayerEvent.SEEKING);
+        break;
+      case VM.Event.TEXT_TRACK_CHANGE:
+        currentTrack = tracks.findIndex(t => t.label === payload.label);
+        break;
+      case VM.Event.CUE_CHANGE:
+        dispatch(PlayerEvent.CUE_CHANGE, payload.cues ? payload.cues : [payload]);
         break;
       case VM.Event.SEEKED:
         if (seeking) dispatch(PlayerEvent.BUFFERING, false);
@@ -211,4 +243,6 @@
   $: (!seeking && ready) ? getTimeUpdates() : cancelTimeUpdates();
   $: if (!srcId && src) srcId = src.match(VM.URL)[1] || null;
   $: getPoster(src).then(poster => dispatch(PlayerEvent.POSTER_CHANGE, poster));
+  $: dispatch(PlayerEvent.TRACKS_CHANGE, tracks);
+  $: dispatch(PlayerEvent.TRACK_CHANGE, currentTrack);
 </script>

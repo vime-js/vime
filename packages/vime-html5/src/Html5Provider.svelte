@@ -5,6 +5,8 @@
     bind:this={audio}
   >
     <Source src={currentSrc} />
+    <Tracks {tracks} />
+    Media not supported.
   </audio>
 {:else if shouldUseVideo}
   <video
@@ -23,6 +25,8 @@
     bind:this={video}
   >
     <Source src={currentSrc} />
+    <Tracks {tracks} />
+    Media not supported.
   </video>
 {/if}
 
@@ -39,12 +43,19 @@
       VIDEO: /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i,
       HLS: /\.(m3u8)($|\?)/i
     },
-    Url: {
-      DROPBOX: /www\.dropbox\.com\/.+/
-    },
     WebkitPresentationMode: {
-      ACTIVE: 'picture-in-picture',
-      INACTIVE: 'inline'
+      PIP: 'picture-in-picture',
+      INLINE: 'inline'
+    },
+    TextTrack: {
+      Mode: {
+        SHOWING: 'showing',
+        HIDDEN: 'hidden'
+      },
+      Event: {
+        CHANGE: 'change',
+        CUE_CHANGE: 'cuechange'
+      }
     },
     Event: {
       LOADED_METADATA: 'loadedmetadata',
@@ -53,9 +64,15 @@
     }
   };
 
+  const Dropbox = {
+    URL: /www\.dropbox\.com\/.+/,
+    ORIGIN: 'www.dropbox.com',
+    CONTENT_ORIGIN: 'dl.dropboxusercontent.com'
+  };
+
   const isMediaStream = src => is_instance_of(src, window.MediaStream);
   const isQualitiesSet = src => is_array(src) && src.every(resource => is_number(resource.quality));
-  const isDropboxUrl = src => is_string(src) && Html5.Url.DROPBOX.test(src);
+  const isDropboxUrl = src => is_string(src) && Dropbox.URL.test(src);
   const isAudio = src => Html5.Ext.AUDIO.test(src);
   const isVideo = src => Html5.Ext.VIDEO.test(src) || 
     (can_play_hls_natively() && Html5.Ext.HLS.test(src));
@@ -83,6 +100,7 @@
   import { tick, createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { run_all, listen, raf } from 'svelte/internal';
   import Source from './Source.svelte';
+  import Tracks from './Tracks.svelte';
   import { Disposal, PlayerEvent, MediaType } from '@vime/core';
   
   import { 
@@ -130,30 +148,103 @@
     if (poster) rebuild();
   };
 
-  export const setPiP = active => {
-    if (!supportsPiP()) return;
-    let fn;
-    let isActive;
-    if (can_use_pip_in_chrome()) {
-      isActive = document.pictureInPictureElement;
-      fn = active ? video.requestPictureInPicture : video.exitPictureInPicture;
-    } else if (can_use_pip_in_safari()) {
-      isActive = (video.webkitPresentationMode === Html5.WebkitPresentationMode.ACTIVE);
-      fn = active 
-        ? () => video.webkitSetPresentationMode(Html5.WebkitPresentationMode.ACTIVE)
-        : () => video.webkitSetPresentationMode(Html5.WebkitPresentationMode.INACTIVE);
-    }
-    if ((active && !isActive) || (!active && isActive)) return fn();
+  // --------------------------------------------------------------
+  // Picture in Picture
+  // --------------------------------------------------------------
+
+  const setChromePiP = active => active 
+    ? video.requestPictureInPicture() 
+    : video.exitPictureInPicture();
+
+  const setSafariPiP = active => {
+    const mode = active ? Html5.WebkitPresentationMode.PIP : Html5.WebkitPresentationMode.INLINE;
+    if (!video.webkitSupportsPresentationMode(mode)) return Promise.reject();
+    video.webkitSetPresentationMode(mode);
+    return (video.webkitPresentationMode === mode) ? Promise.resolve() : Promise.reject();
   };
 
-  export const setFullscreen = active => {
-    const isActive = video.webkitDisplayingFullscreen;
-    if (active && !isActive) return video.webkitEnterFullscreen();
-    if (!active && isActive) return video.webkitExitFullscreen();
+  export const setPiP = active => {
+    if (!supportsPiP()) return Promise.reject('PiP not supported.');
+    if (can_use_pip_in_chrome()) {
+      return setChromePiP(active);
+    } else if (can_use_pip_in_safari()) {
+      return setSafariPiP(active);
+    }
   };
 
   export const supportsPiP = () => can_use_pip();
+
+  // --------------------------------------------------------------
+  // Fullscreen
+  // --------------------------------------------------------------
+
+  export const setFullscreen = active => {
+    if (!video.webkitSupportsFullscreen) return Promise.reject();
+    active ? video.webkitEnterFullscreen() : video.webkitExitFullscreen();
+    return (video.webkitDisplayingFullscreen === active) ? Promise.resolve() : Promise.reject();
+  };
+
   export const supportsFullscreen = () => can_fullscreen_video_in_safari();
+
+  // --------------------------------------------------------------
+  // Tracks
+  // --------------------------------------------------------------
+
+  let tracks = [];
+  let currentTrack = -1;
+  let onCueChangeListener = null;
+
+  const removeOnCueChangeListener = () => {
+    if (onCueChangeListener) onCueChangeListener();
+    onCueChangeListener = null;
+  };
+
+  onDestroy(removeOnCueChangeListener);
+
+  const onCueChange = e => {
+    const activeCues = Array.from(e.target.activeCues);
+    dispatch(PlayerEvent.CUE_CHANGE, activeCues);
+  };
+
+  const listenToCueChanges = track => {
+    dispatch(PlayerEvent.CUE_CHANGE, track.activeCues ? Array.from(track.activeCues) : []);
+    onCueChangeListener = listen(track, Html5.TextTrack.Event.CUE_CHANGE, onCueChange);
+  };
+
+  export const setTracks = newTracks => { 
+    removeOnCueChangeListener();
+    tracks = newTracks || [];
+    currentTrack = -1;
+  };
+
+  export const setTrack = newTrack => {
+    const tracks = Array.from(media.textTracks);
+    if (tracks.length === 0 || currentTrack == newTrack) return;
+    removeOnCueChangeListener();
+    if (currentTrack > -1) tracks[currentTrack].mode = Html5.TextTrack.Mode.HIDDEN;
+    if (newTrack > -1) {
+      const track = tracks[newTrack];
+      track.mode = Html5.TextTrack.Mode.SHOWING;
+      listenToCueChanges(track);
+    }
+    currentTrack = newTrack;
+  };
+
+  const onTracksChange = e => {
+    const tracks = Array.from(media.textTracks);
+    const newTrack = tracks.findIndex(t => t.mode === Html5.TextTrack.Mode.SHOWING);
+    if (currentTrack !== newTrack) {
+      dispatch(PlayerEvent.TRACK_CHANGE, newTrack);
+      setTrack(newTrack);
+      currentTrack = newTrack;
+    }
+  };
+
+  // --------------------------------------------------------------
+  // Media 
+  // --------------------------------------------------------------
+
+  onMount(() => dispatch(PlayerEvent.READY));
 
   let timeRaf;
   const cancelTimeUpdates = () => window.cancelAnimationFrame(timeRaf);
@@ -174,8 +265,6 @@
     const end = (buffered.length === 0) ? 0 : buffered.end(buffered.length - 1);
     dispatch(PlayerEvent.BUFFERED, (end > duration) ? duration : end);
   };
-
-  onMount(() => dispatch(PlayerEvent.READY));
 
   const setupMediaListeners = () => {
     listenToMedia(Html5.Event.LOADED_METADATA, () => {
@@ -199,6 +288,7 @@
     forwardMediaEvent(Html5.Event.WAITING, PlayerEvent.BUFFERING);
     forwardMediaEvent(Html5.Event.ENDED, PlayerEvent.PLAYBACK_END);
     forwardMediaEvent(PlayerEvent.ERROR, null, e => e);
+    disposal.add(listen(media.textTracks, Html5.TextTrack.Event.CHANGE, onTracksChange));
   };
 
   const onEnterPiP = () => dispatch(PlayerEvent.PIP_CHANGE, true);
@@ -207,7 +297,7 @@
   const onPresentationModeChange = e => {
     if (!can_use_pip()) return;
     const mode = video.webkitPresentationMode;
-    dispatch(PlayerEvent.PIP_CHANGE, (mode === Html5.WebkitPresentationMode.ACTIVE));
+    dispatch(PlayerEvent.PIP_CHANGE, (mode === Html5.WebkitPresentationMode.PIP));
   };
 
   const load = async () => {
@@ -254,7 +344,7 @@
 
   const loadNewSrc = () => {
     const newSrc = isDropboxUrl(src)
-      ? src.replace('www.dropbox.com', 'dl.dropboxusercontent.com')
+      ? src.replace(Dropbox.ORIGIN, Dropbox.CONTENT_ORIGIN)
       : src;
     currentSrc = newSrc;
     load();
@@ -285,6 +375,7 @@
   // If media is initialized or changed (audio/video/false).
   $: if (prevMedia !== media) {
     disposal.dispose();
+    removeOnCueChangeListener();
     if (media) setupMediaListeners();
     prevMedia = media;
   }
