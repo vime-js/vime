@@ -22,7 +22,7 @@
     "test:watch": "yarn test --watch",
     "test:update": "yarn test --updateSnapshot --coverage",
     "toc": "doctoc README.md",
-    "setup": "yarn clean:node && yarn && lerna bootstrap --hoist",
+    "setup": "yarn clean:node && yarn install --no-lockfile",
     "release": "yarn validate && lerna publish --silent",
     "validate": "yarn lint && yarn test && yarn build"
   },
