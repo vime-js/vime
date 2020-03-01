@@ -1,33 +1,46 @@
 {
   "name": "@vime/player",
-  "description": "",
+  "description": "Vime Player",
   "version": "1.0.0",
-  "main": "dist/legacy/player.umd.js",
+  "main": "dist/legacy/Player.umd.js",
   "module": "dist/modern/player.esm.js",
-  "unpkg": "dist/legacy/player.umd.js",
+  "unpkg": "dist/legacy/Player.umd.js",
   "svelte": "src/index.js",
   "license": "MIT",
   "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
   "homepage": "https://github.com/vime-js/vime#readme",
-  "repository": "https://github.com/vime-js/vime/tree/master/packages/player",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/vime-player",
   "bugs": {
     "url": "https://github.com/vime-js/vime/issues"
   },
   "keywords": [
     "vime",
-    "player"
+    "player",
+    "youtube",
+    "dailymotion",
+    "vimeo",
+    "html5",
+    "lazy",
+    "lightweight",
+    "fast",
+    "embed"
   ],
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "",
+    "build": "rollup -c",
     "svg:min": "svgo --config ./svgo.yml -f src/static/icons",
     "svg:sprite": "svgstore --inline -o src/static/vime.svg src/static/icons/*.svg"
   },
-  "devDependencies": {
-    "dashjs": "^3.0.2",
+  "dependencies": {
+    "@vime/core": "^1.0.0",
+    "@vime/utils": "^1.0.0",
+    "@vime/html5": "^1.0.0",
+    "@vime/youtube": "^1.0.0",
+    "@vime/vimeo": "^1.0.0",
+    "@vime/dailymotion": "^1.0.0",
     "svgo": "^1.3.2",
     "svgstore-cli": "^1.3.1"
   }

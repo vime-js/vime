@@ -26,8 +26,7 @@ export const plugins = ({ legacy = false, externalCSS = false } = {}) => {
       dedupe: importee => 
         importee === 'svelte' || 
         importee.startsWith('svelte/') ||
-        importee.startsWith('@vime/core') ||
-        importee.startsWith('@vime/utils')
+        importee.startsWith('@vime/')
     }),
     commonjs(),
     svg(),
@@ -37,7 +36,7 @@ export const plugins = ({ legacy = false, externalCSS = false } = {}) => {
         postcss: require('../../postcss.config')(legacy)
       }),
       css: (!dev && externalCSS && !hasOutputCSS) ? css => {
-        css.write(`${outputDir}/vime.css`);
+        css.write(`${outputDir}/vime${legacy ? '-legacy' : ''}.css`);
         hasOutputCSS = true;
       } : () => {}
     }),
@@ -147,3 +146,27 @@ export const modernBuild = ({
   },
   plugins: plugins(pluginOpts)
 });
+
+export const providerBuild = ({ 
+  name, 
+  hasLiteVersion = true 
+}) => {
+  const entry = 'src/index.js';
+  const fullEntry = `src/${name}.js`;
+  const liteEntry = `src/${name}Lite.svelte`;
+  const nameLowerCase = name.toLowerCase();
+  const chunkedEntry = { [nameLowerCase]: entry };
+
+  const chunks = id => {
+    if (id.includes(`vime-${nameLowerCase}/src`)) getFileName(id);
+  };
+
+  return [
+    chunkedBuild({ input: chunkedEntry, chunks }),
+    chunkedBuild({ input: chunkedEntry, format: 'system', chunks }),
+    hasLiteVersion && legacyBuild({ input: liteEntry, name }),
+    legacyBuild({ input: fullEntry, name }),
+    hasLiteVersion && modernBuild({ input: liteEntry, fileName: 'FileSizeLite' }),
+    modernBuild({ input: fullEntry, fileName: 'FileSize' })
+  ].filter(Boolean);
+};

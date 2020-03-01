@@ -1,3 +1,0 @@
-# Vime Player
-
-WIP.
