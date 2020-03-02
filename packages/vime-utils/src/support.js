@@ -3,7 +3,6 @@
 
 import { noop, listen, element } from 'svelte/internal';
 import { is_function } from './unit';
-import { try_on_svelte_destroy } from './svelte';
 
 export const IS_CLIENT = typeof window !== 'undefined';
 export const UA = (IS_CLIENT && window.navigator.userAgent.toLowerCase());
@@ -19,26 +18,26 @@ export const ORIGIN = (window.location.protocol !== 'file:')
   ? `${window.location.protocol}//${window.location.hostname}`
   : null;
 
-export const watch_touch = cb => {
+export const listen_for_touch_input = cb => {
   if (!IS_CLIENT) return;
 
   let lastTouchTime = 0;
-
-  const e1 = listen(document, 'touchstart', () => {
+  
+  const touchListener = listen(document, 'touchstart', () => {
     lastTouchTime = new Date();
     cb(true);
   }, true);
-
-  const e2 = listen(document, 'mousemove', () => {
+  
+  const mouseListener = listen(document, 'mousemove', () => {
     // Filter emulated events coming from touch events
     if (new Date() - lastTouchTime < 500) return;
     cb(false);
   }, true);
 
-  try_on_svelte_destroy(() => {
-    e1();
-    e2();
-  });
+  return () => {
+    touchListener();
+    mouseListener();
+  };
 };
 
 // @see https://developer.apple.com/documentation/webkitjs/htmlvideoelement/1633500-webkitenterfullscreen

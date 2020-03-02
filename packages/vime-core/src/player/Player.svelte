@@ -8,7 +8,7 @@
     srcId={$srcId}
     aspectRatio={$aspectRatio}
     this={Provider}
-    bind:this={provider}
+    bind:this={$provider}
     on:error
     on:ready={onProviderReady}
     on:playbackready={onPlaybackReady}
@@ -49,7 +49,7 @@
   import { get } from 'svelte/store';
   import { get_current_component } from 'svelte/internal';
   import { currentPlayer } from './globalStore';
-  import { bindPlayerStoreToComponent } from './playerStore';
+  import { mapPlayerStoreToComponent } from './playerStore';
   import PlayerEvent from './PlayerEvent';
   import PlayerWrapper from './PlayerWrapper.svelte';
   import {
@@ -62,7 +62,7 @@
   
   onDestroy(() => { self = null; });
 
-  const { store, resetStore, onPropsChange } = bindPlayerStoreToComponent();
+  const { store, resetStore, onPropsChange } = mapPlayerStoreToComponent();
   $: onPropsChange($$props);
 
   const {
@@ -70,12 +70,13 @@
     ended, volume, seeking,
     internalTime, currentTime, nativeMode,
     pipActive, rate, quality,
-    src, srcId, controls, 
+    src, srcId, controlsEnabled, 
     aspectRatio, buffering, buffered, 
     autopause, autoplay, playing, 
     started, poster, playbackReady, 
     videoView, qualities, rates, 
-    currentSrc, tracks, currentTrack
+    currentSrc, tracks, currentTrack,
+    provider
   } = store;
 
   const {
@@ -86,14 +87,11 @@
   } = store;
 
   let props = {};
-  let provider;
   let playerWrapper;
 
   onDestroy(() => { props = {}; });
 
   export let Provider;
-
-  export const getProvider = () => provider;
 
   // Filter out any player props before passing them to the provider.
   $: Object
@@ -139,9 +137,9 @@
   };
 
   afterUpdate(() => {
-    if (!provider || !$playbackReady || $seeking || ($currentTime === $internalTime)) return;
+    if (!$provider || !$playbackReady || $seeking || ($currentTime === $internalTime)) return;
     $internalTime = $currentTime;
-    provider.setCurrentTime($currentTime);
+    $provider.setCurrentTime($currentTime);
   });
 
   const onAutoplay = () => {
@@ -174,7 +172,7 @@
     if ($currentTime > 0 && $canMutedAutoplay) {
       if (!$autoplay) initiateTempPlayback();
       await tick();
-      provider.setCurrentTime($currentTime);
+      $provider.setCurrentTime($currentTime);
       return;
     }
     dispatch(PlayerEvent.REBUILD_END);
@@ -185,7 +183,7 @@
     $currentPlayer.paused = true;
   };
 
-  const onPlay = () => { if (nativeMode && !tempPlay) $paused = false; };
+  const onPlay = () => { if ($nativeMode && !tempPlay) $paused = false; };
 
   // If a provider fires a `pause` event before `seeking` we cancel it to not mess
   // with our internal paused state.
@@ -193,7 +191,7 @@
   const onPause = () => {
     if (rebuilding) return;
     firePauseTimer = window.setTimeout(() => {
-      if (nativeMode && !tempPause) $paused = true;
+      if ($nativeMode && !tempPause) $paused = true;
       if (!tempPause) $playing = false;
     }, 100);
   };
@@ -225,8 +223,8 @@
     $currentPlayer = self;
     if ($nativeMode && !tempPlay) $paused = false;
     if (!tempPlay) $playing = true;
-    provider.setPaused($paused);
-    provider.setMuted($muted);
+    $provider.setPaused($paused);
+    $provider.setMuted($muted);
     cancelTempAction(() => {
       tempPlay = false;
       tempMute = false;
@@ -239,7 +237,7 @@
     $internalTime = 0;
     $currentTime = 0;
     $ended = false;
-    provider.setCurrentTime(0);
+    $provider.setCurrentTime(0);
     $paused = false;
     dispatch(PlayerEvent.REPLAY);
   };
@@ -282,13 +280,13 @@
   const onRateChange = e => { if (!rebuilding) store.rate.forceSet(parseFloat(e.detail)); };
   const onPosterChange = e => { if (!rebuilding) $poster = e.detail; };
   const onQualityChange = e => { if (!rebuilding) store.quality.forceSet(e.detail); };
-  const onMuteChange = e => { if ($nativeMode && !tempMute && !rebuilding) $muted = e.detail; };
-  const onTrackChange = e => { store.currentTrack.forceSet(e.detail); };
+  const onMuteChange = e => { if (!tempMute && !rebuilding) $muted = e.detail; };
+  const onTrackChange = e => { store.currentTrack.set(e.detail); };
   const onTracksChange = e => { $tracks = e.detail; };
   const onCueChange = e => { store.activeCues.set(e.detail); };
-  
+
   const onVolumeChange = e => {
-    if (!$nativeMode || rebuilding) return;
+    if (!rebuilding) return;
     $volume = parseInt(e.detail);
     updatingVolume = true;
   };
@@ -312,33 +310,33 @@
   // Support
   // --------------------------------------------------------------
 
-  $: $canSetPoster = provider && is_function(provider.setPoster);
-  $: $canSetRate = provider && $playbackReady && $rates.length > 1 && is_function(provider.setRate);
-  $: $canSetQuality = provider && $qualities.length > 0 && is_function(provider.setQuality);
+  $: $canSetPoster = $provider && is_function($provider.setPoster);
+  $: $canSetRate = $provider && $playbackReady && $rates.length > 1 && is_function($provider.setRate);
+  $: $canSetQuality = $provider && $qualities.length > 0 && is_function($provider.setQuality);
 
-  const VIDEO_NOT_READY_ERROR_MSG = 'Must be a video view that is ready for playback.';
+  const VIDEO_NOT_READY_ERROR_MSG = 'Action not supported, must be a video that is ready for playback.';
   $: videoReady = $videoView && $playbackReady;
 
   // --------------------------------------------------------------
   // State Updates
   // --------------------------------------------------------------
 
-  $: if (provider) provider.setPlaysinline($playsinline);
-  $: if (provider) provider.setControls($nativeMode && $controls);
-  $: if (provider) provider.setNativeMode($nativeMode);
-  $: if (provider && !$paused && $ended) onRestart();
-  $: if (provider && !rebuilding && $playbackReady) provider.setMuted($muted || tempMute);
+  $: if ($provider) $provider.setPlaysinline($playsinline);
+  $: if ($provider) $provider.setControls($nativeMode && $controlsEnabled);
+  $: if ($provider) $provider.setNativeMode($nativeMode);
+  $: if ($provider && !$paused && $ended) onRestart();
+  $: if ($provider && !rebuilding && $playbackReady) $provider.setMuted($muted || tempMute);
 
-  $: (provider && !rebuilding && !updatingVolume && $playbackReady)
-    ? provider.setVolume($volume)
+  $: ($provider && !rebuilding && !updatingVolume && $playbackReady)
+    ? $provider.setVolume($volume)
     : (updatingVolume = false);
   
-  $: $canSetPoster && !rebuilding && provider.setPoster($poster);
-  $: $canSetRate && !rebuilding && provider.setRate($rate);
-  $: $canSetQuality && !rebuilding && provider.setQuality($quality);
+  $: $canSetPoster && !rebuilding && $provider.setPoster($poster);
+  $: $canSetRate && !rebuilding && $provider.setRate($rate);
+  $: $canSetQuality && !rebuilding && $provider.setQuality($quality);
   
-  $: if (provider && $playbackReady) {
-    provider.setPaused(($paused || tempPause) && !tempPlay);
+  $: if ($provider && $playbackReady) {
+    $provider.setPaused(($paused || tempPause) && !tempPlay);
   } else {
     $paused = true;
   }
@@ -347,13 +345,13 @@
   // Tracks
   // --------------------------------------------------------------
   
-  $: $canSetTrack = provider && $tracks.length > 0 && is_function(provider.setTrack);
-  $: $canSetTracks = provider && is_function(provider.setTracks);
+  $: $canSetTrack = $provider && $tracks.length > 0 && is_function($provider.setTrack);
+  $: $canSetTracks = $provider && is_function($provider.setTracks);
 
-  $: $canSetTracks && !rebuilding && provider.setTracks($tracks);
-  $: $canSetTrack && !rebuilding && provider.setTrack($currentTrack);
+  $: $canSetTracks && !rebuilding && $provider.setTracks($nativeMode ? $tracks : []);
+  $: $canSetTrack && !rebuilding && $provider.setTrack($nativeMode ? $currentTrack : -1);
 
-  $: if ($tracks.length === 0 || $currentTrack === -1) store.activeCues.set([]);
+  $: if ($tracks.length === 0 || $currentTrack === -1 || !$nativeMode) store.activeCues.set([]);
  
   // --------------------------------------------------------------
   // Picture in Picture
@@ -367,7 +365,7 @@
     } else if (!canProviderPiP) {
       return Promise.reject(NO_PIP_SUPPORT_ERROR_MSG);
     } else {
-      const promise = provider.setPiP(active);
+      const promise = $provider.setPiP(active);
       if (promise) promise.then(() => { $pipActive = true; }, () => { $pipActive = false; });
       return Promise.resolve(promise);
     }
@@ -376,7 +374,7 @@
   export const requestPiP = () => onPiPRequest(true);
   export const exitPiP = () => onPiPRequest(false);
 
-  $: canProviderPiP = provider && provider.supportsPiP() && is_function(provider.setPiP);
+  $: canProviderPiP = $provider && $provider.supportsPiP() && is_function($provider.setPiP);
   $: $canSetPiP = videoReady && canProviderPiP;
 
   // --------------------------------------------------------------
@@ -387,14 +385,14 @@
 
   let fullscreen;
 
-  $: if (playerWrapper) {
+  const onSetupFullscreen = () => { 
     fullscreen = new Fullscreen(playerWrapper);
     fullscreen.onChange(active => { $fullscreenActive = active; });
-  }
+  };
 
   const requestProviderFullscreen = (active, e) => {
     if (!canProviderFullscreen) return Promise.reject(e);
-    const promise = provider.setFullscreen(active);
+    const promise = $provider.setFullscreen(active);
     if (promise) promise.then(() => { $fullscreenActive = true; }, () => { $fullscreenActive = false; });
     return Promise.resolve(promise);
   };
@@ -409,6 +407,7 @@
     return fullscreen.exitFullscreen().catch(e => requestProviderFullscreen(false, e));
   };
 
-  $: canProviderFullscreen = provider && provider.supportsFullscreen() && is_function(provider.setFullscreen);
-  $: $canSetFullscreen = videoReady && ((fullscreen && fullscreen.supported()) || canProviderFullscreen);
+  $: if (playerWrapper) onSetupFullscreen();
+  $: canProviderFullscreen = $provider && $provider.supportsFullscreen() && is_function($provider.setFullscreen);
+  $: $canSetFullscreen = Boolean(videoReady && ((fullscreen && fullscreen.supported()) || canProviderFullscreen));
 </script>

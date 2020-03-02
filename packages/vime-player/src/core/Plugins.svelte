@@ -13,7 +13,7 @@
 
   export const ID = 'vPlugins';
 
-  export const buildConfig = (Plugin, config) => {
+  const buildConfig = (Plugin, config) => {
     return merge_deep(config[Plugin.ID], Plugin.DEFAULT_CONFIG || {});
   };
 </script>

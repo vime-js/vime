@@ -88,8 +88,8 @@
 
   export const setPaused = paused => paused ? send(DM.Command.PAUSE) : send(DM.Command.PLAY);
   export const setPlaysinline = enabled => { /** noop */ };
-  export const setControls = enabled => send(DM.Command.CONTROLS, [enabled]);
   export const setQuality = quality => send(DM.Command.QUALITY, [quality]);
+  export const setControls = enabled => { send(DM.Command.CONTROLS, [enabled]); };
   export const setFullscreen = active => send(DM.Command.FULLSCREEN, [active]);
 
   export const setMuted = muted => {
