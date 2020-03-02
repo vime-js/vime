@@ -18,60 +18,65 @@
   const VM = {
     URL: /vimeo\.com\/.+/,
     FILE_URL: /vimeo\.com\/external\/[0-9]+\..+/,
-    THUMBNAIL_URL: /vimeocdn\.com\/video\/([0-9]+)/,
-    Command: {
-      PLAY: PlayerEvent.PLAY,
-      PAUSE: PlayerEvent.PAUSE,
-      SET_MUTED: 'setMuted',
-      SET_VOLUME: 'setVolume',
-      SET_CURRENT_TIME: 'setCurrentTime',
-      SET_PLAYBACK_RATE: 'setPlaybackRate',
-      ADD_EVENT_LISTENER: 'addEventListener',
-      GET_CURRENT_TIME: 'getCurrentTime',
-      GET_TEXT_TRACKS: 'getTextTracks',
-      ENABLE_TEXT_TRACK: 'enableTextTrack',
-      DISABLE_TEXT_TRACK: 'disableTextTrack'
-    },
-    Event: {
-      PLAY: PlayerEvent.PLAY,
-      PAUSE: PlayerEvent.PAUSE,
-      READY: PlayerEvent.READY,
-      LOAD_PROGRESS: 'loadProgress',
-      BUFFER_START: 'bufferstart',
-      BUFFER_END: 'bufferend',
-      LOADED: 'loaded',
-      FINISH: 'finish',
-      SEEKING: PlayerEvent.SEEKING,
-      SEEKED: 'seek',
-      CUE_CHANGE: PlayerEvent.CUE_CHANGE,
-      FULLSCREEN_CHANGE: PlayerEvent.FULLSCREEN_CHANGE,
-      VOLUME_CHANGE: PlayerEvent.VOLUME_CHANGE,
-      DURATION_CHANGE: PlayerEvent.DURATION_CHANGE,
-      PLAYBACK_RATE_CHANGE: 'playbackratechange',
-      TEXT_TRACK_CHANGE: 'texttrackchange',
-      ERROR: PlayerEvent.ERROR
-    },
-    EVENTS: [
-      PlayerEvent.PLAY,
-      PlayerEvent.PAUSE,
-      PlayerEvent.SEEKING,
-      PlayerEvent.SEEKED,
-      PlayerEvent.TIME_UPDATE,
-      PlayerEvent.VOLUME_CHANGE,
-      PlayerEvent.DURATION_CHANGE,
-      PlayerEvent.FULLSCREEN_CHANGE,
-      'playbackratechange',
-      'waiting',
-      'loaded',
-      'ended',
-      'bufferstart',
-      'bufferend',
-      'texttrackchange',
-      PlayerEvent.CUE_CHANGE,
-      PlayerEvent.PROGRESS,
-      PlayerEvent.ERROR
-    ]
+    THUMBNAIL_URL: /vimeocdn\.com\/video\/([0-9]+)/
   };
+
+  VM.Command = {
+    PLAY: PlayerEvent.PLAY,
+    PAUSE: PlayerEvent.PAUSE,
+    SET_MUTED: 'setMuted',
+    SET_VOLUME: 'setVolume',
+    SET_CURRENT_TIME: 'setCurrentTime',
+    SET_PLAYBACK_RATE: 'setPlaybackRate',
+    ADD_EVENT_LISTENER: 'addEventListener',
+    GET_CURRENT_TIME: 'getCurrentTime',
+    GET_TEXT_TRACKS: 'getTextTracks',
+    ENABLE_TEXT_TRACK: 'enableTextTrack',
+    DISABLE_TEXT_TRACK: 'disableTextTrack'
+  };
+
+  VM.Event = {
+    PLAY: PlayerEvent.PLAY,
+    PAUSE: PlayerEvent.PAUSE,
+    READY: PlayerEvent.READY,
+    LOAD_PROGRESS: 'loadProgress',
+    BUFFER_START: 'bufferstart',
+    BUFFER_END: 'bufferend',
+    LOADED: 'loaded',
+    FINISH: 'finish',
+    SEEKING: PlayerEvent.SEEKING,
+    SEEKED: 'seek',
+    CUE_CHANGE: PlayerEvent.CUE_CHANGE,
+    FULLSCREEN_CHANGE: PlayerEvent.FULLSCREEN_CHANGE,
+    VOLUME_CHANGE: PlayerEvent.VOLUME_CHANGE,
+    DURATION_CHANGE: PlayerEvent.DURATION_CHANGE,
+    PLAYBACK_RATE_CHANGE: 'playbackratechange',
+    TEXT_TRACK_CHANGE: 'texttrackchange',
+    ERROR: PlayerEvent.ERROR
+  };
+
+  // Some reason names are different when calling `addEventListener` vs the event name
+  // that comes through `onData`, hence VM.EVENTS/VM.Event.
+  VM.EVENTS = [
+    PlayerEvent.PLAY,
+    PlayerEvent.PAUSE,
+    PlayerEvent.SEEKING,
+    PlayerEvent.SEEKED,
+    PlayerEvent.TIME_UPDATE,
+    PlayerEvent.VOLUME_CHANGE,
+    PlayerEvent.DURATION_CHANGE,
+    PlayerEvent.FULLSCREEN_CHANGE,
+    PlayerEvent.CUE_CHANGE,
+    PlayerEvent.PROGRESS,
+    PlayerEvent.ERROR,
+    VM.Event.PLAYBACK_RATE_CHANGE,
+    VM.Event.LOADED,
+    VM.Event.BUFFER_START,
+    VM.Event.BUFFER_END,
+    VM.Event.TEXT_TRACK_CHANGE,
+    'waiting',
+    'ended'
+  ];
 
   export const canPlay = src => is_string(src) && !VM.FILE_URL.test(src) && VM.URL.test(src);
 

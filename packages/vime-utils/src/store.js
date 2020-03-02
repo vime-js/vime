@@ -1,6 +1,6 @@
 import { onDestroy } from 'svelte';
 import { get, writable, derived } from 'svelte/store';
-import { noop, get_current_component, not_equal, init, validate_store } from 'svelte/internal';
+import { noop, not_equal, init, validate_store } from 'svelte/internal';
 import { create_prop, merge_deep } from './object';
 import { is_function } from './unit';
 import { try_on_svelte_destroy, try_create_svelte_dispatcher } from './svelte';
@@ -87,19 +87,16 @@ export const writable_if = (initialValue, condition) => {
   };
 };
 
-export const indexable = (bounds) => {
+export const indexable = bounds => {
+  let value;
   const store = writable(-1);
   return {
     ...store,
-    set: index => {
-      const _bounds = safe_get(bounds);
-      if (!_bounds || _bounds.length === 0) {
-        store.set(-1);
-        return;
-      }
-      if (index >= -1 && index < _bounds.length) store.set(index);
-    },
-    forceSet: store.set
+    subscribe: derived([store, bounds], ([$value, $bounds]) => {
+      if (!$bounds || $bounds.length === 0) { value = -1; }
+      if ($value >= 0 && $value < $bounds.length) { value = $value; }
+      return value;
+    }).subscribe
   };
 };
 
@@ -108,32 +105,29 @@ export const indexable_if = (bounds, condition) => {
   return {
     ...store,
     set: index => safe_get(condition) && store.set(index),
-    forceSet: store.forceSet
-  };
-};
-
-export const selectable = (initialValue, possibleValues) => {
-  const store = writable(initialValue);
-  return {
-    ...store,
-    set: selection => {
-      const values = safe_get(possibleValues);
-      if (!values) {
-        store.set(null);
-        return;
-      }
-      if (values.includes(selection)) store.set(selection);
-    },
     forceSet: store.set
   };
 };
 
-export const selectable_if = (initialValue, possibleValues, condition) => {
-  const store = selectable(initialValue, possibleValues);
+export const selectable = (initialValue, values) => {
+  let newValue;
+  const store = writable(initialValue);
+  return {
+    ...store,
+    subscribe: derived([store, values], ([$value, $values]) => {
+      if (!$values) { newValue = null; }
+      if ($values.includes($value)) { newValue = $value; }
+      return newValue;
+    }).subscribe
+  };
+};
+
+export const selectable_if = (initialValue, values, condition) => {
+  const store = selectable(initialValue, values);
   return {
     ...store,
     set: selection => safe_get(condition) && store.set(selection),
-    forceSet: store.forceSet
+    forceSet: store.set
   };
 };
 
@@ -148,16 +142,16 @@ export const make_private_stores_readonly = stores => {
   return result;
 };
 
-export const map_store_to_component = stores => {
+export const map_store_to_component = (component, stores) => {
   let ctx = {};
   let canWrite = {};
-  const component = get_current_component();
 
   create_prop(component, 'getStore', {
-    get: () => () => make_private_stores_readonly(stores)
+    get: () => () => make_private_stores_readonly(stores),
+    configurable: true
   });
 
-  onDestroy(() => {
+  component.$$.on_destroy.push(() => {
     ctx = {};
     canWrite = {};
   });

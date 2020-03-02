@@ -15,6 +15,7 @@ PlayerEvent.SRC_CHANGE = 'srcchange';
 PlayerEvent.CURRENT_SRC_CHANGE = 'currentsrcchange';
 PlayerEvent.TRACKS_CHANGE = 'trackschange';
 PlayerEvent.TRACK_CHANGE = 'trackchange';
+PlayerEvent.PROVIDER_CHANGE = 'providerchange';
 PlayerEvent.CUE_CHANGE = 'cuechange';
 PlayerEvent.CAPTIONS_CHANGE = 'captionschange';
 PlayerEvent.TITLE_CHANGE = 'titlechange';
