@@ -1,4 +1,4 @@
-{#each _plugins.filter(p => !nativeMode) as Plugin (Plugin.ID)}
+{#each validatedPlugins.filter(p => !nativeMode) as Plugin (Plugin.ID)}
   <svelte:component
     {player}
     config={buildConfig(Plugin, config)}
@@ -9,19 +9,16 @@
 {/each}
 
 <script context="module">
-  import { merge_deep } from '~utils/object';
+  import { merge_deep } from '@vime/utils';
 
   export const ID = 'vPlugins';
 
-  const buildConfig = (Plugin, config) => {
-    return merge_deep(config[Plugin.ID], Plugin.DEFAULT_CONFIG || {});
-  };
+  const buildConfig = (Plugin, config) => merge_deep(config[Plugin.ID], Plugin.DEFAULT_CONFIG || {});
 </script>
 
 <script>
-  import { onMount } from 'svelte';
-  import { is_svelte_component } from '~utils/unit';
-  import PluginRole from '../PluginRole';
+  import { onMount, onDestroy } from 'svelte';
+  import { is_svelte_component } from '@vime/utils';
 
   // --------------------------------------------------------------
   // Setup
@@ -38,20 +35,25 @@
   
   const instances = {};
 
-  let _plugins = [];
+  let validatedPlugins = [];
 
+  onDestroy(() => { 
+    instances = {};
+    validatedPlugins = [];
+  });
+
+  export let config = {};
   export let plugins = [];
   export let nativeMode = false;
-  export let config = {};
 
   export const addPlugin = plugin => { plugins[plugins.length] = plugin; };
   export const addPlugins = plugins => { plugins && plugins.map(addPlugin); };
   export const removePlugin = id => { plugins = plugins.filter(p => p.ID !== id); };
   export const removePlugins = plugins => { plugins && plugins.map(removePlugin); };
 
-  export const getPlugins = () => _plugins;
   export const getRegistry = () => registry;
   export const getInstances = () => instances;
+  export const getPlugins = () => validatedPlugins;
 
   // --------------------------------------------------------------
   // Plugin Registration
@@ -71,17 +73,12 @@
   };
 
   // Wait till component has mounted so plugins have access to it through Vime.
-  let hasMounted = false;
-  onMount(() => { hasMounted = true; });
+  let mounted = false;
+  onMount(() => { mounted = true; });
 
-  $: if (hasMounted) {
-    _plugins = plugins
-      .filter(validatePlugin)
-      .filter(p => p.ROLE !== PluginRole.PROVIDER)
-      .map(p => ({ ...p }));
-  }
+  $: if (mounted) validatedPlugins = plugins.filter(validatePlugin).map(p => ({ ...p }));
 
-  $: _plugins
+  $: validatedPlugins
     .filter(p => !registry.has(p.ID) && instances[p.ID])
     .forEach(p => registry.register(p.ID, instances[p.ID]));
 </script>
