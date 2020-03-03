@@ -16,12 +16,13 @@
     <InternalPlayer
       fullscreenEl={el}
       Provider={$Provider}
-      bind:this={internalPlayer} 
+      bind:this={internalPlayer}
+      on:error
     />
   </div>
-  <Lazy let:intersecting >
+  <Lazy container={el} let:intersecting >
     {#if mounted && intersecting}
-      <!-- <Plugins
+      <Plugins
         player={self}
         plugins={$plugins || []}
         nativeMode={$nativeMode}
@@ -30,7 +31,7 @@
         on:deregister={onPluginDestroy}
         bind:this={pluginsManager}
         on:error
-      /> -->
+      />
     {/if}
   </Lazy>
 </div>
@@ -39,7 +40,7 @@
   import { get_current_component } from 'svelte/internal';
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import { get } from 'svelte/store';
-  // import Plugins from './Plugins.svelte';
+  import Plugins from './Plugins.svelte';
   import { buildPlayerStore } from './playerStore';
   import PlayerEvent from './PlayerEvent'
   import { 
