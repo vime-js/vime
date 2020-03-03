@@ -53,6 +53,8 @@ Object.keys(pkgSizes).forEach(pkg => {
     console.log(' Lite'.yellow.bold);
     printFileSizes(sizes.lite);
   }
-  console.log(' Full'.red.bold);
-  printFileSizes(sizes.full);
+  if (sizes.full) {
+    console.log(' Full'.red.bold);
+    printFileSizes(sizes.full);
+  }
 });

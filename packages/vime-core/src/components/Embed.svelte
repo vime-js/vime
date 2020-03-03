@@ -65,7 +65,7 @@
 
   $: srcWithParams = src ? add_params_to_url(src, params) : null;
   $: dispatch(Event.SRC_CHANGE, srcWithParams);
-  $: (prevSrc === src) ? dispatch(Event.REBUILD) : (prevSrc = src);
+  $: (prevSrc === src) && params ? dispatch(Event.REBUILD) : (prevSrc = src);
 
   $: if (srcWithParams && !iframe && !PRECONNECTED.includes(srcWithParams)) {
     if (prefetch('preconnect', srcWithParams)) PRECONNECTED.push(srcWithParams);

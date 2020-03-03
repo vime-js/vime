@@ -6,5 +6,9 @@ PlayerEvent.MOUNT = 'mount';
 PlayerEvent.DESTROY = 'destroy';
 PlayerEvent.PLUGIN_MOUNT = 'pluginmount';
 PlayerEvent.PLUGIN_DESTROY = 'plugindestroy';
-// copy over internal events
+PlayerEvent.LOCALE_CHANGE = 'localechange';
+PlayerEvent.THEME_CHANGE = 'themechange';
+Object.keys(InternalPlayerEvent).forEach(event => {
+  PlayerEvent[event] = InternalPlayerEvent[event];
+});
 export default PlayerEvent;

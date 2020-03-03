@@ -15,13 +15,14 @@ import {
   private_writable_with_fallback, indexable
 } from '@vime/utils';
 
-// Player defaults used when the `src` changes or `resetStore`
+// Player defaults used when the `src` changes or `resetStore` is called.
 const playerDefaults = () => ({
   paused: true,
   playing: false,
   seeking: false,
   internalTime: 0,
   currentTime: 0,
+  poster: null,
   volume: 30,
   title: '',
   duration: 0,

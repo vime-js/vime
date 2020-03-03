@@ -45,7 +45,8 @@
     },
     WebkitPresentationMode: {
       PIP: 'picture-in-picture',
-      INLINE: 'inline'
+      INLINE: 'inline',
+      FULLSCREEN: 'fullscreen'
     },
     TextTrack: {
       Mode: {
@@ -98,13 +99,13 @@
 
 <script>
   import { tick, createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import { run_all, listen, raf } from 'svelte/internal';
+  import { run_all, listen, raf, noop } from 'svelte/internal';
   import Source from './Source.svelte';
   import Tracks from './Tracks.svelte';
   import { Disposal, PlayerEvent, MediaType } from '@vime/core';
   
   import { 
-    is_function, can_fullscreen_video_in_safari, can_use_pip_in_chrome,
+    is_function, can_fullscreen_video, can_use_pip_in_chrome,
     can_use_pip_in_safari
   } from '@vime/utils';
 
@@ -133,7 +134,7 @@
 
   export const setCurrentTime = time => { media.currentTime = time; };
   export const setMuted = isMuted => { muted = isMuted; };
-  export const setPaused = paused => { paused ? media.pause() : media.play(); }; 
+  export const setPaused = paused => { paused ? media.pause() : media.play().catch(noop); }; 
   export const setVolume = volume => { media.volume = parseFloat(volume / 100); };
   export const setRate = rate => { media.playbackRate = rate; };
   export const setCrossOrigin = origin => { crossorigin = origin || null; };
@@ -152,19 +153,18 @@
   // Picture in Picture
   // --------------------------------------------------------------
 
-  const setChromePiP = active => active 
-    ? video.requestPictureInPicture() 
-    : video.exitPictureInPicture();
+  const PIP_NOT_SUPPORTED_ERROR_MSG = 'Html5 PiP not supported.';
+
+  const setChromePiP = active => active ? video.requestPictureInPicture() : video.exitPictureInPicture();
 
   const setSafariPiP = active => {
     const mode = active ? Html5.WebkitPresentationMode.PIP : Html5.WebkitPresentationMode.INLINE;
-    if (!video.webkitSupportsPresentationMode(mode)) return Promise.reject();
-    video.webkitSetPresentationMode(mode);
-    return (video.webkitPresentationMode === mode) ? Promise.resolve() : Promise.reject();
+    if (!video.webkitSupportsPresentationMode(mode)) return Promise.reject(PIP_NOT_SUPPORTED_ERROR_MSG);
+    return video.webkitSetPresentationMode(mode);
   };
 
   export const setPiP = active => {
-    if (!supportsPiP()) return Promise.reject('PiP not supported.');
+    if (!supportsPiP()) return Promise.reject(PIP_NOT_SUPPORTED_ERROR_MSG);
     if (can_use_pip_in_chrome()) {
       return setChromePiP(active);
     } else if (can_use_pip_in_safari()) {
@@ -180,11 +180,10 @@
 
   export const setFullscreen = active => {
     if (!video.webkitSupportsFullscreen) return Promise.reject();
-    active ? video.webkitEnterFullscreen() : video.webkitExitFullscreen();
-    return (video.webkitDisplayingFullscreen === active) ? Promise.resolve() : Promise.reject();
+    return active ? video.webkitEnterFullscreen() : video.webkitExitFullscreen();
   };
 
-  export const supportsFullscreen = () => can_fullscreen_video_in_safari();
+  export const supportsFullscreen = () => can_fullscreen_video();
 
   // --------------------------------------------------------------
   // Tracks
@@ -218,6 +217,7 @@
   };
 
   export const setTrack = newTrack => {
+    if (!media) return;
     const tracks = Array.from(media.textTracks);
     if (tracks.length === 0 || currentTrack == newTrack) return;
     removeOnCueChangeListener();
@@ -295,9 +295,9 @@
   const onExitPiP = () => dispatch(PlayerEvent.PIP_CHANGE, false);
 
   const onPresentationModeChange = e => {
-    if (!can_use_pip()) return;
     const mode = video.webkitPresentationMode;
     dispatch(PlayerEvent.PIP_CHANGE, (mode === Html5.WebkitPresentationMode.PIP));
+    dispatch(PlayerEvent.FULLSCREEN_CHANGE, (mode === Html5.WebkitPresentationMode.FULLSCREEN));
   };
 
   const load = async () => {
@@ -321,16 +321,14 @@
   };
 
   const loadNewQuality = async () => {
-    currentSrc = src.filter(s => s.quality === quality);
-    // Wait for player store to reset.
-    await tick();
+    if (currentSrc[0].quality !== quality) currentSrc = src.filter(s => s.quality === quality);
     dispatch(PlayerEvent.QUALITIES_CHANGE, src.map(s => s.quality));
     dispatch(PlayerEvent.QUALITY_CHANGE, quality);
     rebuild();
   };
 
   const calcQuality = () => {
-    if (videoWidth <= 0) return;
+    if (quality || videoWidth <= 0) return;
     let i = 0;
     let newQuality = src[i].quality;
     const [w, h] = aspectRatio.split(':');

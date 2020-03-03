@@ -1,12 +1,20 @@
 import { writable, readable, derived } from 'svelte/store'
 import en from '../lang/en';
 import PluginRole from './PluginRole'
+import PlayerEvent from './PlayerEvent'
 import { 
   IS_MOBILE, listen_for_touch_input, mergeable,
-  private_writable
+  private_writable, subscribe_and_dispatch
 } from '@vime/utils'
 
-// iStore = internalPlayerStore
+
+// For more events see `packages/vime-core/src/PlayerEvents.js`.
+const dispatchPlayerEvents = store => {
+  subscribe_and_dispatch(store.locale, PlayerEvent.LOCALE_CHANGE);
+  subscribe_and_dispatch(store.theme, PlayerEvent.THEME_CHANGE);
+};
+
+// iStore = internalPlayerStore (packages/vime-core/src/playerStore.js).
 export const buildPlayerStore = iStore => {
   const store = {}
   const hasRole = (plugins, role) => plugins.some(p => p.ROLE === role)
@@ -20,9 +28,9 @@ export const buildPlayerStore = iStore => {
   store.providers = writable([]);
   store.controlsActive = writable(true);
   store.contextMenuEnabled = writable(false);
+  store.debug = writable(process.env.NODE_ENV !== 'production');
   store.mobile = private_writable(IS_MOBILE);
   store.touch = readable(false, set => listen_for_touch_input(t => set(t)));
-  store.debug = writable(process.env.NODE_ENV !== 'production');
   store.i18n = derived(
     [store.locale, store.langauges],
     ([$locale, $languages]) => $languages[$locale] || $languages.en
@@ -35,6 +43,9 @@ export const buildPlayerStore = iStore => {
     [store.plugins, iStore.nativeMode],
     ([$plugins, $nativeMode]) => hasRole($plugins, PluginRole.CONTROLS) || $nativeMode
   )
+
+  // Internal player store overrides.
+
   store.canSetTrack = derived(
     [store.plugins, iStore.nativeMode, iStore.canSetTrack],
     ([$plugins, $nativeMode, $canSetTrack]) => 
@@ -51,10 +62,8 @@ export const buildPlayerStore = iStore => {
       hasRole($plugins, PluginRole.POSTER) || ($nativeMode && $canSetPoster)
   )
 
-  store.pipEnabled = writable(true);
-  store.fullscreenEnabled = writable(true);
-  store.captionsEnabled = writable(true);
-  
+  dispatchPlayerEvents(store);
+
   return {
     ...iStore,
     ...store

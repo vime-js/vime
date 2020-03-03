@@ -87,7 +87,10 @@
     return `${base}${vId}?enablejsapi=1`;
   };
 
-  const onLoad = () => embed.postMessage({ event: 'listening' });
+  const onLoad = () => {
+    // Seems like have to wait a misc small delay or else YT player isn't ready.
+    setTimeout(() => embed.postMessage({ event: 'listening' }), 100);
+  };
   
   const onReload = () => {
     ready = deferred();
