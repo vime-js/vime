@@ -14,6 +14,7 @@
       <div class="blocker"></div>
     {/if}
     <InternalPlayer
+      fullscreenEl={el}
       Provider={$Provider}
       bind:this={internalPlayer} 
     />
@@ -37,14 +38,14 @@
 <script>
   import { get_current_component } from 'svelte/internal';
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
-  import { get } from 'svelte/store'
+  import { get } from 'svelte/store';
   // import Plugins from './Plugins.svelte';
-  import { buildPlayerStore } from './playerStore'
+  import { buildPlayerStore } from './playerStore';
   import PlayerEvent from './PlayerEvent'
   import { 
     Registry, Disposal, Lazy,
     Player as InternalPlayer, PlayerEvent as InternalPlayerEvent
-  } from '@vime/core'
+  } from '@vime/core';
   import { 
     log as _log, warn as _warn, error as _error,
     map_store_to_component
@@ -59,22 +60,22 @@
   let pluginsManager;
   let classes = null;
  
-  let debug
-  let plugins
-  let config
-  let paused
-  let video
-  let theme
-  let Provider
-  let videoView
-  let nativeMode
-  let controlsActive
-  let fullscreenActive
-  let contextMenuEnabled
+  let debug;
+  let plugins;
+  let config;
+  let paused;
+  let video;
+  let theme;
+  let Provider;
+  let videoView;
+  let nativeMode;
+  let controlsActive;
+  let fullscreenActive;
+  let contextMenuEnabled;
 
   const ID = 'Player';
   const self = get_current_component();
-  const disposal = new Disposal()
+  const disposal = new Disposal();
   const registry = new Registry(ID);
   const _dispatch = createEventDispatcher();
 
@@ -83,21 +84,17 @@
   $: onPropsChange($$props);
 
   onMount(() => {
-    // 1. Build this player store and extend it with the internal player store.
-    store = buildPlayerStore(internalPlayer.getStore())
-    // 2. Map the store to the component, so now all store values can be retreived and set as props. 
+    store = buildPlayerStore(internalPlayer.getStore());
     onPropsChange = map_store_to_component(self, store);
-    // 3. Subscribe to all player events on the internal player and redispatch them.
     Object.keys(InternalPlayerEvent).forEach(event => {
       disposal.add(internalPlayer.$on(event, e => _dispatch(event, e.detail)))
     });
-    // 4. Autosubscribe to required stores.
     ({  
       plugins, config, paused,
       video, theme, videoView,
       nativeMode, Provider, controlsActive, 
       debug, fullscreenActive, contextMenuEnabled
-    } = store)
+    } = store);
   })
 
   // --------------------------------------------------------------
@@ -112,16 +109,14 @@
   export const getPluginsManager = () => pluginsManager;
   export const getPluginsRegistry = () => pluginsManager && pluginsManager.getRegistry();
 
-  export const dispose = cb => disposal.add(cb)
+  export const dispose = cb => disposal.add(cb);
   export const dispatch = (event, detail) => _dispatch(event, detail);
   export const extendLanguage = (code, language) => { store.languages.set({ [code]: language }); };
 
-  // TODO: A little different -> follow steps.
-  export const requestFullscreen = () => internalPlayer.requestFullscreen();
-  export const exitFullscreen = () => internalPlayer.exitFullscreen();
-
   export const requestPiP = () => internalPlayer.requestPiP();
   export const exitPiP = () => internalPlayer.exitPiP();
+  export const requestFullscreen = () => internalPlayer.requestFullscreen();
+  export const exitFullscreen = () => internalPlayer.exitFullscreen();
   
   export const createRegistry = id => {
     const subRegistry = new Registry(id);
@@ -142,10 +137,10 @@
   // Events
   // --------------------------------------------------------------
 
-  let mounted = false
+  let mounted = false;
   onMount(() => {
-    mounted = true
-    _dispatch(PlayerEvent.MOUNT)
+    mounted = true;
+    _dispatch(PlayerEvent.MOUNT);
   });
 
   onDestroy(() => _dispatch(PlayerEvent.DESTROY));
@@ -170,7 +165,7 @@
     ? el.style.setProperty('--theme', $theme)
     : Object.keys($theme).forEach(key => { el.style.setProperty(`--${key}`, $theme[key]); });
 
-  $: if (el && $theme) onThemeChange()
+  $: if (el && $theme) onThemeChange();
 </script>
 
 <style type="text/scss">

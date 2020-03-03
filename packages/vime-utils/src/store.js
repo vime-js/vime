@@ -1,6 +1,6 @@
 import { onDestroy } from 'svelte';
 import { get, writable, derived } from 'svelte/store';
-import { noop, not_equal, init, validate_store } from 'svelte/internal';
+import { noop, not_equal, init, validate_store, get_current_component } from 'svelte/internal';
 import { create_prop, merge_deep } from './object';
 import { is_function } from './unit';
 import { try_on_svelte_destroy, try_create_svelte_dispatcher } from './svelte';

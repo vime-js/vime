@@ -41,10 +41,9 @@ export const listen_for_touch_input = cb => {
 };
 
 // @see https://developer.apple.com/documentation/webkitjs/htmlvideoelement/1633500-webkitenterfullscreen
-export const can_fullscreen_video_in_safari = () => {
+export const can_fullscreen_video = () => {
   const video = element('video');
-  // !IS_CHROME to stop deprecated warnings.
-  return !IS_CHROME && is_function(video.webkitEnterFullscreen);
+  return is_function(video.webkitEnterFullscreen);
 };
 
 // Reduced motion iOS & MacOS setting
