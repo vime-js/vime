@@ -1,12 +1,12 @@
 <VimeoEmbed
   {srcId}
   {params}
-  on:srcchange
   on:titlechange
   on:error
   on:srcchange={onReload}
   on:rebuild={onReload}
   on:rebuild={onRebuildStart}
+  on:srcchange={onCurrentSrcChange}
   on:data={onData}
   bind:this={embed}
 />
@@ -16,11 +16,12 @@
   import { PlayerEvent } from '@vime/core';
 
   const VM = {
-    URL: /vimeo\.com\/.+/,
+    SRC: /vimeo(?:\.com|)\/([0-9]{9,})/,
     FILE_URL: /vimeo\.com\/external\/[0-9]+\..+/,
     THUMBNAIL_URL: /vimeocdn\.com\/video\/([0-9]+)/
   };
 
+  // @see https://developer.vimeo.com/player/sdk/reference#methods-for-playback-controls
   VM.Command = {
     PLAY: PlayerEvent.PLAY,
     PAUSE: PlayerEvent.PAUSE,
@@ -35,6 +36,8 @@
     DISABLE_TEXT_TRACK: 'disableTextTrack'
   };
 
+  // Some reason event names are different when calling `addEventListener` vs the event name
+  // that comes through `onData`, hence `VM.Event` and `VM.EVENTS` below.
   VM.Event = {
     PLAY: PlayerEvent.PLAY,
     PAUSE: PlayerEvent.PAUSE,
@@ -50,13 +53,12 @@
     FULLSCREEN_CHANGE: PlayerEvent.FULLSCREEN_CHANGE,
     VOLUME_CHANGE: PlayerEvent.VOLUME_CHANGE,
     DURATION_CHANGE: PlayerEvent.DURATION_CHANGE,
-    PLAYBACK_RATE_CHANGE: 'playbackratechange',
+    PLAYBACK_RATE_CHANGE: PlayerEvent.PLAYBACK_RATE_CHANGE,
     TEXT_TRACK_CHANGE: 'texttrackchange',
     ERROR: PlayerEvent.ERROR
   };
 
-  // Some reason names are different when calling `addEventListener` vs the event name
-  // that comes through `onData`, hence VM.EVENTS/VM.Event.
+  // @see https://developer.vimeo.com/player/sdk/reference#events-for-playback-controls
   VM.EVENTS = [
     PlayerEvent.PLAY,
     PlayerEvent.PAUSE,
@@ -78,7 +80,7 @@
     'ended'
   ];
 
-  export const canPlay = src => is_string(src) && !VM.FILE_URL.test(src) && VM.URL.test(src);
+  export const canPlay = src => is_string(src) && !VM.FILE_URL.test(src) && VM.SRC.test(src);
 
   const getPoster = src => {
     if (!src) return Promise.resolve(null);
@@ -92,12 +94,14 @@
 </script>
 
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import { raf } from 'svelte/internal';
   import { MediaType } from '@vime/core';
   import VimeoEmbed from './VimeoEmbed.svelte';
 
   let embed;
+  let srcId = null;
+  let currentSrc = null;
   let seeking = false;
   let ready = false;
   let tracks = [];
@@ -113,7 +117,6 @@
   const send = (command, args) => embed && embed.sendCommand(command, args);
 
   export let src = null;
-  export let srcId = null;
 
   export const getEmbed = () => embed;
   export const getEl = () => embed.getIframe();
@@ -125,7 +128,7 @@
   export const setPlaysinline = enabled => { params.playsinline = enabled; };
   export const setControls = enabled => { params.controls = enabled; };
   export const setNativeMode = nativeMode => { /** noop */ };
-  export const setRate = rate => send(VM.Command.SET_PLAYBACK_RATE, rate);
+  export const setPlaybackRate = rate => send(VM.Command.SET_PLAYBACK_RATE, rate);
 
   export const supportsPiP = () => false;
   export const supportsFullscreen = () => true;
@@ -140,6 +143,14 @@
   };
 
   onMount(() => dispatch(PlayerEvent.ORIGIN_CHANGE, embed.getOrigin()));
+  onMount(() => dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, MediaType.VIDEO));
+  const onRebuildStart = () => dispatch(PlayerEvent.REBUILD_START);
+  
+  const onCurrentSrcChange = e => {
+    currentSrc = e.detail;
+    dispatch(PlayerEvent.SRC_ID_CHANGE, srcId);
+    dispatch(PlayerEvent.CURRENT_SRC_CHANGE, e.detail);
+  };
 
   const onReload = () => {
     ready = false;
@@ -148,8 +159,6 @@
     tracks = [];
     currentTrack = -1;
   };
-
-  const onRebuildStart = () => dispatch(PlayerEvent.REBUILD_START);
 
   const onTimeUpdate = time => {
     dispatch(PlayerEvent.TIME_UPDATE, time);
@@ -192,7 +201,6 @@
       case VM.Event.LOADED:
         ready = true;
         dispatch(PlayerEvent.PLAYBACK_READY);
-        dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, MediaType.VIDEO);
         send(VM.Command.GET_TEXT_TRACKS);
         break;
       case VM.Event.PLAY:
@@ -231,7 +239,7 @@
         dispatch(PlayerEvent.DURATION_CHANGE, payload.duration);
         break;
       case VM.Event.PLAYBACK_RATE_CHANGE:
-        dispatch(PlayerEvent.RATE_CHANGE, payload.playbackRate);
+        dispatch(PlayerEvent.PLAYBACK_RATE_CHANGE, payload.playbackRate);
         break;
       case VM.Event.FULLSCREEN_CHANGE:
         dispatch(PlayerEvent.FULLSCREEN_CHANGE, payload.fullscreen);
@@ -245,9 +253,10 @@
     }
   };
 
-  $: (!seeking && ready) ? getTimeUpdates() : cancelTimeUpdates();
-  $: if (!srcId && src) srcId = src.match(VM.URL)[1] || null;
-  $: getPoster(src).then(poster => dispatch(PlayerEvent.POSTER_CHANGE, poster));
+  $: match = src ? src.match(VM.SRC) : null;
+  $: srcId = match ? match[1] : src;
   $: dispatch(PlayerEvent.TRACKS_CHANGE, tracks);
   $: dispatch(PlayerEvent.TRACK_CHANGE, currentTrack);
+  $: getPoster(currentSrc).then(poster => dispatch(PlayerEvent.POSTER_CHANGE, poster));
+  $: (!seeking && ready) ? getTimeUpdates() : cancelTimeUpdates();
 </script>

@@ -100,7 +100,7 @@ const parse_time_param = (url, pattern) => {
     if (stamp.match(START_TIMESTAMP)) return parse_time_string(stamp);
     if (NUMERIC.test(stamp)) return parseInt(stamp);
   }
-  return undefined;
+  return null;
 };
 
 const START_TIME_QUERY = /[?&#](?:start|t)=([0-9hms]+)/;

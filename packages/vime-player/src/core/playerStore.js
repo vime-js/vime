@@ -7,7 +7,6 @@ import {
   private_writable, subscribe_and_dispatch
 } from '@vime/utils'
 
-
 // For more events see `packages/vime-core/src/PlayerEvents.js`.
 const dispatchPlayerEvents = store => {
   subscribe_and_dispatch(store.locale, PlayerEvent.LOCALE_CHANGE);
@@ -16,8 +15,8 @@ const dispatchPlayerEvents = store => {
 
 // iStore = internalPlayerStore (packages/vime-core/src/playerStore.js).
 export const buildPlayerStore = iStore => {
-  const store = {}
-  const hasRole = (plugins, role) => plugins.some(p => p.ROLE === role)
+  const store = {};
+  const hasRole = (plugins, role) => plugins.some(p => p.ROLE === role);
 
   store.locale = writable('en');
   store.icons = mergeable({});
@@ -26,6 +25,7 @@ export const buildPlayerStore = iStore => {
   store.theme = writable(null);
   store.plugins = writable([]);
   store.providers = writable([]);
+  store.Provider = private_writable(null);
   store.controlsActive = writable(true);
   store.contextMenuEnabled = writable(false);
   store.debug = writable(process.env.NODE_ENV !== 'production');
@@ -34,38 +34,37 @@ export const buildPlayerStore = iStore => {
   store.i18n = derived(
     [store.locale, store.langauges],
     ([$locale, $languages]) => $languages[$locale] || $languages.en
-  )
-  store.Provider = derived(
-    [iStore.src, store.providers],
-    ([$src, $providers]) => $providers.find(p => p.canPlay($src))
-  )
+  );
   store.hasControls = derived(
     [store.plugins, iStore.nativeMode],
     ([$plugins, $nativeMode]) => hasRole($plugins, PluginRole.CONTROLS) || $nativeMode
-  )
+  );
 
-  // Internal player store overrides.
+  // Internal player overrides.
 
   store.canSetTrack = derived(
     [store.plugins, iStore.nativeMode, iStore.canSetTrack],
     ([$plugins, $nativeMode, $canSetTrack]) => 
       hasRole($plugins, PluginRole.CAPTIONS) || ($nativeMode && $canSetTrack)
-  )
+  );
   store.canSetTracks = derived(
     [store.plugins, iStore.nativeMode, iStore.canSetTracks],
     ([$plugins, $nativeMode, $canSetTracks]) => 
       hasRole($plugins, PluginRole.CAPTIONS) || ($nativeMode && $canSetTracks)
-  )
+  );
   store.canSetPoster = derived(
-    [store.plugins, iStore.nativeMode, iStore.canSetPoster],
-    ([$plugins, $nativeMode, $canSetPoster]) => 
-      hasRole($plugins, PluginRole.POSTER) || ($nativeMode && $canSetPoster)
-  )
+    [store.plugins, iStore.canSetPoster],
+    ([$plugins, $canSetPoster]) => {
+      const hasPlugin = hasRole($plugins, PluginRole.POSTER);
+      iStore._posterPlugin.set(hasPlugin);
+      return hasPlugin || $canSetPoster;
+    } 
+  );
 
   dispatchPlayerEvents(store);
 
   return {
     ...iStore,
     ...store
-  }
+  };
 }

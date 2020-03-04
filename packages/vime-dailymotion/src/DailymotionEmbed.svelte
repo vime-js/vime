@@ -104,5 +104,5 @@
   onMount(() => { mounted = true; });
   
   $: if (mounted) dispatch(Event.TITLE_CHANGE, videoTitle);
-  $: if (mounted) dispatch(Event.SRC_CHANGE, { id: srcId, src });
+  $: if (mounted) dispatch(Event.SRC_CHANGE, src);
 </script>

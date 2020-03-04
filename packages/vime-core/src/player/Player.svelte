@@ -5,9 +5,7 @@
   on:mount="{e => { playerWrapper = e.detail; }}"
 >
   <svelte:component
-    {...props}
     src={$src}
-    srcId={$srcId}
     aspectRatio={$aspectRatio}
     this={Provider}
     bind:this={$provider}
@@ -25,20 +23,20 @@
     on:seeking={onSeeking}
     on:seeked={onSeeked}
     on:rebuildstart={onRebuildStart}
-    on:ratechange={onRateChange}
-    on:qualitychange={onQualityChange}
+    on:playbackratechange={onPlaybackRateChange}
+    on:videoqualitychange={onVideoQualityChange}
     on:pipchange={onPiPChange}
     on:fullscreenchange={onProviderFullscreenChange}
     on:posterchange={onPosterChange}
-    on:srcchange={onSrcChange}
+    on:srcidchange={onSrcIdChange}
     on:currentsrcchange={onCurrentSrcChange}
     on:titlechange={onTitleChange}
     on:mutechange={onMuteChange}
     on:volumechange={onVolumeChange}
     on:durationchange={onDurationChange}
     on:mediatypechange={onMediaTypeChange}
-    on:qualitieschange={onQualitiesChange}
-    on:rateschange={onRatesChange}
+    on:videoqualitieschange={onVideoQualitiesChange}
+    on:playbackrateschange={onPlaybackRatesChange}
     on:originchange={onOriginChange}
     on:trackschange={onTracksChange}
     on:trackchange={onTrackChange}
@@ -52,12 +50,12 @@
   import { noop, listen, get_current_component } from 'svelte/internal';
   import { currentPlayer } from './globalStore';
   import { mapPlayerStoreToComponent } from './playerStore';
+  import MediaType from './MediaType';
   import PlayerEvent from './PlayerEvent';
   import PlayerWrapper from './PlayerWrapper.svelte';
   import {
-    is_object, is_array, is_function,
-    is_number, is_boolean, map_store_to_component,
-    deferred
+    is_array, is_function, is_number, 
+    is_boolean, map_store_to_component, deferred
   } from '@vime/utils';
 
   let self = get_current_component();
@@ -65,48 +63,53 @@
   
   onDestroy(() => { self = null; });
 
-  const { store, resetStore, onPropsChange } = mapPlayerStoreToComponent();
+  let { store, resetStore, onPropsChange } = mapPlayerStoreToComponent();
   $: onPropsChange($$props);
 
   const {
     playsinline, paused, muted,
-    ended, volume, seeking,
+    playbackEnded, volume, seeking,
     internalTime, currentTime, nativeMode,
-    pipActive, rate, quality,
-    src, srcId, controlsEnabled, 
-    aspectRatio, buffering, buffered, 
-    autopause, autoplay, playing, 
-    started, poster, playbackReady, 
-    videoView, qualities, rates, 
-    currentSrc, tracks, currentTrack,
-    provider
+    pipActive, playbackRate, videoQuality,
+    src, controlsEnabled, aspectRatio, 
+    buffering, buffered, autopause, 
+    autoplay, playing, playbackStarted, 
+    poster, playbackReady, videoView, 
+    currentSrc, tracks, currentTrack, 
+    provider, rebuilding, videoReady, 
+    canInteract, video,
   } = store;
 
   const {
-    canSetPiP, canSetFullscreen, fullscreenActive,
-    canSetTracks, canSetTrack, canSetPoster,
-    canSetRate, canSetQuality, canAutoplay,
-    canMutedAutoplay
+    canSetPiP, fullscreenActive, canSetTracks, 
+    canSetTrack, canSetPoster, canSetPlaybackRate, 
+    canSetVideoQuality, canAutoplay, canMutedAutoplay
   } = store;
 
   let props = {};
   let playerWrapper;
 
-  onDestroy(() => { props = {}; });
-
   export let Provider;
 
+  // TODO: wait for next Svelte release because it's bugged right now.
   // Filter out any player props before passing them to the provider.
   $: Object
     .keys($$props)
     .filter(prop => !store[prop] && (prop !== 'Provider'))
     .forEach(prop => (props[prop] = $$props[prop]));
 
+  onDestroy(() => { 
+    props = {};
+    store = {};
+    playerWrapper = null;
+    Provider = null;
+    resetStore = noop;
+    onPropsChange = noop;
+  });
+
   // --------------------------------------------------------------
   // Provider Events
   // --------------------------------------------------------------
-
-  let rebuilding = false;
 
   // Avoid infinite loop.
   let updatingVolume = false;
@@ -127,21 +130,21 @@
   };
 
   const initiateTempPlayback = () => {
-    if (!$canMutedAutoplay) return;
+    if (!$playbackReady || !$canMutedAutoplay) return;
     tempMute = true;
     tempPlay = true;
     $playsinline = true;
   };
 
   const onTimeUpdate = e => {
-    if ($seeking || rebuilding) return;
+    if ($seeking || !$canInteract) return;
     $internalTime = parseFloat(e.detail);
     $currentTime = parseFloat(e.detail);
-    if ($internalTime === 0 && $ended) onRestart();
+    if ($internalTime === 0 && $playbackEnded) onRestart();
   };
 
   afterUpdate(() => {
-    if (!$provider || !$playbackReady || $seeking || ($currentTime === $internalTime)) return;
+    if (!$playbackReady || $seeking || ($currentTime === $internalTime)) return;
     $internalTime = $currentTime;
     $provider.setCurrentTime($currentTime);
   });
@@ -154,12 +157,13 @@
   };
 
   const onRebuildStart = () => {
-    rebuilding = true;
-    dispatch(PlayerEvent.REBUILD_START);
+    if (!$playbackReady) return;
+    $rebuilding = true;
+    $buffering = true;
   };
 
   const onRebuild = async () => {
-    if (!rebuilding) return;
+    if (!$canInteract) return;
     // Cancel any existing temp states as rebuild may be called multiple times.
     tempMute = false;
     tempPlay = false;
@@ -174,9 +178,8 @@
   };
 
   const onRebuildEnd = () => {
-    if (!rebuilding) return;
-    rebuilding = false;
-    dispatch(PlayerEvent.REBUILD_END);
+    if (!$canInteract) return;
+    $rebuilding = false;
     if ($fullscreenActive) requestFullscreen().catch(noop);
   };
 
@@ -185,6 +188,7 @@
     await tick();
     onAutoplay();
     $playbackReady = true;
+    $buffering = false;
     onRebuild();
   };
 
@@ -193,13 +197,13 @@
     $currentPlayer.paused = true;
   };
 
-  const onPlay = () => { if ($nativeMode && !tempPlay) $paused = false; };
+  const onPlay = () => { if (!$rebuilding && $nativeMode && !tempPlay) $paused = false; };
 
   // If a provider fires a `pause` event before `seeking` we cancel it to not mess
   // with our internal paused state.
   let firePauseTimer;
   const onPause = () => {
-    if (rebuilding) return;
+    if ($rebuilding) return;
     firePauseTimer = window.setTimeout(() => {
       if ($nativeMode && !tempPause) $paused = true;
       if (!tempPause) $playing = false;
@@ -207,15 +211,15 @@
   };
 
   const onSeeking = () => {
-    if ($seeking || rebuilding) return;
+    if ($seeking || $rebuilding) return;
     window.clearTimeout(firePauseTimer);
     $seeking = true;
-    !$started ? initiateTempPlayback() : (tempPause = true);
+    !$playbackStarted ? initiateTempPlayback() : (tempPause = true);
   };
 
   const onSeeked = async e => {
-    if (!$seeking || rebuilding) return;
-    // Wait a tick incase `seeking` and `seeked` are fired immediately after each other.
+    if (!$seeking || $rebuilding) return;
+    // Wait incase `seeking` and `seeked` are fired immediately after each other.
     await tick();
     $seeking = false;
     dispatch(PlayerEvent.SEEKED);
@@ -226,8 +230,9 @@
   };
 
   const onPlaying = () => {
+    if (!$playbackReady) return;
     $buffering = false;
-    $started = true;
+    $playbackStarted = true;
     onSeeked();
     onAutopause();
     $currentPlayer = self;
@@ -243,10 +248,10 @@
   };
 
   const onRestart = () => {
-    if (get(store.live) || !$ended) return;
+    if (get(store.live) || !$playbackEnded) return;
     $internalTime = 0;
     $currentTime = 0;
-    $ended = false;
+    $playbackEnded = false;
     $provider.setCurrentTime(0);
     $paused = false;
     dispatch(PlayerEvent.REPLAY);
@@ -259,49 +264,41 @@
   };
 
   const onPlaybackEnd = e => {
-    $ended = true;
+    $playbackEnded = true;
     $paused = true;
     onLoop();
   };
 
-  const onSrcChange = e => {
-    const newSrc = e.detail;
-    $srcId = is_object(newSrc) ? newSrc.id : null;
-    $src = is_object(newSrc) ? newSrc.src : newSrc;
-  };
-
-  const onProviderReady = () => {
-    store.ready.set(true);
-    if (!srcId && !src) { rebuilding = false; }
-  };
-
-  const onCurrentSrcChange = e => { $currentSrc = e.detail; };
-  const onBuffered = e => { $buffered = parseFloat(e.detail); };
-  const onBuffering = e => { $buffering = is_boolean(e.detail) ? e.detail : true; };
-  const onTitleChange = e => { store.title.set(e.detail); };
-  const onLive = e => { store.live.set(e.detail); };
-  const onQualitiesChange = e => { $qualities = e.detail; };
-  const onRatesChange = e => { $rates = e.detail; };
-  const onOriginChange = e => { store.origin.set(e.detail); };
-  const onMediaTypeChange = e => { store.mediaType.set(e.detail); };
-  const onDurationChange = e => { if (!rebuilding) store.duration.set(parseFloat(e.detail)); };
-  const onRateChange = e => { if (!rebuilding) store.rate.forceSet(parseFloat(e.detail)); };
-  const onPosterChange = e => { if (!rebuilding) $poster = e.detail; };
-  const onQualityChange = e => { if (!rebuilding) store.quality.forceSet(e.detail || null); };
-  const onMuteChange = e => { if (!tempMute && !rebuilding) $muted = e.detail; };
-  const onTrackChange = e => { store.currentTrack.set(e.detail); };
-  const onTracksChange = e => { $tracks = e.detail; };
-  const onCueChange = e => { store.activeCues.set(e.detail); };
+  const onProviderReady = () => { store.ready.set(true); };
+  const onPosterChange = e => { $poster = e.detail; };
+  const onSrcIdChange = e => { store.srcId.set(e.detail); };
+  const onCurrentSrcChange = e => { if (!$rebuilding) $currentSrc = e.detail; };
+  const onMediaTypeChange = e => { store.mediaType.set(parseInt(e.detail)); };
+  const onBuffered = e => { if (!$rebuilding) $buffered = parseFloat(e.detail); };
+  const onBuffering = e => { if (!$rebuilding) $buffering = is_boolean(e.detail) ? e.detail : true; };
+  const onTitleChange = e => { if (!$rebuilding) store.title.set(e.detail); };
+  const onLive = e => { if (!$rebuilding) store.live.set(e.detail); };
+  const onVideoQualitiesChange = e => { if (!$rebuilding) store.videoQualities.set(e.detail); };
+  const onPlaybackRatesChange = e => { if (!$rebuilding) store.playbackRates.set(e.detail); };
+  const onOriginChange = e => { if (!$rebuilding) store.origin.set(e.detail); };
+  const onDurationChange = e => { if (!$rebuilding) store.duration.set(parseFloat(e.detail)); };
+  const onPlaybackRateChange = e => { if (!$rebuilding) store.playbackRate.forceSet(parseFloat(e.detail)); };
+  const onVideoQualityChange = e => { if (!$rebuilding) store.videoQuality.forceSet(e.detail || null); };
+  const onMuteChange = e => { if (!$rebuilding && !tempMute) $muted = e.detail; };
+  const onTrackChange = e => { if (!$rebuilding) store.currentTrack.set(e.detail); };
+  const onTracksChange = e => { if (!$rebuilding) $tracks = e.detail; };
+  const onCueChange = e => { if (!$rebuilding) store.activeCues.set(e.detail); };
 
   const onVolumeChange = e => {
-    if (!rebuilding) return;
+    if ($rebuilding) return;
     $volume = parseInt(e.detail);
     updatingVolume = true;
   };
 
   const onSrcReset = () => {
     resetStore();
-    rebuilding = false;
+    // TODO: what if provider can't play the src? Need to stop buffering.
+    if ($src && Provider) $buffering = true;
   };
 
   const onProviderChange = () => {
@@ -310,56 +307,37 @@
     store.origin.set(null);
     store.pipActive.set(false);
     if ($fullscreenActive) exitFullscreen().catch(noop);
+    if (!Provider) store.mediaType.set(MediaType.NONE);
   };
 
-  $: onProviderChange(Provider);
   $: onSrcReset($src);
-
-  // --------------------------------------------------------------
-  // Support
-  // --------------------------------------------------------------
-
-  $: $canSetPoster = $provider && is_function($provider.setPoster);
-  $: $canSetRate = $provider && $playbackReady && $rates.length > 1 && is_function($provider.setRate);
-  $: $canSetQuality = $provider && $qualities.length > 0 && is_function($provider.setQuality);
-
-  const VIDEO_NOT_READY_ERROR_MSG = 'Action not supported, must be a video that is ready for playback.';
-  $: videoReady = $videoView && $playbackReady;
+  $: onProviderChange(Provider);
 
   // --------------------------------------------------------------
   // State Updates
   // --------------------------------------------------------------
 
-  $: if ($provider) $provider.setPlaysinline($playsinline);
-  $: if ($provider) $provider.setControls(($nativeMode && $controlsEnabled) || tempControls);
-  $: if ($provider) $provider.setNativeMode($nativeMode);
-  $: if ($provider && !$paused && $ended) onRestart();
-  $: if ($provider && !rebuilding && $playbackReady) $provider.setMuted($muted || tempMute);
+  $: if ($provider && !$rebuilding) $provider.setPlaysinline($playsinline);
+  $: if ($provider && !$rebuilding) $provider.setControls(($nativeMode && $controlsEnabled) || tempControls);
+  $: if ($provider && !$rebuilding) $provider.setNativeMode($nativeMode);
+  $: if ($canSetPoster && !$rebuilding) $provider.setPoster($poster);
+  
+  $: if ($provider && !$paused && $playbackEnded) onRestart();
+  $: if ($provider && $playbackReady) $provider.setPaused(($paused || tempPause) && !tempPlay);
+  $: if ($provider && $canInteract) $provider.setMuted($muted || tempMute);
+  $: if ($canSetPlaybackRate && $canInteract) $provider.setPlaybackRate($playbackRate);
+  $: if ($canSetVideoQuality && $canInteract) $provider.setVideoQuality($videoQuality);
 
-  $: ($provider && !rebuilding && !updatingVolume && $playbackReady)
+  $: ($provider && $canInteract && !updatingVolume)
     ? $provider.setVolume($volume)
     : (updatingVolume = false);
-  
-  $: $canSetPoster && !rebuilding && $provider.setPoster($poster);
-  $: $canSetRate && !rebuilding && $provider.setRate($rate);
-  $: $canSetQuality && !rebuilding && $provider.setQuality($quality);
-  
-  $: if ($provider && $playbackReady) {
-    $provider.setPaused(($paused || tempPause) && !tempPlay);
-  } else {
-    $paused = true;
-  }
   
   // --------------------------------------------------------------
   // Tracks
   // --------------------------------------------------------------
   
-  $: $canSetTrack = $provider && $tracks.length > 0 && is_function($provider.setTrack);
-  $: $canSetTracks = $provider && is_function($provider.setTracks);
-
-  $: $canSetTracks && !rebuilding && $provider.setTracks($nativeMode ? $tracks : []);
-  $: $canSetTrack && !rebuilding && $provider.setTrack($nativeMode ? $currentTrack : -1);
-
+  $: if ($canSetTracks && $canInteract) $provider.setTracks($nativeMode ? $tracks : []);
+  $: if ($canSetTrack && $canInteract) $provider.setTrack($nativeMode ? $currentTrack : -1);
   $: if ($tracks.length === 0 || $currentTrack === -1 || !$nativeMode) store.activeCues.set([]);
  
   // --------------------------------------------------------------
@@ -367,13 +345,14 @@
   // --------------------------------------------------------------
 
   const NO_PIP_SUPPORT_ERROR_MSG = 'Provider does not support PiP.';
+  const VIDEO_NOT_READY_ERROR_MSG = 'Action not supported, must be a video that is ready for playback.';
   
-  const onPiPChange = e => { if (!rebuilding) $pipActive = e.detail; };
+  const onPiPChange = e => { if (!$rebuilding) $pipActive = e.detail; };
 
   const pipRequest = active => {
-    if (!videoReady) {
+    if (!$videoReady) {
       return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
-    } else if (!canProviderPiP) {
+    } else if (!$canSetPiP) {
       return Promise.reject(NO_PIP_SUPPORT_ERROR_MSG);
     } else {
       return Promise.resolve($provider.setPiP(active));
@@ -382,9 +361,6 @@
 
   export const requestPiP = () => pipRequest(true);
   export const exitPiP = () => pipRequest(false);
-
-  $: canProviderPiP = $provider && $provider.supportsPiP() && is_function($provider.setPiP);
-  $: $canSetPiP = videoReady && canProviderPiP;
 
   // --------------------------------------------------------------
   // Fullscreen
@@ -412,7 +388,7 @@
   };
 
   const onProviderFullscreenChange = e => { 
-    if (!rebuilding) $fullscreenActive = (e.detail == 'true');
+    if (!$rebuilding) $fullscreenActive = (e.detail == 'true');
     if (!$fullscreenActive) tempControls = false;
   };
 
@@ -429,7 +405,7 @@
   };
 
   const fullscreenRequest = active => {
-    if (!videoReady) {
+    if (!$videoReady) {
       return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
     } else if (FULLSCREEN_DOC_SUPPORT) {
       return requestDocumentFullscreen(active);
@@ -453,5 +429,5 @@
   });
 
   $: canProviderFullscreen = $provider && $provider.supportsFullscreen() && is_function($provider.setFullscreen);
-  $: $canSetFullscreen = videoReady && (FULLSCREEN_DOC_SUPPORT || canProviderFullscreen);
+  $: store.canSetFullscreen.set($videoReady && (FULLSCREEN_DOC_SUPPORT || canProviderFullscreen));
 </script>

@@ -7,7 +7,7 @@ addParameters({
     theme: create({
       base: 'dark',
       brandTitle: 'Vime',
-      brandUrl: 'https://github.com/vime-js'
+      brandUrl: 'https://github.com/vime-js/vime'
     })
   }
 });

@@ -117,7 +117,6 @@
   let prevMedia = null;
   let poster = null;
   let muted = false;
-  let quality = null;
   let controls = null;
   let playsinline = null;
   let crossorigin = null;
@@ -125,6 +124,7 @@
   let ready = false;
   let paused = true;
   let videoWidth = 0;
+  let videoQuality = null;
 
   export let src;
   export let aspectRatio = null;
@@ -136,12 +136,12 @@
   export const setMuted = isMuted => { muted = isMuted; };
   export const setPaused = paused => { paused ? media.pause() : media.play().catch(noop); }; 
   export const setVolume = volume => { media.volume = parseFloat(volume / 100); };
-  export const setRate = rate => { media.playbackRate = rate; };
+  export const setPlaybackRate = rate => { media.playbackRate = rate; };
   export const setCrossOrigin = origin => { crossorigin = origin || null; };
   export const setControls = enabled => { controls = enabled || null; };
   export const setPlaysinline = enabled => { playsinline = enabled || null; };
   export const setNativeMode = nativeMode => { /** noop */ };
-  export const setQuality = newQuality => { quality = newQuality; };
+  export const setVideoQuality = quality => { videoQuality = quality; };
 
   export const setPoster = newPoster => {
     if (poster === newPoster) return;
@@ -217,7 +217,6 @@
   };
 
   export const setTrack = newTrack => {
-    if (!media) return;
     const tracks = Array.from(media.textTracks);
     if (tracks.length === 0 || currentTrack == newTrack) return;
     removeOnCueChangeListener();
@@ -268,10 +267,14 @@
 
   const setupMediaListeners = () => {
     listenToMedia(Html5.Event.LOADED_METADATA, () => {
-      onBuffered();
       dispatch(PlayerEvent.PLAYBACK_READY);
-      dispatch(PlayerEvent.RATES_CHANGE, Html5.PLAYBACK_RATES);
+      dispatch(PlayerEvent.PLAYBACK_RATES_CHANGE, Html5.PLAYBACK_RATES);
       dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, video ? MediaType.VIDEO : MediaType.AUDIO);
+      if (srcHasQualities) {
+        dispatch(PlayerEvent.VIDEO_QUALITIES_CHANGE, src.map(s => s.quality));
+        dispatch(PlayerEvent.VIDEO_QUALITY_CHANGE, videoQuality);
+      }
+      onBuffered();
       ready = true;
     });
     listenToMedia(PlayerEvent.PROGRESS, onBuffered);
@@ -279,7 +282,7 @@
     forwardMediaEvent(PlayerEvent.PAUSE, null, () => { paused = true; });
     forwardMediaEvent(PlayerEvent.PLAYING);
     forwardMediaEvent(PlayerEvent.DURATION_CHANGE, null, () => media.duration);
-    forwardMediaEvent(PlayerEvent.RATE_CHANGE, null, () => media.playbackRate);
+    forwardMediaEvent(PlayerEvent.PLAYBACK_RATE_CHANGE, null, () => media.playbackRate);
     forwardMediaEvent(PlayerEvent.SEEKING, PlayerEvent.TIME_UPDATE, () => media.currentTime);
     forwardMediaEvent(PlayerEvent.SEEKING);
     forwardMediaEvent(PlayerEvent.SEEKED);
@@ -321,14 +324,14 @@
   };
 
   const loadNewQuality = async () => {
-    if (currentSrc[0].quality !== quality) currentSrc = src.filter(s => s.quality === quality);
-    dispatch(PlayerEvent.QUALITIES_CHANGE, src.map(s => s.quality));
-    dispatch(PlayerEvent.QUALITY_CHANGE, quality);
+    const didChange = currentSrc.some(s => s.quality !== videoQuality);
+    if (!didChange) return;
+    currentSrc = src.filter(s => s.quality === videoQuality);
     rebuild();
   };
 
   const calcQuality = () => {
-    if (quality || videoWidth <= 0) return;
+    if (videoQuality || videoWidth <= 0) return;
     let i = 0;
     let newQuality = src[i].quality;
     const [w, h] = aspectRatio.split(':');
@@ -337,7 +340,7 @@
       i += 1;
       newQuality = src[i].quality;
     }
-    quality = newQuality;
+    videoQuality = newQuality;
   };
 
   const loadNewSrc = () => {
@@ -350,7 +353,7 @@
 
   const onSrcChange = () => {
     ready = false;
-    quality = null;
+    videoQuality = null;
     if (isMediaStream(src)) {
       loadMediaStream();
     } else if (!srcHasQualities) {
@@ -364,11 +367,11 @@
   $: onSrcChange(src, srcHasQualities);
   $: srcHasQualities = video && isQualitiesSet(src);
   $: if (srcHasQualities) calcQuality(videoWidth, aspectRatio);
-  $: if (is_number(quality)) loadNewQuality(quality);
+  $: if (is_number(videoQuality)) loadNewQuality(videoQuality);
   $: shouldUseAudio = everySrc(src, isAudio) && !is_string(poster);
   $: shouldUseVideo = everySrc(src, isVideo) || isMediaStream(src) || is_string(poster);
   $: (ready && !paused) ? getTimeUpdates() : cancelTimeUpdates();
-  $: dispatch(PlayerEvent.CURRENT_SRC_CHANGE, currentSrc);
+  $: tick().then(() => dispatch(PlayerEvent.CURRENT_SRC_CHANGE, currentSrc));
 
   // If media is initialized or changed (audio/video/false).
   $: if (prevMedia !== media) {
@@ -380,7 +383,8 @@
 </script>
 
 <style>
-  audio, video {
+  audio, 
+  video {
     border-radius: inherit;
     vertical-align: middle;
     width: 100%;
