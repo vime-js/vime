@@ -1,7 +1,7 @@
 import { onDestroy } from 'svelte';
 import { get, writable, derived } from 'svelte/store';
 import { noop, not_equal, init, validate_store, get_current_component } from 'svelte/internal';
-import { create_prop, merge_deep } from './object';
+import { create_prop, merge_obj_deep } from './object';
 import { is_function } from './unit';
 import { try_on_svelte_destroy, try_create_svelte_dispatcher } from './svelte';
 
@@ -50,7 +50,7 @@ export const subscribe_until_true = (store, cb) => {
 
 // Private is "private" to the component who instantiates it, when it is exposed publically
 // the set method should be removed. The utility `make_private_stores_readonly` does exactly
-// this. This is also what `map_store_to_component` uses.
+// this. This is also what `map_store_to_component` below uses.
 export const make_store_private = store => ({
   ...store,
   private: true
@@ -62,7 +62,7 @@ export const mergeable = initialValue => {
   const store = writable(initialValue);
   return {
     ...store,
-    set: v => store.update(p => merge_deep(p, v))
+    set: v => store.update(p => merge_obj_deep(p, v))
   };
 };
 
@@ -85,6 +85,10 @@ export const writable_if = (initialValue, condition) => {
     set: v => safe_get(condition) && store.set(v),
     forceSet: store.set
   };
+};
+
+export const private_writable_if = (initialValue, condition) => {
+  return make_store_private(writable_if(initialValue, condition));
 };
 
 export const indexable = bounds => {

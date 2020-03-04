@@ -15,6 +15,17 @@ export default class Registry {
     try_on_svelte_destroy(() => this.destroy());
   }
 
+  _error (msg) {
+    throw Error(`${this._name} :: ${msg}`);
+  }
+
+  _invalidateParent () {
+    if (this._parent) {
+      this._parent._values.update(v => v);
+      this._parent._invalidateParent();
+    }
+  }
+
   name () {
     return this._name;
   }
@@ -44,13 +55,6 @@ export default class Registry {
     if (is_instance_of(value, Registry)) value._parent = this;
     this._dispatch('register', { id, value });
     this._invalidateParent();
-  }
-
-  _invalidateParent () {
-    if (this._parent) {
-      this._parent._values.update(v => v);
-      this._parent._invalidateParent();
-    }
   }
 
   update (id, value) {
@@ -84,10 +88,6 @@ export default class Registry {
       const values = this.unwrap($values);
       set(id ? values[id] : values);
     }));
-  }
-
-  _error (msg) {
-    throw Error(`${this._name} :: ${msg}`);
   }
 
   destroy () {

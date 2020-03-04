@@ -9,11 +9,11 @@
 {/each}
 
 <script context="module">
-  import { merge_deep } from '@vime/utils';
+  import { merge_obj_deep } from '@vime/utils';
 
   export const ID = 'vPlugins';
 
-  const buildConfig = (Plugin, config) => merge_deep(config[Plugin.ID], Plugin.DEFAULT_CONFIG || {});
+  const buildConfig = (Plugin, config) => merge_obj_deep(config[Plugin.ID], Plugin.DEFAULT_CONFIG || {});
 </script>
 
 <script>
@@ -33,8 +33,7 @@
   // Props
   // --------------------------------------------------------------
   
-  const instances = {};
-
+  let instances = {};
   let validatedPlugins = [];
 
   onDestroy(() => { 

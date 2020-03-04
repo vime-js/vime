@@ -2,10 +2,10 @@
   {srcId}
   {params}
   {cookies}
-  on:srcchange
   on:originchange
   on:titlechange
   on:rebuild={onRebuildStart}
+  on:srcchange={onCurrentSrcChange}
   on:data={onData}
   bind:this={embed}
 />
@@ -15,45 +15,49 @@
   import { VideoQuality } from '@vime/core';
 
   const YT = {
-    URL: /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/,
-    // @see https://developers.google.com/youtube/iframe_api_reference#Events
-    Event: {
-      READY: 'onReady'
-    },
-    // @see https://developers.google.com/youtube/iframe_api_reference#Playback_status
-    State: {
-      UNSTARTED: -1,
-      ENDED: 0,
-      PLAYING: 1,
-      PAUSED: 2,
-      BUFFERING: 3,
-      CUED: 5
-    },
-    // @see https://developers.google.com/youtube/iframe_api_reference#Events
-    QualityMap: {
-      unknown: VideoQuality.UNKNOWN,
-      tiny: VideoQuality.XXS,
-      small: VideoQuality.XS,
-      medium: VideoQuality.S,
-      large: VideoQuality.M,
-      hd720: VideoQuality.L,
-      hd1080: VideoQuality.XL,
-      highres: VideoQuality.XXL,
-      max: VideoQuality.MAX
-    },
-    // @see https://developers.google.com/youtube/iframe_api_reference#Playback_controls
-    Command: {
-      PLAY: 'playVideo',
-      PAUSE: 'pauseVideo',
-      SEEK_TO: 'seekTo',
-      MUTE: 'mute',
-      UNMUTE: 'unMute',
-      SET_VOLUME: 'setVolume',
-      SET_PLAYBACK_RATE: 'setPlaybackRate'
-    }
+    SRC: /(?:youtu\.be|youtube|youtube\.com|youtube-nocookie\.com)\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|)((?:\w|-){11})/
   };
 
-  export const canPlay = src => is_string(src) && YT.URL.test(src);
+  // @see https://developers.google.com/youtube/iframe_api_reference#Events
+  YT.Event = {
+    READY: 'onReady'
+  };
+
+  // @see https://developers.google.com/youtube/iframe_api_reference#Playback_status
+  YT.State = {
+    UNSTARTED: -1,
+    ENDED: 0,
+    PLAYING: 1,
+    PAUSED: 2,
+    BUFFERING: 3,
+    CUED: 5
+  };
+
+  // @see https://developers.google.com/youtube/iframe_api_reference#Events
+  YT.QualityMap = {
+    unknown: VideoQuality.UNKNOWN,
+    tiny: VideoQuality.XXS,
+    small: VideoQuality.XS,
+    medium: VideoQuality.S,
+    large: VideoQuality.M,
+    hd720: VideoQuality.L,
+    hd1080: VideoQuality.XL,
+    highres: VideoQuality.XXL,
+    max: VideoQuality.MAX
+  };
+
+  // @see https://developers.google.com/youtube/iframe_api_reference#Playback_controls
+  YT.Command = {
+    PLAY: 'playVideo',
+    PAUSE: 'pauseVideo',
+    SEEK_TO: 'seekTo',
+    MUTE: 'mute',
+    UNMUTE: 'unMute',
+    SET_VOLUME: 'setVolume',
+    SET_PLAYBACK_RATE: 'setPlaybackRate'
+  };
+
+  export const canPlay = src => is_string(src) && YT.SRC.test(src);
 
   const getPoster = srcId => {
     if (!srcId) return Promise.resolve(null);
@@ -68,12 +72,13 @@
 </script>
 
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { tick, onMount, createEventDispatcher } from 'svelte';
   import { PlayerEvent, MediaType } from '@vime/core';
   import { is_number, is_boolean } from '@vime/utils';
   import YouTubeEmbed from './YouTubeEmbed.svelte';
 
   let embed;
+  let srcId = null;
   let internalTime = 0;
   let duration = 0;
   let seeking = false;
@@ -92,7 +97,6 @@
   const send = (command, args) => embed && embed.sendCommand(command, args);
 
   export let src = null;
-  export let srcId = null;
   export let cookies = false;
 
   export const getEmbed = () => embed;
@@ -101,7 +105,7 @@
   export const setPaused = paused => paused ? send(YT.Command.PAUSE) : send(YT.Command.PLAY);
   export const setMuted = muted => muted ? send(YT.Command.MUTE) : send(YT.Command.UNMUTE);
   export const setVolume = volume => send(YT.Command.SET_VOLUME, [volume]);
-  export const setRate = rate => send(YT.Command.SET_PLAYBACK_RATE, [rate]);
+  export const setPlaybackRate = rate => send(YT.Command.SET_PLAYBACK_RATE, [rate]);
   export const setCurrentTime = time => send(YT.Command.SEEK_TO, [time]);
   export const setPlaysinline = enabled => { params.playsinline = enabled ? 1 : 0; };
   export const setNativeMode = nativeMode => { /** noop */ };
@@ -114,7 +118,13 @@
   export const supportsPiP = () => false;
   export const supportsFullscreen = () => true;
 
+  onMount(() => dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, MediaType.VIDEO));
   const onRebuildStart = () => dispatch(PlayerEvent.REBUILD_START);
+  
+  const onCurrentSrcChange = e => {
+    dispatch(PlayerEvent.SRC_ID_CHANGE, srcId);
+    dispatch(PlayerEvent.CURRENT_SRC_CHANGE, e.detail);
+  };
 
   const onEvent = event => {
     if (event === YT.Event.READY) dispatch(PlayerEvent.READY);
@@ -140,7 +150,6 @@
         playbackRate = 1;
         seeking = false;
         dispatch(PlayerEvent.PLAYBACK_READY);
-        dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, MediaType.VIDEO);
         break;
     }
   };
@@ -187,10 +196,10 @@
       duration = parseFloat(newDuration);
       dispatch(PlayerEvent.DURATION_CHANGE, duration);
     }
-    if (rates) dispatch(PlayerEvent.RATES_CHANGE, rates);
+    if (rates) dispatch(PlayerEvent.PLAYBACK_RATES_CHANGE, rates);
     if (rate) {
       playbackRate = parseFloat(rate);
-      dispatch(PlayerEvent.RATE_CHANGE, rate);
+      dispatch(PlayerEvent.PLAYBACK_RATE_CHANGE, rate);
     }
     if (is_number(currentTimeLastUpdated_)) lastTimeUpdate = currentTimeLastUpdated_;
     if (is_number(currentTime)) onTimeUpdate(parseFloat(currentTime));
@@ -199,9 +208,9 @@
     if (is_boolean(muted)) dispatch(PlayerEvent.MUTE_CHANGE, muted);
     if (qualities) {
       const mappedQualities = qualities.map(q => YT.QualityMap[q]).filter(Boolean);
-      dispatch(PlayerEvent.QUALITIES_CHANGE, mappedQualities);
+      dispatch(PlayerEvent.VIDEO_QUALITIES_CHANGE, mappedQualities);
     }
-    if (quality) dispatch(PlayerEvent.QUALITY_CHANGE, YT.QualityMap[quality]);
+    if (quality) dispatch(PlayerEvent.VIDEO_QUALITY_CHANGE, YT.QualityMap[quality]);
   };
 
   const onData = e => {
@@ -211,6 +220,7 @@
     // TODO: not sure how to map the error event.
   };
 
-  $: if (!srcId && src) srcId = src.match(YT.URL)[1] || null;
+  $: match = src ? src.match(YT.SRC) : null;
+  $: srcId = match ? match[1] : src;
   $: getPoster(srcId).then(poster => dispatch(PlayerEvent.POSTER_CHANGE, poster));
 </script>

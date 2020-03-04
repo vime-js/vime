@@ -7,7 +7,6 @@
   preconnections={PRECONNECTIONS}
   on:load
   on:data
-  on:message
   on:rebuild
   on:load={onLoad}
   on:data={onData}
@@ -122,11 +121,11 @@
   $: origin = cookies ? YT.Origin.WITH_COOKIES : YT.Origin.WITHOUT_COOKIES;
   $: src = buildSrc(origin, srcId);
   $: onData = !initialized ? _onData : null;
-  
+
   let mounted = false;
   onMount(() => { mounted = true; });
   
   $: if (mounted) dispatch(Event.TITLE_CHANGE, videoTitle);
   $: if (mounted) dispatch(Event.ORIGIN_CHANGE, origin);
-  $: if (mounted) dispatch(Event.SRC_CHANGE, { id: srcId, src });
+  $: if (mounted) dispatch(Event.SRC_CHANGE, src);
 </script>

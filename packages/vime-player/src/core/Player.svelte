@@ -1,5 +1,3 @@
-<svelte:options accessors />
-
 <div 
   tabindex="0"
   class="vime player{classes ? ` ${classes}` : ''}"
@@ -15,12 +13,15 @@
     {/if}
     <InternalPlayer
       fullscreenEl={el}
-      Provider={$Provider}
+      Provider={$Provider && $Provider.default}
       bind:this={internalPlayer}
       on:error
     />
   </div>
-  <Lazy container={el} let:intersecting >
+  <Lazy 
+    container={el} 
+    let:intersecting 
+  >
     {#if mounted && intersecting}
       <Plugins
         player={self}
@@ -37,8 +38,8 @@
 </div>
 
 <script>
-  import { get_current_component } from 'svelte/internal';
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+  import { noop, get_current_component } from 'svelte/internal';
   import { get } from 'svelte/store';
   import Plugins from './Plugins.svelte';
   import { buildPlayerStore } from './playerStore';
@@ -49,7 +50,7 @@
   } from '@vime/core';
   import { 
     log as _log, warn as _warn, error as _error,
-    map_store_to_component
+    map_store_to_component, is_string
   } from '@vime/utils';
 
   // --------------------------------------------------------------
@@ -60,7 +61,8 @@
   let internalPlayer;
   let pluginsManager;
   let classes = null;
- 
+
+  let src;
   let debug;
   let plugins;
   let config;
@@ -68,6 +70,7 @@
   let video;
   let theme;
   let Provider;
+  let providers;
   let videoView;
   let nativeMode;
   let controlsActive;
@@ -75,7 +78,7 @@
   let contextMenuEnabled;
 
   const ID = 'Player';
-  const self = get_current_component();
+  let self = get_current_component();
   const disposal = new Disposal();
   const registry = new Registry(ID);
   const _dispatch = createEventDispatcher();
@@ -94,9 +97,22 @@
       plugins, config, paused,
       video, theme, videoView,
       nativeMode, Provider, controlsActive, 
-      debug, fullscreenActive, contextMenuEnabled
+      debug, providers, fullscreenActive, 
+      src, contextMenuEnabled
     } = store);
   })
+
+  $: {
+    const newProvider = $providers && $providers.find(p => p.canPlay($src));
+    if (newProvider !== $Provider) $Provider = newProvider;
+    if (!$Provider && $src) _warn(`no provider can play this \`src\` [${$src}]`);
+  }
+
+  onDestroy(() => {
+    self = null;
+    store = {};
+    onPropsChange = noop;
+  });
 
   // --------------------------------------------------------------
   // Props

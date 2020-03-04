@@ -17,6 +17,6 @@ export const Full = () => ({
   Component: CenterView,
   props: {
     Component: Dailymotion,
-    srcId
+    src: srcId
   }
 });
