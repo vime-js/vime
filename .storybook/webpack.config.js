@@ -26,5 +26,10 @@ module.exports = async ({ config }) => {
     loader: 'svg-inline-loader'
   });
 
+  config.resolve.mainFields = ['svelte', 'browser', 'module', 'main'];
+  config.resolve.alias.svelte = path.resolve('node_modules', 'svelte');
+  config.resolve.alias['@vime/core'] = path.resolve('node_modules', '@vime/core');
+  config.resolve.alias['@vime/utils'] = path.resolve('node_modules', '@vime/utils');
+
   return config;
 }
