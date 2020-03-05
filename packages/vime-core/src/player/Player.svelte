@@ -9,53 +9,24 @@
     aspectRatio={$aspectRatio}
     this={Provider}
     bind:this={$provider}
+    on:update={onUpdate}
     on:error
-    on:ready={onProviderReady}
-    on:playbackready={onPlaybackReady}
-    on:play={onPlay}
-    on:pause={onPause}
-    on:playing={onPlaying}
-    on:live={onLive}
-    on:timeupdate={onTimeUpdate}
-    on:playbackend={onPlaybackEnd}
-    on:buffered={onBuffered}
-    on:buffering={onBuffering}
-    on:seeking={onSeeking}
-    on:seeked={onSeeked}
-    on:rebuildstart={onRebuildStart}
-    on:playbackratechange={onPlaybackRateChange}
-    on:videoqualitychange={onVideoQualityChange}
-    on:pipchange={onPiPChange}
-    on:fullscreenchange={onProviderFullscreenChange}
-    on:posterchange={onPosterChange}
-    on:srcidchange={onSrcIdChange}
-    on:currentsrcchange={onCurrentSrcChange}
-    on:titlechange={onTitleChange}
-    on:mutechange={onMuteChange}
-    on:volumechange={onVolumeChange}
-    on:durationchange={onDurationChange}
-    on:mediatypechange={onMediaTypeChange}
-    on:videoqualitieschange={onVideoQualitiesChange}
-    on:playbackrateschange={onPlaybackRatesChange}
-    on:originchange={onOriginChange}
-    on:trackschange={onTracksChange}
-    on:trackchange={onTrackChange}
-    on:cuechange={onCueChange}
   />
 </PlayerWrapper>
 
 <script>
-  import { tick, createEventDispatcher, onMount, onDestroy, afterUpdate } from 'svelte';
+  import { tick, onMount, onDestroy, afterUpdate, createEventDispatcher } from 'svelte';
   import { get } from 'svelte/store';
   import { noop, listen, get_current_component } from 'svelte/internal';
   import { currentPlayer } from './globalStore';
   import { mapPlayerStoreToComponent } from './playerStore';
   import MediaType from './MediaType';
-  import PlayerEvent from './PlayerEvent';
+  import PlayerState from './PlayerState';
   import PlayerWrapper from './PlayerWrapper.svelte';
   import {
     is_array, is_function, is_number, 
-    is_boolean, map_store_to_component, deferred
+    is_boolean, map_store_to_component, deferred,
+    is_null
   } from '@vime/utils';
 
   let self = get_current_component();
@@ -75,15 +46,15 @@
     buffering, buffered, autopause, 
     autoplay, playing, playbackStarted, 
     poster, playbackReady, videoView, 
-    currentSrc, tracks, currentTrack, 
-    provider, rebuilding, videoReady, 
-    canInteract, video,
+    tracks, currentTrack, provider, 
+    rebuilding, videoReady, canInteract, 
+    video, fullscreenActive
   } = store;
 
   const {
-    canSetPiP, fullscreenActive, canSetTracks, 
-    canSetTrack, canSetPoster, canSetPlaybackRate, 
-    canSetVideoQuality, canAutoplay, canMutedAutoplay
+    canSetPiP, canSetTracks, canSetTrack, 
+    canAutoplay, canMutedAutoplay, canSetPoster, 
+    canSetPlaybackRate, canSetVideoQuality
   } = store;
 
   let props = {};
@@ -136,10 +107,10 @@
     $playsinline = true;
   };
 
-  const onTimeUpdate = e => {
+  const onTimeUpdate = time => {
     if ($seeking || !$canInteract) return;
-    $internalTime = parseFloat(e.detail);
-    $currentTime = parseFloat(e.detail);
+    $internalTime = time;
+    $currentTime = time;
     if ($internalTime === 0 && $playbackEnded) onRestart();
   };
 
@@ -197,40 +168,48 @@
     $currentPlayer.paused = true;
   };
 
-  const onPlay = () => { if (!$rebuilding && $nativeMode && !tempPlay) $paused = false; };
-
   // If a provider fires a `pause` event before `seeking` we cancel it to not mess
   // with our internal paused state.
   let firePauseTimer;
   const onPause = () => {
-    if ($rebuilding) return;
     firePauseTimer = window.setTimeout(() => {
       if ($nativeMode && !tempPause) $paused = true;
       if (!tempPause) $playing = false;
     }, 100);
   };
 
+  const onVolumeChange = newVolume => {
+    $volume = newVolume;
+    updatingVolume = true;
+  };
+
+  const onBuffered = progress => {
+    if (progress) $buffered = progress;
+    if ($seeking && $buffered > $currentTime) {
+      $seeking = false;
+      $buffering = false;
+    }
+  };
+
   const onSeeking = () => {
-    if ($seeking || $rebuilding) return;
+    if ($seeking) return;
     window.clearTimeout(firePauseTimer);
     $seeking = true;
+    if ($buffered < $currentTime) $buffering = true;
     !$playbackStarted ? initiateTempPlayback() : (tempPause = true);
   };
 
-  const onSeeked = async e => {
-    if (!$seeking || $rebuilding) return;
+  const onSeeked = async () => {
+    if (!$seeking) return;
     // Wait incase `seeking` and `seeked` are fired immediately after each other.
     await tick();
-    $seeking = false;
-    dispatch(PlayerEvent.SEEKED);
     cancelTempAction(() => {
       tempPause = false;
     });
-    if (e && is_number(e.detail)) onTimeUpdate(e);
+    onBuffered($buffered);
   };
 
   const onPlaying = () => {
-    if (!$playbackReady) return;
     $buffering = false;
     $playbackStarted = true;
     onSeeked();
@@ -254,7 +233,6 @@
     $playbackEnded = false;
     $provider.setCurrentTime(0);
     $paused = false;
-    dispatch(PlayerEvent.REPLAY);
   };
 
   const onLoop = async () => {
@@ -263,36 +241,64 @@
     onRestart();
   };
 
-  const onPlaybackEnd = e => {
+  const onPlaybackEnd = () => {
     $playbackEnded = true;
     $paused = true;
     onLoop();
   };
 
-  const onProviderReady = () => { store.ready.set(true); };
-  const onPosterChange = e => { $poster = e.detail; };
-  const onSrcIdChange = e => { store.srcId.set(e.detail); };
-  const onCurrentSrcChange = e => { if (!$rebuilding) $currentSrc = e.detail; };
-  const onMediaTypeChange = e => { store.mediaType.set(parseInt(e.detail)); };
-  const onBuffered = e => { if (!$rebuilding) $buffered = parseFloat(e.detail); };
-  const onBuffering = e => { if (!$rebuilding) $buffering = is_boolean(e.detail) ? e.detail : true; };
-  const onTitleChange = e => { if (!$rebuilding) store.title.set(e.detail); };
-  const onLive = e => { if (!$rebuilding) store.live.set(e.detail); };
-  const onVideoQualitiesChange = e => { if (!$rebuilding) store.videoQualities.set(e.detail); };
-  const onPlaybackRatesChange = e => { if (!$rebuilding) store.playbackRates.set(e.detail); };
-  const onOriginChange = e => { if (!$rebuilding) store.origin.set(e.detail); };
-  const onDurationChange = e => { if (!$rebuilding) store.duration.set(parseFloat(e.detail)); };
-  const onPlaybackRateChange = e => { if (!$rebuilding) store.playbackRate.forceSet(parseFloat(e.detail)); };
-  const onVideoQualityChange = e => { if (!$rebuilding) store.videoQuality.forceSet(e.detail || null); };
-  const onMuteChange = e => { if (!$rebuilding && !tempMute) $muted = e.detail; };
-  const onTrackChange = e => { if (!$rebuilding) store.currentTrack.set(e.detail); };
-  const onTracksChange = e => { if (!$rebuilding) $tracks = e.detail; };
-  const onCueChange = e => { if (!$rebuilding) store.activeCues.set(e.detail); };
+  const onStateChange = async state => {
+    await tick();
+    switch (state) {
+      case PlayerState.CUED:
+        onPlaybackReady();
+        break;
+      case PlayerState.PAUSED:
+        if ($rebuilding) return;
+        onPause();
+        $buffering = false;
+        break;
+      case PlayerState.BUFFERING:
+        $buffering = true;
+        break;
+      case PlayerState.PLAYING:
+        onPlaying();
+        break;
+      case PlayerState.ENDED:
+        onPlaybackEnd();
+        break;
+    }
+  };
 
-  const onVolumeChange = e => {
+  const onUpdate = e => {
+    const info = e.detail;
+    if (info.ready) store.ready.set(true);
+    if (info.state) onStateChange(info.state);
+    if (info.play && $nativeMode && !tempPlay) $paused = false;
+    if (info.rebuild) onRebuildStart();
     if ($rebuilding) return;
-    $volume = parseInt(e.detail);
-    updatingVolume = true;
+    if (is_null(info.poster) || info.poster) $poster = info.poster;
+    if (is_number(info.duration)) store.duration.set(parseFloat(info.duration));
+    if (is_number(info.currentTime)) onTimeUpdate(parseFloat(info.currentTime));
+    if (is_number(info.buffered)) onBuffered(parseFloat(info.buffered));
+    if (info.seeking) onSeeking();
+    if (info.seeked) onSeeked();
+    if (is_number(info.mediaType)) store.mediaType.set(info.mediaType);
+    if (info.title) store.title.set(info.title);
+    if (info.currentSrc) store.currentSrc.set(info.currentSrc);
+    if (info.srcId) store.srcId.set(info.srcId);
+    if (is_number(info.volume)) onVolumeChange(parseInt(info.volume));
+    if (is_boolean(info.muted) && !tempMute) $muted = !!info.muted;
+    if (info.origin) store.origin.set(info.origin);
+    if (is_null(info.videoQuality) || info.videoQuality) store.videoQuality.forceSet(info.videoQuality);
+    if (info.videoQualities) store.videoQualities.set(info.videoQualities);
+    if (info.playbackRate) store.playbackRate.forceSet(info.playbackRate);
+    if (info.playbackRates) store.playbackRates.set(info.playbackRates);
+    if (info.tracks) $tracks = info.tracks;
+    if (is_number(info.currentTrack)) $currentTrack = info.currentTrack;
+    if (info.activeCues) store.activeCues.set(info.activeCues);
+    if (is_boolean(info.fullscreen)) onFullscreenChange(info.fullscreen);
+    if (is_boolean(info.pip)) $pipActive = info.pip;
   };
 
   const onSrcReset = () => {
@@ -347,8 +353,6 @@
   const NO_PIP_SUPPORT_ERROR_MSG = 'Provider does not support PiP.';
   const VIDEO_NOT_READY_ERROR_MSG = 'Action not supported, must be a video that is ready for playback.';
   
-  const onPiPChange = e => { if (!$rebuilding) $pipActive = e.detail; };
-
   const pipRequest = active => {
     if (!$videoReady) {
       return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
@@ -387,8 +391,8 @@
     $fullscreenActive = active;
   };
 
-  const onProviderFullscreenChange = e => { 
-    if (!$rebuilding) $fullscreenActive = (e.detail == 'true');
+  const onFullscreenChange = active => { 
+    $fullscreenActive = active;
     if (!$fullscreenActive) tempControls = false;
   };
 

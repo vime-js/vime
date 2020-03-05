@@ -1,8 +1,8 @@
 <VimeoEmbed
   {srcId}
   {params}
-  on:titlechange
   on:error
+  on:titlechange={onTitleChange}
   on:srcchange={onReload}
   on:rebuild={onReload}
   on:rebuild={onRebuildStart}
@@ -13,7 +13,6 @@
 
 <script context="module">
   import { is_string } from '@vime/utils';
-  import { PlayerEvent } from '@vime/core';
 
   const VM = {
     SRC: /vimeo(?:\.com|)\/([0-9]{9,})/,
@@ -23,8 +22,8 @@
 
   // @see https://developer.vimeo.com/player/sdk/reference#methods-for-playback-controls
   VM.Command = {
-    PLAY: PlayerEvent.PLAY,
-    PAUSE: PlayerEvent.PAUSE,
+    PLAY: 'play',
+    PAUSE: 'pause',
     SET_MUTED: 'setMuted',
     SET_VOLUME: 'setVolume',
     SET_CURRENT_TIME: 'setCurrentTime',
@@ -39,38 +38,38 @@
   // Some reason event names are different when calling `addEventListener` vs the event name
   // that comes through `onData`, hence `VM.Event` and `VM.EVENTS` below.
   VM.Event = {
-    PLAY: PlayerEvent.PLAY,
-    PAUSE: PlayerEvent.PAUSE,
-    READY: PlayerEvent.READY,
+    PLAY: 'play',
+    PAUSE: 'pause',
+    READY: 'ready',
     LOAD_PROGRESS: 'loadProgress',
     BUFFER_START: 'bufferstart',
     BUFFER_END: 'bufferend',
     LOADED: 'loaded',
     FINISH: 'finish',
-    SEEKING: PlayerEvent.SEEKING,
-    SEEKED: 'seek',
-    CUE_CHANGE: PlayerEvent.CUE_CHANGE,
-    FULLSCREEN_CHANGE: PlayerEvent.FULLSCREEN_CHANGE,
-    VOLUME_CHANGE: PlayerEvent.VOLUME_CHANGE,
-    DURATION_CHANGE: PlayerEvent.DURATION_CHANGE,
-    PLAYBACK_RATE_CHANGE: PlayerEvent.PLAYBACK_RATE_CHANGE,
+    SEEKING: 'seeking',
+    SEEKED: 'seeked',
+    CUE_CHANGE: 'cuechange',
+    FULLSCREEN_CHANGE: 'fullscreenchange',
+    VOLUME_CHANGE: 'volumechange',
+    DURATION_CHANGE: 'durationchange',
+    PLAYBACK_RATE_CHANGE: 'playbackratechange',
     TEXT_TRACK_CHANGE: 'texttrackchange',
-    ERROR: PlayerEvent.ERROR
+    ERROR: 'error'
   };
 
   // @see https://developer.vimeo.com/player/sdk/reference#events-for-playback-controls
   VM.EVENTS = [
-    PlayerEvent.PLAY,
-    PlayerEvent.PAUSE,
-    PlayerEvent.SEEKING,
-    PlayerEvent.SEEKED,
-    PlayerEvent.TIME_UPDATE,
-    PlayerEvent.VOLUME_CHANGE,
-    PlayerEvent.DURATION_CHANGE,
-    PlayerEvent.FULLSCREEN_CHANGE,
-    PlayerEvent.CUE_CHANGE,
-    PlayerEvent.PROGRESS,
-    PlayerEvent.ERROR,
+    VM.Event.PLAY,
+    VM.Event.PAUSE,
+    VM.Event.SEEKING,
+    'seeked',
+    'timeupdate',
+    VM.Event.VOLUME_CHANGE,
+    VM.Event.DURATION_CHANGE,
+    VM.Event.FULLSCREEN_CHANGE,
+    VM.Event.CUE_CHANGE,
+    'progress',
+    VM.Event.ERROR,
     VM.Event.PLAYBACK_RATE_CHANGE,
     VM.Event.LOADED,
     VM.Event.BUFFER_START,
@@ -96,10 +95,11 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import { raf } from 'svelte/internal';
-  import { MediaType } from '@vime/core';
+  import { PlayerState, MediaType } from '@vime/core';
   import VimeoEmbed from './VimeoEmbed.svelte';
 
   let embed;
+  let info = {};
   let srcId = null;
   let currentSrc = null;
   let seeking = false;
@@ -142,14 +142,15 @@
     currentTrack = index;
   };
 
-  onMount(() => dispatch(PlayerEvent.ORIGIN_CHANGE, embed.getOrigin()));
-  onMount(() => dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, MediaType.VIDEO));
-  const onRebuildStart = () => dispatch(PlayerEvent.REBUILD_START);
+  onMount(() => { info.origin = embed.getOrigin(); });
+  onMount(() => { info.mediaType = MediaType.VIDEO; });
+  const onRebuildStart = () => { info.rebuild = true; };
+  const onTitleChange = e => { info.title = e.detail; };
   
   const onCurrentSrcChange = e => {
     currentSrc = e.detail;
-    dispatch(PlayerEvent.SRC_ID_CHANGE, srcId);
-    dispatch(PlayerEvent.CURRENT_SRC_CHANGE, e.detail);
+    info.srcId = srcId;
+    info.currentSrc = e.detail;
   };
 
   const onReload = () => {
@@ -161,12 +162,10 @@
   };
 
   const onTimeUpdate = time => {
-    dispatch(PlayerEvent.TIME_UPDATE, time);
+    info.currentTime = time;
     if (Math.abs(internalTime - time) > 1) {
       seeking = true;
-      dispatch(PlayerEvent.SEEKING);
-      // When paused Vimeo doesn't fire `buffering` event.
-      dispatch(PlayerEvent.BUFFERING);
+      info.seeking = true;
     }
     internalTime = time;
   };
@@ -190,73 +189,73 @@
     }
     if (data.method === VM.Command.GET_TEXT_TRACKS) {
       tracks = data.value || [];
-      currentTrack = tracks.findIndex(t => t.mode === 'showing');
+      info.tracks = tracks;
+      info.currentTrack = tracks.findIndex(t => t.mode === 'showing');
     }
     if (!event) return;
     switch (event) {
       case VM.Event.READY:
-        dispatch(PlayerEvent.READY);
+        info.ready = true;
         VM.EVENTS.forEach(event => send(VM.Command.ADD_EVENT_LISTENER, event));
         break;
       case VM.Event.LOADED:
         ready = true;
-        dispatch(PlayerEvent.PLAYBACK_READY);
+        info.state = PlayerState.CUED;
         send(VM.Command.GET_TEXT_TRACKS);
         break;
       case VM.Event.PLAY:
-        dispatch(PlayerEvent.PLAYING);
+        info.state = PlayerState.PLAYING;
         break;
       case VM.Event.PAUSE:
-        dispatch(PlayerEvent.PAUSE);
+        info.state = PlayerState.PAUSED;
         break;
       case VM.Event.LOAD_PROGRESS:
-        dispatch(PlayerEvent.BUFFERED, payload.seconds);
+        info.buffered = payload.seconds;
         break;
       case VM.Event.BUFFER_START:
-        dispatch(PlayerEvent.BUFFERING);
-        break;
-      case VM.Event.BUFFER_END:
-        dispatch(PlayerEvent.BUFFERING, false);
+        info.state = PlayerState.BUFFERING;
         break;
       case VM.Event.SEEKING:
-        dispatch(PlayerEvent.SEEKING);
+        info.seeking = true;
         break;
       case VM.Event.TEXT_TRACK_CHANGE:
-        currentTrack = tracks.findIndex(t => t.label === payload.label);
+        info.currentTrack = tracks.findIndex(t => t.label === payload.label);
         break;
       case VM.Event.CUE_CHANGE:
-        dispatch(PlayerEvent.CUE_CHANGE, payload.cues ? payload.cues : [payload]);
+        info.activeCues = payload.cues ? payload.cues : [payload];
         break;
       case VM.Event.SEEKED:
-        if (seeking) dispatch(PlayerEvent.BUFFERING, false);
         seeking = false;
-        dispatch(PlayerEvent.SEEKED);
+        info.seeked = true;
         break;
       case VM.Event.VOLUME_CHANGE:
-        dispatch(PlayerEvent.VOLUME_CHANGE, parseFloat(payload.volume) * 100);
+        info.volume = parseFloat(payload.volume) * 100;
         break;
       case VM.Event.DURATION_CHANGE:
-        dispatch(PlayerEvent.DURATION_CHANGE, payload.duration);
+        info.duration = payload.duration;
         break;
       case VM.Event.PLAYBACK_RATE_CHANGE:
-        dispatch(PlayerEvent.PLAYBACK_RATE_CHANGE, payload.playbackRate);
+        info.playbackRate = payload.playbackRate;
         break;
       case VM.Event.FULLSCREEN_CHANGE:
-        dispatch(PlayerEvent.FULLSCREEN_CHANGE, payload.fullscreen);
+        info.fullscreen = payload.fullscreen;
         break;
       case VM.Event.FINISH:
-        dispatch(PlayerEvent.PLAYBACK_END);
+        info.state = PlayerState.ENDED;
         break;
       case VM.Event.ERROR:
-        dispatch(PlayerEvent.ERROR, payload);
+        dispatch('error', payload);
         break;
     }
   };
 
   $: match = src ? src.match(VM.SRC) : null;
   $: srcId = match ? match[1] : src;
-  $: dispatch(PlayerEvent.TRACKS_CHANGE, tracks);
-  $: dispatch(PlayerEvent.TRACK_CHANGE, currentTrack);
-  $: getPoster(currentSrc).then(poster => dispatch(PlayerEvent.POSTER_CHANGE, poster));
+  $: getPoster(currentSrc).then(poster => { info.poster = poster; });
   $: (!seeking && ready) ? getTimeUpdates() : cancelTimeUpdates();
+
+  $: {
+    dispatch('update', info);
+    info = {};
+  }
 </script>

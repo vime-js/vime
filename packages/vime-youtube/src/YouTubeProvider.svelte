@@ -2,8 +2,8 @@
   {srcId}
   {params}
   {cookies}
-  on:originchange
-  on:titlechange
+  on:originchange={onOriginChange}
+  on:titlechange={onTitleChange}
   on:rebuild={onRebuildStart}
   on:srcchange={onCurrentSrcChange}
   on:data={onData}
@@ -73,18 +73,19 @@
 
 <script>
   import { tick, onMount, createEventDispatcher } from 'svelte';
-  import { PlayerEvent, MediaType } from '@vime/core';
+  import { PlayerState, MediaType } from '@vime/core';
   import { is_number, is_boolean } from '@vime/utils';
   import YouTubeEmbed from './YouTubeEmbed.svelte';
 
   let embed;
+  let lastTimeUpdate = 0;
   let srcId = null;
   let internalTime = 0;
   let duration = 0;
   let seeking = false;
-  let lastTimeUpdate = 0;
   let playbackRate = 1;
   let playerState = -1;
+  let info = {}; 
 
   const params = {
     rel: 0,
@@ -118,30 +119,34 @@
   export const supportsPiP = () => false;
   export const supportsFullscreen = () => true;
 
-  onMount(() => dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, MediaType.VIDEO));
-  const onRebuildStart = () => dispatch(PlayerEvent.REBUILD_START);
+  onMount(() => { info.mediaType = MediaType.VIDEO; });
+  const onRebuildStart = () => { info.rebuild = true; };
+  const onOriginChange = e => { info.origin = e.detail; };
+  const onTitleChange = e => { info.title = e.detail; };
   
   const onCurrentSrcChange = e => {
-    dispatch(PlayerEvent.SRC_ID_CHANGE, srcId);
-    dispatch(PlayerEvent.CURRENT_SRC_CHANGE, e.detail);
+    info.srcId = srcId;
+    info.currentSrc = e.detail;
   };
 
   const onEvent = event => {
-    if (event === YT.Event.READY) dispatch(PlayerEvent.READY);
+    if (event === YT.Event.READY) info.ready = true;
   };
 
   const onStateChange = state => {
     playerState = state;
-    dispatch(PlayerEvent.BUFFERING, state === YT.State.BUFFERING);
     switch (state) {
       case YT.State.ENDED:
-        dispatch(PlayerEvent.PLAYBACK_END);
+        info.state = PlayerState.ENDED;
         break;
       case YT.State.PLAYING:
-        dispatch(PlayerEvent.PLAYING);
+        info.state = PlayerState.PLAYING;
+        break;
+      case YT.State.BUFFERING:
+        info.state = PlayerState.BUFFERING;
         break;
       case YT.State.PAUSED:
-        dispatch(PlayerEvent.PAUSE);
+        info.state = PlayerState.PAUSED;
         break;
       case YT.State.CUED:
         duration = 0;
@@ -149,7 +154,7 @@
         internalTime = 0;
         playbackRate = 1;
         seeking = false;
-        dispatch(PlayerEvent.PLAYBACK_READY);
+        info.state = PlayerState.CUED;
         break;
     }
   };
@@ -165,52 +170,52 @@
 
   const onTimeUpdate = time => {
     const currentTime = calcCurrentTime(time);
-    dispatch(PlayerEvent.TIME_UPDATE, currentTime);
+    info.currentTime = currentTime;
     // Unfortunately while the player is `paused` `seeking` and `seeked` will fire at the
     // same time, there are no updates at all inbetween -_-.
     if (Math.abs(internalTime - currentTime) > 2) {
       seeking = true;
-      dispatch(PlayerEvent.SEEKING);
+      info.seeking = true;
     }
     internalTime = currentTime;
   };
 
   const onBuffered = buffered => {
-    dispatch(PlayerEvent.BUFFERED, buffered);
+    info.buffered = buffered;
     // This is the only way to detect `seeked`.
     if (seeking && (buffered > internalTime)) {
       seeking = false;
-      dispatch(PlayerEvent.SEEKED);
+      info.seeked = true;
     }
   };
 
-  const onInfo = info => {
+  const onInfo = _info => {
     const {
       volume, muted, availablePlaybackRates: rates,
       playbackQuality: quality, playbackRate: rate, videoLoadedFraction: loadedFraction,
       availableQualityLevels: qualities, currentTime,
       duration: newDuration, playerState, currentTimeLastUpdated_
-    } = info;
+    } = _info;
     if (is_number(playerState)) onStateChange(playerState);
     if (is_number(newDuration)) {
       duration = parseFloat(newDuration);
-      dispatch(PlayerEvent.DURATION_CHANGE, duration);
+      info.duration = duration;
     }
-    if (rates) dispatch(PlayerEvent.PLAYBACK_RATES_CHANGE, rates);
+    if (rates) info.playbackRates = rates;
     if (rate) {
       playbackRate = parseFloat(rate);
-      dispatch(PlayerEvent.PLAYBACK_RATE_CHANGE, rate);
+      info.playbackRate = playbackRate;
     }
     if (is_number(currentTimeLastUpdated_)) lastTimeUpdate = currentTimeLastUpdated_;
     if (is_number(currentTime)) onTimeUpdate(parseFloat(currentTime));
     if (is_number(loadedFraction)) onBuffered(parseFloat(loadedFraction) * duration);
-    if (is_number(volume)) dispatch(PlayerEvent.VOLUME_CHANGE, volume);
-    if (is_boolean(muted)) dispatch(PlayerEvent.MUTE_CHANGE, muted);
+    if (is_number(volume)) info.volume = volume;
+    if (is_boolean(muted)) info.muted = muted;
     if (qualities) {
       const mappedQualities = qualities.map(q => YT.QualityMap[q]).filter(Boolean);
-      dispatch(PlayerEvent.VIDEO_QUALITIES_CHANGE, mappedQualities);
+      info.videoQualities = mappedQualities;
     }
-    if (quality) dispatch(PlayerEvent.VIDEO_QUALITY_CHANGE, YT.QualityMap[quality]);
+    if (quality) info.videoQuality = YT.QualityMap[quality];
   };
 
   const onData = e => {
@@ -222,5 +227,10 @@
 
   $: match = src ? src.match(YT.SRC) : null;
   $: srcId = match ? match[1] : src;
-  $: getPoster(srcId).then(poster => dispatch(PlayerEvent.POSTER_CHANGE, poster));
+  $: getPoster(srcId).then(poster => { info.poster = poster; });
+
+  $: {
+    dispatch('update', info);
+    info = {};
+  }
 </script>

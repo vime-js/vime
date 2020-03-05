@@ -1,17 +1,10 @@
 import { writable, readable, derived } from 'svelte/store'
 import en from '../lang/en';
 import PluginRole from './PluginRole'
-import PlayerEvent from './PlayerEvent'
 import { 
   IS_MOBILE, listen_for_touch_input, mergeable,
-  private_writable, subscribe_and_dispatch
+  private_writable
 } from '@vime/utils'
-
-// For more events see `packages/vime-core/src/PlayerEvents.js`.
-const dispatchPlayerEvents = store => {
-  subscribe_and_dispatch(store.locale, PlayerEvent.LOCALE_CHANGE);
-  subscribe_and_dispatch(store.theme, PlayerEvent.THEME_CHANGE);
-};
 
 // iStore = internalPlayerStore (packages/vime-core/src/playerStore.js).
 export const buildPlayerStore = iStore => {
@@ -60,8 +53,6 @@ export const buildPlayerStore = iStore => {
       return hasPlugin || $canSetPoster;
     } 
   );
-
-  dispatchPlayerEvents(store);
 
   return {
     ...iStore,
