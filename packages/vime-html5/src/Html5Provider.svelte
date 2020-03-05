@@ -18,6 +18,8 @@
     playsinline={playsinline}
     playsInline={playsinline}
     x5-playsinline={playsinline}
+    on:mozfullscreenchange={onFullscreenChange}
+    on:webkitfullscreenchange={onFullscreenChange}
     webkit-playsinline={playsinline}
     on:enterpictureinpicture={onEnterPiP}
     on:leavepictureinpicture={onExitPiP}
@@ -33,36 +35,53 @@
 <script context="module">
   import { 
     is_instance_of, is_string, can_play_hls_natively,
-    is_array, is_object, can_use_pip , is_number
+    is_array, is_object, can_use_pip, is_number
   } from '@vime/utils';
 
   const Html5 = {
-    PLAYBACK_RATES: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2],
-    Ext: {
-      AUDIO: /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i,
-      VIDEO: /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i,
-      HLS: /\.(m3u8)($|\?)/i
-    },
-    WebkitPresentationMode: {
-      PIP: 'picture-in-picture',
-      INLINE: 'inline',
-      FULLSCREEN: 'fullscreen'
-    },
-    TextTrack: {
-      Mode: {
-        SHOWING: 'showing',
-        HIDDEN: 'hidden'
-      },
-      Event: {
-        CHANGE: 'change',
-        CUE_CHANGE: 'cuechange'
-      }
+    PLAYBACK_RATES: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2]
+  };
+
+  Html5.Ext = {
+    AUDIO: /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i,
+    VIDEO: /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i,
+    HLS: /\.(m3u8)($|\?)/i
+  };
+
+  // @see https://developer.apple.com/documentation/webkitjs/htmlvideoelement/1631913-webkitpresentationmode
+  Html5.WebkitPresentationMode = {
+    PIP: 'picture-in-picture',
+    INLINE: 'inline',
+    FULLSCREEN: 'fullscreen'
+  };
+
+  // @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track
+  Html5.TextTrack = {
+    Mode: {
+      SHOWING: 'showing',
+      HIDDEN: 'hidden'
     },
     Event: {
-      LOADED_METADATA: 'loadedmetadata',
-      WAITING: 'waiting',
-      ENDED: 'ended'
+      CHANGE: 'change',
+      CUE_CHANGE: 'cuechange',
     }
+  };
+
+  // @see https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
+  Html5.Event = {
+    LOADED_METADATA: 'loadedmetadata',
+    PROGRESS: 'progress',
+    PLAY: 'play',
+    PAUSE: 'pause',
+    PLAYING: 'playing',
+    DURATION_CHANGE: 'durationchange',
+    RATE_CHANGE: 'ratechange',
+    SEEKING: 'seeking',
+    SEEKED: 'seeked',
+    VOLUME_CHANGE: 'volumechange',
+    WAITING: 'waiting',
+    ENDED: 'ended',
+    ERROR: 'error'
   };
 
   const Dropbox = {
@@ -102,7 +121,7 @@
   import { run_all, listen, raf, noop } from 'svelte/internal';
   import Source from './Source.svelte';
   import Tracks from './Tracks.svelte';
-  import { Disposal, PlayerEvent, MediaType } from '@vime/core';
+  import { Disposal, PlayerState, MediaType } from '@vime/core';
   
   import { 
     is_function, can_fullscreen_video, can_use_pip_in_chrome,
@@ -112,6 +131,7 @@
   const disposal = new Disposal();
   const dispatch = createEventDispatcher();
 
+  let info = {};
   let audio = null;
   let video = null;
   let prevMedia = null;
@@ -144,7 +164,7 @@
   export const setVideoQuality = quality => { videoQuality = quality; };
 
   export const setPoster = newPoster => {
-    if (poster === newPoster) return;
+    if (poster === newPoster || !is_string(newPoster)) return;
     poster = newPoster || null;
     if (poster) rebuild();
   };
@@ -178,6 +198,11 @@
   // Fullscreen
   // --------------------------------------------------------------
 
+  const onFullscreenChange = () => {
+    info.fullscreen = (document.webkitFullscreenElement === video) ||
+      (document.mozFullScreenElement === video);
+  };
+
   export const setFullscreen = active => {
     if (!video.webkitSupportsFullscreen) return Promise.reject();
     return active ? video.webkitEnterFullscreen() : video.webkitExitFullscreen();
@@ -201,12 +226,11 @@
   onDestroy(removeOnCueChangeListener);
 
   const onCueChange = e => {
-    const activeCues = Array.from(e.target.activeCues);
-    dispatch(PlayerEvent.CUE_CHANGE, activeCues);
+    info.activeCues = Array.from(e.target.activeCues);
   };
 
   const listenToCueChanges = track => {
-    dispatch(PlayerEvent.CUE_CHANGE, track.activeCues ? Array.from(track.activeCues) : []);
+    info.activeCues = track.activeCues ? Array.from(track.activeCues) : [];
     onCueChangeListener = listen(track, Html5.TextTrack.Event.CUE_CHANGE, onCueChange);
   };
 
@@ -233,9 +257,9 @@
     const tracks = Array.from(media.textTracks);
     const newTrack = tracks.findIndex(t => t.mode === Html5.TextTrack.Mode.SHOWING);
     if (currentTrack !== newTrack) {
-      dispatch(PlayerEvent.TRACK_CHANGE, newTrack);
       setTrack(newTrack);
       currentTrack = newTrack;
+      info.currentTrack = newTrack;
     }
   };
 
@@ -243,64 +267,71 @@
   // Media 
   // --------------------------------------------------------------
 
-  onMount(() => dispatch(PlayerEvent.READY));
+  onMount(() => { info.ready = true; });
 
   let timeRaf;
   const cancelTimeUpdates = () => window.cancelAnimationFrame(timeRaf);
   onDestroy(cancelTimeUpdates);
   const getTimeUpdates = () => {
-    dispatch(PlayerEvent.TIME_UPDATE, media.currentTime);
+    info.currentTime = media.currentTime;
     timeRaf = raf(getTimeUpdates);
   };
 
   const listenToMedia = (event, cb) => disposal.add(listen(media, event, cb));
-  const forwardMediaEvent = (event, to, data) => listenToMedia(
-    event, e => dispatch(to || event, data ? data(e) : null)
-  );
 
   const onBuffered = () => {
     const buffered = media.buffered;
     const duration = media.duration;
     const end = (buffered.length === 0) ? 0 : buffered.end(buffered.length - 1);
-    dispatch(PlayerEvent.BUFFERED, (end > duration) ? duration : end);
+    info.buffered = (end > duration) ? duration : end;
   };
 
   const setupMediaListeners = () => {
     listenToMedia(Html5.Event.LOADED_METADATA, () => {
-      dispatch(PlayerEvent.PLAYBACK_READY);
-      dispatch(PlayerEvent.PLAYBACK_RATES_CHANGE, Html5.PLAYBACK_RATES);
-      dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, video ? MediaType.VIDEO : MediaType.AUDIO);
+      info.state = PlayerState.CUED;
+      info.playbackRates = Html5.PLAYBACK_RATES;
+      info.mediaType = video ? MediaType.VIDEO : MediaType.AUDIO;
       if (srcHasQualities) {
-        dispatch(PlayerEvent.VIDEO_QUALITIES_CHANGE, src.map(s => s.quality));
-        dispatch(PlayerEvent.VIDEO_QUALITY_CHANGE, videoQuality);
+        info.videoQualities = src.map(s => s.quality);
+        info.videoQuality = videoQuality;
       }
       onBuffered();
       ready = true;
     });
-    listenToMedia(PlayerEvent.PROGRESS, onBuffered);
-    forwardMediaEvent(PlayerEvent.PLAY, null, () => { paused = false; });
-    forwardMediaEvent(PlayerEvent.PAUSE, null, () => { paused = true; });
-    forwardMediaEvent(PlayerEvent.PLAYING);
-    forwardMediaEvent(PlayerEvent.DURATION_CHANGE, null, () => media.duration);
-    forwardMediaEvent(PlayerEvent.PLAYBACK_RATE_CHANGE, null, () => media.playbackRate);
-    forwardMediaEvent(PlayerEvent.SEEKING, PlayerEvent.TIME_UPDATE, () => media.currentTime);
-    forwardMediaEvent(PlayerEvent.SEEKING);
-    forwardMediaEvent(PlayerEvent.SEEKED);
-    forwardMediaEvent(PlayerEvent.VOLUME_CHANGE, null, () => (media.volume * 100));
-    forwardMediaEvent(PlayerEvent.VOLUME_CHANGE, PlayerEvent.MUTE_CHANGE, () => media.muted);
-    forwardMediaEvent(Html5.Event.WAITING, PlayerEvent.BUFFERING);
-    forwardMediaEvent(Html5.Event.ENDED, PlayerEvent.PLAYBACK_END);
-    forwardMediaEvent(PlayerEvent.ERROR, null, e => e);
+    listenToMedia(Html5.Event.PROGRESS, onBuffered);
+    listenToMedia(Html5.Event.PLAY, () => { 
+      paused = false;
+      info.play = true; 
+    });
+    listenToMedia(Html5.Event.PAUSE, () => { 
+      paused = true;
+      info.state = PlayerState.PAUSED; 
+    });
+    listenToMedia(Html5.Event.PLAYING, () => { info.state = PlayerState.PLAYING; });
+    listenToMedia(Html5.Event.DURATION_CHANGE, () => { info.duration = media.duration; });
+    listenToMedia(Html5.Event.RATE_CHANGE, () => { info.playbackRate = media.playbackRate; });
+    listenToMedia(Html5.Event.SEEKING, () => {
+      info.currentTime = media.currentTime;
+      info.seeking = true;
+    });
+    listenToMedia(Html5.Event.SEEKED, () => { info.seeked = true; });
+    listenToMedia(Html5.Event.VOLUME_CHANGE, () => {
+      info.volume = parseInt(media.volume * 100);
+      info.muted = media.muted;
+    });
+    listenToMedia(Html5.Event.WAITING, () => { info.state = PlayerState.BUFFERING; });
+    listenToMedia(Html5.Event.ENDED, () => { info.state = PlayerState.ENDED; });
+    listenToMedia(Html5.Event.ERROR, e => dispatch('error', e));
     disposal.add(listen(media.textTracks, Html5.TextTrack.Event.CHANGE, onTracksChange));
   };
 
-  const onEnterPiP = () => dispatch(PlayerEvent.PIP_CHANGE, true);
-  const onExitPiP = () => dispatch(PlayerEvent.PIP_CHANGE, false);
+  const onEnterPiP = () => { info.pip = true; };
+  const onExitPiP = () => { info.pip = false; };
 
   const onPresentationModeChange = e => {
     const mode = video.webkitPresentationMode;
-    dispatch(PlayerEvent.PIP_CHANGE, (mode === Html5.WebkitPresentationMode.PIP));
-    dispatch(PlayerEvent.FULLSCREEN_CHANGE, (mode === Html5.WebkitPresentationMode.FULLSCREEN));
+    info.pip = (mode === Html5.WebkitPresentationMode.PIP);
+    info.fullscreen = (mode === Html5.WebkitPresentationMode.FULLSCREEN);
   };
 
   const load = async () => {
@@ -310,7 +341,7 @@
   };
 
   const rebuild = async () => {
-    dispatch(PlayerEvent.REBUILD_START);
+    info.rebuild = true;
     load();
   };
 
@@ -371,7 +402,7 @@
   $: shouldUseAudio = everySrc(src, isAudio) && !is_string(poster);
   $: shouldUseVideo = everySrc(src, isVideo) || isMediaStream(src) || is_string(poster);
   $: (ready && !paused) ? getTimeUpdates() : cancelTimeUpdates();
-  $: tick().then(() => dispatch(PlayerEvent.CURRENT_SRC_CHANGE, currentSrc));
+  $: tick().then(() => { info.currentSrc = currentSrc; });
 
   // If media is initialized or changed (audio/video/false).
   $: if (prevMedia !== media) {
@@ -379,6 +410,11 @@
     removeOnCueChangeListener();
     if (media) setupMediaListeners();
     prevMedia = media;
+  }
+
+  $: {
+    dispatch('update', info);
+    info = {};
   }
 </script>
 

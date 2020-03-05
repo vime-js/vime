@@ -1,6 +1,6 @@
 import { element } from 'svelte/internal';
 import { IS_CLIENT } from './support';
-import { is_null, is_array, is_object } from './unit';
+import { is_null_or_undefined, is_array, is_object } from './unit';
 
 export const try_decode_uri_component = (component, fallback = '') => {
   if (!IS_CLIENT) return fallback;
@@ -37,7 +37,7 @@ export const serialize_query_string = params => {
   };
   Object.keys(params).forEach(param => {
     const value = params[param];
-    if (is_null(value)) return;
+    if (is_null_or_undefined(value)) return;
     if (is_array(value)) {
       value.forEach(v => appendQueryParam(param, v));
     } else {

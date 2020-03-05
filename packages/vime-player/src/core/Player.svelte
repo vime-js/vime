@@ -46,7 +46,7 @@
   import PlayerEvent from './PlayerEvent'
   import { 
     Registry, Disposal, Lazy,
-    Player as InternalPlayer, PlayerEvent as InternalPlayerEvent
+    Player as InternalPlayer
   } from '@vime/core';
   import { 
     log as _log, warn as _warn, error as _error,
@@ -90,9 +90,6 @@
   onMount(() => {
     store = buildPlayerStore(internalPlayer.getStore());
     onPropsChange = map_store_to_component(self, store);
-    Object.keys(InternalPlayerEvent).forEach(event => {
-      disposal.add(internalPlayer.$on(event, e => _dispatch(event, e.detail)))
-    });
     ({  
       plugins, config, paused,
       video, theme, videoView,

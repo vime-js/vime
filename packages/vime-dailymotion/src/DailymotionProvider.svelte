@@ -1,7 +1,7 @@
 <DailymotionEmbed
   {srcId}
   {params}
-  on:titlechange
+  on:titlechange={onTitleChange}
   on:srcchange={onCurrentSrcChange}
   on:rebuild={onRebuildStart}
   on:data={onData}
@@ -10,7 +10,6 @@
 
 <script context="module">
   import { is_string  } from '@vime/utils';
-  import { PlayerEvent } from '@vime/core';
 
   const DM = {
     // eslint-disable-next-line
@@ -21,30 +20,30 @@
   DM.Event = {
     API_READY: 'apiready',
     VIDEO_CHANGE: 'videochange',
-    VOLUME_CHANGE: PlayerEvent.VOLUME_CHANGE,
+    VOLUME_CHANGE: 'volumechange',
     PLAYBACK_READY: 'playback_ready',
-    SEEKING: PlayerEvent.SEEKING,
-    SEEKED: PlayerEvent.SEEKED,
+    SEEKING: 'seeking',
+    SEEKED: 'seeked',
     WAITING: 'waiting',
-    PROGRESS: PlayerEvent.PROGRESS,
+    PROGRESS: 'progress',
     QUALITY_CHANGE: 'qualitychange',
     QUALITIES_AVAILABLE: 'qualitiesavailable',
-    FULLSCREEN_CHANGE: PlayerEvent.FULLSCREEN_CHANGE,
-    DURATION_CHANGE: PlayerEvent.DURATION_CHANGE,
-    PLAYING: PlayerEvent.PLAYING,
-    PLAY: PlayerEvent.PLAY,
-    PAUSE: PlayerEvent.PAUSE,
+    FULLSCREEN_CHANGE: 'fullscreenchange',
+    DURATION_CHANGE: 'durationchange',
+    PLAYING: 'playing',
+    PLAY: 'play',
+    PAUSE: 'pause',
     AD_TIME_UPDATE: 'ad_timeupdate',
-    TIME_UPDATE: PlayerEvent.TIME_UPDATE,
+    TIME_UPDATE: 'timeupdate',
     VIDEO_START: 'video_start',
     VIDEO_END: 'video_end',
-    ERROR: PlayerEvent.ERROR
+    ERROR: 'error'
   };
 
   // @see https://developer.dailymotion.com/player/#player-api-methods
   DM.Command = {
-    PLAY: PlayerEvent.PLAY,
-    PAUSE: PlayerEvent.PAUSE,
+    PLAY: 'play',
+    PAUSE: 'pause',
     SEEK: 'seek',
     VOLUME: 'volume',
     CONTROLS: 'controls',
@@ -65,12 +64,13 @@
 
 <script>
   import { onMount, createEventDispatcher } from 'svelte';
-  import { MediaType } from '@vime/core';
+  import { PlayerState, MediaType } from '@vime/core';
   import { is_number, is_boolean } from '@vime/utils';
   import DailymotionEmbed from './DailymotionEmbed.svelte';
 
   let embed;
   let srcId = null;
+  let info = {};
 
   // DM commands don't go through until ads have finished, so we store them and then replay them
   // once the video starts.
@@ -117,13 +117,14 @@
   export const supportsPiP = () => false;
   export const supportsFullscreen = () => true;
 
-  onMount(() => dispatch(PlayerEvent.ORIGIN_CHANGE, embed.getOrigin()));
-  onMount(() => dispatch(PlayerEvent.MEDIA_TYPE_CHANGE, MediaType.VIDEO));
-  const onRebuildStart = () => dispatch(PlayerEvent.REBUILD_START);
+  onMount(() => { info.origin = embed.getOrigin(); });
+  onMount(() => { info.mediaType = MediaType.VIDEO; });
+  const onRebuildStart = () => { info.rebuild = true; };
+  const onTitleChange = e => { info.title = e.detail; };
   
   const onCurrentSrcChange = e => {
-    dispatch(PlayerEvent.SRC_ID_CHANGE, srcId);
-    dispatch(PlayerEvent.CURRENT_SRC_CHANGE, e.detail);
+    info.srcId = srcId;
+    info.currentSrc = e.detail;
   };
 
   const onData = e => {
@@ -132,19 +133,19 @@
     if (!event) return;
     switch (event) {
       case DM.Event.API_READY:
-        dispatch(PlayerEvent.READY);
+        info.ready = true;
         break;
       case DM.Event.PLAYBACK_READY:
         startTime = null;
         startVolume = null;
         startMuted = null;
         started = false;
-        dispatch(PlayerEvent.PLAYBACK_READY);
+        info.state = PlayerState.CUED;
         break;
       case DM.Event.VIDEO_START:
         if (is_number(startTime) && startTime > 0) {
           setCurrentTime(startTime);
-          dispatch(PlayerEvent.SEEKING);
+          info.seeking = true;
         }
         if (is_boolean(startMuted)) setMuted(startMuted);
         if (is_number(startVolume)) setVolume(startVolume);
@@ -152,58 +153,62 @@
         break;
       case DM.Event.TIME_UPDATE:
       case DM.Event.AD_TIME_UPDATE:
-        dispatch(PlayerEvent.TIME_UPDATE, data.time);
+        info.currentTime = data.time;
         break;
       case DM.Event.VOLUME_CHANGE:
-        dispatch(PlayerEvent.MUTE_CHANGE, data.muted);
-        dispatch(PlayerEvent.VOLUME_CHANGE, parseFloat(data.volume) * 100);
+        info.muted = data.muted;
+        info.volume = parseFloat(data.volume) * 100;
         break;
       case DM.Event.SEEKING:
-        dispatch(PlayerEvent.SEEKING);
-        // When paused DM doesn't fire `buffering` event.
-        dispatch(PlayerEvent.BUFFERING);
+        info.currentTime = data.time;
+        info.seeking = true;
         break;
       case DM.Event.SEEKED:
-        dispatch(PlayerEvent.BUFFERING, false);
-        dispatch(PlayerEvent.SEEKED, parseFloat(data.time));
+        info.currentTime = data.time;
+        info.seeked = true;
         break;
       case DM.Event.WAITING:
-        dispatch(PlayerEvent.BUFFERING);
+        info.state = PlayerState.BUFFERING;
         break;
       case DM.Event.PROGRESS:
-        dispatch(PlayerEvent.BUFFERED, data.time);
+        info.buffered = data.time;
         break;
       case DM.Event.QUALITIES_AVAILABLE:
-        dispatch(PlayerEvent.VIDEO_QUALITIES_CHANGE, data.qualities);
+        info.videoQualities = data.qualities;
         break;
       case DM.Event.QUALITY_CHANGE:
-        dispatch(PlayerEvent.VIDEO_QUALITY_CHANGE, data.quality);
+        info.videoQuality = data.quality;
         break;
       case DM.Event.PLAY:
-        dispatch(PlayerEvent.PLAY);
+        info.play = true;
         break;
       case DM.Event.PLAYING:
-        dispatch(PlayerEvent.PLAYING);
+        info.state = PlayerState.PLAYING;
         break;
       case DM.Event.PAUSE:
-        dispatch(PlayerEvent.PAUSE);
+        info.state = PlayerState.PAUSED;
         break;
       case DM.Event.DURATION_CHANGE:
-        dispatch(PlayerEvent.DURATION_CHANGE, data.duration);
+        info.duration = data.duration;
         break;
       case DM.Event.VIDEO_END:
-        dispatch(PlayerEvent.PLAYBACK_END);
+        info.state = PlayerState.ENDED;
         break;
       case DM.Event.FULLSCREEN_CHANGE:
-        dispatch(PlayerEvent.FULLSCREEN_CHANGE, data.fullscreen);
+        info.fullscreen = data.fullscreen;
         break;
       case DM.Event.ERROR:
-        dispatch(PlayerEvent.ERROR, data);
+        dispatch('error', data);
         break;
     }
   };
 
   $: match = src ? src.match(DM.SRC) : null;
   $: srcId = match ? match[1] : src;
-  $: getPoster(srcId).then(poster => dispatch(PlayerEvent.POSTER_CHANGE, poster));
+  $: getPoster(srcId).then(poster => { info.poster = poster; });
+
+  $: {
+    dispatch('update', info);
+    info = {};
+  }
 </script>
