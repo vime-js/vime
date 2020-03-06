@@ -5,7 +5,7 @@ import {
   YouTubeProvider,
   DailymotionProvider,
   VimeoProvider,
-  // Boot
+  Boot
 } from '../src'
 
 export default { title: 'Player (Desktop)' };
@@ -20,7 +20,7 @@ export const Html5Audio = () => ({
     src: '/media/audio/the-battle.mp3',
     theme: THEME,
     providers: PROVIDERS,
-    // plugins: [Boot]
+    plugins: [Boot]
   }
 });
 
@@ -42,7 +42,7 @@ export const Html5Video = () => ({
     },
     theme: THEME,
     providers: PROVIDERS,
-    // plugins: [Boot],
+    plugins: [Boot],
     textTracks: [
       {
         default: true,

@@ -25,9 +25,9 @@
   />
   <progress
     role="progressbar"
-    class:loading={$isBuffering}
-    class:audio={$isAudio}
-    class:video={$isVideo}
+    class:loading={$buffering}
+    class:audio={!$isVideoView}
+    class:video={$isVideoView}
     min="0"
     max={ariaDuration}
     value={$buffered}
@@ -44,7 +44,7 @@
   <svelte:component 
     {player}
     title={tooltipTitle}
-    isActive={isTooltipActive}
+    active={tooltipActive}
     noBounding
     this={Tooltip}
     bind:this={tooltip}
@@ -57,9 +57,8 @@
 </script>
 
 <script>
-  import { formatTime } from '~utils/formatters';
-  import { ID as PluginsID } from '~core/components/Plugins.svelte';
-  import { ID as TooltipsID } from '~plugins/tooltips/Tooltips.svelte';
+  import { formatTime } from '@vime/core';
+  import { ID as TooltipsID } from '../../tooltips/Tooltips.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -67,13 +66,12 @@
 
   export let player;
 
-  const { isTouch } = player.getGlobalStore();
-  const plugins = player.getRegistry().watch(PluginsID);
+  const tooltipsPlugin = player.getPluginsRegistry().watch(TooltipsID);
   
   const {
-    i18n, isAudio, isVideo,
-    isCurrentPlayer, currentTime, duration,
-    buffered, isBuffering, icons
+    i18n, isVideoView, currentTime, 
+    duration, buffered, buffering, 
+    icons, isTouch
   } = player.getStore();
   
   // --------------------------------------------------------------
@@ -86,7 +84,7 @@
   
   let tooltip;
   let tooltipTitle;
-  let isTooltipActive;
+  let tooltipActive;
 
   export const getEl = () => scrubber;
   export const getSlider = () => slider;
@@ -112,7 +110,7 @@
     if ($duration <= 0 || !tooltip) return;
     const rect = scrubber.getBoundingClientRect();
     const percent = Math.max(0, Math.min(100, (100 / rect.width) * (e.pageX - rect.left)));
-    isTooltipActive = e.type !== 'mouseleave';
+    tooltipActive = e.type !== 'mouseleave';
     tooltipTitle = formatTime(($duration / 100) * percent);
     setTooltipXPos(percent, (percent / 100) * rect.width);
   };
@@ -134,9 +132,11 @@
   // Tooltips Plugin
   // --------------------------------------------------------------
 
-  $: tooltips = $plugins && $plugins[TooltipsID];
-  $: Tooltip = tooltips && tooltips.create();
-  $: if (tooltips && tooltip && !tooltips.getTooltip(LABEL)) tooltips.register(LABEL, tooltip);
+  $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.create();
+  
+  $: if ($tooltipsPlugin && tooltip && !$tooltipsPlugin.getTooltip(LABEL)) {
+    $tooltipsPlugin.getRegistry().register(LABEL, tooltip);
+  }
 </script>
 
 <style type="text/scss">

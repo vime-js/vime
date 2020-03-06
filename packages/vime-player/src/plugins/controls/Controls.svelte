@@ -1,17 +1,16 @@
 <svelte:options accessors />
 <svelte:window on:keydown|capture={onKeyDown} />
 
-{#if $isControlsEnabled}
+{#if $controlsEnabled}
   <div 
     class="controls"
-    class:video={$isVideo || $poster}
-    class:inactive={!$isControlsActive}
+    class:video={$isVideoView}
+    class:inactive={!$controlsActive}
     bind:this={el}
   >
-    {#if $isVideo || !!$poster}
+    {#if $isVideoView}
       <div 
         class="upper"
-        class:video={$isVideo}
         class:active={upper.length > 0}
         bind:this={upperEl}
         bind:clientHeight={upperControlsHeight}
@@ -41,9 +40,9 @@
     {/if}
     <div
       class="lower"
-      class:audio={$isAudio}
-      class:video={$isVideo}
-      class:inactive={!$isControlsActive}
+      class:audio={!$isVideoView}
+      class:video={$isVideoView}
+      class:inactive={!$controlsActive}
       bind:this={lowerEl}
       bind:clientHeight={lowerControlsHeight}
     >
@@ -60,9 +59,9 @@
 {/if}
 
 <script context="module">
-  import { is_array } from '~utils/unit';
   import { writable } from 'svelte/store';
-  import PluginRole from '~core/PluginRole';
+  import { is_array } from '@vime/utils';
+  import PluginRole from '../../core/PluginRole';
 
   export const ID = 'vControls';
   export const ROLE = PluginRole.CONTROLS;
@@ -75,7 +74,7 @@
 <script>
   import { listen } from 'svelte/internal';
   import { tick, onMount, onDestroy } from 'svelte';
-  import Registry from '~core/Registry';
+  import { Registry } from '@vime/core';
   import ControlGroup from './ControlGroup.svelte';
 
   // --------------------------------------------------------------
@@ -85,13 +84,12 @@
   export let player;
 
   const rootEl = player.getEl();
-  const { isMobile } = player.getGlobalStore();
 
   const {
-    isAudio, isVideo, isPaused,
-    isPlaybackReady, isLiveStream, mediaType,
-    poster, isControlsEnabled, _isControlsActive: isControlsActive,
-    canInteract
+    isAudio, paused, playbackReady, 
+    isLive, mediaType, isVideoView, 
+    controlsEnabled, controlsActive, canInteract, 
+    isMobile
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -132,13 +130,13 @@
     return () => { centerAssists = centerAssists.filter(e => e !== el); };
   };
 
-  $: if (!$isPaused && !$isAudio && idleTimer) {
+  $: if (!$paused && !$isAudio && idleTimer) {
     window.clearTimeout(hideControlsTimeout);
-    $isControlsActive = true;
-    hideControlsTimeout = window.setTimeout(() => { $isControlsActive = false; }, 2000);
+    $controlsActive = true;
+    hideControlsTimeout = window.setTimeout(() => { $controlsActive = false; }, 2750);
   } else {
     window.clearTimeout(hideControlsTimeout);
-    $isControlsActive = $isPlaybackReady && $canInteract;
+    $controlsActive = $playbackReady && $canInteract;
   }
 
   // --------------------------------------------------------------
@@ -151,7 +149,7 @@
   const onKeyDown = e => {
     if (
       e.keyCode === 9 &&
-      !$isControlsActive &&
+      !$controlsActive &&
       (document.activeElement === rootEl || el.contains(document.activeElement))
     ) e.preventDefault();
     idleTimer += 1;
@@ -181,11 +179,16 @@
 
   $: if (centerEl) centerAssist(centerEl);
 
-  $: if ($isControlsActive && lowerEl && upperEl) {
+  $: if ($controlsActive && lowerEl && upperEl) {
     onCenterAssist(lowerControlsHeight, upperControlsHeight);
   } else {
     onRemoveCenterAssist();
   }
+
+  // TODO: resolve!
+  // if ios & playsinline & provider.canPlayinline -> show controls, go native on fullscreen
+  // else if ios & !playsinline ->  disable custom & go native?
+  // hide controls if ios fullscreen
 </script>
 
 <style type="text/scss">
@@ -228,14 +231,11 @@
     width: 100%;
     align-items: center;
     flex-flow: wrap;
+    background: linear-gradient(to top, rgba($color-dark, 0), rgba($color-dark, 0.7));
 
     &.active {
       display: flex;
       padding: $control-spacing;
-    }
-
-    &.video {
-      background: linear-gradient(to top, rgba($color-dark, 0), rgba($color-dark, 0.7));
     }
 
     :global(> div),

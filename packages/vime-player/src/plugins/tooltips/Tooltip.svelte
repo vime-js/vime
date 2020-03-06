@@ -1,6 +1,6 @@
 <svelte:options accessors />
 
-{#if isEnabled}
+{#if enabled}
   <span
     {id}
     role="tooltip"
@@ -9,7 +9,7 @@
     class:onBottom
     class:growLeft
     class:growRight
-    aria-hidden={!isActive || $isTouch}
+    aria-hidden={!active || $isTouch}
     bind:this={el}
   >
     {(showHint && hint) ? `${title} (${hint})` : title}
@@ -17,17 +17,13 @@
 {/if}
 
 <script>
-  import { createEventDispatcher } from 'svelte';
-
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
   export let player;
 
-  const dispatch = createEventDispatcher();
-  const { isTouch } = player.getGlobalStore();
-  const { isAudio } = player.getStore();
+  const { isTouch, isAudio } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -42,8 +38,8 @@
   export let id = null;
   export let title = '';
   export let hint = null;
-  export let isEnabled = true;
-  export let isActive = false;
+  export let enabled = true;
+  export let active = false;
   export let showHint = true;
   export let noBounding = false;
 
@@ -60,10 +56,7 @@
     growRight = growRight ? (rect.left - bounds.left) < rect.width : (bounds.left - rect.left) > 0;
   };
 
-  $: if (el && !noBounding) onBound(title, isActive);
-
-  $: dispatch('isenabled', isEnabled);
-  $: dispatch('isactive', isActive);
+  $: if (el && !noBounding) onBound(title, active);
 </script>
 
 <style type="text/scss">

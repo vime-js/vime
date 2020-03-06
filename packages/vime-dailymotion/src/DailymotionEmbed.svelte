@@ -20,8 +20,9 @@
   const DM = {
     ORIGIN: 'https://www.dailymotion.com',
     Event: {
-      API_READY: 'apiready',
-      VIDEO_CHANGE: 'videochange'
+      PLAYBACK_READY: 'playback_ready',
+      VIDEO_CHANGE: 'videochange',
+      ERROR: 'error'
     }
   };
 
@@ -33,13 +34,16 @@
   ];
 
   const Event = {
+    READY: 'ready',
     SRC_CHANGE: 'srcchange',
-    TITLE_CHANGE: 'titlechange'
+    TITLE_CHANGE: 'titlechange',
+    ERROR: 'error'
   };
 </script>
 
 <script>
   import { tick, onMount, createEventDispatcher } from 'svelte';
+  import { noop } from 'svelte/internal';
   import { deferred } from '@vime/utils';
   import { Embed } from '@vime/core';
 
@@ -60,13 +64,17 @@
   export const getIframe = () => embed.getIframe();
   export const getSrcWithParams = () => embed.getSrc();
 
-  export const sendCommand = async (command, args) => {
-    await tick();
-    await ready.promise;
-    embed.postMessage({
-      command,
-      parameters: args || []
-    });
+  export const sendCommand = async (command, args, force) => {
+    try {
+      if (!force) {
+        await tick();
+        await ready.promise;
+      }
+      embed.postMessage({
+        command,
+        parameters: args || []
+      });
+    } catch (e) { /** noop */ }
   };
 
   const buildSrc = () => {
@@ -77,6 +85,8 @@
   };
 
   const onReload = () => {
+    ready.promise.catch(noop);
+    ready.reject();
     ready = deferred();
     initialized = false;
   };
@@ -86,12 +96,16 @@
   const _onData = e => {
     const data = e.detail;
     const event = data.event;
-    if (event === DM.Event.API_READY) {
+    if (event === DM.Event.VIDEO_CHANGE) videoTitle = data.title;
+    if (event === DM.Event.PLAYBACK_READY) {
       ready.resolve();
+      dispatch(Event.READY);
       initialized = true;
     }
-    if (event === DM.Event.VIDEO_CHANGE) {
-      videoTitle = data.title;
+    if (event === DM.Event.ERROR) {
+      ready.reject(data);
+      dispatch(Event.ERROR, data);
+      initialized = true;
     }
   };
 

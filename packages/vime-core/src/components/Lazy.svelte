@@ -1,4 +1,4 @@
-<div bind:this={container}>
+<div bind:this={el}>
 	<slot {intersecting}></slot>
 </div>
 
@@ -7,25 +7,28 @@
   // @see https://github.com/sveltejs/svelte/blob/master/site/src/components/IntersectionObserver.svelte
 
   import { onMount } from 'svelte';
-  
+ 
+  let el;
   let intersecting = false;
   
-  export let container;
+  export let container = null;
   export let threshold = 0.75;
 
   onMount(() => {
+    const observedEl = container || el;
+
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver(entries => {
         intersecting = entries[0].isIntersecting;
-        if (intersecting) observer.unobserve(container);
+        if (intersecting) observer.unobserve(observedEl);
       }, { threshold });
 
-      observer.observe(container);
-      return () => observer.unobserve(container);
+      observer.observe(observedEl);
+      return () => observer.unobserve(observedEl);
     }
 
     function onScroll () {
-      const rect = container.getBoundingClientRect();
+      const rect = observedEl.getBoundingClientRect();
 
       intersecting = (
         rect.bottom > 0 &&
@@ -41,10 +44,3 @@
     return () => window.removeEventListener('scroll', onScroll);
   });
 </script>
-
-<style>
-  div {
-    width: 100%;
-    height: 100%;
-  }
-</style>

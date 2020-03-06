@@ -1,7 +1,7 @@
 <SeekControl 
   {player}
   base={30}
-  isActive={$hasPlaybackStarted}
+  active={$playbackStarted}
   bind:this={seekControl}
 />
 
@@ -15,7 +15,7 @@
 
   export let player;
 
-  const { hasPlaybackStarted } = player.getStore();
+  const { playbackStarted } = player.getStore();
 
   // --------------------------------------------------------------
   // Props

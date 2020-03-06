@@ -1,11 +1,18 @@
 <div class="container">
   <div class="component">
-    <svelte:component this={Component} {...$$props} />
+    <svelte:component this={Component} {...props} />
   </div>
 </div>
 
 <script>
   export let Component;
+
+  let props = {};
+
+  $: {
+    const { Component, ...rest } = $$props;
+    props = rest;
+  }
 </script>
 
 <style>

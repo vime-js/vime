@@ -1,12 +1,13 @@
 <svelte:options accessors />
 
-<PlayerWrapper 
-  aspectRatio={$videoView ? $aspectRatio : null}
+<PlayerWrapper
+  hasParent={!!parentEl}
+  aspectRatio={($isVideoView && !$fullscreenActive) ? $aspectRatio : null}
   on:mount="{e => { playerWrapper = e.detail; }}"
 >
   <svelte:component
+    {...props}
     src={$src}
-    aspectRatio={$aspectRatio}
     this={Provider}
     bind:this={$provider}
     on:update={onUpdate}
@@ -15,7 +16,7 @@
 </PlayerWrapper>
 
 <script>
-  import { tick, onMount, onDestroy, afterUpdate, createEventDispatcher } from 'svelte';
+  import { tick, onMount, onDestroy, afterUpdate } from 'svelte';
   import { get } from 'svelte/store';
   import { noop, listen, get_current_component } from 'svelte/internal';
   import { currentPlayer } from './globalStore';
@@ -30,11 +31,8 @@
   } from '@vime/utils';
 
   let self = get_current_component();
-  const dispatch = createEventDispatcher();
-  
-  onDestroy(() => { self = null; });
 
-  let { store, resetStore, onPropsChange } = mapPlayerStoreToComponent();
+  let { store, resetStore, onPropsChange } = mapPlayerStoreToComponent(self);
   $: onPropsChange($$props);
 
   const {
@@ -45,10 +43,10 @@
     src, controlsEnabled, aspectRatio, 
     buffering, buffered, autopause, 
     autoplay, playing, playbackStarted, 
-    poster, playbackReady, videoView, 
+    poster, playbackReady, isVideoView, 
     tracks, currentTrack, provider, 
     rebuilding, videoReady, canInteract, 
-    video, fullscreenActive
+    fullscreenActive
   } = store;
 
   const {
@@ -60,13 +58,16 @@
   let props = {};
   let playerWrapper;
 
-  export let Provider;
+  export let Provider = null;
+  export let parentEl = null;
 
-  // TODO: wait for next Svelte release because it's bugged right now.
+  // TODO: replace this with $$rest when released.
+  const filteredProps = Object.keys({ Provider, parentEl });
+
   // Filter out any player props before passing them to the provider.
   $: Object
     .keys($$props)
-    .filter(prop => !store[prop] && (prop !== 'Provider'))
+    .filter(prop => !store[prop] && !filteredProps.includes(prop))
     .forEach(prop => (props[prop] = $$props[prop]));
 
   onDestroy(() => { 
@@ -76,20 +77,23 @@
     Provider = null;
     resetStore = noop;
     onPropsChange = noop;
+    if ($currentPlayer === self) $currentPlayer = null;
+    self = null;
   });
+
+  $: if (!$currentPlayer) $currentPlayer = self;
 
   // --------------------------------------------------------------
   // Provider Events
   // --------------------------------------------------------------
-
-  // Avoid infinite loop.
-  let updatingVolume = false;
 
   // Temporary states used to normalize player differences.
   let tempMute = false;
   let tempPlay = false;
   let tempPause = false;
   let tempControls = false;
+  let updatingVolume = false;
+  let updatingTime = false;
 
   const cancelTempAction = async cb => {
     // Give some time for the provider to be set to it's original value before we receive
@@ -108,7 +112,7 @@
   };
 
   const onTimeUpdate = time => {
-    if ($seeking || !$canInteract) return;
+    if ($seeking || updatingTime || !$canInteract) return;
     $internalTime = time;
     $currentTime = time;
     if ($internalTime === 0 && $playbackEnded) onRestart();
@@ -118,7 +122,24 @@
     if (!$playbackReady || $seeking || ($currentTime === $internalTime)) return;
     $internalTime = $currentTime;
     $provider.setCurrentTime($currentTime);
+    updatingTime = true;
   });
+
+  const checkIfBuffering = () => {
+    if ($buffered < $currentTime || ($playbackStarted && $buffered === 0)) {
+      $buffering = true;
+    }
+  };
+
+  const checkHasSeeked = () => {
+    if (!$seeking || $buffered <= $currentTime) return;
+    $seeking = false;
+    $buffering = false;
+    updatingTime = false;
+    cancelTempAction(() => {
+      tempPause = false;
+    });
+  };
 
   const onAutoplay = () => {
     if (!$autoplay || (!$canAutoplay || !$canMutedAutoplay)) return;
@@ -173,7 +194,10 @@
   let firePauseTimer;
   const onPause = () => {
     firePauseTimer = window.setTimeout(() => {
-      if ($nativeMode && !tempPause) $paused = true;
+      if ($nativeMode && !tempPause) {
+        $paused = true;
+        $buffering = false;
+      }
       if (!tempPause) $playing = false;
     }, 100);
   };
@@ -185,17 +209,14 @@
 
   const onBuffered = progress => {
     if (progress) $buffered = progress;
-    if ($seeking && $buffered > $currentTime) {
-      $seeking = false;
-      $buffering = false;
-    }
+    if ($seeking) checkHasSeeked();
   };
 
   const onSeeking = () => {
     if ($seeking) return;
     window.clearTimeout(firePauseTimer);
     $seeking = true;
-    if ($buffered < $currentTime) $buffering = true;
+    checkIfBuffering();
     !$playbackStarted ? initiateTempPlayback() : (tempPause = true);
   };
 
@@ -203,10 +224,12 @@
     if (!$seeking) return;
     // Wait incase `seeking` and `seeked` are fired immediately after each other.
     await tick();
-    cancelTempAction(() => {
-      tempPause = false;
-    });
     onBuffered($buffered);
+  };
+
+  const onPlay = () => {
+    $paused = false;
+    checkIfBuffering();
   };
 
   const onPlaying = () => {
@@ -256,7 +279,6 @@
       case PlayerState.PAUSED:
         if ($rebuilding) return;
         onPause();
-        $buffering = false;
         break;
       case PlayerState.BUFFERING:
         $buffering = true;
@@ -272,12 +294,11 @@
 
   const onUpdate = e => {
     const info = e.detail;
-    if (info.ready) store.ready.set(true);
     if (info.state) onStateChange(info.state);
-    if (info.play && $nativeMode && !tempPlay) $paused = false;
+    if (info.play && $nativeMode && !tempPlay) onPlay();
     if (info.rebuild) onRebuildStart();
     if ($rebuilding) return;
-    if (is_null(info.poster) || info.poster) $poster = info.poster;
+    if ((is_null(info.poster) || info.poster)) $poster = info.poster;
     if (is_number(info.duration)) store.duration.set(parseFloat(info.duration));
     if (is_number(info.currentTime)) onTimeUpdate(parseFloat(info.currentTime));
     if (is_number(info.buffered)) onBuffered(parseFloat(info.buffered));
@@ -288,7 +309,7 @@
     if (info.currentSrc) store.currentSrc.set(info.currentSrc);
     if (info.srcId) store.srcId.set(info.srcId);
     if (is_number(info.volume)) onVolumeChange(parseInt(info.volume));
-    if (is_boolean(info.muted) && !tempMute) $muted = !!info.muted;
+    if (is_boolean(info.muted) && !tempMute) $muted = info.muted;
     if (info.origin) store.origin.set(info.origin);
     if (is_null(info.videoQuality) || info.videoQuality) store.videoQuality.forceSet(info.videoQuality);
     if (info.videoQualities) store.videoQualities.set(info.videoQualities);
@@ -301,22 +322,25 @@
     if (is_boolean(info.pip)) $pipActive = info.pip;
   };
 
-  const onSrcReset = () => {
+  const onSrcChange = () => {
     resetStore();
     // TODO: what if provider can't play the src? Need to stop buffering.
     if ($src && Provider) $buffering = true;
+    updatingTime = false;
+    tempPlay = false;
+    tempPlay = false;
+    tempMute = false;
   };
 
   const onProviderChange = () => {
-    onSrcReset();
-    store.ready.set(false);
+    onSrcChange();
     store.origin.set(null);
     store.pipActive.set(false);
     if ($fullscreenActive) exitFullscreen().catch(noop);
     if (!Provider) store.mediaType.set(MediaType.NONE);
   };
 
-  $: onSrcReset($src);
+  $: onSrcChange($src);
   $: onProviderChange(Provider);
 
   // --------------------------------------------------------------
@@ -327,6 +351,7 @@
   $: if ($provider && !$rebuilding) $provider.setControls(($nativeMode && $controlsEnabled) || tempControls);
   $: if ($provider && !$rebuilding) $provider.setNativeMode($nativeMode);
   $: if ($canSetPoster && !$rebuilding) $provider.setPoster($poster);
+  $: if ($provider && is_function($provider.setAspectRatio)) $provider.setAspectRatio($aspectRatio);
   
   $: if ($provider && !$paused && $playbackEnded) onRestart();
   $: if ($provider && $playbackReady) $provider.setPaused(($paused || tempPause) && !tempPlay);
@@ -337,7 +362,7 @@
   $: ($provider && $canInteract && !updatingVolume)
     ? $provider.setVolume($volume)
     : (updatingVolume = false);
-  
+
   // --------------------------------------------------------------
   // Tracks
   // --------------------------------------------------------------
@@ -375,12 +400,10 @@
   const FULLSCREEN_NOT_SUPPORTED_ERROR_MSG = 'Fullscreen not supported.';
   const FULLSCREEN_DOC_SUPPORT = !!FullscreenApi.requestFullscreen;
 
-  let fsChangeListener = null;
-
-  export let fullscreenEl = null;
+  let onFullscreenChangeListener = null;
 
   const isFullscreen = () => {
-    const els = [playerWrapper, fullscreenEl, $provider && $provider.getEl()].filter(Boolean);
+    const els = [playerWrapper, parentEl, $provider && $provider.getEl()].filter(Boolean);
     let active = els.includes(document[FullscreenApi.fullscreenElement]);
     if (!active) active = els.some(el => el.matches && el.matches(':' + FullscreenApi.fullscreen));
     return active;
@@ -397,7 +420,7 @@
   };
 
   const requestDocumentFullscreen = active => {
-    const el = fullscreenEl || playerWrapper;
+    const el = parentEl || playerWrapper;
     if (!el) return Promise.reject();
     if (active === isFullscreen()) return Promise.resolve();
     return active ? el[FullscreenApi.requestFullscreen]() : document[FullscreenApi.exitFullscreen]();
@@ -424,12 +447,12 @@
 
   onMount(() => {
     if (!FULLSCREEN_DOC_SUPPORT) return;
-    fsChangeListener = listen(document, FullscreenApi.fullscreenchange, onDocumentFullscreenChange);
+    onFullscreenChangeListener = listen(document, FullscreenApi.fullscreenchange, onDocumentFullscreenChange);
   });
   
   onDestroy(() => {
-    fsChangeListener && fsChangeListener();
-    fsChangeListener = null;
+    onFullscreenChangeListener && onFullscreenChangeListener();
+    onFullscreenChangeListener = null;
   });
 
   $: canProviderFullscreen = $provider && $provider.supportsFullscreen() && is_function($provider.setFullscreen);

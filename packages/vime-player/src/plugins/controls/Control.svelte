@@ -1,10 +1,10 @@
 <button
   id={$$props.id}
   class="control"
-  class:audio={$isAudio}
-  class:live={$isLiveStream}
+  class:audio={!$isVideoView}
+  class:live={$isLive}
   class:videoFocus={!$isTouch}
-  class:audioFocus={$isAudio && !$isTouch}
+  class:audioFocus={!$isVideoView && !$isTouch}
   class:touchHighlight={showHighlight}
   use:focus
   use:highlight
@@ -20,28 +20,27 @@
   aria-disabled={$$props['aria-disabled']}
   aria-expanded={$$props['aria-expanded']}
   aria-hidden={$$props['aria-hidden']}
-  aria-describedby={tooltip ? tooltipID : null}
+  aria-describedby={tooltip ? tooltipId : null}
   bind:this={el}
 >
   <slot />
   <svelte:component 
     {player}
     {title}
-    id={tooltipID}
-    isActive={isFocused}
+    id={tooltipId}
+    active={isFocused}
     this={Tooltip}
     bind:this={tooltip}
   />
 </button>
 
 <script context="module">
-  let tooltipIDCount = 0;
+  let tooltipIdCount = 0;
 </script>
 
 <script>
-  import { createEventDispatcher, onDestroy } from 'svelte';
-  import { focus, highlight } from '~utils/actions';
-  import { ID as TooltipsID } from '~plugins/tooltips/Tooltips.svelte';
+  import { focus, highlight } from '@vime/core';
+  import { ID as TooltipsID } from '../tooltips/Tooltips.svelte';
   
   // --------------------------------------------------------------
   // Setup
@@ -50,13 +49,15 @@
   export let player;
 
   // eslint-disable-next-line prefer-const
-  tooltipIDCount += 1;
-  const tooltipID = `tooltip-${tooltipIDCount}`;
+  tooltipIdCount += 1;
+  const tooltipId = `tooltip-${tooltipIdCount}`;
 
-  const dispatch = createEventDispatcher();
-  const plugins = player.getPluginsRegistry();
-  const { isTouch, isMobile } = player.getGlobalStore();
-  const { isAudio, isLiveStream, isCurrentPlayer } = player.getStore();
+  const tooltipsPlugin = player.getPluginsRegistry().watch(TooltipsID);
+  
+  const { 
+    isVideoView, isLive, isTouch, 
+    isMobile
+  } = player.getStore();
   
   // --------------------------------------------------------------
   // Props
@@ -78,9 +79,8 @@
   
   let tooltip;
 
-  $: tooltips = $plugins && $plugins[TooltipsID];
-  $: Tooltip = tooltips && tooltips.create();
-  $: if (tooltips && tooltip) tooltips.register(label, tooltip);
+  $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.create();
+  $: if ($tooltipsPlugin && tooltip) $tooltipsPlugin.getRegistry().register(label, tooltip);
 </script>
 
 <style type="text/scss">

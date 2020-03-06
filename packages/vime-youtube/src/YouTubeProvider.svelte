@@ -2,6 +2,7 @@
   {srcId}
   {params}
   {cookies}
+  on:error
   on:originchange={onOriginChange}
   on:titlechange={onTitleChange}
   on:rebuild={onRebuildStart}
@@ -129,10 +130,6 @@
     info.currentSrc = e.detail;
   };
 
-  const onEvent = event => {
-    if (event === YT.Event.READY) info.ready = true;
-  };
-
   const onStateChange = state => {
     playerState = state;
     switch (state) {
@@ -220,9 +217,7 @@
 
   const onData = e => {
     const { event, info } = e.detail;
-    if (event) onEvent(event);
     if (info) onInfo(info);
-    // TODO: not sure how to map the error event.
   };
 
   $: match = src ? src.match(YT.SRC) : null;

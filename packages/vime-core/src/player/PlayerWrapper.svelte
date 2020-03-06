@@ -1,6 +1,10 @@
 <Lazy let:intersecting>
   {#if intersecting}
-    <div use:setAspectRatio={aspectRatio} bind:this={el}>
+    <div
+      class:relative={!hasParent}
+      use:setAspectRatio={!hasParent ? aspectRatio : null} 
+      bind:this={el}
+    >
       <slot />
     </div>
   {/if}
@@ -16,6 +20,13 @@
   let el;
 
   export let aspectRatio = null;
+  export let hasParent = false;
 
   $: if (el) dispatch('mount', el);
 </script>
+
+<style>
+  .relative {
+    position: relative;
+  }
+</style>

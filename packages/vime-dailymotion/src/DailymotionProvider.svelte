@@ -1,6 +1,7 @@
 <DailymotionEmbed
   {srcId}
   {params}
+  on:error
   on:titlechange={onTitleChange}
   on:srcchange={onCurrentSrcChange}
   on:rebuild={onRebuildStart}
@@ -33,7 +34,9 @@
     PLAYING: 'playing',
     PLAY: 'play',
     PAUSE: 'pause',
-    AD_TIME_UPDATE: 'ad_timeupdate',
+    START: 'start',
+    AD_START: 'ad_start',
+    AD_END: 'ad_end',
     TIME_UPDATE: 'timeupdate',
     VIDEO_START: 'video_start',
     VIDEO_END: 'video_end',
@@ -45,6 +48,7 @@
     PLAY: 'play',
     PAUSE: 'pause',
     SEEK: 'seek',
+    DURATION: 'duration',
     VOLUME: 'volume',
     CONTROLS: 'controls',
     MUTED: 'muted',
@@ -53,6 +57,13 @@
   };
 
   export const canPlay = src => is_string(src) && DM.SRC.test(src);
+
+  const getDuration = srcId => {
+    if (!srcId) return Promise.resolve(null);
+    return window.fetch(`https://api.dailymotion.com/video/${srcId}?fields=duration`)
+      .then(response => response.json())
+      .then(data => data.duration);
+  };
 
   const getPoster = srcId => {
     if (!srcId) return Promise.resolve(null);
@@ -71,6 +82,8 @@
   let embed;
   let srcId = null;
   let info = {};
+  let qualities = null;
+  let isAdsPlaying = false;
 
   // DM commands don't go through until ads have finished, so we store them and then replay them
   // once the video starts.
@@ -132,15 +145,17 @@
     const event = data && data.event;
     if (!event) return;
     switch (event) {
-      case DM.Event.API_READY:
-        info.ready = true;
-        break;
       case DM.Event.PLAYBACK_READY:
         startTime = null;
         startVolume = null;
         startMuted = null;
         started = false;
+        qualities = null;
+        isAdsPlaying = false;
         info.state = PlayerState.CUED;
+        break;
+      case DM.Event.START:
+        info.state = PlayerState.BUFFERING;
         break;
       case DM.Event.VIDEO_START:
         if (is_number(startTime) && startTime > 0) {
@@ -152,32 +167,42 @@
         started = true;
         break;
       case DM.Event.TIME_UPDATE:
-      case DM.Event.AD_TIME_UPDATE:
-        info.currentTime = data.time;
+        info.currentTime = parseFloat(data.time);
         break;
       case DM.Event.VOLUME_CHANGE:
-        info.muted = data.muted;
+        info.muted = (data.muted == 'true');
         info.volume = parseFloat(data.volume) * 100;
         break;
       case DM.Event.SEEKING:
-        info.currentTime = data.time;
+        info.currentTime = parseFloat(data.time);
         info.seeking = true;
         break;
       case DM.Event.SEEKED:
-        info.currentTime = data.time;
+        info.currentTime = parseFloat(data.time);
         info.seeked = true;
         break;
       case DM.Event.WAITING:
         info.state = PlayerState.BUFFERING;
         break;
       case DM.Event.PROGRESS:
-        info.buffered = data.time;
+        info.buffered = parseFloat(data.time);
         break;
       case DM.Event.QUALITIES_AVAILABLE:
-        info.videoQualities = data.qualities;
+        qualities = data.qualities;
+        info.videoQualities = qualities;
         break;
       case DM.Event.QUALITY_CHANGE:
         info.videoQuality = data.quality;
+        // Sometimes quality gets messed up before starting and gets set to 144.
+        if (!started && qualities && data.quality === 144) {
+          setVideoQuality(qualities[1]);
+        }
+        break;
+      case DM.Event.AD_START:
+        isAdsPlaying = true;
+        break;
+      case DM.Event.AD_END:
+        isAdsPlaying = false;
         break;
       case DM.Event.PLAY:
         info.play = true;
@@ -189,13 +214,13 @@
         info.state = PlayerState.PAUSED;
         break;
       case DM.Event.DURATION_CHANGE:
-        info.duration = data.duration;
+        if (!isAdsPlaying) info.duration = parseFloat(data.duration);
         break;
       case DM.Event.VIDEO_END:
         info.state = PlayerState.ENDED;
         break;
       case DM.Event.FULLSCREEN_CHANGE:
-        info.fullscreen = data.fullscreen;
+        info.fullscreen = !!data.fullscreen;
         break;
       case DM.Event.ERROR:
         dispatch('error', data);
@@ -206,6 +231,7 @@
   $: match = src ? src.match(DM.SRC) : null;
   $: srcId = match ? match[1] : src;
   $: getPoster(srcId).then(poster => { info.poster = poster; });
+  $: getDuration(srcId).then(duration => { info.duration = duration; });
 
   $: {
     dispatch('update', info);

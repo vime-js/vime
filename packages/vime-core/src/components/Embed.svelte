@@ -46,9 +46,9 @@
   export const getSrc = () => srcWithParams;
   export const getIframe = () => iframe;
 
-  export const postMessage = (message, target, transfer) => {
+  export const postMessage = (message, target) => {
     if (!iframe || !iframe.contentWindow) return;
-    iframe.contentWindow.postMessage(JSON.stringify(message), target || origin || '*', transfer);
+    iframe.contentWindow.postMessage(JSON.stringify(message), target || origin || '*');
   };
 
   const originMatches = e => {

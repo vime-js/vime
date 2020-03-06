@@ -1,6 +1,5 @@
 import { createEventDispatcher } from 'svelte';
 import { writable, derived } from 'svelte/store';
-import { get_current_component } from 'svelte/internal';
 import { currentPlayer } from './globalStore';
 import PlayerState from './PlayerState';
 import MediaType from './MediaType';
@@ -20,7 +19,6 @@ const playerDefaults = () => ({
   rebuilding: false,
   internalTime: 0,
   currentTime: 0,
-  volume: 30,
   title: '',
   duration: 0,
   buffered: 0,
@@ -34,7 +32,7 @@ const playerDefaults = () => ({
   playbackStarted: false,
   playbackEnded: false,
   playbackReady: false,
-  live: false,
+  isLive: false,
   activeCues: []
 });
 
@@ -42,7 +40,6 @@ const buildPlayerStore = player => {
   const store = {};
   const defaults = playerDefaults();
 
-  store.ready = private_writable(false);
   store.playbackReady = private_writable(defaults.playbackReady);
   store.rebuilding = private_writable_if(defaults.rebuilding, store.playbackReady);
   store.canAutoplay = private_writable(false);
@@ -73,25 +70,25 @@ const buildPlayerStore = player => {
   // Metadata
   // --------------------------------------------------------------
 
-  store.live = private_writable(false);
   store.mediaType = private_writable(MediaType.NONE);
-  store.audio = derived(store.mediaType, $mediaType => $mediaType === MediaType.AUDIO);
-  store.video = derived(store.mediaType, $mediaType => $mediaType === MediaType.VIDEO);
+  store.isAudio = derived(store.mediaType, $mediaType => $mediaType === MediaType.AUDIO);
+  store.isVideo = derived(store.mediaType, $mediaType => $mediaType === MediaType.VIDEO);
+  store.isLive = private_writable(false);
   store.playbackRates = private_writable(defaults.playbackRates);
   store.videoQualities = private_writable(defaults.videoQualities);
   store.duration = private_writable(defaults.duration);
 
   // Used by @vime/player.
   store._posterPlugin = writable(false);
-  store.videoView = derived(
-    [store.poster, store.canSetPoster, store._posterPlugin, store.video],
-    ([$poster, $canSetPoster, $plugin, $video]) => 
-      (($canSetPoster || $plugin) && !!$poster) || $video
+  store.isVideoView = derived(
+    [store.poster, store.canSetPoster, store._posterPlugin, store.isVideo],
+    ([$poster, $canSetPoster, $plugin, $isVideo]) => 
+      (($canSetPoster || $plugin) && !!$poster) || $isVideo
   );
 
   store.videoReady = derived(
-    [store.playbackReady, store.videoView],
-    ([$playbackReady, $videoView]) => $playbackReady && $videoView
+    [store.playbackReady, store.isVideoView],
+    ([$playbackReady, $isVideoView]) => $playbackReady && $isVideoView
   );
 
   // --------------------------------------------------------------
@@ -105,9 +102,9 @@ const buildPlayerStore = player => {
   );
 
   store.canSetVideoQuality = derived(
-    [store.provider, store.video, store.videoQualities],
-    ([$provider, $video, $videoQualities]) => 
-      $provider && $video && $videoQualities.length > 0 && is_function($provider.setVideoQuality)
+    [store.provider, store.isVideo, store.videoQualities],
+    ([$provider, $isVideo, $videoQualities]) => 
+      $provider && $isVideo && $videoQualities.length > 0 && is_function($provider.setVideoQuality)
   );
 
   store.paused = writable(defaults.paused);
@@ -116,7 +113,7 @@ const buildPlayerStore = player => {
   store.currentTime = writable(defaults.currentTime);
   store.internalTime = private_writable(defaults.internalTime);
   store.muted = writable(false);
-  store.volume = writable_if(defaults.volume, !IS_MOBILE);
+  store.volume = writable_if(30, !IS_MOBILE);
   store.buffered = private_writable(defaults.buffered);
   store.controlsEnabled = writable(true);
 
@@ -143,7 +140,7 @@ const buildPlayerStore = player => {
   store.playbackEnded = private_writable(defaults.playbackEnded);
   store.playbackStarted = private_writable(defaults.playbackStarted);
   store.seeking = private_writable(defaults.seeking);
-  store.active = derived(store.currentPlayer, $currentPlayer => $currentPlayer === player);
+  store.isPlayerActive = derived(currentPlayer, $currentPlayer => $currentPlayer === player);
 
   store.state = derived(
     [store.playbackStarted, store.playbackEnded, store.paused, store.buffering, store.playbackReady],
@@ -236,8 +233,7 @@ const fillStore = async store => {
   store.canMutedAutoplay.set(await can_autoplay(true));
 };
 
-export const mapPlayerStoreToComponent = () => {
-  const player = get_current_component();
+export const mapPlayerStoreToComponent = player => {
   const store = buildPlayerStore(player);
   fillStore(store);
   const onPropsChange = map_store_to_component(player, store);

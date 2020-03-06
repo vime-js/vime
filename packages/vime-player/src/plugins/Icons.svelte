@@ -2,13 +2,19 @@
   <div style="display: none;">{@html sprite}</div>
 </svelte:head>
 
+<script context="module">
+  export const ID = 'vIcons';
+</script>
+
 <script>
-  import sprite from '~static/vime.svg';
+  import sprite from '../static/vime.svg';
 
   export let player
 
+  const { icons } = player.getStore();
+
   const icon = icon => `#vime-${icon}`;
-  player.icons = {
+  $icons = {
     play: icon('play'),
     pause: icon('pause'),
     captionsOn: icon('captions-on'),

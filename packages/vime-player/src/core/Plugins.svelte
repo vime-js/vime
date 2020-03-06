@@ -1,7 +1,6 @@
-{#each validatedPlugins.filter(p => !nativeMode) as Plugin (Plugin.ID)}
+{#each validatedPlugins.filter(() => !nativeMode) as Plugin (Plugin.ID)}
   <svelte:component
     {player}
-    config={buildConfig(Plugin, config)}
     this={Plugin.default}
     bind:this={instances[Plugin.ID]}
     on:error
@@ -9,15 +8,11 @@
 {/each}
 
 <script context="module">
-  import { merge_obj_deep } from '@vime/utils';
-
   export const ID = 'vPlugins';
-
-  const buildConfig = (Plugin, config) => merge_obj_deep(config[Plugin.ID], Plugin.DEFAULT_CONFIG || {});
 </script>
 
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { is_svelte_component } from '@vime/utils';
 
   // --------------------------------------------------------------
@@ -36,16 +31,11 @@
   let instances = {};
   let validatedPlugins = [];
 
-  onDestroy(() => { 
-    instances = {};
-    validatedPlugins = [];
-  });
-
-  export let config = {};
   export let plugins = [];
   export let nativeMode = false;
-
-  export const addPlugin = plugin => { plugins[plugins.length] = plugin; };
+  
+  export const hasPlugin = plugin => plugin.ID && plugins.some(p => p.ID === plugin.ID);
+  export const addPlugin = plugin => { if (!hasPlugin(plugin)) plugins[plugins.length] = plugin; };
   export const addPlugins = plugins => { plugins && plugins.map(addPlugin); };
   export const removePlugin = id => { plugins = plugins.filter(p => p.ID !== id); };
   export const removePlugins = plugins => { plugins && plugins.map(removePlugin); };
