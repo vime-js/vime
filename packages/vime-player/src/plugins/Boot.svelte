@@ -2,23 +2,11 @@
 
 <script context="module">
   export const ID = 'vBoot';
-
-  export const DEFAULT_CONFIG = {
-    poster: true,
-    scrim: true,
-    spinner: true,
-    clickToPlay: true,
-    actionDisplay: true,
-    keyboard: true,
-    controls: true,
-    tooltips: true,
-    fullscreen: true,
-    dblClickFullscreen: true
-  };
 </script>
 
 <script>
-  import { IS_IOS } from '~utils/support';
+  import { noop } from 'svelte/internal';
+  import { IS_IOS, is_undefined } from '@vime/utils';
 
   // TODO: should/can everything below be dynamically imported?
 
@@ -28,10 +16,11 @@
     get_captions_icon,
     get_fullscreen_icon,
     get_volume_icon
-  } from '~utils/icon';
+  } from '../utils';
 
   // Plugins
   import {
+    Icons,
     Poster,
     Scrim,
     Spinner,
@@ -40,9 +29,8 @@
     Keyboard,
     Controls,
     Tooltips,
-    Fullscreen,
     DblClickFullscreen
-  } from '~src/main';
+  } from '../';
 
   // Controls
   import {
@@ -61,27 +49,29 @@
     SeekBackwardControl,
     ControlSpacer,
     ControlNewLine
-  } from '~src/main';
+  } from '../';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
   export let player;
-  export let config = DEFAULT_CONFIG;
+  export let config = {};
 
   const pluginsManager = player.getPluginsManager();
-  const plugins = pluginsManager.getRegistry();
-  const { isMobile, isTouch } = player.getGlobalStore();
+  const plugins = player.getPluginsRegistry();
 
   const {
-    isPaused, icons, volume,
-    isMuted, isCaptionsActive, isPiPActive,
-    isFullscreenActive, currentTime, duration,
-    isAudio, isVideo, canInteract
+    paused, icons, volume,
+    muted, captionsActive, pipActive,
+    fullscreenActive, currentTime, duration,
+    isAudio, isVideo, canInteract, 
+    isMobile, canSetTrack, canSetPiP,
+    canSetFullscreen
   } = player.getStore();
 
-  const _plugins = [
+  const PLUGINS = [
+    Icons,
     Poster,
     Scrim,
     Spinner,
@@ -90,48 +80,48 @@
     Controls,
     Keyboard,
     Tooltips,
-    Fullscreen,
     DblClickFullscreen
   ];
 
   const isPluginEnabled = Plugin => {
     const id = Plugin.ID.slice(1);
     const configId = id.charAt(0).toLowerCase() + id.slice(1);
+    if (is_undefined(config[configId])) config[configId] = true;
     return config[configId];
   };
 
   const isPluginDisabled = Plugin => !isPluginEnabled(Plugin);
 
-  $: {
-    pluginsManager.addPlugins(_plugins.filter(isPluginEnabled));
-    pluginsManager.removePlugins(_plugins.filter(isPluginDisabled));
-  }
+  $: if (config) pluginsManager.addPlugins(PLUGINS.filter(isPluginEnabled));
+  $: if (config) pluginsManager.removePlugins(PLUGINS.filter(isPluginDisabled));
 
   // --------------------------------------------------------------
   // Keyboard
   // --------------------------------------------------------------
 
-  const safeRunAction = (icon, value) => {
+  const safeActionDisplay = (icon, value) => {
     const actionDisplay = player[ActionDisplay.ID];
     if (actionDisplay) actionDisplay.run(icon, value);
   };
 
   let hasKeyboardInitialized = false;
 
-  $: keyboard = isPluginEnabled(Keyboard) && $plugins[Keyboard.ID];
+  $: keyboard = config && isPluginEnabled(Keyboard) && $plugins[Keyboard.ID];
 
   $: if (keyboard && !hasKeyboardInitialized) {
-    keyboard.register(PlaybackControl.LABEL, {
+    const keyboardRegistry = keyboard.getRegistry();
+
+    keyboardRegistry.register(PlaybackControl.LABEL, {
       hint: 'space/k',
       keys: [32, 75],
-      action: async () => {
+      action: () => {
         if (!$canInteract) return;
-        $isPaused = !$isPaused;
-        safeRunAction(get_playback_icon($icons, $isPaused));
+        $paused = !$paused;
+        safeActionDisplay(get_playback_icon($icons, $paused));
       }
     });
 
-    keyboard.register(VolumeControl.LABEL, {
+    keyboardRegistry.register(VolumeControl.LABEL, {
       // Up Arrow (38), Down Arrow (40)
       keys: [38, 40],
       action: e => {
@@ -141,58 +131,60 @@
         const icon = isUp
           ? $icons.volumeHigh
           : ($volume === 0 ? $icons.volumeMute : $icons.volumeLow);
-        safeRunAction(icon, `${$volume}%`);
+        safeActionDisplay(icon, `${$volume}%`);
       }
     });
 
-    keyboard.register(MuteControl.LABEL, {
+    keyboardRegistry.register(MuteControl.LABEL, {
       hint: 'm',
       keys: [77],
-      action: async () => {
+      action: () => {
         if (!$canInteract) return;
-        $isMuted = !$isMuted;
-        safeRunAction(get_volume_icon($icons, $isMuted, $volume));
+        $muted = !$muted;
+        safeActionDisplay(get_volume_icon($icons, $muted, $volume));
       }
     });
 
-    keyboard.register(CaptionControl.LABEL, {
+    let prevTrack = -1;
+    keyboardRegistry.register(CaptionControl.LABEL, {
       hint: 'c',
       keys: [67],
-      action: async () => {
-        if (!$canInteract) return;
-        $isCaptionsActive = !$isCaptionsActive;
-        safeRunAction(get_captions_icon($icons, $isCaptionsActive));
+      action: () => {
+        if (!$canInteract || !$canSetTrack) return;
+        $captionsActive ? (player.currentTrack = -1) : (player.currentTrack = prevTrack);
+        prevTrack = player.currentTrack;
+        safeActionDisplay(get_captions_icon($icons, $captionsActive));
       }
     });
 
-    keyboard.register(PiPControl.LABEL, {
+    keyboardRegistry.register(PiPControl.LABEL, {
       hint: 'p',
       keys: [80],
-      action: async () => {
-        if (!$canInteract) return;
-        $isPiPActive = !$isPiPActive;
-        safeRunAction(get_pip_icon($icons, !$isPiPActive));
+      action: () => {
+        if (!$canInteract || !$canSetPiP) return;
+        $pipActive ? player.exitPiP().catch(noop) : player.requestPiP().catch(noop);
+        safeActionDisplay(get_pip_icon($icons, $pipActive));
       }
     });
 
-    keyboard.register(FullscreenControl.LABEL, {
+    keyboardRegistry.register(FullscreenControl.LABEL, {
       hint: 'f',
       keys: [70],
-      action: async () => {
-        if (!$canInteract) return;
-        $isFullscreenActive = !$isFullscreenActive;
-        safeRunAction(get_fullscreen_icon($icons, !$isFullscreenActive));
+      action: () => {
+        if (!$canInteract || !$canSetFullscreen) return;
+        $fullscreenActive ? player.exitFullscreen().catch(noop) : player.requestFullscreen().catch(noop);
+        safeActionDisplay(get_fullscreen_icon($icons, $fullscreenActive));
       }
     });
 
-    keyboard.register(ScrubberControl.LABEL, {
+    keyboardRegistry.register(ScrubberControl.LABEL, {
       // Left Arrow (37), Right Arrow (39)
       keys: [37, 39],
       action: e => {
         if (!$canInteract) return;
         const isLeft = e.keyCode === 37;
         $currentTime = isLeft ? Math.max(0, $currentTime - 5) : Math.min($duration, $currentTime + 5);
-        safeRunAction(isLeft ? $icons.seekBackward : $icons.seekForward);
+        safeActionDisplay(isLeft ? $icons.seekBackward : $icons.seekForward);
       }
     });
 
@@ -205,7 +197,7 @@
   // Controls
   // --------------------------------------------------------------
 
-  $: controls = isPluginEnabled(Controls) && $plugins[Controls.ID];
+  $: controls = config && isPluginEnabled(Controls) && $plugins[Controls.ID];
 
   $: if (controls && $isAudio) {
     controls.upper = [];
@@ -232,8 +224,8 @@
   }
 
   $: if (controls && $isVideo && $isMobile) {
-    // if mobile & LS -> pb (center) / spacer, volume, fs (upper)
-    // if mobile & !LS -> seekB, pb, seekF (center) / spacer, vol, caption, settings, fs (upper)
+    // if isMobile & LS -> pb (center) / spacer, volume, fs (upper)
+    // if isMobile & !LS -> seekB, pb, seekF (center) / spacer, vol, caption, settings, fs (upper)
   }
 </script>
 

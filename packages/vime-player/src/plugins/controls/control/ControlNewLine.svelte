@@ -8,11 +8,17 @@
 </script>
 
 <script>
+  import { noop } from 'svelte/internal';
   import { onMount, onDestroy } from 'svelte';
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
+
+  export let player;
+
+  // Silence dev mode warning.
+  noop(player);
 
   let el;
   let nextControl;

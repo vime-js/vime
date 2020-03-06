@@ -3,7 +3,7 @@
 </div>
 
 <script>
-  import { formatTime } from '~utils/formatters';
+  import { formatTime } from '@vime/core';
 
   export let time;
 </script>

@@ -1,4 +1,4 @@
-{#if $isLiveStream}
+{#if $isLive}
   <div>{$i18n.live}</div>
 {/if}
 
@@ -10,7 +10,7 @@
 <script>
   export let player;
 
-  const { isLiveStream, i18n } = player.getStore();
+  const { isLive, i18n } = player.getStore();
 </script>
 
 <style type="text/scss">

@@ -6,7 +6,7 @@
   activeTitle={$i18n.play}
   inactiveTitle={$i18n.pause}
   aria-label={$i18n.playback}
-  bind:isActive={$isPaused}
+  bind:active={$paused}
   bind:this={toggle}
 />
 
@@ -24,7 +24,7 @@
 
   export let player;
 
-  const { icons, i18n, isPaused } = player.getStore();
+  const { icons, i18n, paused } = player.getStore();
 
   // --------------------------------------------------------------
   // Props

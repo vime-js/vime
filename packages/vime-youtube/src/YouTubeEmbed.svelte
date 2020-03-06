@@ -23,7 +23,8 @@
       WITHOUT_COOKIES: 'https://www.youtube-nocookie.com'
     },
     Event: {
-      READY: 'onReady'
+      INITIAL_DELIVERY: 'initialDelivery',
+      ERROR: 'onError'
     }
   };
 
@@ -40,14 +41,17 @@
   ];
 
   const Event = {
+    READY: 'ready',
     TITLE_CHANGE: 'titlechange',
     ORIGIN_CHANGE: 'originchange',
-    SRC_CHANGE: 'srcchange'
+    SRC_CHANGE: 'srcchange',
+    ERROR: 'error'
   };
 </script>
 
 <script>
   import { tick, onMount, createEventDispatcher } from 'svelte';
+  import { noop } from 'svelte/internal';
   import { deferred } from '@vime/utils';
   import { Embed } from '@vime/core';
 
@@ -69,14 +73,18 @@
   export const getIframe = () => embed.getIframe();
   export const getSrcWithParams = () => embed.getSrc();
 
-  export const sendCommand = async (command, args) => {
-    await tick();
-    await ready.promise;
-    embed.postMessage({
-      event: 'command',
-      func: command,
-      args: args || ''
-    });
+  export const sendCommand = async (command, args, force) => {
+    try {
+      if (!force) {
+        await tick();
+        await ready.promise;
+      }
+      embed.postMessage({
+        event: 'command',
+        func: command,
+        args: args || ''
+      });
+    } catch (e) { /** noop */ }
   };
 
   const buildSrc = () => {
@@ -92,6 +100,8 @@
   };
   
   const onReload = () => {
+    ready.promise.catch(noop);
+    ready.reject();
     ready = deferred();
     initialized = false;
   };
@@ -100,21 +110,27 @@
 
   const onVideoData = videoData => {
     const { title } = videoData;
-    if (title) {
-      videoTitle = title;
-      initialized = true;
-    }
+    if (title) videoTitle = title;
   };
 
   const onInfo = info => {
-    const { videoData } = info;
+    const { playerState, videoData } = info;
     if (videoData) onVideoData(videoData);
+    if (playerState === 5) {
+      ready.resolve();
+      dispatch(Event.READY);
+    }
   };
 
   const _onData = e => {
     const data = e.detail;
-    if (data.event && data.event === YT.Event.READY) ready.resolve();
-    if (data.info) onInfo(data.info);
+    const { info, event } = data || {};
+    if (info) onInfo(info);
+    if (event === YT.Event.ERROR) {
+      ready.reject(data.info);
+      dispatch(Event.ERROR, data.info);
+    }
+    initialized = event && ((event === YT.Event.INITIAL_DELIVERY) || (event === YT.Event.ERROR));
   };
 
   $: title = `YouTube ${videoTitle || 'Video Player'}`;

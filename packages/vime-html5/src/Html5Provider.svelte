@@ -140,14 +140,14 @@
   let controls = null;
   let playsinline = null;
   let crossorigin = null;
+  let aspectRatio = null;
   let currentSrc = null;
-  let ready = false;
+  let playbackReady = false;
   let paused = true;
   let videoWidth = 0;
   let videoQuality = null;
 
   export let src;
-  export let aspectRatio = null;
 
   export const getEl = () => media;
   export const getMedia = () => media;
@@ -161,6 +161,7 @@
   export const setControls = enabled => { controls = enabled || null; };
   export const setPlaysinline = enabled => { playsinline = enabled || null; };
   export const setNativeMode = nativeMode => { /** noop */ };
+  export const setAspectRatio = ratio => { aspectRatio = ratio; };
   export const setVideoQuality = quality => { videoQuality = quality; };
 
   export const setPoster = newPoster => {
@@ -175,7 +176,7 @@
 
   const PIP_NOT_SUPPORTED_ERROR_MSG = 'Html5 PiP not supported.';
 
-  const setChromePiP = active => active ? video.requestPictureInPicture() : video.exitPictureInPicture();
+  const setChromePiP = active => active ? video.requestPictureInPicture() : document.exitPictureInPicture();
 
   const setSafariPiP = active => {
     const mode = active ? Html5.WebkitPresentationMode.PIP : Html5.WebkitPresentationMode.INLINE;
@@ -218,12 +219,12 @@
   let currentTrack = -1;
   let onCueChangeListener = null;
 
-  const removeOnCueChangeListener = () => {
+  const unbindCueChangeListener = () => {
     if (onCueChangeListener) onCueChangeListener();
     onCueChangeListener = null;
   };
 
-  onDestroy(removeOnCueChangeListener);
+  onDestroy(unbindCueChangeListener);
 
   const onCueChange = e => {
     info.activeCues = Array.from(e.target.activeCues);
@@ -235,7 +236,7 @@
   };
 
   export const setTracks = newTracks => { 
-    removeOnCueChangeListener();
+    unbindCueChangeListener();
     tracks = newTracks || [];
     currentTrack = -1;
   };
@@ -243,7 +244,7 @@
   export const setTrack = newTrack => {
     const tracks = Array.from(media.textTracks);
     if (tracks.length === 0 || currentTrack == newTrack) return;
-    removeOnCueChangeListener();
+    unbindCueChangeListener();
     if (currentTrack > -1) tracks[currentTrack].mode = Html5.TextTrack.Mode.HIDDEN;
     if (newTrack > -1) {
       const track = tracks[newTrack];
@@ -267,11 +268,11 @@
   // Media 
   // --------------------------------------------------------------
 
-  onMount(() => { info.ready = true; });
-
   let timeRaf;
+  
   const cancelTimeUpdates = () => window.cancelAnimationFrame(timeRaf);
   onDestroy(cancelTimeUpdates);
+  
   const getTimeUpdates = () => {
     info.currentTime = media.currentTime;
     timeRaf = raf(getTimeUpdates);
@@ -296,7 +297,7 @@
         info.videoQuality = videoQuality;
       }
       onBuffered();
-      ready = true;
+      playbackReady = true;
     });
     listenToMedia(Html5.Event.PROGRESS, onBuffered);
     listenToMedia(Html5.Event.PLAY, () => { 
@@ -383,7 +384,7 @@
   };
 
   const onSrcChange = () => {
-    ready = false;
+    playbackReady = false;
     videoQuality = null;
     if (isMediaStream(src)) {
       loadMediaStream();
@@ -401,13 +402,13 @@
   $: if (is_number(videoQuality)) loadNewQuality(videoQuality);
   $: shouldUseAudio = everySrc(src, isAudio) && !is_string(poster);
   $: shouldUseVideo = everySrc(src, isVideo) || isMediaStream(src) || is_string(poster);
-  $: (ready && !paused) ? getTimeUpdates() : cancelTimeUpdates();
+  $: (playbackReady && !paused) ? getTimeUpdates() : cancelTimeUpdates();
   $: tick().then(() => { info.currentSrc = currentSrc; });
 
   // If media is initialized or changed (audio/video/false).
   $: if (prevMedia !== media) {
     disposal.dispose();
-    removeOnCueChangeListener();
+    unbindCueChangeListener();
     if (media) setupMediaListeners();
     prevMedia = media;
   }

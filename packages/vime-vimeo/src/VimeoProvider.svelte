@@ -29,6 +29,7 @@
     SET_CURRENT_TIME: 'setCurrentTime',
     SET_PLAYBACK_RATE: 'setPlaybackRate',
     ADD_EVENT_LISTENER: 'addEventListener',
+    GET_DURATION: 'getDuration',
     GET_CURRENT_TIME: 'getCurrentTime',
     GET_TEXT_TRACKS: 'getTextTracks',
     ENABLE_TEXT_TRACK: 'enableTextTrack',
@@ -103,7 +104,7 @@
   let srcId = null;
   let currentSrc = null;
   let seeking = false;
-  let ready = false;
+  let playbackReady = false;
   let tracks = [];
   let currentTrack = -1;
   let internalTime = 0;
@@ -154,7 +155,7 @@
   };
 
   const onReload = () => {
-    ready = false;
+    playbackReady = false;
     seeking = false;
     internalTime = 0;
     tracks = [];
@@ -192,16 +193,17 @@
       info.tracks = tracks;
       info.currentTrack = tracks.findIndex(t => t.mode === 'showing');
     }
+    if (data.method === VM.Command.GET_DURATION) info.duration = parseFloat(data.value);
     if (!event) return;
     switch (event) {
       case VM.Event.READY:
-        info.ready = true;
         VM.EVENTS.forEach(event => send(VM.Command.ADD_EVENT_LISTENER, event));
         break;
       case VM.Event.LOADED:
-        ready = true;
         info.state = PlayerState.CUED;
+        send(VM.Command.GET_DURATION);
         send(VM.Command.GET_TEXT_TRACKS);
+        playbackReady = true;
         break;
       case VM.Event.PLAY:
         info.state = PlayerState.PLAYING;
@@ -210,7 +212,7 @@
         info.state = PlayerState.PAUSED;
         break;
       case VM.Event.LOAD_PROGRESS:
-        info.buffered = payload.seconds;
+        info.buffered = parseFloat(payload.seconds);
         break;
       case VM.Event.BUFFER_START:
         info.state = PlayerState.BUFFERING;
@@ -232,13 +234,13 @@
         info.volume = parseFloat(payload.volume) * 100;
         break;
       case VM.Event.DURATION_CHANGE:
-        info.duration = payload.duration;
+        info.duration = parseFloat(payload.duration);
         break;
       case VM.Event.PLAYBACK_RATE_CHANGE:
-        info.playbackRate = payload.playbackRate;
+        info.playbackRate = parseFloat(payload.playbackRate);
         break;
       case VM.Event.FULLSCREEN_CHANGE:
-        info.fullscreen = payload.fullscreen;
+        info.fullscreen = !!payload.fullscreen;
         break;
       case VM.Event.FINISH:
         info.state = PlayerState.ENDED;
@@ -252,7 +254,7 @@
   $: match = src ? src.match(VM.SRC) : null;
   $: srcId = match ? match[1] : src;
   $: getPoster(currentSrc).then(poster => { info.poster = poster; });
-  $: (!seeking && ready) ? getTimeUpdates() : cancelTimeUpdates();
+  $: (!seeking && playbackReady) ? getTimeUpdates() : cancelTimeUpdates();
 
   $: {
     dispatch('update', info);

@@ -1,7 +1,7 @@
 <svelte:options accessors />
 
-{#if isEnabled}
-  <div class:active={isActive}></div>
+{#if enabled}
+  <div class:active></div>
 {/if}
 
 <script context="module">
@@ -15,23 +15,21 @@
   
   export let player;
 
-  const { isMobile } = player.getGlobalStore();
-  
   const {
-    isVideo, hasPlaybackStarted, isPaused,
-    isControlsActive
+    isVideoView, playbackStarted, paused,
+    controlsActive, isMobile
   } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  export let resolve = true;
-  export let isEnabled = false;
-  export let isActive = false;
+  export let autopilot = true;
+  export let enabled = false;
+  export let active = false;
 
-  $: if (resolve) isEnabled = $isVideo;
-  $: if (resolve) isActive = ($isMobile && $hasPlaybackStarted) && ($isPaused || $isControlsActive);
+  $: if (autopilot) enabled = $isVideoView;
+  $: if (autopilot) active = ($isMobile && $playbackStarted) && ($paused || $controlsActive);
 </script>
 
 <style type="text/scss">

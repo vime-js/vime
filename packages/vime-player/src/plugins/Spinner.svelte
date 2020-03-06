@@ -1,8 +1,8 @@
 <svelte:options accessors />
 
-{#if isEnabled}
+{#if enabled}
   <div 
-    class:inactive={!isActive}
+    class:inactive={!active}
     bind:this={el}
   >
     <div>Loading...</div>
@@ -14,7 +14,7 @@
 </script>
 
 <script>
-  import { ID as ControlsId } from '~plugins/controls/Controls.svelte';
+  import { ID as ControlsId } from './controls/Controls.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -22,8 +22,8 @@
 
   export let player;
 
-  const { isVideo, isBuffering, isPlaybackReady, canInteract } = player.getStore();
-  const plugins = player.getPluginsRegistry();
+  const { buffering, isVideoView } = player.getStore();
+  const controlsPlugin = player.getPluginsRegistry().watch(ControlsId);
 
   // --------------------------------------------------------------
   // Props
@@ -31,18 +31,18 @@
 
   let el;
 
-  export let resolve = true;
-  export let isEnabled = false;
-  export let isActive = false;
+  export let autopilot = true;
+  export let enabled = false;
+  export let active = false;
 
-  $: if (resolve) isEnabled = $isVideo;
-  $: if (resolve) isActive = ($isBuffering || !$isPlaybackReady || !$canInteract);
+  $: if (autopilot) enabled = $isVideoView;
+  $: if (autopilot) active = $buffering
 
   // --------------------------------------------------------------
   // Controls Plugin
   // --------------------------------------------------------------
 
-  $: if (el && $plugins[ControlsId]) $plugins[ControlsId].centerAssist(el);
+  $: if (el && $controlsPlugin) $controlsPlugin.centerAssist(el);
 </script>
 
 <style type="text/scss">

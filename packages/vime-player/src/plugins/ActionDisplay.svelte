@@ -1,6 +1,6 @@
 <svelte:options accessors />
 
-{#if isEnabled && value}
+{#if enabled && value}
   <div 
     class="container"
     bind:this={valueContainer}
@@ -14,7 +14,7 @@
   </div>
 {/if}
 
-{#if isEnabled && icon}
+{#if enabled && icon}
   <div 
     class="container"
     bind:this={actionContainer}
@@ -34,9 +34,9 @@
 </script>
 
 <script>
-  import { tick, onDestroy } from 'svelte';
-  import { Icon } from '~core';
-  import { ID as ControlsId } from '~plugins/controls/Controls.svelte';
+  import { tick } from 'svelte';
+  import { Icon } from '@vime/core';
+  import { ID as ControlsId } from './controls/Controls.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -44,9 +44,8 @@
 
   export let player;
 
-  const plugins = player.getPluginsRegistry();
-  const { isMobile } = player.getGlobalStore();
-  const { isControlsEnabled, isPlaybackReady, isAudio } = player.getStore();
+  const { isMobile, controlsEnabled, playbackReady, isVideoView } = player.getStore();
+  const controlsPlugin = player.getPluginsRegistry().watch(ControlsId);
 
   // --------------------------------------------------------------
   // Props
@@ -61,10 +60,10 @@
   let valueContainer;
   let actionContainer;
 
-  export let resolve = true;
-  export let isEnabled = false;
+  export let autopilot = true;
+  export let enabled = false;
 
-  $: if (resolve) isEnabled = $isControlsEnabled && $isPlaybackReady && !$isMobile && !$isAudio;
+  $: if (autopilot) enabled = $controlsEnabled && $playbackReady && $isVideoView && !$isMobile;
 
   export const run = async (i, v = null) => {
     icon = i;
@@ -82,8 +81,8 @@
   // Controls Plugin
   // --------------------------------------------------------------
 
-  $: if (valueContainer && $plugins[ControlsId]) $plugins[ControlsId].centerAssist(valueContainer);
-  $: if (actionContainer && $plugins[ControlsId]) $plugins[ControlsId].centerAssist(actionContainer);
+  $: if (valueContainer && $controlsPlugin) $controlsPlugin.centerAssist(valueContainer);
+  $: if (actionContainer && $controlsPlugin) $controlsPlugin.centerAssist(actionContainer);
 </script>
 
 <style type="text/scss">

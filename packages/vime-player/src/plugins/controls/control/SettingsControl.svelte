@@ -23,7 +23,7 @@
 
 <script>
   import { tick } from 'svelte';
-  import { Icon } from '~core';
+  import { Icon } from '@vime/core';
   import Control from '../Control.svelte';
 
   // --------------------------------------------------------------

@@ -1,6 +1,5 @@
-import { onDestroy } from 'svelte';
 import { get, writable, derived } from 'svelte/store';
-import { noop, not_equal, init, validate_store, get_current_component } from 'svelte/internal';
+import { noop, not_equal, validate_store, get_current_component } from 'svelte/internal';
 import { create_prop, merge_obj_deep } from './object';
 import { is_function } from './unit';
 import { try_on_svelte_destroy, try_create_svelte_dispatcher } from './svelte';
@@ -146,9 +145,10 @@ export const make_private_stores_readonly = stores => {
   return result;
 };
 
-export const map_store_to_component = (component, stores) => {
+export const map_store_to_component = (comp, stores) => {
   let ctx = {};
   let canWrite = {};
+  const component = comp || get_current_component();
 
   create_prop(component, 'getStore', {
     get: () => () => make_private_stores_readonly(stores),
@@ -156,6 +156,8 @@ export const map_store_to_component = (component, stores) => {
   });
 
   component.$$.on_destroy.push(() => {
+    Object.keys(ctx).forEach(prop => { delete component[prop]; });
+    delete component.getStore;
     ctx = {};
     canWrite = {};
   });
@@ -172,7 +174,8 @@ export const map_store_to_component = (component, stores) => {
     canWrite[prop] = !!store.set && !store.private;
     create_prop(component, prop, {
       get: () => get(store),
-      set: canWrite[prop] ? v => onUpdateProp(prop, v) : undefined
+      set: canWrite[prop] ? v => onUpdateProp(prop, v) : undefined,
+      configurable: true
     });
   });
 

@@ -1,13 +1,15 @@
 <ToggleControl
   {player}
+  custom
   label={LABEL}
-  isEnabled={$isPiPSupported && $isPiPEnabled}
+  active={$pipActive}
+  enabled={$canSetPiP}
   activeIcon={$icons.exitPiP}
   inactiveIcon={$icons.enterPiP}
   activeTitle={$i18n.exitPiP}
   inactiveTitle={$i18n.enterPiP}
   aria-label={$i18n.pip}
-  bind:isActive={$isPiPActive}
+  on:click={onToggle}
   bind:this={toggle}
 />
 
@@ -17,6 +19,7 @@
 </script>
 
 <script>
+  import { noop } from 'svelte/internal';
   import ToggleControl from './ToggleControl.svelte';
 
   // --------------------------------------------------------------
@@ -25,10 +28,7 @@
 
   export let player;
 
-  const {
-    icons, i18n, isPiPActive,
-    isPiPSupported, isPiPEnabled
-  } = player.getStore();
+  const { icons, i18n, pipActive, canSetPiP } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -37,4 +37,8 @@
   let toggle;
 
   export const getToggle = () => toggle;
+
+  const onToggle = () => $pipActive 
+    ? player.requestPiP().catch(noop) 
+    : player.exitPiP().catch(noop)
 </script>

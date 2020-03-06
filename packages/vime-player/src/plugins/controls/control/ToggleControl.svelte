@@ -1,11 +1,12 @@
-{#if isEnabled}
+{#if enabled}
   <Control
     {player}
     {title}
     {label}
+    on:click
     on:click={onToggle}
     aria-label={$$props['aria-label']}
-    aria-pressed={isActive}
+    aria-pressed={active}
     on:focuschange
     bind:this={control}
   >
@@ -15,7 +16,7 @@
 
 <script>
   import { tick, createEventDispatcher } from 'svelte';
-  import { Icon } from '~core';
+  import { Icon } from '@vime/core';
   import Control from '../Control.svelte';
 
   export let player;
@@ -27,21 +28,22 @@
   let control;
 
   export let label;
-  export let isActive;
+  export let active;
   export let activeTitle;
   export let inactiveTitle;
   export let activeIcon;
   export let inactiveIcon;
-  export let isEnabled = true;
+  export let custom = false;
+  export let enabled = true;
 
   export const getControl = () => control;
 
-  $: icon = isActive ? activeIcon : inactiveIcon;
-  $: title = isActive ? activeTitle : inactiveTitle;
+  $: icon = active ? activeIcon : inactiveIcon;
+  $: title = active ? activeTitle : inactiveTitle;
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
-  const onToggle = () => { isActive = !isActive; };
+  const onToggle = () => { if (!custom) active = !active; };
 </script>

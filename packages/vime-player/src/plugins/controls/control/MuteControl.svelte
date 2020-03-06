@@ -2,12 +2,12 @@
   {player}
   label={LABEL}
   activeIcon={$icons.volumeMute}
-  inactiveIcon={get_volume_icon($icons, $isMuted, $volume)}
+  inactiveIcon={get_volume_icon($icons, $muted, $volume)}
   activeTitle={$i18n.unmute}
   inactiveTitle={$i18n.mute}
   aria-label={$i18n.mute}
   on:focuschange
-  bind:isActive={$isMuted}
+  bind:active={$muted}
   bind:this={toggle}
 />
 
@@ -17,7 +17,7 @@
 </script>
 
 <script>
-  import { get_volume_icon } from '~utils/icon';
+  import { get_volume_icon } from '../../../utils';
   import ToggleControl from './ToggleControl.svelte';
 
   // --------------------------------------------------------------
@@ -26,7 +26,7 @@
 
   export let player;
 
-  const { icons, i18n, isMuted, volume } = player.getStore();
+  const { icons, i18n, muted, volume } = player.getStore();
 
   // --------------------------------------------------------------
   // Props

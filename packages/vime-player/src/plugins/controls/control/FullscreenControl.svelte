@@ -1,13 +1,15 @@
 <ToggleControl
   {player}
+  custom
   label={LABEL}
-  isEnabled={$isFullscreenSupported && $isFullscreenEnabled}
+  active={$fullscreenActive}
+  enabled={$canSetFullscreen}
   activeIcon={$icons.exitFullscreen}
   inactiveIcon={$icons.enterFullscreen}
   activeTitle={$i18n.exitFullscreen}
   inactiveTitle={$i18n.enterFullscreen}
   aria-label={$i18n.fullscreen}
-  bind:isActive={$isFullscreenActive}
+  on:click={onToggle}
   bind:this={toggle}
 />
 
@@ -17,17 +19,20 @@
 </script>
 
 <script>
+  import { noop } from 'svelte/internal'
   import ToggleControl from './ToggleControl.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
+  let active;
+
   export let player;
 
-  const {
-    icons, i18n, isFullscreenActive,
-    isFullscreenSupported, isFullscreenEnabled
+  const { 
+    icons, i18n, canSetFullscreen,
+    fullscreenActive
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -37,4 +42,8 @@
   let toggle;
 
   export const getToggle = () => toggle;
+
+  const onToggle = () => !$fullscreenActive 
+    ? player.requestFullscreen().catch(noop) 
+    : player.exitFullscreen().catch(noop);
 </script>

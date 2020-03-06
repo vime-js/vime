@@ -18,14 +18,18 @@
   import { decode_json } from '@vime/utils';
 
   const VM = {
-    ORIGIN: 'https://player.vimeo.com',
-    Event: {
-      READY: 'ready',
-      ERROR: 'error'
-    },
-    Command: {
-      GET_VIDEO_TITLE: 'getVideoTitle'
-    }
+    ORIGIN: 'https://player.vimeo.com'
+  };
+
+  VM.Event = {
+    READY: 'ready',
+    ERROR: 'error',
+    LOADED: 'loaded'
+  };
+
+  VM.Command = {
+    GET_VIDEO_TITLE: 'getVideoTitle',
+    ADD_EVENT_LISTENER: 'addEventListener',
   };
 
   const DECODER = decode_json;
@@ -39,6 +43,7 @@
   ];
 
   const Event = {
+    READY: 'ready',
     SRC_CHANGE: 'srcchange',
     TITLE_CHANGE: 'titlechange',
     ERROR: 'error'
@@ -47,6 +52,7 @@
 
 <script>
   import { tick, onMount, createEventDispatcher } from 'svelte';
+  import { noop } from 'svelte/internal';
   import { deferred } from '@vime/utils';
   import { Embed } from '@vime/core';
 
@@ -67,13 +73,17 @@
   export const getIframe = () => embed.getIframe();
   export const getSrcWithParams = () => embed.getSrc();
 
-  export const sendCommand = async (command, args) => {
-    await tick();
-    await ready.promise;
-    embed.postMessage({
-      method: command,
-      value: args || ''
-    });
+  export const sendCommand = async (command, args, force) => {
+    try {
+      if (!force) {
+        await tick();
+        await ready.promise;
+      }
+      embed.postMessage({
+        method: command,
+        value: args || ''
+      });
+    } catch (e) { /** noop */ }
   };
 
   const buildSrc = () => {
@@ -83,6 +93,8 @@
   };
 
   const onReload = () => {
+    ready.promise.catch(noop);
+    ready.reject();
     ready = deferred();
     initialized = false;
   };
@@ -101,12 +113,14 @@
       dispatch(Event.ERROR, error);
       initialized = true;
     }
-    if (event === VM.Event.READY) {
+    if (event === VM.Event.READY) sendCommand(VM.Command.ADD_EVENT_LISTENER, VM.Event.LOADED, true);
+    if (event === VM.Event.LOADED) {
       ready.resolve();
       sendCommand(VM.Command.GET_VIDEO_TITLE);
     }
     if (data.method === VM.Command.GET_VIDEO_TITLE) {
       videoTitle = data.value;
+      dispatch(Event.READY);
       initialized = true;
     }
   };

@@ -7,8 +7,8 @@
 <script>
   import { listen } from 'svelte/internal';
   import { onMount, onDestroy } from 'svelte';
-  import { get_playback_icon } from '~utils/icon';
-  import { ID as ActionDisplayId } from '~plugins/ActionDisplay.svelte';
+  import { get_playback_icon } from '../utils';
+  import { ID as ActionDisplayId } from './ActionDisplay.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -16,35 +16,33 @@
 
   export let player;
 
-  const { isMobile } = player.getGlobalStore();
-
   const {
-    icons, isPaused, isControlsEnabled,
-    canInteract, isAudio
+    icons, paused, controlsEnabled,
+    canInteract, isVideoView, isMobile
   } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
   
-  export let resolve = true;
-  export let isEnabled = false;
+  export let autopilot = true;
+  export let enabled = false;
 
-  $: if (resolve) isEnabled = $isControlsEnabled && $canInteract && !$isMobile && !$isAudio;
+  $: if (autopilot) enabled = $controlsEnabled && $canInteract && !$isMobile && $isVideoView;
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
   const onToggle = () => {
-    $isPaused = !$isPaused;
-    const icon = get_playback_icon($icons, !$isPaused);
+    $paused = !$paused;
+    const icon = get_playback_icon($icons, !$paused);
     if (player[ActionDisplayId]) player[ActionDisplayId].run(icon);
   };
 
   let timer;
-  let clickOff;
-  const onBindClick = () => {
+  let onClickListener;
+  const bindClickListener = () => {
     const onClick = e => {
       window.clearTimeout(timer);
       // Using a timer to avoid interfering with double clicking.
@@ -54,20 +52,20 @@
         if (e.detail === 1 && !isInputNode) onToggle();
       }, 150);
     };
-    clickOff = listen(player.getEl(), 'click', onClick);
+    onClickListener = listen(player.getEl(), 'click', onClick);
   };
 
-  const onUnbindClick = () => {
-    clickOff && clickOff();
+  const unbindClickListener = () => {
+    onClickListener && onClickListener();
     timer = null;
-    clickOff = null;
+    onClickListener = null;
   };
 
-  onDestroy(onUnbindClick);
+  onDestroy(unbindClickListener);
 
-  $: if (isEnabled && !clickOff) {
-    onBindClick();
-  } else if (!isEnabled && clickOff) {
-    onUnbindClick();
+  $: if (enabled && !onClickListener) {
+    bindClickListener();
+  } else if (!enabled && onClickListener) {
+    unbindClickListener();
   }
 </script>

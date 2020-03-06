@@ -9,7 +9,7 @@
 </script>
 
 <script>
-  import { formatTime } from '~utils/formatters';
+  import { formatTime } from '@vime/core';
   import Time from './Time.svelte';
 
   export let player;

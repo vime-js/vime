@@ -4,7 +4,7 @@ import { YouTubeProvider } from '@vime/youtube';
 import { VimeoProvider } from '@vime/vimeo';
 
 export * from './core';
-// export * from './plugins';
+export * from './plugins';
 
 export { Html5Provider };
 export { DailymotionProvider };

@@ -11,7 +11,7 @@
     min="0"
     max="100"
     autocomplete="off"
-    class:active={!$isMobile && isFocused}
+    class:active={!$isMobile && focused}
     bind:this={slider}
     bind:value={currentVolume}
     use:focus
@@ -34,7 +34,7 @@
 
 <script>
   import { tick, onDestroy } from 'svelte';
-  import { focus } from '~utils/actions';
+  import { focus } from '@vime/core';
   import MuteControl from './MuteControl.svelte';
 
   // --------------------------------------------------------------
@@ -43,8 +43,7 @@
 
   export let player;
 
-  const { isMobile } = player.getGlobalStore();
-  const { i18n, volume, isMuted } = player.getStore();
+  const { i18n, volume, muted, isMobile } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -53,7 +52,7 @@
   let el;
   let slider;
   let muteControl;
-  let isFocused = false;
+  let focused = false;
   let prevMuted = false;
 
   export const getEl = () => el;
@@ -61,13 +60,13 @@
   export const getMuteControl = () => muteControl;
 
   const unmuteVolume = () => {
-    if (prevMuted && !$isMuted && $volume === 0) $volume = 30;
-    prevMuted = $isMuted;
+    if (prevMuted && !$muted && $volume === 0) $volume = 30;
+    prevMuted = $muted;
   };
 
-  $: unmuteVolume($isMuted);
-  $: $isMuted = ($volume === 0);
-  $: currentVolume = $isMuted ? 0 : $volume;
+  $: unmuteVolume($muted);
+  $: $muted = ($volume === 0);
+  $: currentVolume = $muted ? 0 : $volume;
   $: if (slider) slider.style.setProperty('--value', `${currentVolume}%`);
 
   // --------------------------------------------------------------
@@ -75,7 +74,7 @@
   // --------------------------------------------------------------
 
   const onVolumeChange = e => { $volume = window.parseInt(e.target.value); };
-  const onFocus = e => { isFocused = e.detail; };
+  const onFocus = e => { focused = e.detail; };
 </script>
 
 <style type="text/scss">

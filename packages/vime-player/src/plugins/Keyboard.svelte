@@ -6,21 +6,16 @@
 </script>
 
 <script>
-  import { createEventDispatcher, onDestroy } from 'svelte';
-  import { is_array } from '~utils/unit';
-  import { ID as TooltipsID } from '~plugins/tooltips/Tooltips.svelte';
-  
+  import { ID as TooltipsID } from './tooltips/Tooltips.svelte';
+  import { is_array } from '@vime/utils';
+
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
   export let player;
 
-  const dispatch = createEventDispatcher();
-  const registry = player.createRegistry(ID);
   const logger = player.createLogger(ID);
-  const plugins = player.getPluginsRegistry();
-  const { isCurrentPlayer } = player.getStore();
 
   const validateEvent = (id, event) => {
     if (!event || !event.keys) {
@@ -30,55 +25,46 @@
     return true;
   };
 
+  const registry = player.createRegistry(ID, validateEvent);
+  const { isPlayerActive } = player.getStore();
+  const tooltips = player.getRegistry().watch(TooltipsID);
+
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  export let isEnabled = true;
+  export let enabled = true;
 
   export const getEvent = id => $registry[id];
   export const getEvents = () => $registry;
-  export const update = (id, event) => { registry.update(id, { ...$registry[id], ...event }); };
-  export const deregister = id => { registry.deregister(id); };
-
-  export const register = (id, event) => {
-    if (!validateEvent(id, event)) return;
-    registry.register(id, event);
-  };
+  export const getRegistry = () => registry;
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
   const onKeyDown = e => {
-    if (!$isCurrentPlayer || !isEnabled) return;
+    if (!$isPlayerActive || !enabled) return;
   
     const listeners = Object.values($registry)
       .filter(o => (is_array(o.keys) ? o.keys : [o.keys]).includes(e.keyCode));
-  
+
     if (listeners.length > 0) {
       e.preventDefault();
-      listeners.forEach(l => {
-        l.action && l.action(e);
-        dispatch(l.id, l);
-      });
+      listeners.forEach(l => l.action && l.action(e));
     }
   };
-
-  $: dispatch('isenabled', isEnabled);
 
   // --------------------------------------------------------------
   // Tooltips Plugin
   // --------------------------------------------------------------
 
-  $: tooltips = $plugins[TooltipsID];
-
-  $: if (tooltips) {
+  $: if ($tooltips) {
     Object.keys($registry).forEach(id => {
-      const tooltip = tooltips.getTooltip(id);
+      const tooltip = $tooltips[id];
       if (tooltip) {
         tooltip.hint = $registry[id].hint;
-        tooltip.showHint = isEnabled;
+        tooltip.showHint = enabled;
       }
     });
   }

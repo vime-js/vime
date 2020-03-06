@@ -1,21 +1,20 @@
 <svelte:options accessors />
 
-{#if isEnabled}
+{#if enabled}
   <div 
-    class:active={isActive}
-    use:setAspectRatio={$aspectRatio}
+    class:active
     bind:this={el}
   ></div>
 {/if}
 
 <script context="module">
+  import PluginRole from '../core/PluginRole';
+
   export const ID = 'vPoster';
+  export const ROLE = PluginRole.POSTER;
 </script>
 
 <script>
-  import { createEventDispatcher } from 'svelte';
-  import { aspectRatio as setAspectRatio } from '~utils/actions';
-
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
@@ -23,12 +22,10 @@
   export let player;
 
   const logger = player.createLogger(ID);
-  const dispatch = createEventDispatcher();
 
   const {
-    poster: _poster, aspectRatio, isVideo,
-    isAudio, hasPlaybackStarted, hasSeeked,
-    src, Provider
+    poster: customPoster, isVideoView, isAudio, 
+    playbackStarted, nativePoster
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -38,9 +35,10 @@
   let el;
 
   export let poster;
-  export let resolve = true;
-  export let isEnabled = true;
-  export let isActive = false;
+  export let autopilot = true;
+  export let enabled = true;
+  export let active = false;
+  export let fallback = true;
 
   export const getEl = () => el;
 
@@ -49,19 +47,9 @@
     el.style.backgroundSize = poster ? (poster.size || 'contain') : null;
   }
 
-  $: if (resolve) poster = $_poster;
-  $: if (resolve) isEnabled = $isVideo || !!$_poster;
-  $: if (resolve) isActive = $isAudio || (!$hasPlaybackStarted && !$hasSeeked);
-
-  const onPosterLoadError = e => {
-    logger.warn(`failed to load poster for \`src\` [${$src}]`);
-    dispatch('error', e);
-  };
-
-  // Get the poster if it's not set and a provider can provide it.
-  $: if (resolve && !$_poster && $src && $Provider && $Provider.getPoster) {
-    $Provider.getPoster($src).then(p => { $_poster = p; }).catch(e => onPosterLoadError(e));
-  }
+  $: if (autopilot) poster = $customPoster || (fallback ? $nativePoster : null);
+  $: if (autopilot) enabled = $isVideoView;
+  $: if (autopilot) active = $isAudio || !$playbackStarted;
 </script>
 
 <style type="text/scss">

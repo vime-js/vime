@@ -1,7 +1,7 @@
 <svelte:options accessors />
 
 <div 
-  class:active={isActive || true}
+  class:active={active || true}
   class:disabled={isDisabled}
   bind:this={el}
 >
@@ -17,7 +17,7 @@
     {player}
     on:click={onSeek}
     aria-disabled={isDisabled}
-    aria-hidden={!isActive}
+    aria-hidden={!active}
     aria-label={isForward ? $i18n.seekForward : $i18n.seekBackward}
     bind:this={control}
   >
@@ -28,8 +28,7 @@
 </div>
 
 <script>
-  import { formatTime } from '~utils/formatters';
-  import { Icon } from '~core';
+  import { Icon, formatTime } from '@vime/core';
   import Control from '../Control.svelte';
 
   // --------------------------------------------------------------
@@ -52,7 +51,7 @@
   let control;
 
   export let base = 0;
-  export let isActive = false;
+  export let active = false;
 
   export const getEl = () => el;
   export const getControl = () => control;

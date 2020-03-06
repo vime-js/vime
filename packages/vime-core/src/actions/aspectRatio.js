@@ -6,18 +6,16 @@ export default function aspectRatio (node, aspectRatio) {
       return;
     }
     const [width, height] = aspectRatio.split(':');
-    node.style.paddingBottom = `${(100 / width) * height}%`;
     node.style.background = '#000';
+    node.style.paddingBottom = `${(100 / width) * height}%`;
   };
 
   update(aspectRatio);
-  node.style.position = 'relative';
 
   return {
     update,
     destroy () {
       update(null);
-      node.style.position = null;
     }
   };
 }

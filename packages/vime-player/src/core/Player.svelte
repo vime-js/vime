@@ -1,25 +1,27 @@
 <div 
   tabindex="0"
   class="vime player{classes ? ` ${classes}` : ''}"
-  class:video={$videoView}
+  class:audio={!$isVideoView}
+  class:video={$isVideoView}
   class:fullscreen={$fullscreenActive}
   class:idle={!$nativeMode && !$paused && !$controlsActive}
+  use:setAspectRatio={($isVideoView && !$fullscreenActive) ? $aspectRatio : null}
   on:contextmenu={onContextMenu}
   bind:this={el}
 >
-  <div class="internal">
-    {#if !$nativeMode && $video}
+  <div>
+    {#if !$nativeMode && $isVideo}
       <div class="blocker"></div>
     {/if}
     <InternalPlayer
-      fullscreenEl={el}
+      parentEl={el}
       Provider={$Provider && $Provider.default}
       bind:this={internalPlayer}
       on:error
     />
   </div>
-  <Lazy 
-    container={el} 
+  <Lazy
+    container={el}
     let:intersecting 
   >
     {#if mounted && intersecting}
@@ -27,7 +29,6 @@
         player={self}
         plugins={$plugins || []}
         nativeMode={$nativeMode}
-        config={$config ? $config.plugins : {}}
         on:register={onPluginMount}
         on:deregister={onPluginDestroy}
         bind:this={pluginsManager}
@@ -46,6 +47,7 @@
   import PlayerEvent from './PlayerEvent'
   import { 
     Registry, Disposal, Lazy,
+    aspectRatio as setAspectRatio,
     Player as InternalPlayer
   } from '@vime/core';
   import { 
@@ -62,23 +64,22 @@
   let pluginsManager;
   let classes = null;
 
-  let src;
   let debug;
   let plugins;
-  let config;
   let paused;
-  let video;
   let theme;
-  let Provider;
-  let providers;
-  let videoView;
+  let isVideo;
+  let aspectRatio;
   let nativeMode;
+  let isVideoView;
+  let Provider;
   let controlsActive;
   let fullscreenActive;
-  let contextMenuEnabled;
+
+  let self = get_current_component();
+  onDestroy(() => { self = null; })
 
   const ID = 'Player';
-  let self = get_current_component();
   const disposal = new Disposal();
   const registry = new Registry(ID);
   const _dispatch = createEventDispatcher();
@@ -91,25 +92,12 @@
     store = buildPlayerStore(internalPlayer.getStore());
     onPropsChange = map_store_to_component(self, store);
     ({  
-      plugins, config, paused,
-      video, theme, videoView,
-      nativeMode, Provider, controlsActive, 
-      debug, providers, fullscreenActive, 
-      src, contextMenuEnabled
+      plugins, paused, isVideo, 
+      theme, isVideoView, nativeMode, 
+      controlsActive, debug, fullscreenActive,
+      aspectRatio, Provider
     } = store);
   })
-
-  $: {
-    const newProvider = $providers && $providers.find(p => p.canPlay($src));
-    if (newProvider !== $Provider) $Provider = newProvider;
-    if (!$Provider && $src) _warn(`no provider can play this \`src\` [${$src}]`);
-  }
-
-  onDestroy(() => {
-    self = null;
-    store = {};
-    onPropsChange = noop;
-  });
 
   // --------------------------------------------------------------
   // Props
@@ -166,13 +154,13 @@
   };
 
   const onPluginDestroy = e => {
-    delete self[e.detail];
+    if (self) delete self[e.detail];
     _dispatch(`${e.detail}destroy`, e.detail);
     _dispatch(PlayerEvent.PLUGIN_DESTROY, e.detail);
   };
 
   const onContextMenu = e => {
-    if (!$debug && !$contextMenuEnabled) e.preventDefault();
+    if (!$debug && !get(store.contextMenuEnabled)) e.preventDefault();
   };
 
   const onThemeChange = () => is_string($theme)
@@ -264,18 +252,13 @@
     }
   }
 
-  .internal {
-    width: 100%;
-    height: 100%;
-  }
-
   .blocker {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1000;
+    z-index: 1;
     display: inline-block;
   }
 </style>
