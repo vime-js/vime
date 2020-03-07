@@ -43,7 +43,7 @@ export const Html5Video = () => ({
     theme: THEME,
     providers: PROVIDERS,
     plugins: [Boot],
-    textTracks: [
+    tracks: [
       {
         default: true,
         kind: 'subtitles',

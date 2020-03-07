@@ -21,7 +21,7 @@ export const buildPlayerStore = _store => {
   store.controlsActive = writable(true);
   store.contextMenuEnabled = writable(false);
   store.debug = writable(process.env.NODE_ENV !== 'production');
-  store.isMobile = private_writable(IS_MOBILE);
+  store.isMobile = writable(IS_MOBILE);
   store.isTouch = readable(false, set => listen_for_touch_input(t => set(t)));
   store.i18n = derived(
     [store.locale, store.langauges],

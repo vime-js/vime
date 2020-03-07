@@ -67,7 +67,7 @@
     fullscreenActive, currentTime, duration,
     isAudio, isVideo, canInteract, 
     isMobile, canSetTrack, canSetPiP,
-    canSetFullscreen
+    canSetFullscreen, isLive, currentTrack
   } = player.getStore();
 
   const PLUGINS = [
@@ -108,7 +108,7 @@
 
   $: keyboard = config && isPluginEnabled(Keyboard) && $plugins[Keyboard.ID];
 
-  $: if (keyboard && !hasKeyboardInitialized) {
+  const onInitializeKeyboard = () => {
     const keyboardRegistry = keyboard.getRegistry();
 
     keyboardRegistry.register(PlaybackControl.LABEL, {
@@ -117,7 +117,7 @@
       action: () => {
         if (!$canInteract) return;
         $paused = !$paused;
-        safeActionDisplay(get_playback_icon($icons, $paused));
+        safeActionDisplay(get_playback_icon($icons, !$paused));
       }
     });
 
@@ -151,8 +151,8 @@
       keys: [67],
       action: () => {
         if (!$canInteract || !$canSetTrack) return;
-        $captionsActive ? (player.currentTrack = -1) : (player.currentTrack = prevTrack);
-        prevTrack = player.currentTrack;
+        $captionsActive ? ($currentTrack = -1) : ($currentTrack = prevTrack);
+        prevTrack = $currentTrack;
         safeActionDisplay(get_captions_icon($icons, $captionsActive));
       }
     });
@@ -189,8 +189,9 @@
     });
 
     hasKeyboardInitialized = true;
-  }
+  };
 
+  $: if (keyboard && !hasKeyboardInitialized) onInitializeKeyboard();
   $: if (!keyboard && hasKeyboardInitialized) hasKeyboardInitialized = false;
 
   // --------------------------------------------------------------
@@ -199,33 +200,46 @@
 
   $: controls = config && isPluginEnabled(Controls) && $plugins[Controls.ID];
 
-  $: if (controls && $isAudio) {
+  const onSetupAudioControls = () => {
     controls.upper = [];
     controls.center = [];
-    controls.lower = [
+    // TODO: add settings control here
+    controls.lower = !$isLive ? [
       PlaybackControl, VolumeControl, CurrentTime,
       ScrubberControl, DurationTime
+    ]: [
+      PlaybackControl, volume, CurrentTime, 
+      ControlSpacer, LiveIndicator
     ];
-    // if LS -> pb, volume, time, spacer, live, settings
-    // else -> pb, volume, currentTime, scrubber, duration, settings
-  }
+  };
 
-  $: if (controls && $isVideo && !$isMobile) {
+  const onSetupDesktopVideoControls = () => {
     controls.upper = [];
     controls.center = [];
-    controls.lower = [
-      ScrubberControl, ControlNewLine,
-      PlaybackControl, VolumeControl, TimeProgress,
-      ControlSpacer, CaptionControl, PiPControl,
-      FullscreenControl
+    // TODO: add settings control here
+    controls.lower = !$isLive ? [
+      ScrubberControl, ControlNewLine, PlaybackControl, 
+      VolumeControl, TimeProgress, ControlSpacer, 
+      CaptionControl, PiPControl, FullscreenControl
+    ] : [
+      PlaybackControl, VolumeControl, ControlSpacer, 
+      LiveIndicator, PiPControl, FullscreenControl
     ];
-    // if desktop & LS -> pb, volume, spacer, live, pip, fs
-    // if desktop && !LS -> scrubber, newLine, pb, volume, time, spacer, cap, settings, pip, fs
-  }
+  };
 
-  $: if (controls && $isVideo && $isMobile) {
-    // if isMobile & LS -> pb (center) / spacer, volume, fs (upper)
-    // if isMobile & !LS -> seekB, pb, seekF (center) / spacer, vol, caption, settings, fs (upper)
-  }
+  const onSetupMobileVideoControls = () => {
+    if (!$isLive) {
+      // TODO: add settings here before fs
+      controls.upper = [ControlSpacer, VolumeControl, CaptionControl, FullscreenControl];
+      controls.center = [SeekBackwardControl, PlaybackControl, SeekForwardControl];
+    } else {
+      controls.upper = [ControlSpacer, VolumeControl, FullscreenControl];
+      controls.center = [PlaybackControl];
+    }
+  };
+
+  $: if (controls && $isAudio) onSetupAudioControls($isLive)
+  $: if (controls && $isVideo && !$isMobile) onSetupDesktopVideoControls($isLive)
+  $: if (controls && $isVideo && $isMobile) onSetupMobileVideoControls($isLive)
 </script>
 

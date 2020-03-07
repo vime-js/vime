@@ -63,7 +63,11 @@
   export let autopilot = true;
   export let enabled = false;
 
-  $: if (autopilot) enabled = $controlsEnabled && $playbackReady && $isVideoView && !$isMobile;
+  $: if (autopilot) enabled = $controlsEnabled && 
+    $playbackReady && 
+    $isVideoView && 
+    !$isMobile && 
+    (($controlsPlugin && !$controlsPlugin.hasCenterControls()) ||  !$controlsPlugin);
 
   export const run = async (i, v = null) => {
     icon = i;

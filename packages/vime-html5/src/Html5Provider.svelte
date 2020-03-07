@@ -235,7 +235,7 @@
     onCueChangeListener = listen(track, Html5.TextTrack.Event.CUE_CHANGE, onCueChange);
   };
 
-  export const setTracks = newTracks => { 
+  export const setTracks = newTracks => {
     unbindCueChangeListener();
     tracks = newTracks || [];
     currentTrack = -1;

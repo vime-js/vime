@@ -24,14 +24,16 @@
   bind:this={el}
 >
   <slot />
-  <svelte:component 
-    {player}
-    {title}
-    id={tooltipId}
-    active={isFocused}
-    this={Tooltip}
-    bind:this={tooltip}
-  />
+  {#if !noTooltip}
+    <svelte:component 
+      {player}
+      {title}
+      id={tooltipId}
+      active={isFocused}
+      this={Tooltip}
+      bind:this={tooltip}
+    />
+  {/if}
 </button>
 
 <script context="module">
@@ -67,8 +69,9 @@
   let isFocused = false;
   let showHighlight = false;
 
-  export let title;
-  export let label;
+  export let title = null;
+  export let label = null;
+  export let noTooltip = false;
 
   export const getEl = () => el;
   export const getTooltip = () => tooltip;
@@ -80,7 +83,12 @@
   let tooltip;
 
   $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.create();
-  $: if ($tooltipsPlugin && tooltip) $tooltipsPlugin.getRegistry().register(label, tooltip);
+
+  // TODO: this is a poor temporary fix, the same control might be reused in different
+  // positions, how to register them?
+  $: if ($tooltipsPlugin && tooltip && !$tooltipsPlugin.getTooltip(label)) {
+    $tooltipsPlugin.getRegistry().register(label, tooltip);
+  }
 </script>
 
 <style type="text/scss">
