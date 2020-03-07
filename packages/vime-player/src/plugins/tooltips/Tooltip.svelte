@@ -30,8 +30,8 @@
   // --------------------------------------------------------------
 
   let el;
-  const onTop = true;
-  const onBottom = false;
+  let onTop = true;
+  let onBottom = false;
   let growLeft = false;
   let growRight = false;
 
@@ -52,6 +52,8 @@
   const onBound = () => {
     const rect = el.getBoundingClientRect();
     const bounds = player.getEl().getBoundingClientRect();
+    onBottom = onBottom ? (rect.top - bounds.top > rect.height) : (rect.top <= bounds.top);
+    onTop = !onBottom
     growLeft = growLeft ? (rect.right - bounds.right) < rect.width : (rect.right - bounds.right) > 0;
     growRight = growRight ? (rect.left - bounds.left) < rect.width : (bounds.left - rect.left) > 0;
   };

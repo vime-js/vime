@@ -1,4 +1,4 @@
-{#each validatedPlugins.filter(() => !nativeMode) as Plugin (Plugin.ID)}
+{#each validatedPlugins as Plugin (Plugin.ID)}
   <svelte:component
     {player}
     this={Plugin.default}
@@ -13,7 +13,7 @@
 
 <script>
   import { onMount } from 'svelte';
-  import { is_svelte_component } from '@vime/utils';
+  import { IS_IOS, is_svelte_component } from '@vime/utils';
 
   // --------------------------------------------------------------
   // Setup
@@ -24,25 +24,29 @@
   const registry = player.createRegistry(ID);
   const logger = player.createLogger(ID);
 
+  const { 
+    plugins, playsinline, fullscreenActive,
+    nativeMode
+  } = player.getStore();
+
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
-  
+
   let instances = {};
   let validatedPlugins = [];
 
-  export let plugins = [];
-  export let nativeMode = false;
-  
-  export const hasPlugin = plugin => plugin.ID && plugins.some(p => p.ID === plugin.ID);
-  export const addPlugin = plugin => { if (!hasPlugin(plugin)) plugins[plugins.length] = plugin; };
+  export const hasPlugin = plugin => plugin.ID && $plugins.some(p => p.ID === plugin.ID);
+  export const addPlugin = plugin => { if (!hasPlugin(plugin)) $plugins[$plugins.length] = plugin; };
   export const addPlugins = plugins => { plugins && plugins.map(addPlugin); };
-  export const removePlugin = id => { plugins = plugins.filter(p => p.ID !== id); };
+  export const removePlugin = id => { $plugins = $plugins.filter(p => p.ID !== id); };
   export const removePlugins = plugins => { plugins && plugins.map(removePlugin); };
 
   export const getRegistry = () => registry;
   export const getInstances = () => instances;
   export const getPlugins = () => validatedPlugins;
+
+  $: enabled = (IS_IOS && $playsinline && !$fullscreenActive) || (!IS_IOS && !$nativeMode)
 
   // --------------------------------------------------------------
   // Plugin Registration
@@ -65,7 +69,7 @@
   let mounted = false;
   onMount(() => { mounted = true; });
 
-  $: if (mounted) validatedPlugins = plugins.filter(validatePlugin).map(p => ({ ...p }));
+  $: if (mounted) validatedPlugins = enabled ? $plugins.filter(validatePlugin).map(p => ({ ...p })) : [];
 
   $: validatedPlugins
     .filter(p => !registry.has(p.ID) && instances[p.ID])

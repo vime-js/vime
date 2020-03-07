@@ -27,8 +27,6 @@
     {#if mounted && intersecting}
       <Plugins
         player={self}
-        plugins={$plugins || []}
-        nativeMode={$nativeMode}
         on:register={onPluginMount}
         on:deregister={onPluginDestroy}
         bind:this={pluginsManager}

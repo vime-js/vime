@@ -1,8 +1,8 @@
 <svelte:options accessors />
 
 <div 
-  class:active={active || true}
-  class:disabled={isDisabled}
+  class:active
+  class:disabled
   bind:this={el}
 >
   <span 
@@ -11,19 +11,20 @@
     aria-hidden={accumulator !== 0}
     aria-label={$i18n.seekTotal}
   >
-    {`${isForward ? '+' : '-'} ${formatTime(Math.abs(accumulator))}`}
+    {`${shouldSeekForward ? '+' : '-'} ${formatTime(Math.abs(accumulator))}`}
   </span>
   <Control
     {player}
+    noTooltip
     on:click={onSeek}
-    aria-disabled={isDisabled}
+    aria-disabled={disabled}
     aria-hidden={!active}
-    aria-label={isForward ? $i18n.seekForward : $i18n.seekBackward}
+    aria-label={shouldSeekForward ? $i18n.seekForward : $i18n.seekBackward}
     bind:this={control}
   >
-    <span class="title backward" class:hidden={isForward}>{Math.abs(base)}s</span>
-    <Icon icon={isForward ? $icons.seekForward : $icons.seekBackward} />
-    <span class="title forward" class:hidden={!isForward}>{Math.abs(base)}s</span>
+    <span class="title backward" class:hidden={shouldSeekForward}>{Math.abs(base)}s</span>
+    <Icon icon={shouldSeekForward ? $icons.seekForward : $icons.seekBackward} />
+    <span class="title forward" class:hidden={!shouldSeekForward}>{Math.abs(base)}s</span>
   </Control>
 </div>
 
@@ -44,27 +45,27 @@
   // --------------------------------------------------------------
 
   let timer;
-  let isDisabled;
   let accumulator = 0;
+  let disabled = false;
 
   let el;
   let control;
 
   export let base = 0;
-  export let active = false;
+  export let active = true;
 
   export const getEl = () => el;
   export const getControl = () => control;
 
-  $: isForward = base > 0;
-  $: isDisabled = isForward ? ($currentTime + base > $duration) : ($currentTime + base < 0);
+  $: shouldSeekForward = base > 0;
+  $: disabled = shouldSeekForward ? ($currentTime + base > $duration) : ($currentTime + base < 0);
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
   const onSeek = () => {
-    if (isDisabled) return;
+    if (disabled) return;
     window.clearTimeout(timer);
     accumulator += base;
     timer = setTimeout(() => {

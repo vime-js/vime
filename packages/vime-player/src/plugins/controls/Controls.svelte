@@ -72,8 +72,8 @@
 </script>
 
 <script>
-  import { listen } from 'svelte/internal';
   import { tick, onMount, onDestroy } from 'svelte';
+  import { listen } from 'svelte/internal';
   import { Registry } from '@vime/core';
   import ControlGroup from './ControlGroup.svelte';
 
@@ -124,6 +124,9 @@
   export const getLowerInstances = () => lowerControlGroup.getInstances();
   export const getCenterInstances = () => centerControlGroup.getInstances();
   export const getUpperInstances = () => upperControlGroup.getInstances();
+  export const hasLowerControls = () => lower.length > 0;
+  export const hasCenterControls = () => center.length > 0;
+  export const hasUpperControls = () => upper.length > 0;
 
   export const centerAssist = el => {
     if (!centerAssists.includes(el)) centerAssists[centerAssists.length] = el;
@@ -155,17 +158,23 @@
     idleTimer += 1;
   };
 
-  const onCenterAssist = () => centerAssists.forEach(el => {
-    const lowerControlsTopPadding = window.getComputedStyle(lowerEl).paddingTop;
-    const upperControlsBottomPadding = window.getComputedStyle(upperEl).paddingBottom;
-    el.style.paddingTop = `${upperControlsHeight - parseFloat(upperControlsBottomPadding)}px`;
-    el.style.paddingBottom = `${lowerControlsHeight - parseFloat(lowerControlsTopPadding)}px`;
-  });
+  const getLowerControlsYPadding = () => {
+    if (!lowerEl) return 0;
+    return parseFloat(window.getComputedStyle(lowerEl).paddingTop) +
+      parseFloat(window.getComputedStyle(lowerEl).paddingBottom);
+  }
 
-  const onRemoveCenterAssist = () => centerAssists.forEach(el => {
-    el.style.paddingTop = null;
+  const onCenterAssist = el => {
+    const paddingBottom = lowerControlsHeight + getLowerControlsYPadding();
+    el.style.paddingBottom = (lower.length > 0) ? `${paddingBottom}px` : null;
+    el.style.transition = 'padding 0.2s linear';
+  }
+
+  const runCenterAssist = () => centerAssists.forEach(onCenterAssist);
+  const removeCenterAssist = () => centerAssists.forEach(el => {
     el.style.paddingBottom = null;
-  });
+    el.style.transition = null;
+  })
 
   onMount(() => {
     const showControlsEvents = ['focus', 'keydown', 'mousemove', 'touchstart'];
@@ -173,22 +182,26 @@
   });
 
   onDestroy(() => {
-    onRemoveCenterAssist();
+    removeCenterAssist();
     centerAssists = [];
   });
 
-  $: if (centerEl) centerAssist(centerEl);
-
-  $: if ($controlsActive && lowerEl && upperEl) {
-    onCenterAssist(lowerControlsHeight, upperControlsHeight);
-  } else {
-    onRemoveCenterAssist();
+  $: if (centerEl) {
+    onCenterAssist(centerEl, lower, lowerEl, lowerControlsHeight)
+    if (lower.length === 0 && upper.length > 0) {
+      centerEl.style.paddingBottom = `${upperControlsHeight}px`;
+    }
   }
 
-  // TODO: resolve!
-  // if ios & playsinline & provider.canPlayinline -> show controls, go native on fullscreen
-  // else if ios & !playsinline ->  disable custom & go native?
-  // hide controls if ios fullscreen
+  $: if ($controlsEnabled && lowerEl) {
+    runCenterAssist(
+      centerAssists,
+      lower,
+      lowerControlsHeight,
+    );
+  } else {
+    removeCenterAssist();
+  }
 </script>
 
 <style type="text/scss">

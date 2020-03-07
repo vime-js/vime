@@ -426,8 +426,10 @@
     return active ? el[FullscreenApi.requestFullscreen]() : document[FullscreenApi.exitFullscreen]();
   };
 
+  // TODO: the two providers which can set fullscreen at the moment (Html5/Dailymotion) don't 
+  // require a rebuild when enabling controls, if at some point a provider does this won't work.
   const requestProviderFullscreen = active => {
-    if (active) tempControls = true;
+    if (active) tempControls = $controlsEnabled;
     return Promise.resolve($provider.setFullscreen(active));
   };
 
