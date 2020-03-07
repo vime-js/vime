@@ -12,7 +12,7 @@
   <video
     {controls}
     {crossorigin}
-    {poster}
+    poster={nativeMode ? poster : null}
     preload="metadata"
     bind:videoWidth
     playsinline={playsinline}
@@ -141,6 +141,7 @@
   let playsinline = null;
   let crossorigin = null;
   let aspectRatio = null;
+  let nativeMode = false;
   let currentSrc = null;
   let playbackReady = false;
   let paused = true;
@@ -160,9 +161,9 @@
   export const setCrossOrigin = origin => { crossorigin = origin || null; };
   export const setControls = enabled => { controls = enabled || null; };
   export const setPlaysinline = enabled => { playsinline = enabled || null; };
-  export const setNativeMode = nativeMode => { /** noop */ };
   export const setAspectRatio = ratio => { aspectRatio = ratio; };
   export const setVideoQuality = quality => { videoQuality = quality; };
+  export const setNativeMode = enabled => { nativeMode = enabled; };
 
   export const setPoster = newPoster => {
     if (poster === newPoster || !is_string(newPoster)) return;

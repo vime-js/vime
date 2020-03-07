@@ -23,10 +23,12 @@ export const getFileName = id => path.parse(id).base.replace(path.extname(id), '
 export const plugins = ({ legacy = false, externalCSS = false } = {}) => {
   return [
     nodeResolve({
+      mainFields: ['svelte', 'module', 'main'],
       dedupe: importee => 
         importee === 'svelte' || 
         importee.startsWith('svelte/') ||
-        importee.startsWith('@vime/')
+        importee.startsWith('@vime/') ||
+        importee.includes('packages/vime-')
     }),
     commonjs(),
     svg(),
@@ -45,7 +47,7 @@ export const plugins = ({ legacy = false, externalCSS = false } = {}) => {
       extensions: ['.js', '.mjs', '.html', '.svelte'],
       runtimeHelpers: true,
       externalHelpers: true,
-      exclude: ['node_modules/@babel/**', 'node_modules/core-js/**'],
+      exclude: ['node_modules/@babel/**', /\/core-js\//],
       presets: !legacy
         ? [['@babel/preset-modules', {
           loose: true
@@ -85,14 +87,14 @@ const manualChunks = chunks => {
     if (id.includes('node_modules')) {
       const directories = id.split(path.sep);
       const name = directories[directories.lastIndexOf('node_modules') + 1];
-      // Production
+      // Production.
       if (name.match(/^@vime\/utils/)) return 'vime-utils';
       if (name.match(/^@vime\/core/)) return 'vime-core';
       if (name.match(/^svelte/)) return 'vime-internals';
       return name;
     }
     
-    // Local
+    // Local (Yarn Workspace creates a symlink).
     if (id.includes('packages/vime-utils')) return 'vime-utils';
     if (id.includes('packages/vime-core')) return 'vime-core';
 
