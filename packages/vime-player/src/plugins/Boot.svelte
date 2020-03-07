@@ -18,19 +18,16 @@
     get_volume_icon
   } from '../utils';
 
-  // Plugins
-  import {
-    Icons,
-    Poster,
-    Scrim,
-    Spinner,
-    ClickToPlay,
-    ActionDisplay,
-    Keyboard,
-    Controls,
-    Tooltips,
-    DblClickFullscreen
-  } from '../';
+  import Icons from './Icons.svelte';
+  import Poster from './Poster.svelte';
+  import Scrim from './Scrim.svelte';
+  import Spinner from './Spinner.svelte';
+  import ClickToPlay from './ClickToPlay.svelte';
+  import ActionDisplay from './ActionDisplay.svelte';
+  import Keyboard from './Keyboard.svelte';
+  import Controls from './controls/Controls.svelte'
+  import Tooltips from './tooltips/Tooltips.svelte';
+  import DblClickFullscreen from './DblClickFullscreen.svelte';
 
   // Controls
   import {
@@ -49,7 +46,7 @@
     SeekBackwardControl,
     ControlSpacer,
     ControlNewLine
-  } from '../';
+  } from './controls';
 
   // --------------------------------------------------------------
   // Setup
