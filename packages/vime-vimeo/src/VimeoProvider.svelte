@@ -101,12 +101,11 @@
 
   let embed;
   let info = {};
+  let tracks = [];
   let srcId = null;
   let currentSrc = null;
   let seeking = false;
   let playbackReady = false;
-  let tracks = [];
-  let currentTrack = -1;
   let internalTime = 0;
 
   const params = {
@@ -128,19 +127,16 @@
   export const setCurrentTime = time => send(VM.Command.SET_CURRENT_TIME, time);
   export const setPlaysinline = enabled => { params.playsinline = enabled; };
   export const setControls = enabled => { params.controls = enabled; };
-  export const setNativeMode = nativeMode => { /** noop */ };
   export const setPlaybackRate = rate => send(VM.Command.SET_PLAYBACK_RATE, rate);
 
   export const supportsPiP = () => false;
   export const supportsFullscreen = () => true;
 
+  export const enableTracks = enabled => { send(VM.Command.DISABLE_TEXT_TRACK, !enabled); };
+
   export const setTrack = index => {
-    if (index === -1) send(VM.Command.DISABLE_TEXT_TRACK);
-    if (index > -1) {
-      const { language, kind } = tracks[index];
-      send(VM.Command.ENABLE_TEXT_TRACK, { language, kind });
-    }
-    currentTrack = index;
+    const { language, kind } = tracks[index];
+    send(VM.Command.ENABLE_TEXT_TRACK, { language, kind });
   };
 
   onMount(() => { info.origin = embed.getOrigin(); });
@@ -159,7 +155,6 @@
     seeking = false;
     internalTime = 0;
     tracks = [];
-    currentTrack = -1;
   };
 
   const onTimeUpdate = time => {
@@ -191,7 +186,7 @@
     if (data.method === VM.Command.GET_TEXT_TRACKS) {
       tracks = data.value || [];
       info.tracks = tracks;
-      info.currentTrack = tracks.findIndex(t => t.mode === 'showing');
+      info.currentTrackIndex = tracks.findIndex(t => t.mode === 'showing');
     }
     if (data.method === VM.Command.GET_DURATION) info.duration = parseFloat(data.value);
     if (!event) return;
@@ -221,7 +216,7 @@
         info.seeking = true;
         break;
       case VM.Event.TEXT_TRACK_CHANGE:
-        info.currentTrack = tracks.findIndex(t => t.label === payload.label);
+        info.currentTrackIndex = tracks.findIndex(t => t.label === payload.label);
         break;
       case VM.Event.CUE_CHANGE:
         info.activeCues = payload.cues ? payload.cues : [payload];

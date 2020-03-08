@@ -26,9 +26,9 @@
   import { createEventDispatcher } from 'svelte';
   import { is_string, prefetch, add_params_to_url } from '@vime/utils';
 
-  let iframe;
-  let srcWithParams;
+  let iframe = null;
   let prevSrc = null;
+  let srcWithParams = null;
 
   // eslint-disable-next-line prefer-const
   idCount += 1;

@@ -1,6 +1,6 @@
 <svelte:options accessors />
 
-{#if enabled}
+{#if isEnabled}
   <span
     {id}
     role="tooltip"
@@ -9,7 +9,7 @@
     class:onBottom
     class:growLeft
     class:growRight
-    aria-hidden={!active || $isTouch}
+    aria-hidden={!isActive || $isTouch}
     bind:this={el}
   >
     {(showHint && hint) ? `${title} (${hint})` : title}
@@ -38,8 +38,8 @@
   export let id = null;
   export let title = '';
   export let hint = null;
-  export let enabled = true;
-  export let active = false;
+  export let isEnabled = true;
+  export let isActive = false;
   export let showHint = true;
   export let noBounding = false;
 
@@ -58,7 +58,7 @@
     growRight = growRight ? (rect.left - bounds.left) < rect.width : (bounds.left - rect.left) > 0;
   };
 
-  $: if (el && !noBounding) onBound(title, active);
+  $: if (el && !noBounding) onBound(title, isActive);
 </script>
 
 <style type="text/scss">

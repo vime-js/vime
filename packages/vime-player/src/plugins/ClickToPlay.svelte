@@ -17,8 +17,9 @@
   export let player;
 
   const {
-    icons, paused, controlsEnabled,
-    canInteract, isVideoView, isMobile
+    icons, paused, isControlsEnabled,
+    canInteract, isVideoView, isMobile,
+    useNativeControls
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -26,9 +27,13 @@
   // --------------------------------------------------------------
   
   export let autopilot = true;
-  export let enabled = false;
+  export let isEnabled = false;
 
-  $: if (autopilot) enabled = $controlsEnabled && $canInteract && !$isMobile && $isVideoView;
+  $: if (autopilot) isEnabled = $isControlsEnabled && 
+    $canInteract && 
+    !$isMobile && 
+    $isVideoView &&
+    !$useNativeControls;
 
   // --------------------------------------------------------------
   // Events
@@ -63,9 +68,9 @@
 
   onDestroy(unbindClickListener);
 
-  $: if (enabled && !onClickListener) {
+  $: if (isEnabled && !onClickListener) {
     bindClickListener();
-  } else if (!enabled && onClickListener) {
+  } else if (!isEnabled && onClickListener) {
     unbindClickListener();
   }
 </script>

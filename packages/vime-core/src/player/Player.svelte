@@ -2,7 +2,7 @@
 
 <PlayerWrapper
   hasParent={!!parentEl}
-  aspectRatio={($isVideoView && !$fullscreenActive) ? $aspectRatio : null}
+  aspectRatio={($isVideoView && !$isFullscreenActive) ? $aspectRatio : null}
   on:mount="{e => { playerWrapper = e.detail; }}"
 >
   <svelte:component
@@ -38,15 +38,16 @@
   const {
     playsinline, paused, muted,
     playbackEnded, volume, seeking,
-    internalTime, currentTime, nativeMode,
-    pipActive, playbackRate, videoQuality,
-    src, controlsEnabled, aspectRatio, 
-    buffering, buffered, autopause, 
-    autoplay, playing, playbackStarted, 
-    poster, playbackReady, isVideoView, 
-    tracks, currentTrack, provider, 
-    rebuilding, videoReady, canInteract, 
-    fullscreenActive
+    internalTime, currentTime, isPiPActive, 
+    playbackRate, videoQuality, src, 
+    isControlsEnabled, aspectRatio, buffering, 
+    buffered, autopause, autoplay, 
+    playing, playbackStarted, poster, 
+    playbackReady, isVideoView, tracks, 
+    currentTrackIndex, provider, rebuilding, 
+    isVideoReady, canInteract, isFullscreenActive,
+    useNativeView, useNativeControls, useNativeCaptions,
+    isCaptionsEnabled
   } = store;
 
   const {
@@ -172,7 +173,7 @@
   const onRebuildEnd = () => {
     if (!$canInteract) return;
     $rebuilding = false;
-    if ($fullscreenActive) requestFullscreen().catch(noop);
+    if ($isFullscreenActive) requestFullscreen().catch(noop);
   };
 
   const onPlaybackReady = async () => {
@@ -194,7 +195,7 @@
   let firePauseTimer;
   const onPause = () => {
     firePauseTimer = window.setTimeout(() => {
-      if ($nativeMode && !tempPause) {
+      if ($useNativeControls && !tempPause) {
         $paused = true;
         $buffering = false;
       }
@@ -238,7 +239,7 @@
     onSeeked();
     onAutopause();
     $currentPlayer = self;
-    if ($nativeMode && !tempPlay) $paused = false;
+    if ($useNativeControls && !tempPlay) $paused = false;
     if (!tempPlay) $playing = true;
     $provider.setPaused($paused);
     $provider.setMuted($muted);
@@ -295,10 +296,10 @@
   const onUpdate = e => {
     const info = e.detail;
     if (info.state) onStateChange(info.state);
-    if (info.play && $nativeMode && !tempPlay) onPlay();
+    if (info.play && $useNativeControls && !tempPlay) onPlay();
     if (info.rebuild) onRebuildStart();
     if ($rebuilding) return;
-    if ((is_null(info.poster) || info.poster)) $poster = info.poster;
+    if ((is_null(info.poster) || info.poster)) store.nativePoster.set(info.poster);
     if (is_number(info.duration)) store.duration.set(parseFloat(info.duration));
     if (is_number(info.currentTime)) onTimeUpdate(parseFloat(info.currentTime));
     if (is_number(info.buffered)) onBuffered(parseFloat(info.buffered));
@@ -316,10 +317,10 @@
     if (info.playbackRate) store.playbackRate.forceSet(info.playbackRate);
     if (info.playbackRates) store.playbackRates.set(info.playbackRates);
     if (info.tracks) $tracks = info.tracks;
-    if (is_number(info.currentTrack)) $currentTrack = info.currentTrack;
+    if (is_number(info.currentTrackIndex)) $currentTrackIndex = info.currentTrackIndex;
     if (info.activeCues) store.activeCues.set(info.activeCues);
     if (is_boolean(info.fullscreen)) onFullscreenChange(info.fullscreen);
-    if (is_boolean(info.pip)) $pipActive = info.pip;
+    if (is_boolean(info.pip)) $isPiPActive = info.pip;
   };
 
   const onSrcChange = () => {
@@ -335,8 +336,8 @@
   const onProviderChange = () => {
     onSrcChange();
     store.origin.set(null);
-    store.pipActive.set(false);
-    if ($fullscreenActive) exitFullscreen().catch(noop);
+    store.isPiPActive.set(false);
+    if ($isFullscreenActive) exitFullscreen().catch(noop);
     if (!Provider) store.mediaType.set(MediaType.NONE);
   };
 
@@ -348,8 +349,8 @@
   // --------------------------------------------------------------
 
   $: if ($provider && !$rebuilding) $provider.setPlaysinline($playsinline);
-  $: if ($provider && !$rebuilding) $provider.setControls(($nativeMode && $controlsEnabled) || tempControls);
-  $: if ($provider && !$rebuilding) $provider.setNativeMode($nativeMode);
+  $: if ($provider && !$rebuilding) $provider.setControls(($useNativeControls && $isControlsEnabled) || tempControls);
+  $: if ($provider && !$rebuilding && is_function($provider.setView)) $provider.setView($useNativeView);
   $: if ($canSetPoster && !$rebuilding) $provider.setPoster($poster);
   $: if ($provider && is_function($provider.setAspectRatio)) $provider.setAspectRatio($aspectRatio);
   
@@ -367,9 +368,24 @@
   // Tracks
   // --------------------------------------------------------------
   
-  $: if ($canSetTracks && $canInteract) $provider.setTracks($nativeMode ? $tracks : []);
-  $: if ($canSetTrack && $canInteract) $provider.setTrack($nativeMode ? $currentTrack : -1);
-  $: if ($tracks.length === 0 || $currentTrack === -1 || !$nativeMode) store.activeCues.set([]);
+  $: if ($canSetTracks && $canInteract && $currentTrackIndex >= 0) {
+    $provider.enableTracks($isCaptionsEnabled && $useNativeCaptions);
+  }
+
+  $: if ($canSetTracks && $canInteract && $useNativeCaptions) $provider.setTracks($tracks);
+
+  $: if (
+    $canSetTrack && 
+    $canInteract && 
+    $tracks.length > 0 && 
+    $currentTrackIndex >= 0 &&
+    $useNativeCaptions
+  ) $provider.setTrack($currentTrackIndex);
+  
+  $: if (
+    $useNativeCaptions && 
+    ($tracks.length === 0 || $currentTrackIndex === -1 || !$isCaptionsEnabled)
+  ) store.activeCues.set([]);
  
   // --------------------------------------------------------------
   // Picture in Picture
@@ -379,7 +395,7 @@
   const VIDEO_NOT_READY_ERROR_MSG = 'Action not supported, must be a video that is ready for playback.';
   
   const pipRequest = active => {
-    if (!$videoReady) {
+    if (!$isVideoReady) {
       return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
     } else if (!$canSetPiP) {
       return Promise.reject(NO_PIP_SUPPORT_ERROR_MSG);
@@ -411,12 +427,12 @@
 
   const onDocumentFullscreenChange = () => {
     const active = isFullscreen();
-    $fullscreenActive = active;
+    $isFullscreenActive = active;
   };
 
   const onFullscreenChange = active => { 
-    $fullscreenActive = active;
-    if (!$fullscreenActive) tempControls = false;
+    $isFullscreenActive = active;
+    if (!$isFullscreenActive) tempControls = false;
   };
 
   const requestDocumentFullscreen = active => {
@@ -429,12 +445,12 @@
   // TODO: the two providers which can set fullscreen at the moment (Html5/Dailymotion) don't 
   // require a rebuild when enabling controls, if at some point a provider does this won't work.
   const requestProviderFullscreen = active => {
-    if (active) tempControls = $controlsEnabled;
+    if (active) tempControls = $isControlsEnabled;
     return Promise.resolve($provider.setFullscreen(active));
   };
 
   const fullscreenRequest = active => {
-    if (!$videoReady) {
+    if (!$isVideoReady) {
       return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
     } else if (FULLSCREEN_DOC_SUPPORT) {
       return requestDocumentFullscreen(active);
@@ -458,5 +474,5 @@
   });
 
   $: canProviderFullscreen = $provider && $provider.supportsFullscreen() && is_function($provider.setFullscreen);
-  $: store.canSetFullscreen.set($videoReady && (FULLSCREEN_DOC_SUPPORT || canProviderFullscreen));
+  $: store.canSetFullscreen.set($isVideoReady && (FULLSCREEN_DOC_SUPPORT || canProviderFullscreen));
 </script>

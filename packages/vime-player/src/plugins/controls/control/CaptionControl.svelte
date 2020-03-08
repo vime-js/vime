@@ -2,14 +2,13 @@
   {player}
   custom
   label={LABEL}
-  active={$captionsActive}
-  enabled={$canSetTrack}
+  isEnabled={$canSetTracks}
   activeIcon={$icons.captionsOn}
   inactiveIcon={$icons.captionsOff}
   activeTitle={$i18n.disableCaptions}
   inactiveTitle={$i18n.enableCaptions}
   aria-label={$i18n.captions}
-  on:click={onToggle}
+  bind:isActive={$isCaptionsEnabled}
   bind:this={toggle}
 />
 
@@ -28,8 +27,9 @@
   export let player;
 
   const {
-    icons, i18n, captionsActive,
-    canSetTrack, currentTrack
+    icons, i18n, isCaptionsActive,
+    canSetTracks, currentTrackIndex,
+    isCaptionsEnabled
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -37,12 +37,6 @@
   // --------------------------------------------------------------
 
   let toggle;
-  let prevTrack = -1;
 
   export const getToggle = () => toggle;
-
-  const onToggle = () => {
-    $captionsActive ? ($currentTrack = -1) : ($currentTrack = prevTrack);
-    $currentTrack = prevTrack;
-  };
 </script>

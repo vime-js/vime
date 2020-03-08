@@ -1,9 +1,9 @@
 <ToggleControl
   {player}
-  custom
   label={LABEL}
-  active={$fullscreenActive}
-  enabled={$canSetFullscreen}
+  autopilot={false}
+  isActive={$isFullscreenActive}
+  isEnabled={$canSetFullscreen}
   activeIcon={$icons.exitFullscreen}
   inactiveIcon={$icons.enterFullscreen}
   activeTitle={$i18n.exitFullscreen}
@@ -26,14 +26,9 @@
   // Setup
   // --------------------------------------------------------------
 
-  let active;
-
   export let player;
 
-  const { 
-    icons, i18n, canSetFullscreen,
-    fullscreenActive
-  } = player.getStore();
+  const { icons, i18n, canSetFullscreen, isFullscreenActive } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -43,7 +38,7 @@
 
   export const getToggle = () => toggle;
 
-  const onToggle = () => !$fullscreenActive 
+  const onToggle = () => !$isFullscreenActive 
     ? player.requestFullscreen().catch(noop) 
     : player.exitFullscreen().catch(noop);
 </script>

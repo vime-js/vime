@@ -1,8 +1,8 @@
 <svelte:options accessors />
 
-{#if enabled}
+{#if isEnabled}
   <div 
-    class:active
+    class:active={isActive}
     bind:this={el}
   ></div>
 {/if}
@@ -24,8 +24,8 @@
   const logger = player.createLogger(ID);
 
   const {
-    poster: customPoster, isVideoView, isAudio, 
-    playbackStarted, nativePoster
+    currentPoster, isVideoView, isAudio, 
+    playbackStarted, nativePoster, useNativeControls
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -34,22 +34,19 @@
 
   let el;
 
-  export let poster;
   export let autopilot = true;
-  export let enabled = true;
-  export let active = false;
-  export let fallback = true;
+  export let isEnabled = true;
+  export let isActive = false;
 
   export const getEl = () => el;
 
   $: if (el) {
-    el.style.backgroundImage = poster ? `url('${poster.src || poster}')` : null;
-    el.style.backgroundSize = poster ? (poster.size || 'contain') : null;
+    el.style.backgroundImage = $currentPoster ? `url('${$currentPoster.src || $currentPoster}')` : null;
+    el.style.backgroundSize = $currentPoster ? ($currentPoster.size || 'contain') : null;
   }
 
-  $: if (autopilot) poster = $customPoster || (fallback ? $nativePoster : null);
-  $: if (autopilot) enabled = $isVideoView;
-  $: if (autopilot) active = $isAudio || !$playbackStarted;
+  $: if (autopilot) isEnabled = $isVideoView && !$useNativeControls;
+  $: if (autopilot) isActive = $isAudio || !$playbackStarted;
 </script>
 
 <style type="text/scss">

@@ -1,7 +1,7 @@
 <SeekControl 
   {player}
   base={30}
-  active={$playbackStarted}
+  isActive={$playbackStarted}
   bind:this={seekControl}
 />
 

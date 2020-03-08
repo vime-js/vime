@@ -24,32 +24,36 @@
       );
       return false;
     }
-    tooltip.enabled = enabled;
+    tooltip.isEnabled = isEnabled;
     return true;
   };
 
   const registry = player.createRegistry(ID, validateTooltip);
-  const { isMobile, isTouch } = player.getStore();
+  
+  const { 
+    isMobile, isTouch, isControlsEnabled,
+    useNativeControls
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
   export let autopilot = true;
-  export let enabled = true;
-  export let showHint = true;
+  export let showHints = true;
+  export let isEnabled = true;
 
-  export const create = () => Tooltip;
   export const getTooltip = id => $registry[id];
   export const getTooltips = () => $registry;
   export const getRegistry = () => registry;
+  export const getTooltipComponent = () => Tooltip;
 
-  $: if (autopilot) enabled = !$isMobile && !$isTouch;
+  $: if (autopilot) isEnabled = !$isMobile && !$isTouch && $isControlsEnabled && !$useNativeControls;
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
-  $: Object.values($registry).forEach(tooltip => { tooltip.enabled = enabled; });
-  $: Object.values($registry).forEach(tooltip => { tooltip.showHint = showHint; });
+  $: Object.values($registry).forEach(tooltip => { tooltip.isEnabled = isEnabled; });
+  $: Object.values($registry).forEach(tooltip => { tooltip.showHint = showHints; });
 </script>

@@ -151,16 +151,18 @@ export const modernBuild = ({
 
 export const providerBuild = ({ 
   name, 
-  hasLiteVersion = true 
+  hasLiteVersion = true,
+  additionalChunks = () => {}
 }) => {
   const entry = 'src/index.js';
   const fullEntry = `src/${name}.js`;
   const liteEntry = `src/${name}Lite.svelte`;
   const nameLowerCase = name.toLowerCase();
   const chunkedEntry = { [nameLowerCase]: entry };
-
+  
   const chunks = id => {
-    if (id.includes(`vime-${nameLowerCase}/src`)) getFileName(id);
+    if (id.includes(`vime-${nameLowerCase}/src`) && id.includes(name)) return getFileName(id);
+    return additionalChunks(id);
   };
 
   return [

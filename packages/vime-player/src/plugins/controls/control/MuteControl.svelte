@@ -7,7 +7,7 @@
   inactiveTitle={$i18n.mute}
   aria-label={$i18n.mute}
   on:focuschange
-  bind:active={$muted}
+  bind:isActive={$muted}
   bind:this={toggle}
 />
 

@@ -79,14 +79,14 @@
   import YouTubeEmbed from './YouTubeEmbed.svelte';
 
   let embed;
-  let lastTimeUpdate = 0;
+  let info = {}; 
   let srcId = null;
-  let internalTime = 0;
   let duration = 0;
   let seeking = false;
+  let internalTime = 0;
+  let lastTimeUpdate = 0;
   let playbackRate = 1;
   let playerState = -1;
-  let info = {}; 
 
   const params = {
     rel: 0,
@@ -110,7 +110,6 @@
   export const setPlaybackRate = rate => send(YT.Command.SET_PLAYBACK_RATE, [rate]);
   export const setCurrentTime = time => send(YT.Command.SEEK_TO, [time]);
   export const setPlaysinline = enabled => { params.playsinline = enabled ? 1 : 0; };
-  export const setNativeMode = nativeMode => { /** noop */ };
   
   export const setControls = enabled => {
     params.controls = enabled ? 1 : 0;

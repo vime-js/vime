@@ -24,10 +24,7 @@
   const registry = player.createRegistry(ID);
   const logger = player.createLogger(ID);
 
-  const { 
-    plugins, playsinline, fullscreenActive,
-    nativeMode
-  } = player.getStore();
+  const { plugins, playsinline, isFullscreenActive } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -46,7 +43,7 @@
   export const getInstances = () => instances;
   export const getPlugins = () => validatedPlugins;
 
-  $: enabled = (IS_IOS && $playsinline && !$fullscreenActive) || (!IS_IOS && !$nativeMode)
+  $: enabled = (IS_IOS && $playsinline && !$isFullscreenActive) || !IS_IOS
 
   // --------------------------------------------------------------
   // Plugin Registration

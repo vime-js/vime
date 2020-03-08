@@ -17,8 +17,9 @@
   export let player;
 
   const {
-    icons, controlsEnabled, canSetFullscreen, 
-    isVideoView, canInteract, isMobile, fullscreenActive
+    icons, isControlsEnabled, canSetFullscreen, 
+    isVideoView, canInteract, isMobile, isFullscreenActive,
+    useNativeControls
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -26,10 +27,15 @@
   // --------------------------------------------------------------
 
   export let autopilot = true;
-  export let enabled = false;
+  export let isEnabled = false;
 
   $: if (autopilot) {
-    enabled = $controlsEnabled && $canSetFullscreen && $canInteract && $isVideoView && !$isMobile;
+    isEnabled = $isControlsEnabled && 
+      $canSetFullscreen && 
+      $canInteract && 
+      $isVideoView && 
+      !$isMobile &&
+      !$useNativeControls;
   }
 
   // --------------------------------------------------------------
@@ -38,7 +44,7 @@
 
   const onToggle = () => {
     player.requestFullscreen().catch(noop);
-    const icon = get_fullscreen_icon($icons, !$fullscreenActive);
+    const icon = get_fullscreen_icon($icons, !$isFullscreenActive);
     if (player[ActionDisplayId]) player[ActionDisplayId].run(icon);
   };
 
@@ -59,9 +65,9 @@
 
   onDestroy(unbindDblClickListener);
 
-  $: if (enabled && !onDblClickListener) {
+  $: if (isEnabled && !onDblClickListener) {
     bindDblClickListener();
-  } else if (!enabled && onDblClickListener) {
+  } else if (!isEnabled && onDblClickListener) {
     unbindDblClickListener();
   }
 </script>
