@@ -1,11 +1,11 @@
 <svelte:options accessors />
 <svelte:window on:keydown|capture={onKeyDown} />
 
-{#if $controlsEnabled}
+{#if $isControlsEnabled && !$useNativeControls}
   <div 
     class="controls"
     class:video={$isVideoView}
-    class:inactive={!$controlsActive}
+    class:inactive={!$isControlsActive}
     bind:this={el}
   >
     {#if $isVideoView}
@@ -42,7 +42,7 @@
       class="lower"
       class:audio={!$isVideoView}
       class:video={$isVideoView}
-      class:inactive={!$controlsActive}
+      class:inactive={!$isControlsActive}
       bind:this={lowerEl}
       bind:clientHeight={lowerControlsHeight}
     >
@@ -88,8 +88,8 @@
   const {
     isAudio, paused, playbackReady, 
     isLive, mediaType, isVideoView, 
-    controlsEnabled, controlsActive, canInteract, 
-    isMobile
+    isControlsEnabled, canInteract, isMobile, 
+    useNativeControls, _isControlsActive: isControlsActive
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -135,11 +135,11 @@
 
   $: if (!$paused && !$isAudio && idleTimer) {
     window.clearTimeout(hideControlsTimeout);
-    $controlsActive = true;
-    hideControlsTimeout = window.setTimeout(() => { $controlsActive = false; }, 2750);
+    $isControlsActive = true;
+    hideControlsTimeout = window.setTimeout(() => { $isControlsActive = false; }, 2750);
   } else {
     window.clearTimeout(hideControlsTimeout);
-    $controlsActive = $playbackReady && $canInteract;
+    $isControlsActive = $playbackReady && $canInteract;
   }
 
   // --------------------------------------------------------------
@@ -152,7 +152,7 @@
   const onKeyDown = e => {
     if (
       e.keyCode === 9 &&
-      !$controlsActive &&
+      !$isControlsActive &&
       (document.activeElement === rootEl || el.contains(document.activeElement))
     ) e.preventDefault();
     idleTimer += 1;
@@ -193,7 +193,7 @@
     }
   }
 
-  $: if ($controlsEnabled && lowerEl) {
+  $: if ($isControlsEnabled && lowerEl) {
     runCenterAssist(
       centerAssists,
       lower,

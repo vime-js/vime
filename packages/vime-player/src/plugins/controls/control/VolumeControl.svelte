@@ -11,19 +11,19 @@
     min="0"
     max="100"
     autocomplete="off"
-    class:active={!$isMobile && focused}
-    bind:this={slider}
-    bind:value={currentVolume}
-    use:focus
-    on:focuschange={onFocus}
-    on:input="{onVolumeChange}"
-    on:keydown|stopPropagation
     aria-label={i18n.volume}
     aria-valuemin="0"
     aria-valuemax="100"
     aria-valuenow="{currentVolume}"
     aria-valuetext={`${currentVolume}%`}
     aria-orientation="horizontal"
+    class:active={!$isMobile && focused}
+    use:focus
+    on:focuschange={onFocus}
+    on:input="{onVolumeChange}"
+    on:keydown|stopPropagation
+    bind:this={slider}
+    bind:value={currentVolume}
   />
 </div>
 

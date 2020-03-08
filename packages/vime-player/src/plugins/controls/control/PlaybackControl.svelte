@@ -6,7 +6,7 @@
   activeTitle={$i18n.play}
   inactiveTitle={$i18n.pause}
   aria-label={$i18n.playback}
-  bind:active={$paused}
+  bind:isActive={$paused}
   bind:this={toggle}
 />
 

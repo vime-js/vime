@@ -1,8 +1,8 @@
 <button
   id={$$props.id}
   class="control"
-  class:audio={!$isVideoView}
   class:live={$isLive}
+  class:audio={!$isVideoView}
   class:videoFocus={!$isTouch}
   class:audioFocus={!$isVideoView && !$isTouch}
   class:touchHighlight={showHighlight}
@@ -29,7 +29,7 @@
       {player}
       {title}
       id={tooltipId}
-      active={isFocused}
+      isActive={isFocused}
       this={Tooltip}
       bind:this={tooltip}
     />
@@ -82,7 +82,7 @@
   
   let tooltip;
 
-  $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.create();
+  $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.getTooltipComponent();
 
   // TODO: this is a poor temporary fix, the same control might be reused in different
   // positions, how to register them?

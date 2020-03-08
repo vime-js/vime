@@ -1,9 +1,9 @@
 <ToggleControl
   {player}
-  custom
   label={LABEL}
-  active={$pipActive}
-  enabled={$canSetPiP}
+  autopilot={false}
+  isActive={$isPiPActive}
+  isEnabled={$canSetPiP}
   activeIcon={$icons.exitPiP}
   inactiveIcon={$icons.enterPiP}
   activeTitle={$i18n.exitPiP}
@@ -28,7 +28,7 @@
 
   export let player;
 
-  const { icons, i18n, pipActive, canSetPiP } = player.getStore();
+  const { icons, i18n, isPiPActive, canSetPiP } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -38,7 +38,7 @@
 
   export const getToggle = () => toggle;
 
-  const onToggle = () => $pipActive 
+  const onToggle = () => !$isPiPActive 
     ? player.requestPiP().catch(noop) 
     : player.exitPiP().catch(noop)
 </script>

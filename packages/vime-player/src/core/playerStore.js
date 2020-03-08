@@ -18,19 +18,26 @@ export const buildPlayerStore = _store => {
   store.plugins = writable([]);
   store.providers = writable([]);
   store.Provider = private_writable(null);
-  store.controlsActive = writable(true);
-  store.contextMenuEnabled = writable(false);
   store.debug = writable(process.env.NODE_ENV !== 'production');
   store.isMobile = writable(IS_MOBILE);
   store.isTouch = readable(false, set => listen_for_touch_input(t => set(t)));
+  store.isContextMenuEnabled = writable(false);
+
+  store.currentPoster = derived(
+    [store.poster, store.nativePoster],
+    ([$poster, $nativePoster]) => ($poster || $nativePoster)
+  );
+  
   store.i18n = derived(
     [store.locale, store.langauges],
     ([$locale, $languages]) => $languages[$locale] || $languages.en
   );
+  
   store.hasControls = derived(
-    [store.plugins, _store.nativeMode],
-    ([$plugins, $nativeMode]) => hasRole($plugins, PluginRole.CONTROLS) || $nativeMode
+    [store.plugins, _store.useNativeControls],
+    ([$plugins, $useNativeControls]) => hasRole($plugins, PluginRole.CONTROLS) || $useNativeControls
   );
+  
   store.Provider = derived(
     [_store.src, store.providers],
     ([$src, $providers]) => $providers.find(p => p.canPlay($src))
@@ -38,21 +45,29 @@ export const buildPlayerStore = _store => {
 
   // Internal player overrides.
 
-  _store.nativeMode.set(false);
+  _store.useNativeView.set(false);
+  _store.useNativeControls.set(false);
+  _store.useNativeCaptions.set(false);
 
-  store.poster = writable(null);
-  store.nativePoster = _store.poster;
+  store._isControlsActive = writable(false);
+  store.isControlsActive = derived(
+    [_store.isControlsEnabled, store._isControlsActive, _store.useNativeControls, _store.isControlsActive],
+    ([$isControlsEnabled, $isControlsActive, $useNativeControls, $isNativeControlsActive]) => 
+      $isControlsEnabled && ($isControlsActive || ($useNativeControls && $isNativeControlsActive))
+  );
 
   store.canSetTrack = derived(
-    [store.plugins, _store.nativeMode, _store.canSetTrack],
-    ([$plugins, $nativeMode, $canSetTrack]) => 
-      hasRole($plugins, PluginRole.CAPTIONS) || ($nativeMode && $canSetTrack)
+    [store.plugins, _store.useNativeCaptions, _store.canSetTrack],
+    ([$plugins, $useNativeCaptions, $canSetNativeTrack]) => 
+      hasRole($plugins, PluginRole.CAPTIONS) || ($useNativeCaptions && $canSetNativeTrack)
   );
+
   store.canSetTracks = derived(
-    [store.plugins, _store.nativeMode, _store.canSetTracks],
-    ([$plugins, $nativeMode, $canSetTracks]) => 
-      hasRole($plugins, PluginRole.CAPTIONS) || ($nativeMode && $canSetTracks)
+    [store.plugins, _store.useNativeCaptions, _store.canSetTracks],
+    ([$plugins, $useNativeCaptions, $canSetNativeTracks]) => 
+      hasRole($plugins, PluginRole.CAPTIONS) || ($useNativeCaptions && $canSetNativeTracks)
   );
+
   store.canSetPoster = derived(
     [store.plugins, _store.canSetPoster],
     ([$plugins, $canSetPoster]) => {

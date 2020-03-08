@@ -122,9 +122,9 @@
     send(DM.Command.SEEK, [time]);
   };
   
-  export const setNativeMode = nativeMode => {
-    params['ui-logo'] = nativeMode;
-    params['ui-start-screen-info'] = nativeMode;
+  export const setView = enabled => {
+    params['ui-logo'] = enabled;
+    params['ui-start-screen-info'] = enabled;
   };
 
   export const supportsPiP = () => false;

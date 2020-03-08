@@ -3,14 +3,14 @@
   class="vime player{classes ? ` ${classes}` : ''}"
   class:audio={!$isVideoView}
   class:video={$isVideoView}
-  class:fullscreen={$fullscreenActive}
-  class:idle={!$nativeMode && !$paused && !$controlsActive}
-  use:setAspectRatio={($isVideoView && !$fullscreenActive) ? $aspectRatio : null}
+  class:fullscreen={$isFullscreenActive}
+  class:idle={!$useNativeControls && !$paused && !$isControlsActive}
+  use:setAspectRatio={($isVideoView && !$isFullscreenActive) ? $aspectRatio : null}
   on:contextmenu={onContextMenu}
   bind:this={el}
 >
   <div>
-    {#if !$nativeMode && $isVideo}
+    {#if !$useNativeControls && $isVideo}
       <div class="blocker"></div>
     {/if}
     <InternalPlayer
@@ -68,11 +68,11 @@
   let theme;
   let isVideo;
   let aspectRatio;
-  let nativeMode;
   let isVideoView;
   let Provider;
-  let controlsActive;
-  let fullscreenActive;
+  let useNativeControls;
+  let isControlsActive;
+  let isFullscreenActive;
 
   let self = get_current_component();
   onDestroy(() => { self = null; })
@@ -91,8 +91,8 @@
     onPropsChange = map_store_to_component(self, store);
     ({  
       plugins, paused, isVideo, 
-      theme, isVideoView, nativeMode, 
-      controlsActive, debug, fullscreenActive,
+      theme, isVideoView, useNativeControls, 
+      isControlsActive, debug, isFullscreenActive,
       aspectRatio, Provider
     } = store);
   })
@@ -158,7 +158,7 @@
   };
 
   const onContextMenu = e => {
-    if (!$debug && !get(store.contextMenuEnabled)) e.preventDefault();
+    if (!$debug && !get(store.isContextMenuEnabled)) e.preventDefault();
   };
 
   const onThemeChange = () => is_string($theme)

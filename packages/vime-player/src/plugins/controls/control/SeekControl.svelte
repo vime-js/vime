@@ -1,8 +1,8 @@
 <svelte:options accessors />
 
 <div 
-  class:active
-  class:disabled
+  class:active={isActive}
+  class:disabled={isDisabled}
   bind:this={el}
 >
   <span 
@@ -17,8 +17,8 @@
     {player}
     noTooltip
     on:click={onSeek}
-    aria-disabled={disabled}
-    aria-hidden={!active}
+    aria-disabled={isDisabled}
+    aria-hidden={!isActive}
     aria-label={shouldSeekForward ? $i18n.seekForward : $i18n.seekBackward}
     bind:this={control}
   >
@@ -46,26 +46,26 @@
 
   let timer;
   let accumulator = 0;
-  let disabled = false;
+  let isDisabled = false;
 
   let el;
   let control;
 
   export let base = 0;
-  export let active = true;
+  export let isActive = true;
 
   export const getEl = () => el;
   export const getControl = () => control;
 
   $: shouldSeekForward = base > 0;
-  $: disabled = shouldSeekForward ? ($currentTime + base > $duration) : ($currentTime + base < 0);
+  $: isDisabled = shouldSeekForward ? ($currentTime + base > $duration) : ($currentTime + base < 0);
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
   const onSeek = () => {
-    if (disabled) return;
+    if (isDisabled) return;
     window.clearTimeout(timer);
     accumulator += base;
     timer = setTimeout(() => {

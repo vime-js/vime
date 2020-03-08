@@ -1,48 +1,70 @@
-{#if $isCaptionsEnabled}
-  <div
-    class:active={isCueActive && $isCaptionsActive}
-    class:withControls={$isControlsActive}
-    class:fullscreen={$isFullscreenActive}
-    class:mobile={$isMobile}
-    data-testid="cues"
-  >
-    {#if isCueActive}
-      <span data-testid="cue">
-        {@html getCueContent(currentCue)}
-      </span>
-    {/if}
-  </div>
-{/if}
+<div
+  class:active={cueActive}
+  class:withControls={$isControlsActive}
+  class:fullscreen={$isFullscreenActive}
+  class:mobile={$isMobile}
+>
+  {#if cueActive}
+    <span data-testid="cue">
+      {@html getCueContent(cues[currentCue])}
+    </span>
+  {/if}
+</div>
+
+<script context="module">
+  export const ID = 'vCaptions';
+  export const ROLE = PluginRole.CAPTIONS;
+
+  const isTracksEqual = (tA, tB) => tA.kind === tB.kind &&
+    tA.label === tB.label &&
+    tA.srclang === tB.srclang;
+
+  const Event = {
+    CUE_ENTER: 'cueenter',
+    CUE_EXIT: 'cueexit',
+    CUE_CHANGE: 'cuechange'
+  };
+</script>
 
 <script>
-  import { getContext, createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import { element, listen, append } from 'svelte/internal';
-  import { warn } from '~utils/debug';
-  import { is_number, is_instance_of } from '~utils/unit';
-  import { ctxKey } from '~src/context';
-  import { isMobile } from '~src/store';
-  import PlayerEvent from '~src/PlayerEvent';
+  import { is_number, is_instance_of } from '@vime/utils';
 
+  // --------------------------------------------------------------
+  // Setup
+  // --------------------------------------------------------------
+
+  export let player;
+
+  const logger = player.createLogger(ID);
   const dispatch = createEventDispatcher();
-
-  const ctx = getContext(ctxKey);
-  const isControlsActive = ctx.isControlsActive;
-  const isCaptionsEnabled = ctx.isCaptionsEnabled;
-  const isCaptionsActive = ctx.isCaptionsActive;
-  const isFullscreenActive = ctx.isFullscreenActive;
   
-  // $: if (!$isAudio && isPlaybackReady && _track) $isCaptionsEnabled = _tracks.length > 0
+  const { 
+    isMobile, isFullscreenActive, isControlsActive,
+    tracks, currentTrackIndex, activeCues, 
+    currentTime
+  } = player.getStore();
 
-  const cues = [];
-  let currentCueIndex = -1;
-  let currentCue = null;
-  let isCueActive = false;
+  // --------------------------------------------------------------
+  // Props
+  // --------------------------------------------------------------
 
-  export let track;
-  export let currentTime;
-  export let crossOrigin;
+  let cues = [];
+  let currentCue = -1;
+  let cueActive = false;
+  let crossOrigin = false;
 
-  const shouldCueBeActive = cue => (currentTime >= cue.startTime) && (currentTime <= cue.endTime);
+  export const getCues = () => cues;
+  export const getCurrentCue = () => currentCue;
+
+  export const setCrossOrigin = origin => { crossOrigin = origin || null; };
+
+  // --------------------------------------------------------------
+  // Cues
+  // --------------------------------------------------------------
+
+  const shouldCueBeActive = cue => ($currentTime >= cue.startTime) && ($currentTime <= cue.endTime);
 
   const getCueContent = cue => {
     const div = element('div');
@@ -55,7 +77,7 @@
     while (
       index >= 0 &&
       index < (cues.length - 1) &&
-      currentTime > cues[index].startTime &&
+      $currentTime > cues[index].startTime &&
       !shouldCueBeActive(cues[index])
     ) {
       index += 1;
@@ -63,63 +85,24 @@
     return index;
   };
 
-  export const toList = () => cues;
-
-  export const getCurrentCue = () => ({
-    index: currentCueIndex,
-    cue: currentCue,
-    isActive: !!currentCue && shouldCueBeActive(currentCue),
-    content: currentCue ? getCueContent(currentCue) : null
-  });
-
   const validateCue = cue => {
     if (!is_instance_of(cue, window.VTTCue)) {
-      warn(
-        'Cues :: invalid cue must be an instance of window.VTTCue.' +
-        '\nsee https://developer.mozilla.org/en-US/docs/Web/API/VTTCue'
-      );
+      logger.warn('invalid cue must be an instance of window.VTTCue');
       return false;
     }
     if (cues.some(c => (c.startTime <= cue.endTime) && (cue.startTime <= c.endTime))) {
-      warn('Cues :: invalid cue found, overlapping cues are not supported at this time');
+      logger.warn('invalid cue found, overlapping cues are not supported at this time');
       return false;
     }
     return true;
   };
 
-  export const addCue = cue => {
-    if (!validateCue(cue)) return;
-    let index = 0;
-    while (cues[index] && (cues[index].endTime < cue.startTime)) index++;
-    cues.splice(index, 0, cue);
-    onCuesChange();
-  };
-
-  export const addCues = cues => { cues.map(addCue); };
-
-  export const removeCue = cue => {
-    const index = is_number(cue) ? cue : cues.findIndex(c => c === cue);
-    if (index <= 0 || index >= cues.length) {
-      warn('Cues :: could not remove cue because it could not be found or index was out of bounds');
-      return;
-    }
-    cues.splice(index, 1);
-    onCuesChange();
-  };
-
-  export const removeAllCues = () => {
-    cues.splice(0, cues.length);
-    currentCueIndex = -1;
-    currentCue = null;
-    onCuesChange();
-  };
-
-  const onCueEnter = () => dispatch(PlayerEvent.CUE_ENTER, getCurrentCue());
+  const onCueEnter = () => dispatch(Event.CUE_ENTER, { cues, currentCue });
 
   const onCueExit = () => {
-    if (!isCueActive) return;
-    isCueActive = false;
-    dispatch(PlayerEvent.CUE_EXIT, getCurrentCue());
+    if (!cueActive) return;
+    cueActive = false;
+    dispatch(Event.CUE_EXIT, { cues, currentCue })
   };
 
   const onCueChange = index => {
@@ -138,6 +121,34 @@
     }
     if (cues.length > 0) onCueChange(findNextCueIndex(0));
   };
+
+  export const addCue = cue => {
+    if (!validateCue(cue)) return;
+    let index = 0;
+    while (cues[index] && (cues[index].endTime < cue.startTime)) index++;
+    cues.splice(index, 0, cue);
+    onCuesChange();
+  };
+
+  export const addCues = cues => { cues.map(addCue); };
+
+  export const removeCue = value => {
+    const index = is_number(value) ? value : cues.findIndex(c => c === value);
+    if (index <= 0 || index >= cues.length) {
+      logger.warn('could not remove cue because it could not be found or index was out of bounds');
+      return;
+    }
+    cues.splice(index, 1);
+    onCuesChange();
+  };
+
+  export const removeAllCues = () => {
+    cues.splice(0, cues.length);
+    currentCueIndex = -1;
+    currentCue = null;
+    onCuesChange();
+  };
+
 
   // TODO: Fix IE captions if CORS is used.
   // Fetch captions and inject as blobs instead (data URIs not supported).
@@ -164,6 +175,17 @@
     track ? loadCues() : onCuesChange();
   };
 
+  const findTrackByLocale = () => tracks.find(t => t.srclang === locale);
+
+  const findCurrentTrack = () => {
+    if (!currentTrack) currentTrack = findTrackByLocale();
+    if (!currentTrack) currentTrack = tracks.find(t => t.default);
+  };
+
+  // $: if (!$isAudio && isPlaybackReady && _track) $captionsActive = _tracks.length > 0
+  $: if (!currentTrack && tracks.length > 0) findCurrentTrack();
+  $: if (locale) currentTrack = findTrackByLocale();
+
   $: onTrackChange(track);
 
   $: if (currentCue && (currentCueIndex < cues.length - 1) && currentTime > currentCue.endTime) {
@@ -174,8 +196,8 @@
     onCueChange(findNextCueIndex(0));
   }
 
-  $: isCueActive = (currentCue && currentTime >= 0) ? shouldCueBeActive(currentCue) : false;
-  $: if (isCueActive) onCueEnter();
+  $: cueActive = (currentCue && currentTime >= 0) ? shouldCueBeActive(currentCue) : false;
+  $: if (cueActive) onCueEnter();
 </script>
 
 <style type="text/scss">

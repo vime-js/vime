@@ -33,7 +33,9 @@ const playerDefaults = () => ({
   playbackEnded: false,
   playbackReady: false,
   isLive: false,
-  activeCues: []
+  activeCues: [],
+  nativePoster: null,
+  isControlsActive: true
 });
 
 const buildPlayerStore = player => {
@@ -48,6 +50,15 @@ const buildPlayerStore = player => {
     [store.playbackReady, store.rebuilding],
     ([$playbackReady, $rebuilding]) => $playbackReady && !$rebuilding
   );
+
+  // --------------------------------------------------------------
+  // Native
+  // --------------------------------------------------------------
+
+  store.nativePoster = writable(defaults.nativePoster);
+  store.useNativeView = writable(true);
+  store.useNativeControls = writable(true);
+  store.useNativeCaptions = writable(true);
 
   // --------------------------------------------------------------
   // Src
@@ -86,7 +97,7 @@ const buildPlayerStore = player => {
       (($canSetPoster || $plugin) && !!$poster) || $isVideo
   );
 
-  store.videoReady = derived(
+  store.isVideoReady = derived(
     [store.playbackReady, store.isVideoView],
     ([$playbackReady, $isVideoView]) => $playbackReady && $isVideoView
   );
@@ -115,7 +126,8 @@ const buildPlayerStore = player => {
   store.muted = writable(false);
   store.volume = writable_if(30, !IS_MOBILE);
   store.buffered = private_writable(defaults.buffered);
-  store.controlsEnabled = writable(true);
+  store.isControlsEnabled = writable(true);
+  store.isControlsActive = private_writable(defaults.isControlsActive);
 
   store.progress = derived(
     [store.currentTime, store.duration, store.buffered],
@@ -180,10 +192,16 @@ const buildPlayerStore = player => {
 
   // Can't block current track with `canSetTrack` because it'll stop @vime/player from updating
   // the value when a plugin is managing captions.
-  store.currentTrack = indexable(store.tracks);
+  store.currentTrackIndex = indexable(store.tracks);
   store.activeCues = private_writable(defaults.activeCues);
 
-  store.captionsActive = derived(
+  store.currentTrack = derived(
+    [store.tracks, store.currentTrackIndex],
+    ([$tracks, $index]) => ($index >= 0) ? $tracks[$index] : null
+  );
+
+  store.isCaptionsEnabled = writable(false);
+  store.isCaptionsActive = derived(
     [store.playbackReady, store.currentTrack], 
     ([$playbackReady, $currentTrack]) => $playbackReady && ($currentTrack !== -1)
   );
@@ -193,12 +211,12 @@ const buildPlayerStore = player => {
   // --------------------------------------------------------------
 
   store.canSetPiP = derived(
-    [store.videoReady, store.provider],
-    ([$videoReady, $provider]) => 
-      $videoReady && $provider && $provider.supportsPiP() && is_function($provider.setPiP)
+    [store.isVideoReady, store.provider],
+    ([$isVideoReady, $provider]) => 
+      $isVideoReady && $provider && $provider.supportsPiP() && is_function($provider.setPiP)
   );
 
-  store.pipActive = private_writable(false);
+  store.isPiPActive = private_writable(false);
   
   // --------------------------------------------------------------
   // Fullscreen
@@ -206,14 +224,13 @@ const buildPlayerStore = player => {
 
   // Set in the Player.
   store.canSetFullscreen = private_writable(false);
-  store.fullscreenActive = private_writable(false);
+  store.isFullscreenActive = private_writable(false);
 
   // --------------------------------------------------------------
   // Options
   // --------------------------------------------------------------
 
   store.autopause = writable(true);
-  store.nativeMode = writable(true);
   store.aspectRatio = writable('16:9');
   store.playsinline = writable(true);
   store.autoplay = writable(false);

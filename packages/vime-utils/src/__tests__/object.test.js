@@ -1,4 +1,4 @@
-import { create_prop, merge_deep } from '../object';
+import { create_prop, merge_obj_deep } from '../object';
 
 describe('utils', () => {
   describe('object', () => {
@@ -13,7 +13,7 @@ describe('utils', () => {
       });
     });
 
-    describe('merge_deep', () => {
+    describe('merge_obj_deep', () => {
       const target = {
         a: 1,
         b: 2,
@@ -36,7 +36,7 @@ describe('utils', () => {
       };
 
       it('should deep merge source into target', () => {
-        const result = merge_deep(target, source);
+        const result = merge_obj_deep(target, source);
 
         expect(result).toEqual({
           a: 1,

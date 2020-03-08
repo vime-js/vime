@@ -12,7 +12,7 @@
   <video
     {controls}
     {crossorigin}
-    poster={nativeMode ? poster : null}
+    poster={useNativePoster ? poster : null}
     preload="metadata"
     bind:videoWidth
     playsinline={playsinline}
@@ -141,12 +141,12 @@
   let playsinline = null;
   let crossorigin = null;
   let aspectRatio = null;
-  let nativeMode = false;
   let currentSrc = null;
   let playbackReady = false;
   let paused = true;
   let videoWidth = 0;
   let videoQuality = null;
+  let useNativePoster = false;
 
   export let src;
 
@@ -163,7 +163,7 @@
   export const setPlaysinline = enabled => { playsinline = enabled || null; };
   export const setAspectRatio = ratio => { aspectRatio = ratio; };
   export const setVideoQuality = quality => { videoQuality = quality; };
-  export const setNativeMode = enabled => { nativeMode = enabled; };
+  export const setView = enabled => { useNativePoster = enabled; };
 
   export const setPoster = newPoster => {
     if (poster === newPoster || !is_string(newPoster)) return;
@@ -217,7 +217,7 @@
   // --------------------------------------------------------------
 
   let tracks = [];
-  let currentTrack = -1;
+  let currentTrackIndex = -1;
   let onCueChangeListener = null;
 
   const unbindCueChangeListener = () => {
@@ -236,32 +236,35 @@
     onCueChangeListener = listen(track, Html5.TextTrack.Event.CUE_CHANGE, onCueChange);
   };
 
+  export const enableTracks = enabled => {
+    tracks[currentTrackIndex].mode = enabled 
+      ? Html5.TextTrack.Mode.SHOWING 
+      : Html5.TextTrack.Mode.HIDDEN;
+  };
+
   export const setTracks = newTracks => {
     unbindCueChangeListener();
     tracks = newTracks || [];
-    currentTrack = -1;
+    currentTrackIndex = -1;
   };
 
-  export const setTrack = newTrack => {
+  export const setTrack = index => {
     const tracks = Array.from(media.textTracks);
-    if (tracks.length === 0 || currentTrack == newTrack) return;
     unbindCueChangeListener();
-    if (currentTrack > -1) tracks[currentTrack].mode = Html5.TextTrack.Mode.HIDDEN;
-    if (newTrack > -1) {
-      const track = tracks[newTrack];
-      track.mode = Html5.TextTrack.Mode.SHOWING;
-      listenToCueChanges(track);
-    }
-    currentTrack = newTrack;
+    if (currentTrackIndex !== -1) tracks[currentTrackIndex].mode = Html5.TextTrack.Mode.HIDDEN;
+    const track = tracks[index];
+    track.mode = Html5.TextTrack.Mode.SHOWING;
+    listenToCueChanges(track);
+    currentTrackIndex = index;
   };
 
   const onTracksChange = e => {
     const tracks = Array.from(media.textTracks);
-    const newTrack = tracks.findIndex(t => t.mode === Html5.TextTrack.Mode.SHOWING);
-    if (currentTrack !== newTrack) {
-      setTrack(newTrack);
-      currentTrack = newTrack;
-      info.currentTrack = newTrack;
+    const index = tracks.findIndex(t => t.mode === Html5.TextTrack.Mode.SHOWING);
+    if (currentTrackIndex !== index) {
+      setTrack(index);
+      currentTrackIndex = index;
+      info.currentTrackIndex = index;
     }
   };
 

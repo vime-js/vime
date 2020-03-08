@@ -1,6 +1,6 @@
 <svelte:options accessors />
 
-{#if enabled && value}
+{#if isEnabled && value}
   <div 
     class="container"
     bind:this={valueContainer}
@@ -14,7 +14,7 @@
   </div>
 {/if}
 
-{#if enabled && icon}
+{#if isEnabled && icon}
   <div 
     class="container"
     bind:this={actionContainer}
@@ -44,7 +44,11 @@
 
   export let player;
 
-  const { isMobile, controlsEnabled, playbackReady, isVideoView } = player.getStore();
+  const { 
+    isMobile, isControlsEnabled, playbackReady, 
+    isVideoView, useNativeControls
+  } = player.getStore();
+
   const controlsPlugin = player.getPluginsRegistry().watch(ControlsId);
 
   // --------------------------------------------------------------
@@ -61,9 +65,9 @@
   let actionContainer;
 
   export let autopilot = true;
-  export let enabled = false;
+  export let isEnabled = false;
 
-  $: if (autopilot) enabled = $controlsEnabled && 
+  $: if (autopilot) isEnabled = $isControlsEnabled && 
     $playbackReady && 
     $isVideoView && 
     !$isMobile && 

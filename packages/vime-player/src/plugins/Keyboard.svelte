@@ -26,14 +26,14 @@
   };
 
   const registry = player.createRegistry(ID, validateEvent);
-  const { isPlayerActive } = player.getStore();
   const tooltips = player.getRegistry().watch(TooltipsID);
+  const { isPlayerActive } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  export let enabled = true;
+  export let isEnabled = true;
 
   export const getEvent = id => $registry[id];
   export const getEvents = () => $registry;
@@ -44,7 +44,7 @@
   // --------------------------------------------------------------
 
   const onKeyDown = e => {
-    if (!$isPlayerActive || !enabled) return;
+    if (!$isPlayerActive || !isEnabled) return;
   
     const listeners = Object.values($registry)
       .filter(o => (is_array(o.keys) ? o.keys : [o.keys]).includes(e.keyCode));
@@ -64,7 +64,7 @@
       const tooltip = $tooltips[id];
       if (tooltip) {
         tooltip.hint = $registry[id].hint;
-        tooltip.showHint = enabled;
+        tooltip.showHint = isEnabled;
       }
     });
   }

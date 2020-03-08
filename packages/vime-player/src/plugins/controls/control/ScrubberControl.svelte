@@ -43,9 +43,9 @@
   </progress>
   <svelte:component 
     {player}
-    title={tooltipTitle}
-    active={tooltipActive}
     noBounding
+    title={tooltipTitle}
+    isActive={tooltipActive}
     this={Tooltip}
     bind:this={tooltip}
   />
@@ -132,7 +132,7 @@
   // Tooltips Plugin
   // --------------------------------------------------------------
 
-  $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.create();
+  $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.getTooltipComponent();
   
   $: if ($tooltipsPlugin && tooltip && !$tooltipsPlugin.getTooltip(LABEL)) {
     $tooltipsPlugin.getRegistry().register(LABEL, tooltip);

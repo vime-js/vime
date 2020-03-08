@@ -2,13 +2,13 @@ import {
   chunkedBuild, modernBuild, legacyBuild, getFileName
 } from '../../rollup-base';
 
-const name = 'Vime';
+const name = 'Player';
 const entry = 'src/index.js';
 const chunkedEntry = { player: entry }
-const pluginOpts = { externalCSS: true };
+const pluginOpts = { externalCSS: false };
 
 const chunks = id => {
-  if (id.includes('vime-player/src/lang')) return 'Language';
+  if (id.includes('vime-player/src/lang')) return 'vime-language';
 };
 
 export default [

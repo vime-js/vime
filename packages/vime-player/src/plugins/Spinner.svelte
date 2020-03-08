@@ -1,8 +1,8 @@
 <svelte:options accessors />
 
-{#if enabled}
+{#if isEnabled}
   <div 
-    class:inactive={!active}
+    class:inactive={!isActive}
     bind:this={el}
   >
     <div>Loading...</div>
@@ -22,7 +22,10 @@
 
   export let player;
 
-  const { buffering, isVideoView } = player.getStore();
+  const { 
+    buffering, isVideoView, useNativeControls
+  } = player.getStore();
+
   const controlsPlugin = player.getPluginsRegistry().watch(ControlsId);
 
   // --------------------------------------------------------------
@@ -32,11 +35,11 @@
   let el;
 
   export let autopilot = true;
-  export let enabled = false;
-  export let active = false;
+  export let isEnabled = false;
+  export let isActive = false;
 
-  $: if (autopilot) enabled = $isVideoView;
-  $: if (autopilot) active = $buffering
+  $: if (autopilot) isActive = $buffering
+  $: if (autopilot) isEnabled = $isVideoView && !$useNativeControls;
 
   // --------------------------------------------------------------
   // Controls Plugin

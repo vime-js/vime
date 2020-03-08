@@ -18,16 +18,16 @@
     get_volume_icon
   } from '../utils';
 
-  import Icons from './Icons.svelte';
-  import Poster from './Poster.svelte';
-  import Scrim from './Scrim.svelte';
-  import Spinner from './Spinner.svelte';
-  import ClickToPlay from './ClickToPlay.svelte';
-  import ActionDisplay from './ActionDisplay.svelte';
-  import Keyboard from './Keyboard.svelte';
-  import Controls from './controls/Controls.svelte'
-  import Tooltips from './tooltips/Tooltips.svelte';
-  import DblClickFullscreen from './DblClickFullscreen.svelte';
+  import * as Icons from './Icons.svelte';
+  import * as Poster from './Poster.svelte';
+  import * as Scrim from './Scrim.svelte';
+  import * as Spinner from './Spinner.svelte';
+  import * as ClickToPlay from './ClickToPlay.svelte';
+  import * as ActionDisplay from './ActionDisplay.svelte';
+  import * as Keyboard from './Keyboard.svelte';
+  import * as Controls from './controls/Controls.svelte'
+  import * as Tooltips from './tooltips/Tooltips.svelte';
+  import * as DblClickFullscreen from './DblClickFullscreen.svelte';
 
   // Controls
   import {
@@ -60,11 +60,11 @@
 
   const {
     paused, icons, volume,
-    muted, captionsActive, pipActive,
-    fullscreenActive, currentTime, duration,
+    muted, isCaptionsActive, isPiPActive,
+    isFullscreenActive, currentTime, duration,
     isAudio, isVideo, canInteract, 
     isMobile, canSetTrack, canSetPiP,
-    canSetFullscreen, isLive, currentTrack
+    canSetFullscreen, isLive, currentTrackIndex
   } = player.getStore();
 
   const PLUGINS = [
@@ -96,7 +96,7 @@
   // Keyboard
   // --------------------------------------------------------------
 
-  const safeActionDisplay = (icon, value) => {
+  const displayAction = (icon, value) => {
     const actionDisplay = player[ActionDisplay.ID];
     if (actionDisplay) actionDisplay.run(icon, value);
   };
@@ -114,7 +114,7 @@
       action: () => {
         if (!$canInteract) return;
         $paused = !$paused;
-        safeActionDisplay(get_playback_icon($icons, !$paused));
+        displayAction(get_playback_icon($icons, !$paused));
       }
     });
 
@@ -128,7 +128,7 @@
         const icon = isUp
           ? $icons.volumeHigh
           : ($volume === 0 ? $icons.volumeMute : $icons.volumeLow);
-        safeActionDisplay(icon, `${$volume}%`);
+        displayAction(icon, `${$volume}%`);
       }
     });
 
@@ -138,19 +138,19 @@
       action: () => {
         if (!$canInteract) return;
         $muted = !$muted;
-        safeActionDisplay(get_volume_icon($icons, $muted, $volume));
+        displayAction(get_volume_icon($icons, $muted, $volume));
       }
     });
 
-    let prevTrack = -1;
+    let prevTrackIndex = -1;
     keyboardRegistry.register(CaptionControl.LABEL, {
       hint: 'c',
       keys: [67],
       action: () => {
         if (!$canInteract || !$canSetTrack) return;
-        $captionsActive ? ($currentTrack = -1) : ($currentTrack = prevTrack);
-        prevTrack = $currentTrack;
-        safeActionDisplay(get_captions_icon($icons, $captionsActive));
+        $isCaptionsActive ? ($currentTrackIndex = -1) : ($currentTrackIndex = prevTrackIndex);
+        prevTrackIndex = $currentTrackIndex;
+        displayAction(get_captions_icon($icons, $isCaptionsActive));
       }
     });
 
@@ -159,8 +159,8 @@
       keys: [80],
       action: () => {
         if (!$canInteract || !$canSetPiP) return;
-        $pipActive ? player.exitPiP().catch(noop) : player.requestPiP().catch(noop);
-        safeActionDisplay(get_pip_icon($icons, $pipActive));
+        $isPiPActive ? player.exitPiP().catch(noop) : player.requestPiP().catch(noop);
+        displayAction(get_pip_icon($icons, $isPiPActive));
       }
     });
 
@@ -169,8 +169,8 @@
       keys: [70],
       action: () => {
         if (!$canInteract || !$canSetFullscreen) return;
-        $fullscreenActive ? player.exitFullscreen().catch(noop) : player.requestFullscreen().catch(noop);
-        safeActionDisplay(get_fullscreen_icon($icons, $fullscreenActive));
+        $isFullscreenActive ? player.exitFullscreen().catch(noop) : player.requestFullscreen().catch(noop);
+        displayAction(get_fullscreen_icon($icons, $isFullscreenActive));
       }
     });
 
@@ -181,7 +181,7 @@
         if (!$canInteract) return;
         const isLeft = e.keyCode === 37;
         $currentTime = isLeft ? Math.max(0, $currentTime - 5) : Math.min($duration, $currentTime + 5);
-        safeActionDisplay(isLeft ? $icons.seekBackward : $icons.seekForward);
+        displayAction(isLeft ? $icons.seekBackward : $icons.seekForward);
       }
     });
 

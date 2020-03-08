@@ -1,12 +1,12 @@
-{#if enabled}
+{#if isEnabled}
   <Control
     {player}
     {title}
     {label}
     on:click
-    on:click={onToggle}
+    on:click={autopilot ? onToggle : null}
     aria-label={$$props['aria-label']}
-    aria-pressed={active}
+    aria-pressed={isActive}
     on:focuschange
     bind:this={control}
   >
@@ -28,22 +28,22 @@
   let control;
 
   export let label;
-  export let active;
   export let activeTitle;
   export let inactiveTitle;
   export let activeIcon;
   export let inactiveIcon;
-  export let custom = false;
-  export let enabled = true;
+  export let isActive = false;
+  export let isEnabled = true;
+  export let autopilot = true;
 
   export const getControl = () => control;
 
-  $: icon = active ? activeIcon : inactiveIcon;
-  $: title = active ? activeTitle : inactiveTitle;
+  $: icon = isActive ? activeIcon : inactiveIcon;
+  $: title = isActive ? activeTitle : inactiveTitle;
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
-  const onToggle = () => { if (!custom) active = !active; };
+  const onToggle = () => { isActive = !isActive; };
 </script>

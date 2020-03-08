@@ -91,8 +91,8 @@ export const private_writable_if = (initialValue, condition) => {
 };
 
 export const indexable = bounds => {
-  let value;
-  const store = writable(-1);
+  let value = -1;
+  const store = writable(value);
   return {
     ...store,
     subscribe: derived([store, bounds], ([$value, $bounds]) => {

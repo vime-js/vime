@@ -7,14 +7,15 @@
 </script>
 
 <script>
+  import { onDestroy } from 'svelte';
   import sprite from '../static/vime.svg';
 
   export let player
 
-  const { icons } = player.getStore();
-
+  const store = player.getStore();
+  
   const icon = icon => `#vime-${icon}`;
-  $icons = {
+  const ICONS = {
     play: icon('play'),
     pause: icon('pause'),
     captionsOn: icon('captions-on'),
@@ -31,4 +32,15 @@
     settings: icon('settings'),
     checkmark: icon('checkmark')
   };
+
+  store.icons.set(ICONS);
+
+  onDestroy(() => {
+    const icons = player.icons;
+    if (!icons) return;
+    Object.keys(ICONS).forEach(icon => {
+      if (icons[icon] && icons[icon] === ICONS[icon]) delete icons[icon];
+    });
+    store.icons.set(icons);
+  });
 </script>
