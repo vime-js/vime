@@ -1,72 +1,81 @@
+<svelte:options accessors />
+
 <div
-  class:active={cueActive}
+  class:active={!$useNativeCaptions && $isVideoView}
   class:withControls={$isControlsActive}
   class:fullscreen={$isFullscreenActive}
   class:mobile={$isMobile}
 >
-  {#if cueActive}
+  {#if isCueActive}
     <span data-testid="cue">
-      {@html getCueContent(cues[currentCue])}
+      {@html getCueContent($currentCue)}
     </span>
   {/if}
 </div>
 
 <script context="module">
+  import PluginRole from '../core/PluginRole';
+
   export const ID = 'vCaptions';
   export const ROLE = PluginRole.CAPTIONS;
-
-  const isTracksEqual = (tA, tB) => tA.kind === tB.kind &&
-    tA.label === tB.label &&
-    tA.srclang === tB.srclang;
-
-  const Event = {
-    CUE_ENTER: 'cueenter',
-    CUE_EXIT: 'cueexit',
-    CUE_CHANGE: 'cuechange'
-  };
 </script>
 
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { tick, onDestroy, createEventDispatcher } from 'svelte';
   import { element, listen, append } from 'svelte/internal';
-  import { is_number, is_instance_of } from '@vime/utils';
+  import { derived } from 'svelte/store';
+  import { 
+    is_number, is_instance_of, private_writable,
+    map_store_to_component
+  } from '@vime/utils';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
   export let player;
+  export let crossOrigin = false;
 
   const logger = player.createLogger(ID);
   const dispatch = createEventDispatcher();
   
   const { 
     isMobile, isFullscreenActive, isControlsActive,
-    tracks, currentTrackIndex, activeCues, 
-    currentTime
+    currentTrackIndex, currentTime, useNativeCaptions, 
+    tracks, locale, isVideoView
   } = player.getStore();
 
-  // --------------------------------------------------------------
-  // Props
-  // --------------------------------------------------------------
+  const buildStore = () => {
+    const store = {};
+    store.cues = private_writable([]);
+    store.currentCueIndex = private_writable(-1);
+    store.currentCue = derived(
+      [store.cues, store.currentCueIndex],
+      ([$cues, $index]) => ($cues.length >= 0) ? $cues[$index] : null
+    )
+    store.activeCues = private_writable([]);
+    return store;
+  };
 
-  let cues = [];
-  let currentCue = -1;
-  let cueActive = false;
-  let crossOrigin = false;
+  const store = buildStore();
+  const onPropsChange = map_store_to_component(null, store);
+  $: onPropsChange($$props);
 
-  export const getCues = () => cues;
-  export const getCurrentCue = () => currentCue;
-
-  export const setCrossOrigin = origin => { crossOrigin = origin || null; };
+  const {
+    cues, currentCueIndex, currentCue,
+    activeCues
+  } = store;
 
   // --------------------------------------------------------------
   // Cues
   // --------------------------------------------------------------
 
+  let isCueActive = false;
+
   const shouldCueBeActive = cue => ($currentTime >= cue.startTime) && ($currentTime <= cue.endTime);
 
   const getCueContent = cue => {
+    if (!cue) return '';
     const div = element('div');
     append(div, cue.getCueAsHTML());
     return div.innerHTML.trim();
@@ -76,9 +85,9 @@
     let index = start;
     while (
       index >= 0 &&
-      index < (cues.length - 1) &&
-      $currentTime > cues[index].startTime &&
-      !shouldCueBeActive(cues[index])
+      index < ($cues.length - 1) &&
+      $currentTime > $cues[index].startTime &&
+      !shouldCueBeActive($cues[index])
     ) {
       index += 1;
     }
@@ -87,121 +96,100 @@
 
   const validateCue = cue => {
     if (!is_instance_of(cue, window.VTTCue)) {
-      logger.warn('invalid cue must be an instance of window.VTTCue');
-      return false;
-    }
-    if (cues.some(c => (c.startTime <= cue.endTime) && (cue.startTime <= c.endTime))) {
-      logger.warn('invalid cue found, overlapping cues are not supported at this time');
+      logger.warn(`invalid cue with \`label\` [${cue.label}] must be an instance of window.VTTCue`);
       return false;
     }
     return true;
   };
 
-  const onCueEnter = () => dispatch(Event.CUE_ENTER, { cues, currentCue });
-
-  const onCueExit = () => {
-    if (!cueActive) return;
-    cueActive = false;
-    dispatch(Event.CUE_EXIT, { cues, currentCue })
-  };
-
-  const onCueChange = index => {
-    onCueExit();
-    if (currentCueIndex === index) return;
-    currentCueIndex = index;
-    currentCue = cues[index];
-    dispatch(PlayerEvent.CUE_CHANGE, getCurrentCue());
-  };
-
   const onCuesChange = () => {
-    dispatch(PlayerEvent.CUES_CHANGE, [...cues]);
-    if (currentCueIndex >= 0 && cues[currentCueIndex]) {
-      currentCue = cues[currentCueIndex];
-      return;
-    }
-    if (cues.length > 0) onCueChange(findNextCueIndex(0));
+    if ($currentCueIndex >= 0 && $cues[$currentCueIndex]) return;
+    if ($cues.length > 0) $currentCueIndex = findNextCueIndex(0);
   };
 
   export const addCue = cue => {
     if (!validateCue(cue)) return;
     let index = 0;
-    while (cues[index] && (cues[index].endTime < cue.startTime)) index++;
-    cues.splice(index, 0, cue);
-    onCuesChange();
+    while ($cues[index] && ($cues[index].endTime < cue.startTime)) index++;
+    $cues.splice(index, 0, cue);
+    $cues = $cues;
   };
 
   export const addCues = cues => { cues.map(addCue); };
 
   export const removeCue = value => {
-    const index = is_number(value) ? value : cues.findIndex(c => c === value);
-    if (index <= 0 || index >= cues.length) {
+    const index = is_number(value) ? value : $cues.findIndex(cue => cue === value);
+    if (index <= 0 || index >= $cues.length) {
       logger.warn('could not remove cue because it could not be found or index was out of bounds');
       return;
     }
-    cues.splice(index, 1);
-    onCuesChange();
+    $cues.splice(index, 1);
+    $cues = $cues;
   };
 
-  export const removeAllCues = () => {
-    cues.splice(0, cues.length);
-    currentCueIndex = -1;
-    currentCue = null;
-    onCuesChange();
-  };
+  $: if ($currentCue && ($currentCueIndex < $cues.length - 1) && $currentTime > $currentCue.endTime) {
+    $currentCueIndex = findNextCueIndex($currentCueIndex);
+  }
 
+  $: if ($currentCueIndex > 0 && $currentTime < $cues[$currentCueIndex - 1].endTime) {
+    $currentCueIndex = findNextCueIndex(0);
+  }
+
+  $: isCueActive = ($currentCue && $currentTime >= 0 && shouldCueBeActive($currentCue))
+  $: isCueActive ? ($activeCues = [$currentCue]) : ($activeCues = []);
+  $: onCuesChange($cues);
+
+  // --------------------------------------------------------------
+  // Tracks
+  // --------------------------------------------------------------
+
+  export const hasTrack = () => $currentTrackIndex !== -1;
+
+  const buildTrack = track => {
+    const el = element('track');
+    el.default = true;
+    el.src = track.src;
+    el.kind = track.kind;
+    el.label = track.label;
+    el.srclang = track.srclang;
+    return el;
+  };
 
   // TODO: Fix IE captions if CORS is used.
   // Fetch captions and inject as blobs instead (data URIs not supported).
   const loadCues = () => {
     const media = element('audio');
-    media.crossOrigin = crossOrigin;
-    const trackEl = element('track');
-    trackEl.default = true;
-    trackEl.src = track.src;
-    listen(trackEl, 'load', () => {
+    media.crossorigin = crossOrigin;
+    const track = buildTrack($tracks[$currentTrackIndex]);
+    listen(track, 'load', () => {
       const newCues = Array.from(media.textTracks[0].cues);
-      if (newCues.some(c => !validateCue(c))) return;
-      cues.push(...newCues);
-      dispatch(PlayerEvent.CUES_LOADED, cues);
-      onCuesChange();
+      $cues = newCues;
     }, { once: true });
-    append(media, trackEl);
+    append(media, track);
   };
 
   const onTrackChange = () => {
-    cues.splice(0, cues.length);
-    currentCueIndex = -1;
-    currentCue = null;
-    track ? loadCues() : onCuesChange();
+    $cues = [];
+    $currentCueIndex = -1;
+    hasTrack() ? loadCues() : onCuesChange();
   };
 
-  const findTrackByLocale = () => tracks.find(t => t.srclang === locale);
-
-  const findCurrentTrack = () => {
-    if (!currentTrack) currentTrack = findTrackByLocale();
-    if (!currentTrack) currentTrack = tracks.find(t => t.default);
+  const onTracksChange = async () => {
+    await tick();
+    if (!hasTrack()) $currentTrackIndex = $tracks.findIndex(t => t.default);
   };
 
-  // $: if (!$isAudio && isPlaybackReady && _track) $captionsActive = _tracks.length > 0
-  $: if (!currentTrack && tracks.length > 0) findCurrentTrack();
-  $: if (locale) currentTrack = findTrackByLocale();
-
-  $: onTrackChange(track);
-
-  $: if (currentCue && (currentCueIndex < cues.length - 1) && currentTime > currentCue.endTime) {
-    onCueChange(findNextCueIndex(currentCueIndex));
-  }
-
-  $: if (currentCueIndex > 0 && currentTime < cues[currentCueIndex - 1].endTime) {
-    onCueChange(findNextCueIndex(0));
-  }
-
-  $: cueActive = (currentCue && currentTime >= 0) ? shouldCueBeActive(currentCue) : false;
-  $: if (cueActive) onCueEnter();
+  $: onTracksChange($isVideoView ? $tracks : []);
+  $: onTrackChange($isVideoView ? $currentTrackIndex : -1, crossOrigin);
+  
+  $: if ($isVideoView) {
+    const index = $tracks.findIndex(t => t.srclang === $locale);
+    if (index >= 0) $currentTrackIndex = index;
+  };
 </script>
 
 <style type="text/scss">
-  @import '../../style/common';
+  @import '../style/common';
 
   // Container (cues)
   div {

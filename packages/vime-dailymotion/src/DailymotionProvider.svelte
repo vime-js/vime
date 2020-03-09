@@ -101,9 +101,9 @@
   export const getEmbed = () => embed;
   export const getEl = () => embed.getIframe();
 
-  export const setPaused = paused => paused ? send(DM.Command.PAUSE) : send(DM.Command.PLAY);
+  export const setPaused = paused => { paused ? send(DM.Command.PAUSE) : send(DM.Command.PLAY); };
   export const setPlaysinline = enabled => { /** noop */ };
-  export const setVideoQuality = quality => send(DM.Command.QUALITY, [quality]);
+  export const setVideoQuality = quality => { send(DM.Command.QUALITY, [quality]); };
   export const setControls = enabled => { send(DM.Command.CONTROLS, [enabled]); };
   export const setFullscreen = active => { send(DM.Command.FULLSCREEN, [active]); };
 

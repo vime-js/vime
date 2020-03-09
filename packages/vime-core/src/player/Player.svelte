@@ -46,8 +46,7 @@
     playbackReady, isVideoView, tracks, 
     currentTrackIndex, provider, rebuilding, 
     isVideoReady, canInteract, isFullscreenActive,
-    useNativeView, useNativeControls, useNativeCaptions,
-    isCaptionsEnabled
+    useNativeView, useNativeControls, useNativeCaptions
   } = store;
 
   const {
@@ -316,11 +315,12 @@
     if (info.videoQualities) store.videoQualities.set(info.videoQualities);
     if (info.playbackRate) store.playbackRate.forceSet(info.playbackRate);
     if (info.playbackRates) store.playbackRates.set(info.playbackRates);
-    if (info.tracks) $tracks = info.tracks;
-    if (is_number(info.currentTrackIndex)) $currentTrackIndex = info.currentTrackIndex;
-    if (info.activeCues) store.activeCues.set(info.activeCues);
     if (is_boolean(info.fullscreen)) onFullscreenChange(info.fullscreen);
     if (is_boolean(info.pip)) $isPiPActive = info.pip;
+    if ($useNativeCaptions) {
+      if (info.tracks) $tracks = info.tracks;
+      if (is_number(info.currentTrackIndex)) $currentTrackIndex = info.currentTrackIndex;
+    }
   };
 
   const onSrcChange = () => {
@@ -367,26 +367,10 @@
   // --------------------------------------------------------------
   // Tracks
   // --------------------------------------------------------------
-  
-  $: if ($canSetTracks && $canInteract && $currentTrackIndex >= 0) {
-    $provider.enableTracks($isCaptionsEnabled && $useNativeCaptions);
-  }
 
-  $: if ($canSetTracks && $canInteract && $useNativeCaptions) $provider.setTracks($tracks);
+  $: if ($canSetTracks && $canInteract) $provider.setTracks($useNativeCaptions ? $tracks : []); 
+  $: if ($canSetTrack && $canInteract) $provider.setTrack($useNativeCaptions ? $currentTrackIndex : -1); 
 
-  $: if (
-    $canSetTrack && 
-    $canInteract && 
-    $tracks.length > 0 && 
-    $currentTrackIndex >= 0 &&
-    $useNativeCaptions
-  ) $provider.setTrack($currentTrackIndex);
-  
-  $: if (
-    $useNativeCaptions && 
-    ($tracks.length === 0 || $currentTrackIndex === -1 || !$isCaptionsEnabled)
-  ) store.activeCues.set([]);
- 
   // --------------------------------------------------------------
   // Picture in Picture
   // --------------------------------------------------------------

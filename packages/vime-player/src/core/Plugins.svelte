@@ -43,7 +43,7 @@
   export const getInstances = () => instances;
   export const getPlugins = () => validatedPlugins;
 
-  $: enabled = (IS_IOS && $playsinline && !$isFullscreenActive) || !IS_IOS
+  $: isEnabled = (IS_IOS && $playsinline && !$isFullscreenActive) || !IS_IOS
 
   // --------------------------------------------------------------
   // Plugin Registration
@@ -66,7 +66,7 @@
   let mounted = false;
   onMount(() => { mounted = true; });
 
-  $: if (mounted) validatedPlugins = enabled ? $plugins.filter(validatePlugin).map(p => ({ ...p })) : [];
+  $: if (mounted) validatedPlugins = isEnabled ? $plugins.filter(validatePlugin).map(p => ({ ...p })) : [];
 
   $: validatedPlugins
     .filter(p => !registry.has(p.ID) && instances[p.ID])

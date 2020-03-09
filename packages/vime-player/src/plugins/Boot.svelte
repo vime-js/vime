@@ -22,6 +22,7 @@
   import * as Poster from './Poster.svelte';
   import * as Scrim from './Scrim.svelte';
   import * as Spinner from './Spinner.svelte';
+  import * as Captions from './Captions.svelte';
   import * as ClickToPlay from './ClickToPlay.svelte';
   import * as ActionDisplay from './ActionDisplay.svelte';
   import * as Keyboard from './Keyboard.svelte';
@@ -72,6 +73,7 @@
     Poster,
     Scrim,
     Spinner,
+    Captions,
     ClickToPlay,
     ActionDisplay,
     Controls,
@@ -148,8 +150,8 @@
       keys: [67],
       action: () => {
         if (!$canInteract || !$canSetTrack) return;
+        if ($isCaptionsActive) prevTrackIndex = $currentTrackIndex;
         $isCaptionsActive ? ($currentTrackIndex = -1) : ($currentTrackIndex = prevTrackIndex);
-        prevTrackIndex = $currentTrackIndex;
         displayAction(get_captions_icon($icons, $isCaptionsActive));
       }
     });
