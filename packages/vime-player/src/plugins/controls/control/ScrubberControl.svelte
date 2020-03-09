@@ -66,8 +66,6 @@
 
   export let player;
 
-  const tooltipsPlugin = player.getPluginsRegistry().watch(TooltipsID);
-  
   const {
     i18n, isVideoView, currentTime, 
     duration, buffered, buffering, 
@@ -132,10 +130,13 @@
   // Tooltips Plugin
   // --------------------------------------------------------------
 
+  const tooltipsPlugin = player.getPluginsRegistry().watch(TooltipsID);
+
   $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.getTooltipComponent();
+  $: tooltipsRegistry = $tooltipsPlugin && $tooltipsPlugin.getRegistry();
   
-  $: if ($tooltipsPlugin && tooltip && !$tooltipsPlugin.getTooltip(LABEL)) {
-    $tooltipsPlugin.getRegistry().register(LABEL, tooltip);
+  $: if (tooltipsRegistry && tooltip && !tooltipsRegistry.has(LABEL)) {
+    tooltipsRegistry.register(LABEL, tooltip);
   }
 </script>
 

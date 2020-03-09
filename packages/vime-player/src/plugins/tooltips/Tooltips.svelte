@@ -43,8 +43,6 @@
   export let showHints = true;
   export let isEnabled = true;
 
-  export const getTooltip = id => $registry[id];
-  export const getTooltips = () => $registry;
   export const getRegistry = () => registry;
   export const getTooltipComponent = () => Tooltip;
 

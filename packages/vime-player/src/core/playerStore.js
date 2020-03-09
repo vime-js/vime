@@ -37,6 +37,17 @@ export const buildPlayerStore = _store => {
     [store.plugins, _store.useNativeControls],
     ([$plugins, $useNativeControls]) => hasRole($plugins, PluginRole.CONTROLS) || $useNativeControls
   );
+
+  store.hasCaptions = derived(
+    [store.plugins, _store.useNativeCaptions, _store.canSetTracks],
+    ([$plugins, $useNativeCaptions, $canSetNativeTracks]) => 
+      hasRole($plugins, PluginRole.CAPTIONS) || ($useNativeCaptions && $canSetNativeTracks)
+  );
+
+  store.hasSettings = derived(
+    [store.plugins, _store.useNativeControls],
+    ([$plugins, $useNativeControls]) => hasRole($plugins, PluginRole.SETTINGS) || $useNativeControls
+  );
   
   store.Provider = derived(
     [_store.src, store.providers],

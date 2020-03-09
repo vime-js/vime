@@ -28,7 +28,7 @@ export default {
   speed: 'Speed',
   normal: 'Normal',
   none: 'None',
-  quality: 'Quality',
+  videoQuality: 'Video Quality',
   loop: 'Loop',
   disabled: 'Disabled',
   off: 'Off',

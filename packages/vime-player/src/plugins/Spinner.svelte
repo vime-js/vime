@@ -26,8 +26,6 @@
     buffering, isVideoView, useNativeControls
   } = player.getStore();
 
-  const controlsPlugin = player.getPluginsRegistry().watch(ControlsId);
-
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
@@ -44,6 +42,8 @@
   // --------------------------------------------------------------
   // Controls Plugin
   // --------------------------------------------------------------
+
+  const controlsPlugin = player.getPluginsRegistry().watch(ControlsId);
 
   $: if (el && $controlsPlugin) $controlsPlugin.centerAssist(el);
 </script>

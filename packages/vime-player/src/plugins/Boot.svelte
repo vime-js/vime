@@ -28,6 +28,8 @@
   import * as Keyboard from './Keyboard.svelte';
   import * as Controls from './controls/Controls.svelte'
   import * as Tooltips from './tooltips/Tooltips.svelte';
+  import * as Settings from './settings/Settings.svelte';
+  import * as DefaultSettings from './settings/DefaultSettings.svelte';
   import * as DblClickFullscreen from './DblClickFullscreen.svelte';
 
   // Controls
@@ -41,6 +43,7 @@
     CaptionControl,
     PiPControl,
     LiveIndicator,
+    SettingsControl,
     FullscreenControl,
     ScrubberControl,
     SeekForwardControl,
@@ -79,6 +82,8 @@
     Controls,
     Keyboard,
     Tooltips,
+    Settings,
+    DefaultSettings,
     DblClickFullscreen
   ];
 
@@ -202,10 +207,9 @@
   const onSetupAudioControls = () => {
     controls.upper = [];
     controls.center = [];
-    // TODO: add settings control here
     controls.lower = !$isLive ? [
       PlaybackControl, VolumeControl, CurrentTime,
-      ScrubberControl, DurationTime
+      ScrubberControl, DurationTime, SettingsControl
     ]: [
       PlaybackControl, volume, CurrentTime, 
       ControlSpacer, LiveIndicator
@@ -215,11 +219,11 @@
   const onSetupDesktopVideoControls = () => {
     controls.upper = [];
     controls.center = [];
-    // TODO: add settings control here
     controls.lower = !$isLive ? [
       ScrubberControl, ControlNewLine, PlaybackControl, 
       VolumeControl, TimeProgress, ControlSpacer, 
-      CaptionControl, PiPControl, FullscreenControl
+      CaptionControl, PiPControl, SettingsControl, 
+      FullscreenControl
     ] : [
       PlaybackControl, VolumeControl, ControlSpacer, 
       LiveIndicator, PiPControl, FullscreenControl
@@ -228,8 +232,7 @@
 
   const onSetupMobileVideoControls = () => {
     if (!$isLive) {
-      // TODO: add settings here before fs
-      controls.upper = [ControlSpacer, VolumeControl, CaptionControl, FullscreenControl];
+      controls.upper = [ControlSpacer, VolumeControl, CaptionControl, SettingsControl, FullscreenControl];
       controls.center = [SeekBackwardControl, PlaybackControl, SeekForwardControl];
     } else {
       controls.upper = [ControlSpacer, VolumeControl, FullscreenControl];

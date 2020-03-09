@@ -8,6 +8,8 @@ import * as ActionDisplay from './ActionDisplay.svelte';
 import * as Boot from './Boot.svelte';
 import * as Keyboard from './Keyboard.svelte';
 import * as Tooltips from './tooltips/Tooltips.svelte';
+import * as Settings from './settings/Settings.svelte';
+import * as DefaultSettings from './settings/DefaultSettings.svelte';
 import * as DblClickFullscreen from './DblClickFullscreen.svelte';
 
 export { Icons };
@@ -20,5 +22,7 @@ export { ActionDisplay };
 export { Keyboard };
 export { Boot };
 export { Tooltips };
+export { Settings }
+export { DefaultSettings };
 export { DblClickFullscreen };
 export * from './controls';

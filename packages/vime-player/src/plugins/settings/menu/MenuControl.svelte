@@ -1,6 +1,6 @@
 <button
-  id={$$props.id}
-  role={$$props.role}
+  {id}
+  {role}
   class:audio={$isAudio}
   class:videoFocus={!$isTouch}
   class:audioFocus={$isAudio && !$isTouch}
@@ -30,24 +30,36 @@
 </button>
 
 <script>
-  import { getContext } from 'svelte';
-  import { focus, highlight } from '~actions';
-  import { ctxKey } from '~src/context';
-  import { isTouch } from '~src/store';
-  import { Icon } from '~src/icons';
+  import { Icon, focus, highlight } from '@vime/core';
 
-  const ctx = getContext(ctxKey);
-  const isAudio = ctx.isAudio;
+  // --------------------------------------------------------------
+  // Setup
+  // --------------------------------------------------------------
+
+  export let player;
+
+  const { isAudio, isTouch } = player.getStore();
+
+  // --------------------------------------------------------------
+  // Props
+  // --------------------------------------------------------------
 
   let showHighlight = false;
 
+  export let role;
   export let title;
+  export let id = null;
   export let hint = null;
   export let badge = null;
+
+  export const getId = () => id;
+  export const getTitle = () => title;
+  export const getHint = () => hint;
+  export const getBadge = () => badge;
 </script>
 
 <style type="text/scss">
-  @import '../../style/common';
+  @import '../../../style/common';
 
   button {
     display: flex;
