@@ -33,7 +33,6 @@ const playerDefaults = () => ({
   playbackEnded: false,
   playbackReady: false,
   isLive: false,
-  activeCues: [],
   nativePoster: null,
   isControlsActive: true
 });
@@ -174,7 +173,7 @@ const buildPlayerStore = player => {
   );
 
   // --------------------------------------------------------------
-  // Captions
+  // Tracks
   // --------------------------------------------------------------
 
   store.canSetTracks = derived(
@@ -193,19 +192,20 @@ const buildPlayerStore = player => {
   // Can't block current track with `canSetTrack` because it'll stop @vime/player from updating
   // the value when a plugin is managing captions.
   store.currentTrackIndex = indexable(store.tracks);
-  store.activeCues = private_writable(defaults.activeCues);
-
+  
   store.currentTrack = derived(
     [store.tracks, store.currentTrackIndex],
     ([$tracks, $index]) => ($index >= 0) ? $tracks[$index] : null
   );
-
-  store.isCaptionsEnabled = writable(false);
+  
   store.isCaptionsActive = derived(
-    [store.playbackReady, store.currentTrack], 
-    ([$playbackReady, $currentTrack]) => $playbackReady && ($currentTrack !== -1)
+    [store.playbackReady, store.isAudio, store.currentTrackIndex], 
+    ([$playbackReady, $isAudio, $currentTrackIndex]) => 
+      $playbackReady && !$isAudio && ($currentTrackIndex !== -1)
   );
 
+  // TODO: add cues support (cues, currentCueIndex, currentCue, activeCues).
+  
   // --------------------------------------------------------------
   // Picture in Picture
   // --------------------------------------------------------------

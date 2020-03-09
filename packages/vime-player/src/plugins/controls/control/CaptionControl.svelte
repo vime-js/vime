@@ -1,14 +1,15 @@
 <ToggleControl
   {player}
-  custom
+  autopilot={false}
   label={LABEL}
   isEnabled={$canSetTracks}
+  isActive={$isCaptionsActive}
   activeIcon={$icons.captionsOn}
   inactiveIcon={$icons.captionsOff}
   activeTitle={$i18n.disableCaptions}
   inactiveTitle={$i18n.enableCaptions}
   aria-label={$i18n.captions}
-  bind:isActive={$isCaptionsEnabled}
+  on:click={onToggle}
   bind:this={toggle}
 />
 
@@ -28,8 +29,7 @@
 
   const {
     icons, i18n, isCaptionsActive,
-    canSetTracks, currentTrackIndex,
-    isCaptionsEnabled
+    canSetTracks, currentTrackIndex
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -37,6 +37,12 @@
   // --------------------------------------------------------------
 
   let toggle;
+  let prevTrackIndex = -1;
 
   export const getToggle = () => toggle;
+
+  const onToggle = () => {
+    if ($isCaptionsActive) prevTrackIndex = $currentTrackIndex;
+    $isCaptionsActive ? ($currentTrackIndex = -1) : ($currentTrackIndex = prevTrackIndex);
+  };
 </script>

@@ -1,3 +1,4 @@
+import { tick } from 'svelte';
 import { get, writable, derived } from 'svelte/store';
 import { noop, not_equal, validate_store, get_current_component } from 'svelte/internal';
 import { create_prop, merge_obj_deep } from './object';
@@ -61,7 +62,7 @@ export const mergeable = initialValue => {
   const store = writable(initialValue);
   return {
     ...store,
-    set: v => store.update(p => merge_obj_deep(p, v))
+    set: v => { store.update(p => merge_obj_deep(p, v)); }
   };
 };
 
@@ -81,7 +82,7 @@ export const writable_if = (initialValue, condition) => {
   const store = writable(initialValue);
   return {
     ...store,
-    set: v => safe_get(condition) && store.set(v),
+    set: v => { safe_get(condition) && store.set(v); },
     forceSet: store.set
   };
 };
@@ -91,14 +92,13 @@ export const private_writable_if = (initialValue, condition) => {
 };
 
 export const indexable = bounds => {
-  let value = -1;
-  const store = writable(value);
+  const store = writable(-1);
   return {
     ...store,
     subscribe: derived([store, bounds], ([$value, $bounds]) => {
-      if (!$bounds || $bounds.length === 0) { value = -1; }
-      if ($value >= 0 && $value < $bounds.length) { value = $value; }
-      return value;
+      if (!$bounds || $bounds.length === 0) return -1;
+      if ($value >= 0 && $value < $bounds.length) return $value;
+      return -1;
     }).subscribe
   };
 };
@@ -107,7 +107,7 @@ export const indexable_if = (bounds, condition) => {
   const store = indexable(bounds);
   return {
     ...store,
-    set: index => safe_get(condition) && store.set(index),
+    set: index => { safe_get(condition) && store.set(index); },
     forceSet: store.set
   };
 };
@@ -129,7 +129,7 @@ export const selectable_if = (initialValue, values, condition) => {
   const store = selectable(initialValue, values);
   return {
     ...store,
-    set: selection => safe_get(condition) && store.set(selection),
+    set: selection => { safe_get(condition) && store.set(selection); },
     forceSet: store.set
   };
 };
@@ -162,10 +162,11 @@ export const map_store_to_component = (comp, stores) => {
     canWrite = {};
   });
 
-  const onUpdateProp = (prop, newValue) => {
+  const onUpdateProp = async (prop, newValue) => {
     if (!canWrite[prop] || !not_equal(ctx[prop], newValue)) return;
     ctx[prop] = newValue;
     stores[prop].set(newValue);
+    return tick();
   };
 
   Object.keys(stores).forEach(prop => {

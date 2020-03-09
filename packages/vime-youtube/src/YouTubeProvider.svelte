@@ -104,11 +104,11 @@
   export const getEmbed = () => embed;
   export const getEl = () => embed.getIframe();
 
-  export const setPaused = paused => paused ? send(YT.Command.PAUSE) : send(YT.Command.PLAY);
-  export const setMuted = muted => muted ? send(YT.Command.MUTE) : send(YT.Command.UNMUTE);
-  export const setVolume = volume => send(YT.Command.SET_VOLUME, [volume]);
-  export const setPlaybackRate = rate => send(YT.Command.SET_PLAYBACK_RATE, [rate]);
-  export const setCurrentTime = time => send(YT.Command.SEEK_TO, [time]);
+  export const setPaused = paused => { paused ? send(YT.Command.PAUSE) : send(YT.Command.PLAY); };
+  export const setMuted = muted => { muted ? send(YT.Command.MUTE) : send(YT.Command.UNMUTE); };
+  export const setVolume = volume => { send(YT.Command.SET_VOLUME, [volume]); };
+  export const setPlaybackRate = rate => { send(YT.Command.SET_PLAYBACK_RATE, [rate]); };
+  export const setCurrentTime = time => { send(YT.Command.SEEK_TO, [time]); };
   export const setPlaysinline = enabled => { params.playsinline = enabled ? 1 : 0; };
   
   export const setControls = enabled => {

@@ -1,7 +1,9 @@
+<svelte:options accessors />
+
 {#if shouldUseAudio}
   <audio
     {controls}
-    {crossorigin}
+    crossorigin={crossOrigin}
     bind:this={audio}
   >
     <Source src={currentSrc} />
@@ -11,7 +13,7 @@
 {:else if shouldUseVideo}
   <video
     {controls}
-    {crossorigin}
+    crossorigin={crossOrigin}
     poster={useNativePoster ? poster : null}
     preload="metadata"
     bind:videoWidth
@@ -63,7 +65,6 @@
     },
     Event: {
       CHANGE: 'change',
-      CUE_CHANGE: 'cuechange',
     }
   };
 
@@ -139,7 +140,6 @@
   let muted = false;
   let controls = null;
   let playsinline = null;
-  let crossorigin = null;
   let aspectRatio = null;
   let currentSrc = null;
   let playbackReady = false;
@@ -149,6 +149,7 @@
   let useNativePoster = false;
 
   export let src;
+  export let crossOrigin = null;
 
   export const getEl = () => media;
   export const getMedia = () => media;
@@ -158,7 +159,6 @@
   export const setPaused = paused => { paused ? media.pause() : media.play().catch(noop); }; 
   export const setVolume = volume => { media.volume = parseFloat(volume / 100); };
   export const setPlaybackRate = rate => { media.playbackRate = rate; };
-  export const setCrossOrigin = origin => { crossorigin = origin || null; };
   export const setControls = enabled => { controls = enabled || null; };
   export const setPlaysinline = enabled => { playsinline = enabled || null; };
   export const setAspectRatio = ratio => { aspectRatio = ratio; };
@@ -218,54 +218,28 @@
 
   let tracks = [];
   let currentTrackIndex = -1;
-  let onCueChangeListener = null;
-
-  const unbindCueChangeListener = () => {
-    if (onCueChangeListener) onCueChangeListener();
-    onCueChangeListener = null;
-  };
-
-  onDestroy(unbindCueChangeListener);
-
-  const onCueChange = e => {
-    info.activeCues = Array.from(e.target.activeCues);
-  };
-
-  const listenToCueChanges = track => {
-    info.activeCues = track.activeCues ? Array.from(track.activeCues) : [];
-    onCueChangeListener = listen(track, Html5.TextTrack.Event.CUE_CHANGE, onCueChange);
-  };
-
-  export const enableTracks = enabled => {
-    tracks[currentTrackIndex].mode = enabled 
-      ? Html5.TextTrack.Mode.SHOWING 
-      : Html5.TextTrack.Mode.HIDDEN;
-  };
 
   export const setTracks = newTracks => {
-    unbindCueChangeListener();
     tracks = newTracks || [];
     currentTrackIndex = -1;
   };
 
   export const setTrack = index => {
     const tracks = Array.from(media.textTracks);
-    unbindCueChangeListener();
-    if (currentTrackIndex !== -1) tracks[currentTrackIndex].mode = Html5.TextTrack.Mode.HIDDEN;
-    const track = tracks[index];
-    track.mode = Html5.TextTrack.Mode.SHOWING;
-    listenToCueChanges(track);
+    if (currentTrackIndex !== -1) {
+      tracks[currentTrackIndex].mode = Html5.TextTrack.Mode.HIDDEN;
+    }
+    if (index !== -1) {
+      const track = tracks[index];
+      track.mode = Html5.TextTrack.Mode.SHOWING;
+    }
     currentTrackIndex = index;
   };
 
   const onTracksChange = e => {
     const tracks = Array.from(media.textTracks);
     const index = tracks.findIndex(t => t.mode === Html5.TextTrack.Mode.SHOWING);
-    if (currentTrackIndex !== index) {
-      setTrack(index);
-      currentTrackIndex = index;
-      info.currentTrackIndex = index;
-    }
+    if (currentTrackIndex !== index) info.currentTrackIndex = index;
   };
 
   // --------------------------------------------------------------
@@ -412,7 +386,6 @@
   // If media is initialized or changed (audio/video/false).
   $: if (prevMedia !== media) {
     disposal.dispose();
-    unbindCueChangeListener();
     if (media) setupMediaListeners();
     prevMedia = media;
   }

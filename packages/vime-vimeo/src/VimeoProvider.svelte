@@ -97,6 +97,7 @@
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import { raf } from 'svelte/internal';
   import { PlayerState, MediaType } from '@vime/core';
+  import { is_array } from '@vime/utils';
   import VimeoEmbed from './VimeoEmbed.svelte';
 
   let embed;
@@ -121,20 +122,22 @@
   export const getEmbed = () => embed;
   export const getEl = () => embed.getIframe();
 
-  export const setPaused = paused => paused ? send(VM.Command.PAUSE) : send(VM.Command.PLAY);
-  export const setMuted = muted => send(VM.Command.SET_MUTED, muted);
-  export const setVolume = volume => send(VM.Command.SET_VOLUME, volume / 100);
-  export const setCurrentTime = time => send(VM.Command.SET_CURRENT_TIME, time);
+  export const setPaused = paused => { paused ? send(VM.Command.PAUSE) : send(VM.Command.PLAY); };
+  export const setMuted = muted => { send(VM.Command.SET_MUTED, muted); };
+  export const setVolume = volume => { send(VM.Command.SET_VOLUME, volume / 100); };
+  export const setCurrentTime = time => { send(VM.Command.SET_CURRENT_TIME, time); };
   export const setPlaysinline = enabled => { params.playsinline = enabled; };
   export const setControls = enabled => { params.controls = enabled; };
-  export const setPlaybackRate = rate => send(VM.Command.SET_PLAYBACK_RATE, rate);
+  export const setPlaybackRate = rate => { send(VM.Command.SET_PLAYBACK_RATE, rate); };
 
   export const supportsPiP = () => false;
   export const supportsFullscreen = () => true;
 
-  export const enableTracks = enabled => { send(VM.Command.DISABLE_TEXT_TRACK, !enabled); };
-
   export const setTrack = index => {
+    if (index === -1) {
+      send(VM.Command.DISABLE_TEXT_TRACK);
+      return;
+    }
     const { language, kind } = tracks[index];
     send(VM.Command.ENABLE_TEXT_TRACK, { language, kind });
   };
@@ -174,21 +177,27 @@
     timeRaf = raf(getTimeUpdates);
   };
 
+  const onMethod = (method, value) => {
+    switch (method) {
+      case VM.Command.GET_CURRENT_TIME:
+        onTimeUpdate(parseFloat(value));
+        break;
+      case VM.Command.GET_TEXT_TRACKS:
+        tracks = value || [];
+        info.tracks = tracks.map(track => ({ ...track, srclang: track.language }));
+        info.currentTrackIndex = tracks.findIndex(t => t.mode === 'showing');
+        break;
+      case VM.Command.GET_DURATION:
+        info.duration = parseFloat(value);
+        break;
+    }
+  };
+
   const onData = e => {
     const data = e.detail;
     if (!data) return;
-    const event = data.event;
-    const payload = data.data;
-    if (data.method === VM.Command.GET_CURRENT_TIME) {
-      onTimeUpdate(parseFloat(data.value));
-      return;
-    }
-    if (data.method === VM.Command.GET_TEXT_TRACKS) {
-      tracks = data.value || [];
-      info.tracks = tracks;
-      info.currentTrackIndex = tracks.findIndex(t => t.mode === 'showing');
-    }
-    if (data.method === VM.Command.GET_DURATION) info.duration = parseFloat(data.value);
+    const { event, data: payload } = data;
+    if (data.method) onMethod(data.method, data.value);
     if (!event) return;
     switch (event) {
       case VM.Event.READY:
@@ -217,9 +226,6 @@
         break;
       case VM.Event.TEXT_TRACK_CHANGE:
         info.currentTrackIndex = tracks.findIndex(t => t.label === payload.label);
-        break;
-      case VM.Event.CUE_CHANGE:
-        info.activeCues = payload.cues ? payload.cues : [payload];
         break;
       case VM.Event.SEEKED:
         seeking = false;
