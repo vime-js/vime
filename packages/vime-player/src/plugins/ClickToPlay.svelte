@@ -29,11 +29,13 @@
   export let autopilot = true;
   export let isEnabled = false;
 
-  $: if (autopilot) isEnabled = $isControlsEnabled && 
-    $canInteract && 
-    !$isMobile && 
-    $isVideoView &&
-    !$useNativeControls;
+  $: if (autopilot) {
+    isEnabled = $isControlsEnabled && 
+      $canInteract && 
+      $isVideoView &&
+      !$isMobile && 
+      !$useNativeControls;
+  }
 
   // --------------------------------------------------------------
   // Events

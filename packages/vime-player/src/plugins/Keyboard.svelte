@@ -27,17 +27,20 @@
 
   const registry = player.createRegistry(ID, validateEvent);
   const tooltips = player.getRegistry().watch(TooltipsID);
-  const { isPlayerActive } = player.getStore();
+  const { isPlayerActive, useNativeControls } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  export let isEnabled = true;
+  export let autopilot = true;
+  export let isEnabled = false;
 
   export const getEvent = id => $registry[id];
   export const getEvents = () => $registry;
   export const getRegistry = () => registry;
+
+  $: if (autopilot) isEnabled = !$useNativeControls
 
   // --------------------------------------------------------------
   // Events
