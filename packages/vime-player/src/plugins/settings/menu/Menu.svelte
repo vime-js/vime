@@ -1,6 +1,6 @@
 <svelte:window
-  on:keydown="{e => { if (e.keyCode === KeyCode.ESC) dispatchMenuClose(); }}"
-  on:click="{() => dispatchMenuClose()}"
+  on:keydown={onWindowKeyDown}
+  on:click={dispatchMenuClose}
 />
 
 <ul
@@ -13,14 +13,23 @@
   on:mousedown|preventDefault
   on:keydown={onKeyDown}
   on:focus={onMenuOpen}
-  bind:this={ref}
+  bind:this={el}
 >
   <slot />
 </ul>
 
+<script context="module">
+  const Event = {
+    MENU_CLOSE: 'menuclose'
+  };
+</script>
+
 <script>
   import { tick, createEventDispatcher } from 'svelte';
-  import { ctxKey } from '~src/context';
+
+  // --------------------------------------------------------------
+  // Setup
+  // --------------------------------------------------------------
 
   const dispatch = createEventDispatcher();
 
@@ -39,27 +48,35 @@
     DOWN: 40
   });
 
+  // --------------------------------------------------------------
+  // Props
+  // --------------------------------------------------------------
+
   let items;
   let activeItem = 0;
+  let el;
+
+  export const getEl = () => el;
+  export const getSubMenu = item => document.getElementById(item.getAttribute('aria-controls'));
   
-  // Two-way binding (readonly).
-  export let ref = null;
-
-  const dispatchMenuClose = () => dispatch('menuclose');
-
-  const setFocusToItem = index => {
+  export const setFocusToItem = index => {
     if (index === -1) index = items.length - 1;
     if (index === items.length) index = 0;
     activeItem = index;
     items[activeItem].focus();
   };
 
-  const setFocusToController = () => {
+  export const setFocusToController = () => {
     const controller = document.getElementById($$props['aria-labelledby']);
     if (controller) controller.focus();
   };
 
-  const getSubMenu = item => document.getElementById(item.getAttribute('aria-controls'));
+  // --------------------------------------------------------------
+  // Events
+  // --------------------------------------------------------------
+
+  const dispatchMenuClose = () => { dispatch(Event.MENU_CLOSE); }
+  const onWindowKeyDown = e => { if (e.keyCode === KeyCode.ESC) dispatchMenuClose(); }
 
   const onItemSelect = async () => {
     const item = items[activeItem];
@@ -133,7 +150,7 @@
 </script>
 
 <style type="text/scss">
-  @import '../../style/common';
+  @import '../../../style/common';
 
   ul {
     display: flex;

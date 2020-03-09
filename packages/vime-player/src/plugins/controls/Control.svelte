@@ -54,8 +54,6 @@
   tooltipIdCount += 1;
   const tooltipId = `tooltip-${tooltipIdCount}`;
 
-  const tooltipsPlugin = player.getPluginsRegistry().watch(TooltipsID);
-  
   const { 
     isVideoView, isLive, isTouch, 
     isMobile
@@ -79,15 +77,18 @@
   // --------------------------------------------------------------
   // Tooltips Plugin
   // --------------------------------------------------------------
+
+  const tooltipsPlugin = player.getPluginsRegistry().watch(TooltipsID);
   
   let tooltip;
 
   $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.getTooltipComponent();
+  $: tooltipsRegistry = $tooltipsPlugin && $tooltipsPlugin.getRegistry();
 
   // TODO: this is a poor temporary fix, the same control might be reused in different
   // positions, how to register them?
-  $: if ($tooltipsPlugin && tooltip && !$tooltipsPlugin.getTooltip(label)) {
-    $tooltipsPlugin.getRegistry().register(label, tooltip);
+  $: if (tooltipsRegistry && tooltip && !tooltipsRegistry.has(label)) {
+    tooltipsRegistry.register(label, tooltip);
   }
 </script>
 

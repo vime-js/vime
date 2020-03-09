@@ -5,11 +5,12 @@ import {
   on_svelte_instance_destroy, is_null
 } from '@vime/utils';
 
+// TODO: needs work.
 export default class Registry {
   constructor (id, validator) {
     this._id = id;
     this._name = id + 'Registry';
-    this._validator = null;
+    this._validator = validator || (() => true);
     this._registry = new Set();
     this._values = writable({});
     this._parent = null;
@@ -32,7 +33,7 @@ export default class Registry {
     const result = {};
     Object.keys(values).forEach(id => {
       const value = values[id];
-      result[id] = is_instance_of(value, Registry) ? this._unwrap(value.values()) : value;
+      result[id] = is_instance_of(value, Registry) ? this._unwrap(value.getValues()) : value;
     });
     return result;
   }
@@ -45,15 +46,15 @@ export default class Registry {
     return this._name;
   }
 
-  registrations () {
+  getRegistrations () {
     return Array.from(this._registry.values());
   }
 
-  value (id) {
+  getValue (id) {
     return get(this._values)[id];
   }
 
-  values () {
+  getValues () {
     return get(this._values);
   }
 
@@ -61,21 +62,20 @@ export default class Registry {
     return this._registry.has(id);
   }
 
+  invalidate () {
+    this._values.update(v => v);
+    this._invalidateParent();
+  }
+
   register (id, value) {
     if (!id) this._error('registration failed because `id` is missing');
     if (this.has(id)) this._error(`attempted to register with \`id\` [${id}] but it is taken`);
-    if (this._validator && !this._validator(id, value)) return;
+    if (!this._validator(id, value)) return;
     this._registry.add(id);
     this._values.update($values => ({ ...$values, [id]: value }));
     on_svelte_instance_destroy(value, () => this.deregister(id));
     if (is_instance_of(value, Registry)) value._parent = this;
     this._dispatch('register', { id, value });
-    this._invalidateParent();
-  }
-
-  update (id, value) {
-    if (!this.has(id)) this._error(`attempted to update an unregistered value with \`id\` [${id}]`);
-    this._values.update($values => ({ ...$values, [id]: value }));
     this._invalidateParent();
   }
 
@@ -106,7 +106,7 @@ export default class Registry {
     if (this._parent && !this._parent._destroyed) {
       this._parent.deregister(this.getId());
     }
-    this.registrations().forEach(id => this.deregister(id));
+    this.getRegistrations().forEach(id => this.deregister(id));
     this._parent = null;
     this._registry = null;
     this._values = null;

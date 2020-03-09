@@ -95,7 +95,7 @@
       isControlsActive, debug, isFullscreenActive,
       aspectRatio, Provider
     } = store);
-  })
+  });
 
   // --------------------------------------------------------------
   // Props

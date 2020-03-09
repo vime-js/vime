@@ -1,6 +1,6 @@
 <svelte:options accessors />
 
-{#if isEnabled}
+{#if isEnabled && title}
   <span
     {id}
     role="tooltip"
@@ -36,7 +36,7 @@
   let growRight = false;
 
   export let id = null;
-  export let title = '';
+  export let title = null;
   export let hint = null;
   export let isEnabled = true;
   export let isActive = false;

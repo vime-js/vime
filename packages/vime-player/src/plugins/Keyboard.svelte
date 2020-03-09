@@ -6,8 +6,8 @@
 </script>
 
 <script>
-  import { ID as TooltipsID } from './tooltips/Tooltips.svelte';
   import { is_array } from '@vime/utils';
+  import { ID as TooltipsID } from './tooltips/Tooltips.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -26,7 +26,6 @@
   };
 
   const registry = player.createRegistry(ID, validateEvent);
-  const tooltips = player.getRegistry().watch(TooltipsID);
   const { isPlayerActive, useNativeControls } = player.getStore();
 
   // --------------------------------------------------------------
@@ -36,11 +35,9 @@
   export let autopilot = true;
   export let isEnabled = false;
 
-  export const getEvent = id => $registry[id];
-  export const getEvents = () => $registry;
   export const getRegistry = () => registry;
-
-  $: if (autopilot) isEnabled = !$useNativeControls
+  
+  $: if (autopilot) isEnabled = !$useNativeControls;
 
   // --------------------------------------------------------------
   // Events
@@ -61,6 +58,8 @@
   // --------------------------------------------------------------
   // Tooltips Plugin
   // --------------------------------------------------------------
+
+  const tooltips = player.getRegistry().watch(TooltipsID);
 
   $: if ($tooltips) {
     Object.keys($registry).forEach(id => {

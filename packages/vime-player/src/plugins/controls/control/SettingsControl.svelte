@@ -1,20 +1,25 @@
-<!-- {#if $isSettingsSupported && $isSettingsEnabled}
+<svelte:options accessors />
+<svelte:window on:keydown={onWindowKeyDown} />
+
+{#if isEnabled}
   <div>
     <Control
       {id}
       {player}
-      title={$i18n.settings}
-      on:click={onToggle}
+      label={LABEL}
+      title={!isActive ? $i18n.settings : null}
       aria-haspopup
       aria-controls={menuId}
-      aria-expanded={$isSettingsActive}
+      aria-expanded={isActive}
       aria-label={$i18n.settings}
+      on:click
+      on:click={onToggle}
       bind:this={control}
     >
       <Icon icon={$icons.settings} />
     </Control>
   </div>
-{/if} -->
+{/if}
 
 <script context="module">
   export const ID = 'vSettingsControl';
@@ -25,6 +30,8 @@
   import { tick } from 'svelte';
   import { Icon } from '@vime/core';
   import Control from '../Control.svelte';
+  import PluginRole from '../../../core/PluginRole';
+  import { ID as SettingsID } from '../../settings/Settings.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -32,48 +39,59 @@
 
   export let player;
 
-  const { i18n, icons } = player.getStore();
-  
+  const { i18n, icons, isLive, plugins } = player.getStore();
+
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
   let control;
+  let hasSettingsPlugin = false;
+
+  export let id = null;
+  export let menuId = null;
+  export let autopilot = true;
+  export let isActive = false;
+  export let isEnabled = false;
 
   export const getControl = () => control;
-
-  // --------------------------------------------------------------
-  // Events
-  // --------------------------------------------------------------
-
-  // const onToggle = e => {
-  //   e.stopPropagation()
-  //   $isSettingsActive = !$isSettingsActive
-  // }
+  
+  $: if (autopilot) hasSettingsPlugin = $plugins.some(p => p.ROLE === PluginRole.SETTINGS);
+  $: if (autopilot) isEnabled = hasSettingsPlugin && !$isLive;
 
   // --------------------------------------------------------------
   // Settings Plugin
   // --------------------------------------------------------------
 
-  let id;
-  let menuId;
+  const settingsPlugin = player.getPluginsRegistry().watch(SettingsID);
 
-  // settingsControl
-  // const keyboardEvent = {
-  //   // Enter (13)
-  //   keys: [13],
-  //   action: async () => {
-  //     onToggle()
-  //     await tick()
-  //     // focus menu
-  //   }
-  // }
+  let onToggle;
+  let isSettingsActive;
 
-  // get id ($settingsMenuRef.getAttribute('aria-labelledby'))
-  // get menuId ($settingsMenuRef.getAttribute('id'))
+  const _onToggle = e => {
+    e.stopPropagation();
+    $isSettingsActive = !$isSettingsActive;
+  };
+
+  const onWindowKeyDown = async e => {
+    if (e.keyCode !== 13 || !$settingsPlugin) return;
+    _onToggle()
+    // Wait for dom updates so menu is ready.
+    await tick();
+    $settingsPlugin.getMenu().setFocusToItem(0);
+  }
+
+  $: if (autopilot && $settingsPlugin) {
+    ({ isMenuActive: isSettingsActive } = $settingsPlugin.getStore());
+  }
+
+  $: if (autopilot) onToggle = (hasSettingsPlugin && $settingsPlugin) ? _onToggle : null;
+  $: if (autopilot) id = $settingsPlugin ? $settingsPlugin.getLabelledBy() : null;
+  $: if (autopilot) menuId = $settingsPlugin ? $settingsPlugin.getId() : null;
+  $: if (autopilot) isActive = !!$isSettingsActive
 </script>
 
-<!-- <style type="text/scss">
+<style type="text/scss">
   div {
     :global(.control > svg) {
       transition: transform 0.3s ease;
@@ -83,4 +101,4 @@
       transform: rotate(90deg);
     }
   }
-</style> -->
+</style>
