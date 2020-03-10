@@ -11,8 +11,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn clean:build && cross-env NODE_ENV=production && lerna run build",
-    "build:dev": "yarn clean:build && cross-env NODE_ENV=development && lerna run build",
+    "build": "lerna run build",
+    "build:dev": "lerna run build:dev",
+    "build:all": "yarn clean:build && yarn build && yarn build:dev",
     "clean:node": "rimraf node_modules packages/*/node_modules",
     "clean:build": "rimraf packages/*/dist",
     "lint:js": "eslint packages --fix --ext .js,.svelte",
@@ -24,7 +25,7 @@
     "toc": "doctoc README.md",
     "setup": "yarn clean:node && yarn install --no-lockfile",
     "release": "yarn validate && lerna publish --silent",
-    "validate": "yarn lint && yarn test && yarn build"
+    "validate": "yarn lint && yarn test && yarn build:all"
   },
   "husky": {
     "hooks": {
@@ -76,7 +77,6 @@
     "codecov": "^3.5.0",
     "colors": "^1.4.0",
     "conventional-changelog-cli": "^2.0.23",
-    "cross-env": "^7.0.0",
     "doctoc": "^1.4.0",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.1",
@@ -95,11 +95,11 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "rimraf": "^3.0.0",
-    "rollup": "^1.32.0",
+    "rollup": "^2.0.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-svelte": "^5.1.1",
     "rollup-plugin-svg": "^2.0.0",
-    "rollup-plugin-terser": "^5.2.0",
+    "rollup-plugin-terser": "^5.3.0",
     "svelte": "^3.19.1",
     "svelte-jester": "^1.0.4",
     "svelte-loader": "^2.13.6",
