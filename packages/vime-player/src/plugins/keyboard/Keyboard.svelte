@@ -7,7 +7,7 @@
 
 <script>
   import { is_array } from '@vime/utils';
-  import { ID as TooltipsID } from './tooltips/Tooltips.svelte';
+  import { ID as TooltipsID } from '../tooltips/Tooltips.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -26,6 +26,7 @@
   };
 
   const registry = player.createRegistry(ID, validateEvent);
+  const plugins = player.getPluginsRegistry();
   const { isPlayerActive, useNativeControls } = player.getStore();
 
   // --------------------------------------------------------------
@@ -59,11 +60,12 @@
   // Tooltips Plugin
   // --------------------------------------------------------------
 
-  const tooltips = player.getRegistry().watch(TooltipsID);
+  $: tooltips = $plugins[TooltipsID];
+  $: tooltipsRegistry = tooltips && tooltips.getRegistry();
 
-  $: if ($tooltips) {
+  $: if ($tooltipsRegistry) {
     Object.keys($registry).forEach(id => {
-      const tooltip = $tooltips[id];
+      const tooltip = $tooltipsRegistry[id];
       if (tooltip) {
         tooltip.hint = $registry[id].hint;
         tooltip.showHint = isEnabled;

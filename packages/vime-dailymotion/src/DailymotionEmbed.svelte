@@ -2,7 +2,7 @@
   {src}
   {title}
   {params}
-  origin={DM.ORIGIN}
+  origin={ORIGIN}
   decoder={DECODER}
   preconnections={PRECONNECTIONS}
   on:load
@@ -16,22 +16,22 @@
 
 <script context="module">
   import { decode_query_string } from '@vime/utils';
-
-  const DM = {
-    ORIGIN: 'https://www.dailymotion.com',
-    Event: {
-      PLAYBACK_READY: 'playback_ready',
-      VIDEO_CHANGE: 'videochange',
-      ERROR: 'error'
-    }
-  };
+  import { ORIGIN } from './utils';
 
   const DECODER = decode_query_string;
 
   const PRECONNECTIONS = [
-    DM.ORIGIN,
+    ORIGIN,
     'https://static1.dmcdn.net'
   ];
+
+  const DM = {};
+
+  DM.Event = {
+    PLAYBACK_READY: 'playback_ready',
+    VIDEO_CHANGE: 'videochange',
+    ERROR: 'error'
+  };
 
   const Event = {
     READY: 'ready',
@@ -60,7 +60,7 @@
 
   export const getSrc = () => src;
   export const getTitle = () => videoTitle;
-  export const getOrigin = () => DM.ORIGIN;
+  export const getOrigin = () => ORIGIN;
   export const getIframe = () => embed.getIframe();
   export const getSrcWithParams = () => embed.getSrc();
 
@@ -79,9 +79,8 @@
 
   const buildSrc = () => {
     const vId = window.encodeURIComponent(srcId || '');
-    const base = `${DM.ORIGIN}/embed`;
     const content = srcId ? `/video/${vId}` : '';
-    return `${base}${content}?api=1`;
+    return `${ORIGIN}/embed${content}?api=1`;
   };
 
   const onReload = () => {

@@ -1,5 +1,7 @@
 import * as Controls from './Controls.svelte';
+import * as DefaultControls from './DefaultControls.svelte';
 import * as PlaybackControl from './control/PlaybackControl.svelte';
+import * as BigPlaybackControl from './control/BigPlaybackControl.svelte';
 import * as CaptionControl from './control/CaptionControl.svelte';
 import * as MuteControl from './control/MuteControl.svelte';
 import * as PiPControl from './control/PiPControl.svelte';
@@ -9,7 +11,7 @@ import * as ScrubberControl from './control/ScrubberControl.svelte';
 import * as SeekForwardControl from './control/SeekForwardControl.svelte';
 import * as SeekBackwardControl from './control/SeekBackwardControl.svelte';
 import * as LiveIndicator from './control/LiveIndicator.svelte';
-import * as SettingsControl from './control/SettingsControl.svelte'
+import * as SettingsControl from './control/SettingsControl.svelte';
 import * as ControlSpacer from './control/ControlSpacer.svelte';
 import * as ControlNewLine from './control/ControlNewLine.svelte';
 import * as CurrentTime from './control/time/CurrentTime.svelte';
@@ -24,7 +26,9 @@ export { default as SeekControl } from './control/SeekControl.svelte';
 export { default as ToggleControl } from './control/ToggleControl.svelte';
 
 export { Controls };
+export { DefaultControls };
 export { PlaybackControl };
+export { BigPlaybackControl };
 export { CaptionControl };
 export { MuteControl };
 export { PiPControl };

@@ -1,5 +1,6 @@
 <div 
-  class="break" 
+  class="break"
+  class:mobile={$isMobile}
   bind:this={el}
 ></div>
 
@@ -8,8 +9,9 @@
 </script>
 
 <script>
-  import { noop } from 'svelte/internal';
+  import { raf } from 'svelte/internal';
   import { onMount, onDestroy } from 'svelte';
+  import { set_style, set_style_raf } from '@vime/utils';
 
   // --------------------------------------------------------------
   // Props
@@ -17,8 +19,7 @@
 
   export let player;
 
-  // Silence dev mode warning.
-  noop(player);
+  const { isMobile } = player.getStore();
 
   let el;
   let nextControl;
@@ -27,20 +28,27 @@
   // Events
   // --------------------------------------------------------------
 
-  onMount(async () => {
+  onMount(() => {
     nextControl = el.nextElementSibling;
-    nextControl.style.marginLeft = 0;
+    set_style_raf(nextControl, 'marginLeft', 0);
   });
 
   onDestroy(() => {
-    if (nextControl) nextControl.style.marginLeft = null;
-    nextControl = null;
+    if (!nextControl) return;
+    raf(() => {
+      set_style(nextControl, 'marginLeft');
+      nextControl = null;
+    });
   });
 </script>
 
-<style>
+<style type="text/scss">
   .break {
     width: 100%;
     margin-bottom: 8px;
+
+    &.mobile {
+      margin-bottom: 4px;
+    }
   }
 </style>

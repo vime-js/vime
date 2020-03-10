@@ -1,9 +1,10 @@
 <button
   {id}
   {role}
-  class:audio={$isAudio}
+  class:mobile={$isMobile}
+  class:audio={!$isVideoView}
   class:videoFocus={!$isTouch}
-  class:audioFocus={$isAudio && !$isTouch}
+  class:audioFocus={!$isVideoView && !$isTouch}
   class:touchHighlight={showHighlight}
   use:focus
   use:highlight
@@ -17,9 +18,7 @@
   aria-expanded={$$props['aria-expanded']}
   aria-disabled={$$props['aria-disabled']}
 >
-  <svg role="presentation" focusable="false">
-    <use href={Icon.CHECKMARK}></use>
-  </svg>
+  <Icon icon={$icons.checkmark} />
   <span class="arrow left"></span>
   <span>{title}</span>
   <span class="hint">{hint}</span>
@@ -38,7 +37,7 @@
 
   export let player;
 
-  const { isAudio, isTouch } = player.getStore();
+  const { isMobile, isVideoView, isTouch, icons } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -77,6 +76,10 @@
 
     &:focus {
       outline: 0;
+    }
+
+    &.mobile {
+      padding: 12px ($control-padding * 2);
     }
 
     &.audio {
@@ -135,7 +138,7 @@
     }
 
     &[aria-checked] {
-      svg {
+      :global(svg) {
         display: inline-block;
       }
 
@@ -144,21 +147,21 @@
       }
     }
 
-    &[aria-checked='true'] svg {
+    &[aria-checked='true'] :global(svg) {
       opacity: 1;
       transition: opacity 0.3s ease;
     }
-  }
 
-  svg {
-    opacity: 0;
-    display: none;
-    fill: currentColor;
-    pointer-events: none;
-    width: 10px;
-    height: 10px;
-    margin-right: 10px;
-    transition: opacity 0.3s ease;
+    :global(svg) {
+      opacity: 0;
+      display: none;
+      fill: currentColor;
+      pointer-events: none;
+      width: 10px;
+      height: 10px;
+      margin-right: 10px;
+      transition: opacity 0.3s ease;
+    }
   }
 
   .hint {

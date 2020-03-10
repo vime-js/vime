@@ -1,10 +1,11 @@
-import { writable, readable, derived } from 'svelte/store'
+import { writable, readable, derived } from 'svelte/store';
 import en from '../lang/en';
-import PluginRole from './PluginRole'
+import PluginRole from './PluginRole';
+
 import { 
   IS_MOBILE, listen_for_touch_input, mergeable,
   private_writable
-} from '@vime/utils'
+} from '@vime/utils';
 
 // _store = internalPlayerStore (packages/vime-core/src/playerStore.js).
 export const buildPlayerStore = _store => {
@@ -22,12 +23,12 @@ export const buildPlayerStore = _store => {
   store.isMobile = writable(IS_MOBILE);
   store.isTouch = readable(false, set => listen_for_touch_input(t => set(t)));
   store.isContextMenuEnabled = writable(false);
-
+ 
   store.currentPoster = derived(
-    [store.poster, store.nativePoster],
+    [_store.poster, _store.nativePoster],
     ([$poster, $nativePoster]) => ($poster || $nativePoster)
   );
-  
+
   store.i18n = derived(
     [store.locale, store.langauges],
     ([$locale, $languages]) => $languages[$locale] || $languages.en
@@ -92,4 +93,4 @@ export const buildPlayerStore = _store => {
     ..._store,
     ...store
   };
-}
+};

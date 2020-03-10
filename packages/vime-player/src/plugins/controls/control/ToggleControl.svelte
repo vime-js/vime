@@ -3,6 +3,7 @@
     {player}
     {title}
     {label}
+    {large}
     on:click
     on:click={autopilot ? onToggle : null}
     aria-label={$$props['aria-label']}
@@ -34,6 +35,7 @@
   export let inactiveIcon;
   export let isActive = false;
   export let isEnabled = true;
+  export let large = false;
   export let autopilot = true;
 
   export const getControl = () => control;

@@ -1,13 +1,13 @@
+import { set_style } from '@vime/utils';
+
 export default function aspectRatio (node, aspectRatio) {
   const update = aspectRatio => {
     if (!aspectRatio) {
-      node.style.paddingBottom = null;
-      node.style.background = null;
+      set_style(node, 'paddingBottom');
       return;
     }
     const [width, height] = aspectRatio.split(':');
-    node.style.background = '#000';
-    node.style.paddingBottom = `${(100 / width) * height}%`;
+    set_style(node, 'paddingBottom', `${(100 / width) * height}%`);
   };
 
   update(aspectRatio);

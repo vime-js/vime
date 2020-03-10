@@ -1,4 +1,5 @@
 export * from './debug';
+export * from './style';
 export * from './decode';
 export * from './json';
 export * from './load';

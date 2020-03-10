@@ -1,5 +1,5 @@
-import { providerBuild } from '../../rollup-base';
+import { basicBuild } from '../../rollup';
 
-const name = 'Html5';
+const name = 'html5';
 
-export default providerBuild({ name, hasLiteVersion: false });
+export default basicBuild({ name, hasLite: false });

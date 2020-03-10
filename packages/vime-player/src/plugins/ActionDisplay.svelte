@@ -36,7 +36,7 @@
 <script>
   import { tick } from 'svelte';
   import { Icon } from '@vime/core';
-  import { ID as ControlsId } from './controls/Controls.svelte';
+  import { ID as ControlsID } from './controls/Controls.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -49,7 +49,9 @@
     isVideoView, useNativeControls
   } = player.getStore();
 
-  const controlsPlugin = player.getPluginsRegistry().watch(ControlsId);
+  const plugins = player.getPluginsRegistry();
+
+  $: controlsPlugin = $plugins[ControlsID];
 
   // --------------------------------------------------------------
   // Props
@@ -71,7 +73,7 @@
     $playbackReady && 
     $isVideoView && 
     !$isMobile && 
-    (($controlsPlugin && !$controlsPlugin.hasCenterControls()) ||  !$controlsPlugin);
+    ((controlsPlugin && !controlsPlugin.hasCenterControls()) ||  !controlsPlugin);
 
   export const run = async (i, v = null) => {
     icon = i;
@@ -89,8 +91,8 @@
   // Controls Plugin
   // --------------------------------------------------------------
 
-  $: if (valueContainer && $controlsPlugin) $controlsPlugin.centerAssist(valueContainer);
-  $: if (actionContainer && $controlsPlugin) $controlsPlugin.centerAssist(actionContainer);
+  $: if (valueContainer && controlsPlugin) controlsPlugin.centerAssist(valueContainer);
+  $: if (actionContainer && controlsPlugin) controlsPlugin.centerAssist(actionContainer);
 </script>
 
 <style type="text/scss">

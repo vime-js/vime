@@ -14,7 +14,6 @@ const getFileSizeGzipped = path => {
 };
 
 const getFileSizes = path => {
-  if (!fs.existsSync(path)) return null;
   return {
     original: getFileSize(path),
     compressed: getFileSizeGzipped(path)
@@ -24,6 +23,7 @@ const getFileSizes = path => {
 const pkgSizes = {};
 const packagesPath = `${process.cwd()}/packages`;
 const packages = fs.readdirSync(packagesPath);
+const packageFilter = process.argv.slice(2).map(p => p.startsWith('@') ? p.slice(1).replace('/', '-') : p);
 
 packages.forEach(pkg => {
   if (
@@ -31,13 +31,14 @@ packages.forEach(pkg => {
     pkg.includes('core') || 
     pkg.includes('utils')
   ) return;
-  const distPath = `${packagesPath}/${pkg}/dist/modern`;
-  const litePath = `${distPath}/FileSizeLite.esm.js`;
-  const fullPath = `${distPath}/FileSize.esm.js`;
-  pkgSizes[pkg] = {
-    lite: getFileSizes(litePath),
-    full: getFileSizes(fullPath) 
-  };
+  if (packageFilter.length > 0 && !packageFilter.includes(pkg)) return;
+  const distPath = `${packagesPath}/${pkg}/dist`;
+  if (!fs.existsSync(distPath)) return;
+  const distFiles = fs.readdirSync(distPath);
+  pkgSizes[pkg] = {};
+  distFiles.forEach(file => {
+    pkgSizes[pkg][file] = getFileSizes(`${distPath}/${file}`);
+  });
 });
 
 const printFileSizes = sizes => {
@@ -47,14 +48,11 @@ const printFileSizes = sizes => {
 };
 
 Object.keys(pkgSizes).forEach(pkg => {
-  const sizes = pkgSizes[pkg];
-  console.log(pkg.bold.green);
-  if (sizes.lite) {
-    console.log(' Lite'.yellow.bold);
-    printFileSizes(sizes.lite);
-  }
-  if (sizes.full) {
-    console.log(' Full'.red.bold);
-    printFileSizes(sizes.full);
-  }
+  const fileSizes = pkgSizes[pkg];
+  console.log(pkg.green.bold);
+  Object.keys(fileSizes).forEach(file => {
+    console.log(`  ${file}`.white.bold);
+    const sizes = fileSizes[file];
+    printFileSizes(sizes);
+  });
 });

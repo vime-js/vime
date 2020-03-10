@@ -1,5 +1,5 @@
-import { providerBuild } from '../../rollup-base';
+import { basicBuild } from '../../rollup';
 
-const name = 'Dailymotion';
+const name = 'dailymotion';
 
-export default providerBuild({ name });
+export default basicBuild({ name });

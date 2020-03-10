@@ -40,7 +40,7 @@
         emptyHint={item.emptyHint}
         isHidden={currentMenuItemId !== null && currentMenuItemId !== id}
         isDisabled={item.isDisabled}
-        on:valuechange={item.onValueChange}
+        on:valuechange="{e => item.onValueChange(e.detail)}"
         on:menuchange="{e => onMenuItemChange(id, e.detail)}"
         bind:this={instances[id]}
       />
@@ -63,7 +63,7 @@
   import MenuItem from './menu/MenuItem.svelte';
   import MenuItemRadio from './menu/MenuItemRadio.svelte';
   import Control from '../controls/Control.svelte';
-  import { map_store_to_component } from '@vime/utils'
+  import { map_store_to_component } from '@vime/utils';
 
   // eslint-disable-next-line prefer-const
   menuIdCounter += 1;
@@ -96,7 +96,7 @@
 
   let el;
   let menu;
-  let instances = {};
+  const instances = {};
   let currentMenuItemId = null;
 
   export const getId = () => menuId;
@@ -110,10 +110,10 @@
   // Events
   // --------------------------------------------------------------
 
-  const onCloseMenu = () => { $isMenuActive = false; }
-  const onMenuItemChange = (id, isOpen) => { currentMenuItemId = isOpen ? id : null; }
+  const onCloseMenu = () => { $isMenuActive = false; };
+  const onMenuItemChange = (id, isOpen) => { currentMenuItemId = isOpen ? id : null; };
 
-  $: isModalHeaderHidden = !$isMobile || !$isVideoView || (currentMenuItemId !== null)
+  $: isModalHeaderHidden = !$isMobile || !$isVideoView || (currentMenuItemId !== null);
 
   $: Object.keys($menuItems)
     .filter(id => !registry.has(id) && instances[id])
@@ -143,6 +143,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 65%;
+    z-index: 3;
     scrollbar-width: thin;
     scrollbar-color: $video-scroll-thumb-color $video-scroll-bg;
     scroll-behavior: smooth;
@@ -167,7 +168,7 @@
 
     &.audio {
       background: $audio-settings-bg;
-      bottom: 48px;
+      bottom: 64px;
       max-height: 200px;
       scrollbar-color: $audio-scroll-thumb-color $audio-scroll-bg;
 
@@ -185,7 +186,8 @@
       max-height: none;
       z-index: 10;
       top: 100%;
-      transition: top .5s ease-out;
+      position: fixed;
+      transition: top .3s ease-out;
 
       &.active {
         top: 0;

@@ -1,5 +1,6 @@
 <ToggleControl
   {player}
+  {large}
   label={LABEL}
   activeIcon={$icons.play}
   inactiveIcon={$icons.pause}
@@ -31,6 +32,8 @@
   // --------------------------------------------------------------
 
   let toggle;
+
+  export let large = false;
 
   export const getToggle = () => toggle;
 </script>

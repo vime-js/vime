@@ -39,6 +39,7 @@
 
   export let player;
 
+  const pluginsRegistry = player.getPluginsRegistry();
   const { i18n, icons, isLive, plugins } = player.getStore();
 
   // --------------------------------------------------------------
@@ -50,20 +51,17 @@
 
   export let id = null;
   export let menuId = null;
-  export let autopilot = true;
   export let isActive = false;
   export let isEnabled = false;
 
   export const getControl = () => control;
   
-  $: if (autopilot) hasSettingsPlugin = $plugins.some(p => p.ROLE === PluginRole.SETTINGS);
-  $: if (autopilot) isEnabled = hasSettingsPlugin && !$isLive;
+  $: hasSettingsPlugin = $plugins.some(p => p.ROLE === PluginRole.SETTINGS);
+  $: isEnabled = hasSettingsPlugin && !$isLive;
 
   // --------------------------------------------------------------
   // Settings Plugin
   // --------------------------------------------------------------
-
-  const settingsPlugin = player.getPluginsRegistry().watch(SettingsID);
 
   let onToggle;
   let isSettingsActive;
@@ -74,21 +72,23 @@
   };
 
   const onWindowKeyDown = async e => {
-    if (e.keyCode !== 13 || !$settingsPlugin) return;
-    _onToggle()
+    if (e.keyCode !== 13 || !settingsPlugin) return;
+    _onToggle();
     // Wait for dom updates so menu is ready.
     await tick();
-    $settingsPlugin.getMenu().setFocusToItem(0);
+    settingsPlugin.getMenu().setFocusToItem(0);
+  };
+
+  $: settingsPlugin = $pluginsRegistry[SettingsID];
+
+  $: if (settingsPlugin) {
+    ({ isMenuActive: isSettingsActive } = settingsPlugin.getStore());
   }
 
-  $: if (autopilot && $settingsPlugin) {
-    ({ isMenuActive: isSettingsActive } = $settingsPlugin.getStore());
-  }
-
-  $: if (autopilot) onToggle = (hasSettingsPlugin && $settingsPlugin) ? _onToggle : null;
-  $: if (autopilot) id = $settingsPlugin ? $settingsPlugin.getLabelledBy() : null;
-  $: if (autopilot) menuId = $settingsPlugin ? $settingsPlugin.getId() : null;
-  $: if (autopilot) isActive = !!$isSettingsActive
+  $: onToggle = (hasSettingsPlugin && settingsPlugin) ? _onToggle : null;
+  $: id = settingsPlugin ? settingsPlugin.getLabelledBy() : null;
+  $: menuId = settingsPlugin ? settingsPlugin.getId() : null;
+  $: isActive = !!$isSettingsActive;
 </script>
 
 <style type="text/scss">

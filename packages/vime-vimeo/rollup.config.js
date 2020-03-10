@@ -1,5 +1,5 @@
-import { providerBuild } from '../../rollup-base';
+import { basicBuild } from '../../rollup';
 
-const name = 'Vimeo';
+const name = 'vimeo';
 
-export default providerBuild({ name });
+export default basicBuild({ name });

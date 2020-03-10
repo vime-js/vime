@@ -1,10 +1,12 @@
 <svelte:options accessors />
 
 {#if isEnabled}
-  <div 
+  <img
     class:active={isActive}
+    src={$currentPoster}
+    alt={$title || 'Media Poster'}
     bind:this={el}
-  ></div>
+  />
 {/if}
 
 <script context="module">
@@ -15,6 +17,8 @@
 </script>
 
 <script>
+  import { writable } from 'svelte/store';
+
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
@@ -22,11 +26,7 @@
   export let player;
 
   const logger = player.createLogger(ID);
-
-  const {
-    currentPoster, isVideoView, isAudio, 
-    playbackStarted, nativePoster, useNativeControls
-  } = player.getStore();
+  const { title, currentPoster, playbackStarted, useNativeControls } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -40,29 +40,22 @@
 
   export const getEl = () => el;
 
-  $: if (el) {
-    el.style.backgroundImage = $currentPoster ? `url('${$currentPoster.src || $currentPoster}')` : null;
-    el.style.backgroundSize = $currentPoster ? ($currentPoster.size || 'contain') : null;
-  }
-
-  $: if (autopilot) isEnabled = $isVideoView && !$useNativeControls;
-  $: if (autopilot) isActive = $isAudio || !$playbackStarted;
+  $: if (autopilot) isEnabled = !$useNativeControls && !!$currentPoster;
+  $: if (autopilot) isActive = !$playbackStarted;
 </script>
 
 <style type="text/scss">
-  div {
-    background-color: #000;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    height: 100%;
-    left: 0;
-    opacity: 0;
+  img {
     position: absolute;
+    left: 0;
     top: 0;
-    transition: opacity 0.5s ease;
     width: 100%;
+    height: 100%;
     z-index: 1;
     pointer-events: none;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 
     &.active {
       opacity: 1;

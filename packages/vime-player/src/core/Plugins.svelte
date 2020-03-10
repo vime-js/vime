@@ -30,7 +30,7 @@
   // Props
   // --------------------------------------------------------------
 
-  let instances = {};
+  const instances = {};
   let validatedPlugins = [];
 
   export const hasPlugin = plugin => plugin.ID && $plugins.some(p => p.ID === plugin.ID);
@@ -43,7 +43,7 @@
   export const getInstances = () => instances;
   export const getPlugins = () => validatedPlugins;
 
-  $: isEnabled = (IS_IOS && $playsinline && !$isFullscreenActive) || !IS_IOS
+  $: isEnabled = (IS_IOS && $playsinline && !$isFullscreenActive) || !IS_IOS;
 
   // --------------------------------------------------------------
   // Plugin Registration
@@ -66,7 +66,11 @@
   let mounted = false;
   onMount(() => { mounted = true; });
 
-  $: if (mounted) validatedPlugins = isEnabled ? $plugins.filter(validatePlugin).map(p => ({ ...p })) : [];
+  $: if (mounted) validatedPlugins = isEnabled 
+    ? $plugins
+      .filter(validatePlugin)
+      .map(p => ({ ...p })) 
+    : [];
 
   $: validatedPlugins
     .filter(p => !registry.has(p.ID) && instances[p.ID])

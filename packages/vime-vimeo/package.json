@@ -3,9 +3,11 @@
   "description": "Vime Vimeo Player",
   "version": "1.0.0",
   "svelte": "src/index.js",
-  "main": "dist/legacy/Vimeo.umd.js",
-  "module": "dist/modern/vimeo.esm.js",
-  "unpkg": "dist/legacy/Vimeo.umd.js",
+  "main": "dist/vimeo.js",
+  "module": "dist/vimeo.esm.js",
+  "unpkg": "dist/vimeo.js",
+  "jsdelivr": "dist/vimeo.js",
+  "sideEffects": false,
   "license": "MIT",
   "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
   "homepage": "https://github.com/vime-js/vime#readme",
@@ -24,7 +26,8 @@
     "src"
   ],
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c --environment NODE_ENV:production",
+    "build:dev": "rollup -c --environment NODE_ENV:development"
   },
   "dependencies": {
     "@vime/core": "^1.0.0",

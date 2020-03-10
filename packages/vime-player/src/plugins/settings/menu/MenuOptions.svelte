@@ -29,12 +29,12 @@
   // --------------------------------------------------------------
 
   let menu;
-  let menuItemRadios = [];
+  const menuItemRadios = [];
   
   export let id;
   export let group;
   export let options;
 
   export const getMenu = () => menu;
-  export const getMenuItemRadios = () => menuItemRadios.filter(Boolean)
+  export const getMenuItemRadios = () => menuItemRadios.filter(Boolean);
 </script>

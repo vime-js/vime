@@ -18,7 +18,7 @@ module.exports = async ({ config }) => {
     ...svelteLoader.options,
     dev: true,
     preprocess: sveltePreprocess({ 
-      postcss: require('../postcss.config')()
+      postcss: require('../postcss')()
     })
   };
 

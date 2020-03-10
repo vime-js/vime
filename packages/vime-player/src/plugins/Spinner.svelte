@@ -14,13 +14,15 @@
 </script>
 
 <script>
-  import { ID as ControlsId } from './controls/Controls.svelte';
+  import { ID as ControlsID } from './controls/Controls.svelte';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
   export let player;
+
+  const plugins = player.getPluginsRegistry();
 
   const { 
     buffering, isVideoView, useNativeControls
@@ -36,16 +38,15 @@
   export let isEnabled = false;
   export let isActive = false;
 
-  $: if (autopilot) isActive = $buffering
+  $: if (autopilot) isActive = $buffering;
   $: if (autopilot) isEnabled = $isVideoView && !$useNativeControls;
 
   // --------------------------------------------------------------
   // Controls Plugin
   // --------------------------------------------------------------
 
-  const controlsPlugin = player.getPluginsRegistry().watch(ControlsId);
-
-  $: if (el && $controlsPlugin) $controlsPlugin.centerAssist(el);
+  $: controlsPlugin = $plugins[ControlsID];
+  $: if (el && controlsPlugin) controlsPlugin.centerAssist(el);
 </script>
 
 <style type="text/scss">

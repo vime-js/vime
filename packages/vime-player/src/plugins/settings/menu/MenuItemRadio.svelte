@@ -42,7 +42,7 @@
   // Events
   // --------------------------------------------------------------
 
-  const onClick = () => { dispatch(Event.VALUE_CHANGE, value); }
+  const onClick = () => { dispatch(Event.VALUE_CHANGE, value); };
 
   $: isChecked = (group === value);
 </script>

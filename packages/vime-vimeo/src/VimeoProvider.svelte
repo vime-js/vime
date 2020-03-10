@@ -12,13 +12,9 @@
 />
 
 <script context="module">
-  import { is_string } from '@vime/utils';
+  import { can_play } from './utils';
 
-  const VM = {
-    SRC: /vimeo(?:\.com|)\/([0-9]{9,})/,
-    FILE_URL: /vimeo\.com\/external\/[0-9]+\..+/,
-    THUMBNAIL_URL: /vimeocdn\.com\/video\/([0-9]+)/
-  };
+  const VM = {};
 
   // @see https://developer.vimeo.com/player/sdk/reference#methods-for-playback-controls
   VM.Command = {
@@ -80,17 +76,7 @@
     'ended'
   ];
 
-  export const canPlay = src => is_string(src) && !VM.FILE_URL.test(src) && VM.SRC.test(src);
-
-  const getPoster = src => {
-    if (!src) return Promise.resolve(null);
-    return window.fetch(`https://noembed.com/embed?url=${src}`)
-      .then(response => response.json())
-      .then(data => {
-        const thumbnailId = data.thumbnail_url.match(VM.THUMBNAIL_URL)[1];
-        return `https://i.vimeocdn.com/video/${thumbnailId}_1920x1080.jpg?r=pad`;
-      });
-  };
+  export const canPlay = src => can_play(src);
 </script>
 
 <script>
@@ -99,6 +85,7 @@
   import { PlayerState, MediaType } from '@vime/core';
   import { is_array } from '@vime/utils';
   import VimeoEmbed from './VimeoEmbed.svelte';
+  import { get_src_id, get_poster } from './utils';
 
   let embed;
   let info = {};
@@ -252,9 +239,8 @@
     }
   };
 
-  $: match = src ? src.match(VM.SRC) : null;
-  $: srcId = match ? match[1] : src;
-  $: getPoster(currentSrc).then(poster => { info.poster = poster; });
+  $: srcId = get_src_id(src);
+  $: get_poster(src).then(poster => { info.poster = poster; }).catch(e => dispatch('error', e));
   $: (!seeking && playbackReady) ? getTimeUpdates() : cancelTimeUpdates();
 
   $: {

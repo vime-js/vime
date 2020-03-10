@@ -20,6 +20,7 @@
     aria-valuenow={$currentTime}
     aria-valuetext={scrubberLabel}
     aria-orientation="horizontal"
+    use:inputRangeTouch
     on:input={onSeek}
     bind:this={slider}
   />
@@ -57,14 +58,18 @@
 </script>
 
 <script>
-  import { formatTime } from '@vime/core';
+  import { raf } from 'svelte/internal';
+  import { formatTime, inputRangeTouch } from '@vime/core';
   import { ID as TooltipsID } from '../../tooltips/Tooltips.svelte';
+  import { set_style_raf } from '@vime/utils';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
   export let player;
+
+  const plugins = player.getPluginsRegistry();
 
   const {
     i18n, isVideoView, currentTime, 
@@ -114,6 +119,7 @@
   };
 
   const setTooltipXPos = (percent, value) => {
+    if (!tooltip.getEl()) return;
     const rect = tooltip.getEl().getBoundingClientRect();
     const bounds = scrubber.parentNode.getBoundingClientRect();
     const scrubberRect = scrubber.getBoundingClientRect();
@@ -122,7 +128,7 @@
     const leftLimit = bounds.left + leftOffset;
     const rightLimit = bounds.right - rightOffset;
     if ((rect.left + percent > leftLimit) && (rect.right - (100 - percent) < rightLimit)) {
-      tooltip.getEl().style.left = `${value}px`;
+      set_style_raf(tooltip.getEl(), 'left', `${value}px`);
     }
   };
 
@@ -130,10 +136,9 @@
   // Tooltips Plugin
   // --------------------------------------------------------------
 
-  const tooltipsPlugin = player.getPluginsRegistry().watch(TooltipsID);
-
-  $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.getTooltipComponent();
-  $: tooltipsRegistry = $tooltipsPlugin && $tooltipsPlugin.getRegistry();
+  $: tooltipsPlugin = $plugins[TooltipsID];
+  $: Tooltip = tooltipsPlugin && tooltipsPlugin.getTooltipComponent();
+  $: tooltipsRegistry = tooltipsPlugin && tooltipsPlugin.getRegistry();
   
   $: if (tooltipsRegistry && tooltip && !tooltipsRegistry.has(LABEL)) {
     tooltipsRegistry.register(LABEL, tooltip);

@@ -1,0 +1,45 @@
+{
+  "name": "@vime/preview",
+  "description": "Vime Preview",
+  "version": "1.0.0",
+  "svelte": "src/index.js",
+  "main": "dist/preview.js",
+  "module": "dist/preview.esm.js",
+  "unpkg": "dist/preview.js",
+  "jsdelivr": "dist/preview.js",
+  "sideEffects": false,
+  "license": "MIT",
+  "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
+  "homepage": "https://github.com/vime-js/vime#readme",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/vime-preview",
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "keywords": [
+    "vime",
+    "preview",
+    "thumbnail",
+    "youtube",
+    "dailymotion",
+    "vimeo",
+    "html5",
+    "lazy",
+    "lightweight"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup -c --environment NODE_ENV:production",
+    "build:dev": "rollup -c --environment NODE_ENV:development"
+  },
+  "dependencies": {
+    "@vime/core": "^1.0.0",
+    "@vime/utils": "^1.0.0",
+    "@vime/html5": "^1.0.0",
+    "@vime/youtube": "^1.0.0",
+    "@vime/vimeo": "^1.0.0",
+    "@vime/dailymotion": "^1.0.0"
+  }
+}

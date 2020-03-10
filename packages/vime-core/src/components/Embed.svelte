@@ -53,7 +53,7 @@
 
   const originMatches = e => {
     if (!iframe || e.source !== iframe.contentWindow) return false;
-    return (is_string(origin) && (origin === e.origin)) || origin.test(e.origin);
+    return (is_string(origin) && (origin === e.origin));
   };
 
   const onMessage = e => {

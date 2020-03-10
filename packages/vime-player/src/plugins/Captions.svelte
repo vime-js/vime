@@ -2,7 +2,7 @@
 
 <div
   class:active={!$useNativeCaptions && $isVideoView}
-  class:withControls={$isControlsActive}
+  class:withControls={!$isMobile && $isControlsActive}
   class:fullscreen={$isFullscreenActive}
   class:mobile={$isMobile}
 >
@@ -52,7 +52,7 @@
     store.currentCue = derived(
       [store.cues, store.currentCueIndex],
       ([$cues, $index]) => ($cues.length >= 0) ? $cues[$index] : null
-    )
+    );
     store.activeCues = private_writable([]);
     return store;
   };
@@ -135,7 +135,7 @@
     $currentCueIndex = findNextCueIndex(0);
   }
 
-  $: isCueActive = ($currentCue && $currentTime >= 0 && shouldCueBeActive($currentCue))
+  $: isCueActive = ($currentCue && $currentTime >= 0 && shouldCueBeActive($currentCue));
   $: isCueActive ? ($activeCues = [$currentCue]) : ($activeCues = []);
   $: onCuesChange($cues);
 
@@ -185,7 +185,7 @@
   $: if ($isVideoView) {
     const index = $tracks.findIndex(t => t.srclang === $locale);
     if (index >= 0) $currentTrackIndex = index;
-  };
+  }
 </script>
 
 <style type="text/scss">

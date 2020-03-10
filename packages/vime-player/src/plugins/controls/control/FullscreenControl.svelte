@@ -19,7 +19,7 @@
 </script>
 
 <script>
-  import { noop } from 'svelte/internal'
+  import { noop } from 'svelte/internal';
   import ToggleControl from './ToggleControl.svelte';
 
   // --------------------------------------------------------------
@@ -38,7 +38,9 @@
 
   export const getToggle = () => toggle;
 
-  const onToggle = () => !$isFullscreenActive 
-    ? player.requestFullscreen().catch(noop) 
-    : player.exitFullscreen().catch(noop);
+  const onToggle = () => {
+    !$isFullscreenActive 
+      ? player.requestFullscreen().catch(noop) 
+      : player.exitFullscreen().catch(noop);
+  };
 </script>

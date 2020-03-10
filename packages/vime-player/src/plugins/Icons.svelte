@@ -10,7 +10,7 @@
   import { onDestroy } from 'svelte';
   import sprite from '../static/vime.svg';
 
-  export let player
+  export let player;
 
   const store = player.getStore();
   

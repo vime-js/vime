@@ -40,5 +40,5 @@
 
   const onToggle = () => !$isPiPActive 
     ? player.requestPiP().catch(noop) 
-    : player.exitPiP().catch(noop)
+    : player.exitPiP().catch(noop);
 </script>
