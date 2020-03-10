@@ -24,7 +24,7 @@
     container={el}
     let:intersecting 
   >
-    {#if mounted && intersecting}
+    {#if intersecting && mounted}
       <Plugins
         player={self}
         on:register={onPluginMount}
@@ -37,12 +37,12 @@
 </div>
 
 <script>
-  import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+  import { onMount, onDestroy, tick, createEventDispatcher } from 'svelte';
   import { noop, get_current_component } from 'svelte/internal';
   import { get } from 'svelte/store';
   import Plugins from './Plugins.svelte';
   import { buildPlayerStore } from './playerStore';
-  import PlayerEvent from './PlayerEvent'
+  import PlayerEvent from './PlayerEvent';
   import { 
     Registry, Disposal, Lazy,
     aspectRatio as setAspectRatio,
@@ -75,7 +75,7 @@
   let isFullscreenActive;
 
   let self = get_current_component();
-  onDestroy(() => { self = null; })
+  onDestroy(() => { self = null; });
 
   const ID = 'Player';
   const disposal = new Disposal();
@@ -130,7 +130,7 @@
       log () { $debug && _log(id, seperator, ...arguments); },
       warn () { $debug && _warn(id, seperator, ...arguments); },
       error () { $debug && _error(id, seperator, ...arguments); }
-    }
+    };
   };
 
   // --------------------------------------------------------------
@@ -139,8 +139,8 @@
 
   let mounted = false;
   onMount(() => {
+    tick().then(() => _dispatch(PlayerEvent.MOUNT));
     mounted = true;
-    _dispatch(PlayerEvent.MOUNT);
   });
 
   onDestroy(() => _dispatch(PlayerEvent.DESTROY));

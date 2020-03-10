@@ -13,7 +13,6 @@
         class="upper"
         class:active={upper.length > 0}
         bind:this={upperEl}
-        bind:clientHeight={upperControlsHeight}
       >
         <ControlGroup
           {player}
@@ -40,11 +39,11 @@
     {/if}
     <div
       class="lower"
+      class:mobile={$isMobile}
       class:audio={!$isVideoView}
       class:video={$isVideoView}
       class:inactive={!$isControlsActive}
       bind:this={lowerEl}
-      bind:clientHeight={lowerControlsHeight}
     >
       <ControlGroup
         {player}
@@ -73,9 +72,14 @@
 
 <script>
   import { tick, onMount, onDestroy } from 'svelte';
-  import { listen } from 'svelte/internal';
+  import { raf, listen } from 'svelte/internal';
   import { Registry } from '@vime/core';
   import ControlGroup from './ControlGroup.svelte';
+
+  import {
+    set_style, get_computed_height, get_computed_height_without_padding,
+    set_style_raf
+  } from '@vime/utils';
 
   // --------------------------------------------------------------
   // Setup
@@ -86,10 +90,10 @@
   const rootEl = player.getEl();
 
   const {
-    isAudio, paused, playbackReady, 
-    isLive, mediaType, isVideoView, 
-    isControlsEnabled, canInteract, isMobile, 
-    useNativeControls, _isControlsActive: isControlsActive
+    paused, playbackReady, isLive, 
+    mediaType, isVideoView, isControlsEnabled, 
+    canInteract, isMobile, useNativeControls, _isControlsActive: 
+    isControlsActive, rebuilding
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -110,8 +114,6 @@
   let hideControlsTimeout;
 
   let centerAssists = [];
-  let lowerControlsHeight = 0;
-  let upperControlsHeight = 0;
 
   export let lower = [];
   export let center = [];
@@ -124,6 +126,8 @@
   export const getLowerInstances = () => lowerControlGroup.getInstances();
   export const getCenterInstances = () => centerControlGroup.getInstances();
   export const getUpperInstances = () => upperControlGroup.getInstances();
+  export const getLowerControlsHeight = () => get_computed_height(lowerEl);
+  export const getUpperControlsHeight = () => get_computed_height(upperEl);
   export const hasLowerControls = () => lower.length > 0;
   export const hasCenterControls = () => center.length > 0;
   export const hasUpperControls = () => upper.length > 0;
@@ -133,13 +137,13 @@
     return () => { centerAssists = centerAssists.filter(e => e !== el); };
   };
 
-  $: if (!$paused && !$isAudio && idleTimer) {
+  $: if (!$paused && $isVideoView && idleTimer) {
     window.clearTimeout(hideControlsTimeout);
     $isControlsActive = true;
     hideControlsTimeout = window.setTimeout(() => { $isControlsActive = false; }, 2750);
   } else {
     window.clearTimeout(hideControlsTimeout);
-    $isControlsActive = $playbackReady && $canInteract;
+    $isControlsActive = ($playbackReady && $canInteract) || $rebuilding;
   }
 
   // --------------------------------------------------------------
@@ -158,23 +162,21 @@
     idleTimer += 1;
   };
 
-  const getLowerControlsYPadding = () => {
-    if (!lowerEl) return 0;
-    return parseFloat(window.getComputedStyle(lowerEl).paddingTop) +
-      parseFloat(window.getComputedStyle(lowerEl).paddingBottom);
-  }
-
-  const onCenterAssist = el => {
-    const paddingBottom = lowerControlsHeight + getLowerControlsYPadding();
-    el.style.paddingBottom = (lower.length > 0) ? `${paddingBottom}px` : null;
-    el.style.transition = 'padding 0.2s linear';
-  }
+  const onCenterAssist = async el => {
+    await tick();
+    raf(() => {
+      const paddingBottom = getLowerControlsHeight();
+      set_style(el, 'paddingBottom', (lower.length > 0) ? `${paddingBottom}px` : null);
+      set_style(el, 'transition', 'padding 0.2s linear');
+    });
+  };
 
   const runCenterAssist = () => centerAssists.forEach(onCenterAssist);
+  
   const removeCenterAssist = () => centerAssists.forEach(el => {
-    el.style.paddingBottom = null;
-    el.style.transition = null;
-  })
+    set_style_raf(el, 'paddingBottom');
+    set_style_raf(el, 'transition');
+  });
 
   onMount(() => {
     const showControlsEvents = ['focus', 'keydown', 'mousemove', 'touchstart'];
@@ -186,19 +188,28 @@
     centerAssists = [];
   });
 
-  $: if (centerEl) {
-    onCenterAssist(centerEl, lower, lowerEl, lowerControlsHeight)
-    if (lower.length === 0 && upper.length > 0) {
-      centerEl.style.paddingBottom = `${upperControlsHeight}px`;
-    }
-  }
+  const positionCenterControls = async () => {
+    await tick();
+    raf(() => {
+      const lHeight = get_computed_height_without_padding(lowerEl);
+      const uHeight = get_computed_height_without_padding(upperEl);
+      let paddingBottom = null;
+      if (hasLowerControls() && hasUpperControls()) {
+        paddingBottom = lHeight + uHeight;
+      } else if (hasLowerControls()) {
+        paddingBottom = lHeight;
+      } else if (hasUpperControls()) {
+        paddingBottom = uHeight;
+      }
+      set_style(centerEl, 'paddingBottom', `${paddingBottom}px`);
+    });
+  };
+
+  $: if (centerEl) positionCenterControls(lower, upper);
+  $: if (centerEl) set_style(centerEl, 'transition', 'padding 0.2s linear');
 
   $: if ($isControlsEnabled && lowerEl) {
-    runCenterAssist(
-      centerAssists,
-      lower,
-      lowerControlsHeight,
-    );
+    runCenterAssist(centerAssists, lower);
   } else {
     removeCenterAssist();
   }
@@ -225,6 +236,10 @@
 
     &.inactive {
       opacity: 0;
+
+      & > div {
+        visibility: hidden;
+      }
     }
   }
 
@@ -247,8 +262,8 @@
     background: linear-gradient(to top, rgba($color-dark, 0), rgba($color-dark, 0.7));
 
     &.active {
-      display: flex;
       padding: $control-spacing;
+      display: flex;
     }
 
     :global(> div),
@@ -300,6 +315,10 @@
       @media (min-width: $bp-sm) {
         padding: $control-spacing;
       }
+    }
+
+    &.mobile.video {
+      padding: $control-spacing;
     }
 
     &.inactive {

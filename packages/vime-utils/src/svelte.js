@@ -23,13 +23,13 @@ export const try_on_svelte_destroy = cb => {
 };
 
 export const on_svelte_instance_update = (instance, cb) => {
-  if (!is_svelte_component(instance)) return;
+  if (!instance || !is_svelte_component(instance.constructor)) return;
   if (!instance.$$.after_update) instance.$$.after_update = [];
   instance.$$.after_update.push(cb);
 };
 
 export const on_svelte_instance_destroy = (instance, cb) => {
-  if (!is_svelte_component(instance)) return;
+  if (!instance || !is_svelte_component(instance.constructor)) return;
   if (!instance.$$.on_destroy) instance.$$.on_destroy = [];
   instance.$$.on_destroy.push(cb);
 };

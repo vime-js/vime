@@ -6,7 +6,7 @@ import {
   DailymotionProvider,
   VimeoProvider,
   Boot
-} from '../src'
+} from '../src';
 
 export default { title: 'Player (Desktop)' };
 
@@ -36,10 +36,7 @@ export const Html5Video = () => ({
       { src: '/media/video/240p.mp4', type: 'video/mp4', quality: 240 },
       { src: '/media/video/144p.mp4', type: 'video/mp4', quality: 144 }
     ],
-    poster: {
-      src: '/media/video/poster.png',
-      size: 'cover'
-    },
+    poster: '/media/video/poster.png',
     theme: THEME,
     providers: PROVIDERS,
     plugins: [Boot],

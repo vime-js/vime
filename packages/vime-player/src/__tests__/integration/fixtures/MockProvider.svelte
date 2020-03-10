@@ -12,11 +12,11 @@
 
   const dispatch = createEventDispatcher();
 
-  export let config;
-  export let playsinline;
+  // export let config;
+  // export let playsinline;
 
   // Just to stop unused-export warning.
-  $: if (config && playsinline) {}
+  // $: if (config && playsinline) {}
 
   export const firePlayerReady = () => dispatch(ProviderEvent.PLAYER_READY);
   export const firePlaybackReady = () => dispatch(ProviderEvent.PLAYBACK_READY);

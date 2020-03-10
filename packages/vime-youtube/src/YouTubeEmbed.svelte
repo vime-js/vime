@@ -16,29 +16,26 @@
 
 <script context="module">
   import { decode_json } from '@vime/utils';
-
-  const YT = {
-    Origin: {
-      WITH_COOKIES: 'https://www.youtube.com',
-      WITHOUT_COOKIES: 'https://www.youtube-nocookie.com'
-    },
-    Event: {
-      INITIAL_DELIVERY: 'initialDelivery',
-      ERROR: 'onError'
-    }
-  };
+  import { ORIGIN, ORIGIN_NO_COOKIES } from './utils';
 
   const DECODER = decode_json;
 
   const PRECONNECTIONS = [
-    YT.Origin.WITH_COOKIES,
-    YT.Origin.WITHOUT_COOKIES,
+    ORIGIN,
+    ORIGIN_NO_COOKIES,
     'https://www.google.com',
     'https://googleads.g.doubleclick.net',
     'https://static.doubleclick.net',
     'https://s.ytimg.com',
     'https://i.ytimg.com'
   ];
+
+  const YT = {};
+
+  YT.Event = {
+    INITIAL_DELIVERY: 'initialDelivery',
+    ERROR: 'onError'
+  };
 
   const Event = {
     READY: 'ready',
@@ -88,10 +85,8 @@
   };
 
   const buildSrc = () => {
-    if (!srcId) return null;
-    const base = `${origin}/embed/`;
     const vId = window.encodeURIComponent(srcId || '');
-    return `${base}${vId}?enablejsapi=1`;
+    return `${origin}/embed/${vId}?enablejsapi=1`;
   };
 
   const onLoad = () => {
@@ -134,7 +129,7 @@
   };
 
   $: title = `YouTube ${videoTitle || 'Video Player'}`;
-  $: origin = cookies ? YT.Origin.WITH_COOKIES : YT.Origin.WITHOUT_COOKIES;
+  $: origin = cookies ? ORIGIN : ORIGIN_NO_COOKIES;
   $: src = buildSrc(origin, srcId);
   $: onData = !initialized ? _onData : null;
 

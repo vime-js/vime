@@ -75,8 +75,8 @@
   // Events
   // --------------------------------------------------------------
 
-  const dispatchMenuClose = () => { dispatch(Event.MENU_CLOSE); }
-  const onWindowKeyDown = e => { if (e.keyCode === KeyCode.ESC) dispatchMenuClose(); }
+  const dispatchMenuClose = () => { dispatch(Event.MENU_CLOSE); };
+  const onWindowKeyDown = e => { if (e.keyCode === KeyCode.ESC) dispatchMenuClose(); };
 
   const onItemSelect = async () => {
     const item = items[activeItem];

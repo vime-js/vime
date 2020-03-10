@@ -12,12 +12,10 @@
 />
 
 <script context="module">
-  import { is_string, load_image } from '@vime/utils';
+  import { can_play } from './utils';
   import { VideoQuality } from '@vime/core';
 
-  const YT = {
-    SRC: /(?:youtu\.be|youtube|youtube\.com|youtube-nocookie\.com)\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|)((?:\w|-){11})/
-  };
+  const YT = {};
 
   // @see https://developers.google.com/youtube/iframe_api_reference#Events
   YT.Event = {
@@ -58,18 +56,7 @@
     SET_PLAYBACK_RATE: 'setPlaybackRate'
   };
 
-  export const canPlay = src => is_string(src) && YT.SRC.test(src);
-
-  const getPoster = srcId => {
-    if (!srcId) return Promise.resolve(null);
-    const posterSrc = quality => `https://i.ytimg.com/vi/${srcId}/${quality}.jpg`;
-    // We are testing a that the image has a min-width of 121px because if the thumbnail does
-    // not exist YouTube returns a blank/error image that is 120px wide.
-    return load_image(posterSrc('maxresdefault'), 121) // 1080p (no padding)
-      .catch(() => load_image(posterSrc('sddefault'), 121)) // 640p (padded 4:3)
-      .catch(() => load_image(posterSrc('hqdefault'), 121)) // 480p (padded 4:3)
-      .then(img => img.src || null);
-  };
+  export const canPlay = src => can_play(src);
 </script>
 
 <script>
@@ -77,6 +64,7 @@
   import { PlayerState, MediaType } from '@vime/core';
   import { is_number, is_boolean } from '@vime/utils';
   import YouTubeEmbed from './YouTubeEmbed.svelte';
+  import { get_src_id, get_poster } from './utils';
 
   let embed;
   let info = {}; 
@@ -219,9 +207,8 @@
     if (info) onInfo(info);
   };
 
-  $: match = src ? src.match(YT.SRC) : null;
-  $: srcId = match ? match[1] : src;
-  $: getPoster(srcId).then(poster => { info.poster = poster; });
+  $: srcId = get_src_id(src);
+  $: get_poster(src).then(poster => { info.poster = poster; }).catch(e => dispatch('error', e));
 
   $: {
     dispatch('update', info);

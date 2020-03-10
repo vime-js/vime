@@ -17,7 +17,8 @@
     aria-valuenow="{currentVolume}"
     aria-valuetext={`${currentVolume}%`}
     aria-orientation="horizontal"
-    class:active={!$isMobile && focused}
+    class:hidden={$isMobile}
+    class:active={isFocused}
     use:focus
     on:focuschange={onFocus}
     on:input="{onVolumeChange}"
@@ -52,7 +53,7 @@
   let el;
   let slider;
   let muteControl;
-  let focused = false;
+  let isFocused = false;
   let prevMuted = false;
 
   export const getEl = () => el;
@@ -74,7 +75,7 @@
   // --------------------------------------------------------------
 
   const onVolumeChange = e => { $volume = window.parseInt(e.target.value); };
-  const onFocus = e => { focused = e.detail; };
+  const onFocus = e => { isFocused = e.detail; };
 </script>
 
 <style type="text/scss">
@@ -100,6 +101,10 @@
     position: relative;
     z-index: 3;
     transition: slider-transition(margin), slider-transition(max-width);
+
+    &.hidden {
+      display: none;
+    }
 
     &.active {
       max-width: 75px;

@@ -3,9 +3,11 @@
   "description": "Vime Html5 Player",
   "version": "1.0.0",
   "svelte": "src/index.js",
-  "main": "dist/legacy/Html5.umd.js",
-  "module": "dist/modern/html5.esm.js",
-  "unpkg": "dist/legacy/Html5.umd.js",
+  "main": "dist/html5.js",
+  "module": "dist/html5.esm.js",
+  "unpkg": "dist/html5.js",
+  "jsdelivr": "dist/html5.js",
+  "sideEffects": false,
   "license": "MIT",
   "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
   "homepage": "https://github.com/vime-js/vime#readme",
@@ -23,7 +25,8 @@
     "src"
   ],
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c --environment NODE_ENV:production",
+    "build:dev": "rollup -c --environment NODE_ENV:development"
   },
   "dependencies": {
     "@vime/core": "^1.0.0",

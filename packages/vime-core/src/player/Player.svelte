@@ -24,6 +24,7 @@
   import MediaType from './MediaType';
   import PlayerState from './PlayerState';
   import PlayerWrapper from './PlayerWrapper.svelte';
+  
   import {
     is_array, is_function, is_number, 
     is_boolean, map_store_to_component, deferred,
@@ -136,13 +137,14 @@
     $seeking = false;
     $buffering = false;
     updatingTime = false;
+    if (!$playbackStarted) $playbackStarted = true;
     cancelTempAction(() => {
       tempPause = false;
     });
   };
 
   const onAutoplay = () => {
-    if (!$autoplay || (!$canAutoplay || !$canMutedAutoplay)) return;
+    if (!$autoplay || $rebuilding || (!$canAutoplay || !$canMutedAutoplay)) return;
     $paused = false;
     $playsinline = true;
     if (!$canAutoplay) $muted = true;
@@ -155,22 +157,22 @@
   };
 
   const onRebuild = async () => {
-    if (!$canInteract) return;
+    if (!$playbackReady) return;
     // Cancel any existing temp states as rebuild may be called multiple times.
     tempMute = false;
     tempPlay = false;
     await tick();
     if ($currentTime > 0 && $canMutedAutoplay) {
-      if (!$autoplay) initiateTempPlayback();
-      await tick();
-      $provider.setCurrentTime($currentTime);
+      initiateTempPlayback();
       return;
     }
     onRebuildEnd();
   };
 
-  const onRebuildEnd = () => {
-    if (!$canInteract) return;
+  const onRebuildEnd = async () => {
+    if (!$playbackReady || !$rebuilding) return;
+    if ($currentTime > 0) $provider.setCurrentTime($currentTime);
+    await tick();
     $rebuilding = false;
     if ($isFullscreenActive) requestFullscreen().catch(noop);
   };
@@ -331,6 +333,7 @@
     tempPlay = false;
     tempPlay = false;
     tempMute = false;
+    tempControls = false;
   };
 
   const onProviderChange = () => {
@@ -349,7 +352,7 @@
   // --------------------------------------------------------------
 
   $: if ($provider && !$rebuilding) $provider.setPlaysinline($playsinline);
-  $: if ($provider && !$rebuilding) $provider.setControls(($useNativeControls && $isControlsEnabled) || tempControls);
+  $: if ($provider && !$rebuilding) $provider.setControls($isControlsEnabled && ($useNativeControls || tempControls));
   $: if ($provider && !$rebuilding && is_function($provider.setView)) $provider.setView($useNativeView);
   $: if ($canSetPoster && !$rebuilding) $provider.setPoster($poster);
   $: if ($provider && is_function($provider.setAspectRatio)) $provider.setAspectRatio($aspectRatio);
@@ -400,7 +403,7 @@
   const FULLSCREEN_NOT_SUPPORTED_ERROR_MSG = 'Fullscreen not supported.';
   const FULLSCREEN_DOC_SUPPORT = !!FullscreenApi.requestFullscreen;
 
-  let onFullscreenChangeListener = null;
+  let onDocFullscreenChangeListener = null;
 
   const isFullscreen = () => {
     const els = [playerWrapper, parentEl, $provider && $provider.getEl()].filter(Boolean);
@@ -417,19 +420,28 @@
   const onFullscreenChange = active => { 
     $isFullscreenActive = active;
     if (!$isFullscreenActive) tempControls = false;
+    tempPause = false;
+    // iOS pauses the video when exiting fullscreen.
+    if (!$paused) {
+      setTimeout(() => {
+        $provider.setPaused(false);
+      }, 300);
+    }
   };
 
   const requestDocumentFullscreen = active => {
     const el = parentEl || playerWrapper;
     if (!el) return Promise.reject();
     if (active === isFullscreen()) return Promise.resolve();
-    return active ? el[FullscreenApi.requestFullscreen]() : document[FullscreenApi.exitFullscreen]();
+    const request = active ? el[FullscreenApi.requestFullscreen]() : document[FullscreenApi.exitFullscreen]();
+    return Promise.resolve(request);
   };
 
   // TODO: the two providers which can set fullscreen at the moment (Html5/Dailymotion) don't 
   // require a rebuild when enabling controls, if at some point a provider does this won't work.
   const requestProviderFullscreen = active => {
-    if (active) tempControls = $isControlsEnabled;
+    if (active) tempControls = true;
+    tempPause = true;
     return Promise.resolve($provider.setFullscreen(active));
   };
 
@@ -449,12 +461,12 @@
 
   onMount(() => {
     if (!FULLSCREEN_DOC_SUPPORT) return;
-    onFullscreenChangeListener = listen(document, FullscreenApi.fullscreenchange, onDocumentFullscreenChange);
+    onDocFullscreenChangeListener = listen(document, FullscreenApi.fullscreenchange, onDocumentFullscreenChange);
   });
   
   onDestroy(() => {
-    onFullscreenChangeListener && onFullscreenChangeListener();
-    onFullscreenChangeListener = null;
+    onDocFullscreenChangeListener && onDocFullscreenChangeListener();
+    onDocFullscreenChangeListener = null;
   });
 
   $: canProviderFullscreen = $provider && $provider.supportsFullscreen() && is_function($provider.setFullscreen);

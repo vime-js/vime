@@ -91,9 +91,9 @@ const buildPlayerStore = player => {
   // Used by @vime/player.
   store._posterPlugin = writable(false);
   store.isVideoView = derived(
-    [store.poster, store.canSetPoster, store._posterPlugin, store.isVideo],
-    ([$poster, $canSetPoster, $plugin, $isVideo]) => 
-      (($canSetPoster || $plugin) && !!$poster) || $isVideo
+    [store.poster, store.nativePoster, store.canSetPoster, store._posterPlugin, store.isVideo],
+    ([$poster, $nativePoster, $canSetPoster, $plugin, $isVideo]) => 
+      (($canSetPoster || $plugin) && ($poster || $nativePoster)) || $isVideo
   );
 
   store.isVideoReady = derived(

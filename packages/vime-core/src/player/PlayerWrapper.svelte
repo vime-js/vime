@@ -26,6 +26,10 @@
 </script>
 
 <style>
+  div {
+    background: #000;
+  }
+
   .relative {
     position: relative;
   }

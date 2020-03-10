@@ -12,6 +12,7 @@
 
   export let player;
 
+  const plugins = player.getPluginsRegistry();
   const { i18n, isVideoView, isAudio } = player.getStore();
 
   // --------------------------------------------------------------
@@ -20,22 +21,22 @@
 
   let menuItems;
 
-  const settingsPlugin = player.getPluginsRegistry().watch(SettingsID);
-
-  $: if ($settingsPlugin) ({ menuItems } = $settingsPlugin.getStore())
+  $: settingsPlugin = $plugins[SettingsID];
+  $: if (settingsPlugin) ({ menuItems } = settingsPlugin.getStore());
 
   // --------------------------------------------------------------
   // Playback Rate Menu
   // --------------------------------------------------------------
 
-  const PLAYBACK_RATE_MENU = 'playbackRateMenu';
+  const PLAYBACK_RATE_MENU = 'playbackRateMenuItem';
 
   const { canSetPlaybackRate, playbackRate, playbackRates } = player.getStore();
 
-  onDestroy(() => { if ($menuItems) delete $menuItems[PLAYBACK_RATE_MENU]; })
+  onDestroy(() => { if ($menuItems) delete $menuItems[PLAYBACK_RATE_MENU]; });
 
   $: if ($menuItems) {
     $menuItems[PLAYBACK_RATE_MENU] = {
+      id: PLAYBACK_RATE_MENU,
       title: $i18n.speed,
       value: $playbackRate,
       options: playbackRateMenuOptions,
@@ -56,14 +57,15 @@
   // Captions Menu
   // --------------------------------------------------------------
 
-  const CAPTION_MENU = 'captionMenu';
+  const CAPTION_MENU = 'captionMenuItem';
   
   const { canSetTrack, tracks, currentTrackIndex } = player.getStore();
 
-  onDestroy(() => { if ($menuItems) delete $menuItems[CAPTION_MENU]; })
+  onDestroy(() => { if ($menuItems) delete $menuItems[CAPTION_MENU]; });
 
   $: if ($menuItems) {
     $menuItems[CAPTION_MENU] = {
+      id: CAPTION_MENU,
       title: $i18n.subtitlesOrCc,
       value: $currentTrackIndex,
       options: captionMenuOptions,
@@ -87,14 +89,15 @@
   // Quality Menu
   // --------------------------------------------------------------
   
-  const VIDEO_QUALITY_MENU = 'videoQualityMenu';
+  const VIDEO_QUALITY_MENU = 'videoQualityMenuItem';
   
   const { canSetVideoQuality, videoQualities, videoQuality } = player.getStore();
 
-  onDestroy(() => { if ($menuItems) delete $menuItems[VIDEO_QUALITY_MENU]; })
+  onDestroy(() => { if ($menuItems) delete $menuItems[VIDEO_QUALITY_MENU]; });
 
   $: if ($menuItems) {
     $menuItems[VIDEO_QUALITY_MENU] = {
+      id: VIDEO_QUALITY_MENU,
       title: $i18n.videoQuality,
       value: $videoQuality,
       options: videoQualityMenuOptions,

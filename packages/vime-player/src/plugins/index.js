@@ -6,7 +6,8 @@ import * as Captions from './Captions.svelte';
 import * as ClickToPlay from './ClickToPlay.svelte';
 import * as ActionDisplay from './ActionDisplay.svelte';
 import * as Boot from './Boot.svelte';
-import * as Keyboard from './Keyboard.svelte';
+import * as Keyboard from './keyboard/Keyboard.svelte';
+import * as DefaultKeyboard from './keyboard/DefaultKeyboard.svelte';
 import * as Tooltips from './tooltips/Tooltips.svelte';
 import * as Settings from './settings/Settings.svelte';
 import * as DefaultSettings from './settings/DefaultSettings.svelte';
@@ -22,7 +23,7 @@ export { ActionDisplay };
 export { Keyboard };
 export { Boot };
 export { Tooltips };
-export { Settings }
+export { Settings };
 export { DefaultSettings };
 export { DblClickFullscreen };
 export * from './controls';

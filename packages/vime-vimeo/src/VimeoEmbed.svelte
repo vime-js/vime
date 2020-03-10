@@ -2,7 +2,7 @@
   {src}
   {title}
   {params}
-  origin={VM.ORIGIN}
+  origin={ORIGIN}
   decoder={DECODER}
   preconnections={PRECONNECTIONS}
   on:load
@@ -16,10 +16,9 @@
 
 <script context="module">
   import { decode_json } from '@vime/utils';
+  import { EMBED_ORIGIN as ORIGIN } from './utils';
 
-  const VM = {
-    ORIGIN: 'https://player.vimeo.com'
-  };
+  const VM = {};
 
   VM.Event = {
     READY: 'ready',
@@ -36,7 +35,7 @@
   const BLANK_SRC_ID = '390460225';
 
   const PRECONNECTIONS = [
-    VM.ORIGIN,
+    ORIGIN,
     'https://i.vimeocdn.com',
     'https://f.vimeocdn.com',
     'https://fresnel.vimeocdn.com'
@@ -69,7 +68,7 @@
 
   export const getSrc = () => src;
   export const getTitle = () => videoTitle;
-  export const getOrigin = () => VM.ORIGIN;
+  export const getOrigin = () => ORIGIN;
   export const getIframe = () => embed.getIframe();
   export const getSrcWithParams = () => embed.getSrc();
 
@@ -87,9 +86,8 @@
   };
 
   const buildSrc = () => {
-    const base = `${VM.ORIGIN}/video/`;
     const content = window.encodeURIComponent(srcId || BLANK_SRC_ID);
-    return `${base}${content}`;
+    return `${ORIGIN}/video/${content}`;
   };
 
   const onReload = () => {

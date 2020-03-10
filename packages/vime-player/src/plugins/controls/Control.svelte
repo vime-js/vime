@@ -1,9 +1,10 @@
 <button
   id={$$props.id}
   class="control"
+  class:large
   class:live={$isLive}
   class:audio={!$isVideoView}
-  class:videoFocus={!$isTouch}
+  class:videoFocus={$isVideoView && !$isTouch}
   class:audioFocus={!$isVideoView && !$isTouch}
   class:touchHighlight={showHighlight}
   use:focus
@@ -44,15 +45,17 @@
   import { focus, highlight } from '@vime/core';
   import { ID as TooltipsID } from '../tooltips/Tooltips.svelte';
   
+  // eslint-disable-next-line prefer-const
+  tooltipIdCount += 1;
+  const tooltipId = `tooltip-${tooltipIdCount}`;
+
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
   export let player;
 
-  // eslint-disable-next-line prefer-const
-  tooltipIdCount += 1;
-  const tooltipId = `tooltip-${tooltipIdCount}`;
+  const plugins = player.getPluginsRegistry();
 
   const { 
     isVideoView, isLive, isTouch, 
@@ -70,6 +73,7 @@
   export let title = null;
   export let label = null;
   export let noTooltip = false;
+  export let large = false;
 
   export const getEl = () => el;
   export const getTooltip = () => tooltip;
@@ -77,13 +81,12 @@
   // --------------------------------------------------------------
   // Tooltips Plugin
   // --------------------------------------------------------------
-
-  const tooltipsPlugin = player.getPluginsRegistry().watch(TooltipsID);
   
   let tooltip;
 
-  $: Tooltip = $tooltipsPlugin && $tooltipsPlugin.getTooltipComponent();
-  $: tooltipsRegistry = $tooltipsPlugin && $tooltipsPlugin.getRegistry();
+  $: tooltipsPlugin = $plugins[TooltipsID];
+  $: Tooltip = tooltipsPlugin && tooltipsPlugin.getTooltipComponent();
+  $: tooltipsRegistry = tooltipsPlugin && tooltipsPlugin.getRegistry();
 
   // TODO: this is a poor temporary fix, the same control might be reused in different
   // positions, how to register them?
@@ -126,6 +129,14 @@
 
     &:focus {
       outline: 0;
+    }
+
+    &.large {
+      padding: $control-padding * 2;
+
+      & :global(svg) {
+        transform: scale(1.5);
+      }
     }
 
     &.videoFocus {

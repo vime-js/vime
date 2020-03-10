@@ -7,7 +7,7 @@ const forceMobile = Story => ({
     ...Story().props,
     isMobile: true
   }
-})
+});
 
 export const Html5Audio = () => forceMobile(DesktopStory.Html5Audio);
 export const Html5Video = () => forceMobile(DesktopStory.Html5Video);

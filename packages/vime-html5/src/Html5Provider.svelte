@@ -16,7 +16,6 @@
     crossorigin={crossOrigin}
     poster={useNativePoster ? poster : null}
     preload="metadata"
-    bind:videoWidth
     playsinline={playsinline}
     playsInline={playsinline}
     x5-playsinline={playsinline}
@@ -35,20 +34,11 @@
 {/if}
 
 <script context="module">
-  import { 
-    is_instance_of, is_string, can_play_hls_natively,
-    is_array, is_object, can_use_pip, is_number
-  } from '@vime/utils';
+  import { can_play } from './html5Utils';
 
-  const Html5 = {
-    PLAYBACK_RATES: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2]
-  };
+  const Html5 = {};
 
-  Html5.Ext = {
-    AUDIO: /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i,
-    VIDEO: /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i,
-    HLS: /\.(m3u8)($|\?)/i
-  };
+  Html5.PLAYBACK_RATES = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2];
 
   // @see https://developer.apple.com/documentation/webkitjs/htmlvideoelement/1631913-webkitpresentationmode
   Html5.WebkitPresentationMode = {
@@ -85,36 +75,7 @@
     ERROR: 'error'
   };
 
-  const Dropbox = {
-    URL: /www\.dropbox\.com\/.+/,
-    ORIGIN: 'www.dropbox.com',
-    CONTENT_ORIGIN: 'dl.dropboxusercontent.com'
-  };
-
-  const isMediaStream = src => is_instance_of(src, window.MediaStream);
-  const isQualitiesSet = src => is_array(src) && src.every(resource => is_number(resource.quality));
-  const isDropboxUrl = src => is_string(src) && Dropbox.URL.test(src);
-  const isAudio = src => Html5.Ext.AUDIO.test(src);
-  const isVideo = src => Html5.Ext.VIDEO.test(src) || 
-    (can_play_hls_natively() && Html5.Ext.HLS.test(src));
-
-  const extractResource = resource => {
-    if (is_string(resource) || isMediaStream(resource)) {
-      return resource;
-    } else if (is_object(resource)) {
-      return resource.src;
-    } else {
-      return '';
-    }
-  };
-
-  const everySrc = (src, cb) => is_array(src) 
-    ? src.every(resource => cb(extractResource(resource)))
-    : cb(extractResource(src));
-
-  export const canPlay = (src, extensionCanPlay = () => false) => isMediaStream(src) ||
-    everySrc(src, isAudio) ||
-    everySrc(src, isVideo);
+  export const canPlay = src => can_play(src);
 </script>
 
 <script>
@@ -123,10 +84,17 @@
   import Source from './Source.svelte';
   import Tracks from './Tracks.svelte';
   import { Disposal, PlayerState, MediaType } from '@vime/core';
+
+  import { 
+    DROPBOX_ORIGIN, DROPBOX_CONTENT_ORIGIN, is_media_stream,
+    is_dropbox_url, is_qualities_set, run_on_every_src,
+    is_audio, is_video
+  } from './html5Utils.js';
   
   import { 
     is_function, can_fullscreen_video, can_use_pip_in_chrome,
-    can_use_pip_in_safari
+    can_use_pip_in_safari, get_computed_height, is_string, 
+    can_use_pip, is_number
   } from '@vime/utils';
 
   const disposal = new Disposal();
@@ -144,7 +112,6 @@
   let currentSrc = null;
   let playbackReady = false;
   let paused = true;
-  let videoWidth = 0;
   let videoQuality = null;
   let useNativePoster = false;
 
@@ -321,6 +288,7 @@
 
   const rebuild = async () => {
     info.rebuild = true;
+    playbackReady = false;
     load();
   };
 
@@ -340,22 +308,22 @@
     rebuild();
   };
 
-  const calcQuality = () => {
-    if (videoQuality || videoWidth <= 0) return;
-    let i = 0;
-    let newQuality = src[i].quality;
+  const calcInitialQuality = () => {
+    if (videoQuality) return;
+    const videoHeight = get_computed_height(video);
     const [w, h] = aspectRatio.split(':');
-    const minQuality = videoWidth / (w/h);
-    while (i < (src.length - 1) && newQuality < minQuality) {
-      i += 1;
-      newQuality = src[i].quality;
-    }
+    const minQuality = videoHeight * (w / h);
+    const qualities = src.map(s => s.quality);
+    // @see https://stackoverflow.com/a/35000557
+    const newQuality = qualities.reduce((prev, curr) => 
+      Math.abs(curr - minQuality) < Math.abs(prev - minQuality) ? curr : prev
+    );
     videoQuality = newQuality;
   };
 
   const loadNewSrc = () => {
-    const newSrc = isDropboxUrl(src)
-      ? src.replace(Dropbox.ORIGIN, Dropbox.CONTENT_ORIGIN)
+    const newSrc = is_dropbox_url(src)
+      ? src.replace(DROPBOX_ORIGIN, DROPBOX_CONTENT_ORIGIN)
       : src;
     currentSrc = newSrc;
     load();
@@ -364,7 +332,7 @@
   const onSrcChange = () => {
     playbackReady = false;
     videoQuality = null;
-    if (isMediaStream(src)) {
+    if (is_media_stream(src)) {
       loadMediaStream();
     } else if (!srcHasQualities) {
       loadNewSrc();
@@ -375,11 +343,11 @@
   $: if (media) media.muted = muted;
 
   $: onSrcChange(src, srcHasQualities);
-  $: srcHasQualities = video && isQualitiesSet(src);
-  $: if (srcHasQualities) calcQuality(videoWidth, aspectRatio);
+  $: srcHasQualities = video && is_qualities_set(src);
+  $: if (srcHasQualities) calcInitialQuality(aspectRatio);
   $: if (is_number(videoQuality)) loadNewQuality(videoQuality);
-  $: shouldUseAudio = everySrc(src, isAudio) && !is_string(poster);
-  $: shouldUseVideo = everySrc(src, isVideo) || isMediaStream(src) || is_string(poster);
+  $: shouldUseAudio = run_on_every_src(src, is_audio) && !is_string(poster);
+  $: shouldUseVideo = run_on_every_src(src, is_video) || is_media_stream(src) || is_string(poster);
   $: (playbackReady && !paused) ? getTimeUpdates() : cancelTimeUpdates();
   $: tick().then(() => { info.currentSrc = currentSrc; });
 

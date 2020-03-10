@@ -1,4 +1,4 @@
-import { writable, readable, get } from 'svelte/store';
+import { writable, derived, get } from 'svelte/store';
 
 import {
   is_instance_of, try_create_svelte_dispatcher, try_on_svelte_destroy,
@@ -90,27 +90,14 @@ export default class Registry {
     this._invalidateParent();
   }
 
-  watch (id) {
-    return readable({}, set => this._values.subscribe($values => {
-      const values = this._unwrap($values);
-      set(id ? values[id] : values);
-    }));
-  }
-
   subscribe () {
-    return this.watch(null).subscribe(...arguments);
+    return derived(this._values, $values => this._unwrap($values)).subscribe(...arguments);
   }
 
   destroy () {
     if (is_null(this._registry)) return;
-    if (this._parent && !this._parent._destroyed) {
-      this._parent.deregister(this.getId());
-    }
     this.getRegistrations().forEach(id => this.deregister(id));
-    this._parent = null;
-    this._registry = null;
-    this._values = null;
-    this._dispatch = null;
+    if (this._parent && !this._parent._destroyed) this._parent.deregister(this.getId());
     this._destroyed = true;
   }
 }

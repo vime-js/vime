@@ -1,4 +1,4 @@
-<li class:audio={$isAudio}>
+<li class:audio={!$isVideoView}>
   <MenuControl 
     {id}
     {title}
@@ -58,7 +58,7 @@
   export let player;
 
   const dispatch = createEventDispatcher();
-  const { isAudio } = player.getStore();
+  const { isVideoView } = player.getStore();
 
   // --------------------------------------------------------------
   // Props

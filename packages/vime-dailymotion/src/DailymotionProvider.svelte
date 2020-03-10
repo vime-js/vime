@@ -10,12 +10,9 @@
 />
 
 <script context="module">
-  import { is_string  } from '@vime/utils';
+  import { can_play } from './utils';
 
-  const DM = {
-    // eslint-disable-next-line
-    SRC: /(?:dai\.ly|dailymotion|dailymotion\.com)\/(?:video\/|embed\/|)(?:video\/|)((?:\w)+)/
-  };
+  const DM = {};
 
   // @see https://developer.dailymotion.com/player/#player-api-events
   DM.Event = {
@@ -56,21 +53,7 @@
     FULLSCREEN: 'fullscreen'
   };
 
-  export const canPlay = src => is_string(src) && DM.SRC.test(src);
-
-  const getDuration = srcId => {
-    if (!srcId) return Promise.resolve(null);
-    return window.fetch(`https://api.dailymotion.com/video/${srcId}?fields=duration`)
-      .then(response => response.json())
-      .then(data => data.duration);
-  };
-
-  const getPoster = srcId => {
-    if (!srcId) return Promise.resolve(null);
-    return window.fetch(`https://api.dailymotion.com/video/${srcId}?fields=thumbnail_1080_url`)
-      .then(response => response.json())
-      .then(data => data.thumbnail_1080_url);
-  };
+  export const canPlay = src => can_play(src);
 </script>
 
 <script>
@@ -78,6 +61,7 @@
   import { PlayerState, MediaType } from '@vime/core';
   import { is_number, is_boolean } from '@vime/utils';
   import DailymotionEmbed from './DailymotionEmbed.svelte';
+  import { get_src_id, get_poster, get_duration } from './utils';
 
   let embed;
   let srcId = null;
@@ -228,10 +212,9 @@
     }
   };
 
-  $: match = src ? src.match(DM.SRC) : null;
-  $: srcId = match ? match[1] : src;
-  $: getPoster(srcId).then(poster => { info.poster = poster; });
-  $: getDuration(srcId).then(duration => { info.duration = duration; });
+  $: srcId = get_src_id(src);
+  $: get_poster(src).then(poster => { info.poster = poster; }).catch(e => dispatch('error', e));
+  $: get_duration(srcId).then(duration => { info.duration = duration; });
 
   $: {
     dispatch('update', info);

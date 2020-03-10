@@ -3,9 +3,11 @@
   "description": "Vime Player",
   "version": "1.0.0",
   "svelte": "src/index.js",
-  "main": "dist/legacy/Player.umd.js",
-  "module": "dist/modern/player.esm.js",
-  "unpkg": "dist/legacy/Player.umd.js",
+  "main": "dist/player.js",
+  "module": "dist/player.esm.js",
+  "unpkg": "dist/player.js",
+  "jsdelivr": "dist/player.js",
+  "sideEffects": false,
   "license": "MIT",
   "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
   "homepage": "https://github.com/vime-js/vime#readme",
@@ -30,7 +32,8 @@
     "src"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c --environment NODE_ENV:production",
+    "build:dev": "rollup -c --environment NODE_ENV:development",
     "svg:min": "svgo --config ./svgo.yml -f src/static/icons",
     "svg:sprite": "svgstore --inline -o src/static/vime.svg src/static/icons/*.svg"
   },
