@@ -34,7 +34,7 @@
 {/if}
 
 <script context="module">
-  import { can_play } from './html5Utils';
+  import { can_play } from './utils';
 
   const Html5 = {};
 
@@ -89,7 +89,7 @@
     DROPBOX_ORIGIN, DROPBOX_CONTENT_ORIGIN, is_media_stream,
     is_dropbox_url, is_qualities_set, run_on_every_src,
     is_audio, is_video
-  } from './html5Utils.js';
+  } from './utils.js';
   
   import { 
     is_function, can_fullscreen_video, can_use_pip_in_chrome,

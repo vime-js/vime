@@ -1,6 +1,7 @@
 <Lazy let:intersecting>
   {#if intersecting}
     <div
+      class:bg={!!aspectRatio}
       class:relative={!hasParent}
       use:setAspectRatio={!hasParent ? aspectRatio : null} 
       bind:this={el}
@@ -26,7 +27,7 @@
 </script>
 
 <style>
-  div {
+  .bg {
     background: #000;
   }
 
