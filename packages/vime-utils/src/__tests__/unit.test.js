@@ -1,6 +1,6 @@
 import {
   is_array, is_boolean, is_empty, is_function, is_null, is_number, is_object, is_string,
-  is_instance_of, get_constructor, is_prototype_of
+  is_instance_of, get_constructor, is_prototype_of, is_undefined
 } from '../unit';
 
 describe('utils', () => {
@@ -76,13 +76,24 @@ describe('utils', () => {
     });
 
     describe('is_null', () => {
-      it('should return true only if given null or undefined', () => {
+      it('should return true only if given null', () => {
         expect(is_null(null)).toBeTruthy();
-        expect(is_null(undefined)).toBeTruthy();
         expect(is_null('')).toBeFalsy();
         expect(is_null(0)).toBeFalsy();
         expect(is_null([])).toBeFalsy();
         expect(is_null({})).toBeFalsy();
+        expect(is_null(undefined)).toBeFalsy();
+      });
+    });
+
+    describe('is_undefined', () => {
+      it('should return true only if given undefined', () => {
+        expect(is_undefined(null)).toBeFalsy();
+        expect(is_undefined('')).toBeFalsy();
+        expect(is_undefined(0)).toBeFalsy();
+        expect(is_undefined([])).toBeFalsy();
+        expect(is_undefined({})).toBeFalsy();
+        expect(is_undefined(undefined)).toBeTruthy();
       });
     });
   });
