@@ -23,8 +23,9 @@
     "test:watch": "yarn test --watch",
     "test:update": "yarn test --updateSnapshot --coverage",
     "toc": "doctoc README.md",
-    "setup": "yarn clean:node && yarn install --no-lockfile",
-    "release": "yarn validate && lerna publish --silent",
+    "setup": "yarn clean:node && yarn install",
+    "release:latest": "yarn validate && lerna publish",
+    "release:next": "yarn validate && lerna publish --dist-tag next",
     "validate": "yarn lint && yarn test && yarn build:all"
   },
   "husky": {
