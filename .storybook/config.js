@@ -1,13 +1,19 @@
-import { create } from '@storybook/theming'
-import { configure, addParameters } from '@storybook/svelte'
+import { addParameters } from '@storybook/svelte'
+import { DocsPage, DocsContainer } from '@storybook/addon-docs/blocks';
+import theme from './theme';
+import sortStories from './sortStories';
 
 addParameters({
   options: {
     title: 'Vime',
-    theme: create({
-      base: 'dark',
-      brandTitle: 'Vime',
-      brandUrl: 'https://github.com/vime-js/vime'
-    })
+    theme,
+    showRoots: true,
+    // Shortcuts like fullscreen interfere with the player.
+    enableShortcuts: false,
+    storySort: sortStories
+  },
+  docs: {
+    container: DocsContainer,
+    page: DocsPage,
   }
 });
