@@ -14,6 +14,8 @@ export default function inputRangeTouch (node) {
     // Calculate percentage.
     let percent;
     const clientRect = input.getBoundingClientRect();
+    
+    // NOTE: hardcoded thumbwidth.
     const thumbWidth = ((100 / clientRect.width) * (13 / 2)) / 100;
 
     // Determine left percentage.
