@@ -24,8 +24,8 @@
     "test:update": "yarn test --updateSnapshot --coverage",
     "toc": "doctoc README.md",
     "setup": "yarn clean:node && yarn install",
-    "release:latest": "yarn validate && lerna publish",
-    "release:next": "yarn validate && lerna publish --dist-tag next",
+    "release": "yarn validate && lerna publish --create-release github",
+    "prerelease": "yarn validate && lerna publish --conventional-prerelease --pre-dist-tag next",
     "validate": "yarn lint && yarn test && yarn build:all"
   },
   "husky": {
