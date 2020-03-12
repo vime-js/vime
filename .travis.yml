@@ -21,7 +21,7 @@ jobs:
     node_js: '12'
     deploy:
       provider: script
-      script: yarn lint:js && yarn test:update && npx codecov && yarn release
+      script: yarn lint:js && yarn test:update && npx codecov
       skip_cleanup: true
 branches:
   only: master

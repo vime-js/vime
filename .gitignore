@@ -6,8 +6,6 @@ dist
 .opt-out
 .DS_Store
 .eslintcache
-package-lock.json
-yarn.lock
 .vscode
 .vs
 *.log
@@ -17,6 +15,4 @@ lerna-debug.log
 packages/*/node_modules
 packages/*/lib
 packages/*/*.log
-packages/*/yarn.lock
-packages/*/package-lock.json
 packages/*/dist
