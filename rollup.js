@@ -186,6 +186,6 @@ export const basicBuild = options => {
     // eg: vime.esm.min.js
     esmBuild({ input, name }),
     // eg: filesizeLite.esm.min.js
-    hasLite && esmBuild({ input: `src/${name}Lite.svelte`, name: 'filesizeLite' })
+    hasLite && esmBuild({ input: `src/${name}Lite.svelte`, name: `${name}-lite` })
   ].filter(Boolean);
 };

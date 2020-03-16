@@ -1,23 +1,33 @@
-import { CenterView } from '../../../views';
+import { PlayerView } from '../../../views';
 import Media from '../../../Media';
+import { withA11y } from '@storybook/addon-a11y';
+import { withKnobs, text, boolean } from '@storybook/addon-knobs';
 import { Html5 } from '@vime/html5';
+import PlayerKnobs from '../../../knobs/player-knobs';
 
-export default { title: 'Packages/Html5/Components' };
+export default { 
+  title: 'Packages/Html 5/Components',
+  decorators: [withA11y, withKnobs],
+  parameters: {
+    viewMode: 'story',
+    previewTabs: {
+      'storybook/docs/panel': { hidden: true }
+    }
+  }
+};
 
 export const Audio = () => ({
-  Component: CenterView,
+  Component: PlayerView,
   props: {
     Component: Html5,
-    src: Media.File.AUDIO
+    ...PlayerKnobs(Media.File.AUDIO)
   }
 });
 
 export const Video = () => ({
-  Component: CenterView,
+  Component: PlayerView,
   props: {
     Component: Html5,
-    src: Media.File.VIDEO,
-    poster: Media.File.POSTER,
-    tracks: Media.File.TRACKS
+    ...PlayerKnobs(Media.File.VIDEO, Media.File.POSTER, Media.File.TRACKS)
   }
 });

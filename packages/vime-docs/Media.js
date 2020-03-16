@@ -1,13 +1,13 @@
 export default {
   File: {
-    AUDIO: '/media/audio/the-battle.mp3',
+    AUDIO: {
+      src: '/media/audio/the-battle.mp3',
+      type: 'audio/mp3'
+    },
     VIDEO: [
       { src: '/media/video/1080p.mp4', type: 'video/mp4', quality: 1080 },
       { src: '/media/video/720p.mp4', type: 'video/mp4', quality: 720 },
-      { src: '/media/video/480p.mp4', type: 'video/mp4', quality: 480 },
-      { src: '/media/video/360p.mp4', type: 'video/mp4', quality: 360 },
-      { src: '/media/video/240p.mp4', type: 'video/mp4', quality: 240 },
-      { src: '/media/video/144p.mp4', type: 'video/mp4', quality: 144 }
+      { src: '/media/video/480p.mp4', type: 'video/mp4', quality: 480 }
     ],
     POSTER: '/media/video/poster.png',
     TRACKS: [{
