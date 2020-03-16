@@ -54,12 +54,14 @@ Reasons Vime is built with Svelte:
 * **Framework Agnostic**. Svelte compiles down to Vanilla JS, you can use it anywhere, regardless of what 
 framework you choose. This all comes without the baggage of the entire Svelte internal system,
 only the parts we need come along for the ride.
+
 * **Lightweight**. Svelte code is terse in a non-cryptic way, it **can** (not will) enable us to naturally write less
 code (see [Write Less Code][write-less-code]). In addition, Svelte is able to infer at compile-time
 the minimal number of steps required to perform the change you're seeking, whether this is updating
-computed properties or the DOM. Through inserting import statements of only small utility-like 
+computed properties or the DOM. Through inserting import statements of only small utility like 
 functions, and taking advantage of treeshaking, the final bundle size is ridiculously small. There is 
 stil the hovering question of does it scale, for that checkout [Yes but does it scale?][does-it-scale]
+
 * **Performant**. In contrast with a virtual DOM approach, which comes with the overhead of being stored 
 in memory and the cost of diffing (see [Virtual DOM is Pure Overhead][vdom-overhead]),
 Svelte inserts code that interfaces with only the part of the DOM that is necessary. Thus, when a change occurs, 
@@ -67,12 +69,18 @@ only the part of the DOM that is affected is recomputed and updated if necessary
 at compile-time analyze our code and make optimizations to increase performance, an example of this is 
 using dependency graph resolution on computed properties to propagate changes with minimal overhead.
 
+* **Store Flexibility**. Svelte's [store contract][svelte-store-contract] interoperates with 
+libraries like RxJS. Today we rely on Svelte's simple built-in store in the background for storing
+state and propagating changes, but we are planning on moving towards a more declarative and predicatable 
+state management flow with a library like RxJS, and the ability to easily switch over is crucial.
+
 💡 Checkout this excellent write up called [Why Svelte?][why-svelte]
 
 [write-less-code]: https://svelte.dev/blog/write-less-code
 [why-svelte]: https://github.com/feltcoop/why-svelte
 [vdom-overhead]: https://svelte.dev/blog/virtual-dom-is-pure-overhead
 [does-it-scale]: https://github.com/sveltejs/svelte/issues/2546
+[svelte-store-contract]: https://svelte.dev/docs#svelte_store
 
 ## Motivation
 
