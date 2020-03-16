@@ -55,8 +55,6 @@ writes code that surgically updates the DOM when the state of your app changes.
 
 ### Why Svelte?
 
-Reasons Vime is built with Svelte:
-
 * **Framework Agnostic**. Svelte compiles down to Vanilla JS, you can use it anywhere, regardless of what 
 framework you choose. This all comes without the baggage of the entire Svelte internal system,
 only the parts we need come along for the ride.

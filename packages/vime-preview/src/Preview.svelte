@@ -16,7 +16,7 @@
       />
       <div 
         class="play"
-        class:active={hasPlayButton && hasLoaded}
+        class:active={showPlayButton && hasLoaded}
       >
         <svg>
           <path d="M3 1.52c0-.398.644-.637.977-.418L15 8.662a.5.5 0 010 .835L3.977 16.911c-.333.219-.977-.02-.977-.418V1.52z"/>
@@ -51,8 +51,8 @@
   export let src = null;
   export let poster = null;
   export let isEnabled = true;
-  export let hasPlayButton = false;
   export let aspectRatio = '16:9';
+  export let showPlayButton = false;
 
   const getNativePoster = async () => {
     if (!is_function(Provider.getPoster)) return;

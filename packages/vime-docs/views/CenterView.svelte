@@ -1,18 +1,19 @@
 <div class="container">
   <div class="component">
-    <svelte:component this={Component} {...props} />
+    <svelte:component 
+      this={Component} 
+      {...$$restProps}
+      bind:this={component}
+    />
   </div>
 </div>
 
 <script>
+  let component;
+
   export let Component;
 
-  let props = {};
-
-  $: {
-    const { Component, ...rest } = $$props;
-    props = rest;
-  }
+  export const getComponent = () => component;
 </script>
 
 <style>

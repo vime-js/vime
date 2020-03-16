@@ -186,7 +186,7 @@ const buildPlayerStore = player => {
 
   store.canSetTrack = derived(
     [store.provider, store.tracks],
-    ([$provider, $tracks]) => $provider && $tracks.length > 0 && is_function($provider.setTrack)
+    ([$provider, $tracks]) => $provider && $tracks && $tracks.length > 0 && is_function($provider.setTrack)
   );
 
   // Can't block current track with `canSetTrack` because it'll stop @vime/player from updating

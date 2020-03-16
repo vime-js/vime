@@ -1,30 +1,73 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta } from "@storybook/addon-docs/blocks";
+import LinkTo from "@storybook/addon-links/react";
 
 <Meta title="Overview/Getting Started" />
 
 # Getting Started
 
-Since there are a few options, this page is about helping you find what package best suits your needs. 
+Since there are a few options, this page is about helping you find what package best suits your needs.
 
-The following options are available:
+The following 4 options are available:
 
-1. **Preview** for displaying thumbnails.
-2. **Lite** for embedding a player.
-3. **Standard** for embedded players that are plugged into the Vime core.
-4. **Complete** for the core Vime player with multi-provider and plugins support.
+- **Preview** for displaying thumbnails. If your `src` points to an external provider such as YouTube,
+  we'll load in the thumbnail for you. It comes with a skeleton loading animation and optional play button.
+
+- **Lite** for a simple player embed. The difference between Lite and traditional Player SDKs is:
+
+  - **Loaded lazily**. See the benefits of lazy loading [here](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video).
+  - Utilizes **preconnections** for an approximately [224x faster load](https://github.com/paulirish/lite-youtube-embed).
+  - **Lighter by about 50% on average and minimal overhead**. For example, if you normally wanted to embed a video from YouTube, Dailymotion and
+    Vimeo, the total Player SDK cost would be ~25 kB. In contrast, with Vime it'll be about ~8 kB, and any
+    additional Lite player from a different provider would only increase that cost by about ~1-1.5 kB.
+  - You send commands and receive messages from the embed via [postmessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage).
+    However, we take the pain out of it by storing your commands and sending them when the player is ready
+    for playback, and we decode any messages received into a POJO.
+
+* **Standard** for when you want all Lite features, and you want to interact with the provider/embed
+  through the core Vime player interface (not via `postmessage`). Thus, you avoid browser/provider differences and get access
+  to the store.
+
+* **Complete** for when you want all Lite and Standard features + custom controls, multi-provider support, internationalization,
+  and plugins.
 
 ## Features / Differences
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| Feature                   | Preview |   Lite   | Standard |   Complete    |
+| ------------------------- | :-----: | :------: | :------: | :-----------: |
+| Size                      | 4.27 kB | ~ 5.3 kB | ~ 13 kB  | 16 kB - 54 kB |
+| Lazy Loading              |    ✓    |    ✓     |    ✓     |       ✓       |
+| Preconnections            |    ✓    |    ✓     |    ✓     |       ✓       |
+| Native Controls           |         |    ✓     |    ✓     |       ✓       |
+| Native Player API         |         |    ✓     |    ✓     |       ✓       |
+| Vime Player API           |         |          |    ✓     |       ✓       |
+| Provider Normalization    |         |          |    ✓     |       ✓       |
+| Browser Normalization     |         |          |    ✓     |       ✓       |
+| Reactive / Eventful Store |         |          |    ✓     |       ✓       |
+| Custom Controls           |         |          |          |       ✓       |
+| Plugins                   |         |          |          |       ✓       |
+| Multi-provider Support    |         |          |          |       ✓       |
+| Internationalization      |         |          |          |       ✓       |
 
-preview / lite / standard / complete
+### Notes
 
-table of differences here??
+1. Custom controls are available via plugins.
+2. All plugins are designed to be responsive and built with accessibility in mind.
+3. The size of 'Complete' depends on the plugins and providers you use, hence the range.
+4. Sizes may be outdated at the time of reading this, see respective package for more accurate numbers.
 
-## Where to next
+## Where to next?
 
-wip.
+- <LinkTo kind="packages-preview-getting-started--page">Preview</LinkTo>
+- <LinkTo kind="packages-html-5-getting-started--page">Html5 (Standard)</LinkTo>
+- <LinkTo kind="packages-youtube-getting-started--page">
+    YouTube (Lite/Standard)
+  </LinkTo>
+- <LinkTo kind="packages-vimeo-getting-started--page">
+    Vimeo (Lite/Standard)
+  </LinkTo>
+- <LinkTo kind="packages-dailymotion-getting-started--page">
+    Dailymotion (Lite/Standard)
+  </LinkTo>
+- <LinkTo kind="packages-player-getting-started--page">
+    Player (Complete)
+  </LinkTo>
