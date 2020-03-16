@@ -24,8 +24,9 @@
 
 
 - [What is Vime?](#what-is-vime)
-- [What is Svelte?](#what-is-svelte)
-- [Why Svelte?](#why-svelte)
+- [Svelte](#svelte)
+  - [What is Svelte?](#what-is-svelte)
+  - [Why Svelte?](#why-svelte)
 - [Motivation](#motivation)
 - [Warning](#warning)
 - [Screenshots](#screenshots)
@@ -43,14 +44,16 @@ for the web simple. The idea behind Vime is **we want you to control the player,
 with that in mind. Thus, we focus on normalizing cross-browser and provider (YouTube, Vimeo, Dailymotion etc.) 
 differences, all powered by an reactive/eventful store, modular design, powerful plugin system and much more.
 
-## What is Svelte?
+## Svelte
+
+### What is Svelte?
 
 > Svelte is a radical new approach to building user interfaces. Whereas traditional frameworks like 
 React and Vue do the bulk of their work in the browser, Svelte shifts that work into a compile step 
 that happens when you build your app. Instead of using techniques like virtual DOM diffing, Svelte 
 writes code that surgically updates the DOM when the state of your app changes.
 
-## Why Svelte?
+### Why Svelte?
 
 Reasons Vime is built with Svelte:
 
