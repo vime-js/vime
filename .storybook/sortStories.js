@@ -4,9 +4,12 @@ const SIDEBAR_ORDER = {
     'Getting Started'
   ],
   Packages: {
-    Html5: {
+    Preview: [
+      'Getting Started',
+      'Components'
+    ],
+    'Html 5': {
       'Getting Started': null,
-      'Player': null,
       Components: [
         'Audio',
         'Video'
@@ -22,7 +25,13 @@ const SIDEBAR_ORDER = {
     'Creating a Control',
     'Creating a Provider'
   ],
-  API: null
+  API: [
+    'Lite Player',
+    'Player',
+    'Registry',
+    'Media Type',
+    'Player State'
+  ]
 }
 
 const getValueForPath = story => {
