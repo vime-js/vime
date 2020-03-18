@@ -16,7 +16,6 @@ module.exports = async ({ config }) => {
   const svelteLoader = findRule(config, 'svelte');
   svelteLoader.options = { 
     ...svelteLoader.options,
-    dev: true,
     preprocess: sveltePreprocess({ 
       postcss: require('../postcss')()
     })

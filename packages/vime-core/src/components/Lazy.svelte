@@ -44,3 +44,9 @@
     return () => window.removeEventListener('scroll', onScroll);
   });
 </script>
+
+<style>
+  div {
+    width: 100%;
+  }
+</style>

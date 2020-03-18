@@ -1,42 +1,28 @@
-<div class="container">
-  <div class="component">
-    <svelte:component 
-      this={Component} 
-      {...$$restProps}
-      bind:this={component}
-    />
-  </div>
-</div>
+<Center>
+  <svelte:component 
+    this={Component} 
+    {...$$restProps}
+    bind:this={component}
+  />
+</Center>
 
 <script>
+  import { createEventDispatcher } from 'svelte';
+  import Center from '../components/Center.svelte';
+
+  const dispatch = createEventDispatcher();
+
   let component;
+  let prevComponent;
 
   export let Component;
 
   export const getComponent = () => component;
+
+  $: if (component) dispatch('mount', component);
+  
+  $: if (prevComponent !== component) {
+    if (prevComponent && !component) dispatch('destroy');
+    prevComponent = component;
+  }
 </script>
-
-<style>
-  .container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .component {
-    width: 100%;
-    max-width: 960px;
-    padding: 16px;
-  }
-
-  @media screen and (min-width: 480px) {
-    .component {
-      padding: 40px;
-    }
-  }
-</style>

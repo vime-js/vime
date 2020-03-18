@@ -54,10 +54,10 @@ const buildPlayerStore = player => {
   // Native
   // --------------------------------------------------------------
 
-  store.nativePoster = writable(defaults.nativePoster);
   store.useNativeView = writable(true);
   store.useNativeControls = writable(true);
   store.useNativeCaptions = writable(true);
+  store.nativePoster = private_writable(defaults.nativePoster);
 
   // --------------------------------------------------------------
   // Src

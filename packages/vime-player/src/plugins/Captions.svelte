@@ -34,7 +34,7 @@
   // --------------------------------------------------------------
 
   export let player;
-  export let crossOrigin = false;
+  export let crossOrigin = null;
 
   const logger = player.createLogger(ID);
   const dispatch = createEventDispatcher();
