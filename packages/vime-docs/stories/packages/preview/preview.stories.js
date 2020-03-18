@@ -1,12 +1,9 @@
-import { CenterView } from '../../../views';
-import Media from '../../../Media';
-import { withA11y } from '@storybook/addon-a11y';
-import { withKnobs, text, boolean } from '@storybook/addon-knobs';
 import { Preview } from '@vime/preview';
+import { InteractiveView } from '../../../views';
+import Media from '../../../Media';
 
 export default { 
   title: 'Packages/Preview/Components',
-  decorators: [withA11y, withKnobs],
   parameters: {
     viewMode: 'story',
     previewTabs: {
@@ -15,42 +12,52 @@ export default {
   }
 };
 
-const createKnobs = (src, poster) => ({
-  src: text('src', src),
-  poster: text('poster' , poster),
-  aspectRatio: text('aspectRatio', '16:9'),
-  showPlayButton: boolean('showPlayButton', false),
-  isEnabled: boolean('isEnabled', true)
-});
+const propTypes = {
+  src: 'text',
+  isEnabled: 'boolean',
+  poster: 'text',
+  aspectRatio: 'text',
+  showPlayButton: 'boolean'
+};
+
+const events = ['loading', 'posterchange'];
 
 export const Html5 = () => ({
-  Component: CenterView,
+  Component: InteractiveView,
   props: {
     Component: Preview,
-    ...createKnobs(undefined, '/media/video/poster.png')
+    poster: '/media/video/poster.png',
+    propTypes,
+    events
   }
 });
 
 export const Youtube = () => ({
-  Component: CenterView,
+  Component: InteractiveView,
   props: {
     Component: Preview,
-    ...createKnobs('youtube/R6MlUcmOul8')
+    src: 'youtube/R6MlUcmOul8',
+    propTypes,
+    events
   }
 });
 
 export const Dailymotion = () => ({
-  Component: CenterView,
+  Component: InteractiveView,
   props: {
     Component: Preview,
-    ...createKnobs('dailymotion/x3a9qe6')
+    src: 'dailymotion/x3a9qe6',
+    propTypes,
+    events
   }
 });
 
 export const Vimeo = () => ({
-  Component: CenterView,
+  Component: InteractiveView,
   props: {
     Component: Preview,
-    ...createKnobs('vimeo/154225711')
+    src: 'vimeo/154225711',
+    propTypes,
+    events
   }
 });
