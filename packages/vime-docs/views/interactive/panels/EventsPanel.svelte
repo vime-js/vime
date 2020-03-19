@@ -1,13 +1,16 @@
 <ul class="uk-list uk-list-divider">
-  {#each Object.keys(events) as event}
-    <li>
+  {#each events as event}
+    <li data-uk-scrollspy>
       <span class="uk-text-emphasis uk-text-small">
-        {event} 
+        {event.event}
         <span class="uk-text-muted uk-text-italic">
-          (fired {events[event].timeAgo})
+          (fired {event.timeAgo})
         </span>
+        {#if showBadge(event)}
+          <span class="uk-badge">new</span>
+        {/if}
       </span> 
-      <pre><code>{JSON.stringify(events[event].detail)}</code></pre>
+      <pre><code>{JSON.stringify(event.data)}</code></pre>
     </li>
   {/each}
 </ul>
@@ -25,15 +28,18 @@
 
   export let events = [];
 
+  const showBadge = event => (Date.now() - event.time) < 5000;
+
   const onStartInterval = () => {
     if (interval) window.clearInterval(interval);
+    if (events.length === 0) return;
     const onInterval = () => {
-      Object.keys(events).forEach(event => {
-        events[event].timeAgo = timeAgo.format(events[event].time, { gradation: canonical });
+      events.forEach((event, i) => {
+        events[i].timeAgo = timeAgo.format(event.time, { gradation: canonical });
       });
     };
     onInterval();
-    interval = setInterval(onInterval, 5000);
+    interval = setInterval(onInterval, 1000);
   };
 
   onDestroy(() => {

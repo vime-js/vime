@@ -7,8 +7,9 @@ import VideoQuality from './VideoQuality';
 
 import {
   private_writable, map_store_to_component, can_autoplay, 
-  selectable_if, writable_if, IS_MOBILE,
-  indexable, private_writable_if, is_function
+  selectable_if, rangeable_if, IS_MOBILE,
+  indexable, private_writable_if, is_function,
+  rangeable
 } from '@vime/utils';
 
 // Player defaults used when the `src` changes or `resetStore` is called.
@@ -93,7 +94,7 @@ const buildPlayerStore = player => {
   store.isVideoView = derived(
     [store.poster, store.nativePoster, store.canSetPoster, store._posterPlugin, store.isVideo],
     ([$poster, $nativePoster, $canSetPoster, $plugin, $isVideo]) => 
-      (($canSetPoster || $plugin) && ($poster || $nativePoster)) || $isVideo
+      !!(($canSetPoster || $plugin) && ($poster || $nativePoster)) || $isVideo
   );
 
   store.isVideoReady = derived(
@@ -120,10 +121,10 @@ const buildPlayerStore = player => {
   store.paused = writable(defaults.paused);
   store.playbackRate = selectable_if(defaults.playbackRate, store.playbackRates, store.canSetPlaybackRate);
   store.videoQuality = selectable_if(defaults.videoQuality, store.videoQualities, store.canSetVideoQuality);
-  store.currentTime = writable(defaults.currentTime);
+  store.currentTime = rangeable(defaults.currentTime, 0, store.duration);
   store.internalTime = private_writable(defaults.internalTime);
   store.muted = writable(false);
-  store.volume = writable_if(30, !IS_MOBILE);
+  store.volume = rangeable_if(30, 0, 100, !IS_MOBILE);
   store.buffered = private_writable(defaults.buffered);
   store.isControlsEnabled = writable(true);
   store.isControlsActive = private_writable(defaults.isControlsActive);

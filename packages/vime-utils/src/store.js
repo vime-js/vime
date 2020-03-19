@@ -1,6 +1,6 @@
 import { tick } from 'svelte';
 import { get, writable, derived } from 'svelte/store';
-import { noop, not_equal, validate_store, get_current_component } from 'svelte/internal';
+import { noop, not_equal, validate_store, get_current_component, init } from 'svelte/internal';
 import { create_prop, merge_obj_deep } from './object';
 import { is_function } from './unit';
 import { try_on_svelte_destroy, try_create_svelte_dispatcher } from './svelte';
@@ -51,9 +51,15 @@ export const subscribe_until_true = (store, cb) => {
 // Private is "private" to the component who instantiates it, when it is exposed publically
 // the set method should be removed. The utility `make_private_stores_readonly` does exactly
 // this. This is also what `map_store_to_component` below uses.
-export const make_store_private = store => ({
+const make_store_private = store => ({
   ...store,
   private: true
+});
+
+const add_condition_to_store = (store, condition) => ({
+  ...store,
+    set: value => { safe_get(condition) && store.set(value); },
+    forceSet: store.set
 });
 
 export const private_writable = initialValue => make_store_private(writable(initialValue));
@@ -74,22 +80,14 @@ export const writable_with_fallback = (initialValue, fallback) => {
   };
 };
 
-export const private_writable_with_fallback = (initialValue, fallback) => {
-  return make_store_private(writable_with_fallback(initialValue, fallback));
-};
+export const private_writable_with_fallback = (initialValue, fallback) => 
+  make_store_private(writable_with_fallback(initialValue, fallback));
 
-export const writable_if = (initialValue, condition) => {
-  const store = writable(initialValue);
-  return {
-    ...store,
-    set: v => { safe_get(condition) && store.set(v); },
-    forceSet: store.set
-  };
-};
+export const writable_if = (initialValue, condition) => 
+  add_condition_to_store(writable(initialValue), condition);
 
-export const private_writable_if = (initialValue, condition) => {
-  return make_store_private(writable_if(initialValue, condition));
-};
+export const private_writable_if = (initialValue, condition) => 
+  make_store_private(writable_if(initialValue, condition));
 
 export const indexable = bounds => {
   const store = writable(-1);
@@ -103,14 +101,19 @@ export const indexable = bounds => {
   };
 };
 
-export const indexable_if = (bounds, condition) => {
-  const store = indexable(bounds);
+export const indexable_if = (bounds, condition) => 
+  add_condition_to_store(indexable(bounds), condition);
+
+export const rangeable = (initialValue, lowerBound, upperBound) => {
+  const store = writable(initialValue);
   return {
     ...store,
-    set: index => { safe_get(condition) && store.set(index); },
-    forceSet: store.set
+    set: value => { store.set(Math.max(safe_get(lowerBound), Math.min(value, safe_get(upperBound)))); }
   };
 };
+
+export const rangeable_if = (initialValue, lowerBound, upperBound, condition) =>
+  add_condition_to_store(rangeable(initialValue, lowerBound, upperBound), condition);
 
 export const selectable = (initialValue, values) => {
   let newValue;
@@ -125,14 +128,8 @@ export const selectable = (initialValue, values) => {
   };
 };
 
-export const selectable_if = (initialValue, values, condition) => {
-  const store = selectable(initialValue, values);
-  return {
-    ...store,
-    set: selection => { safe_get(condition) && store.set(selection); },
-    forceSet: store.set
-  };
-};
+export const selectable_if = (initialValue, values, condition) =>
+  add_condition_to_store(selectable(initialValue, values), condition);
 
 export const make_store_readonly = store => ({ subscribe: store.subscribe });
 

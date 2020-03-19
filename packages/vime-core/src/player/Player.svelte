@@ -144,7 +144,7 @@
   };
 
   const onAutoplay = () => {
-    if (!$autoplay || $rebuilding || (!$canAutoplay || !$canMutedAutoplay)) return;
+    if (!$autoplay || $rebuilding || $currentTime > 0 || (!$canAutoplay || !$canMutedAutoplay)) return;
     $paused = false;
     $playsinline = true;
     if (!$canAutoplay) $muted = true;
@@ -180,7 +180,6 @@
   const onPlaybackReady = async () => {
     // Wait a tick incase of any src changes.
     await tick();
-    onAutoplay();
     $playbackReady = true;
     $buffering = false;
     onRebuild();
@@ -351,6 +350,7 @@
   // State Updates
   // --------------------------------------------------------------
 
+  $: if ($autoplay && $playbackReady) onAutoplay();
   $: if ($provider && !$rebuilding) $provider.setPlaysinline($playsinline);
   $: if ($provider && !$rebuilding) $provider.setControls($isControlsEnabled && ($useNativeControls || tempControls));
   $: if ($provider && !$rebuilding && is_function($provider.setView)) $provider.setView($useNativeView);

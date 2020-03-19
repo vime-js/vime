@@ -29,10 +29,10 @@ The `dist` folder inside the package contains multiple exports:
 📝 **_See the Svelte [Client-side component API](https://svelte.dev/docs#Client-side_component_API)._**
 
 ```js
-import { Preview } from '@vime/preview';
+import { Preview } from "@vime/preview";
 
 // Mount
-const target = document.getElementById('preview-target');
+const target = document.getElementById("preview-target");
 const preview = new Preview({ target });
 
 // ...
@@ -47,21 +47,11 @@ preview.$destroy();
 <Preview />
 
 <script>
-  import { Preview } from '@vime/preview';
+  import { Preview } from "@vime/preview";
 </script>
 ```
 
 ## Props
-
-| Prop           |     Type      | Description                                  | Default |
-| -------------- | :-----------: | -------------------------------------------- | :-----: |
-| src            | `string,null` | The src of the media you're previewing.      | `null`  |
-| poster         | `string,null` | The URL of a custom poster to load.          | `null`  |
-| aspectRatio    | `string,null` | The aspect ratio of the preview.             | `16:9`  |
-| showPlayButton |   `boolean`   | Whether to show a play button in the center. | `false` |
-| isEnabled      |   `boolean`   | Whether to show or hide the preview.         | `true`  |
-
-### JavaScript
 
 ```js
 // Get
@@ -70,6 +60,41 @@ const value = preview.someProp;
 // Set
 preview.someProp = newValue;
 ```
+
+| Prop         |     Type      | Description                                                   | Default |
+| ------------ | :-----------: | ------------------------------------------------------------- | :-----: |
+| src          | `string,null` | The src of the media you're previewing.                       | `null`  |
+| poster       | `string,null` | The URL of a custom poster to load. This will override `src`. | `null`  |
+| aspectRatio  | `string,null` | The aspect ratio of the preview as 'w:h'.                     | `16:9`  |
+| showPlayIcon |   `boolean`   | Whether to show a play icon in the center.                    | `false` |
+| isEnabled    |   `boolean`   | Whether to show or hide the preview.                          | `true`  |
+
+## Methods
+
+```js
+preview.callMethod();
+```
+
+| Method          |  Return Type  | Description                                                                                   |
+| --------------- | :-----------: | --------------------------------------------------------------------------------------------- |
+| getNativePoster | `string,null` | The URL for the poster of the current `src`. If `poster` is set then this will return `null`. |
+
+## Events
+
+```js
+// Start listening.
+const off = preview.$on("someEvent", e => {
+  const data = e.detail;
+});
+
+// Stop listening.
+off();
+```
+
+| Event        |   Data Type   | Description                                          |
+| ------------ | :-----------: | ---------------------------------------------------- |
+| loading      |   `boolean`   | Whether a poster is currently loading.               |
+| posterchange | `string,null` | When a poster is changed, useful when setting `src`. |
 
 ## Examples
 

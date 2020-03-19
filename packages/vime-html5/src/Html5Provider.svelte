@@ -14,7 +14,7 @@
   <video
     {controls}
     crossorigin={crossOrigin}
-    poster={useNativePoster ? poster : null}
+    poster={(useNativePoster && !playbackStarted) ? poster : null}
     preload="metadata"
     playsinline={playsinline}
     playsInline={playsinline}
@@ -113,6 +113,7 @@
   let playbackReady = false;
   let paused = true;
   let videoQuality = null;
+  let playbackStarted = false;
   let useNativePoster = false;
 
   export let src;
@@ -196,7 +197,7 @@
     if (currentTrackIndex !== -1) {
       tracks[currentTrackIndex].mode = Html5.TextTrack.Mode.HIDDEN;
     }
-    if (index !== -1) {
+    if (tracks.length > 0 && index !== -1) {
       const track = tracks[index];
       track.mode = Html5.TextTrack.Mode.SHOWING;
     }
@@ -247,7 +248,8 @@
     listenToMedia(Html5.Event.PROGRESS, onBuffered);
     listenToMedia(Html5.Event.PLAY, () => { 
       paused = false;
-      info.play = true; 
+      info.play = true;
+      playbackStarted = true; 
     });
     listenToMedia(Html5.Event.PAUSE, () => { 
       paused = true;
@@ -326,12 +328,13 @@
       ? src.replace(DROPBOX_ORIGIN, DROPBOX_CONTENT_ORIGIN)
       : src;
     currentSrc = newSrc;
-    load();
+    if (currentSrc) load();
   };
 
   const onSrcChange = () => {
     playbackReady = false;
     videoQuality = null;
+    playbackStarted = false;
     if (is_media_stream(src)) {
       loadMediaStream();
     } else if (!srcHasQualities) {

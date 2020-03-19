@@ -6,6 +6,10 @@ export const is_svelte_component = input => Boolean(
   input && is_instance_of(input.prototype, SvelteComponent)
 );
 
+export const is_svelte_instance = input => Boolean(
+  input && is_svelte_component(input.constructor)
+);
+
 export const try_create_svelte_dispatcher = () => {
   try {
     return createEventDispatcher();
@@ -23,13 +27,13 @@ export const try_on_svelte_destroy = cb => {
 };
 
 export const on_svelte_instance_update = (instance, cb) => {
-  if (!instance || !is_svelte_component(instance.constructor)) return;
+  if (!is_svelte_instance(instance)) return;
   if (!instance.$$.after_update) instance.$$.after_update = [];
   instance.$$.after_update.push(cb);
 };
 
 export const on_svelte_instance_destroy = (instance, cb) => {
-  if (!instance || !is_svelte_component(instance.constructor)) return;
+  if (!is_svelte_instance(instance)) return;
   if (!instance.$$.on_destroy) instance.$$.on_destroy = [];
   instance.$$.on_destroy.push(cb);
 };
