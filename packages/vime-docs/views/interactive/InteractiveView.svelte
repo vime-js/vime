@@ -1,21 +1,19 @@
-<Center>
+<InteractiveCanvas
+  props={Object.values(props)}
+  events={firedEvents}
+  on:change={onChange}
+>
   <svelte:component
     {...$$restProps}
     {...cProps}
     this={Component}
     bind:this={component}
   />
-  <InteractiveCanvas
-    props={Object.values(props)}
-    events={firedEvents}
-    on:change={onChange}
-  />
-</Center>
+</InteractiveCanvas>
 
 <script>
   import { onDestroy } from 'svelte';
   import { run_all, safe_not_equal } from 'svelte/internal';
-  import Center from '../../components/Center.svelte';
   import InteractiveCanvas from './InteractiveCanvas.svelte';
   import { is_function } from '@vime/utils';
 
@@ -55,7 +53,12 @@
 
   const listenToEvents = () => {
     events.forEach(event => {
-      dispose.push(component.$on(event, e => { firedEvents[event] = e.detail; }));
+      dispose.push(component.$on(event, e => { 
+        firedEvents[event] = {
+          time: Date.now(),
+          detail: e.detail 
+        };
+      }));
     });
   };
 

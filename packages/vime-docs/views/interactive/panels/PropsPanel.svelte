@@ -1,5 +1,5 @@
 <form class="uk-form-stacked" onsubmit="return false;">
-  {#each props as prop (prop.id)}
+  {#each props.filter(p => !p.readonly) as prop (prop.id)}
     <div class="uk-margin">
       <label class="uk-form-label" for="{prop.id}">{prop.label || prop.id}</label>
       <div class="uk-form-controls">
@@ -32,14 +32,6 @@
             placeholder={prop.placeholder || prop.id} 
             bind:value={prop.value}
           />
-        {:else if prop.readonly}
-          <input 
-            id={prop.id} 
-            class="uk-input" 
-            type="text"
-            disabled
-            value={prop.value}
-          />
         {:else}
           <input 
             id={prop.id} 
@@ -56,9 +48,5 @@
 </form>
 
 <script>
-  import { createEventDispatcher } from 'svelte';
-
-  const dispatch = createEventDispatcher();
-
   export let props = [];
 </script>
