@@ -87,6 +87,7 @@
     "eslint-plugin-svelte3": "^2.7.3",
     "gzip-size": "^5.1.1",
     "husky": "^4.2.3",
+    "javascript-time-ago": "^2.0.7",
     "jest": "^25.1.0",
     "jest-svelte-events": "^1.0.5",
     "jest-svg-transformer": "^1.0.0",

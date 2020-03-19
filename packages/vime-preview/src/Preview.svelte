@@ -150,10 +150,10 @@
   }
 
   .loading {
-    overflow: hidden;
     background-color: #dfdfdf;
 
     &::after {
+      overflow: hidden;
       display: block;
       content: '';
       position: absolute;
