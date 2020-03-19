@@ -1,12 +1,12 @@
 <ul class="uk-list uk-list-divider">
-  {#each props.filter(p => p.readonly) as prop (prop.id)}
-    <li>
-      <span class="uk-text-emphasis uk-text-small">{prop.id}</span> 
-      <pre><code>{JSON.stringify(prop.value)}</code></pre>
+  {#each methods as method (method.id)}
+    <li data-uk-scrollspy>
+      <span class="uk-text-emphasis uk-text-small">{method.id}</span> 
+      <pre><code>{JSON.stringify(method.value)}</code></pre>
     </li>
   {/each}
 </ul>
 
 <script>
-  export let props = [];
+  export let methods = [];
 </script>

@@ -12,14 +12,6 @@ export default {
   }
 };
 
-const propTypes = {
-  src: 'text',
-  isEnabled: 'boolean',
-  poster: 'text',
-  aspectRatio: 'text',
-  showPlayButton: 'boolean'
-};
-
 const events = ['loading', 'posterchange'];
 
 export const Html5 = () => ({
@@ -27,7 +19,6 @@ export const Html5 = () => ({
   props: {
     Component: Preview,
     poster: '/media/video/poster.png',
-    propTypes,
     events
   }
 });
@@ -37,7 +28,6 @@ export const Youtube = () => ({
   props: {
     Component: Preview,
     src: 'youtube/R6MlUcmOul8',
-    propTypes,
     events
   }
 });
@@ -47,7 +37,6 @@ export const Dailymotion = () => ({
   props: {
     Component: Preview,
     src: 'dailymotion/x3a9qe6',
-    propTypes,
     events
   }
 });
@@ -57,7 +46,6 @@ export const Vimeo = () => ({
   props: {
     Component: Preview,
     src: 'vimeo/154225711',
-    propTypes,
     events
   }
 });

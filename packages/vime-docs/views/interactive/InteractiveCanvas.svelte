@@ -9,6 +9,12 @@
       <slot />
     </Center>
   </div>
+  <button
+    class="uk-icon-button interactives-toggle"
+    on:click={onToggle}
+  >
+    <span uk-icon="icon: move;"></span>
+  </button>
   <div 
     class="interactives"
     class:hidden
@@ -19,27 +25,40 @@
       class="interactives-dragbar" 
       on:mousedown|preventDefault={startDragging}
     ></div>
-    <button
-      class="uk-icon-button interactives-toggle"
-      on:click={onToggle}
-    >
-      <span uk-icon="icon: move;"></span>
-    </button>
     <ul uk-tab>
       <li></li>
-      <li><a href="#props">Props</a></li>
-      <li><a href="#methods">Methods</a></li>
-      <li><a href="#events">Events</a></li>
+      {#each tabs as tab, i}
+        <li><a href={`#${tab}`} on:click="{() => onTabChange(i)}">{tab}</a></li>
+      {/each}
     </ul>
     <ul class="uk-switcher uk-margin interactives-body">
       <li>
-        <PropsPanel
-          {props} 
-          on:change
-        />
+        {#if isPropsPanelActive && pureProps.length > 0}
+          <PropsPanel props={pureProps} on:propschange />
+        {:else if isPropsPanelActive}
+          <span class="uk-text-small uk-text-muted">
+            This component has no props.
+          </span>
+        {/if}
       </li>
-      <li><MethodsPanel {props} /></li>
-      <li><EventsPanel {events} /></li>
+      <li>
+        {#if isMethodsPanelActive && methods.length > 0}
+          <MethodsPanel {methods} />
+        {:else if isMethodsPanelActive}
+          <span class="uk-text-small uk-text-muted">
+            This component has no getter methods.
+          </span>
+        {/if}
+      </li>
+      <li>
+        {#if isEventsPanelActive && events.length > 0}
+          <EventsPanel {events} />
+        {:else if isEventsPanelActive}
+          <span class="uk-text-small uk-text-muted">
+            This component has not fired any events.
+          </span>
+        {/if}
+      </li>
     </ul>
   </div>
 </div>
@@ -58,10 +77,17 @@
   let interactivesEl;
   let hidden = false;
   let dragging = false;
+  let currentTabIndex = 0;
   let transitioning = false;
 
+  const tabs = [
+    'Props',
+    'Methods',
+    'Events'
+  ];
+
   export let props = [];
-  export let events = {};
+  export let events = [];
 
   onMount(() => {
     const width = parseFloat(window.getComputedStyle(canvasEl).width);
@@ -83,18 +109,26 @@
     startWidth = parseInt(window.getComputedStyle(interactivesEl).width);
   };
   
-  const stopDragging = () => { dragging = false; };
+  const stopDragging = e => { dragging = false; };
 
   const onDraggingHandler = e => {
     interactivesEl.style.width = `${(startWidth - (e.clientX - startX))}px`;
   };
 
+  const onTabChange = index => { currentTabIndex = index; };
+
   $: onDragging = dragging ? onDraggingHandler : null;
+
+  $: isPropsPanelActive = (currentTabIndex === 0);
+  $: isMethodsPanelActive = (currentTabIndex === 1);
+  $: isEventsPanelActive = (currentTabIndex === 2);
+
+  $: methods = props.filter(p => p.method);
+  $: pureProps = props.filter(p => !p.method);
 </script>
 
 <style>
   .canvas {
-    position: relative;
     display: flex;
     width: 100%;
     height: 100%;
@@ -126,6 +160,7 @@
     position: relative;
     min-width: 300px;
     max-width: 60%;
+    overflow-y: auto;
   }
 
   @media (min-width: 959px) {
@@ -146,7 +181,7 @@
   .interactives-toggle {
     position: absolute;
     top: 12px;
-    right: 8px;
+    right: 16px;
     cursor: pointer;
     border: 0 !important;
     z-index: 2;
@@ -170,7 +205,6 @@
 
   .interactives-body {
     padding: 0 20px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: auto;
   }
 </style>

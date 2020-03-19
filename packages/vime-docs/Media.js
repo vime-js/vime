@@ -1,9 +1,6 @@
 export default {
   File: {
-    AUDIO: {
-      src: '/media/audio/the-battle.mp3',
-      type: 'audio/mp3'
-    },
+    AUDIO: '/media/audio/the-battle.mp3',
     VIDEO: [
       { src: '/media/video/1080p.mp4', type: 'video/mp4', quality: 1080 },
       { src: '/media/video/720p.mp4', type: 'video/mp4', quality: 720 },

@@ -2,9 +2,11 @@
 
 <div 
   class="preview"
-  class:loading={isLoading}
   use:setAspectRatio={isEnabled ? aspectRatio : null}
 >
+  <div class="loading-container">
+    <div class:loading={isLoading}></div> 
+  </div>
   <Lazy let:intersecting >
     {#if isEnabled && intersecting}
       <img
@@ -16,7 +18,7 @@
       />
       <div 
         class="play"
-        class:active={showPlayButton && !isLoading}
+        class:active={showPlayIcon && !isLoading}
       >
         <svg>
           {@html playIcon}
@@ -25,6 +27,10 @@
     {/if}
   </Lazy>
 </div>
+
+<script context="module">
+  const cache = {};
+</script>
 
 <script>
   import { tick, onMount, createEventDispatcher } from 'svelte';
@@ -58,12 +64,13 @@
   export let poster = null;
   export let isEnabled = true;
   export let aspectRatio = '16:9';
-  export let showPlayButton = false;
+  export let showPlayIcon = false;
 
   export const getNativePoster = () => nativePoster;
 
   const _getNativePoster = async () => {
-    nativePoster = await Provider.getPoster(src);
+    nativePoster = cache[src] || await Provider.getPoster(src);
+    if (!cache[src]) cache[src] = nativePoster;
     isLoading = true;
   };
 
@@ -81,11 +88,11 @@
   $: onPosterChange(poster);
   
   $: Provider = providers.find(p => p.canPlay(src));
-  $: if (!Provider) nativePoster = null;
+  $: if (!Provider || poster) nativePoster = null;
   $: if (!poster && src && Provider && is_function(Provider.getPoster)) _getNativePoster();
 
-  $: dispatch(Event.LOADING, isLoading);
-  $: dispatch(Event.POSTER_CHANGE, poster || nativePoster);
+  $: tick().then(() => dispatch(Event.LOADING, isLoading));
+  $: tick().then(() => dispatch(Event.POSTER_CHANGE, poster || nativePoster));
 </script>
 
 <style type="text/scss">
@@ -149,11 +156,22 @@
     }
   }
 
-  .loading {
+  .loading-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: #dfdfdf;
+  }
+
+  .loading {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
 
     &::after {
-      overflow: hidden;
       display: block;
       content: '';
       position: absolute;
