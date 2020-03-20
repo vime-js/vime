@@ -25,7 +25,7 @@
     "setup": "yarn clean:node && yarn install",
     "release": "yarn validate && lerna publish --create-release github",
     "prerelease": "yarn validate && lerna publish --conventional-prerelease --pre-dist-tag next",
-    "validate": "yarn lint && yarn test && yarn build:all"
+    "validate": "yarn lint:js && yarn test && yarn build:all"
   },
   "husky": {
     "hooks": {
