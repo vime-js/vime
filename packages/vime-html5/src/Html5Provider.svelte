@@ -83,7 +83,7 @@
   import { run_all, listen, raf, noop } from 'svelte/internal';
   import Source from './Source.svelte';
   import Tracks from './Tracks.svelte';
-  import { Disposal, PlayerState, MediaType } from '@vime/core';
+  import { Disposal, PlayerState, MediaType } from '@vime-js/core';
 
   import { 
     DROPBOX_ORIGIN, DROPBOX_CONTENT_ORIGIN, is_media_stream,
@@ -95,7 +95,7 @@
     is_function, can_fullscreen_video, can_use_pip_in_chrome,
     can_use_pip_in_safari, get_computed_height, is_string, 
     can_use_pip, is_number
-  } from '@vime/utils';
+  } from '@vime-js/utils';
 
   const disposal = new Disposal();
   const dispatch = createEventDispatcher();

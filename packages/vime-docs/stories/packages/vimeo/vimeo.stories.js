@@ -1,5 +1,5 @@
 import { CenterView } from '../../../views';
-import { VimeoLite, Vimeo } from '@vime/vimeo';
+import { VimeoLite, Vimeo } from '@vime-js/vimeo';
 import config from '../../../config';
 
 export default { title: 'Packages/Vimeo/Components' };

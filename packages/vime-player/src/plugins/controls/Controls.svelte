@@ -59,7 +59,7 @@
 
 <script context="module">
   import { writable } from 'svelte/store';
-  import { is_array } from '@vime/utils';
+  import { is_array } from '@vime-js/utils';
   import PluginRole from '../../core/PluginRole';
 
   export const ID = 'vControls';
@@ -73,13 +73,13 @@
 <script>
   import { tick, onMount, onDestroy } from 'svelte';
   import { raf, listen } from 'svelte/internal';
-  import { Registry } from '@vime/core';
+  import { Registry } from '@vime-js/core';
   import ControlGroup from './ControlGroup.svelte';
 
   import {
     set_style, get_computed_height, get_computed_height_without_padding,
     set_style_raf
-  } from '@vime/utils';
+  } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup

@@ -29,7 +29,7 @@
 </button>
 
 <script>
-  import { Icon, focus, highlight } from '@vime/core';
+  import { Icon, focus, highlight } from '@vime-js/core';
 
   // --------------------------------------------------------------
   // Setup

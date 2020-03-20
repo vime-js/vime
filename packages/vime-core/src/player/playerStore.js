@@ -10,7 +10,7 @@ import {
   selectable_if, rangeable_if, IS_MOBILE,
   indexable, private_writable_if, is_function,
   rangeable
-} from '@vime/utils';
+} from '@vime-js/utils';
 
 // Player defaults used when the `src` changes or `resetStore` is called.
 const playerDefaults = () => ({
@@ -89,7 +89,7 @@ const buildPlayerStore = player => {
   store.videoQualities = private_writable(defaults.videoQualities);
   store.duration = private_writable(defaults.duration);
 
-  // Used by @vime/player.
+  // Used by @vime-js/player.
   store._posterPlugin = writable(false);
   store.isVideoView = derived(
     [store.poster, store.nativePoster, store.canSetPoster, store._posterPlugin, store.isVideo],
@@ -190,7 +190,7 @@ const buildPlayerStore = player => {
     ([$provider, $tracks]) => $provider && $tracks && $tracks.length > 0 && is_function($provider.setTrack)
   );
 
-  // Can't block current track with `canSetTrack` because it'll stop @vime/player from updating
+  // Can't block current track with `canSetTrack` because it'll stop @vime-js/player from updating
   // the value when a plugin is managing captions.
   store.currentTrackIndex = indexable(store.tracks);
   

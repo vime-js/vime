@@ -5,7 +5,7 @@
 </script>
 
 <script>
-  import { is_instance_of } from '@vime/utils';
+  import { is_instance_of } from '@vime-js/utils';
   import Tooltip from './Tooltip.svelte';
 
   // --------------------------------------------------------------

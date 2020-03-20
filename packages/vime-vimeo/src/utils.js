@@ -1,4 +1,4 @@
-import { is_string } from '@vime/utils';
+import { is_string } from '@vime-js/utils';
 
 export const ORIGIN = 'https://www.vimeo.com';
 export const EMBED_ORIGIN = 'https://player.vimeo.com';

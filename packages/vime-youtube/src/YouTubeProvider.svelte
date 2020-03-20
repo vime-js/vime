@@ -13,7 +13,7 @@
 
 <script context="module">
   import { can_play } from './utils';
-  import { VideoQuality } from '@vime/core';
+  import { VideoQuality } from '@vime-js/core';
 
   const YT = {};
 
@@ -61,8 +61,8 @@
 
 <script>
   import { tick, onMount, createEventDispatcher } from 'svelte';
-  import { PlayerState, MediaType } from '@vime/core';
-  import { is_number, is_boolean } from '@vime/utils';
+  import { PlayerState, MediaType } from '@vime-js/core';
+  import { is_number, is_boolean } from '@vime-js/utils';
   import YouTubeEmbed from './YouTubeEmbed.svelte';
   import { get_src_id, get_poster } from './utils';
 

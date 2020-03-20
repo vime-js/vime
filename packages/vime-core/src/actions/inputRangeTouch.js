@@ -1,5 +1,5 @@
 import { run_all, listen } from 'svelte/internal';
-import { listen_for_touch_input, set_style } from '@vime/utils';
+import { listen_for_touch_input, set_style } from '@vime-js/utils';
 
 // @see https://github.com/sampotts/rangetouch
 export default function inputRangeTouch (node) {

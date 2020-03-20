@@ -35,7 +35,7 @@
 
 <script>
   import { tick, onDestroy } from 'svelte';
-  import { focus } from '@vime/core';
+  import { focus } from '@vime-js/core';
   import MuteControl from './MuteControl.svelte';
 
   // --------------------------------------------------------------

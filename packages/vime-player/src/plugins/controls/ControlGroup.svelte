@@ -7,7 +7,7 @@
 {/each}
 
 <script>
-  import { is_svelte_component } from '@vime/utils';
+  import { is_svelte_component } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup

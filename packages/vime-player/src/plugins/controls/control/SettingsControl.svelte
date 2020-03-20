@@ -28,7 +28,7 @@
 
 <script>
   import { tick } from 'svelte';
-  import { Icon } from '@vime/core';
+  import { Icon } from '@vime-js/core';
   import Control from '../Control.svelte';
   import PluginRole from '../../../core/PluginRole';
   import { ID as SettingsID } from '../../settings/Settings.svelte';

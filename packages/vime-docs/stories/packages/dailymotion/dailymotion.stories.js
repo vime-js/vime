@@ -1,5 +1,5 @@
 import { CenterView } from '../../../views';
-import { Dailymotion, DailymotionLite } from '@vime/dailymotion';
+import { Dailymotion, DailymotionLite } from '@vime-js/dailymotion';
 import config from '../../../config';
 
 export default { title: 'Packages/Dailymotion/Components' };

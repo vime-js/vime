@@ -1,5 +1,5 @@
 import { InteractiveView } from '../../../views';
-import { Html5 } from '@vime/html5';
+import { Html5 } from '@vime-js/html5';
 import config from '../../../config';
 
 export default { 

@@ -13,7 +13,7 @@
 
 <script>
   import { onMount } from 'svelte';
-  import { IS_IOS, is_svelte_component } from '@vime/utils';
+  import { IS_IOS, is_svelte_component } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup

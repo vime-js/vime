@@ -24,7 +24,7 @@
 
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { is_string, prefetch, add_params_to_url } from '@vime/utils';
+  import { is_string, prefetch, add_params_to_url } from '@vime-js/utils';
 
   let iframe = null;
   let prevSrc = null;

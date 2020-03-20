@@ -16,7 +16,7 @@
 </PlayerWrapper>
 
 <script>
-  import { PlayerWrapper } from '@vime/core';
+  import { PlayerWrapper } from '@vime-js/core';
   import VimeoEmbed from './VimeoEmbed.svelte';
 
   let embed;
