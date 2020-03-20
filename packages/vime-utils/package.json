@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/utils",
   "description": "Vime utilities",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "module": "src/index.js",
   "sideEffects": false,
   "license": "MIT",
