@@ -1,6 +1,6 @@
 import { createEventDispatcher } from 'svelte';
 import { writable, derived } from 'svelte/store';
-import { currentPlayer } from './globalStore';
+import { currentPlayer } from './sharedStore';
 import PlayerState from './PlayerState';
 import MediaType from './MediaType';
 import VideoQuality from './VideoQuality';

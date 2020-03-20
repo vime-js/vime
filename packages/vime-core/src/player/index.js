@@ -1,6 +1,6 @@
-import * as globalStore from './globalStore';
+import * as sharedStore from './sharedStore';
 
-export { globalStore };
+export { sharedStore };
 export { default as MediaType } from './MediaType';
 export { default as PlayerState } from './PlayerState';
 export { default as Disposal } from './Disposal';
