@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/html5",
   "description": "Vime Html5 Player",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "svelte": "src/index.js",
   "main": "dist/html5.js",
   "module": "dist/html5.esm.js",
@@ -29,8 +29,8 @@
     "build:dev": "rollup -c --environment NODE_ENV:development"
   },
   "dependencies": {
-    "@vime-js/core": "^1.1.0",
-    "@vime-js/utils": "^1.1.0"
+    "@vime-js/core": "^1.1.1",
+    "@vime-js/utils": "^1.1.1"
   },
   "publishConfig": {
     "access": "public"

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/vime-js/vime/tree/master/packages/vime-core/compare/v1.1.0...v1.1.1) (2020-03-20)
+
+
+### Bug Fixes
+
+* **player:** broken shared store reference ([fdbe6c7](https://github.com/vime-js/vime/tree/master/packages/vime-core/commit/fdbe6c7dc8d2fff511fa5629ddbfa2a47cccd643))
+
+
+
+
+
 # 1.1.0 (2020-03-20)
 
 
