@@ -34,11 +34,11 @@
 
 <script>
   import { tick, onMount, createEventDispatcher } from 'svelte';
-  import { aspectRatio as setAspectRatio, Lazy } from '@vime/core';
-  import { is_function } from '@vime/utils';
-  import { utils as Dailymotion } from '@vime/dailymotion';
-  import { utils as YouTube } from '@vime/youtube';
-  import { utils as Vimeo } from '@vime/vimeo';
+  import { aspectRatio as setAspectRatio, Lazy } from '@vime-js/core';
+  import { is_function } from '@vime-js/utils';
+  import { utils as Dailymotion } from '@vime-js/dailymotion';
+  import { utils as YouTube } from '@vime-js/youtube';
+  import { utils as Vimeo } from '@vime-js/vimeo';
   import playIcon from '../static/vime-play.svg';
 
   const dispatch = createEventDispatcher();
