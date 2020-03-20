@@ -47,7 +47,7 @@
   }
 
   $: playbackRateMenuOptions = ($playbackRates.length === 1)
-    ? [] 
+    ? []
     : $playbackRates.map(rate => ({
       title: (rate === 1) ? $i18n.normal : rate,
       value: rate
@@ -76,7 +76,7 @@
   }
 
   $: captionMenuOptions = (!$isVideoView)
-    ? [] 
+    ? []
     : [{
       title: $i18n.off,
       value: -1

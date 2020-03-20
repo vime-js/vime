@@ -1,4 +1,4 @@
-import { 
+import {
   is_instance_of, is_string, can_play_hls_natively,
   is_array, is_object, is_number
 } from '@vime-js/utils';
@@ -27,7 +27,7 @@ export const extract_media_resource = resource => {
   }
 };
 
-export const run_on_every_src = (src, cb) => is_array(src) 
+export const run_on_every_src = (src, cb) => is_array(src)
   ? src.every(resource => cb(extract_media_resource(resource)))
   : cb(extract_media_resource(src));
 

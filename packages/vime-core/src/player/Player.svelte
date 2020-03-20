@@ -26,7 +26,7 @@
   import PlayerWrapper from './PlayerWrapper.svelte';
   
   import {
-    is_array, is_function, is_number, 
+    is_array, is_function, is_number,
     is_boolean, map_store_to_component, deferred,
     is_null
   } from '@vime-js/utils';
@@ -39,21 +39,21 @@
   const {
     playsinline, paused, muted,
     playbackEnded, volume, seeking,
-    internalTime, currentTime, isPiPActive, 
-    playbackRate, videoQuality, src, 
-    isControlsEnabled, aspectRatio, buffering, 
-    buffered, autopause, autoplay, 
-    playing, playbackStarted, poster, 
-    playbackReady, isVideoView, tracks, 
-    currentTrackIndex, provider, rebuilding, 
+    internalTime, currentTime, isPiPActive,
+    playbackRate, videoQuality, src,
+    isControlsEnabled, aspectRatio, buffering,
+    buffered, autopause, autoplay,
+    playing, playbackStarted, poster,
+    playbackReady, isVideoView, tracks,
+    currentTrackIndex, provider, rebuilding,
     isVideoReady, canInteract, isFullscreenActive,
     useNativeView, useNativeControls, useNativeCaptions,
     duration
   } = store;
 
   const {
-    canSetPiP, canSetTracks, canSetTrack, 
-    canAutoplay, canMutedAutoplay, canSetPoster, 
+    canSetPiP, canSetTracks, canSetTrack,
+    canAutoplay, canMutedAutoplay, canSetPoster,
     canSetPlaybackRate, canSetVideoQuality
   } = store;
 
@@ -72,7 +72,7 @@
     .filter(prop => !store[prop] && !filteredProps.includes(prop))
     .forEach(prop => (props[prop] = $$props[prop]));
 
-  onDestroy(() => { 
+  onDestroy(() => {
     props = {};
     store = {};
     playerWrapper = null;
@@ -376,8 +376,8 @@
   // Tracks
   // --------------------------------------------------------------
 
-  $: if ($canSetTracks && $canInteract) $provider.setTracks($useNativeCaptions ? $tracks : []); 
-  $: if ($canSetTrack && $canInteract) $provider.setTrack($useNativeCaptions ? $currentTrackIndex : -1); 
+  $: if ($canSetTracks && $canInteract) $provider.setTracks($useNativeCaptions ? $tracks : []);
+  $: if ($canSetTrack && $canInteract) $provider.setTrack($useNativeCaptions ? $currentTrackIndex : -1);
 
   // --------------------------------------------------------------
   // Picture in Picture
@@ -422,7 +422,7 @@
     $isFullscreenActive = active;
   };
 
-  const onFullscreenChange = active => { 
+  const onFullscreenChange = active => {
     $isFullscreenActive = active;
     if (!$isFullscreenActive) tempControls = false;
     tempPause = false;
@@ -442,7 +442,7 @@
     return Promise.resolve(request);
   };
 
-  // TODO: the two providers which can set fullscreen at the moment (Html5/Dailymotion) don't 
+  // TODO: the two providers which can set fullscreen at the moment (Html5/Dailymotion) don't
   // require a rebuild when enabling controls, if at some point a provider does this won't work.
   const requestProviderFullscreen = active => {
     if (active) tempControls = true;

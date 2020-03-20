@@ -44,8 +44,8 @@
 
   export let player;
 
-  const { 
-    isMobile, isControlsEnabled, playbackReady, 
+  const {
+    isMobile, isControlsEnabled, playbackReady,
     isVideoView, useNativeControls
   } = player.getStore();
 
@@ -69,10 +69,10 @@
   export let autopilot = true;
   export let isEnabled = false;
 
-  $: if (autopilot) isEnabled = $isControlsEnabled && 
-    $playbackReady && 
-    $isVideoView && 
-    !$isMobile && 
+  $: if (autopilot) isEnabled = $isControlsEnabled &&
+    $playbackReady &&
+    $isVideoView &&
+    !$isMobile &&
     ((controlsPlugin && !controlsPlugin.hasCenterControls()) ||  !controlsPlugin);
 
   export const run = async (i, v = null) => {

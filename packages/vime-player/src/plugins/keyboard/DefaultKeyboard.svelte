@@ -34,7 +34,7 @@
     paused, icons, volume,
     muted, isCaptionsActive, isPiPActive,
     isFullscreenActive, currentTime, duration,
-    canInteract, canSetTrack, canSetPiP, 
+    canInteract, canSetTrack, canSetPiP,
     canSetFullscreen, currentTrackIndex
   } = player.getStore();
 

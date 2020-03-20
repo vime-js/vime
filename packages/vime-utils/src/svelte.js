@@ -21,8 +21,8 @@ export const try_create_svelte_dispatcher = () => {
 export const try_on_svelte_destroy = cb => {
   try {
     onDestroy(cb);
-  } catch (e) { 
-    /** noop */ 
+  } catch (e) {
+    /** noop */
   }
 };
 

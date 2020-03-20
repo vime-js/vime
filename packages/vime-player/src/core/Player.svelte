@@ -44,13 +44,13 @@
   import { buildPlayerStore } from './playerStore';
   import PlayerEvent from './PlayerEvent';
   
-  import { 
+  import {
     Registry, Disposal, Lazy,
     aspectRatio as setAspectRatio,
     Player as InternalPlayer
   } from '@vime-js/core';
 
-  import { 
+  import {
     log as _log, warn as _warn, error as _error,
     map_store_to_component, is_string
   } from '@vime-js/utils';
@@ -91,9 +91,9 @@
   onMount(() => {
     store = buildPlayerStore(internalPlayer.getStore());
     onPropsChange = map_store_to_component(self, store);
-    ({  
-      plugins, paused, isVideo, 
-      theme, isVideoView, useNativeControls, 
+    ({
+      plugins, paused, isVideo,
+      theme, isVideoView, useNativeControls,
       isControlsActive, debug, isFullscreenActive,
       aspectRatio, Provider
     } = store);

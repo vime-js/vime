@@ -30,10 +30,10 @@
   export let isEnabled = false;
 
   $: if (autopilot) {
-    isEnabled = $isControlsEnabled && 
-      $canInteract && 
+    isEnabled = $isControlsEnabled &&
+      $canInteract &&
       $isVideoView &&
-      !$isMobile && 
+      !$isMobile &&
       !$useNativeControls;
   }
 

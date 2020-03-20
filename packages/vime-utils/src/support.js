@@ -22,12 +22,12 @@ export const listen_for_touch_input = cb => {
   if (!IS_CLIENT) return;
 
   let lastTouchTime = 0;
-  
+
   const touchListener = listen(document, 'touchstart', () => {
     lastTouchTime = new Date();
     cb(true);
   }, true);
-  
+
   const mouseListener = listen(document, 'mousemove', () => {
     // Filter emulated events coming from touch events
     if (new Date() - lastTouchTime < 500) return;

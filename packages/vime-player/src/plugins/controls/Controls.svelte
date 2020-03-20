@@ -90,9 +90,9 @@
   const rootEl = player.getEl();
 
   const {
-    paused, playbackReady, isLive, 
-    mediaType, isVideoView, isControlsEnabled, 
-    canInteract, isMobile, useNativeControls, _isControlsActive: 
+    paused, playbackReady, isLive,
+    mediaType, isVideoView, isControlsEnabled,
+    canInteract, isMobile, useNativeControls, _isControlsActive:
     isControlsActive, rebuilding
   } = player.getStore();
 

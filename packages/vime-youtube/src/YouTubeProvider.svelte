@@ -67,7 +67,7 @@
   import { get_src_id, get_poster } from './utils';
 
   let embed;
-  let info = {}; 
+  let info = {};
   let srcId = null;
   let duration = 0;
   let seeking = false;
