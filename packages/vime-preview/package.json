@@ -28,7 +28,8 @@
   ],
   "files": [
     "dist",
-    "src"
+    "src",
+    "static"
   ],
   "scripts": {
     "build": "rollup -c --environment NODE_ENV:production",
