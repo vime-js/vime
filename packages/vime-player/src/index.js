@@ -1,7 +1,7 @@
-import { Html5Provider } from '@vime/html5';
-import { DailymotionProvider } from '@vime/dailymotion';
-import { YouTubeProvider } from '@vime/youtube';
-import { VimeoProvider } from '@vime/vimeo';
+import { Html5Provider } from '@vime-js/html5';
+import { DailymotionProvider } from '@vime-js/dailymotion';
+import { YouTubeProvider } from '@vime-js/youtube';
+import { VimeoProvider } from '@vime-js/vimeo';
 
 export * from './core';
 export * from './plugins';

@@ -82,8 +82,8 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import { raf } from 'svelte/internal';
-  import { PlayerState, MediaType } from '@vime/core';
-  import { is_array } from '@vime/utils';
+  import { PlayerState, MediaType } from '@vime-js/core';
+  import { is_array } from '@vime-js/utils';
   import VimeoEmbed from './VimeoEmbed.svelte';
   import { get_src_id, get_poster } from './utils';
 

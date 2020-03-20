@@ -1,13 +1,13 @@
 {
-  "name": "@vime/docs",
+  "name": "@vime-js/docs",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "@vime/html5": "^1.0.0",
-    "@vime/youtube": "^1.0.0",
-    "@vime/vimeo": "^1.0.0",
-    "@vime/dailymotion": "^1.0.0",
-    "@vime/player": "^1.0.0"
+    "@vime-js/html5": "^1.0.0",
+    "@vime-js/youtube": "^1.0.0",
+    "@vime-js/vimeo": "^1.0.0",
+    "@vime-js/dailymotion": "^1.0.0",
+    "@vime-js/player": "^1.0.0"
   }
 }

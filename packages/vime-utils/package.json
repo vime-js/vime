@@ -1,5 +1,5 @@
 {
-  "name": "@vime/utils",
+  "name": "@vime-js/utils",
   "description": "Vime utilities",
   "version": "1.0.0",
   "module": "src/index.js",

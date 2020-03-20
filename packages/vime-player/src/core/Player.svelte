@@ -43,15 +43,17 @@
   import Plugins from './Plugins.svelte';
   import { buildPlayerStore } from './playerStore';
   import PlayerEvent from './PlayerEvent';
+  
   import { 
     Registry, Disposal, Lazy,
     aspectRatio as setAspectRatio,
     Player as InternalPlayer
-  } from '@vime/core';
+  } from '@vime-js/core';
+
   import { 
     log as _log, warn as _warn, error as _error,
     map_store_to_component, is_string
-  } from '@vime/utils';
+  } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup

@@ -63,7 +63,7 @@
   import MenuItem from './menu/MenuItem.svelte';
   import MenuItemRadio from './menu/MenuItemRadio.svelte';
   import Control from '../controls/Control.svelte';
-  import { map_store_to_component } from '@vime/utils';
+  import { map_store_to_component } from '@vime-js/utils';
 
   // eslint-disable-next-line prefer-const
   menuIdCounter += 1;

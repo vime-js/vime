@@ -29,7 +29,7 @@
 </div>
 
 <script>
-  import { Icon, formatTime } from '@vime/core';
+  import { Icon, formatTime } from '@vime-js/core';
   import Control from '../Control.svelte';
 
   // --------------------------------------------------------------

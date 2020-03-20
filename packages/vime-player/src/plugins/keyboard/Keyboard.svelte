@@ -6,7 +6,7 @@
 </script>
 
 <script>
-  import { is_array } from '@vime/utils';
+  import { is_array } from '@vime-js/utils';
   import { ID as TooltipsID } from '../tooltips/Tooltips.svelte';
 
   // --------------------------------------------------------------

@@ -59,9 +59,9 @@
 
 <script>
   import { raf } from 'svelte/internal';
-  import { formatTime, inputRangeTouch } from '@vime/core';
+  import { formatTime, inputRangeTouch } from '@vime-js/core';
   import { ID as TooltipsID } from '../../tooltips/Tooltips.svelte';
-  import { set_style_raf } from '@vime/utils';
+  import { set_style_raf } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup

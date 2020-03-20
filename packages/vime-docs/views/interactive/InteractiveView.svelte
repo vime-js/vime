@@ -19,7 +19,7 @@
     debounce, is_number, is_function, 
     is_boolean, is_string, is_object,
     is_array, is_svelte_instance, is_element
-  } from '@vime/utils';
+  } from '@vime-js/utils';
 
   let component;
   let props = [];

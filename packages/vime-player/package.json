@@ -1,5 +1,5 @@
 {
-  "name": "@vime/player",
+  "name": "@vime-js/player",
   "description": "Vime Player",
   "version": "1.0.0",
   "svelte": "src/index.js",
@@ -38,12 +38,12 @@
     "svg:sprite": "svgstore --inline -o src/static/vime.svg src/static/icons/*.svg"
   },
   "dependencies": {
-    "@vime/core": "^1.0.0",
-    "@vime/utils": "^1.0.0",
-    "@vime/html5": "^1.0.0",
-    "@vime/youtube": "^1.0.0",
-    "@vime/vimeo": "^1.0.0",
-    "@vime/dailymotion": "^1.0.0",
+    "@vime-js/core": "^1.0.0",
+    "@vime-js/utils": "^1.0.0",
+    "@vime-js/html5": "^1.0.0",
+    "@vime-js/youtube": "^1.0.0",
+    "@vime-js/vimeo": "^1.0.0",
+    "@vime-js/dailymotion": "^1.0.0",
     "svgo": "^1.3.2",
     "svgstore-cli": "^1.3.1"
   },

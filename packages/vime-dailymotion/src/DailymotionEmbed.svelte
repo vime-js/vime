@@ -15,7 +15,7 @@
 />
 
 <script context="module">
-  import { decode_query_string } from '@vime/utils';
+  import { decode_query_string } from '@vime-js/utils';
   import { ORIGIN } from './utils';
 
   const DECODER = decode_query_string;
@@ -44,8 +44,8 @@
 <script>
   import { tick, onMount, createEventDispatcher } from 'svelte';
   import { noop } from 'svelte/internal';
-  import { deferred } from '@vime/utils';
-  import { Embed } from '@vime/core';
+  import { deferred } from '@vime-js/utils';
+  import { Embed } from '@vime-js/core';
 
   const dispatch = createEventDispatcher();
 

@@ -1,5 +1,5 @@
 import { run_all } from 'svelte/internal';
-import { try_on_svelte_destroy } from '@vime/utils';
+import { try_on_svelte_destroy } from '@vime-js/utils';
 
 export default class Disposal {
   constructor () {

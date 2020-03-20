@@ -1,4 +1,4 @@
-import { is_string  } from '@vime/utils';
+import { is_string  } from '@vime-js/utils';
 
 export const ORIGIN = 'https://www.dailymotion.com';
 export const API_ENDPOINT = 'https://api.dailymotion.com';

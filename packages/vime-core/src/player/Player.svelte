@@ -29,7 +29,7 @@
     is_array, is_function, is_number, 
     is_boolean, map_store_to_component, deferred,
     is_null
-  } from '@vime/utils';
+  } from '@vime-js/utils';
 
   let self = get_current_component();
 

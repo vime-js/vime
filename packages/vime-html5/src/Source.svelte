@@ -7,7 +7,7 @@
 {/each}
 
 <script>
-  import { is_object, is_array } from '@vime/utils';
+  import { is_object, is_array } from '@vime-js/utils';
 
   export let src;
 

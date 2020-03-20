@@ -17,7 +17,7 @@
 
 <script>
   import { tick, createEventDispatcher } from 'svelte';
-  import { Icon } from '@vime/core';
+  import { Icon } from '@vime-js/core';
   import Control from '../Control.svelte';
 
   export let player;

@@ -35,7 +35,7 @@
 
 <script>
   import { tick } from 'svelte';
-  import { Icon } from '@vime/core';
+  import { Icon } from '@vime-js/core';
   import { ID as ControlsID } from './controls/Controls.svelte';
 
   // --------------------------------------------------------------

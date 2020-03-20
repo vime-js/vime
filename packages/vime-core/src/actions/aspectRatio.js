@@ -1,4 +1,4 @@
-import { set_style } from '@vime/utils';
+import { set_style } from '@vime-js/utils';
 
 export default function aspectRatio (node, aspectRatio) {
   const update = aspectRatio => {

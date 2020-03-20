@@ -27,7 +27,7 @@
   import { 
     is_number, is_instance_of, private_writable,
     map_store_to_component
-  } from '@vime/utils';
+  } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup

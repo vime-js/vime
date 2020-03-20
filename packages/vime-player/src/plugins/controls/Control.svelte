@@ -42,7 +42,7 @@
 </script>
 
 <script>
-  import { focus, highlight } from '@vime/core';
+  import { focus, highlight } from '@vime-js/core';
   import { ID as TooltipsID } from '../tooltips/Tooltips.svelte';
   
   // eslint-disable-next-line prefer-const

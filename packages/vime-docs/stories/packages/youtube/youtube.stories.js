@@ -1,5 +1,5 @@
 import { InteractiveView } from '../../../views';
-import { YouTube, YouTubeLite } from '@vime/youtube';
+import { YouTube, YouTubeLite } from '@vime-js/youtube';
 import config from '../../../config';
 
 export default { 

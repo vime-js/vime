@@ -22,7 +22,7 @@ export const plugins = options => {
       dedupe: importee => 
         importee === 'svelte' || 
         importee.startsWith('svelte/') ||
-        importee.startsWith('@vime/') ||
+        importee.startsWith('@vime-js/') ||
         importee.includes('packages/vime-')
     }),
     commonjs(),

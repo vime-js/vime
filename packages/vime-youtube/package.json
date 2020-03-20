@@ -1,5 +1,5 @@
 {
-  "name": "@vime/youtube",
+  "name": "@vime-js/youtube",
   "description": "Vime YouTube Player",
   "version": "1.0.0",
   "svelte": "src/index.js",
@@ -30,8 +30,8 @@
     "build:dev": "rollup -c --environment NODE_ENV:development"
   },
   "dependencies": {
-    "@vime/core": "^1.0.0",
-    "@vime/utils": "^1.0.0"
+    "@vime-js/core": "^1.0.0",
+    "@vime-js/utils": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"

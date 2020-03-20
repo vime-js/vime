@@ -11,7 +11,7 @@
 <script>
   import { raf } from 'svelte/internal';
   import { onMount, onDestroy } from 'svelte';
-  import { set_style, set_style_raf } from '@vime/utils';
+  import { set_style, set_style_raf } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Props

@@ -15,7 +15,7 @@
 />
 
 <script context="module">
-  import { decode_json } from '@vime/utils';
+  import { decode_json } from '@vime-js/utils';
   import { EMBED_ORIGIN as ORIGIN } from './utils';
 
   const VM = {};
@@ -52,8 +52,8 @@
 <script>
   import { tick, onMount, createEventDispatcher } from 'svelte';
   import { noop } from 'svelte/internal';
-  import { deferred } from '@vime/utils';
-  import { Embed } from '@vime/core';
+  import { deferred } from '@vime-js/utils';
+  import { Embed } from '@vime-js/core';
 
   const dispatch = createEventDispatcher();
 

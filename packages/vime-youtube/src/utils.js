@@ -1,4 +1,4 @@
-import { is_string, load_image } from '@vime/utils';
+import { is_string, load_image } from '@vime-js/utils';
 
 export const ORIGIN = 'https://www.youtube.com';
 export const ORIGIN_NO_COOKIES = 'https://www.youtube-nocookie.com';

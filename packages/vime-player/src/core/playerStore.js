@@ -5,7 +5,7 @@ import PluginRole from './PluginRole';
 import { 
   IS_MOBILE, listen_for_touch_input, mergeable,
   private_writable
-} from '@vime/utils';
+} from '@vime-js/utils';
 
 // _store = internalPlayerStore (packages/vime-core/src/playerStore.js).
 export const buildPlayerStore = _store => {

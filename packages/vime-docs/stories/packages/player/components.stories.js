@@ -7,7 +7,7 @@ import {
   DailymotionProvider,
   VimeoProvider,
   Boot
-} from '@vime/player';
+} from '@vime-js/player';
 
 export default { title: 'Packages/Player/Components' };
 

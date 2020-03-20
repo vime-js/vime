@@ -5,7 +5,7 @@
 </script>
 
 <script>
-  import { is_undefined } from '@vime/utils';
+  import { is_undefined } from '@vime-js/utils';
 
   // TODO: should/can everything below be dynamically imported?
 

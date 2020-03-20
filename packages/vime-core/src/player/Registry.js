@@ -3,7 +3,7 @@ import { writable, derived, get } from 'svelte/store';
 import {
   is_instance_of, try_create_svelte_dispatcher, try_on_svelte_destroy,
   on_svelte_instance_destroy, is_null
-} from '@vime/utils';
+} from '@vime-js/utils';
 
 // TODO: needs work.
 export default class Registry {

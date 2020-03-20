@@ -1,4 +1,4 @@
-import { Preview } from '@vime/preview';
+import { Preview } from '@vime-js/preview';
 import { InteractiveView } from '../../../views';
 import config from '../../../config';
 
