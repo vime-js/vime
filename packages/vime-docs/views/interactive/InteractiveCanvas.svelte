@@ -25,16 +25,30 @@
       class="interactives-dragbar" 
       on:mousedown|preventDefault={startDragging}
     ></div>
-    <ul uk-tab>
+    <ul class="interactives-tabs" uk-tab>
       <li></li>
       {#each tabs as tab, i}
         <li><a href={`#${tab}`} on:click="{() => onTabChange(i)}">{tab}</a></li>
       {/each}
     </ul>
+    <div class="search">
+      <form 
+        class="uk-width-1-1 uk-search uk-search-default"
+        onsubmit="return false;"
+      >
+        <span uk-search-icon></span>
+        <input 
+          class="uk-search-input" 
+          type="search"
+          placeholder="Search..."
+          bind:value={search}
+        />
+      </form>
+    </div>
     <ul class="uk-switcher uk-margin interactives-body">
       <li>
         {#if isPropsPanelActive && pureProps.length > 0}
-          <PropsPanel props={pureProps} on:propschange />
+          <PropsPanel props={filteredProps} on:propschange />
         {:else if isPropsPanelActive}
           <span class="uk-text-small uk-text-muted">
             This component has no props.
@@ -43,7 +57,7 @@
       </li>
       <li>
         {#if isMethodsPanelActive && methods.length > 0}
-          <MethodsPanel {methods} />
+          <MethodsPanel methods={filteredMethods} />
         {:else if isMethodsPanelActive}
           <span class="uk-text-small uk-text-muted">
             This component has no getter methods.
@@ -52,7 +66,7 @@
       </li>
       <li>
         {#if isEventsPanelActive && events.length > 0}
-          <EventsPanel {events} />
+          <EventsPanel events={filteredEvents} />
         {:else if isEventsPanelActive}
           <span class="uk-text-small uk-text-muted">
             This component has not fired any events.
@@ -64,8 +78,9 @@
 </div>
 
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { raf } from 'svelte/internal';
+  import fuzzy from 'fuzzy';
   import Center from '../../components/Center.svelte';
   import PropsPanel from './panels/PropsPanel.svelte';
   import MethodsPanel from './panels/MethodsPanel.svelte';
@@ -74,11 +89,15 @@
   let startX;
   let startWidth;
   let canvasEl;
+  let search;
   let interactivesEl;
   let hidden = false;
   let dragging = false;
   let currentTabIndex = 0;
   let transitioning = false;
+  let filteredEvents = [];
+  let filteredProps = [];
+  let filteredMethods = [];
 
   const tabs = [
     'Props',
@@ -92,6 +111,12 @@
   onMount(() => {
     const width = parseFloat(window.getComputedStyle(canvasEl).width);
     if (width < 760) hidden = true;
+  });
+
+  onDestroy(() => {
+    filteredEvents = [];
+    filteredProps = [];
+    filteredMethods = [];
   });
 
   const onToggle = e => { 
@@ -117,6 +142,10 @@
 
   const onTabChange = index => { currentTabIndex = index; };
 
+  const fuzzyFilter = (list, extract) => search 
+    ? fuzzy.filter(search, list, { extract }).map(f => f.original) 
+    : list;
+
   $: onDragging = dragging ? onDraggingHandler : null;
 
   $: isPropsPanelActive = (currentTabIndex === 0);
@@ -125,6 +154,10 @@
 
   $: methods = props.filter(p => p.method);
   $: pureProps = props.filter(p => !p.method);
+
+  $: if (isPropsPanelActive) filteredProps = fuzzyFilter(pureProps, p => p.id, search);
+  $: if (isMethodsPanelActive) filteredMethods = fuzzyFilter(methods, p => p.id, search);
+  $: if (isEventsPanelActive) filteredEvents = fuzzyFilter(events, e => e.event, search);
 </script>
 
 <style>
@@ -148,6 +181,13 @@
     background-color: #1ea7fd;
   }
 
+  .search {
+    z-index: 2;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+  }
+
   .view {
     flex: 1;
     padding: 24px;
@@ -169,6 +209,11 @@
     }
   }
 
+  .interactives-tabs {
+    z-index: 2;
+    background-color: #fff;
+  }
+
   .interactives.transitioning {
     transition: 0.3s ease-out width, 0.3s ease-out min-width;
   }
@@ -184,7 +229,7 @@
     right: 16px;
     cursor: pointer;
     border: 0 !important;
-    z-index: 2;
+    z-index: 3;
     background: none;
   }
 
@@ -197,14 +242,16 @@
     content: '';
     position: absolute;
     top: 0;
-    left: -10px;
+    left: -8px;
     width: 10px;
     height: 100%;
+    z-index: 3;
     cursor: col-resize;
   }
 
   .interactives-body {
     padding: 0 20px;
     overflow: auto;
+    margin-top: 0 !important;
   }
 </style>

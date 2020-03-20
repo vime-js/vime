@@ -1,21 +1,30 @@
-import { CenterView } from '../../../views';
-import Media from '../../../Media';
-import { YouTubeLite, YouTube } from '@vime/youtube';
+import { InteractiveView } from '../../../views';
+import { YouTube, YouTubeLite } from '@vime/youtube';
+import config from '../../../config';
 
-export default { title: 'Packages/Youtube/Components' };
+export default { 
+  title: 'Packages/Youtube/Components',
+  parameters: {
+    viewMode: 'story',
+    previewTabs: {
+      'storybook/docs/panel': { hidden: true }
+    }
+  }
+};
 
 export const Lite = () => ({
-  Component: CenterView,
+  Component: InteractiveView,
   props: {
     Component: YouTubeLite,
-    srcId: Media.YouTube.SRC_ID
+    srcId: config.YouTube.SRC_ID,
+    events: config.Events.LITE
   }
 });
 
 export const Standard = () => ({
-  Component: CenterView,
+  Component: InteractiveView,
   props: {
     Component: YouTube,
-    srcId: Media.YouTube.SRC_ID
+    src: config.YouTube.SRC
   }
 });

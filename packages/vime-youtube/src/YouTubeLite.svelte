@@ -28,5 +28,10 @@
   export let cookies = false;
   export let aspectRatio = '16:9';
 
-  export const getEmbed = () => embed;
+  export const getSrc = () => embed.getSrc();
+  export const getOrigin = () => embed.getOrigin();
+  export const getTitle = () => embed.getTitle();
+  export const getIframe = () => embed.getIframe();
+  export const getSrcWithParams = () => embed.getSrcWithParams();
+  export const sendCommand = (command, args, force) => embed.sendCommand(command, args, force);
 </script>

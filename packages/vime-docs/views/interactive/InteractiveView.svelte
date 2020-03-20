@@ -18,7 +18,7 @@
   import { 
     debounce, is_number, is_function, 
     is_boolean, is_string, is_object,
-    is_array, is_svelte_instance
+    is_array, is_svelte_instance, is_element
   } from '@vime/utils';
 
   let component;
@@ -42,6 +42,8 @@
       return 'boolean';
     } else if (is_number(value)) {
       return 'number';
+    } else if (!is_function(value) && (is_object(value) || is_array(value))) {
+      return 'editor';
     } else {
       return 'text';
     }
@@ -51,7 +53,9 @@
     if (is_function(value)) {
       return value();
     } else if (is_svelte_instance(value)) {
-      return `${value.constructor.name} Svelte Component`;
+      return `${value.constructor.name} Component`;
+    } else if (is_element(value)) {
+      return 'HTML DOM Element';
     } else {
       return value;
     }
@@ -73,7 +77,7 @@
         id: prop,
         type: inferPropType(value),
         value: extractValue(value),
-        readonly: isReadonly || is_function(value) || is_object(value) || is_array(value),
+        readonly: isReadonly || is_function(value),
         method: is_function(value) && isGetterMethod(prop)
       };
       sortProps(props);
@@ -102,7 +106,7 @@
       firedEvents.unshift({
         event,
         time: Date.now(),
-        data
+        data: extractValue(data)
       });
     });
     eventsQueue = [];

@@ -1,4 +1,5 @@
 export * from './debug';
+export * from './dom';
 export * from './style';
 export * from './timing';
 export * from './decode';
