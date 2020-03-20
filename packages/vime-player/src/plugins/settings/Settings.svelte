@@ -80,7 +80,7 @@
   const logger = player.createLogger(ID);
   const { i18n, isMobile, isVideoView, } = player.getStore();
 
-  const store = { 
+  const store = {
     menuItems: writable({}),
     isMenuActive: writable(false)
   };

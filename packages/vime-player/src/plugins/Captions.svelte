@@ -24,7 +24,7 @@
   import { tick, onDestroy, createEventDispatcher } from 'svelte';
   import { element, listen, append } from 'svelte/internal';
   import { derived } from 'svelte/store';
-  import { 
+  import {
     is_number, is_instance_of, private_writable,
     map_store_to_component
   } from '@vime-js/utils';
@@ -39,9 +39,9 @@
   const logger = player.createLogger(ID);
   const dispatch = createEventDispatcher();
   
-  const { 
+  const {
     isMobile, isFullscreenActive, isControlsActive,
-    currentTrackIndex, currentTime, useNativeCaptions, 
+    currentTrackIndex, currentTime, useNativeCaptions,
     tracks, locale, isVideoView
   } = player.getStore();
 

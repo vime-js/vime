@@ -17,7 +17,7 @@
   export let player;
 
   const {
-    icons, isControlsEnabled, canSetFullscreen, 
+    icons, isControlsEnabled, canSetFullscreen,
     isVideoView, canInteract, isMobile, isFullscreenActive,
     useNativeControls
   } = player.getStore();
@@ -30,10 +30,10 @@
   export let isEnabled = false;
 
   $: if (autopilot) {
-    isEnabled = $isControlsEnabled && 
-      $canSetFullscreen && 
-      $canInteract && 
-      $isVideoView && 
+    isEnabled = $isControlsEnabled &&
+      $canSetFullscreen &&
+      $canInteract &&
+      $isVideoView &&
       !$isMobile &&
       !$useNativeControls;
   }

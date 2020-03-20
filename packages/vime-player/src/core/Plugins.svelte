@@ -66,10 +66,10 @@
   let mounted = false;
   onMount(() => { mounted = true; });
 
-  $: if (mounted) validatedPlugins = isEnabled 
+  $: if (mounted) validatedPlugins = isEnabled
     ? $plugins
       .filter(validatePlugin)
-      .map(p => ({ ...p })) 
+      .map(p => ({ ...p }))
     : [];
 
   $: validatedPlugins

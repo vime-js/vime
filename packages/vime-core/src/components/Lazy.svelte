@@ -7,7 +7,7 @@
   // @see https://github.com/sveltejs/svelte/blob/master/site/src/components/IntersectionObserver.svelte
 
   import { onMount } from 'svelte';
- 
+
   let el;
   let intersecting = false;
   

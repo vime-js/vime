@@ -38,7 +38,7 @@
 
   export const getToggle = () => toggle;
 
-  const onToggle = () => !$isPiPActive 
-    ? player.requestPiP().catch(noop) 
+  const onToggle = () => !$isPiPActive
+    ? player.requestPiP().catch(noop)
     : player.exitPiP().catch(noop);
 </script>

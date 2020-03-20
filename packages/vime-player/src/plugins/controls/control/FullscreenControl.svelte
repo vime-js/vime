@@ -39,8 +39,8 @@
   export const getToggle = () => toggle;
 
   const onToggle = () => {
-    !$isFullscreenActive 
-      ? player.requestFullscreen().catch(noop) 
+    !$isFullscreenActive
+      ? player.requestFullscreen().catch(noop)
       : player.exitFullscreen().catch(noop);
   };
 </script>

@@ -2,7 +2,7 @@ import { writable, readable, derived } from 'svelte/store';
 import en from '../lang/en';
 import PluginRole from './PluginRole';
 
-import { 
+import {
   IS_MOBILE, listen_for_touch_input, mergeable,
   private_writable
 } from '@vime-js/utils';
@@ -23,7 +23,7 @@ export const buildPlayerStore = _store => {
   store.isMobile = writable(IS_MOBILE);
   store.isTouch = readable(false, set => listen_for_touch_input(t => set(t)));
   store.isContextMenuEnabled = writable(false);
- 
+
   store.currentPoster = derived(
     [_store.poster, _store.nativePoster],
     ([$poster, $nativePoster]) => ($poster || $nativePoster)
@@ -33,7 +33,7 @@ export const buildPlayerStore = _store => {
     [store.locale, store.langauges],
     ([$locale, $languages]) => $languages[$locale] || $languages.en
   );
-  
+
   store.hasControls = derived(
     [store.plugins, _store.useNativeControls],
     ([$plugins, $useNativeControls]) => hasRole($plugins, PluginRole.CONTROLS) || $useNativeControls
@@ -41,7 +41,7 @@ export const buildPlayerStore = _store => {
 
   store.hasCaptions = derived(
     [store.plugins, _store.useNativeCaptions, _store.canSetTracks],
-    ([$plugins, $useNativeCaptions, $canSetNativeTracks]) => 
+    ([$plugins, $useNativeCaptions, $canSetNativeTracks]) =>
       hasRole($plugins, PluginRole.CAPTIONS) || ($useNativeCaptions && $canSetNativeTracks)
   );
 
@@ -49,7 +49,7 @@ export const buildPlayerStore = _store => {
     [store.plugins, _store.useNativeControls],
     ([$plugins, $useNativeControls]) => hasRole($plugins, PluginRole.SETTINGS) || $useNativeControls
   );
-  
+
   store.Provider = derived(
     [_store.src, store.providers],
     ([$src, $providers]) => $providers.find(p => p.canPlay($src))
@@ -64,19 +64,19 @@ export const buildPlayerStore = _store => {
   store._isControlsActive = writable(false);
   store.isControlsActive = derived(
     [_store.isControlsEnabled, store._isControlsActive, _store.useNativeControls, _store.isControlsActive],
-    ([$isControlsEnabled, $isControlsActive, $useNativeControls, $isNativeControlsActive]) => 
+    ([$isControlsEnabled, $isControlsActive, $useNativeControls, $isNativeControlsActive]) =>
       $isControlsEnabled && ($isControlsActive || ($useNativeControls && $isNativeControlsActive))
   );
 
   store.canSetTrack = derived(
     [store.plugins, _store.useNativeCaptions, _store.canSetTrack],
-    ([$plugins, $useNativeCaptions, $canSetNativeTrack]) => 
+    ([$plugins, $useNativeCaptions, $canSetNativeTrack]) =>
       hasRole($plugins, PluginRole.CAPTIONS) || ($useNativeCaptions && $canSetNativeTrack)
   );
 
   store.canSetTracks = derived(
     [store.plugins, _store.useNativeCaptions, _store.canSetTracks],
-    ([$plugins, $useNativeCaptions, $canSetNativeTracks]) => 
+    ([$plugins, $useNativeCaptions, $canSetNativeTracks]) =>
       hasRole($plugins, PluginRole.CAPTIONS) || ($useNativeCaptions && $canSetNativeTracks)
   );
 
@@ -86,7 +86,7 @@ export const buildPlayerStore = _store => {
       const hasPlugin = hasRole($plugins, PluginRole.POSTER);
       _store._posterPlugin.set(hasPlugin);
       return hasPlugin || $canSetPoster;
-    } 
+    }
   );
 
   return {

@@ -27,7 +27,7 @@
 
   const plugins = player.getPluginsRegistry();
 
-  const { 
+  const {
     isLive, isVideoView, isMobile,
     playbackStarted
   } = player.getStore();
@@ -39,7 +39,7 @@
       PlaybackControl, VolumeControl, CurrentTime,
       ScrubberControl, DurationTime, SettingsControl
     ]: [
-      PlaybackControl, VolumeControl, CurrentTime, 
+      PlaybackControl, VolumeControl, CurrentTime,
       ControlSpacer, LiveIndicator
     ];
   };
@@ -48,12 +48,12 @@
     controlsPlugin.upper = [];
     controlsPlugin.center = [];
     controlsPlugin.lower = !$isLive ? [
-      ScrubberControl, ControlNewLine, PlaybackControl, 
-      VolumeControl, TimeProgress, ControlSpacer, 
-      CaptionControl, PiPControl, SettingsControl, 
+      ScrubberControl, ControlNewLine, PlaybackControl,
+      VolumeControl, TimeProgress, ControlSpacer,
+      CaptionControl, PiPControl, SettingsControl,
       FullscreenControl
     ] : [
-      PlaybackControl, VolumeControl, ControlSpacer, 
+      PlaybackControl, VolumeControl, ControlSpacer,
       LiveIndicator, PiPControl, FullscreenControl
     ];
   };
@@ -63,7 +63,7 @@
       controlsPlugin.upper = [ControlSpacer, VolumeControl, CaptionControl, SettingsControl];
       controlsPlugin.center = [BigPlaybackControl];
       controlsPlugin.lower = [
-        CurrentTime, ControlSpacer, DurationTime, 
+        CurrentTime, ControlSpacer, DurationTime,
         FullscreenControl, ControlNewLine, ScrubberControl
       ];
     } else {

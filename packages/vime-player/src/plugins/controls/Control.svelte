@@ -57,8 +57,8 @@
 
   const plugins = player.getPluginsRegistry();
 
-  const { 
-    isVideoView, isLive, isTouch, 
+  const {
+    isVideoView, isLive, isTouch,
     isMobile
   } = player.getStore();
   

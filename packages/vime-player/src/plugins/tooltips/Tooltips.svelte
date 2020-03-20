@@ -30,7 +30,7 @@
 
   const registry = player.createRegistry(ID, validateTooltip);
   
-  const { 
+  const {
     isMobile, isTouch, isControlsEnabled,
     useNativeControls
   } = player.getStore();

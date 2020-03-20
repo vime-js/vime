@@ -72,8 +72,8 @@
   const plugins = player.getPluginsRegistry();
 
   const {
-    i18n, isVideoView, currentTime, 
-    duration, buffered, buffering, 
+    i18n, isVideoView, currentTime,
+    duration, buffered, buffering,
     icons, isTouch
   } = player.getStore();
   

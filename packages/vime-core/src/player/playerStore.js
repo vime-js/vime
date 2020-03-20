@@ -6,7 +6,7 @@ import MediaType from './MediaType';
 import VideoQuality from './VideoQuality';
 
 import {
-  private_writable, map_store_to_component, can_autoplay, 
+  private_writable, map_store_to_component, can_autoplay,
   selectable_if, rangeable_if, IS_MOBILE,
   indexable, private_writable_if, is_function,
   rangeable
@@ -93,7 +93,7 @@ const buildPlayerStore = player => {
   store._posterPlugin = writable(false);
   store.isVideoView = derived(
     [store.poster, store.nativePoster, store.canSetPoster, store._posterPlugin, store.isVideo],
-    ([$poster, $nativePoster, $canSetPoster, $plugin, $isVideo]) => 
+    ([$poster, $nativePoster, $canSetPoster, $plugin, $isVideo]) =>
       !!(($canSetPoster || $plugin) && ($poster || $nativePoster)) || $isVideo
   );
 
@@ -108,13 +108,13 @@ const buildPlayerStore = player => {
 
   store.canSetPlaybackRate = derived(
     [store.provider, store.playbackRates],
-    ([$provider, $playbackRates]) => 
+    ([$provider, $playbackRates]) =>
       $provider && $playbackRates.length > 1 && is_function($provider.setPlaybackRate)
   );
 
   store.canSetVideoQuality = derived(
     [store.provider, store.isVideo, store.videoQualities],
-    ([$provider, $isVideo, $videoQualities]) => 
+    ([$provider, $isVideo, $videoQualities]) =>
       $provider && $isVideo && $videoQualities.length > 0 && is_function($provider.setVideoQuality)
   );
 
@@ -181,7 +181,7 @@ const buildPlayerStore = player => {
     store.provider,
     $provider => $provider && is_function($provider.setTracks)
   );
- 
+
   // No needs to block writing of `tracks` as it might be stored and used by a provider when possible.
   store.tracks = writable([]);
 
@@ -193,32 +193,32 @@ const buildPlayerStore = player => {
   // Can't block current track with `canSetTrack` because it'll stop @vime-js/player from updating
   // the value when a plugin is managing captions.
   store.currentTrackIndex = indexable(store.tracks);
-  
+
   store.currentTrack = derived(
     [store.tracks, store.currentTrackIndex],
     ([$tracks, $index]) => ($index >= 0) ? $tracks[$index] : null
   );
-  
+
   store.isCaptionsActive = derived(
-    [store.playbackReady, store.isAudio, store.currentTrackIndex], 
-    ([$playbackReady, $isAudio, $currentTrackIndex]) => 
+    [store.playbackReady, store.isAudio, store.currentTrackIndex],
+    ([$playbackReady, $isAudio, $currentTrackIndex]) =>
       $playbackReady && !$isAudio && ($currentTrackIndex !== -1)
   );
 
   // TODO: add cues support (cues, currentCueIndex, currentCue, activeCues).
-  
+
   // --------------------------------------------------------------
   // Picture in Picture
   // --------------------------------------------------------------
 
   store.canSetPiP = derived(
     [store.isVideoReady, store.provider],
-    ([$isVideoReady, $provider]) => 
+    ([$isVideoReady, $provider]) =>
       $isVideoReady && $provider && $provider.supportsPiP() && is_function($provider.setPiP)
   );
 
   store.isPiPActive = private_writable(false);
-  
+
   // --------------------------------------------------------------
   // Fullscreen
   // --------------------------------------------------------------

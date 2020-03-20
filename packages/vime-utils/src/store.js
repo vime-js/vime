@@ -80,13 +80,13 @@ export const writable_with_fallback = (initialValue, fallback) => {
   };
 };
 
-export const private_writable_with_fallback = (initialValue, fallback) => 
+export const private_writable_with_fallback = (initialValue, fallback) =>
   make_store_private(writable_with_fallback(initialValue, fallback));
 
-export const writable_if = (initialValue, condition) => 
+export const writable_if = (initialValue, condition) =>
   add_condition_to_store(writable(initialValue), condition);
 
-export const private_writable_if = (initialValue, condition) => 
+export const private_writable_if = (initialValue, condition) =>
   make_store_private(writable_if(initialValue, condition));
 
 export const indexable = bounds => {
@@ -101,7 +101,7 @@ export const indexable = bounds => {
   };
 };
 
-export const indexable_if = (bounds, condition) => 
+export const indexable_if = (bounds, condition) =>
   add_condition_to_store(indexable(bounds), condition);
 
 export const rangeable = (initialValue, lowerBound, upperBound) => {

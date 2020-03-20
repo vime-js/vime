@@ -85,15 +85,15 @@
   import Tracks from './Tracks.svelte';
   import { Disposal, PlayerState, MediaType } from '@vime-js/core';
 
-  import { 
+  import {
     DROPBOX_ORIGIN, DROPBOX_CONTENT_ORIGIN, is_media_stream,
     is_dropbox_url, is_qualities_set, run_on_every_src,
     is_audio, is_video
   } from './utils.js';
   
-  import { 
+  import {
     is_function, can_fullscreen_video, can_use_pip_in_chrome,
-    can_use_pip_in_safari, get_computed_height, is_string, 
+    can_use_pip_in_safari, get_computed_height, is_string,
     can_use_pip, is_number
   } from '@vime-js/utils';
 
@@ -124,7 +124,7 @@
 
   export const setCurrentTime = time => { media.currentTime = time; };
   export const setMuted = isMuted => { muted = isMuted; };
-  export const setPaused = paused => { paused ? media.pause() : media.play().catch(noop); }; 
+  export const setPaused = paused => { paused ? media.pause() : media.play().catch(noop); };
   export const setVolume = volume => { media.volume = parseFloat(volume / 100); };
   export const setPlaybackRate = rate => { media.playbackRate = rate; };
   export const setControls = enabled => { controls = enabled || null; };
@@ -211,7 +211,7 @@
   };
 
   // --------------------------------------------------------------
-  // Media 
+  // Media
   // --------------------------------------------------------------
 
   let timeRaf;
@@ -246,14 +246,14 @@
       playbackReady = true;
     });
     listenToMedia(Html5.Event.PROGRESS, onBuffered);
-    listenToMedia(Html5.Event.PLAY, () => { 
+    listenToMedia(Html5.Event.PLAY, () => {
       paused = false;
       info.play = true;
-      playbackStarted = true; 
+      playbackStarted = true;
     });
-    listenToMedia(Html5.Event.PAUSE, () => { 
+    listenToMedia(Html5.Event.PAUSE, () => {
       paused = true;
-      info.state = PlayerState.PAUSED; 
+      info.state = PlayerState.PAUSED;
     });
     listenToMedia(Html5.Event.PLAYING, () => { info.state = PlayerState.PLAYING; });
     listenToMedia(Html5.Event.DURATION_CHANGE, () => { info.duration = media.duration; });
@@ -317,7 +317,7 @@
     const minQuality = videoHeight * (w / h);
     const qualities = src.map(s => s.quality);
     // @see https://stackoverflow.com/a/35000557
-    const newQuality = qualities.reduce((prev, curr) => 
+    const newQuality = qualities.reduce((prev, curr) =>
       Math.abs(curr - minQuality) < Math.abs(prev - minQuality) ? curr : prev
     );
     videoQuality = newQuality;
