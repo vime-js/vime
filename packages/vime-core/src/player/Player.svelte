@@ -19,7 +19,7 @@
   import { tick, onMount, onDestroy, afterUpdate } from 'svelte';
   import { get } from 'svelte/store';
   import { noop, listen, get_current_component } from 'svelte/internal';
-  import { currentPlayer } from './globalStore';
+  import { currentPlayer } from './sharedStore';
   import { mapPlayerStoreToComponent } from './playerStore';
   import MediaType from './MediaType';
   import PlayerState from './PlayerState';
