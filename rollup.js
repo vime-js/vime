@@ -156,12 +156,12 @@ export const esmBuild = options => {
 };
 
 export const umdBuild = options => {
-  const { input, name } = options;
+  const { input } = options;
   const opts = { legacy: true, ...options };
   return {
     input,
     output: {
-      name,
+      name: 'Vime',
       file: buildFile(opts),
       format: 'umd',
       esModule: false
@@ -185,7 +185,7 @@ export const basicBuild = options => {
     umdBuild({ input, name }),
     // eg: vime.esm.min.js
     esmBuild({ input, name }),
-    // eg: filesizeLite.esm.min.js
+    // eg: vime-lite.esm.min.js
     hasLite && esmBuild({ input: `src/${name}Lite.svelte`, name: `${name}-lite` })
   ].filter(Boolean);
 };

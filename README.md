@@ -159,34 +159,48 @@ IE 11 is important to you, then don't use Vime in production just yet.
 ## Features
 
 * **Responsive Design.** The player and all our plugins are designed for mobile, touch and larger screens.
+
 * **Accessible.** All controls and menus are built with accessiblility in mind, and VTT captions are supported.
-* **Options.** There is a player for whatever your use case. Lightweight embeddable player, standard
+
+* **Options.** There is an option for whatever your use case. Thumbnails preview, lite player embed, standard
 player for a normalized experience, and a complete system with plugins and all.
+
 * **Lightweight.** 0 external dependencies, modular, treeshakable, no additional SDK's loaded, and compiled with 
 Svelte to have the smallest footprint possible. Sizes ranging from 5.5 kB (min + gzip) up to everything 
 included at 54 kB (min + gzip).
-* **Modular Design + Plugin System.** Include only the parts you need and benefit from treeshaking to remove the 
-waste. Outside of the core, everything else is built as a plugin so you can 
-integrate only what you need. There are plugins for Keyboard shortcuts, Tooltips, Settings and more. 
-The plugin system utilizes `svelte:component` so you can extend the player with the full power of Svelte.
+
+* **Avoid browser inconsistencies.** Browsers each approach new API's differently and this can be quite
+a headache. Vime handles it all so you don't. Enjoy fullscreen, picture-in-picture and more without 
+any pain.
+
 * **Multi-provider support.** Out of the box at the moment we support Html5, YouTube, Vimeo and Dailymotion.
 Dont' bother learning a new SDK everytime, just use Vime!
+
 * **Reactive/eventful store.** Behind the scences, all properties are a Svelte store. Subscribe to anything you
 like and receive updates in realtime.
+
 * **I18n.** Internationalization is built right in. Easy to add, extend and change as needed. English
 is provided out of the box and more languages to come.
+
 * **Portable.** Since Svlete compiles down to Vanilla JS, you can use it anywhere you like. For an 
 even better experience we'll be building framework intergations starting with React and Vue.
+
 * **Lazy loading.** All players are loaded lazily as soon as they are almost in view.
+
+* **Design**. A minimalistic, modern and sleek design which you can customize with your own icons and theme. See
+Screenshots above for our base design.
+
+* **Modular Design + Plugin System.** Include only the parts you need and benefit from treeshaking to remove the 
+waste. Outside of the core, everything is built as a plugin so you can integrate only what you need. There are 
+plugins for Keyboard shortcuts, Controls, Tooltips, Settings and much more. There is even a handy Boot plugin, if you want 
+to use everything with no additional setup required. The plugin system utilizes `svelte:component` so you can extend 
+the player with the full power of Svelte.
+
 * **Built with Svelte.** Enjoy great performance and a smaller bundler thanks to Svelte. If you're using 
 Vime inside a Svelte project, we've provided a `svelte` key so you can compile the player yourself 
 and share the same Svelte internals. This will reduce the overhead cost of Vime, and you get all the 
 benefits of auto-subscriptions since all props are powered by a store.
-* **Avoid browser inconsistencies.** Browsers each approach new API's differently and this can be quite
-a headache. Vime handles it all so you don't. Enjoy fullscreen, picture-in-picture and more without 
-any pain.
-* **Design**. A minimalistic, modern and sleek design which you can customize with your own icons and theme. See
-Screenshots above for our base design.
+
 * **Complete control**. Remember, we want you to control the player, not the other way around. We've
 built all of Vime with that in mind. Pick what you want, extend what you want, interact with what you want, 
 pretty much do whatever you want easily.

@@ -10,7 +10,7 @@
           <span class="uk-badge">new</span>
         {/if}
       </span> 
-      <pre><code>{JSON.stringify(event.data)}</code></pre>
+      <pre><code>{JSON.stringify(event.data, undefined , 2)}</code></pre>
     </li>
   {/each}
 </ul>
@@ -39,7 +39,7 @@
       });
     };
     onInterval();
-    interval = setInterval(onInterval, 1000);
+    interval = setInterval(onInterval, 5000);
   };
 
   onDestroy(() => {

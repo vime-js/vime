@@ -1,6 +1,6 @@
 import { Preview } from '@vime/preview';
 import { InteractiveView } from '../../../views';
-import Media from '../../../Media';
+import config from '../../../config';
 
 export default { 
   title: 'Packages/Preview/Components',
@@ -12,14 +12,12 @@ export default {
   }
 };
 
-const events = ['loading', 'posterchange'];
-
 export const Html5 = () => ({
   Component: InteractiveView,
   props: {
     Component: Preview,
-    poster: '/media/video/poster.png',
-    events
+    poster: config.File.POSTER,
+    events: config.Events.PREVIEW
   }
 });
 
@@ -27,8 +25,8 @@ export const Youtube = () => ({
   Component: InteractiveView,
   props: {
     Component: Preview,
-    src: 'youtube/R6MlUcmOul8',
-    events
+    src: config.YouTube.src,
+    events: config.Events.PREVIEW
   }
 });
 
@@ -36,8 +34,8 @@ export const Dailymotion = () => ({
   Component: InteractiveView,
   props: {
     Component: Preview,
-    src: 'dailymotion/x3a9qe6',
-    events
+    src: config.Dailymotion.src,
+    events: config.Events.PREVIEW
   }
 });
 
@@ -45,7 +43,7 @@ export const Vimeo = () => ({
   Component: InteractiveView,
   props: {
     Component: Preview,
-    src: 'vimeo/154225711',
-    events
+    src: config.Vimeo.SRC,
+    events: config.Events.PREVIEW
   }
 });

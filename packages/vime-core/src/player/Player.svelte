@@ -47,7 +47,8 @@
     playbackReady, isVideoView, tracks, 
     currentTrackIndex, provider, rebuilding, 
     isVideoReady, canInteract, isFullscreenActive,
-    useNativeView, useNativeControls, useNativeCaptions
+    useNativeView, useNativeControls, useNativeCaptions,
+    duration
   } = store;
 
   const {
@@ -133,11 +134,15 @@
   };
 
   const checkHasSeeked = () => {
-    if (!$seeking || $buffered <= $currentTime) return;
+    if (!$seeking || ($buffered <= $currentTime && $currentTime < $duration)) return;
     $seeking = false;
     $buffering = false;
     updatingTime = false;
-    if (!$playbackStarted) $playbackStarted = true;
+    if (!$playbackStarted) {
+      $playbackStarted = true;
+      if ($currentTime === $duration) $currentTime = 0;
+    }
+    if ($playbackEnded) $playbackEnded = false;
     cancelTempAction(() => {
       tempPause = false;
     });
@@ -300,7 +305,7 @@
     if (info.rebuild) onRebuildStart();
     if ($rebuilding) return;
     if ((is_null(info.poster) || info.poster)) store.nativePoster.set(info.poster);
-    if (is_number(info.duration)) store.duration.set(parseFloat(info.duration));
+    if (is_number(info.duration)) $duration = parseFloat(info.duration);
     if (is_number(info.currentTime)) onTimeUpdate(parseFloat(info.currentTime));
     if (is_number(info.buffered)) onBuffered(parseFloat(info.buffered));
     if (info.seeking) onSeeking();

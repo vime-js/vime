@@ -5,6 +5,8 @@
       <div class="uk-form-controls">
         {#if prop.readonly}
           <pre class="disabled">{JSON.stringify(prop.value, undefined, 2)}</pre>
+        {:else if prop.type === 'editor'}
+          <div bind:this={editorContainers[prop.id]}></div>
         {:else if prop.type === 'boolean'}
           <input 
             id={prop.id} 
@@ -49,7 +51,10 @@
 
 <script>
   import { createEventDispatcher } from 'svelte';
+  import JSONEditor from 'jsoneditor/dist/jsoneditor.min';
 
+  const editors = {};
+  const editorContainers = {};
   const dispatch = createEventDispatcher();
 
   export let props = [];
@@ -70,9 +75,60 @@
     }
     dispatch('propschange', { prop: e.target.id, value });
   };
+
+  const onMountEditors = () => Object.keys(editorContainers)
+    .filter(id => !Object.keys(editors).includes(id))
+    .forEach(id => {
+      const container = editorContainers[id];
+
+      container.style.width = '100%';
+      container.style.height = '200px';
+
+      const editor = new JSONEditor(container, {
+        mode: 'code',
+        mainMenuBar: false,
+        navigationBar: false,
+        statusBar: false,
+        maxLines: 10000,
+        onChangeText: json => {
+          try {
+            const obj = JSON.parse(json);
+            // dispatch('propschange', obj);
+            console.log(obj);
+          } catch (e) { /** noop */ }
+        }
+      });
+
+      editor.aceEditor.container.style.height = '200px';
+      editor.aceEditor.setTheme('ace/theme/chrome');
+      // editor.aceEditor.renderer.setShowGutter(false);
+
+      editor.set({
+        Array: [1, 2, 3],
+        Boolean: true,
+        Null: null,
+        Number: 123,
+        Object: {a: "b", c: "d"},
+        String: "Hello World"
+      });
+    });
+
+  const onDestroyEditors = () => Object.keys(editors)
+    .filter(id => !Object.keys(editorContainers).includes(id))
+    .forEach(id => {
+      editors[id].destroy();
+      delete editors[id];
+    });
+
+  $: onMountEditors(editorContainers);
+  $: onDestroyEditors(editorContainers);
 </script>
 
 <style>
+  .uk-form-controls {
+    position: relative;
+  }
+
   .disabled {
     background-color: #f8f8f8;
     color: #999;

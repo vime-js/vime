@@ -1,6 +1,6 @@
 import { InteractiveView } from '../../../views';
-import Media from '../../../Media';
 import { Html5 } from '@vime/html5';
+import config from '../../../config';
 
 export default { 
   title: 'Packages/Html 5/Components',
@@ -16,7 +16,7 @@ export const Audio = () => ({
   Component: InteractiveView,
   props: {
     Component: Html5,
-    src: Media.File.AUDIO
+    src: config.File.AUDIO
   }
 });
 
@@ -24,8 +24,8 @@ export const Video = () => ({
   Component: InteractiveView,
   props: {
     Component: Html5,
-    src: Media.File.VIDEO,
-    poster: Media.File.POSTER,
-    tracks: Media.File.TRACKS
+    src: config.File.VIDEO,
+    poster: config.File.POSTER,
+    tracks: config.File.TRACKS
   }
 });

@@ -38,5 +38,21 @@ export default {
   Vimeo: {
     SRC: 'vimeo/154225711',
     SRC_ID: '154225711'
+  },
+  Events: {
+    PREVIEW: [
+      'loading', 
+      'posterchange'
+    ],
+    LITE: [
+      'load',
+      'data',
+      'message',
+      'rebuild',
+      'srcchange',
+      'titlechange',
+      'originchange',
+      'error'
+    ]
   }
 };
