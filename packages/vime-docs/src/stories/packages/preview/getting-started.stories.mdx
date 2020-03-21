@@ -1,0 +1,108 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Preview/Getting Started" />
+
+## Installation
+
+This package contains the **Preview** component. If you'd like to know what features it includes,
+see <LinkTo kind="overview-getting-started--page">Overview/Getting Started</LinkTo>.
+
+**NPM:** `npm install @vime-js/preview`
+
+**YARN:** `yarn add @vime-js/preview`
+
+**UNPKG:** `https://unpkg.com/@vime-js/preview`
+
+The `dist` folder inside the package contains multiple exports:
+
+- `preview.js` is a UMD development build that can be used directly in the browser via the `<script>` tag.
+- `preview.esm.js` is intended for use with modern bundlers like [Webpack](https://webpack.js.org/) or [Rollup](http://rollupjs.org/guide/en/).
+- `preview.min.js` is a UMD production build that can be used directly in the browser via the `<script>` tag.
+- `preview.esm.min.js` is an ESM production build that can be used directly in modern browsers via the `<script type="module">` tag.
+
+📝 **_UMD builds are exported under the `Vime` namespace._**
+
+📝 **_If you're using a bundler then it will automatically pull in the correct files._**
+
+📝 **_If you're using [svelte-loader](https://github.com/sveltejs/svelte-loader) or [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) then you'll receive the uncompiled components._**
+
+## Setup
+
+### JavaScript
+
+📝 **_See the Svelte [Client-side component API](https://svelte.dev/docs#Client-side_component_API) for the complete set of component initialization options._**
+
+```js
+import { Preview } from "@vime-js/preview";
+
+// Mount
+const target = document.getElementById("preview-target");
+const preview = new Preview({ target });
+
+// ...
+
+// Destroy
+preview.$destroy();
+```
+
+### Svelte
+
+```html
+<Preview />
+
+<script>
+  import { Preview } from "@vime-js/preview";
+</script>
+```
+
+## Props
+
+```js
+// Get
+const value = preview.someProp;
+
+// Set
+preview.someProp = newValue;
+```
+
+| Prop         |     Type      | Description                                                   | Default |
+| ------------ | :-----------: | ------------------------------------------------------------- | :-----: |
+| src          | `string,null` | The src of the media you're previewing.                       | `null`  |
+| poster       | `string,null` | The URL of a custom poster to load. This will override `src`. | `null`  |
+| aspectRatio  | `string,null` | The aspect ratio of the preview as 'w:h'.                     | `16:9`  |
+| showPlayIcon |   `boolean`   | Whether to show a play icon in the center.                    | `false` |
+| isEnabled    |   `boolean`   | Whether to show or hide the preview.                          | `true`  |
+
+📝 **_See <LinkTo kind="guides-setting-src--page">Guide/Setting Src</LinkTo> for setting the `src` prop._**
+
+## Methods
+
+```js
+preview.callMethod();
+```
+
+| Method          |  Return Type  | Description                                                                                   |
+| --------------- | :-----------: | --------------------------------------------------------------------------------------------- |
+| getNativePoster | `string,null` | The URL for the poster of the current `src`. If `poster` is set then this will return `null`. |
+
+## Events
+
+```js
+// Start listening.
+const off = preview.$on("someEvent", e => {
+  const data = e.detail;
+});
+
+// Stop listening.
+off();
+```
+
+| Event        |   Data Type   | Description                                                             |
+| ------------ | :-----------: | ----------------------------------------------------------------------- |
+| loading      |   `boolean`   | Whether a poster is currently loading.                                  |
+| posterchange | `string,null` | When the curently visible poster is changed, useful when setting `src`. |
+
+## Examples
+
+For interactive examples go to 'Preview/Components'.
