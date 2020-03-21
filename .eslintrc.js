@@ -29,7 +29,7 @@ module.exports = {
     'camelcase': 'off',
     // Doesn't work with Svelte.
     'no-multiple-empty-lines': 'off',
-	  // These do not currently work with eslint-plugin-svelte3.
+    // These do not currently work with eslint-plugin-svelte3.
     'import/first': 'off',
     'import/order': 'off',
     'import/no-duplicates': 'off',
