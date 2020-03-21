@@ -27,7 +27,6 @@
   import { is_string, prefetch, add_params_to_url } from '@vime-js/utils';
 
   let iframe = null;
-  let prevSrc = null;
   let srcWithParams = null;
 
   // eslint-disable-next-line prefer-const
@@ -65,7 +64,7 @@
 
   $: srcWithParams = src ? add_params_to_url(src, params) : null;
   $: dispatch(Event.SRC_CHANGE, srcWithParams);
-  $: (prevSrc === src) && params ? dispatch(Event.REBUILD) : (prevSrc = src);
+  $: if (srcWithParams) dispatch(Event.REBUILD);
 
   $: if (srcWithParams && !iframe && !PRECONNECTED.includes(srcWithParams)) {
     if (prefetch('preconnect', srcWithParams)) PRECONNECTED.push(srcWithParams);
