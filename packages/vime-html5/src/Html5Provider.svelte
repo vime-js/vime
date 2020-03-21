@@ -352,7 +352,7 @@
 
   $: onSrcChange(src, srcHasQualities);
   $: srcHasQualities = video && is_qualities_set(src);
-  $: if (srcHasQualities) calcInitialQuality(aspectRatio);
+  $: if (srcHasQualities) calcInitialQuality(src, aspectRatio);
   $: if (is_number(videoQuality)) loadNewQuality(videoQuality);
   $: shouldUseAudio = run_on_every_src(src, is_audio) && !is_string(poster);
   $: shouldUseVideo = run_on_every_src(src, is_video) || is_media_stream(src) || is_string(poster);
