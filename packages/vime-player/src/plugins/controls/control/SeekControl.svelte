@@ -38,7 +38,9 @@
 
   export let player;
 
-  const { icons, i18n, currentTime, duration } = player.getStore();
+  const {
+    icons, i18n, currentTime, duration,
+} = player.getStore();
 
   // --------------------------------------------------------------
   // Props

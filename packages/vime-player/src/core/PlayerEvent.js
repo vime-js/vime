@@ -1,5 +1,5 @@
 // Treeshaking safe.
-const PlayerEvent = function () {};
+const PlayerEvent = function PlayerEvent() {};
 PlayerEvent.MOUNT = 'mount';
 PlayerEvent.DESTROY = 'destroy';
 PlayerEvent.PLUGIN_MOUNT = 'pluginmount';

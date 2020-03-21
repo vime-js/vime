@@ -13,7 +13,7 @@
     get_pip_icon,
     get_captions_icon,
     get_fullscreen_icon,
-    get_volume_icon
+    get_volume_icon,
   } from '../../utils';
 
   import {
@@ -23,7 +23,7 @@
     CaptionControl,
     PiPControl,
     FullscreenControl,
-    ScrubberControl
+    ScrubberControl,
   } from '../controls';
 
   export let player;
@@ -35,7 +35,7 @@
     muted, isCaptionsActive, isPiPActive,
     isFullscreenActive, currentTime, duration,
     canInteract, canSetTrack, canSetPiP,
-    canSetFullscreen, currentTrackIndex
+    canSetFullscreen, currentTrackIndex,
   } = player.getStore();
 
   let hasKeyboardInitialized = false;
@@ -53,21 +53,24 @@
         if (!$canInteract) return;
         $paused = !$paused;
         displayAction(get_playback_icon($icons, !$paused));
-      }
+      },
     });
 
     keyboardRegistry.register(VolumeControl.LABEL, {
       // Up Arrow (38), Down Arrow (40)
       keys: [38, 40],
-      action: e => {
+      action: (e) => {
         if (!$canInteract) return;
         const isUp = e.keyCode === 38;
         $volume = isUp ? Math.min(100, $volume + 5) : Math.max(0, $volume - 5);
-        const icon = isUp
-          ? $icons.volumeHigh
-          : ($volume === 0 ? $icons.volumeMute : $icons.volumeLow);
+        let icon;
+        if (isUp) {
+          icon = $icons.volumeHigh;
+        } else {
+          icon = ($volume === 0 ? $icons.volumeMute : $icons.volumeLow);
+        }
         displayAction(icon, `${$volume}%`);
-      }
+      },
     });
 
     keyboardRegistry.register(MuteControl.LABEL, {
@@ -77,7 +80,7 @@
         if (!$canInteract) return;
         $muted = !$muted;
         displayAction(get_volume_icon($icons, $muted, $volume));
-      }
+      },
     });
 
     let prevTrackIndex = -1;
@@ -89,7 +92,7 @@
         if ($isCaptionsActive) prevTrackIndex = $currentTrackIndex;
         $isCaptionsActive ? ($currentTrackIndex = -1) : ($currentTrackIndex = prevTrackIndex);
         displayAction(get_captions_icon($icons, $isCaptionsActive));
-      }
+      },
     });
 
     keyboardRegistry.register(PiPControl.LABEL, {
@@ -99,7 +102,7 @@
         if (!$canInteract || !$canSetPiP) return;
         $isPiPActive ? player.exitPiP().catch(noop) : player.requestPiP().catch(noop);
         displayAction(get_pip_icon($icons, $isPiPActive));
-      }
+      },
     });
 
     keyboardRegistry.register(FullscreenControl.LABEL, {
@@ -107,20 +110,22 @@
       keys: [70],
       action: () => {
         if (!$canInteract || !$canSetFullscreen) return;
-        $isFullscreenActive ? player.exitFullscreen().catch(noop) : player.requestFullscreen().catch(noop);
+        $isFullscreenActive
+          ? player.exitFullscreen().catch(noop)
+          : player.requestFullscreen().catch(noop);
         displayAction(get_fullscreen_icon($icons, $isFullscreenActive));
-      }
+      },
     });
 
     keyboardRegistry.register(ScrubberControl.LABEL, {
       // Left Arrow (37), Right Arrow (39)
       keys: [37, 39],
-      action: e => {
+      action: (e) => {
         if (!$canInteract) return;
         const isLeft = e.keyCode === 37;
         $currentTime = isLeft ? Math.max(0, $currentTime - 5) : Math.min($duration, $currentTime + 5);
         displayAction(isLeft ? $icons.seekBackward : $icons.seekForward);
-      }
+      },
     });
 
     hasKeyboardInitialized = true;
@@ -128,7 +133,7 @@
 
   onDestroy(() => {
     if (!$plugins[KeyboardID]) return;
-    const deregister = Control => keyboardRegistry.deregister(Control.LABEL);
+    const deregister = (Control) => keyboardRegistry.deregister(Control.LABEL);
     deregister(PlaybackControl);
     deregister(VolumeControl);
     deregister(MuteControl);

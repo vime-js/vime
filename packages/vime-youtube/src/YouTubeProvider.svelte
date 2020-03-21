@@ -19,7 +19,7 @@
 
   // @see https://developers.google.com/youtube/iframe_api_reference#Events
   YT.Event = {
-    READY: 'onReady'
+    READY: 'onReady',
   };
 
   // @see https://developers.google.com/youtube/iframe_api_reference#Playback_status
@@ -29,7 +29,7 @@
     PLAYING: 1,
     PAUSED: 2,
     BUFFERING: 3,
-    CUED: 5
+    CUED: 5,
   };
 
   // @see https://developers.google.com/youtube/iframe_api_reference#Events
@@ -42,7 +42,7 @@
     hd720: VideoQuality.L,
     hd1080: VideoQuality.XL,
     highres: VideoQuality.XXL,
-    max: VideoQuality.MAX
+    max: VideoQuality.MAX,
   };
 
   // @see https://developers.google.com/youtube/iframe_api_reference#Playback_controls
@@ -53,14 +53,14 @@
     MUTE: 'mute',
     UNMUTE: 'unMute',
     SET_VOLUME: 'setVolume',
-    SET_PLAYBACK_RATE: 'setPlaybackRate'
+    SET_PLAYBACK_RATE: 'setPlaybackRate',
   };
 
-  export const canPlay = src => can_play(src);
+  export const canPlay = (src) => can_play(src);
 </script>
 
 <script>
-  import { tick, onMount, createEventDispatcher } from 'svelte';
+  import { onMount, createEventDispatcher } from 'svelte';
   import { PlayerState, MediaType } from '@vime-js/core';
   import { is_number, is_boolean } from '@vime-js/utils';
   import YouTubeEmbed from './YouTubeEmbed.svelte';
@@ -80,7 +80,7 @@
     rel: 0,
     fs: 1,
     iv_load_policy: 3,
-    widget_referrer: window.location.href
+    widget_referrer: window.location.href,
   };
 
   const dispatch = createEventDispatcher();
@@ -92,16 +92,19 @@
   export const getEmbed = () => embed;
   export const getEl = () => embed.getIframe();
 
-  export const setPaused = paused => { paused ? send(YT.Command.PAUSE) : send(YT.Command.PLAY); };
-  export const setMuted = muted => { muted ? send(YT.Command.MUTE) : send(YT.Command.UNMUTE); };
-  export const setVolume = volume => { send(YT.Command.SET_VOLUME, [volume]); };
-  export const setPlaybackRate = rate => { send(YT.Command.SET_PLAYBACK_RATE, [rate]); };
-  export const setCurrentTime = time => { send(YT.Command.SEEK_TO, [time]); };
-  export const setPlaysinline = enabled => { params.playsinline = enabled ? 1 : 0; };
+  export const setMuted = (isMuted) => { isMuted ? send(YT.Command.MUTE) : send(YT.Command.UNMUTE); };
+  export const setVolume = (newVolume) => { send(YT.Command.SET_VOLUME, [newVolume]); };
+  export const setPlaybackRate = (newRate) => { send(YT.Command.SET_PLAYBACK_RATE, [newRate]); };
+  export const setCurrentTime = (newTime) => { send(YT.Command.SEEK_TO, [newTime]); };
+  export const setPlaysinline = (isEnabled) => { params.playsinline = isEnabled ? 1 : 0; };
+
+  export const setPaused = (isPaused) => {
+    isPaused ? send(YT.Command.PAUSE) : send(YT.Command.PLAY);
+  };
   
-  export const setControls = enabled => {
-    params.controls = enabled ? 1 : 0;
-    params.disablekb = enabled ? 0 : 1;
+  export const setControls = (isEnabled) => {
+    params.controls = isEnabled ? 1 : 0;
+    params.disablekb = isEnabled ? 0 : 1;
   };
 
   export const supportsPiP = () => false;
@@ -109,15 +112,15 @@
 
   onMount(() => { info.mediaType = MediaType.VIDEO; });
   const onRebuildStart = () => { info.rebuild = true; };
-  const onOriginChange = e => { info.origin = e.detail; };
-  const onTitleChange = e => { info.title = e.detail; };
+  const onOriginChange = (e) => { info.origin = e.detail; };
+  const onTitleChange = (e) => { info.title = e.detail; };
   
-  const onCurrentSrcChange = e => {
+  const onCurrentSrcChange = (e) => {
     info.srcId = srcId;
     info.currentSrc = e.detail;
   };
 
-  const onStateChange = state => {
+  const onStateChange = (state) => {
     playerState = state;
     switch (state) {
       case YT.State.ENDED:
@@ -140,10 +143,12 @@
         seeking = false;
         info.state = PlayerState.CUED;
         break;
+      default:
+        break;
     }
   };
 
-  const calcCurrentTime = time => {
+  const calcCurrentTime = (time) => {
     let currentTime = time;
     if (playerState === YT.State.PLAYING) {
       const elapsedTime = (Date.now() / 1E3 - lastTimeUpdate) * playbackRate;
@@ -152,7 +157,7 @@
     return currentTime;
   };
 
-  const onTimeUpdate = time => {
+  const onTimeUpdate = (time) => {
     const currentTime = calcCurrentTime(time);
     info.currentTime = currentTime;
     // Unfortunately while the player is `paused` `seeking` and `seeked` will fire at the
@@ -164,7 +169,7 @@
     internalTime = currentTime;
   };
 
-  const onBuffered = buffered => {
+  const onBuffered = (buffered) => {
     info.buffered = buffered;
     // This is the only way to detect `seeked`.
     if (seeking && (buffered > internalTime)) {
@@ -173,14 +178,14 @@
     }
   };
 
-  const onInfo = _info => {
+  const onInfo = (_info) => {
     const {
       volume, muted, availablePlaybackRates: rates,
       playbackQuality: quality, playbackRate: rate, videoLoadedFraction: loadedFraction,
       availableQualityLevels: qualities, currentTime,
-      duration: newDuration, playerState, currentTimeLastUpdated_
+      duration: newDuration, playerState: state, currentTimeLastUpdated_,
     } = _info;
-    if (is_number(playerState)) onStateChange(playerState);
+    if (is_number(state)) onStateChange(state);
     if (is_number(newDuration)) {
       duration = parseFloat(newDuration);
       info.duration = duration;
@@ -196,19 +201,19 @@
     if (is_number(volume)) info.volume = volume;
     if (is_boolean(muted)) info.muted = muted;
     if (qualities) {
-      const mappedQualities = qualities.map(q => YT.QualityMap[q]).filter(Boolean);
+      const mappedQualities = qualities.map((q) => YT.QualityMap[q]).filter(Boolean);
       info.videoQualities = mappedQualities;
     }
     if (quality) info.videoQuality = YT.QualityMap[quality];
   };
 
-  const onData = e => {
-    const { event, info } = e.detail;
-    if (info) onInfo(info);
+  const onData = (e) => {
+    const dInfo = e.detail.info;
+    if (dInfo) onInfo(dInfo);
   };
 
   $: srcId = get_src_id(src);
-  $: get_poster(src).then(poster => { info.poster = poster; }).catch(e => dispatch('error', e));
+  $: get_poster(src).then((poster) => { info.poster = poster; }).catch((e) => dispatch('error', e));
 
   $: {
     dispatch('update', info);

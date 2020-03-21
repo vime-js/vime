@@ -37,7 +37,7 @@
   let menuIdCounter = 0;
 
   const Event = {
-    MENU_CHANGE: 'menuchange'
+    MENU_CHANGE: 'menuchange',
   };
 </script>
 
@@ -86,20 +86,20 @@
   // Events
   // --------------------------------------------------------------
 
-  const onToggleMenu = e => {
+  const onToggleMenu = () => {
     if (isDisabled || !hasOptions) return;
     isMenuActive = !isMenuActive;
     dispatch(Event.MENU_CHANGE, isMenuActive);
   };
 
-  const onMenuClose = e => {
+  const onMenuClose = () => {
     isMenuActive = false;
     dispatch(Event.MENU_CHANGE, false);
   };
 
   $: hasOptions = !options || options.length > 0;
   $: canShowOptions = !isDisabled && !isMenuActive && hasOptions;
-  $: currentOption = hasOptions ? options.find(o => o.value === value) : null;
+  $: currentOption = hasOptions ? options.find((o) => o.value === value) : null;
   $: hint = (!hasOptions || !currentOption) ? emptyHint : currentOption.title;
 </script>
 

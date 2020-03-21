@@ -27,14 +27,14 @@
     'https://googleads.g.doubleclick.net',
     'https://static.doubleclick.net',
     'https://s.ytimg.com',
-    'https://i.ytimg.com'
+    'https://i.ytimg.com',
   ];
 
   const YT = {};
 
   YT.Event = {
     INITIAL_DELIVERY: 'initialDelivery',
-    ERROR: 'onError'
+    ERROR: 'onError',
   };
 
   const Event = {
@@ -42,7 +42,7 @@
     TITLE_CHANGE: 'titlechange',
     ORIGIN_CHANGE: 'originchange',
     SRC_CHANGE: 'srcchange',
-    ERROR: 'error'
+    ERROR: 'error',
   };
 </script>
 
@@ -79,7 +79,7 @@
       embed.postMessage({
         event: 'command',
         func: command,
-        args: args || ''
+        args: args || '',
       });
     } catch (e) { /** noop */ }
   };
@@ -103,12 +103,12 @@
 
   const onSrcChange = () => { videoTitle = ''; };
 
-  const onVideoData = videoData => {
-    const { title } = videoData;
-    if (title) videoTitle = title;
+  const onVideoData = (videoData) => {
+    const { title: vTitle } = videoData;
+    if (vTitle) videoTitle = vTitle;
   };
 
-  const onInfo = info => {
+  const onInfo = (info) => {
     const { playerState, videoData } = info;
     if (videoData) onVideoData(videoData);
     if (playerState === 5) {
@@ -117,7 +117,7 @@
     }
   };
 
-  const _onData = e => {
+  const onDataHandler = (e) => {
     const data = e.detail;
     const { info, event } = data || {};
     if (info) onInfo(info);
@@ -131,7 +131,8 @@
   $: title = `YouTube ${videoTitle || 'Video Player'}`;
   $: origin = cookies ? ORIGIN : ORIGIN_NO_COOKIES;
   $: src = buildSrc(origin, srcId);
-  $: onData = !initialized ? _onData : null;
+  $: onSrcChange(srcId);
+  $: onData = !initialized ? onDataHandler : null;
 
   let mounted = false;
   onMount(() => { mounted = true; });

@@ -17,7 +17,7 @@
 
   const {
     isVideoView, playbackStarted, paused,
-    isControlsActive, isMobile, useNativeControls
+    isControlsActive, isMobile, useNativeControls,
   } = player.getStore();
 
   // --------------------------------------------------------------

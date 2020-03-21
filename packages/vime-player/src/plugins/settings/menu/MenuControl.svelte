@@ -9,7 +9,7 @@
   use:focus
   use:highlight
   on:click
-  on:highlightchange="{e => { showHighlight = e.detail; }}"
+  on:highlightchange="{(e) => { showHighlight = e.detail; }}"
   aria-label={title}
   aria-hidden={$$props['aria-hidden']}
   aria-checked={$$props['aria-checked']}
@@ -37,7 +37,9 @@
 
   export let player;
 
-  const { isMobile, isVideoView, isTouch, icons } = player.getStore();
+  const {
+    isMobile, isVideoView, isTouch, icons,
+} = player.getStore();
 
   // --------------------------------------------------------------
   // Props

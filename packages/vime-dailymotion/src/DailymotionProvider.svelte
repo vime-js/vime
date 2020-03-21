@@ -37,7 +37,7 @@
     TIME_UPDATE: 'timeupdate',
     VIDEO_START: 'video_start',
     VIDEO_END: 'video_end',
-    ERROR: 'error'
+    ERROR: 'error',
   };
 
   // @see https://developer.dailymotion.com/player/#player-api-methods
@@ -50,10 +50,10 @@
     CONTROLS: 'controls',
     MUTED: 'muted',
     QUALITY: 'quality',
-    FULLSCREEN: 'fullscreen'
+    FULLSCREEN: 'fullscreen',
   };
 
-  export const canPlay = src => can_play(src);
+  export const canPlay = (src) => can_play(src);
 </script>
 
 <script>
@@ -64,8 +64,8 @@
   import { get_src_id, get_poster, get_duration } from './utils';
 
   let embed;
-  let srcId = null;
   let info = {};
+  let srcId = null;
   let qualities = null;
   let isAdsPlaying = false;
 
@@ -85,28 +85,31 @@
   export const getEmbed = () => embed;
   export const getEl = () => embed.getIframe();
 
-  export const setPaused = paused => { paused ? send(DM.Command.PAUSE) : send(DM.Command.PLAY); };
-  export const setPlaysinline = enabled => { /** noop */ };
-  export const setVideoQuality = quality => { send(DM.Command.QUALITY, [quality]); };
-  export const setControls = enabled => { send(DM.Command.CONTROLS, [enabled]); };
-  export const setFullscreen = active => { send(DM.Command.FULLSCREEN, [active]); };
+  export const setPlaysinline = () => { /** noop */ };
+  export const setVideoQuality = (newQuality) => { send(DM.Command.QUALITY, [newQuality]); };
+  export const setControls = (isEnabled) => { send(DM.Command.CONTROLS, [isEnabled]); };
+  export const setFullscreen = (isActive) => { send(DM.Command.FULLSCREEN, [isActive]); };
 
-  export const setMuted = muted => {
-    if (!started) startMuted = muted;
-    send(DM.Command.MUTED, [muted]);
+  export const setPaused = (isPaused) => {
+    isPaused ? send(DM.Command.PAUSE) : send(DM.Command.PLAY);
   };
 
-  export const setVolume = volume => {
-    if (!started) startVolume = volume;
-    send(DM.Command.VOLUME, [volume / 100]);
+  export const setMuted = (isMuted) => {
+    if (!started) startMuted = isMuted;
+    send(DM.Command.MUTED, [isMuted]);
   };
 
-  export const setCurrentTime = time => {
-    if (!started) startTime = time;
-    send(DM.Command.SEEK, [time]);
+  export const setVolume = (newVolume) => {
+    if (!started) startVolume = newVolume;
+    send(DM.Command.VOLUME, [newVolume / 100]);
+  };
+
+  export const setCurrentTime = (newTime) => {
+    if (!started) startTime = newTime;
+    send(DM.Command.SEEK, [newTime]);
   };
   
-  export const setView = enabled => {
+  export const setView = (enabled) => {
     params['ui-logo'] = enabled;
     params['ui-start-screen-info'] = enabled;
   };
@@ -117,14 +120,14 @@
   onMount(() => { info.origin = embed.getOrigin(); });
   onMount(() => { info.mediaType = MediaType.VIDEO; });
   const onRebuildStart = () => { info.rebuild = true; };
-  const onTitleChange = e => { info.title = e.detail; };
+  const onTitleChange = (e) => { info.title = e.detail; };
   
-  const onCurrentSrcChange = e => {
+  const onCurrentSrcChange = (e) => {
     info.srcId = srcId;
     info.currentSrc = e.detail;
   };
 
-  const onData = e => {
+  const onData = (e) => {
     const data = e.detail;
     const event = data && data.event;
     if (!event) return;
@@ -154,7 +157,7 @@
         info.currentTime = parseFloat(data.time);
         break;
       case DM.Event.VOLUME_CHANGE:
-        info.muted = (data.muted == 'true');
+        info.muted = (data.muted === 'true');
         info.volume = parseFloat(data.volume) * 100;
         break;
       case DM.Event.SEEKING:
@@ -209,12 +212,14 @@
       case DM.Event.ERROR:
         dispatch('error', data);
         break;
+      default:
+        break;
     }
   };
 
   $: srcId = get_src_id(src);
-  $: get_poster(src).then(poster => { info.poster = poster; }).catch(e => dispatch('error', e));
-  $: get_duration(srcId).then(duration => { info.duration = duration; });
+  $: get_poster(src).then((poster) => { info.poster = poster; }).catch((e) => dispatch('error', e));
+  $: get_duration(srcId).then((duration) => { info.duration = duration; });
 
   $: {
     dispatch('update', info);

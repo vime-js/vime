@@ -33,11 +33,13 @@
   const instances = {};
   let validatedPlugins = [];
 
-  export const hasPlugin = plugin => plugin.ID && $plugins.some(p => p.ID === plugin.ID);
-  export const addPlugin = plugin => { if (!hasPlugin(plugin)) $plugins[$plugins.length] = plugin; };
-  export const addPlugins = plugins => { plugins && plugins.map(addPlugin); };
-  export const removePlugin = id => { $plugins = $plugins.filter(p => p.ID !== id); };
-  export const removePlugins = plugins => { plugins && plugins.map(removePlugin); };
+  export const hasPlugin = (plugin) => plugin.ID && $plugins.some((p) => p.ID === plugin.ID);
+  export const addPlugin = (newPlugin) => {
+    if (!hasPlugin(newPlugin)) $plugins[$plugins.length] = newPlugin;
+  };
+  export const addPlugins = (newPlugins) => { if (newPlugins) newPlugins.map(addPlugin); };
+  export const removePlugin = (id) => { $plugins = $plugins.filter((p) => p.ID !== id); };
+  export const removePlugins = (delPlugins) => { if (delPlugins) delPlugins.map(removePlugin); };
 
   export const getRegistry = () => registry;
   export const getInstances = () => instances;
@@ -49,7 +51,7 @@
   // Plugin Registration
   // --------------------------------------------------------------
 
-  const validatePlugin = Plugin => {
+  const validatePlugin = (Plugin) => {
     const name = Plugin && (Plugin.ID || (Plugin.default && Plugin.default.name));
     if (!Plugin || !Plugin.ID) {
       logger.error(`plugin [${name}] is missing an \`ID\` property`);
@@ -66,13 +68,11 @@
   let mounted = false;
   onMount(() => { mounted = true; });
 
-  $: if (mounted) validatedPlugins = isEnabled
-    ? $plugins
-      .filter(validatePlugin)
-      .map(p => ({ ...p }))
-    : [];
+  $: if (mounted) {
+    validatedPlugins = isEnabled ? $plugins.filter(validatePlugin).map((p) => ({ ...p })) : [];
+  }
 
   $: validatedPlugins
-    .filter(p => !registry.has(p.ID) && instances[p.ID])
-    .forEach(p => registry.register(p.ID, instances[p.ID]));
+    .filter((p) => !registry.has(p.ID) && instances[p.ID])
+    .forEach((p) => registry.register(p.ID, instances[p.ID]));
 </script>

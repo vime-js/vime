@@ -2,8 +2,8 @@ import { run_all, listen } from 'svelte/internal';
 import { listen_for_touch_input, set_style } from '@vime-js/utils';
 
 // @see https://github.com/sampotts/rangetouch
-export default function inputRangeTouch (node) {
-  const calcValue = e => {
+export default function inputRangeTouch(node) {
+  const calcValue = (e) => {
     const input = e.target;
     const touch = e.changedTouches[0];
     const min = parseFloat(input.getAttribute('min')) || 0;
@@ -35,14 +35,13 @@ export default function inputRangeTouch (node) {
 
     if (step >= 1) {
       return min + Math.round(position / step) * step;
-    } else {
-      // NOTE: this part differs from original implementation to save space.
-      // Only supports 2 decimal places (0.01) as the step.
-      return min + parseFloat(position.toFixed(2));
     }
+    // NOTE: this part differs from original implementation to save space.
+    // Only supports 2 decimal places (0.01) as the step.
+    return min + parseFloat(position.toFixed(2));
   };
 
-  const onTouch = e => {
+  const onTouch = (e) => {
     if (e.target.disabled) return;
     e.preventDefault();
     e.target.value = calcValue(e);
@@ -60,7 +59,7 @@ export default function inputRangeTouch (node) {
     set_style(node, 'webKitUserSelect', 'none');
     set_style(node, 'touchAction', 'manipulation');
     const touchEvents = ['touchstart', 'touchmove', 'touchend'];
-    touchEvents.forEach(event => dispose.push(listen(node, event, onTouch)));
+    touchEvents.forEach((event) => dispose.push(listen(node, event, onTouch)));
   };
 
   const onDestroy = () => {
@@ -71,7 +70,7 @@ export default function inputRangeTouch (node) {
     set_style(node, 'touchAction');
   };
 
-  const onTouchDetect = isTouch => {
+  const onTouchDetect = (isTouch) => {
     if (isTouch && !mounted) {
       onMount();
       mounted = true;
@@ -86,9 +85,9 @@ export default function inputRangeTouch (node) {
   const touchListener = listen_for_touch_input(onTouchDetect);
 
   return {
-    destroy () {
+    destroy() {
       if (!destroyed) onDestroy();
-      touchListener && touchListener();
-    }
+      if (touchListener) touchListener();
+    },
   };
 }

@@ -1,6 +1,6 @@
 import { element } from 'svelte/internal';
 import { IS_CLIENT } from './support';
-import { is_null_or_undefined, is_array, is_object } from './unit';
+import { is_null_or_undefined, is_array } from './unit';
 
 export const try_decode_uri_component = (component, fallback = '') => {
   if (!IS_CLIENT) return fallback;
@@ -14,10 +14,11 @@ export const try_decode_uri_component = (component, fallback = '') => {
 // eslint-disable-next-line max-len
 // @see https://github.com/ampproject/amphtml/blob/c7c46cec71bac92f5c5da31dcc6366c18577f566/src/url-parse-query-string.js#L31
 const QUERY_STRING_REGEX = /(?:^[#?]?|&)([^=&]+)(?:=([^&]*))?/g;
-export const parse_query_string = qs => {
+export const parse_query_string = (qs) => {
   const params = Object.create(null);
   if (!qs) return params;
   let match;
+  // eslint-disable-next-line no-cond-assign
   while ((match = QUERY_STRING_REGEX.exec(qs))) {
     const name = try_decode_uri_component(match[1], match[1]).replace('[]', '');
     const value = match[2]
@@ -30,16 +31,16 @@ export const parse_query_string = qs => {
   return params;
 };
 
-export const serialize_query_string = params => {
+export const serialize_query_string = (params) => {
   const qs = [];
   const appendQueryParam = (param, v) => {
     qs.push(`${encodeURIComponent(param)}=${encodeURIComponent(v)}`);
   };
-  Object.keys(params).forEach(param => {
+  Object.keys(params).forEach((param) => {
     const value = params[param];
     if (is_null_or_undefined(value)) return;
     if (is_array(value)) {
-      value.forEach(v => appendQueryParam(param, v));
+      value.forEach((v) => appendQueryParam(param, v));
     } else {
       appendQueryParam(param, value);
     }
@@ -53,9 +54,10 @@ export const apppend_querystring_to_url = (url, qs) => {
   return mainAndQuery[0] + (mainAndQuery[1] ? `?${mainAndQuery[1]}&${qs}` : `?${qs}`);
 };
 
-export const add_params_to_url = (url, params) => {
-  return apppend_querystring_to_url(url, serialize_query_string(params));
-};
+export const add_params_to_url = (
+  url,
+  params,
+) => apppend_querystring_to_url(url, serialize_query_string(params));
 
 export const prefetch = (rel, url, as) => {
   if (!IS_CLIENT) return false;
@@ -69,7 +71,7 @@ export const prefetch = (rel, url, as) => {
 };
 
 // Does not handle relative URL's.
-export const parse_url = url => {
+export const parse_url = (url) => {
   if (!IS_CLIENT) return {};
   const parser = element('a');
   parser.href = url;
@@ -78,7 +80,7 @@ export const parse_url = url => {
 };
 
 const START_TIMESTAMP = /(\d+)(h|m|s)/g;
-const parse_time_string = stamp => {
+const parse_time_string = (stamp) => {
   let seconds = 0;
   let array = START_TIMESTAMP.exec(stamp);
   while (array !== null) {
@@ -98,13 +100,13 @@ const parse_time_param = (url, pattern) => {
   if (match) {
     const stamp = match[1];
     if (stamp.match(START_TIMESTAMP)) return parse_time_string(stamp);
-    if (NUMERIC.test(stamp)) return parseInt(stamp);
+    if (NUMERIC.test(stamp)) return parseInt(stamp, 10);
   }
   return null;
 };
 
 const START_TIME_QUERY = /[?&#](?:start|t)=([0-9hms]+)/;
-export const parse_start_time = url => parse_time_param(url, START_TIME_QUERY);
+export const parse_start_time = (url) => parse_time_param(url, START_TIME_QUERY);
 
 const END_TIME_QUERY = /[?&#]end=([0-9hms]+)/;
-export const parse_end_time = url => parse_time_param(url, END_TIME_QUERY);
+export const parse_end_time = (url) => parse_time_param(url, END_TIME_QUERY);

@@ -1,6 +1,8 @@
+/* eslint-disable max-classes-per-file */
+
 import {
   is_array, is_boolean, is_empty, is_function, is_null, is_number, is_object, is_string,
-  is_instance_of, get_constructor, is_prototype_of, is_undefined
+  is_instance_of, get_constructor, is_prototype_of, is_undefined,
 } from '../unit';
 
 describe('utils', () => {
@@ -14,7 +16,7 @@ describe('utils', () => {
         number: { input: 0 },
         object: { input: {} },
         fn: { input: () => {} },
-        boolean: { input: true }
+        boolean: { input: true },
       };
 
       inputs[type].isValid = true;

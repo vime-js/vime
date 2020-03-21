@@ -58,10 +58,8 @@
 {/if}
 
 <script context="module">
-  import { writable } from 'svelte/store';
-  import { is_array } from '@vime-js/utils';
   import PluginRole from '../../core/PluginRole';
-
+  
   export const ID = 'vControls';
   export const ROLE = PluginRole.CONTROLS;
 
@@ -73,12 +71,11 @@
 <script>
   import { tick, onMount, onDestroy } from 'svelte';
   import { raf, listen } from 'svelte/internal';
-  import { Registry } from '@vime-js/core';
   import ControlGroup from './ControlGroup.svelte';
 
   import {
     set_style, get_computed_height, get_computed_height_without_padding,
-    set_style_raf
+    set_style_raf,
   } from '@vime-js/utils';
 
   // --------------------------------------------------------------
@@ -90,10 +87,9 @@
   const rootEl = player.getEl();
 
   const {
-    paused, playbackReady, isLive,
-    mediaType, isVideoView, isControlsEnabled,
-    canInteract, isMobile, useNativeControls, _isControlsActive:
-    isControlsActive, rebuilding
+    paused, playbackReady, isVideoView,
+    isControlsEnabled, canInteract, isMobile,
+    useNativeControls, _isControlsActive: isControlsActive, rebuilding,
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -132,9 +128,9 @@
   export const hasCenterControls = () => center.length > 0;
   export const hasUpperControls = () => upper.length > 0;
 
-  export const centerAssist = el => {
-    if (!centerAssists.includes(el)) centerAssists[centerAssists.length] = el;
-    return () => { centerAssists = centerAssists.filter(e => e !== el); };
+  export const centerAssist = (element) => {
+    if (!centerAssists.includes(element)) centerAssists[centerAssists.length] = element;
+    return () => { centerAssists = centerAssists.filter((e) => e !== element); };
   };
 
   $: if (!$paused && $isVideoView && idleTimer) {
@@ -153,34 +149,34 @@
   const onShowControls = () => { idleTimer += 1; };
 
   // Avoid trying to tab-focus a control that is out of view, causes the video to jump.
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (
-      e.keyCode === 9 &&
-      !$isControlsActive &&
-      (document.activeElement === rootEl || el.contains(document.activeElement))
+      e.keyCode === 9
+    && !$isControlsActive
+    && (document.activeElement === rootEl || el.contains(document.activeElement))
     ) e.preventDefault();
     idleTimer += 1;
   };
 
-  const onCenterAssist = async el => {
+  const onCenterAssist = async (element) => {
     await tick();
     raf(() => {
       const paddingBottom = getLowerControlsHeight();
-      set_style(el, 'paddingBottom', (lower.length > 0) ? `${paddingBottom}px` : null);
-      set_style(el, 'transition', 'padding 0.2s linear');
+      set_style(element, 'paddingBottom', (lower.length > 0) ? `${paddingBottom}px` : null);
+      set_style(element, 'transition', 'padding 0.2s linear');
     });
   };
 
   const runCenterAssist = () => centerAssists.forEach(onCenterAssist);
   
-  const removeCenterAssist = () => centerAssists.forEach(el => {
-    set_style_raf(el, 'paddingBottom');
-    set_style_raf(el, 'transition');
+  const removeCenterAssist = () => centerAssists.forEach((element) => {
+    set_style_raf(element, 'paddingBottom');
+    set_style_raf(element, 'transition');
   });
 
   onMount(() => {
     const showControlsEvents = ['focus', 'keydown', 'mousemove', 'touchstart'];
-    showControlsEvents.forEach(event => onDestroy(listen(player.getEl(), event, onShowControls)));
+    showControlsEvents.forEach((event) => onDestroy(listen(player.getEl(), event, onShowControls)));
   });
 
   onDestroy(() => {

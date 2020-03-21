@@ -19,7 +19,7 @@
   const registry = player.createRegistry(id);
   const logger = player.createLogger(id);
 
-  const validateControl = Control => {
+  const validateControl = (Control) => {
     if (!Control || !is_svelte_component(Control.default)) {
       const name = Control && (Control.ID || (Control.default && Control.default.name));
       logger.error(`control [${name}] has an invalid \`default\` property, must be a SvelteComponent`);
@@ -43,6 +43,6 @@
 
   $: controls
     .filter(validateControl)
-    .filter(c => c.ID && !registry.has(c.ID) && instances[c.ID])
-    .forEach(c => registry.register(c.ID, instances[c.ID]));
+    .filter((c) => c.ID && !registry.has(c.ID) && instances[c.ID])
+    .forEach((c) => registry.register(c.ID, instances[c.ID]));
 </script>

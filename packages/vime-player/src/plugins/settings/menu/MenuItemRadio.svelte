@@ -12,7 +12,7 @@
 
 <script context="module">
   const Event = {
-    VALUE_CHANGE: 'valuechange'
+    VALUE_CHANGE: 'valuechange',
   };
 </script>
 

@@ -37,22 +37,25 @@
 </div>
 
 <script>
-  import { onMount, onDestroy, tick, createEventDispatcher } from 'svelte';
-  import { noop, get_current_component } from 'svelte/internal';
+  import { get_current_component } from 'svelte/internal';
   import { get } from 'svelte/store';
   import Plugins from './Plugins.svelte';
   import { buildPlayerStore } from './playerStore';
   import PlayerEvent from './PlayerEvent';
-  
+
+  import {
+    onMount, onDestroy, tick, createEventDispatcher,
+  } from 'svelte';
+
   import {
     Registry, Disposal, Lazy,
     aspectRatio as setAspectRatio,
-    Player as InternalPlayer
+    Player as InternalPlayer,
   } from '@vime-js/core';
 
   import {
-    log as _log, warn as _warn, error as _error,
-    map_store_to_component, is_string
+    log as vimeLog, warn as vimeWarn, error as vimeError,
+    map_store_to_component, is_string,
   } from '@vime-js/utils';
 
   // --------------------------------------------------------------
@@ -65,7 +68,6 @@
   let classes = null;
 
   let debug;
-  let plugins;
   let paused;
   let theme;
   let isVideo;
@@ -82,7 +84,7 @@
   const ID = 'Player';
   const disposal = new Disposal();
   const registry = new Registry(ID);
-  const _dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher();
 
   let store = {};
   let onPropsChange = () => {};
@@ -92,10 +94,10 @@
     store = buildPlayerStore(internalPlayer.getStore());
     onPropsChange = map_store_to_component(self, store);
     ({
-      plugins, paused, isVideo,
-      theme, isVideoView, useNativeControls,
-      isControlsActive, debug, isFullscreenActive,
-      aspectRatio, Provider
+      paused, isVideo, theme,
+      isVideoView, useNativeControls, isControlsActive,
+      debug, isFullscreenActive, aspectRatio,
+      Provider,
     } = store);
   });
 
@@ -111,8 +113,7 @@
   export const getPluginsManager = () => pluginsManager;
   export const getPluginsRegistry = () => pluginsManager && pluginsManager.getRegistry();
 
-  export const dispose = cb => disposal.add(cb);
-  export const dispatch = (event, detail) => _dispatch(event, detail);
+  export const dispose = (cb) => disposal.add(cb);
   export const extendLanguage = (code, language) => { store.languages.set({ [code]: language }); };
 
   export const requestPiP = () => internalPlayer.requestPiP();
@@ -120,18 +121,18 @@
   export const requestFullscreen = () => internalPlayer.requestFullscreen();
   export const exitFullscreen = () => internalPlayer.exitFullscreen();
   
-  export const createRegistry = id => {
+  export const createRegistry = (id) => {
     const subRegistry = new Registry(id);
     registry.register(id, subRegistry);
     return subRegistry;
   };
 
-  export const createLogger = id => {
+  export const createLogger = (id) => {
     const seperator = '::';
     return {
-      log () { $debug && _log(id, seperator, ...arguments); },
-      warn () { $debug && _warn(id, seperator, ...arguments); },
-      error () { $debug && _error(id, seperator, ...arguments); }
+      log(...args) { if ($debug) vimeLog(id, seperator, ...args); },
+      warn(...args) { if ($debug) vimeWarn(id, seperator, ...args); },
+      error(...args) { if ($debug) vimeError(id, seperator, ...args); },
     };
   };
 
@@ -141,31 +142,31 @@
 
   let mounted = false;
   onMount(() => {
-    tick().then(() => _dispatch(PlayerEvent.MOUNT));
+    tick().then(() => dispatch(PlayerEvent.MOUNT));
     mounted = true;
   });
 
-  onDestroy(() => _dispatch(PlayerEvent.DESTROY));
+  onDestroy(() => dispatch(PlayerEvent.DESTROY));
   
-  const onPluginMount = e => {
+  const onPluginMount = (e) => {
     self[e.detail.id] = e.detail.value;
-    _dispatch(`${e.detail.id}mount`, e.detail);
-    _dispatch(PlayerEvent.PLUGIN_MOUNT, e.detail);
+    dispatch(`${e.detail.id}mount`, e.detail);
+    dispatch(PlayerEvent.PLUGIN_MOUNT, e.detail);
   };
 
-  const onPluginDestroy = e => {
+  const onPluginDestroy = (e) => {
     if (self) delete self[e.detail];
-    _dispatch(`${e.detail}destroy`, e.detail);
-    _dispatch(PlayerEvent.PLUGIN_DESTROY, e.detail);
+    dispatch(`${e.detail}destroy`, e.detail);
+    dispatch(PlayerEvent.PLUGIN_DESTROY, e.detail);
   };
 
-  const onContextMenu = e => {
+  const onContextMenu = (e) => {
     if (!$debug && !get(store.isContextMenuEnabled)) e.preventDefault();
   };
 
-  const onThemeChange = () => is_string($theme)
+  const onThemeChange = () => (is_string($theme)
     ? el.style.setProperty('--theme', $theme)
-    : Object.keys($theme).forEach(key => { el.style.setProperty(`--${key}`, $theme[key]); });
+    : Object.keys($theme).forEach((key) => { el.style.setProperty(`--${key}`, $theme[key]); }));
 
   $: if (el && $theme) onThemeChange();
 </script>

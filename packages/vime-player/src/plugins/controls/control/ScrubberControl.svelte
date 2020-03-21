@@ -58,10 +58,9 @@
 </script>
 
 <script>
-  import { raf } from 'svelte/internal';
   import { formatTime, inputRangeTouch } from '@vime-js/core';
-  import { ID as TooltipsID } from '../../tooltips/Tooltips.svelte';
   import { set_style_raf } from '@vime-js/utils';
+  import { ID as TooltipsID } from '../../tooltips/Tooltips.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -74,7 +73,6 @@
   const {
     i18n, isVideoView, currentTime,
     duration, buffered, buffering,
-    icons, isTouch
   } = player.getStore();
   
   // --------------------------------------------------------------
@@ -104,19 +102,8 @@
     .replace('{duration}', formatTime(ariaDuration));
 
   // --------------------------------------------------------------
-  // Events
+  // Tooltips Plugin
   // --------------------------------------------------------------
-
-  const onSeek = e => { $currentTime = window.parseFloat(e.target.value); };
-  
-  const onSeeking = e => {
-    if ($duration <= 0 || !tooltip) return;
-    const rect = scrubber.getBoundingClientRect();
-    const percent = Math.max(0, Math.min(100, (100 / rect.width) * (e.pageX - rect.left)));
-    tooltipActive = e.type !== 'mouseleave';
-    tooltipTitle = formatTime(($duration / 100) * percent);
-    setTooltipXPos(percent, (percent / 100) * rect.width);
-  };
 
   const setTooltipXPos = (percent, value) => {
     if (!tooltip.getEl()) return;
@@ -132,10 +119,6 @@
     }
   };
 
-  // --------------------------------------------------------------
-  // Tooltips Plugin
-  // --------------------------------------------------------------
-
   $: tooltipsPlugin = $plugins[TooltipsID];
   $: Tooltip = tooltipsPlugin && tooltipsPlugin.getTooltipComponent();
   $: tooltipsRegistry = tooltipsPlugin && tooltipsPlugin.getRegistry();
@@ -143,6 +126,21 @@
   $: if (tooltipsRegistry && tooltip && !tooltipsRegistry.has(LABEL)) {
     tooltipsRegistry.register(LABEL, tooltip);
   }
+
+  // --------------------------------------------------------------
+  // Events
+  // --------------------------------------------------------------
+
+  const onSeek = (e) => { $currentTime = window.parseFloat(e.target.value); };
+  
+  const onSeeking = (e) => {
+    if ($duration <= 0 || !tooltip) return;
+    const rect = scrubber.getBoundingClientRect();
+    const percent = Math.max(0, Math.min(100, (100 / rect.width) * (e.pageX - rect.left)));
+    tooltipActive = e.type !== 'mouseleave';
+    tooltipTitle = formatTime(($duration / 100) * percent);
+    setTooltipXPos(percent, (percent / 100) * rect.width);
+  };
 </script>
 
 <style type="text/scss">

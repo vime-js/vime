@@ -20,7 +20,7 @@
 
 <script context="module">
   const Event = {
-    MENU_CLOSE: 'menuclose'
+    MENU_CLOSE: 'menuclose',
   };
 </script>
 
@@ -45,24 +45,28 @@
     LEFT: 37,
     UP: 38,
     RIGHT: 39,
-    DOWN: 40
+    DOWN: 40,
   });
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
+  let el;
   let items;
   let activeItem = 0;
-  let el;
 
   export const getEl = () => el;
-  export const getSubMenu = item => document.getElementById(item.getAttribute('aria-controls'));
+  export const getSubMenu = (item) => document.getElementById(item.getAttribute('aria-controls'));
   
-  export const setFocusToItem = index => {
-    if (index === -1) index = items.length - 1;
-    if (index === items.length) index = 0;
-    activeItem = index;
+  export const setFocusToItem = (index) => {
+    if (index === -1) {
+      activeItem = items.length - 1;
+    } else if (index === items.length) {
+      activeItem = 0;
+    } else {
+      activeItem = index;
+    }
     items[activeItem].focus();
   };
 
@@ -76,7 +80,7 @@
   // --------------------------------------------------------------
 
   const dispatchMenuClose = () => { dispatch(Event.MENU_CLOSE); };
-  const onWindowKeyDown = e => { if (e.keyCode === KeyCode.ESC) dispatchMenuClose(); };
+  const onWindowKeyDown = (e) => { if (e.keyCode === KeyCode.ESC) dispatchMenuClose(); };
 
   const onItemSelect = async () => {
     const item = items[activeItem];
@@ -108,8 +112,8 @@
     subMenu.focus();
   };
 
-  const onKeyDown = e => {
-    const keyCode = e.keyCode;
+  const onKeyDown = (e) => {
+    const { keyCode } = e;
     const isValidKeyCode = Object.values(KeyCode).includes(keyCode);
   
     if (isValidKeyCode) {
@@ -144,6 +148,8 @@
         break;
       case KeyCode.RIGHT:
         onOpenSubMenu();
+        break;
+      default:
         break;
     }
   };

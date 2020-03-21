@@ -23,7 +23,7 @@
   VM.Event = {
     READY: 'ready',
     ERROR: 'error',
-    LOADED: 'loaded'
+    LOADED: 'loaded',
   };
 
   VM.Command = {
@@ -38,14 +38,14 @@
     ORIGIN,
     'https://i.vimeocdn.com',
     'https://f.vimeocdn.com',
-    'https://fresnel.vimeocdn.com'
+    'https://fresnel.vimeocdn.com',
   ];
 
   const Event = {
     READY: 'ready',
     SRC_CHANGE: 'srcchange',
     TITLE_CHANGE: 'titlechange',
-    ERROR: 'error'
+    ERROR: 'error',
   };
 </script>
 
@@ -80,7 +80,7 @@
       }
       embed.postMessage({
         method: command,
-        value: args || ''
+        value: args || '',
       });
     } catch (e) { /** noop */ }
   };
@@ -99,7 +99,7 @@
 
   const onSrcChange = () => { videoTitle = ''; };
 
-  const _onData = e => {
+  const onDataHandler = (e) => {
     const data = e.detail;
     if (!data) return;
     const event = data && data.event;
@@ -126,7 +126,7 @@
   $: src = buildSrc(srcId);
   $: title = `Vimeo - ${videoTitle || 'Video Player'}`;
   $: onSrcChange(src);
-  $: onData = !initialized ? _onData : null;
+  $: onData = !initialized ? onDataHandler : null;
 
   let mounted = false;
   onMount(() => { mounted = true; });

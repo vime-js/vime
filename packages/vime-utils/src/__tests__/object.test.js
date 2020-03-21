@@ -7,7 +7,7 @@ describe('utils', () => {
         const id = 327;
         const obj = {};
         create_prop(obj, 'id', {
-          get: () => id
+          get: () => id,
         });
         expect(obj.id).toBe(id);
       });
@@ -19,20 +19,20 @@ describe('utils', () => {
         b: 2,
         c: {
           a: 4,
-          b: 1
+          b: 1,
         },
-        d: [1, 2, 3]
+        d: [1, 2, 3],
       };
 
       const source = {
         b: 4,
         c: {
           c: {
-            a: 1
+            a: 1,
           },
-          d: [1, 2, 3]
+          d: [1, 2, 3],
         },
-        d: [4, 5]
+        d: [4, 5],
       };
 
       it('should deep merge source into target', () => {
@@ -45,11 +45,11 @@ describe('utils', () => {
             a: 4,
             b: 1,
             c: {
-              a: 1
+              a: 1,
             },
-            d: [1, 2, 3]
+            d: [1, 2, 3],
           },
-          d: [1, 2, 3, 4, 5]
+          d: [1, 2, 3, 4, 5],
         });
       });
     });

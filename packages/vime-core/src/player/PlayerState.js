@@ -1,5 +1,5 @@
 // Treeshaking safe.
-const PlayerState = function () {};
+const PlayerState = function PlayerState() {};
 PlayerState.IDLE = 1;
 PlayerState.CUED = 2;
 PlayerState.PLAYING = 3;

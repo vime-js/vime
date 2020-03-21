@@ -1,5 +1,5 @@
 // Treeshaking safe.
-const PluginRole = function () {};
+const PluginRole = function PluginRole() {};
 PluginRole.POSTER = 1;
 PluginRole.CONTROLS = 2;
 PluginRole.CAPTIONS = 3;

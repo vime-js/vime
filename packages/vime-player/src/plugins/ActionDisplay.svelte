@@ -46,7 +46,7 @@
 
   const {
     isMobile, isControlsEnabled, playbackReady,
-    isVideoView, useNativeControls
+    isVideoView, useNativeControls,
   } = player.getStore();
 
   const plugins = player.getPluginsRegistry();
@@ -69,11 +69,14 @@
   export let autopilot = true;
   export let isEnabled = false;
 
-  $: if (autopilot) isEnabled = $isControlsEnabled &&
-    $playbackReady &&
-    $isVideoView &&
-    !$isMobile &&
-    ((controlsPlugin && !controlsPlugin.hasCenterControls()) ||  !controlsPlugin);
+  $: if (autopilot) {
+    isEnabled = $isControlsEnabled
+      && $playbackReady
+      && $isVideoView
+      && !$isMobile
+      && !$useNativeControls
+      && ((controlsPlugin && !controlsPlugin.hasCenterControls()) || !controlsPlugin);
+  }
 
   export const run = async (i, v = null) => {
     icon = i;

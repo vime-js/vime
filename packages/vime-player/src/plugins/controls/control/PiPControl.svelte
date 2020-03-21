@@ -28,7 +28,9 @@
 
   export let player;
 
-  const { icons, i18n, isPiPActive, canSetPiP } = player.getStore();
+  const {
+    icons, i18n, isPiPActive, canSetPiP,
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -38,7 +40,7 @@
 
   export const getToggle = () => toggle;
 
-  const onToggle = () => !$isPiPActive
-    ? player.requestPiP().catch(noop)
-    : player.exitPiP().catch(noop);
+  const onToggle = () => {
+    !$isPiPActive ? player.requestPiP().catch(noop) : player.exitPiP().catch(noop);
+  };
 </script>

@@ -17,16 +17,16 @@
 </script>
 
 <script>
-  import { writable } from 'svelte/store';
-
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
   export let player;
 
-  const logger = player.createLogger(ID);
-  const { title, currentPoster, playbackStarted, useNativeControls } = player.getStore();
+  const {
+    title, currentPoster, playbackStarted,
+    useNativeControls,
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props

@@ -1,7 +1,7 @@
 // @see https://github.com/videojs/video.js/blob/7.6.x/src/js/fullscreen-api.js
 
 const FullscreenApi = {
-  prefixed: true
+  prefixed: true,
 };
 
 const apiMap = [
@@ -12,7 +12,7 @@ const apiMap = [
     'fullscreenEnabled',
     'fullscreenchange',
     'fullscreenerror',
-    'fullscreen'
+    'fullscreen',
   ],
   // WebKit
   [
@@ -22,7 +22,7 @@ const apiMap = [
     'webkitFullscreenEnabled',
     'webkitfullscreenchange',
     'webkitfullscreenerror',
-    '-webkit-full-screen'
+    '-webkit-full-screen',
   ],
   // Mozilla
   [
@@ -32,7 +32,7 @@ const apiMap = [
     'mozFullScreenEnabled',
     'mozfullscreenchange',
     'mozfullscreenerror',
-    '-moz-full-screen'
+    '-moz-full-screen',
   ],
   // Microsoft
   [
@@ -42,15 +42,15 @@ const apiMap = [
     'msFullscreenEnabled',
     'MSFullscreenChange',
     'MSFullscreenError',
-    '-ms-fullscreen'
-  ]
+    '-ms-fullscreen',
+  ],
 ];
 
 const specApi = apiMap[0];
 let browserApi;
 
 // Determine the supported set of functions.
-for (let i = 0; i < apiMap.length; i++) {
+for (let i = 0; i < apiMap.length; i += 1) {
   // Check for exitFullscreen function.
   if (apiMap[i][1] in document) {
     browserApi = apiMap[i];
@@ -60,7 +60,7 @@ for (let i = 0; i < apiMap.length; i++) {
 
 // Map the browser API names to the spec API names.
 if (browserApi) {
-  for (let i = 0; i < browserApi.length; i++) {
+  for (let i = 0; i < browserApi.length; i += 1) {
     FullscreenApi[specApi[i]] = browserApi[i];
   }
 

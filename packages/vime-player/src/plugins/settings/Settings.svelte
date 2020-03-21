@@ -40,8 +40,8 @@
         emptyHint={item.emptyHint}
         isHidden={currentMenuItemId !== null && currentMenuItemId !== id}
         isDisabled={item.isDisabled}
-        on:valuechange="{e => item.onValueChange(e.detail)}"
-        on:menuchange="{e => onMenuItemChange(id, e.detail)}"
+        on:valuechange="{(e) => item.onValueChange(e.detail)}"
+        on:menuchange="{(e) => onMenuItemChange(id, e.detail)}"
         bind:this={instances[id]}
       />
     {/each}
@@ -59,11 +59,10 @@
 
 <script>
   import { writable } from 'svelte/store';
+  import { map_store_to_component } from '@vime-js/utils';
   import Menu from './menu/Menu.svelte';
   import MenuItem from './menu/MenuItem.svelte';
-  import MenuItemRadio from './menu/MenuItemRadio.svelte';
   import Control from '../controls/Control.svelte';
-  import { map_store_to_component } from '@vime-js/utils';
 
   // eslint-disable-next-line prefer-const
   menuIdCounter += 1;
@@ -77,12 +76,11 @@
   export let player;
 
   const registry = player.createRegistry(ID);
-  const logger = player.createLogger(ID);
-  const { i18n, isMobile, isVideoView, } = player.getStore();
+  const { i18n, isMobile, isVideoView } = player.getStore();
 
   const store = {
     menuItems: writable({}),
-    isMenuActive: writable(false)
+    isMenuActive: writable(false),
   };
 
   const onPropsChange = map_store_to_component(null, store);
@@ -116,8 +114,8 @@
   $: isModalHeaderHidden = !$isMobile || !$isVideoView || (currentMenuItemId !== null);
 
   $: Object.keys($menuItems)
-    .filter(id => !registry.has(id) && instances[id])
-    .forEach(id => registry.register(id, instances[id]));
+    .filter((id) => !registry.has(id) && instances[id])
+    .forEach((id) => registry.register(id, instances[id]));
 </script>
 
 <style type="text/scss">

@@ -8,10 +8,10 @@ export let error = noop;
 
 if (
   // eslint-disable-next-line no-undef
-  process.env.NODE_ENV === 'development' &&
-  window.console !== undefined
+  process.env.NODE_ENV === 'development'
+  && window.console !== undefined
 ) {
-  log = function () { console.log('[Vime]', ...arguments); };
-  warn = function () { console.warn('[Vime warn]', ...arguments); };
-  error = function () { console.error('[Vime error]', ...arguments); };
+  log = function vimeLog(...args) { console.log('[Vime]', ...args); };
+  warn = function vimeWarn(...args) { console.warn('[Vime warn]', ...args); };
+  error = function vimeError(...args) { console.error('[Vime error]', ...args); };
 }

@@ -12,8 +12,8 @@
   on:click
   on:keydown
   on:focuschange
-  on:focuschange="{e => { isFocused = e.detail; }}"
-  on:highlightchange="{e => { showHighlight = e.detail; }}"
+  on:focuschange="{(e) => { isFocused = e.detail; }}"
+  on:highlightchange="{(e) => { showHighlight = e.detail; }}"
   aria-label={$$props['aria-label']}
   aria-pressed={$$props['aria-pressed']}
   aria-haspopup={$$props['aria-haspopup']}
@@ -56,11 +56,7 @@
   export let player;
 
   const plugins = player.getPluginsRegistry();
-
-  const {
-    isVideoView, isLive, isTouch,
-    isMobile
-  } = player.getStore();
+  const { isVideoView, isLive, isTouch } = player.getStore();
   
   // --------------------------------------------------------------
   // Props
@@ -76,13 +72,14 @@
   export let large = false;
 
   export const getEl = () => el;
-  export const getTooltip = () => tooltip;
 
   // --------------------------------------------------------------
   // Tooltips Plugin
   // --------------------------------------------------------------
   
   let tooltip;
+
+  export const getTooltip = () => tooltip;
 
   $: tooltipsPlugin = $plugins[TooltipsID];
   $: Tooltip = tooltipsPlugin && tooltipsPlugin.getTooltipComponent();
