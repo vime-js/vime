@@ -489,9 +489,14 @@
 
   onMount(() => {
     if (!FULLSCREEN_DOC_SUPPORT) return;
+    // We have to listen to this on webkit, because when the video element enters
+    // or exits fullscreen by the Html5 fullscreen video control, calling
+    // requestFullscreen from the video element directly, or inside an iframe, then no
+    // `fullscreenchange` event is fired.
+    const useWebkit = document.webkitExitFullscreen;
     onDocFullscreenChangeListener = listen(
       document,
-      FullscreenApi.fullscreenchange,
+      useWebkit ? 'webkitfullscreenchange' : FullscreenApi.fullscreenchange,
       onDocumentFullscreenChange,
     );
   });
