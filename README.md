@@ -182,7 +182,7 @@ like and receive updates in realtime.
 * **I18n.** Internationalization is built right in. Easy to add, extend and change as needed. English
 is provided out of the box and more languages to come.
 
-* **Portable.** Since Svlete compiles down to Vanilla JS, you can use it anywhere you like. For an 
+* **Portable.** Since Svelte compiles down to Vanilla JS, you can use it anywhere you like. For an 
 even better experience we'll be building framework intergations starting with React and Vue.
 
 * **Lazy loading.** All players are loaded lazily as soon as they are almost in view.
