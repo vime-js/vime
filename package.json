@@ -16,6 +16,7 @@
     "build:all": "yarn clean:build && yarn build && yarn build:dev",
     "clean:node": "rimraf node_modules packages/*/node_modules",
     "clean:build": "rimraf packages/*/dist",
+    "serve": "yarn workspace @vime-js/docs serve",
     "lint:js": "eslint packages --fix --ext .js,.svelte",
     "script:size": "node scripts/package-sizes.js",
     "test": "jest packages/*/src/",
