@@ -40,7 +40,9 @@
   export let player;
 
   const pluginsRegistry = player.getPluginsRegistry();
-  const { i18n, icons, isLive, plugins } = player.getStore();
+  const {
+    i18n, icons, isLive, plugins,
+} = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -56,7 +58,7 @@
 
   export const getControl = () => control;
   
-  $: hasSettingsPlugin = $plugins.some(p => p.ROLE === PluginRole.SETTINGS);
+  $: hasSettingsPlugin = $plugins.some((p) => p.ROLE === PluginRole.SETTINGS);
   $: isEnabled = hasSettingsPlugin && !$isLive;
 
   // --------------------------------------------------------------
@@ -66,14 +68,14 @@
   let onToggle;
   let isSettingsActive;
 
-  const _onToggle = e => {
+  const onToggleHandler = (e) => {
     e.stopPropagation();
     $isSettingsActive = !$isSettingsActive;
   };
 
-  const onWindowKeyDown = async e => {
+  const onWindowKeyDown = async (e) => {
     if (e.keyCode !== 13 || !settingsPlugin) return;
-    _onToggle();
+    onToggleHandler();
     // Wait for dom updates so menu is ready.
     await tick();
     settingsPlugin.getMenu().setFocusToItem(0);
@@ -85,10 +87,10 @@
     ({ isMenuActive: isSettingsActive } = settingsPlugin.getStore());
   }
 
-  $: onToggle = (hasSettingsPlugin && settingsPlugin) ? _onToggle : null;
+  $: isActive = !!$isSettingsActive;
   $: id = settingsPlugin ? settingsPlugin.getLabelledBy() : null;
   $: menuId = settingsPlugin ? settingsPlugin.getId() : null;
-  $: isActive = !!$isSettingsActive;
+  $: onToggle = (hasSettingsPlugin && settingsPlugin) ? onToggleHandler : null;
 </script>
 
 <style type="text/scss">

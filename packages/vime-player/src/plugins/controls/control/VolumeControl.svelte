@@ -34,7 +34,6 @@
 </script>
 
 <script>
-  import { tick, onDestroy } from 'svelte';
   import { focus } from '@vime-js/core';
   import MuteControl from './MuteControl.svelte';
 
@@ -44,7 +43,9 @@
 
   export let player;
 
-  const { i18n, volume, muted, isMobile } = player.getStore();
+  const {
+    i18n, volume, muted, isMobile,
+} = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -74,8 +75,8 @@
   // Events
   // --------------------------------------------------------------
 
-  const onVolumeChange = e => { $volume = window.parseInt(e.target.value); };
-  const onFocus = e => { isFocused = e.detail; };
+  const onVolumeChange = (e) => { $volume = window.parseInt(e.target.value); };
+  const onFocus = (e) => { isFocused = e.detail; };
 </script>
 
 <style type="text/scss">

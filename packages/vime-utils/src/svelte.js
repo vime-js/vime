@@ -1,13 +1,13 @@
-import { noop, run_all, SvelteComponent } from 'svelte/internal';
+import { noop, SvelteComponent } from 'svelte/internal';
 import { createEventDispatcher, onDestroy } from 'svelte';
 import { is_instance_of } from './unit';
 
-export const is_svelte_component = input => Boolean(
-  input && is_instance_of(input.prototype, SvelteComponent)
+export const is_svelte_component = (input) => Boolean(
+  input && is_instance_of(input.prototype, SvelteComponent),
 );
 
-export const is_svelte_instance = input => Boolean(
-  input && is_svelte_component(input.constructor)
+export const is_svelte_instance = (input) => Boolean(
+  input && is_svelte_component(input.constructor),
 );
 
 export const try_create_svelte_dispatcher = () => {
@@ -18,7 +18,7 @@ export const try_create_svelte_dispatcher = () => {
   }
 };
 
-export const try_on_svelte_destroy = cb => {
+export const try_on_svelte_destroy = (cb) => {
   try {
     onDestroy(cb);
   } catch (e) {
@@ -28,12 +28,14 @@ export const try_on_svelte_destroy = cb => {
 
 export const on_svelte_instance_update = (instance, cb) => {
   if (!is_svelte_instance(instance)) return;
+  // eslint-disable-next-line no-param-reassign
   if (!instance.$$.after_update) instance.$$.after_update = [];
   instance.$$.after_update.push(cb);
 };
 
 export const on_svelte_instance_destroy = (instance, cb) => {
   if (!is_svelte_instance(instance)) return;
+  // eslint-disable-next-line no-param-reassign
   if (!instance.$$.on_destroy) instance.$$.on_destroy = [];
   instance.$$.on_destroy.push(cb);
 };

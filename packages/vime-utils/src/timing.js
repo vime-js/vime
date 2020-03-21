@@ -1,11 +1,10 @@
 export const debounce = (func, wait, immediate) => {
   let timeout;
 
-  return function executedFunction() {
+  return function executedFunction(...args) {
     const context = this;
-    const args = arguments;
 
-    const later = function() {
+    const later = function delayedFunctionCall() {
       timeout = null;
       if (!immediate) func.apply(context, args);
     };

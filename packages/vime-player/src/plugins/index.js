@@ -25,5 +25,6 @@ export { Boot };
 export { Tooltips };
 export { Settings };
 export { DefaultSettings };
+export { DefaultKeyboard };
 export { DblClickFullscreen };
 export * from './controls';

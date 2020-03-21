@@ -1,5 +1,5 @@
 // Treeshaking safe.
-const VideoQuality = function () {};
+const VideoQuality = function VideoQuality() {};
 VideoQuality.UNKNOWN = null;
 VideoQuality.XXS = 144;
 VideoQuality.XS = 240;

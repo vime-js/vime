@@ -29,7 +29,7 @@
     GET_CURRENT_TIME: 'getCurrentTime',
     GET_TEXT_TRACKS: 'getTextTracks',
     ENABLE_TEXT_TRACK: 'enableTextTrack',
-    DISABLE_TEXT_TRACK: 'disableTextTrack'
+    DISABLE_TEXT_TRACK: 'disableTextTrack',
   };
 
   // Some reason event names are different when calling `addEventListener` vs the event name
@@ -51,7 +51,7 @@
     DURATION_CHANGE: 'durationchange',
     PLAYBACK_RATE_CHANGE: 'playbackratechange',
     TEXT_TRACK_CHANGE: 'texttrackchange',
-    ERROR: 'error'
+    ERROR: 'error',
   };
 
   // @see https://developer.vimeo.com/player/sdk/reference#events-for-playback-controls
@@ -73,17 +73,16 @@
     VM.Event.BUFFER_END,
     VM.Event.TEXT_TRACK_CHANGE,
     'waiting',
-    'ended'
+    'ended',
   ];
 
-  export const canPlay = src => can_play(src);
+  export const canPlay = (src) => can_play(src);
 </script>
 
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
   import { raf } from 'svelte/internal';
   import { PlayerState, MediaType } from '@vime-js/core';
-  import { is_array } from '@vime-js/utils';
   import VimeoEmbed from './VimeoEmbed.svelte';
   import { get_src_id, get_poster } from './utils';
 
@@ -91,14 +90,13 @@
   let info = {};
   let tracks = [];
   let srcId = null;
-  let currentSrc = null;
   let seeking = false;
   let playbackReady = false;
   let internalTime = 0;
 
   const params = {
     // Controlled by Vime.
-    autopause: false
+    autopause: false,
   };
 
   const dispatch = createEventDispatcher();
@@ -109,33 +107,35 @@
   export const getEmbed = () => embed;
   export const getEl = () => embed.getIframe();
 
-  export const setPaused = paused => { paused ? send(VM.Command.PAUSE) : send(VM.Command.PLAY); };
-  export const setMuted = muted => { send(VM.Command.SET_MUTED, muted); };
-  export const setVolume = volume => { send(VM.Command.SET_VOLUME, volume / 100); };
-  export const setCurrentTime = time => { send(VM.Command.SET_CURRENT_TIME, time); };
-  export const setPlaysinline = enabled => { params.playsinline = enabled; };
-  export const setControls = enabled => { params.controls = enabled; };
-  export const setPlaybackRate = rate => { send(VM.Command.SET_PLAYBACK_RATE, rate); };
+  export const setMuted = (isMuted) => { send(VM.Command.SET_MUTED, isMuted); };
+  export const setVolume = (newVolume) => { send(VM.Command.SET_VOLUME, newVolume / 100); };
+  export const setCurrentTime = (newTime) => { send(VM.Command.SET_CURRENT_TIME, newTime); };
+  export const setPlaysinline = (isEnabled) => { params.playsinline = isEnabled; };
+  export const setControls = (isEnabled) => { params.controls = isEnabled; };
+  export const setPlaybackRate = (newRate) => { send(VM.Command.SET_PLAYBACK_RATE, newRate); };
+
+  export const setPaused = (isPaused) => {
+    isPaused ? send(VM.Command.PAUSE) : send(VM.Command.PLAY);
+  };
 
   export const supportsPiP = () => false;
   export const supportsFullscreen = () => true;
 
-  export const setTrack = index => {
-    if (index === -1) {
+  export const setTrack = (newIndex) => {
+    if (newIndex === -1) {
       send(VM.Command.DISABLE_TEXT_TRACK);
       return;
     }
-    const { language, kind } = tracks[index];
+    const { language, kind } = tracks[newIndex];
     send(VM.Command.ENABLE_TEXT_TRACK, { language, kind });
   };
 
   onMount(() => { info.origin = embed.getOrigin(); });
   onMount(() => { info.mediaType = MediaType.VIDEO; });
   const onRebuildStart = () => { info.rebuild = true; };
-  const onTitleChange = e => { info.title = e.detail; };
+  const onTitleChange = (e) => { info.title = e.detail; };
   
-  const onCurrentSrcChange = e => {
-    currentSrc = e.detail;
+  const onCurrentSrcChange = (e) => {
     info.srcId = srcId;
     info.currentSrc = e.detail;
   };
@@ -147,7 +147,7 @@
     tracks = [];
   };
 
-  const onTimeUpdate = time => {
+  const onTimeUpdate = (time) => {
     info.currentTime = time;
     if (Math.abs(internalTime - time) > 1) {
       seeking = true;
@@ -171,16 +171,18 @@
         break;
       case VM.Command.GET_TEXT_TRACKS:
         tracks = value || [];
-        info.tracks = tracks.map(track => ({ ...track, srclang: track.language }));
-        info.currentTrackIndex = tracks.findIndex(t => t.mode === 'showing');
+        info.tracks = tracks.map((track) => ({ ...track, srclang: track.language }));
+        info.currentTrackIndex = tracks.findIndex((t) => t.mode === 'showing');
         break;
       case VM.Command.GET_DURATION:
         info.duration = parseFloat(value);
         break;
+      default:
+        break;
     }
   };
 
-  const onData = e => {
+  const onData = (e) => {
     const data = e.detail;
     if (!data) return;
     const { event, data: payload } = data;
@@ -188,7 +190,7 @@
     if (!event) return;
     switch (event) {
       case VM.Event.READY:
-        VM.EVENTS.forEach(event => send(VM.Command.ADD_EVENT_LISTENER, event));
+        VM.EVENTS.forEach((vmEvent) => send(VM.Command.ADD_EVENT_LISTENER, vmEvent));
         break;
       case VM.Event.LOADED:
         info.state = PlayerState.CUED;
@@ -212,7 +214,7 @@
         info.seeking = true;
         break;
       case VM.Event.TEXT_TRACK_CHANGE:
-        info.currentTrackIndex = tracks.findIndex(t => t.label === payload.label);
+        info.currentTrackIndex = tracks.findIndex((t) => t.label === payload.label);
         break;
       case VM.Event.SEEKED:
         seeking = false;
@@ -236,11 +238,13 @@
       case VM.Event.ERROR:
         dispatch('error', payload);
         break;
+      default:
+        break;
     }
   };
 
   $: srcId = get_src_id(src);
-  $: get_poster(src).then(poster => { info.poster = poster; }).catch(e => dispatch('error', e));
+  $: get_poster(src).then((poster) => { info.poster = poster; }).catch((e) => dispatch('error', e));
   $: (!seeking && playbackReady) ? getTimeUpdates() : cancelTimeUpdates();
 
   $: {

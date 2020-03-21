@@ -22,7 +22,7 @@
 
   const PRECONNECTIONS = [
     ORIGIN,
-    'https://static1.dmcdn.net'
+    'https://static1.dmcdn.net',
   ];
 
   const DM = {};
@@ -30,14 +30,14 @@
   DM.Event = {
     PLAYBACK_READY: 'playback_ready',
     VIDEO_CHANGE: 'videochange',
-    ERROR: 'error'
+    ERROR: 'error',
   };
 
   const Event = {
     READY: 'ready',
     SRC_CHANGE: 'srcchange',
     TITLE_CHANGE: 'titlechange',
-    ERROR: 'error'
+    ERROR: 'error',
   };
 </script>
 
@@ -72,7 +72,7 @@
       }
       embed.postMessage({
         command,
-        parameters: args || []
+        parameters: args || [],
       });
     } catch (e) { /** noop */ }
   };
@@ -92,9 +92,9 @@
 
   const onSrcChange = () => { videoTitle = ''; };
 
-  const _onData = e => {
+  const onDataHandler = (e) => {
     const data = e.detail;
-    const event = data.event;
+    const { event } = data;
     if (event === DM.Event.VIDEO_CHANGE) videoTitle = data.title;
     if (event === DM.Event.PLAYBACK_READY) {
       ready.resolve();
@@ -111,7 +111,7 @@
   $: src = buildSrc(srcId);
   $: title = `Dailymotion - ${videoTitle || 'Video Player'}`;
   $: onSrcChange(src);
-  $: onData = !initialized ? _onData : null;
+  $: onData = !initialized ? onDataHandler : null;
 
   let mounted = false;
   onMount(() => { mounted = true; });

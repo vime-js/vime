@@ -9,7 +9,6 @@
   import * as PlaybackControl from './control/PlaybackControl.svelte';
   import * as BigPlaybackControl from './control/BigPlaybackControl.svelte';
   import * as CaptionControl from './control/CaptionControl.svelte';
-  import * as MuteControl from './control/MuteControl.svelte';
   import * as PiPControl from './control/PiPControl.svelte';
   import * as FullscreenControl from './control/FullscreenControl.svelte';
   import * as VolumeControl from './control/VolumeControl.svelte';
@@ -20,7 +19,6 @@
   import * as ControlNewLine from './control/ControlNewLine.svelte';
   import * as CurrentTime from './control/time/CurrentTime.svelte';
   import * as DurationTime from './control/time/DurationTime.svelte';
-  import * as TimeDivider from './control/time/TimeDivider.svelte';
   import * as TimeProgress from './control/time/TimeProgress.svelte';
 
   export let player;
@@ -29,7 +27,6 @@
 
   const {
     isLive, isVideoView, isMobile,
-    playbackStarted
   } = player.getStore();
 
   const onSetupAudioControls = () => {
@@ -37,10 +34,10 @@
     controlsPlugin.center = [];
     controlsPlugin.lower = !$isLive ? [
       PlaybackControl, VolumeControl, CurrentTime,
-      ScrubberControl, DurationTime, SettingsControl
-    ]: [
+      ScrubberControl, DurationTime, SettingsControl,
+    ] : [
       PlaybackControl, VolumeControl, CurrentTime,
-      ControlSpacer, LiveIndicator
+      ControlSpacer, LiveIndicator,
     ];
   };
 
@@ -51,10 +48,10 @@
       ScrubberControl, ControlNewLine, PlaybackControl,
       VolumeControl, TimeProgress, ControlSpacer,
       CaptionControl, PiPControl, SettingsControl,
-      FullscreenControl
+      FullscreenControl,
     ] : [
       PlaybackControl, VolumeControl, ControlSpacer,
-      LiveIndicator, PiPControl, FullscreenControl
+      LiveIndicator, PiPControl, FullscreenControl,
     ];
   };
 
@@ -64,7 +61,7 @@
       controlsPlugin.center = [BigPlaybackControl];
       controlsPlugin.lower = [
         CurrentTime, ControlSpacer, DurationTime,
-        FullscreenControl, ControlNewLine, ScrubberControl
+        FullscreenControl, ControlNewLine, ScrubberControl,
       ];
     } else {
       controlsPlugin.upper = [ControlSpacer, VolumeControl, FullscreenControl];

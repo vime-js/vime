@@ -29,7 +29,7 @@
 
   const {
     icons, i18n, isCaptionsActive,
-    canSetTracks, currentTrackIndex
+    canSetTracks, currentTrackIndex,
   } = player.getStore();
 
   // --------------------------------------------------------------

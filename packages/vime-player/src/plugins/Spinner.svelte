@@ -25,7 +25,7 @@
   const plugins = player.getPluginsRegistry();
 
   const {
-    buffering, isVideoView, useNativeControls
+    buffering, isVideoView, useNativeControls,
   } = player.getStore();
 
   // --------------------------------------------------------------

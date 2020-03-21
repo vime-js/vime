@@ -29,7 +29,6 @@
   export let manifest = {};
 
   const pluginsManager = player.getPluginsManager();
-  const plugins = player.getPluginsRegistry();
 
   const PLUGINS = [
     Icons,
@@ -46,17 +45,17 @@
     Tooltips,
     Settings,
     DefaultSettings,
-    DblClickFullscreen
+    DblClickFullscreen,
   ];
 
-  const isPluginEnabled = Plugin => {
+  const isPluginEnabled = (Plugin) => {
     const id = Plugin.ID.slice(1);
     const manifestId = id.charAt(0).toLowerCase() + id.slice(1);
     if (is_undefined(manifest[manifestId])) manifest[manifestId] = true;
     return manifest[manifestId];
   };
 
-  const isPluginDisabled = Plugin => !isPluginEnabled(Plugin);
+  const isPluginDisabled = (Plugin) => !isPluginEnabled(Plugin);
 
   $: if (manifest) pluginsManager.addPlugins(PLUGINS.filter(isPluginEnabled));
   $: if (manifest) pluginsManager.removePlugins(PLUGINS.filter(isPluginDisabled));

@@ -33,7 +33,7 @@
 </script>
 
 <script>
-  import { tick, onMount, createEventDispatcher } from 'svelte';
+  import { tick, createEventDispatcher } from 'svelte';
   import { aspectRatio as setAspectRatio, Lazy } from '@vime-js/core';
   import { is_function } from '@vime-js/utils';
   import { utils as Dailymotion } from '@vime-js/dailymotion';
@@ -45,7 +45,7 @@
 
   const Event = {
     POSTER_CHANGE: 'posterchange',
-    LOADING: 'loading'
+    LOADING: 'loading',
   };
 
   // TODO: questionable...
@@ -68,7 +68,7 @@
 
   export const getNativePoster = () => nativePoster;
 
-  const _getNativePoster = async () => {
+  const fetchNativePoster = async () => {
     nativePoster = cache[src] || await Provider.getPoster(src);
     if (!cache[src]) cache[src] = nativePoster;
     isLoading = true;
@@ -87,9 +87,9 @@
 
   $: onPosterChange(poster);
   
-  $: Provider = providers.find(p => p.canPlay(src));
+  $: Provider = providers.find((p) => p.canPlay(src));
   $: if (!Provider || poster) nativePoster = null;
-  $: if (!poster && src && Provider && is_function(Provider.getPoster)) _getNativePoster();
+  $: if (!poster && src && Provider && is_function(Provider.getPoster)) fetchNativePoster();
 
   $: tick().then(() => dispatch(Event.LOADING, isLoading));
   $: tick().then(() => dispatch(Event.POSTER_CHANGE, poster || nativePoster));

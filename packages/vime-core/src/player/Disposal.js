@@ -1,17 +1,19 @@
+/* eslint-disable no-underscore-dangle */
+
 import { run_all } from 'svelte/internal';
 import { try_on_svelte_destroy } from '@vime-js/utils';
 
 export default class Disposal {
-  constructor () {
+  constructor() {
     this._dispose = [];
     try_on_svelte_destroy(() => this.dispose());
   }
 
-  add (cb) {
+  add(cb) {
     this._dispose.push(cb);
   }
 
-  dispose () {
+  dispose() {
     run_all(this._dispose);
     this._dispose = [];
   }

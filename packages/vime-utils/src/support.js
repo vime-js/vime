@@ -18,8 +18,8 @@ export const ORIGIN = (window.location.protocol !== 'file:')
   ? `${window.location.protocol}//${window.location.hostname}`
   : null;
 
-export const listen_for_touch_input = cb => {
-  if (!IS_CLIENT) return;
+export const listen_for_touch_input = (cb) => {
+  if (!IS_CLIENT) return noop;
 
   let lastTouchTime = 0;
 
@@ -48,9 +48,9 @@ export const can_fullscreen_video = () => {
 
 // Reduced motion iOS & MacOS setting
 // @see https://webkit.org/blog/7551/responsive-design-for-motion/
-export const is_reduced_motion_preferred = () => IS_CLIENT &&
-  'matchMedia' in window &&
-  window.matchMedia('(prefers-reduced-motion)').matches;
+export const is_reduced_motion_preferred = () => IS_CLIENT
+  && 'matchMedia' in window
+  && window.matchMedia('(prefers-reduced-motion)').matches;
 
 export const can_play_hls_natively = () => {
   if (!IS_CLIENT) return false;
@@ -72,9 +72,9 @@ export const can_use_pip_in_chrome = () => {
 export const can_use_pip_in_safari = () => {
   if (!IS_CLIENT) return false;
   const video = element('video');
-  return is_function(video.webkitSupportsPresentationMode) &&
-    is_function(video.webkitSetPresentationMode) &&
-    !IS_IPHONE;
+  return is_function(video.webkitSupportsPresentationMode)
+    && is_function(video.webkitSetPresentationMode)
+    && !IS_IPHONE;
 };
 
 export const can_use_pip = () => can_use_pip_in_chrome() || can_use_pip_in_safari();
@@ -114,7 +114,7 @@ export const can_autoplay = (muted = true, playsinline = true) => {
 
   // Promise wrapped this way to catch both sync throws and async rejections.
   // More info: https://github.com/tc39/proposal-promise-try
-  new Promise(resolve => resolve(video.play())).catch(noop);
+  new Promise((resolve) => resolve(video.play())).catch(noop);
 
   return Promise.resolve(!video.paused);
 };

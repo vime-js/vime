@@ -3,7 +3,7 @@
 <PlayerWrapper
   hasParent={!!parentEl}
   aspectRatio={($isVideoView && !$isFullscreenActive) ? $aspectRatio : null}
-  on:mount="{e => { playerWrapper = e.detail; }}"
+  on:mount="{(e) => { playerWrapper = e.detail; }}"
 >
   <svelte:component
     {...props}
@@ -16,7 +16,6 @@
 </PlayerWrapper>
 
 <script>
-  import { tick, onMount, onDestroy, afterUpdate } from 'svelte';
   import { get } from 'svelte/store';
   import { noop, listen, get_current_component } from 'svelte/internal';
   import { currentPlayer } from './sharedStore';
@@ -24,11 +23,15 @@
   import MediaType from './MediaType';
   import PlayerState from './PlayerState';
   import PlayerWrapper from './PlayerWrapper.svelte';
-  
+
   import {
-    is_array, is_function, is_number,
-    is_boolean, map_store_to_component, deferred,
-    is_null
+    tick, onMount, onDestroy,
+    afterUpdate,
+  } from 'svelte';
+
+  import {
+    is_function, is_number, is_boolean,
+    is_null,
   } from '@vime-js/utils';
 
   let self = get_current_component();
@@ -48,13 +51,13 @@
     currentTrackIndex, provider, rebuilding,
     isVideoReady, canInteract, isFullscreenActive,
     useNativeView, useNativeControls, useNativeCaptions,
-    duration
+    duration,
   } = store;
 
   const {
     canSetPiP, canSetTracks, canSetTrack,
     canAutoplay, canMutedAutoplay, canSetPoster,
-    canSetPlaybackRate, canSetVideoQuality
+    canSetPlaybackRate, canSetVideoQuality,
   } = store;
 
   let props = {};
@@ -69,8 +72,8 @@
   // Filter out any player props before passing them to the provider.
   $: Object
     .keys($$props)
-    .filter(prop => !store[prop] && !filteredProps.includes(prop))
-    .forEach(prop => (props[prop] = $$props[prop]));
+    .filter((prop) => !store[prop] && !filteredProps.includes(prop))
+    .forEach((prop) => { (props[prop] = $$props[prop]); });
 
   onDestroy(() => {
     props = {};
@@ -97,7 +100,7 @@
   let updatingVolume = false;
   let updatingTime = false;
 
-  const cancelTempAction = async cb => {
+  const cancelTempAction = async (cb) => {
     // Give some time for the provider to be set to it's original value before we receive
     // event updates.
     await tick();
@@ -113,7 +116,16 @@
     $playsinline = true;
   };
 
-  const onTimeUpdate = time => {
+  const onRestart = () => {
+    if (get(store.live) || !$playbackEnded) return;
+    $internalTime = 0;
+    $currentTime = 0;
+    $playbackEnded = false;
+    $provider.setCurrentTime(0);
+    $paused = false;
+  };
+
+  const onTimeUpdate = (time) => {
     if ($seeking || updatingTime || !$canInteract) return;
     $internalTime = time;
     $currentTime = time;
@@ -149,7 +161,12 @@
   };
 
   const onAutoplay = () => {
-    if (!$autoplay || $rebuilding || $currentTime > 0 || (!$canAutoplay || !$canMutedAutoplay)) return;
+    if (
+      !$autoplay
+      || $rebuilding
+      || $currentTime > 0
+      || (!$canAutoplay || !$canMutedAutoplay)
+    ) return;
     $paused = false;
     $playsinline = true;
     if (!$canAutoplay) $muted = true;
@@ -159,6 +176,15 @@
     if (!$playbackReady) return;
     $rebuilding = true;
     $buffering = true;
+  };
+
+  const onRebuildEnd = async () => {
+    if (!$playbackReady || !$rebuilding) return;
+    if ($currentTime > 0) $provider.setCurrentTime($currentTime);
+    await tick();
+    $rebuilding = false;
+    // eslint-disable-next-line no-use-before-define
+    if ($isFullscreenActive) requestFullscreen().catch(noop);
   };
 
   const onRebuild = async () => {
@@ -172,14 +198,6 @@
       return;
     }
     onRebuildEnd();
-  };
-
-  const onRebuildEnd = async () => {
-    if (!$playbackReady || !$rebuilding) return;
-    if ($currentTime > 0) $provider.setCurrentTime($currentTime);
-    await tick();
-    $rebuilding = false;
-    if ($isFullscreenActive) requestFullscreen().catch(noop);
   };
 
   const onPlaybackReady = async () => {
@@ -208,12 +226,12 @@
     }, 100);
   };
 
-  const onVolumeChange = newVolume => {
+  const onVolumeChange = (newVolume) => {
     $volume = newVolume;
     updatingVolume = true;
   };
 
-  const onBuffered = progress => {
+  const onBuffered = (progress) => {
     if (progress) $buffered = progress;
     if ($seeking) checkHasSeeked();
   };
@@ -255,15 +273,6 @@
     onRebuildEnd();
   };
 
-  const onRestart = () => {
-    if (get(store.live) || !$playbackEnded) return;
-    $internalTime = 0;
-    $currentTime = 0;
-    $playbackEnded = false;
-    $provider.setCurrentTime(0);
-    $paused = false;
-  };
-
   const onLoop = async () => {
     if (get(store.live) || !get(store.loop)) return;
     await tick();
@@ -276,7 +285,7 @@
     onLoop();
   };
 
-  const onStateChange = async state => {
+  const onStateChange = async (state) => {
     await tick();
     switch (state) {
       case PlayerState.CUED:
@@ -295,10 +304,13 @@
       case PlayerState.ENDED:
         onPlaybackEnd();
         break;
+      default:
+        break;
     }
   };
 
-  const onUpdate = e => {
+  // TODO: this is basically a crappy reducer.
+  const onUpdate = (e) => {
     const info = e.detail;
     if (info.state) onStateChange(info.state);
     if (info.play && $useNativeControls && !tempPlay) onPlay();
@@ -314,19 +326,22 @@
     if (info.title) store.title.set(info.title);
     if (info.currentSrc) store.currentSrc.set(info.currentSrc);
     if (info.srcId) store.srcId.set(info.srcId);
-    if (is_number(info.volume)) onVolumeChange(parseInt(info.volume));
+    if (is_number(info.volume)) onVolumeChange(parseInt(info.volume, 10));
     if (is_boolean(info.muted) && !tempMute) $muted = info.muted;
     if (info.origin) store.origin.set(info.origin);
-    if (is_null(info.videoQuality) || info.videoQuality) store.videoQuality.forceSet(info.videoQuality);
+    if (is_null(info.videoQuality) || info.videoQuality) {
+      store.videoQuality.forceSet(info.videoQuality);
+    }
     if (info.videoQualities) store.videoQualities.set(info.videoQualities);
     if (info.playbackRate) store.playbackRate.forceSet(info.playbackRate);
     if (info.playbackRates) store.playbackRates.set(info.playbackRates);
-    if (is_boolean(info.fullscreen)) onFullscreenChange(info.fullscreen);
-    if (is_boolean(info.pip)) $isPiPActive = info.pip;
     if ($useNativeCaptions) {
       if (info.tracks) $tracks = info.tracks;
       if (is_number(info.currentTrackIndex)) $currentTrackIndex = info.currentTrackIndex;
     }
+    if (is_boolean(info.pip)) $isPiPActive = info.pip;
+    // eslint-disable-next-line no-use-before-define
+    if (is_boolean(info.fullscreen)) onFullscreenChange(info.fullscreen);
   };
 
   const onSrcChange = () => {
@@ -344,6 +359,7 @@
     onSrcChange();
     store.origin.set(null);
     store.isPiPActive.set(false);
+    // eslint-disable-next-line no-use-before-define
     if ($isFullscreenActive) exitFullscreen().catch(noop);
     if (!Provider) store.mediaType.set(MediaType.NONE);
   };
@@ -357,10 +373,16 @@
 
   $: if ($autoplay && $playbackReady) onAutoplay();
   $: if ($provider && !$rebuilding) $provider.setPlaysinline($playsinline);
-  $: if ($provider && !$rebuilding) $provider.setControls($isControlsEnabled && ($useNativeControls || tempControls));
-  $: if ($provider && !$rebuilding && is_function($provider.setView)) $provider.setView($useNativeView);
   $: if ($canSetPoster && !$rebuilding) $provider.setPoster($poster);
   $: if ($provider && is_function($provider.setAspectRatio)) $provider.setAspectRatio($aspectRatio);
+  
+  $: if ($provider && !$rebuilding && is_function($provider.setView)) {
+    $provider.setView($useNativeView);
+  }
+  
+  $: if ($provider && !$rebuilding) {
+    $provider.setControls($isControlsEnabled && ($useNativeControls || tempControls));
+  }
   
   $: if ($provider && !$paused && $playbackEnded) onRestart();
   $: if ($provider && $playbackReady) $provider.setPaused(($paused || tempPause) && !tempPlay);
@@ -377,7 +399,10 @@
   // --------------------------------------------------------------
 
   $: if ($canSetTracks && $canInteract) $provider.setTracks($useNativeCaptions ? $tracks : []);
-  $: if ($canSetTrack && $canInteract) $provider.setTrack($useNativeCaptions ? $currentTrackIndex : -1);
+  
+  $: if ($canSetTrack && $canInteract) {
+    $provider.setTrack($useNativeCaptions ? $currentTrackIndex : -1);
+  }
 
   // --------------------------------------------------------------
   // Picture in Picture
@@ -386,14 +411,10 @@
   const NO_PIP_SUPPORT_ERROR_MSG = 'Provider does not support PiP.';
   const VIDEO_NOT_READY_ERROR_MSG = 'Action not supported, must be a video that is ready for playback.';
   
-  const pipRequest = active => {
-    if (!$isVideoReady) {
-      return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
-    } else if (!$canSetPiP) {
-      return Promise.reject(NO_PIP_SUPPORT_ERROR_MSG);
-    } else {
-      return Promise.resolve($provider.setPiP(active));
-    }
+  const pipRequest = (active) => {
+    if (!$isVideoReady) { return Promise.reject(VIDEO_NOT_READY_ERROR_MSG); }
+    if (!$canSetPiP) { return Promise.reject(NO_PIP_SUPPORT_ERROR_MSG); }
+    return Promise.resolve($provider.setPiP(active));
   };
 
   export const requestPiP = () => pipRequest(true);
@@ -413,7 +434,7 @@
   const isFullscreen = () => {
     const els = [playerWrapper, parentEl, $provider && $provider.getEl()].filter(Boolean);
     let active = els.includes(document[FullscreenApi.fullscreenElement]);
-    if (!active) active = els.some(el => el.matches && el.matches(':' + FullscreenApi.fullscreen));
+    if (!active) active = els.some((el) => el.matches && el.matches(`:${FullscreenApi.fullscreen}`));
     return active;
   };
 
@@ -422,7 +443,7 @@
     $isFullscreenActive = active;
   };
 
-  const onFullscreenChange = active => {
+  const onFullscreenChange = (active) => {
     $isFullscreenActive = active;
     if (!$isFullscreenActive) tempControls = false;
     tempPause = false;
@@ -434,28 +455,30 @@
     }
   };
 
-  const requestDocumentFullscreen = active => {
+  const requestDocumentFullscreen = (active) => {
     const el = parentEl || playerWrapper;
     if (!el) return Promise.reject();
     if (active === isFullscreen()) return Promise.resolve();
-    const request = active ? el[FullscreenApi.requestFullscreen]() : document[FullscreenApi.exitFullscreen]();
+    const request = active
+      ? el[FullscreenApi.requestFullscreen]()
+      : document[FullscreenApi.exitFullscreen]();
     return Promise.resolve(request);
   };
 
   // TODO: the two providers which can set fullscreen at the moment (Html5/Dailymotion) don't
   // require a rebuild when enabling controls, if at some point a provider does this won't work.
-  const requestProviderFullscreen = active => {
+  const requestProviderFullscreen = (active) => {
     if (active) tempControls = true;
     tempPause = true;
     return Promise.resolve($provider.setFullscreen(active));
   };
 
-  const fullscreenRequest = active => {
+  const fullscreenRequest = (active) => {
     if (!$isVideoReady) {
       return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
-    } else if (FULLSCREEN_DOC_SUPPORT) {
+    } if (FULLSCREEN_DOC_SUPPORT) {
       return requestDocumentFullscreen(active);
-    } else if (canProviderFullscreen) {
+    } if (canProviderFullscreen) {
       return requestProviderFullscreen(active);
     }
     return Promise.reject(FULLSCREEN_NOT_SUPPORTED_ERROR_MSG);
@@ -466,14 +489,23 @@
 
   onMount(() => {
     if (!FULLSCREEN_DOC_SUPPORT) return;
-    onDocFullscreenChangeListener = listen(document, FullscreenApi.fullscreenchange, onDocumentFullscreenChange);
+    onDocFullscreenChangeListener = listen(
+      document,
+      FullscreenApi.fullscreenchange,
+      onDocumentFullscreenChange,
+    );
   });
   
   onDestroy(() => {
-    onDocFullscreenChangeListener && onDocFullscreenChangeListener();
+    if (onDocFullscreenChangeListener) onDocFullscreenChangeListener();
     onDocFullscreenChangeListener = null;
   });
 
-  $: canProviderFullscreen = $provider && $provider.supportsFullscreen() && is_function($provider.setFullscreen);
-  $: store.canSetFullscreen.set($isVideoReady && (FULLSCREEN_DOC_SUPPORT || canProviderFullscreen));
+  $: canProviderFullscreen = $provider
+    && $provider.supportsFullscreen()
+    && is_function($provider.setFullscreen);
+  
+  $: store.canSetFullscreen.set(
+    $isVideoReady && (FULLSCREEN_DOC_SUPPORT || canProviderFullscreen),
+  );
 </script>

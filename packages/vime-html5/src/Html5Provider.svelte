@@ -44,18 +44,18 @@
   Html5.WebkitPresentationMode = {
     PIP: 'picture-in-picture',
     INLINE: 'inline',
-    FULLSCREEN: 'fullscreen'
+    FULLSCREEN: 'fullscreen',
   };
 
   // @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track
   Html5.TextTrack = {
     Mode: {
       SHOWING: 'showing',
-      HIDDEN: 'hidden'
+      HIDDEN: 'hidden',
     },
     Event: {
       CHANGE: 'change',
-    }
+    },
   };
 
   // @see https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
@@ -72,29 +72,28 @@
     VOLUME_CHANGE: 'volumechange',
     WAITING: 'waiting',
     ENDED: 'ended',
-    ERROR: 'error'
+    ERROR: 'error',
   };
 
-  export const canPlay = src => can_play(src);
+  export const canPlay = (src) => can_play(src);
 </script>
 
 <script>
-  import { tick, createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import { run_all, listen, raf, noop } from 'svelte/internal';
+  import { tick, createEventDispatcher, onDestroy } from 'svelte';
+  import { listen, raf, noop } from 'svelte/internal';
+  import { Disposal, PlayerState, MediaType } from '@vime-js/core';
   import Source from './Source.svelte';
   import Tracks from './Tracks.svelte';
-  import { Disposal, PlayerState, MediaType } from '@vime-js/core';
 
   import {
     DROPBOX_ORIGIN, DROPBOX_CONTENT_ORIGIN, is_media_stream,
     is_dropbox_url, is_qualities_set, run_on_every_src,
-    is_audio, is_video
-  } from './utils.js';
+    is_audio, is_video,
+  } from './utils';
   
   import {
-    is_function, can_fullscreen_video, can_use_pip_in_chrome,
-    can_use_pip_in_safari, get_computed_height, is_string,
-    can_use_pip, is_number
+    can_fullscreen_video, can_use_pip_in_chrome, can_use_pip_in_safari,
+    get_computed_height, is_string, can_use_pip, is_number,
   } from '@vime-js/utils';
 
   const disposal = new Disposal();
@@ -122,20 +121,21 @@
   export const getEl = () => media;
   export const getMedia = () => media;
 
-  export const setCurrentTime = time => { media.currentTime = time; };
-  export const setMuted = isMuted => { muted = isMuted; };
-  export const setPaused = paused => { paused ? media.pause() : media.play().catch(noop); };
-  export const setVolume = volume => { media.volume = parseFloat(volume / 100); };
-  export const setPlaybackRate = rate => { media.playbackRate = rate; };
-  export const setControls = enabled => { controls = enabled || null; };
-  export const setPlaysinline = enabled => { playsinline = enabled || null; };
-  export const setAspectRatio = ratio => { aspectRatio = ratio; };
-  export const setVideoQuality = quality => { videoQuality = quality; };
-  export const setView = enabled => { useNativePoster = enabled; };
+  export const setCurrentTime = (newTime) => { media.currentTime = newTime; };
+  export const setMuted = (isMuted) => { muted = isMuted; };
+  export const setPaused = (isPaused) => { isPaused ? media.pause() : media.play().catch(noop); };
+  export const setVolume = (newVolume) => { media.volume = parseFloat(newVolume / 100); };
+  export const setPlaybackRate = (newRate) => { media.playbackRate = newRate; };
+  export const setControls = (isEnabled) => { controls = isEnabled || null; };
+  export const setPlaysinline = (isEnabled) => { playsinline = isEnabled || null; };
+  export const setAspectRatio = (newRatio) => { aspectRatio = newRatio; };
+  export const setVideoQuality = (newVideoQuality) => { videoQuality = newVideoQuality; };
+  export const setView = (isEnabled) => { useNativePoster = isEnabled; };
 
-  export const setPoster = newPoster => {
+  export const setPoster = (newPoster) => {
     if (poster === newPoster || !is_string(newPoster)) return;
     poster = newPoster || null;
+    // eslint-disable-next-line no-use-before-define
     if (poster) rebuild();
   };
 
@@ -145,35 +145,40 @@
 
   const PIP_NOT_SUPPORTED_ERROR_MSG = 'Html5 PiP not supported.';
 
-  const setChromePiP = active => active ? video.requestPictureInPicture() : document.exitPictureInPicture();
+  const setChromePiP = (isActive) => (
+    isActive ? video.requestPictureInPicture() : document.exitPictureInPicture()
+  );
 
-  const setSafariPiP = active => {
-    const mode = active ? Html5.WebkitPresentationMode.PIP : Html5.WebkitPresentationMode.INLINE;
-    if (!video.webkitSupportsPresentationMode(mode)) return Promise.reject(PIP_NOT_SUPPORTED_ERROR_MSG);
+  const setSafariPiP = (isActive) => {
+    const mode = isActive ? Html5.WebkitPresentationMode.PIP : Html5.WebkitPresentationMode.INLINE;
+    if (!video.webkitSupportsPresentationMode(mode)) {
+      return Promise.reject(PIP_NOT_SUPPORTED_ERROR_MSG);
+    }
     return video.webkitSetPresentationMode(mode);
   };
 
-  export const setPiP = active => {
-    if (!supportsPiP()) return Promise.reject(PIP_NOT_SUPPORTED_ERROR_MSG);
-    if (can_use_pip_in_chrome()) {
-      return setChromePiP(active);
-    } else if (can_use_pip_in_safari()) {
-      return setSafariPiP(active);
-    }
-  };
-
   export const supportsPiP = () => can_use_pip();
+
+  export const setPiP = (isActive) => {
+    if (can_use_pip_in_chrome()) {
+      return setChromePiP(isActive);
+    }
+    if (can_use_pip_in_safari()) {
+      return setSafariPiP(isActive);
+    }
+    return Promise.reject(PIP_NOT_SUPPORTED_ERROR_MSG);
+  };
 
   // --------------------------------------------------------------
   // Fullscreen
   // --------------------------------------------------------------
 
   const onFullscreenChange = () => {
-    info.fullscreen = (document.webkitFullscreenElement === video) ||
-      (document.mozFullScreenElement === video);
+    info.fullscreen = (document.webkitFullscreenElement === video)
+    || (document.mozFullScreenElement === video);
   };
 
-  export const setFullscreen = active => {
+  export const setFullscreen = (active) => {
     if (!video.webkitSupportsFullscreen) return Promise.reject();
     return active ? video.webkitEnterFullscreen() : video.webkitExitFullscreen();
   };
@@ -187,26 +192,26 @@
   let tracks = [];
   let currentTrackIndex = -1;
 
-  export const setTracks = newTracks => {
+  export const setTracks = (newTracks) => {
     tracks = newTracks || [];
     currentTrackIndex = -1;
   };
 
-  export const setTrack = index => {
-    const tracks = Array.from(media.textTracks);
+  export const setTrack = (newIndex) => {
+    const mediaTextTracks = Array.from(media.textTracks);
     if (currentTrackIndex !== -1) {
-      tracks[currentTrackIndex].mode = Html5.TextTrack.Mode.HIDDEN;
+      mediaTextTracks[currentTrackIndex].mode = Html5.TextTrack.Mode.HIDDEN;
     }
-    if (tracks.length > 0 && index !== -1) {
-      const track = tracks[index];
+    if (mediaTextTracks.length > 0 && newIndex !== -1) {
+      const track = mediaTextTracks[newIndex];
       track.mode = Html5.TextTrack.Mode.SHOWING;
     }
-    currentTrackIndex = index;
+    currentTrackIndex = newIndex;
   };
 
-  const onTracksChange = e => {
-    const tracks = Array.from(media.textTracks);
-    const index = tracks.findIndex(t => t.mode === Html5.TextTrack.Mode.SHOWING);
+  const onTracksChange = () => {
+    const mediaTextTracks = Array.from(media.textTracks);
+    const index = mediaTextTracks.findIndex((t) => t.mode === Html5.TextTrack.Mode.SHOWING);
     if (currentTrackIndex !== index) info.currentTrackIndex = index;
   };
 
@@ -227,8 +232,8 @@
   const listenToMedia = (event, cb) => disposal.add(listen(media, event, cb));
 
   const onBuffered = () => {
-    const buffered = media.buffered;
-    const duration = media.duration;
+    const { buffered } = media;
+    const { duration } = media;
     const end = (buffered.length === 0) ? 0 : buffered.end(buffered.length - 1);
     info.buffered = (end > duration) ? duration : end;
   };
@@ -239,7 +244,7 @@
       info.playbackRates = Html5.PLAYBACK_RATES;
       info.mediaType = video ? MediaType.VIDEO : MediaType.AUDIO;
       if (srcHasQualities) {
-        info.videoQualities = src.map(s => s.quality);
+        info.videoQualities = src.map((s) => s.quality);
         info.videoQuality = videoQuality;
       }
       onBuffered();
@@ -264,19 +269,19 @@
     });
     listenToMedia(Html5.Event.SEEKED, () => { info.seeked = true; });
     listenToMedia(Html5.Event.VOLUME_CHANGE, () => {
-      info.volume = parseInt(media.volume * 100);
+      info.volume = parseInt(media.volume * 100, 10);
       info.muted = media.muted;
     });
     listenToMedia(Html5.Event.WAITING, () => { info.state = PlayerState.BUFFERING; });
     listenToMedia(Html5.Event.ENDED, () => { info.state = PlayerState.ENDED; });
-    listenToMedia(Html5.Event.ERROR, e => dispatch('error', e));
+    listenToMedia(Html5.Event.ERROR, (e) => dispatch('error', e));
     disposal.add(listen(media.textTracks, Html5.TextTrack.Event.CHANGE, onTracksChange));
   };
 
   const onEnterPiP = () => { info.pip = true; };
   const onExitPiP = () => { info.pip = false; };
 
-  const onPresentationModeChange = e => {
+  const onPresentationModeChange = () => {
     const mode = video.webkitPresentationMode;
     info.pip = (mode === Html5.WebkitPresentationMode.PIP);
     info.fullscreen = (mode === Html5.WebkitPresentationMode.FULLSCREEN);
@@ -304,9 +309,9 @@
   };
 
   const loadNewQuality = async () => {
-    const didChange = currentSrc.some(s => s.quality !== videoQuality);
+    const didChange = currentSrc.some((s) => s.quality !== videoQuality);
     if (!didChange) return;
-    currentSrc = src.filter(s => s.quality === videoQuality);
+    currentSrc = src.filter((s) => s.quality === videoQuality);
     rebuild();
   };
 
@@ -315,10 +320,10 @@
     const videoHeight = get_computed_height(video);
     const [w, h] = aspectRatio.split(':');
     const minQuality = videoHeight * (w / h);
-    const qualities = src.map(s => s.quality);
+    const qualities = src.map((s) => s.quality);
     // @see https://stackoverflow.com/a/35000557
-    const newQuality = qualities.reduce((prev, curr) =>
-      Math.abs(curr - minQuality) < Math.abs(prev - minQuality) ? curr : prev
+    const newQuality = qualities.reduce(
+      (prev, curr) => (Math.abs(curr - minQuality) < Math.abs(prev - minQuality) ? curr : prev),
     );
     videoQuality = newQuality;
   };

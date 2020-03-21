@@ -26,7 +26,9 @@
 
   export let player;
 
-  const { icons, i18n, muted, volume } = player.getStore();
+  const {
+    icons, i18n, muted, volume,
+} = player.getStore();
 
   // --------------------------------------------------------------
   // Props

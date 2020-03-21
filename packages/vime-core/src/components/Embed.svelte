@@ -18,7 +18,7 @@
     SRC_CHANGE: 'srcchange',
     MESSAGE: 'message',
     DATA: 'data',
-    REBUILD: 'rebuild'
+    REBUILD: 'rebuild',
   };
 </script>
 
@@ -40,7 +40,7 @@
   export let params = {};
   export let origin = null;
   export let preconnections = [];
-  export let decoder = d => d;
+  export let decoder = (d) => d;
 
   export const getId = () => id;
   export const getSrc = () => srcWithParams;
@@ -51,12 +51,12 @@
     iframe.contentWindow.postMessage(JSON.stringify(message), target || origin || '*');
   };
 
-  const originMatches = e => {
+  const originMatches = (e) => {
     if (!iframe || e.source !== iframe.contentWindow) return false;
     return (is_string(origin) && (origin === e.origin));
   };
 
-  const onMessage = e => {
+  const onMessage = (e) => {
     if (!originMatches(e)) return;
     dispatch(Event.MESSAGE, e);
     const data = decoder(e.data);
@@ -74,8 +74,8 @@
   // TODO: improve preconnections
   // @see https://github.com/ampproject/amphtml/blob/master/src/preconnect.js
   $: preconnections
-    .filter(p => !PRECONNECTED.includes(p))
-    .forEach(url => { if (prefetch('preconnect', url)) PRECONNECTED.push(url); });
+    .filter((p) => !PRECONNECTED.includes(p))
+    .forEach((url) => { if (prefetch('preconnect', url)) PRECONNECTED.push(url); });
 </script>
 
 <style>

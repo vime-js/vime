@@ -21,12 +21,13 @@
 </script>
 
 <script>
-  import { tick, onDestroy, createEventDispatcher } from 'svelte';
+  import { tick } from 'svelte';
   import { element, listen, append } from 'svelte/internal';
   import { derived } from 'svelte/store';
+  
   import {
     is_number, is_instance_of, private_writable,
-    map_store_to_component
+    map_store_to_component,
   } from '@vime-js/utils';
 
   // --------------------------------------------------------------
@@ -37,12 +38,11 @@
   export let crossOrigin = null;
 
   const logger = player.createLogger(ID);
-  const dispatch = createEventDispatcher();
   
   const {
     isMobile, isFullscreenActive, isControlsActive,
     currentTrackIndex, currentTime, useNativeCaptions,
-    tracks, locale, isVideoView
+    tracks, locale, isVideoView,
   } = player.getStore();
 
   const buildStore = () => {
@@ -51,7 +51,7 @@
     store.currentCueIndex = private_writable(-1);
     store.currentCue = derived(
       [store.cues, store.currentCueIndex],
-      ([$cues, $index]) => ($cues.length >= 0) ? $cues[$index] : null
+      ([$currentCues, $index]) => (($currentCues.length >= 0) ? $currentCues[$index] : null),
     );
     store.activeCues = private_writable([]);
     return store;
@@ -63,7 +63,7 @@
 
   const {
     cues, currentCueIndex, currentCue,
-    activeCues
+    activeCues,
   } = store;
 
   // --------------------------------------------------------------
@@ -72,29 +72,29 @@
 
   let isCueActive = false;
 
-  const shouldCueBeActive = cue => ($currentTime >= cue.startTime) && ($currentTime <= cue.endTime);
+  const shouldCueBeActive = (cue) => ($currentTime >= cue.startTime) && ($currentTime <= cue.endTime);
 
-  const getCueContent = cue => {
+  const getCueContent = (cue) => {
     if (!cue) return '';
     const div = element('div');
     append(div, cue.getCueAsHTML());
     return div.innerHTML.trim();
   };
 
-  const findNextCueIndex = start => {
+  const findNextCueIndex = (start) => {
     let index = start;
     while (
-      index >= 0 &&
-      index < ($cues.length - 1) &&
-      $currentTime > $cues[index].startTime &&
-      !shouldCueBeActive($cues[index])
+      index >= 0
+    && index < ($cues.length - 1)
+    && $currentTime > $cues[index].startTime
+    && !shouldCueBeActive($cues[index])
     ) {
       index += 1;
     }
     return index;
   };
 
-  const validateCue = cue => {
+  const validateCue = (cue) => {
     if (!is_instance_of(cue, window.VTTCue)) {
       logger.warn(`invalid cue with \`label\` [${cue.label}] must be an instance of window.VTTCue`);
       return false;
@@ -107,18 +107,18 @@
     if ($cues.length > 0) $currentCueIndex = findNextCueIndex(0);
   };
 
-  export const addCue = cue => {
+  export const addCue = (cue) => {
     if (!validateCue(cue)) return;
     let index = 0;
-    while ($cues[index] && ($cues[index].endTime < cue.startTime)) index++;
+    while ($cues[index] && ($cues[index].endTime < cue.startTime)) index += 1;
     $cues.splice(index, 0, cue);
     $cues = $cues;
   };
 
-  export const addCues = cues => { cues.map(addCue); };
+  export const addCues = (newCues) => { newCues.map(addCue); };
 
-  export const removeCue = value => {
-    const index = is_number(value) ? value : $cues.findIndex(cue => cue === value);
+  export const removeCue = (value) => {
+    const index = is_number(value) ? value : $cues.findIndex((cue) => cue === value);
     if (index <= 0 || index >= $cues.length) {
       logger.warn('could not remove cue because it could not be found or index was out of bounds');
       return;
@@ -145,7 +145,7 @@
 
   export const hasTrack = () => $currentTrackIndex !== -1;
 
-  const buildTrack = track => {
+  const buildTrack = (track) => {
     const el = element('track');
     el.default = true;
     el.src = track.src;
@@ -176,14 +176,14 @@
 
   const onTracksChange = async () => {
     await tick();
-    if (!hasTrack()) $currentTrackIndex = $tracks.findIndex(t => t.default);
+    if (!hasTrack()) $currentTrackIndex = $tracks.findIndex((t) => t.default);
   };
 
   $: onTracksChange($isVideoView ? $tracks : []);
   $: onTrackChange($isVideoView ? $currentTrackIndex : -1, crossOrigin);
   
   $: if ($isVideoView) {
-    const index = $tracks.findIndex(t => t.srclang === $locale);
+    const index = $tracks.findIndex((t) => t.srclang === $locale);
     if (index >= 0) $currentTrackIndex = index;
   }
 </script>

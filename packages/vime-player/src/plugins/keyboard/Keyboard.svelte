@@ -44,15 +44,15 @@
   // Events
   // --------------------------------------------------------------
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (!$isPlayerActive || !isEnabled) return;
   
     const listeners = Object.values($registry)
-      .filter(o => (is_array(o.keys) ? o.keys : [o.keys]).includes(e.keyCode));
+      .filter((o) => (is_array(o.keys) ? o.keys : [o.keys]).includes(e.keyCode));
 
     if (listeners.length > 0) {
       e.preventDefault();
-      listeners.forEach(l => l.action && l.action(e));
+      listeners.forEach((l) => l.action && l.action(e));
     }
   };
 
@@ -64,7 +64,7 @@
   $: tooltipsRegistry = tooltips && tooltips.getRegistry();
 
   $: if ($tooltipsRegistry) {
-    Object.keys($registry).forEach(id => {
+    Object.keys($registry).forEach((id) => {
       const tooltip = $tooltipsRegistry[id];
       if (tooltip) {
         tooltip.hint = $registry[id].hint;

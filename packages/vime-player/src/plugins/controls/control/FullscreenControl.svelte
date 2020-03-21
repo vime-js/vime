@@ -28,7 +28,9 @@
 
   export let player;
 
-  const { icons, i18n, canSetFullscreen, isFullscreenActive } = player.getStore();
+  const {
+    icons, i18n, canSetFullscreen, isFullscreenActive,
+} = player.getStore();
 
   // --------------------------------------------------------------
   // Props

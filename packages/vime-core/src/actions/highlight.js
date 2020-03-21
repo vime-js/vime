@@ -1,6 +1,6 @@
 import { listen } from 'svelte/internal';
 
-export default function highlight (node, duration = 100) {
+export default function highlight(node, duration = 100) {
   const off = listen(node, 'touchstart', () => {
     node.dispatchEvent(new CustomEvent('highlightchange', { detail: true }));
 
@@ -10,6 +10,6 @@ export default function highlight (node, duration = 100) {
   });
 
   return {
-    destroy () { off(); }
+    destroy() { off(); },
   };
 }

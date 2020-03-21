@@ -5,6 +5,8 @@
 </script>
 
 <script>
+  /* eslint-disable no-param-reassign */
+
   import { is_instance_of } from '@vime-js/utils';
   import Tooltip from './Tooltip.svelte';
 
@@ -19,11 +21,12 @@
   const validateTooltip = (id, tooltip) => {
     if (!tooltip || !is_instance_of(tooltip, Tooltip)) {
       logger.warn(
-        `attempted to register tooltip with \`id\` [${id}] but received invalid ` +
-        'value, must be an instance of `Tooltip.svelte`'
+        `attempted to register tooltip with \`id\` [${id}] but received invalid `
+      + 'value, must be an instance of `Tooltip.svelte`',
       );
       return false;
     }
+    // eslint-disable-next-line no-use-before-define
     tooltip.isEnabled = isEnabled;
     return true;
   };
@@ -32,7 +35,7 @@
   
   const {
     isMobile, isTouch, isControlsEnabled,
-    useNativeControls
+    useNativeControls,
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -52,6 +55,6 @@
   // Events
   // --------------------------------------------------------------
 
-  $: Object.values($registry).forEach(tooltip => { tooltip.isEnabled = isEnabled; });
-  $: Object.values($registry).forEach(tooltip => { tooltip.showHint = showHints; });
+  $: Object.values($registry).forEach((tooltip) => { tooltip.isEnabled = isEnabled; });
+  $: Object.values($registry).forEach((tooltip) => { tooltip.showHint = showHints; });
 </script>

@@ -42,15 +42,15 @@
       options: playbackRateMenuOptions,
       emptyHint: $i18n.normal,
       isDisabled: !$canSetPlaybackRate || ($playbackRates.length === 0),
-      onValueChange: v => { $playbackRate = v; }
+      onValueChange: (v) => { $playbackRate = v; },
     };
   }
 
   $: playbackRateMenuOptions = ($playbackRates.length === 1)
     ? []
-    : $playbackRates.map(rate => ({
+    : $playbackRates.map((rate) => ({
       title: (rate === 1) ? $i18n.normal : rate,
-      value: rate
+      value: rate,
     }));
 
   // --------------------------------------------------------------
@@ -71,7 +71,7 @@
       options: captionMenuOptions,
       emptyHint: $i18n.none,
       isDisabled: !$canSetTrack || ($tracks.length === 0),
-      onValueChange: v => { $currentTrackIndex = v; }
+      onValueChange: (v) => { $currentTrackIndex = v; },
     };
   }
 
@@ -79,10 +79,10 @@
     ? []
     : [{
       title: $i18n.off,
-      value: -1
+      value: -1,
     }, ...$tracks.map((track, i) => ({
       title: track.label,
-      value: i
+      value: i,
     }))];
 
   // --------------------------------------------------------------
@@ -103,13 +103,13 @@
       options: videoQualityMenuOptions,
       emptyHint: $i18n.default,
       isDisabled: !$canSetVideoQuality || ($videoQualities.length === 0),
-      onValueChange: v => { $videoQuality = v; }
+      onValueChange: (v) => { $videoQuality = v; },
     };
   }
 
-  $: videoQualityMenuOptions = $isAudio ? [] : $videoQualities.map(quality => ({
+  $: videoQualityMenuOptions = $isAudio ? [] : $videoQualities.map((quality) => ({
     title: `${quality}p`,
     value: quality,
-    badge: (quality >= 720) ? 'HD' : null
+    badge: (quality >= 720) ? 'HD' : null,
   }));
 </script>

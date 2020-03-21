@@ -35,5 +35,5 @@ export default {
   enabled: 'Enabled',
   pip: 'Picture-in-Picture',
   enterPiP: 'Miniplayer',
-  exitPiP: 'Expand'
+  exitPiP: 'Expand',
 };

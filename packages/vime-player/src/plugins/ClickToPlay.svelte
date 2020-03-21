@@ -6,7 +6,7 @@
 
 <script>
   import { listen } from 'svelte/internal';
-  import { onMount, onDestroy } from 'svelte';
+  import { onDestroy } from 'svelte';
   import { get_playback_icon } from '../utils';
   import { ID as ActionDisplayId } from './ActionDisplay.svelte';
 
@@ -19,7 +19,7 @@
   const {
     icons, paused, isControlsEnabled,
     canInteract, isVideoView, isMobile,
-    useNativeControls
+    useNativeControls,
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -30,11 +30,11 @@
   export let isEnabled = false;
 
   $: if (autopilot) {
-    isEnabled = $isControlsEnabled &&
-      $canInteract &&
-      $isVideoView &&
-      !$isMobile &&
-      !$useNativeControls;
+    isEnabled = $isControlsEnabled
+    && $canInteract
+    && $isVideoView
+    && !$isMobile
+    && !$useNativeControls;
   }
 
   // --------------------------------------------------------------
@@ -50,7 +50,7 @@
   let timer;
   let onClickListener;
   const bindClickListener = () => {
-    const onClick = e => {
+    const onClick = (e) => {
       window.clearTimeout(timer);
       // Using a timer to avoid interfering with double clicking.
       timer = setTimeout(() => {
@@ -63,7 +63,7 @@
   };
 
   const unbindClickListener = () => {
-    onClickListener && onClickListener();
+    if (onClickListener) onClickListener();
     timer = null;
     onClickListener = null;
   };

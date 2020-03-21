@@ -1,9 +1,9 @@
 import { listen, run_all } from 'svelte/internal';
 
-export default function focus (node) {
+export default function focus(node) {
   const dispose = [];
 
-  const onFocus = e => {
+  const onFocus = (e) => {
     const isFocused = (e.type === 'mouseenter' || e.type === 'focus');
     if (!isFocused) node.blur();
     node.dispatchEvent(new CustomEvent('focuschange', { detail: isFocused }));
@@ -15,6 +15,6 @@ export default function focus (node) {
   dispose.push(listen(node, 'mouseleave', onFocus));
 
   return {
-    destroy () { run_all(dispose); }
+    destroy() { run_all(dispose); },
   };
 }

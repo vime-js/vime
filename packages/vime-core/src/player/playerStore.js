@@ -1,4 +1,3 @@
-import { createEventDispatcher } from 'svelte';
 import { writable, derived } from 'svelte/store';
 import { currentPlayer } from './sharedStore';
 import PlayerState from './PlayerState';
@@ -9,8 +8,9 @@ import {
   private_writable, map_store_to_component, can_autoplay,
   selectable_if, rangeable_if, IS_MOBILE,
   indexable, private_writable_if, is_function,
-  rangeable
+  rangeable,
 } from '@vime-js/utils';
+
 
 // Player defaults used when the `src` changes or `resetStore` is called.
 const playerDefaults = () => ({
@@ -35,10 +35,10 @@ const playerDefaults = () => ({
   playbackReady: false,
   isLive: false,
   nativePoster: null,
-  isControlsActive: true
+  isControlsActive: true,
 });
 
-const buildPlayerStore = player => {
+const buildPlayerStore = (player) => {
   const store = {};
   const defaults = playerDefaults();
 
@@ -48,7 +48,7 @@ const buildPlayerStore = player => {
   store.canMutedAutoplay = private_writable(false);
   store.canInteract = derived(
     [store.playbackReady, store.rebuilding],
-    ([$playbackReady, $rebuilding]) => $playbackReady && !$rebuilding
+    ([$playbackReady, $rebuilding]) => $playbackReady && !$rebuilding,
   );
 
   // --------------------------------------------------------------
@@ -74,7 +74,7 @@ const buildPlayerStore = player => {
 
   store.canSetPoster = derived(
     store.provider,
-    $provider => $provider && is_function($provider.setPoster)
+    ($provider) => $provider && is_function($provider.setPoster),
   );
 
   // --------------------------------------------------------------
@@ -82,24 +82,31 @@ const buildPlayerStore = player => {
   // --------------------------------------------------------------
 
   store.mediaType = private_writable(MediaType.NONE);
-  store.isAudio = derived(store.mediaType, $mediaType => $mediaType === MediaType.AUDIO);
-  store.isVideo = derived(store.mediaType, $mediaType => $mediaType === MediaType.VIDEO);
+  store.isAudio = derived(store.mediaType, ($mediaType) => $mediaType === MediaType.AUDIO);
+  store.isVideo = derived(store.mediaType, ($mediaType) => $mediaType === MediaType.VIDEO);
   store.isLive = private_writable(false);
   store.playbackRates = private_writable(defaults.playbackRates);
   store.videoQualities = private_writable(defaults.videoQualities);
   store.duration = private_writable(defaults.duration);
 
   // Used by @vime-js/player.
+  // eslint-disable-next-line no-underscore-dangle
   store._posterPlugin = writable(false);
   store.isVideoView = derived(
+    // eslint-disable-next-line no-underscore-dangle
     [store.poster, store.nativePoster, store.canSetPoster, store._posterPlugin, store.isVideo],
-    ([$poster, $nativePoster, $canSetPoster, $plugin, $isVideo]) =>
-      !!(($canSetPoster || $plugin) && ($poster || $nativePoster)) || $isVideo
+    ([
+      $poster,
+      $nativePoster,
+      $canSetPoster,
+      $plugin,
+      $isVideo,
+    ]) => !!(($canSetPoster || $plugin) && ($poster || $nativePoster)) || $isVideo,
   );
 
   store.isVideoReady = derived(
     [store.playbackReady, store.isVideoView],
-    ([$playbackReady, $isVideoView]) => $playbackReady && $isVideoView
+    ([$playbackReady, $isVideoView]) => $playbackReady && $isVideoView,
   );
 
   // --------------------------------------------------------------
@@ -108,19 +115,31 @@ const buildPlayerStore = player => {
 
   store.canSetPlaybackRate = derived(
     [store.provider, store.playbackRates],
-    ([$provider, $playbackRates]) =>
-      $provider && $playbackRates.length > 1 && is_function($provider.setPlaybackRate)
+    ([
+      $provider,
+      $playbackRates,
+    ]) => $provider && $playbackRates.length > 1 && is_function($provider.setPlaybackRate),
   );
 
   store.canSetVideoQuality = derived(
     [store.provider, store.isVideo, store.videoQualities],
-    ([$provider, $isVideo, $videoQualities]) =>
-      $provider && $isVideo && $videoQualities.length > 0 && is_function($provider.setVideoQuality)
+    ([$provider, $isVideo, $videoQualities]) => $provider
+      && $isVideo
+      && $videoQualities.length > 0
+      && is_function($provider.setVideoQuality),
   );
 
   store.paused = writable(defaults.paused);
-  store.playbackRate = selectable_if(defaults.playbackRate, store.playbackRates, store.canSetPlaybackRate);
-  store.videoQuality = selectable_if(defaults.videoQuality, store.videoQualities, store.canSetVideoQuality);
+  store.playbackRate = selectable_if(
+    defaults.playbackRate,
+    store.playbackRates,
+    store.canSetPlaybackRate,
+  );
+  store.videoQuality = selectable_if(
+    defaults.videoQuality,
+    store.videoQualities,
+    store.canSetVideoQuality,
+  );
   store.currentTime = rangeable(defaults.currentTime, 0, store.duration);
   store.internalTime = private_writable(defaults.internalTime);
   store.muted = writable(false);
@@ -134,13 +153,13 @@ const buildPlayerStore = player => {
     ([$currentTime, $duration, $buffered]) => ({
       played: {
         seconds: $currentTime,
-        percent: ($currentTime / $duration) * 100
+        percent: ($currentTime / $duration) * 100,
       },
       buffered: {
         seconds: $buffered,
-        percent: ($buffered / $duration) * 100
-      }
-    })
+        percent: ($buffered / $duration) * 100,
+      },
+    }),
   );
 
   // --------------------------------------------------------------
@@ -152,25 +171,30 @@ const buildPlayerStore = player => {
   store.playbackEnded = private_writable(defaults.playbackEnded);
   store.playbackStarted = private_writable(defaults.playbackStarted);
   store.seeking = private_writable(defaults.seeking);
-  store.isPlayerActive = derived(currentPlayer, $currentPlayer => $currentPlayer === player);
+  store.isPlayerActive = derived(currentPlayer, ($currentPlayer) => $currentPlayer === player);
 
   store.state = derived(
-    [store.playbackStarted, store.playbackEnded, store.paused, store.buffering, store.playbackReady],
+    [
+      store.playbackStarted,
+      store.playbackEnded,
+      store.paused,
+      store.buffering,
+      store.playbackReady,
+    ],
     ([$playbackStarted, $playbackEnded, $paused, $buffering, $playbackReady]) => {
       if ($playbackEnded) {
         return PlayerState.ENDED;
-      } else if ($buffering) {
+      } if ($buffering) {
         return PlayerState.BUFFERING;
-      } else if ($playbackStarted && $paused) {
+      } if ($playbackStarted && $paused) {
         return PlayerState.PAUSED;
-      } else if ($playbackStarted) {
+      } if ($playbackStarted) {
         return PlayerState.PLAYING;
-      } else if ($playbackReady) {
+      } if ($playbackReady) {
         return PlayerState.CUED;
-      } else {
-        return PlayerState.IDLE;
       }
-    }
+      return PlayerState.IDLE;
+    },
   );
 
   // --------------------------------------------------------------
@@ -179,15 +203,18 @@ const buildPlayerStore = player => {
 
   store.canSetTracks = derived(
     store.provider,
-    $provider => $provider && is_function($provider.setTracks)
+    ($provider) => $provider && is_function($provider.setTracks),
   );
 
-  // No needs to block writing of `tracks` as it might be stored and used by a provider when possible.
+  // Don't block writing of `tracks` as it might be stored and used by a provider when possible.
   store.tracks = writable([]);
 
   store.canSetTrack = derived(
     [store.provider, store.tracks],
-    ([$provider, $tracks]) => $provider && $tracks && $tracks.length > 0 && is_function($provider.setTrack)
+    ([$provider, $tracks]) => $provider
+      && $tracks
+      && $tracks.length > 0
+      && is_function($provider.setTrack),
   );
 
   // Can't block current track with `canSetTrack` because it'll stop @vime-js/player from updating
@@ -196,13 +223,14 @@ const buildPlayerStore = player => {
 
   store.currentTrack = derived(
     [store.tracks, store.currentTrackIndex],
-    ([$tracks, $index]) => ($index >= 0) ? $tracks[$index] : null
+    ([$tracks, $index]) => (($index >= 0) ? $tracks[$index] : null),
   );
 
   store.isCaptionsActive = derived(
     [store.playbackReady, store.isAudio, store.currentTrackIndex],
-    ([$playbackReady, $isAudio, $currentTrackIndex]) =>
-      $playbackReady && !$isAudio && ($currentTrackIndex !== -1)
+    ([$playbackReady, $isAudio, $currentTrackIndex]) => $playbackReady
+      && !$isAudio
+      && ($currentTrackIndex !== -1),
   );
 
   // TODO: add cues support (cues, currentCueIndex, currentCue, activeCues).
@@ -213,8 +241,10 @@ const buildPlayerStore = player => {
 
   store.canSetPiP = derived(
     [store.isVideoReady, store.provider],
-    ([$isVideoReady, $provider]) =>
-      $isVideoReady && $provider && $provider.supportsPiP() && is_function($provider.setPiP)
+    ([$isVideoReady, $provider]) => $isVideoReady
+      && $provider
+      && $provider.supportsPiP()
+      && is_function($provider.setPiP),
   );
 
   store.isPiPActive = private_writable(false);
@@ -240,24 +270,24 @@ const buildPlayerStore = player => {
   return store;
 };
 
-const resetStore = store => {
+const resetStore = (store) => {
   const defaults = playerDefaults();
   Object.keys(defaults)
-    .forEach(prop => store[prop] && store[prop].set(defaults[prop]));
+    .forEach((prop) => store[prop] && store[prop].set(defaults[prop]));
 };
 
-const fillStore = async store => {
+const fillStore = async (store) => {
   store.canAutoplay.set(await can_autoplay(false));
   store.canMutedAutoplay.set(await can_autoplay(true));
 };
 
-export const mapPlayerStoreToComponent = player => {
+export const mapPlayerStoreToComponent = (player) => {
   const store = buildPlayerStore(player);
   fillStore(store);
   const onPropsChange = map_store_to_component(player, store);
   return {
     store,
     onPropsChange,
-    resetStore: () => resetStore(store)
+    resetStore: () => resetStore(store),
   };
 };

@@ -5,7 +5,7 @@
 </script>
 
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onDestroy } from 'svelte';
   import { noop, listen } from 'svelte/internal';
   import { get_fullscreen_icon } from '../utils';
   import { ID as ActionDisplayId } from './ActionDisplay.svelte';
@@ -19,7 +19,7 @@
   const {
     icons, isControlsEnabled, canSetFullscreen,
     isVideoView, canInteract, isMobile, isFullscreenActive,
-    useNativeControls
+    useNativeControls,
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -30,12 +30,12 @@
   export let isEnabled = false;
 
   $: if (autopilot) {
-    isEnabled = $isControlsEnabled &&
-      $canSetFullscreen &&
-      $canInteract &&
-      $isVideoView &&
-      !$isMobile &&
-      !$useNativeControls;
+    isEnabled = $isControlsEnabled
+    && $canSetFullscreen
+    && $canInteract
+    && $isVideoView
+    && !$isMobile
+    && !$useNativeControls;
   }
 
   // --------------------------------------------------------------
@@ -50,7 +50,7 @@
 
   let onDblClickListener;
   const bindDblClickListener = () => {
-    const onDblClick = e => {
+    const onDblClick = (e) => {
     // TODO: this is probably not ideal, need a better solution.
       const isInputNode = ['BUTTON', 'INPUT'].includes(e.target.nodeName);
       if (!isInputNode) onToggle();
@@ -59,7 +59,7 @@
   };
 
   const unbindDblClickListener = () => {
-    onDblClickListener && onDblClickListener();
+    if (onDblClickListener) onDblClickListener();
     onDblClickListener = null;
   };
 

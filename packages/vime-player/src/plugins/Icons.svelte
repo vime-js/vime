@@ -14,7 +14,7 @@
 
   const store = player.getStore();
   
-  const icon = icon => `#vime-${icon}`;
+  const icon = (id) => `#vime-${id}`;
   const ICONS = {
     play: icon('play'),
     pause: icon('pause'),
@@ -30,16 +30,16 @@
     volumeHigh: icon('volume-high'),
     volumeMute: icon('volume-mute'),
     settings: icon('settings'),
-    checkmark: icon('checkmark')
+    checkmark: icon('checkmark'),
   };
 
   store.icons.set(ICONS);
 
   onDestroy(() => {
-    const icons = player.icons;
+    const { icons } = player;
     if (!icons) return;
-    Object.keys(ICONS).forEach(icon => {
-      if (icons[icon] && icons[icon] === ICONS[icon]) delete icons[icon];
+    Object.keys(ICONS).forEach((id) => {
+      if (icons[icon] && icons[id] === ICONS[id]) delete icons[id];
     });
     store.icons.set(icons);
   });
