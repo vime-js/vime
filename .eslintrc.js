@@ -10,11 +10,7 @@ module.exports = {
     // Jest (jest-svelte-events)
     listen: 'readonly'
   },
-  extends: [
-		'eslint:recommended',
-		'plugin:import/errors',
-		'plugin:import/warnings'
-  ],
+  extends: ['eslint-config-airbnb-base'],
   plugins: ['svelte3'],
   overrides: [{
       files: ['**/*.svelte'],
@@ -28,32 +24,18 @@ module.exports = {
     'svelte3/ignore-styles': (attrs) => attrs.type === 'text/scss',
   },
   rules: {
-		indent: 'off',
-		'no-unused-vars': 'off',
-		semi: [2, 'always'],
-		'keyword-spacing': [2, { before: true, after: true }],
-		'space-before-blocks': [2, 'always'],
-		'no-mixed-spaces-and-tabs': [2, 'smart-tabs'],
-		'no-cond-assign': 0,
-		'object-shorthand': [2, 'always'],
-		'no-const-assign': 2,
-		'no-class-assign': 2,
-		'no-this-before-super': 2,
-    'no-var': 2,
-    'no-trailing-spaces': 2,
-		'no-unreachable': 2,
-		'valid-typeof': 2,
-		'quote-props': [2, 'as-needed'],
-		'one-var': [2, 'never'],
-		'prefer-arrow-callback': 2,
-		'prefer-const': [2, { destructuring: 'all' }],
-		'arrow-spacing': 2,
-    'no-inner-declarations': 0,
-    'eol-last': [2, 'always'],
+    'no-unused-expressions': [2, { 'allowTernary': true }],
+    // Utils use snakecase.
+    'camelcase': 'off',
+    // Doesn't work with Svelte.
+    'no-multiple-empty-lines': 'off',
 	    // These do not currently work with eslint-plugin-svelte3.
     'import/first': 'off',
+    'import/order': 'off',
     'import/no-duplicates': 'off',
     'import/no-mutable-exports': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',	'require-atomic-updates': 'off',
   }
 }
