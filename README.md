@@ -10,12 +10,12 @@
   <br />
   <br />
 
+  [![version-badge]][package]
   [![license-badge]][license]
   [![prs-badge]][prs] 
   [![lerna-badge]][lerna]
   [![github-star-badge]][github-repo]
   [![tweet-badge]][tweet]
-  <!-- [![version-badge]][package] -->
 </div>
 
 ## Table of Contents
