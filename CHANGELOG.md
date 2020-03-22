@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/vime-js/vime/compare/v1.1.2...v1.1.3) (2020-03-22)
+
+
+### Bug Fixes
+
+* cannot be bundled without svg plugin or loader ([6b31a51](https://github.com/vime-js/vime/commit/6b31a51f03b858f337e2f2811a89cd60c44bcc9d))
+* **core:** fullscreen change event not firing in webkit ([89f6cec](https://github.com/vime-js/vime/commit/89f6ceca2994dc3ba84c1bcaab1b3ec2d71d221e))
+* **core:** rebuild event not firing properly ([4cc440b](https://github.com/vime-js/vime/commit/4cc440b8b492cc61b4709454471609a135359a4e))
+* **html5:** video qualities not updating when changed ([4421abc](https://github.com/vime-js/vime/commit/4421abc9ca88e219489c3273fdd17280aa3ad117))
+* enforce stricter eslint rules ([d5ad7e6](https://github.com/vime-js/vime/commit/d5ad7e653cc41e82681d86f475d94a01629fe07d))
+
+
+
+
+
 ## [1.1.2](https://github.com/vime-js/vime/compare/v1.1.1...v1.1.2) (2020-03-20)
 
 
