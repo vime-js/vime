@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/vime-js/vime/tree/master/packages/vime-player/compare/v1.1.3...v1.2.0) (2020-03-22)
+
+
+### Features
+
+* **player:** new icons plugin ([f22e1cf](https://github.com/vime-js/vime/tree/master/packages/vime-player/commit/f22e1cf48c23a8d9bbbc770c9a30812ba22757d4))
+
+
+
+
+
 ## [1.1.3](https://github.com/vime-js/vime/tree/master/packages/vime-player/compare/v1.1.2...v1.1.3) (2020-03-22)
 
 
