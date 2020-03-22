@@ -96,7 +96,6 @@
     "rollup": "^2.1.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-svelte": "^5.1.1",
-    "rollup-plugin-svg": "^2.0.0",
     "rollup-plugin-terser": "^5.3.0",
     "svelte": "^3.20.1",
     "svelte-jester": "^1.0.4",

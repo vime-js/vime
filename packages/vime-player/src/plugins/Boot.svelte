@@ -9,7 +9,7 @@
 
   // TODO: should/can everything below be dynamically imported?
 
-  import * as Icons from './Icons.svelte';
+  import { vimeIcons } from '../core';
   import * as Poster from './Poster.svelte';
   import * as Scrim from './Scrim.svelte';
   import * as Spinner from './Spinner.svelte';
@@ -27,11 +27,12 @@
 
   export let player;
   export let manifest = {};
+  
+  player.icons = vimeIcons;
 
   const pluginsManager = player.getPluginsManager();
 
   const PLUGINS = [
-    Icons,
     Poster,
     Scrim,
     Spinner,
