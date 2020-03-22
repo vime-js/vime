@@ -20,9 +20,7 @@
         class="play"
         class:active={showPlayIcon && !isLoading}
       >
-        <svg>
-          {@html playIcon}
-        </svg>
+        <Icon icon={playIcon} />
       </div>
     {/if}
   </Lazy>
@@ -34,12 +32,11 @@
 
 <script>
   import { tick, createEventDispatcher } from 'svelte';
-  import { aspectRatio as setAspectRatio, Lazy } from '@vime-js/core';
+  import { aspectRatio as setAspectRatio, Icon, Lazy } from '@vime-js/core';
   import { is_function } from '@vime-js/utils';
   import { utils as Dailymotion } from '@vime-js/dailymotion';
   import { utils as YouTube } from '@vime-js/youtube';
   import { utils as Vimeo } from '@vime-js/vimeo';
-  import playIcon from '../static/vime-play.svg';
 
   const dispatch = createEventDispatcher();
 
@@ -64,6 +61,7 @@
   export let poster = null;
   export let isEnabled = true;
   export let aspectRatio = '16:9';
+  export let playIcon = '#vime-play';
   export let showPlayIcon = false;
 
   export const getNativePoster = () => nativePoster;
@@ -135,18 +133,15 @@
     &.active {
       opacity: 1;
     }
+  }
 
-    svg {
-      color: #fff;
-      fill: currentColor;
-      pointer-events: none;
-      width: 18px;
-      height: 18px;
-      transform: scale(2);
-      
-      @media (min-width: 680px) {
-        transform: scale(3.5);
-      }
+  .play :global(svg) {
+    transform: scale(2);
+  }
+
+  @media (min-width: 680px) {
+    .play :global(svg) {
+      transform: scale(3.5);
     }
   }
 
