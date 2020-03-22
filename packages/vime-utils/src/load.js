@@ -1,3 +1,5 @@
+import { element, insert } from 'svelte/internal';
+
 export const load_script = (src, onLoad, onError) => {
   const script = document.createElement('script');
   script.src = src;
@@ -22,3 +24,13 @@ export const load_image = (src, minWidth = 1) => new Promise((resolve, reject) =
   };
   Object.assign(image, { onload: handler, onerror: handler, src });
 });
+
+export const load_sprite = (src) => fetch(src)
+  .then((res) => res.text())
+  .then((sprite) => {
+    const div = element('div');
+    div.style.display = 'none';
+    div.innerHTML = sprite;
+    const firstBodyChild = document.body.childNodes[0];
+    insert(document.body, div, firstBodyChild);
+  });
