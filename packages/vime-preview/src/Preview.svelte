@@ -4,7 +4,7 @@
   class="preview"
   use:setAspectRatio={isEnabled ? aspectRatio : null}
 >
-  <div class="loading-container">
+  <div class="loadingContainer">
     <div class:loading={isLoading}></div> 
   </div>
   <Lazy let:intersecting >
@@ -17,10 +17,10 @@
         bind:this={img}
       />
       <div 
-        class="play"
+        class="playIcon"
         class:active={showPlayIcon && !isLoading}
       >
-        <Icon icon={playIcon} />
+        <PlayIcon />
       </div>
     {/if}
   </Lazy>
@@ -32,11 +32,12 @@
 
 <script>
   import { tick, createEventDispatcher } from 'svelte';
-  import { aspectRatio as setAspectRatio, Icon, Lazy } from '@vime-js/core';
+  import { aspectRatio as setAspectRatio, Lazy } from '@vime-js/core';
   import { is_function } from '@vime-js/utils';
   import { utils as Dailymotion } from '@vime-js/dailymotion';
   import { utils as YouTube } from '@vime-js/youtube';
   import { utils as Vimeo } from '@vime-js/vimeo';
+  import PlayIcon from './PlayIcon.svelte';
 
   const dispatch = createEventDispatcher();
 
@@ -61,7 +62,6 @@
   export let poster = null;
   export let isEnabled = true;
   export let aspectRatio = '16:9';
-  export let playIcon = '#vime-play';
   export let showPlayIcon = false;
 
   export const getNativePoster = () => nativePoster;
@@ -117,7 +117,7 @@
     }
   }
 
-  .play {
+  .playIcon {
     position: absolute;
     top: 0;
     left: 0;
@@ -128,20 +128,11 @@
     justify-content: center;
     z-index: 2;
     opacity: 0;
+    color: #fff;
     transition: opacity 0.3s ease;
 
     &.active {
       opacity: 1;
-    }
-  }
-
-  .play :global(svg) {
-    transform: scale(2);
-  }
-
-  @media (min-width: 680px) {
-    .play :global(svg) {
-      transform: scale(3.5);
     }
   }
 
@@ -151,7 +142,7 @@
     }
   }
 
-  .loading-container {
+  .loadingContainer {
     position: absolute;
     top: 0;
     left: 0;
