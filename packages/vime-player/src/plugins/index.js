@@ -1,3 +1,4 @@
+import * as Icons from './Icons.svelte';
 import * as Poster from './Poster.svelte';
 import * as Scrim from './Scrim.svelte';
 import * as Spinner from './Spinner.svelte';
@@ -12,6 +13,7 @@ import * as Settings from './settings/Settings.svelte';
 import * as DefaultSettings from './settings/DefaultSettings.svelte';
 import * as DblClickFullscreen from './DblClickFullscreen.svelte';
 
+export { Icons };
 export { Poster };
 export { Scrim };
 export { Spinner };

@@ -1,4 +1,4 @@
-import { element, insert } from 'svelte/internal';
+import { element } from 'svelte/internal';
 
 export const load_script = (src, onLoad, onError) => {
   const script = document.createElement('script');
@@ -31,6 +31,7 @@ export const load_sprite = (src) => fetch(src)
     const div = element('div');
     div.style.display = 'none';
     div.innerHTML = sprite;
-    const firstBodyChild = document.body.childNodes[0];
-    insert(document.body, div, firstBodyChild);
+    const firstLinkTag = document.getElementsByTagName('link')[0];
+    firstLinkTag.parentNode.insertBefore(div, firstLinkTag);
+    return div;
   });
