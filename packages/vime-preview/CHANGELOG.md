@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/vime-js/vime/tree/master/packages/vime-preview/compare/v1.1.3...v1.2.0) (2020-03-22)
+
+
+### Features
+
+* **preview:** inline play icon to avoid additional setup ([f2ce0a3](https://github.com/vime-js/vime/tree/master/packages/vime-preview/commit/f2ce0a3507e4263a7883b02a94fd5e97c1b3f7b6))
+
+
+
+
+
 ## [1.1.3](https://github.com/vime-js/vime/tree/master/packages/vime-preview/compare/v1.1.2...v1.1.3) (2020-03-22)
 
 
