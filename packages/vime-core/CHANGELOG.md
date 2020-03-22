@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/vime-js/vime/tree/master/packages/vime-core/compare/v1.1.2...v1.1.3) (2020-03-22)
+
+
+### Bug Fixes
+
+* **core:** fullscreen change event not firing in webkit ([89f6cec](https://github.com/vime-js/vime/tree/master/packages/vime-core/commit/89f6ceca2994dc3ba84c1bcaab1b3ec2d71d221e))
+* **core:** rebuild event not firing properly ([4cc440b](https://github.com/vime-js/vime/tree/master/packages/vime-core/commit/4cc440b8b492cc61b4709454471609a135359a4e))
+* enforce stricter eslint rules ([d5ad7e6](https://github.com/vime-js/vime/tree/master/packages/vime-core/commit/d5ad7e653cc41e82681d86f475d94a01629fe07d))
+
+
+
+
+
 ## [1.1.1](https://github.com/vime-js/vime/tree/master/packages/vime-core/compare/v1.1.0...v1.1.1) (2020-03-20)
 
 
