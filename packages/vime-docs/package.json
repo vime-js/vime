@@ -33,7 +33,6 @@
     "svelte": "^3.20.1",
     "svelte-loader": "^2.13.6",
     "svelte-preprocess": "^3.5.0",
-    "svg-inline-loader": "^0.8.2",
     "webpack": "^4.41.5"
   }
 }

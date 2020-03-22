@@ -1,7 +1,10 @@
+const autoprefixer = require('autoprefixer');
+const customProperties = require('postcss-custom-properties');
+
 // This file is imported by `rollup.config.js` and `.storybook/webpack.config.js`.
 module.exports = (legacy = false) => ({
   plugins: [
-    require('autoprefixer')({
+    autoprefixer({
       overrideBrowserslist: legacy
         ? ['ie 11']
         : [
@@ -10,9 +13,9 @@ module.exports = (legacy = false) => ({
           'last 2 Edge versions',
           'last 2 Safari versions',
           'last 2 Opera versions',
-          'last 2 iOS versions'
-        ]
+          'last 2 iOS versions',
+        ],
     }),
-    legacy && require('postcss-custom-properties')
-  ].filter(Boolean)
+    legacy && customProperties,
+  ].filter(Boolean),
 });
