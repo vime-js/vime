@@ -1,0 +1,69 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Poster" />
+
+# Poster `Plugin`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/Poster.svelte)
+
+**ID:** `vPoster`
+
+**ROLE:** `POSTER`
+
+This plugin is responsible for loading and showing the current poster set in the `currentPoster` prop.
+
+💡 To see this plugin in action then go to 'Player/Components'.
+
+## Setup
+
+### `plugins`
+
+```js
+import { Poster } from '@vime-js/player';
+
+player.plugins = [Poster];
+```
+
+### `PluginsManager`
+```js
+import { Poster } from '@vime-js/player';
+
+player
+  .getPluginsManager()
+  .addPlugin(Poster)
+  .then((poster) => {
+    // ...
+  });
+```
+
+## Props
+
+### `autopilot: boolean`
+
+**Default:** `true`
+
+In autopilot mode the plugin will control certain properties automatically. Set this to `false` if you'd like to 
+control them yourself. Properties marked with `auto` are part of this system.
+
+### `isEnabled: boolean` `(auto)`
+
+**Default:** `true`
+
+Whether the plugin is enabled or not.
+
+### `isActive: boolean` `(auto)`
+
+**Default:** `false`
+
+Whether the poster is visible or not.
+
+## Methods
+
+### `getEl(): ImgElement`
+
+The `img` element that loads the poster.
+
+
+
+

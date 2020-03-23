@@ -3,7 +3,7 @@
     <div
       class:bg={!!aspectRatio}
       class:relative={!hasParent}
-      use:setAspectRatio={!hasParent ? aspectRatio : null} 
+      use:vAspectRatio={!hasParent ? aspectRatio : null} 
       bind:this={el}
     >
       <slot />
@@ -14,7 +14,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { Lazy } from '../components';
-  import { aspectRatio as setAspectRatio } from '../actions';
+  import { vAspectRatio } from '@vime-js/utils';
 
   const dispatch = createEventDispatcher();
 

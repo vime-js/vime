@@ -1,15 +1,16 @@
 <form class="uk-form-stacked" onsubmit="return false;">
   {#each props as prop (prop.id)}
     <div class="uk-margin" data-uk-scrollspy>
-      <label class="uk-form-label" for="{prop.id}">{prop.label || prop.id}</label>
-      <div class="uk-form-controls">
+      <code>{prop.label || prop.id}</code>
+      <div class="uk-form-controls uk-margin-small-top">
         {#if prop.readonly}
           <pre class="disabled">{JSON.stringify(prop.value, undefined, 2)}</pre>
-        {:else if prop.type === 'editor'}
-          <JsonEditor
-            id={prop.id}
-            value={prop.value} 
-            on:change={onJsonEditorChange} 
+        {:else if prop.type === 'json'}
+          <textarea
+            id={prop.id} 
+            class="uk-textarea"
+            on:change={onJsonChange}
+            value={JSON.stringify(prop.value, undefined, 2)}
           />
         {:else if prop.type === 'boolean'}
           <input 
@@ -50,12 +51,12 @@
         {/if}
       </div>
     </div>
+    <hr />
   {/each}
 </form>
 
 <script>
   import { createEventDispatcher } from 'svelte';
-  import JsonEditor from '../JsonEditor.svelte';
 
   const dispatch = createEventDispatcher();
 
@@ -78,9 +79,11 @@
     dispatch('propschange', { prop: e.target.id, value });
   };
 
-  const onJsonEditorChange = (e) => {
-    const { id, value } = e.detail;
-    dispatch('propschange', { prop: id, value });
+  const onJsonChange = (e) => {
+    try {
+      const value = JSON.parse(e.target.value);
+      dispatch('propschange', { prop: e.target.id, value });
+    } catch (_) { /** noop */ }
   };
 </script>
 
@@ -93,5 +96,10 @@
     background-color: #f8f8f8;
     color: #999;
     border-color: #e5e5e5;
+  }
+
+  textarea {
+    min-width: 100%;
+    min-height: 150px;
   }
 </style>

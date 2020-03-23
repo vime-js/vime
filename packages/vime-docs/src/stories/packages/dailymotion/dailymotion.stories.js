@@ -1,11 +1,19 @@
-import { CenterView } from '../../../views';
+import { InteractiveView } from '../../../views';
 import { Dailymotion, DailymotionLite } from '@vime-js/dailymotion';
 import config from '../../../config';
 
-export default { title: 'Packages/Dailymotion/Components' };
+export default {
+  title: 'Packages/Dailymotion/Components',
+  parameters: {
+    viewMode: 'story',
+    previewTabs: {
+      'storybook/docs/panel': { hidden: true },
+    },
+  },
+};
 
 export const Lite = () => ({
-  Component: CenterView,
+  Component: InteractiveView,
   props: {
     Component: DailymotionLite,
     srcId: config.Dailymotion.SRC_ID,
@@ -14,9 +22,9 @@ export const Lite = () => ({
 });
 
 export const Standard = () => ({
-  Component: CenterView,
+  Component: InteractiveView,
   props: {
     Component: Dailymotion,
-    srcId: config.Dailymotion.SRC,
+    src: config.Dailymotion.SRC,
   },
 });

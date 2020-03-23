@@ -1,33 +1,31 @@
 <svelte:options accessors />
-
-{#if isEnabled && value}
+  
+<div 
+  class="container"
+  use:vIf={isEnabled && value}
+  bind:this={valueContainer}
+>
   <div 
-    class="container"
-    bind:this={valueContainer}
+    class="value" 
+    class:show
   >
-    <div 
-      class="value" 
-      class:show
-    >
-      {value}
-    </div>
+    {value}
   </div>
-{/if}
-
-{#if isEnabled && icon}
-  <div 
-    class="container"
-    bind:this={actionContainer}
+</div>
+  
+<div 
+  class="container"
+  use:vIf={isEnabled && icon}
+  bind:this={actionContainer}
+>
+  <div
+    class="action"
+    class:show 
+    bind:this={iconRef}
   >
-    <div
-      class="action"
-      class:show 
-      bind:this={iconRef}
-    >
-      <Icon {icon} />
-    </div>
+    <Icon {icon} />
   </div>
-{/if}
+</div>
 
 <script context="module">
   export const ID = 'vActionDisplay';
@@ -36,7 +34,7 @@
 <script>
   import { tick } from 'svelte';
   import { Icon } from '@vime-js/core';
-  import { ID as ControlsID } from './controls/Controls.svelte';
+  import { vIf } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup
@@ -48,10 +46,6 @@
     isMobile, isControlsEnabled, playbackReady,
     isVideoView, useNativeControls,
   } = player.getStore();
-
-  const plugins = player.getPluginsRegistry();
-
-  $: controlsPlugin = $plugins[ControlsID];
 
   // --------------------------------------------------------------
   // Props
@@ -67,15 +61,14 @@
   let actionContainer;
 
   export let autopilot = true;
-  export let isEnabled = false;
+  export let isEnabled = true;
 
   $: if (autopilot) {
     isEnabled = $isControlsEnabled
       && $playbackReady
       && $isVideoView
       && !$isMobile
-      && !$useNativeControls
-      && ((controlsPlugin && !controlsPlugin.hasCenterControls()) || !controlsPlugin);
+      && !$useNativeControls;
   }
 
   export const run = async (i, v = null) => {
@@ -89,13 +82,6 @@
     show = true;
     timer = setTimeout(() => { show = false; }, 600);
   };
-
-  // --------------------------------------------------------------
-  // Controls Plugin
-  // --------------------------------------------------------------
-
-  $: if (valueContainer && controlsPlugin) controlsPlugin.centerAssist(valueContainer);
-  $: if (actionContainer && controlsPlugin) controlsPlugin.centerAssist(actionContainer);
 </script>
 
 <style type="text/scss">

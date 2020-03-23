@@ -3,6 +3,31 @@ import LinkTo from "@storybook/addon-links/react";
 
 <Meta title="Packages/Html 5/Getting Started" />
 
+<img
+  width="300px"
+  alt="vime"
+  src="/brand/vime-html5--dark.svg"
+/>
+
+<br/>
+
+[![version-badge]][package]
+[![size-badge]][size]
+[![license-badge]][license]
+[![github-badge]][github]
+[![tweet-badge]][tweet]
+
+[package]: https://www.npmjs.com/package/@vime-js/html5
+[version-badge]: https://img.shields.io/npm/v/@vime-js/html5?style=flat-square
+[size]: https://bundlephobia.com/result?p=@vime-js/html5
+[size-badge]: https://img.shields.io/bundlephobia/minzip/@vime-js/html5?label=min%2Bgzip
+[license]: https://github.com/vime-js/vime/blob/master/LICENSE
+[license-badge]: https://img.shields.io/github/license/vime-js/vime?color=blue&style=flat-square
+[tweet]: https://twitter.com/intent/tweet?text=Check%20out%20Vime%20%28https%3A%2F%2Fgithub.com%2Fvime-js%2Fvime%29%2C%20it%20makes%20embedding%20and%20using%20media%20players%20for%20the%20web%20simple.%20It%20supports%20Html5%2C%20YouTube%2C%20Dailymotion%2C%20Vimeo%20and%20more%20to%20come%21
+[tweet-badge]: https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fvime-js%2Fvime
+[github]: https://github.com/vime-js/vime
+[github-badge]: https://img.shields.io/github/stars/vime-js/vime?style=social
+
 ## Installation
 
 This package contains a **Standard** (Html5) player. If you'd like to know what features a Standard player includes
@@ -21,24 +46,27 @@ The `dist` folder inside the package contains multiple exports:
 - `html5.min.js` is a UMD production build that can be used directly in the browser via the `<script>` tag.
 - `html5.esm.min.js` is an ESM production build that can be used directly in modern browsers via the `<script type="module">` tag.
 
-📝 **_UMD builds are exported under the `Vime` namespace._**
+📝 UMD builds are exported under the `Vime` namespace.
 
-📝 **_If you're using a bundler then it will automatically pull in the correct files._**
+📝 If you're using a bundler then it will automatically pull in the correct files.
 
-📝 **_If you're using [svelte-loader](https://github.com/sveltejs/svelte-loader) or [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) then you'll receive the uncompiled components._**
+📝 If you're using [svelte-loader](https://github.com/sveltejs/svelte-loader) or [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) then you'll receive the uncompiled components.
 
 ## Setup
 
 ### JavaScript
-
-📝 **_See the Svelte [Client-side component API](https://svelte.dev/docs#Client-side_component_API) for the complete set of component initialization options._**
 
 ```js
 import { Html5 } from '@vime-js/html5';
 
 // Mount
 const target = document.getElementById('player-target');
-const player = new Html5({ target });
+
+const player = new Html5({
+  target,
+  // If you'd like to initialize any props on setup, you can do so here.
+  props: {}
+});
 
 // ...
 
@@ -46,20 +74,28 @@ const player = new Html5({ target });
 player.$destroy();
 ```
 
+📝 See the Svelte [Client-side component API](https://svelte.dev/docs#Client-side_component_API) for the complete set of component initialization options.
+
 ### Svelte
 
 ```html
-<Html5 />
+<Html5 bind:this={player} />
 
 <script>
+  import { onMount } from 'svelte';
   import { Html5 } from '@vime-js/html5';
+
+  let player;
+
+  onMount(() => {
+    // If you need to call any methods, you have access to the player instance here.
+  });
 </script>
 ```
 
 ## Usage
 
-- The `Html5` component returns the core Vime player interface (see <LinkTo kind="api-player--page">API/Player</LinkTo>).
-- See <LinkTo kind="guides-setting-src--page">Guide/Setting Src</LinkTo> for how you can set the `src` prop.
+The `Html5` component returns the core Vime player interface (see <LinkTo kind="api-player--page">API/Player</LinkTo>).
 
 ## Examples
 

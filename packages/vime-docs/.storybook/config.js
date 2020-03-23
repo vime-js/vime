@@ -9,8 +9,6 @@ addParameters({
     title: 'Vime',
     theme,
     showRoots: true,
-    // Shortcuts like fullscreen interfere with the player.
-    enableShortcuts: false,
     storySort: sortStories
   },
   docs: {

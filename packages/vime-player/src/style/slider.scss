@@ -12,9 +12,9 @@
   $range-max-height: ($range-thumb-active-shadow-width * 2) + $range-thumb-height;
 
   $video-range-track-bg: $color-white-200;
-  $video-range-fill-bg: var(--theme, #fff);
+  $video-range-fill-bg: var(--color, #fff);
 
-  $audio-range-fill-bg: var(--theme, $color-dark);
+  $audio-range-fill-bg: var(--color, $color-dark);
   $audio-range-track-bg: $color-gray-100;
   $audio-range-thumb-shadow-color: $color-gray-100;
 

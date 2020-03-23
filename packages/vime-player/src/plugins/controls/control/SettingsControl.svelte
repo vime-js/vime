@@ -1,5 +1,4 @@
 <svelte:options accessors />
-<svelte:window on:keydown={onWindowKeyDown} />
 
 {#if isEnabled}
   <div>
@@ -13,7 +12,10 @@
       aria-expanded={isActive}
       aria-label={$i18n.settings}
       on:click
+      on:keydown
+      on:focuschange
       on:click={onToggle}
+      on:keydown={onKeyDown}
       bind:this={control}
     >
       <Icon icon={$icons.settings} />
@@ -29,8 +31,7 @@
 <script>
   import { tick } from 'svelte';
   import { Icon } from '@vime-js/core';
-  import Control from '../Control.svelte';
-  import PluginRole from '../../../core/PluginRole';
+  import Control from './Control.svelte';
   import { ID as SettingsID } from '../../settings/Settings.svelte';
 
   // --------------------------------------------------------------
@@ -39,58 +40,55 @@
 
   export let player;
 
-  const pluginsRegistry = player.getPluginsRegistry();
+  const plugins = player.getPluginsRegistry();
+  
   const {
-    i18n, icons, isLive, plugins,
-} = player.getStore();
+    i18n, icons, isLive,
+    hasSettings,
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
   let control;
-  let hasSettingsPlugin = false;
 
   export let id = null;
   export let menuId = null;
   export let isActive = false;
-  export let isEnabled = false;
+  export let isEnabled = true;
 
   export const getControl = () => control;
   
-  $: hasSettingsPlugin = $plugins.some((p) => p.ROLE === PluginRole.SETTINGS);
-  $: isEnabled = hasSettingsPlugin && !$isLive;
+  $: isEnabled = $hasSettings && !$isLive;
 
   // --------------------------------------------------------------
   // Settings Plugin
   // --------------------------------------------------------------
 
-  let onToggle;
-  let isSettingsActive;
+  let isMenuActive;
 
-  const onToggleHandler = (e) => {
+  const onToggle = (e) => {
+    if (!settings) return;
+    e.preventDefault();
     e.stopPropagation();
-    $isSettingsActive = !$isSettingsActive;
+    $isMenuActive = !$isMenuActive;
   };
 
-  const onWindowKeyDown = async (e) => {
-    if (e.keyCode !== 13 || !settingsPlugin) return;
-    onToggleHandler();
+  const onKeyDown = async (e) => {
+    if (e.keyCode !== 13 || !settings) return;
+    onToggle(e);
     // Wait for dom updates so menu is ready.
     await tick();
-    settingsPlugin.getMenu().setFocusToItem(0);
+    settings.getMenu().focus();
   };
 
-  $: settingsPlugin = $pluginsRegistry[SettingsID];
+  $: settings = $plugins[SettingsID];
 
-  $: if (settingsPlugin) {
-    ({ isMenuActive: isSettingsActive } = settingsPlugin.getStore());
-  }
-
-  $: isActive = !!$isSettingsActive;
-  $: id = settingsPlugin ? settingsPlugin.getLabelledBy() : null;
-  $: menuId = settingsPlugin ? settingsPlugin.getId() : null;
-  $: onToggle = (hasSettingsPlugin && settingsPlugin) ? onToggleHandler : null;
+  $: if (settings) id = settings.getControllerId();
+  $: if (settings) menuId = settings.getId();
+  $: if (settings) isActive = $isMenuActive;
+  $: if (settings) { ({ isMenuActive } = settings.getStore()); }
 </script>
 
 <style type="text/scss">

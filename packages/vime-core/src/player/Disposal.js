@@ -9,8 +9,8 @@ export default class Disposal {
     try_on_svelte_destroy(() => this.dispose());
   }
 
-  add(cb) {
-    this._dispose.push(cb);
+  add(callback) {
+    this._dispose.push(callback);
   }
 
   dispose() {

@@ -1,0 +1,20 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Keyboard/KeyboardShortcut" />
+
+# KeyboardShortcut `interface`
+
+A keyboard shortcut is an `object` with the following properties:
+
+### `hint: string` 
+
+Text that helps the user understand what key to press to use this shortcut.
+
+### `keys: int[]` 
+
+The [JS key codes](https://keycode.info) to listen to.
+
+### `action: () => void` 
+
+A callback to call when the key is pressed.

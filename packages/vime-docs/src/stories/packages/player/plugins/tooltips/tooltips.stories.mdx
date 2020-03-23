@@ -1,0 +1,135 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Tooltips/Tooltips" />
+
+# Tooltips `Plugin`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/tooltips/Tooltips.svelte)
+
+**ID:** `vTooltips`
+
+This plugin manages tooltips (see <LinkTo kind="packages-player-plugins-tooltips-tooltip--page">Tooltips/Tooltip</LinkTo>).
+
+💡 To see this plugin in action then go to 'Player/Components'.
+
+📝 This plugin has a `Registry` that can be accessed through the root registry under the `ID` listed above.
+
+## Setup
+
+### `plugins`
+
+```js
+import { Tooltips } from '@vime-js/player';
+
+player.plugins = [Tooltips];
+```
+
+### `PluginsManager`
+```js
+import { Tooltips } from '@vime-js/player';
+
+player
+  .getPluginsManager()
+  .addPlugin(Tooltips)
+  .then((tooltips) => {
+    // ...
+  });
+```
+
+## Usage
+
+### Create Tooltip
+
+```js
+// The target must be inside the element we want to add a tooltip for.
+const target = document.getElementById('tooltip-target');
+const tooltip = player.vTooltips.createTooltip('myTooltip', target);
+tooltip.title = 'Content inside tooltip';
+```
+
+### Update Tooltip
+
+See <LinkTo kind="packages-player-plugins-tooltips-tooltip--page">Tooltips/Tooltip</LinkTo> for
+the full API.
+
+```js
+const tooltip = player.vTooltips.getTooltip('myTooltip');
+tooltip.showHint = false;
+```
+
+### Remove Tooltip
+
+```js
+player.vTooltips.removeTooltip('myTooltip');
+```
+
+### Access Tooltip via Event
+
+```js
+player.vTooltips.$on('register', registration => {
+  const { id, value: tooltip } = registration;
+  if (id === 'myTooltip') {
+    // ...
+  }
+});
+```
+
+### Access Tooltip via Registry
+
+```js
+player.vTooltips.getRegistry().subscribe(tooltips => {
+  const tooltip = tooltips.myTooltip;
+  if (tooltip) {
+    // ...
+  }
+});
+```
+
+## Props
+
+### `autopilot: boolean`
+
+**Default:** `true`
+
+In autopilot mode the plugin will control certain properties automatically. Set this to `false` if you'd like to 
+control them yourself. Properties marked with `auto` are part of this system.
+
+### `isEnabled: boolean` `(auto)`
+
+**Default:** `true`
+
+Whether to render all tooltips in the DOM or not.
+
+### `showHints: boolean`
+
+**Default:** `true`
+
+Whether to show or hide `hint` texts on all registered tooltips.
+
+## Methods
+
+### `getRegistry(): Registry`
+
+The plugin registry where `Tooltip` instances are registered (see <LinkTo kind="api-registry--page">API/Registry</LinkTo>).
+
+### `getTooltips(): Tooltip[]`
+
+All registered `Tooltip` instances.
+
+### `getTooltip(id: string): Tooltip|undefined`
+
+The `Tooltip` instance for the given `id`.
+
+### `createTooltip(id: string, target: HTMLELement): Tooltip`
+
+Creates a `Tooltip` instance, mounts it on the given `target`, registers it under the given `id` and
+returns the instance.
+
+### `removeTooltip(id: string)`
+
+Destroys the `Tooltip` instance associated with the given `id` and deregisters it.
+
+### `getTooltipComponent(): TooltipConstructor`
+
+The `Tooltip` component constructor (see <LinkTo kind="packages-player-plugins-tooltips-tooltip--page">Tooltips/Tooltip</LinkTo>).

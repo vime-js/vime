@@ -2,7 +2,7 @@
   {#each events as event}
     <li data-uk-scrollspy>
       <span class="uk-text-emphasis uk-text-small">
-        {event.event}
+        <code>{event.event}</code>
         <span class="uk-text-muted uk-text-italic">
           (fired {event.timeAgo})
         </span>
@@ -12,6 +12,7 @@
       </span> 
       <pre><code>{JSON.stringify(event.data, undefined, 2)}</code></pre>
     </li>
+    <hr />
   {/each}
 </ul>
 

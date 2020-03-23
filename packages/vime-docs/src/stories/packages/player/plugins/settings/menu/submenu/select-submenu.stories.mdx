@@ -1,0 +1,86 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Settings/Menu/Submenu/SelectSubmenu" />
+
+# SelectSubmenu `Component`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/settings/menu/submenu/SelectSubmenu.svelte)
+
+Extends the base submenu (see <LinkTo kind="packages-player-plugins-settings-menu-submenu-submenu--page">Submenu/Submenu</LinkTo>) with 
+a list of radio buttons.
+
+## Props
+
+### `title: string|null`
+
+**Default:** `null`
+
+The title for the control that is responsible for showing/hiding the menu.
+
+### `value: any`
+
+**Default:** `null`
+
+The value of the currently selected radio button.
+
+### `options: any[]`
+
+**Default:** `[]`
+
+List of objects, where each `object` is a set of `MenuItemRadio` props (see <LinkTo kind="packages-player-plugins-settings-menu-menuitemradio--page#props">Menu/MenuItemRadio - Props</LinkTo>).
+
+### `emptyHint: string|null`
+
+**Default:** `''`
+
+The `hint` text to be used if there are no options.
+
+### `isActive: boolean`
+
+**Default:** `false`
+
+Whether the menu is visible or not.
+
+### `isDisabled: boolean`
+
+**Default:** `false`
+
+Whether the menu is rendered or not. The menu controller responsible for opening/closing the 
+submenu is visible regardless of this prop.
+
+### `hideController: boolean`
+
+**Default:** `false`
+
+Whether to hide the menu controller or not.
+
+## Methods
+
+### `getSubmenu(): Submenu`
+
+The underlying `Submenu` (see <LinkTo kind="packages-player-plugins-settings-menu-submenu-submenu--page">Submenu/Submenu</LinkTo>) instance.
+
+### `getMenuOptions(): MenuOptions`
+
+The underlying `MenuOptions` (see <LinkTo kind="packages-player-plugins-settings-menu-menuoptions--page">Menu/MenuOptions</LinkTo>) instance.
+
+## Events
+
+### `open`
+
+**Data Type:** `undefined`
+
+Fired when the menu becomes visible.
+
+### `close`
+
+**Data Type:** `undefined`
+
+Fired when the menu becomes hidden.
+
+### `valuechange`
+
+**Data Type:** `any`
+
+Fired when a radio button is clicked. The event data contains the radio's respective value.

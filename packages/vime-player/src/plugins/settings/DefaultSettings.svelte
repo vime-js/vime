@@ -4,7 +4,9 @@
 
 <script>
   import { onDestroy } from 'svelte';
+  import { Disposal } from '@vime-js/core';
   import { ID as SettingsID } from './Settings.svelte';
+  import SelectSubmenu from './menu/submenu/SelectSubmenu.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -12,102 +14,109 @@
 
   export let player;
 
+  const disposal = new Disposal();
   const plugins = player.getPluginsRegistry();
-  const { i18n, isVideoView, isAudio } = player.getStore();
+  
+  const {
+    i18n, isVideoView, isAudio,
+    canSetVideoQuality, videoQualities, videoQuality,
+    canSetTrack, tracks, currentTrackIndex,
+    canSetPlaybackRate, playbackRate, playbackRates,
+  } = player.getStore();
 
-  // --------------------------------------------------------------
-  // Settings Plugin
-  // --------------------------------------------------------------
+  let playbackRateMenu;
+  let captionsMenu;
+  let videoQualityMenu;
 
-  let menuItems;
+  const MENUS = ['vPlaybackRateMenu', 'vCaptionsMenu', 'vVideoQualityMenu'];
 
-  $: settingsPlugin = $plugins[SettingsID];
-  $: if (settingsPlugin) ({ menuItems } = settingsPlugin.getStore());
+  const onCreateMenus = async () => {
+    const onValueChange = (menu, callback) => {
+      const off = menu.$on('valuechange', (e) => { callback(e.detail); });
+      disposal.add(off);
+    };
+
+    ([
+      playbackRateMenu,
+      captionsMenu,
+      videoQualityMenu,
+    ] = await settings.createSubmenus(MENUS, SelectSubmenu));
+
+    onValueChange(playbackRateMenu, (rate) => { $playbackRate = rate; });
+    onValueChange(captionsMenu, (index) => { $currentTrackIndex = index; });
+    onValueChange(videoQualityMenu, (quality) => { $videoQuality = quality; });
+  };
+
+  const onDestroyMenus = () => {
+    disposal.dispose();
+    playbackRateMenu = null;
+    captionsMenu = null;
+    videoQualityMenu = null;
+    if (plugins[SettingsID]) settings.removeSubmenus(MENUS);
+  };
+
+  onDestroy(onDestroyMenus);
+
+  $: settings = $plugins[SettingsID];
+  $: if (settings && !playbackRateMenu) onCreateMenus();
+  $: if (!settings && playbackRateMenu) onDestroyMenus();
 
   // --------------------------------------------------------------
   // Playback Rate Menu
   // --------------------------------------------------------------
 
-  const PLAYBACK_RATE_MENU = 'playbackRateMenuItem';
-
-  const { canSetPlaybackRate, playbackRate, playbackRates } = player.getStore();
-
-  onDestroy(() => { if ($menuItems) delete $menuItems[PLAYBACK_RATE_MENU]; });
-
-  $: if ($menuItems) {
-    $menuItems[PLAYBACK_RATE_MENU] = {
-      id: PLAYBACK_RATE_MENU,
+  $: if (playbackRateMenu) {
+    playbackRateMenu.$set({
       title: $i18n.speed,
       value: $playbackRate,
-      options: playbackRateMenuOptions,
+      options: ($playbackRates.length === 1) ? [] : playbackRateOptions,
       emptyHint: $i18n.normal,
       isDisabled: !$canSetPlaybackRate || ($playbackRates.length === 0),
-      onValueChange: (v) => { $playbackRate = v; },
-    };
+    });
   }
 
-  $: playbackRateMenuOptions = ($playbackRates.length === 1)
-    ? []
-    : $playbackRates.map((rate) => ({
-      title: (rate === 1) ? $i18n.normal : rate,
-      value: rate,
-    }));
+  $: playbackRateOptions = $playbackRates.map((rate) => ({
+    title: (rate === 1) ? $i18n.normal : rate,
+    value: rate,
+  }));
 
   // --------------------------------------------------------------
   // Captions Menu
   // --------------------------------------------------------------
 
-  const CAPTION_MENU = 'captionMenuItem';
-  
-  const { canSetTrack, tracks, currentTrackIndex } = player.getStore();
-
-  onDestroy(() => { if ($menuItems) delete $menuItems[CAPTION_MENU]; });
-
-  $: if ($menuItems) {
-    $menuItems[CAPTION_MENU] = {
-      id: CAPTION_MENU,
+  $: if (captionsMenu) {
+    captionsMenu.$set({
       title: $i18n.subtitlesOrCc,
       value: $currentTrackIndex,
-      options: captionMenuOptions,
+      options: !$isVideoView ? [] : captionsOptions,
       emptyHint: $i18n.none,
       isDisabled: !$canSetTrack || ($tracks.length === 0),
-      onValueChange: (v) => { $currentTrackIndex = v; },
-    };
+    });
   }
 
-  $: captionMenuOptions = (!$isVideoView)
-    ? []
-    : [{
-      title: $i18n.off,
-      value: -1,
-    }, ...$tracks.map((track, i) => ({
-      title: track.label,
-      value: i,
-    }))];
+  $: captionsOptions = [{
+    title: $i18n.off,
+    value: -1,
+  }, ...$tracks.map((track, i) => ({
+    title: track.label,
+    value: i,
+  }))];
 
   // --------------------------------------------------------------
-  // Quality Menu
+  // Video Quality Menu
   // --------------------------------------------------------------
   
-  const VIDEO_QUALITY_MENU = 'videoQualityMenuItem';
-  
-  const { canSetVideoQuality, videoQualities, videoQuality } = player.getStore();
-
-  onDestroy(() => { if ($menuItems) delete $menuItems[VIDEO_QUALITY_MENU]; });
-
-  $: if ($menuItems) {
-    $menuItems[VIDEO_QUALITY_MENU] = {
-      id: VIDEO_QUALITY_MENU,
+  $: if (videoQualityMenu) {
+    videoQualityMenu.$set({
       title: $i18n.videoQuality,
       value: $videoQuality,
-      options: videoQualityMenuOptions,
+      options: $isAudio ? [] : videoQualityOptions,
       emptyHint: $i18n.default,
       isDisabled: !$canSetVideoQuality || ($videoQualities.length === 0),
-      onValueChange: (v) => { $videoQuality = v; },
-    };
+    });
   }
 
-  $: videoQualityMenuOptions = $isAudio ? [] : $videoQualities.map((quality) => ({
+  $: videoQualityOptions = $videoQualities.map((quality) => ({
     title: `${quality}p`,
     value: quality,
     badge: (quality >= 720) ? 'HD' : null,

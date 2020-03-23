@@ -25,7 +25,7 @@
   import PlayerWrapper from './PlayerWrapper.svelte';
 
   import {
-    tick, onMount, onDestroy,
+    tick as svelteTick, onMount, onDestroy,
     afterUpdate,
   } from 'svelte';
 
@@ -36,7 +36,7 @@
 
   let self = get_current_component();
 
-  let { store, resetStore, onPropsChange } = mapPlayerStoreToComponent(self);
+  const { store, resetStore, onPropsChange } = mapPlayerStoreToComponent(self);
   $: onPropsChange($$props);
 
   const {
@@ -60,11 +60,13 @@
     canSetPlaybackRate, canSetVideoQuality,
   } = store;
 
-  let props = {};
+  const props = {};
   let playerWrapper;
 
   export let Provider = null;
   export let parentEl = null;
+
+  export const tick = () => svelteTick();
 
   // TODO: replace this with $$rest when released.
   const filteredProps = Object.keys({ Provider, parentEl });
@@ -76,12 +78,6 @@
     .forEach((prop) => { (props[prop] = $$props[prop]); });
 
   onDestroy(() => {
-    props = {};
-    store = {};
-    playerWrapper = null;
-    Provider = null;
-    resetStore = noop;
-    onPropsChange = noop;
     if ($currentPlayer === self) $currentPlayer = null;
     self = null;
   });
@@ -103,7 +99,7 @@
   const cancelTempAction = async (cb) => {
     // Give some time for the provider to be set to it's original value before we receive
     // event updates.
-    await tick();
+    await svelteTick();
     setTimeout(() => {
       cb();
     }, 100);
@@ -181,7 +177,7 @@
   const onRebuildEnd = async () => {
     if (!$playbackReady || !$rebuilding) return;
     if ($currentTime > 0) $provider.setCurrentTime($currentTime);
-    await tick();
+    await svelteTick();
     $rebuilding = false;
     // eslint-disable-next-line no-use-before-define
     if ($isFullscreenActive) requestFullscreen().catch(noop);
@@ -192,7 +188,7 @@
     // Cancel any existing temp states as rebuild may be called multiple times.
     tempMute = false;
     tempPlay = false;
-    await tick();
+    await svelteTick();
     if ($currentTime > 0 && $canMutedAutoplay) {
       initiateTempPlayback();
       return;
@@ -201,8 +197,8 @@
   };
 
   const onPlaybackReady = async () => {
-    // Wait a tick incase of any src changes.
-    await tick();
+    // Wait incase of any sudden src changes.
+    await svelteTick();
     $playbackReady = true;
     $buffering = false;
     onRebuild();
@@ -218,11 +214,10 @@
   let firePauseTimer;
   const onPause = () => {
     firePauseTimer = window.setTimeout(() => {
-      if ($useNativeControls && !tempPause) {
-        $paused = true;
-        $buffering = false;
-      }
-      if (!tempPause) $playing = false;
+      if (tempPause) return;
+      $paused = true;
+      $buffering = false;
+      $playing = false;
     }, 100);
   };
 
@@ -247,7 +242,7 @@
   const onSeeked = async () => {
     if (!$seeking) return;
     // Wait incase `seeking` and `seeked` are fired immediately after each other.
-    await tick();
+    await svelteTick();
     onBuffered($buffered);
   };
 
@@ -262,8 +257,10 @@
     onSeeked();
     onAutopause();
     $currentPlayer = self;
-    if ($useNativeControls && !tempPlay) $paused = false;
-    if (!tempPlay) $playing = true;
+    if (!tempPlay) {
+      $paused = false;
+      $playing = true;
+    }
     $provider.setPaused($paused);
     $provider.setMuted($muted);
     cancelTempAction(() => {
@@ -275,7 +272,7 @@
 
   const onLoop = async () => {
     if (get(store.live) || !get(store.loop)) return;
-    await tick();
+    await svelteTick();
     onRestart();
   };
 
@@ -286,7 +283,7 @@
   };
 
   const onStateChange = async (state) => {
-    await tick();
+    await svelteTick();
     switch (state) {
       case PlayerState.CUED:
         onPlaybackReady();
@@ -313,7 +310,7 @@
   const onUpdate = (e) => {
     const info = e.detail;
     if (info.state) onStateChange(info.state);
-    if (info.play && $useNativeControls && !tempPlay) onPlay();
+    if (info.play && !tempPlay) onPlay();
     if (info.rebuild) onRebuildStart();
     if ($rebuilding) return;
     if ((is_null(info.poster) || info.poster)) store.nativePoster.set(info.poster);
@@ -411,6 +408,7 @@
   const NO_PIP_SUPPORT_ERROR_MSG = 'Provider does not support PiP.';
   const VIDEO_NOT_READY_ERROR_MSG = 'Action not supported, must be a video that is ready for playback.';
   
+  // TODO: check if the player has mounted.
   const pipRequest = (active) => {
     if (!$isVideoReady) { return Promise.reject(VIDEO_NOT_READY_ERROR_MSG); }
     if (!$canSetPiP) { return Promise.reject(NO_PIP_SUPPORT_ERROR_MSG); }
@@ -455,6 +453,7 @@
     }
   };
 
+  // TODO: check when exiting if current element is this player.
   const requestDocumentFullscreen = (active) => {
     const el = parentEl || playerWrapper;
     if (!el) return Promise.reject();

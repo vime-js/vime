@@ -1,5 +1,5 @@
 <Time 
-  time={$currentTime}
+  seconds={$currentTime}
   aria-label={$i18n.currentTime}
 />
 

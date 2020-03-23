@@ -20,7 +20,7 @@
     aria-valuenow={$currentTime}
     aria-valuetext={scrubberLabel}
     aria-orientation="horizontal"
-    use:inputRangeTouch
+    use:vInputTouch
     on:input={onSeek}
     bind:this={slider}
   />
@@ -58,8 +58,7 @@
 </script>
 
 <script>
-  import { formatTime, inputRangeTouch } from '@vime-js/core';
-  import { set_style_raf } from '@vime-js/utils';
+  import { set_style_raf, format_time, vInputTouch } from '@vime-js/utils';
   import { ID as TooltipsID } from '../../tooltips/Tooltips.svelte';
 
   // --------------------------------------------------------------
@@ -98,8 +97,8 @@
   $: ariaDuration = Math.max(0, $duration);
   
   $: scrubberLabel = $i18n.scrubberLabel
-    .replace('{currentTime}', formatTime($currentTime))
-    .replace('{duration}', formatTime(ariaDuration));
+    .replace('{currentTime}', format_time($currentTime))
+    .replace('{duration}', format_time(ariaDuration));
 
   // --------------------------------------------------------------
   // Tooltips Plugin
@@ -119,9 +118,9 @@
     }
   };
 
-  $: tooltipsPlugin = $plugins[TooltipsID];
-  $: Tooltip = tooltipsPlugin && tooltipsPlugin.getTooltipComponent();
-  $: tooltipsRegistry = tooltipsPlugin && tooltipsPlugin.getRegistry();
+  $: tooltips = $plugins[TooltipsID];
+  $: Tooltip = tooltips && tooltips.getTooltipComponent();
+  $: tooltipsRegistry = tooltips && tooltips.getRegistry();
   
   $: if (tooltipsRegistry && tooltip && !tooltipsRegistry.has(LABEL)) {
     tooltipsRegistry.register(LABEL, tooltip);
@@ -138,7 +137,7 @@
     const rect = scrubber.getBoundingClientRect();
     const percent = Math.max(0, Math.min(100, (100 / rect.width) * (e.pageX - rect.left)));
     tooltipActive = e.type !== 'mouseleave';
-    tooltipTitle = formatTime(($duration / 100) * percent);
+    tooltipTitle = format_time(($duration / 100) * percent);
     setTooltipXPos(percent, (percent / 100) * rect.width);
   };
 </script>

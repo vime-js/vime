@@ -1,5 +1,117 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta } from "@storybook/addon-docs/blocks";
+import LinkTo from "@storybook/addon-links/react";
 
 <Meta title="API/Registry" />
 
-wip.
+# Registry `class`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-core/src/player/Registry.js)
+
+The `Registry` class represents a collection of `id` and `value` pairs known as records. Each `id` is a `string`
+that identifies a `value` (which can be anything, including another `Registry` which we then call a subregistry).
+Each `id` is unique so it can only be registered once, unless it is deregistered and registered again.
+
+### Notes
+
+- Registries are an integral part of the Vime plugin system, read more 
+  at <LinkTo kind="packages-player-plugins-introduction-how-it-works--page">Plugins/How it Works</LinkTo>.
+- A registry is powered by a [Svelte store](https://svelte.dev/docs#svelte_store). Thus, you can
+  subscribe to the `Registry` and be updated of any changes to its records.
+- If a registry is created within a Plugin (aka Svelte component), it will automatically destroy
+  itself when the component does.
+- If a registered value is a Svelte component, it will automatically be deregistered
+  when the component is destroyed.
+
+## Setup
+
+`new Registry(id: string, validator: ((id: string, value: any) => boolean)?)`
+
+```js
+import { Registry } from "@vime-js/core";
+
+const id = "myRegistry";
+
+// Values are not registered if they fail validation. This should log a message so developers
+// are aware of why a particular registration failed.
+const optionalValidator = (id, value) => true;
+
+const registry = new Registry(id, optionalValidator);
+
+// ...
+
+// No need to call this if we are inside a Plugin (aka Svelte component).
+registry.destroy();
+```
+
+## Methods
+
+### `getId(): string`
+
+The id the registry was created with.
+
+### `getName(): string`
+
+The name of the registry, which is simply 'Registry' appended to the id. This is used for logging errors.
+
+### `getRegistrations(): string[]`
+
+A list of all registered id's.
+
+### `getValue(id: string): any`
+
+Gets the currently registered value for the given id.
+
+### `getValues(): any[]`
+
+A list of all registered values.
+
+### `has(id: string): boolean`
+
+Checks whether any value is registered to the given id.
+
+### `invalidate()`
+
+Notifies the registry to send a new copy of it's records to subscribers. Bubbles up to parent registries.
+
+### `register(id: string, value: any)`
+
+Registers a value under the given id. This method throws if there is no id or if it is taken.
+
+### `deregister(id: string)`
+
+Deregisters an id and removes it's corresponding value.
+
+### `subscribe()`
+
+A readonly store that emits updated copies of all records. All subregistries are unwrapped to return their records.
+
+### `destroy()`
+
+Deregisters all registrations, and if it is a subregistry it deregisters itself from its parent.
+
+## Events
+
+Events are only emitted if the registry is created within a Plugin (aka Svelte component). The event
+is emitted using the components event dispatcher.
+
+### `register`
+
+**Data Type:** `{ id: string, value: any }`
+
+Fires on new registrations.
+
+### `deregister`
+
+**Data Type:** `string`
+
+Fires on deregistrations with the `id` of the deregistered value.
+
+## Store
+
+```js
+const registry = new Registry('myRegistry');
+
+registry.subscribe(records => {
+  console.log(records);
+});
+```

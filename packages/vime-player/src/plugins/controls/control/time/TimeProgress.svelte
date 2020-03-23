@@ -1,7 +1,7 @@
 <div>
   <CurrentTime {player} />
   <TimeDivider />
-  <DurationTime {player} />
+  <EndTime {player} />
 </div>
 
 <script context="module">
@@ -12,7 +12,7 @@
 <script>
   import CurrentTime from './CurrentTime.svelte';
   import TimeDivider from './TimeDivider.svelte';
-  import DurationTime from './DurationTime.svelte';
+  import EndTime from './EndTime.svelte';
 
   export let player;
 </script>

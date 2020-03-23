@@ -27,15 +27,15 @@
   // --------------------------------------------------------------
 
   export let autopilot = true;
-  export let isEnabled = false;
+  export let isEnabled = true;
 
   $: if (autopilot) {
     isEnabled = $isControlsEnabled
-    && $canSetFullscreen
-    && $canInteract
-    && $isVideoView
-    && !$isMobile
-    && !$useNativeControls;
+      && $canSetFullscreen
+      && $canInteract
+      && $isVideoView
+      && !$isMobile
+      && !$useNativeControls;
   }
 
   // --------------------------------------------------------------

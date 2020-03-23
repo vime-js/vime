@@ -1,14 +1,17 @@
 <svelte:options accessors />
 
-{#if isEnabled}
-  <div class:active={isActive}></div>
-{/if}
+<div 
+  use:vIf={isEnabled}
+  use:vShow={isActive}
+></div>
 
 <script context="module">
   export const ID = 'vScrim';
 </script>
 
 <script>
+  import { vIf, vShow } from '@vime-js/utils';
+
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
@@ -25,7 +28,7 @@
   // --------------------------------------------------------------
 
   export let autopilot = true;
-  export let isEnabled = false;
+  export let isEnabled = true;
   export let isActive = false;
 
   $: if (autopilot) isEnabled = $isVideoView && !$useNativeControls;
@@ -43,12 +46,6 @@
     right: 0;
     z-index: 1;
     background: $color-gray-300;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
     pointer-events: none;
-
-    &.active {
-      opacity: 1;
-    }
   }
 </style>

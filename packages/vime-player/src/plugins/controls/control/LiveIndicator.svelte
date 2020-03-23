@@ -1,6 +1,6 @@
-{#if $isLive}
-  <div>{$i18n.live}</div>
-{/if}
+<div use:vIf={$isLive}>
+  {$i18n.live}
+</div>
 
 <script context="module">
   export const ID = 'vLiveIndicator';
@@ -8,6 +8,8 @@
 </script>
 
 <script>
+  import { vIf } from '@vime-js/utils';
+
   export let player;
 
   const { isLive, i18n } = player.getStore();

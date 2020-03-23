@@ -46,7 +46,7 @@
   };
 
   const onInitializeKeyboard = () => {
-    keyboardRegistry.register(PlaybackControl.LABEL, {
+    keyboard.addShortcut(PlaybackControl.LABEL, {
       hint: 'space/k',
       keys: [32, 75],
       action: () => {
@@ -56,7 +56,7 @@
       },
     });
 
-    keyboardRegistry.register(VolumeControl.LABEL, {
+    keyboard.addShortcut(VolumeControl.LABEL, {
       // Up Arrow (38), Down Arrow (40)
       keys: [38, 40],
       action: (e) => {
@@ -73,7 +73,7 @@
       },
     });
 
-    keyboardRegistry.register(MuteControl.LABEL, {
+    keyboard.addShortcut(MuteControl.LABEL, {
       hint: 'm',
       keys: [77],
       action: () => {
@@ -84,7 +84,7 @@
     });
 
     let prevTrackIndex = -1;
-    keyboardRegistry.register(CaptionControl.LABEL, {
+    keyboard.addShortcut(CaptionControl.LABEL, {
       hint: 'c',
       keys: [67],
       action: () => {
@@ -95,7 +95,7 @@
       },
     });
 
-    keyboardRegistry.register(PiPControl.LABEL, {
+    keyboard.addShortcut(PiPControl.LABEL, {
       hint: 'p',
       keys: [80],
       action: () => {
@@ -105,7 +105,7 @@
       },
     });
 
-    keyboardRegistry.register(FullscreenControl.LABEL, {
+    keyboard.addShortcut(FullscreenControl.LABEL, {
       hint: 'f',
       keys: [70],
       action: () => {
@@ -117,7 +117,7 @@
       },
     });
 
-    keyboardRegistry.register(ScrubberControl.LABEL, {
+    keyboard.addShortcut(ScrubberControl.LABEL, {
       // Left Arrow (37), Right Arrow (39)
       keys: [37, 39],
       action: (e) => {
@@ -133,17 +133,18 @@
 
   onDestroy(() => {
     if (!$plugins[KeyboardID]) return;
-    const deregister = (Control) => keyboardRegistry.deregister(Control.LABEL);
-    deregister(PlaybackControl);
-    deregister(VolumeControl);
-    deregister(MuteControl);
-    deregister(CaptionControl);
-    deregister(PiPControl);
-    deregister(FullscreenControl);
+    const controls = [
+      PlaybackControl,
+      VolumeControl,
+      MuteControl,
+      CaptionControl,
+      PiPControl,
+      FullscreenControl,
+    ];
+    keyboard.removeShortcuts(controls.map((Control) => Control.LABEL));
   });
 
-  $: keyboardPlugin = $plugins[KeyboardID];
-  $: keyboardRegistry = keyboardPlugin && keyboardPlugin.getRegistry();
-  $: if (keyboardRegistry && !hasKeyboardInitialized) onInitializeKeyboard();
-  $: if (!keyboardRegistry && hasKeyboardInitialized) hasKeyboardInitialized = false;
+  $: keyboard = $plugins[KeyboardID];
+  $: if (keyboard && !hasKeyboardInitialized) onInitializeKeyboard();
+  $: if (!keyboard && hasKeyboardInitialized) hasKeyboardInitialized = false;
 </script>

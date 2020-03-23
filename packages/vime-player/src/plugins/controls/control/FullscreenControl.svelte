@@ -30,7 +30,7 @@
 
   const {
     icons, i18n, canSetFullscreen, isFullscreenActive,
-} = player.getStore();
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props

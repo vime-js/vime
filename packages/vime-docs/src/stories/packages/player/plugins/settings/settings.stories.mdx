@@ -1,0 +1,233 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Settings/Settings" />
+
+# Settings `Plugin`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/settings/Settings.svelte)
+
+**ID:** `vSettings`
+
+**ROLE:** `SETTINGS`
+
+This plugin renders and manages submenus. The root menu is a small popup on desktop, and a fullscreen modal on mobile.
+
+💡 To see this plugin in action then go to 'Player/Components'.
+
+📝 This plugin has a `Registry` that can be accessed through the root registry under the `ID` listed above.
+
+## Default Settings
+
+By default there are no submenus, but you can install an additional `DefaultSettings` plugin to
+get started with the Vime defaults. The default Vime settings includes submenus for setting the 
+playback rate, video quality and captions/subtitles.
+
+## Setup
+
+### `plugins`
+
+```js
+import { Settings, DefaultSettings } from '@vime-js/player';
+
+player.plugins = [Settings, DefaultSettings];
+```
+
+### `PluginsManager`
+
+```js
+import { Settings, DefaultSettings } from '@vime-js/player';
+
+player
+  .getPluginsManager()
+  .addPlugins([Settings, DefaultSettings])
+  .then(([settings]) => {
+    // ...
+  });
+```
+
+## Usage
+
+### Create a Submenu
+
+```js
+import { SelectSubmenu } from '@vime-js/player';
+
+player
+  .vSettings
+  .createSubmenu('playbackRateMenu', SelectSubmenu)
+  .then(submenu => {
+    const options = player.playbackRates.map((rate) => ({
+      title: (rate === 1) ? player.i18n.normal : rate,
+      value: rate,
+    }));
+
+    // $set is part of the Svelte component API, you can individually set these props as well.
+    submenu.$set({
+      title: player.i18n.speed,
+      value: player.playbackRate,
+      options: (player.playbackRates.length === 1) ? [] : options,
+      emptyHint: player.i18n.normal,
+      isDisabled: !player.canSetPlaybackRate || (player.playbackRates.length === 0),
+    });
+
+    submenu.$on('valuechange', e => {
+      player.playbackRate = e.detail;
+    });
+  });
+```
+
+### Update a Submenu
+
+See <LinkTo kind="packages-player-plugins-settings-menu-submenu-selectsubmenu--page">Submenu/SelectSubmenu</LinkTo> for
+the full API.
+
+```js
+const submenu = player.vSettings.getSubmenu('playbackRateMenu');
+const { playbackRate } = player.getStore();
+
+playbackRate.subscribe(rate => {
+  submenu.value = rate;
+});
+
+// ...
+```
+
+### Remove a Submenu
+
+```js
+player
+  .vSettings
+  .removeSubmenu('playbackRateMenu')
+  .then(() => {
+    // ...
+  });
+```
+
+### Access Submenu via Event
+
+```js
+player.vSettings.$on('register', registration => {
+  const { id, value: submenu } = registration;
+  if (id === 'playbackRateMenu') {
+    // ...
+  }
+});
+```
+
+### Access Submenu via Registry
+
+```js
+player.vSettings.getRegistry().subscribe(menus => {
+  const submenu = menus.playbackRateMenu;
+  if (submenu) {
+    // ...
+  }
+});
+```
+
+## Props
+
+### `isMenuActive: boolean`
+
+**Default:** `false`
+
+Whether the root settings menu is visible or not.
+
+### `currentSubmenu: string|null`
+
+**Default:** `null`
+
+The `id` of the currently active submenu.  If it is `null` then no submenu is active.
+
+## Store
+
+All properties for this plugin are backed by a Svelte store which you can access via the `getStore`
+method.
+
+```js
+const { isMenuActive } = player.vSettings.getStore();
+```
+
+## Methods
+
+### `getRegistry(): Registry`
+
+The plugin registry where `Submenu` instances are registered (see <LinkTo kind="api-registry--page">API/Registry</LinkTo>).
+
+### `getStore(): object`
+
+See the [Store](#store) section above.
+
+### `getEl(): HTMLElement`
+
+The root component HTML element.
+
+### `getId(): string`
+
+An auto-generated id for the root menu element in the form `settings-{count}`. This is to distinguish
+between multiple player menus on the same page.
+
+### `getControllerId(): string`
+
+An auto-generated id for the root menu controller in the form `settings-control-{count}`.
+
+### `getMenu(): Menu`
+
+The underlying `Menu` instance (see <LinkTo kind="packages-player-plugins-settings-menu-menu--page">Menu/Menu</LinkTo>).
+
+### `getSubmenus(): Submenu[]`
+
+The rendered `Submenu` instances.
+
+### `getSubmenu(id: string): Submenu|undefined`
+
+The rendered `Submenu` instance for the given `id`.
+
+### `createSubmenu(id: string, type: component = Submenu): Promise<Submenu>`
+
+Creates and renders a `Submenu` component and returns a `Promise` that will resolve with the 
+rendered instance. The `type` field can be used to pass in a component that extends the base `Submenu`.
+
+### `createSubmenus(ids: string[], type: component = Submenu): Promise<Submenu[]>`
+
+Creates and renders a list of `Submenu` components and returns all their instances via a `Promise`.
+The `type` field can be used to pass in a component that extends the base `Submenu`.
+
+### `removeSubmenu(id: string): Promise<undefined>`
+
+Destroys a `Submenu` instance matching the given `id` and returns a `Promise` that will resolve
+once it has completed.
+
+### `removeSubmenus(ids: string[]): Promise<undefined>`
+
+Destroys multiple `Submenu` instances matching the given `ids` and returns a `Promise` that will
+resolve once it has completed.
+
+## Events
+
+See <LinkTo kind="api-registry--page#events">API/Registry - Events.</LinkTo>
+
+### `open`
+
+**Data Type:** `undefined`
+
+Fired when the root menu becomes visible.
+
+### `close`
+
+**Data Type:** `undefined`
+
+Fired when the root menu becomes hidden.
+
+### `opensubmenu`
+
+**Data Type:** `string`
+
+Fired with the id of the submenu that's visible.
+
+### `closesubmenu`
+
+**Data Type:** `string`
+
+Fired with the id of the submenu that's hidden.

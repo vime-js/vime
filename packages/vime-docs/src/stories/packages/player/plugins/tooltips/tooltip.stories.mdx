@@ -1,0 +1,62 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Tooltips/Tooltip" />
+
+# Tooltip `Component`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/tooltips/Tooltip.svelte)
+
+A tooltip is a small pop-up box that appears when a user moves their mouse over an element. Their main 
+purpose is to provide the user with a description about that element.
+
+## Props
+
+### `id: string|null`
+
+**Default:** `null`
+
+Sets the `id` attribute.
+
+### `title: string|null`
+
+**Default:** `null`
+
+The content to be displayed inside the tooltip.
+
+### `hint: string|null`
+
+**Default:** `null`
+
+The hint is some optional text that provides some more context.
+
+### `isEnabled: boolean`
+
+**Default:** `true`
+
+Whether to render the tooltip in the DOM or not.
+
+### `isActive: boolean`
+
+**Default:** `false`
+
+Whether to show or hide the tooltip.
+
+### `showHint: boolean`
+
+**Default:** `true`
+
+Whether to show or hide the `hint` text.
+
+### `noBounding: boolean`
+
+**Default:** `false`
+
+Whether the tooltip should stop checking if the tooltip is outside the players boundaries and 
+changing direction of its content to stay inside.
+
+## Methods
+
+### `getEl(): HTMLElement`
+
+The root component HTML element.
