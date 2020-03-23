@@ -1,9 +1,9 @@
 <div align="center">
   <a href="#">
     <img
-      width="30%"
+      width="70%"
       alt="vime"
-      src="https://raw.githubusercontent.com/vime-js/vime/master/static/brand/vime-logo--dark.svg?sanitize=true"
+      src="https://raw.githubusercontent.com/vime-js/vime/master/static/brand/vime-docs--dark.svg?sanitize=true"
     />
   </a>
 
