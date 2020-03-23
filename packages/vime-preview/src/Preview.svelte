@@ -2,27 +2,26 @@
 
 <div 
   class="preview"
-  use:setAspectRatio={isEnabled ? aspectRatio : null}
+  use:vAspectRatio={isEnabled ? aspectRatio : null}
 >
   <div class="loadingContainer">
     <div class:loading={isLoading}></div> 
   </div>
   <Lazy let:intersecting >
-    {#if isEnabled && intersecting}
-      <img
-        class:active={!isLoading}
-        src={poster || nativePoster} 
-        alt="Preview for {src}"
-        on:load={onLoad}
-        bind:this={img}
-      />
-      <div 
-        class="playIcon"
-        class:active={showPlayIcon && !isLoading}
-      >
-        <PlayIcon />
-      </div>
-    {/if}
+    <img
+      src={poster || nativePoster} 
+      alt="Preview for {src}"
+      use:vIf={isEnabled && intersecting}
+      use:vShow={!isLoading}
+      on:load={onLoad}
+      bind:this={img}
+    />
+    <div 
+      class="playIcon"
+      use:vShow={showPlayIcon && !isLoading}
+    >
+      <PlayIcon />
+    </div>
   </Lazy>
 </div>
 
@@ -32,12 +31,16 @@
 
 <script>
   import { tick, createEventDispatcher } from 'svelte';
-  import { aspectRatio as setAspectRatio, Lazy } from '@vime-js/core';
-  import { is_function } from '@vime-js/utils';
+  import { Lazy } from '@vime-js/core';
   import { utils as Dailymotion } from '@vime-js/dailymotion';
   import { utils as YouTube } from '@vime-js/youtube';
   import { utils as Vimeo } from '@vime-js/vimeo';
   import PlayIcon from './PlayIcon.svelte';
+  
+  import {
+    is_function, vAspectRatio, vIf,
+    vShow,
+  } from '@vime-js/utils';
 
   const dispatch = createEventDispatcher();
 
@@ -109,12 +112,6 @@
     z-index: 1;
     pointer-events: none;
     object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-
-    &.active {
-      opacity: 1;
-    }
   }
 
   .playIcon {
@@ -127,13 +124,7 @@
     align-items: center;
     justify-content: center;
     z-index: 2;
-    opacity: 0;
     color: #fff;
-    transition: opacity 0.3s ease;
-
-    &.active {
-      opacity: 1;
-    }
   }
 
   @keyframes loading {
