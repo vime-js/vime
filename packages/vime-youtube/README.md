@@ -1,12 +1,13 @@
 <div align="center">
   <a href="#">
     <img
-      width="70%"
+      width="400px"
       alt="vime"
       src="https://raw.githubusercontent.com/vime-js/vime/master/static/brand/vime-youtube--dark.svg?sanitize=true"
     />
   </a>
 
+  <br />
   <br />
   <br />
 
@@ -16,6 +17,8 @@
   [![github-badge]][github]
   [![tweet-badge]][tweet]
 </div>
+
+<br />
 
 Documentation coming soon.
 

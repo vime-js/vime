@@ -24,7 +24,7 @@ const getFileSizes = (path) => ({
 const pkgSizes = {};
 const packagesPath = `${process.cwd()}/packages`;
 const packages = fs.readdirSync(packagesPath);
-const packageFilter = process.argv.slice(2).map((p) => (p.startsWith('@') ? p.slice(1).replace('/', '-') : p));
+const packageFilter = process.argv.slice(2).map((p) => (p.startsWith('@') ? p.slice(1).replace('-js/', '-') : p));
 
 packages.forEach((pkg) => {
   if (

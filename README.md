@@ -1,7 +1,7 @@
 <div align="center">
   <a href="#">
     <img
-      width="30%"
+      width="250px"
       alt="vime"
       src="https://raw.githubusercontent.com/vime-js/vime/master/static/brand/vime-logo--dark.svg?sanitize=true"
     />
