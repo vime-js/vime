@@ -5,6 +5,9 @@ export default {
       { src: '/media/video/1080p.mp4', type: 'video/mp4', quality: 1080 },
       { src: '/media/video/720p.mp4', type: 'video/mp4', quality: 720 },
       { src: '/media/video/480p.mp4', type: 'video/mp4', quality: 480 },
+      { src: '/media/video/360p.mp4', type: 'video/mp4', quality: 360 },
+      { src: '/media/video/240p.mp4', type: 'video/mp4', quality: 240 },
+      { src: '/media/video/144p.mp4', type: 'video/mp4', quality: 144 },
     ],
     POSTER: '/media/video/poster.png',
     TRACKS: [{
@@ -47,11 +50,17 @@ export default {
     LITE: [
       'load',
       'data',
-      'message',
       'rebuild',
       'srcchange',
       'titlechange',
       'originchange',
+      'error',
+    ],
+    COMPLETE: [
+      'mount',
+      'destroy',
+      'pluginmount',
+      'plugindestroy',
       'error',
     ],
   },

@@ -1,4 +1,3 @@
-import { tick } from 'svelte';
 import { get, writable, derived } from 'svelte/store';
 import { create_prop, merge_obj_deep } from './object';
 import { is_function } from './unit';
@@ -165,7 +164,6 @@ export const make_private_stores_readonly = (stores) => {
 };
 
 export const map_store_to_component = (comp, stores) => {
-  let ctx = {};
   let canWrite = {};
   const component = comp || get_current_component();
 
@@ -175,30 +173,26 @@ export const map_store_to_component = (comp, stores) => {
   });
 
   component.$$.on_destroy.push(() => {
-    Object.keys(ctx).forEach((prop) => { delete component[prop]; });
+    Object.keys(stores).forEach((prop) => { delete component[prop]; });
     delete component.getStore;
-    ctx = {};
     canWrite = {};
   });
 
   const onUpdateProp = (prop, newValue) => {
-    if (!canWrite[prop] || !not_equal(ctx[prop], newValue)) return noop;
-    ctx[prop] = newValue;
+    if (!canWrite[prop] || !not_equal(get(stores[prop]), newValue)) return;
     stores[prop].set(newValue);
-    return tick();
   };
 
   Object.keys(stores).forEach((prop) => {
     const store = stores[prop];
-    ctx[prop] = get(store);
     canWrite[prop] = !!store.set && !store.private;
     create_prop(component, prop, {
       get: () => get(store),
-      set: canWrite[prop] ? (v) => onUpdateProp(prop, v) : undefined,
+      set: canWrite[prop] ? ((v) => { onUpdateProp(prop, v); }) : undefined,
       configurable: true,
     });
   });
 
   // onPropsChange
-  return (props) => Object.keys(props).forEach((prop) => onUpdateProp(prop, props[prop]));
+  return (props) => Object.keys(props).forEach((prop) => { onUpdateProp(prop, props[prop]); });
 };

@@ -1,16 +1,14 @@
 <svelte:options accessors />
 
 <div
-  class:active={!$useNativeCaptions && $isVideoView}
   class:withControls={!$isMobile && $isControlsActive}
   class:fullscreen={$isFullscreenActive}
   class:mobile={$isMobile}
+  use:vShow={!$useNativeCaptions && $isVideoView}
 >
-  {#if isCueActive}
-    <span data-testid="cue">
-      {@html getCueContent($currentCue)}
-    </span>
-  {/if}
+  <span use:vIf={isCueActive} >
+    {@html getCueContent($currentCue)}
+  </span>
 </div>
 
 <script context="module">
@@ -27,16 +25,17 @@
   
   import {
     is_number, is_instance_of, private_writable,
-    map_store_to_component,
+    map_store_to_component, vIf, vShow,
   } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
-
+  
   export let player;
-  export let crossOrigin = null;
-
+  export let useLocale = true;
+  export let crossorigin = null;
+  
   const logger = player.createLogger(ID);
   
   const {
@@ -44,7 +43,7 @@
     currentTrackIndex, currentTime, useNativeCaptions,
     tracks, locale, isVideoView,
   } = player.getStore();
-
+  
   const buildStore = () => {
     const store = {};
     store.cues = private_writable([]);
@@ -56,11 +55,12 @@
     store.activeCues = private_writable([]);
     return store;
   };
-
+  
   const store = buildStore();
   const onPropsChange = map_store_to_component(null, store);
+  
   $: onPropsChange($$props);
-
+  
   const {
     cues, currentCueIndex, currentCue,
     activeCues,
@@ -69,31 +69,30 @@
   // --------------------------------------------------------------
   // Cues
   // --------------------------------------------------------------
-
   let isCueActive = false;
-
+  
   const shouldCueBeActive = (cue) => ($currentTime >= cue.startTime) && ($currentTime <= cue.endTime);
-
+  
   const getCueContent = (cue) => {
     if (!cue) return '';
     const div = element('div');
     append(div, cue.getCueAsHTML());
     return div.innerHTML.trim();
   };
-
+  
   const findNextCueIndex = (start) => {
     let index = start;
     while (
       index >= 0
-    && index < ($cues.length - 1)
-    && $currentTime > $cues[index].startTime
-    && !shouldCueBeActive($cues[index])
+      && index < ($cues.length - 1)
+      && $currentTime > $cues[index].startTime
+      && !shouldCueBeActive($cues[index])
     ) {
       index += 1;
     }
     return index;
   };
-
+  
   const validateCue = (cue) => {
     if (!is_instance_of(cue, window.VTTCue)) {
       logger.warn(`invalid cue with \`label\` [${cue.label}] must be an instance of window.VTTCue`);
@@ -127,6 +126,8 @@
     $cues = $cues;
   };
 
+  export const removeCues = (values) => { values.map(removeCue); };
+
   $: if ($currentCue && ($currentCueIndex < $cues.length - 1) && $currentTime > $currentCue.endTime) {
     $currentCueIndex = findNextCueIndex($currentCueIndex);
   }
@@ -142,9 +143,9 @@
   // --------------------------------------------------------------
   // Tracks
   // --------------------------------------------------------------
-
+  
   export const hasTrack = () => $currentTrackIndex !== -1;
-
+  
   const buildTrack = (track) => {
     const el = element('track');
     el.default = true;
@@ -154,12 +155,12 @@
     el.srclang = track.srclang;
     return el;
   };
-
+  
   // TODO: Fix IE captions if CORS is used.
   // Fetch captions and inject as blobs instead (data URIs not supported).
   const loadCues = () => {
     const media = element('audio');
-    media.crossorigin = crossOrigin;
+    media.crossorigin = crossorigin;
     const track = buildTrack($tracks[$currentTrackIndex]);
     listen(track, 'load', () => {
       const newCues = Array.from(media.textTracks[0].cues);
@@ -167,22 +168,22 @@
     }, { once: true });
     append(media, track);
   };
-
+  
   const onTrackChange = () => {
     $cues = [];
     $currentCueIndex = -1;
     hasTrack() ? loadCues() : onCuesChange();
   };
-
+  
   const onTracksChange = async () => {
     await tick();
     if (!hasTrack()) $currentTrackIndex = $tracks.findIndex((t) => t.default);
   };
-
-  $: onTracksChange($isVideoView ? $tracks : []);
-  $: onTrackChange($isVideoView ? $currentTrackIndex : -1, crossOrigin);
   
-  $: if ($isVideoView) {
+  $: onTracksChange($isVideoView ? $tracks : []);
+  $: onTrackChange($isVideoView ? $currentTrackIndex : -1, crossorigin);
+
+  $: if (useLocale && $isVideoView) {
     const index = $tracks.findIndex((t) => t.srclang === $locale);
     if (index >= 0) $currentTrackIndex = index;
   }
@@ -190,48 +191,43 @@
 
 <style type="text/scss">
   @import '../style/common';
-
+  
   // Container (cues)
   div {
     bottom: 0;
     color: #fff;
     font-size: $font-size-medium;
     left: 0;
-    opacity: 0;
     padding: $control-spacing;
     position: absolute;
     text-align: center;
-    transition: transform 0.4s ease-in-out, opacity 0.3s ease;
+    transition: transform 0.4s ease-in-out;
     width: 100%;
-
-    &.active {
-      opacity: 1;
-    }
-
+    
     &.withControls {
       transform: translateY(-($control-spacing * 4) - 8);
-
+      
       &.mobile {
         transform: translateY(-($control-spacing * 4));
       }
     }
-
+    
     @media (min-width: $bp-sm) {
       font-size: $font-size-small;
       padding: ($control-spacing * 2);
     }
-
+    
     @media (min-width: $bp-md) {
       font-size: $font-size-large;
     }
-
+    
     &.fullscreen {
       @media (min-width: $bp-lg) {
         font-size: $font-size-extra-large;
       }
     }
   }
-
+  
   // Cue
   span {
     background: $color-gray-600;
@@ -240,12 +236,12 @@
     line-height: 185%;
     padding: 0.2em 0.5em;
     white-space: pre-wrap;
-
+    
     // Firefox adds a <div> when using getCueAsHTML()
     :global(div) {
       display: inline;
     }
-
+    
     &:empty {
       display: none;
     }

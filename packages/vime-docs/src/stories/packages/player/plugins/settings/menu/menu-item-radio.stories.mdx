@@ -1,0 +1,51 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Settings/Menu/MenuItemRadio" />
+
+# MenuItemRadio `Component`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/settings/menu/MenuItemRadio.svelte)
+
+A menu radio button used to select a particular value from a group of values.
+
+## Props
+
+### `title: string|undefined`
+
+**Default:** `undefined`
+
+The title of the radio button.
+
+### `value: any`
+
+**Default:** `undefined`
+
+The value of the radio button.
+
+### `group: any`
+
+**Default:** `undefined`
+
+The current group value.
+
+### `badge: string|null`
+
+**Default:** `null`
+
+Optional text used to give more context to the value associated with the button.
+
+### `getMenuControl(): MenuControl`
+
+The underlying `MenuControl` (see <LinkTo kind="packages-player-plugins-settings-menu-menucontrol--page">Menu/MenuControl</LinkTo>) 
+instance.
+
+## Events
+
+Forwards all `MenuControl` events (see <LinkTo kind="packages-player-plugins-settings-menu-menucontrol--page#events">Menu/MenuControl - Events</LinkTo>).
+
+### `valuechange`
+
+**Data Type:** `any`
+
+Fired with the `value` of the radio button when it is clicked.

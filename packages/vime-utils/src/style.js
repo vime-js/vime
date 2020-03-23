@@ -7,6 +7,8 @@ export const set_style_raf = (el, prop, value) => { raf(() => { set_style(el, pr
 
 export const get_computed_style = (el) => (el ? window.getComputedStyle(el) : null);
 
+export const get_computed_width = (el) => (el ? parseFloat(get_computed_style(el).width) : 0);
+
 export const get_computed_height = (el) => (el ? parseFloat(get_computed_style(el).height) : 0);
 
 export const get_y_padding = (el) => {

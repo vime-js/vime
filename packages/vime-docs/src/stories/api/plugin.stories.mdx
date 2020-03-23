@@ -1,0 +1,43 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="API/Plugin" />
+
+# Plugin `interface`
+
+The plugins interface is an `object` with the following properties:
+
+### `ID: string`
+
+A string used to identify the plugin.
+
+### `ROLE: PluginRole?`
+
+An optional <LinkTo kind="api-pluginrole--page">PluginRole</LinkTo>.
+
+### `default: component`
+
+A Svelte component that accepts a `player` prop.
+
+### Example
+
+This is a Svelte component that compiles into a valid Plugin.
+
+```html
+<div></div>
+
+<script context="module">
+  import { PluginRole } from '@vime-js/player';
+
+  export const ID = 'myPluginId';
+
+  // Optional.
+  export const ROLE = PluginRole.POSTER;
+</script>
+
+<script>
+  export let player;
+
+  // ...
+</script>
+```

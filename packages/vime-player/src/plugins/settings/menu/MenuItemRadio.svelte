@@ -1,3 +1,5 @@
+<svelte:options accessors />
+
 <li>
   <MenuControl 
     {title}
@@ -6,6 +8,7 @@
     role="menuitemradio"
     aria-label={title}
     aria-checked={isChecked}
+    on:click
     on:click={onClick}
   />
 </li>
@@ -28,15 +31,14 @@
   // Props
   // --------------------------------------------------------------
 
+  let menuControl;
+
   export let title;
   export let value;
   export let group;
   export let badge = null;
 
-  export const getTitle = () => title;
-  export const getValue = () => value;
-  export const getGroup = () => group;
-  export const getBadge = () => badge;
+  export const getMenuControl = () => menuControl;
 
   // --------------------------------------------------------------
   // Events

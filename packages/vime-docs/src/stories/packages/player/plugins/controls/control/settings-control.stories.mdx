@@ -1,0 +1,55 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Controls/Control/SettingsControl" />
+
+# SettingsControl `Component`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/controls/control/SettingsControl.svelte)
+
+**ID:** `vSettingsControl`
+
+**LABEL:** `toggleSettings`
+
+A control that toggles the visibility state of the settings menu.
+
+## Relationships
+
+If the <LinkTo kind="packages-player-plugins-settings-settings--page">Settings</LinkTo> plugin is 
+available then this control will automatically manage opening and closing it.
+
+## Props
+
+### `id: string|null`
+
+**Default:** `null`
+
+The id of this control that is set on the underlying `<button>` element.
+
+### `menuId: string|null`
+
+**Default:** `null`
+
+The id of the menu that is tied to this control.
+
+### `isEnabled: boolean`
+
+**Default:** `true`
+
+Whether the control is rendered in the DOM or not.
+
+### `isActive: boolean`
+
+**Default:** `false`
+
+Whether the menu that is tied to this control is active or not.
+
+## Methods
+
+### `getControl(): Control`
+
+The underlying `Control` (see <LinkTo kind="packages-player-plugins-controls-control-control--page">Controls/Control</LinkTo>) instance.
+
+## Events
+
+Forwards all `Control` events (see <LinkTo kind="packages-player-plugins-controls-control-control--page#events">Controls/Control - Events</LinkTo>).

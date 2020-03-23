@@ -1,95 +1,78 @@
-// import { CenterView } from '../../../views';
+import { InteractiveView } from '../../../views';
+import config from '../../../config';
 
-// import {
-//   Player,
-//   Html5Provider,
-//   YouTubeProvider,
-//   DailymotionProvider,
-//   VimeoProvider,
-//   Boot,
-// } from '@vime-js/player';
+import {
+  Player, Html5Provider, YouTubeProvider,
+  DailymotionProvider, VimeoProvider, Boot,
+} from '@vime-js/player';
 
-// export default { title: 'Packages/Player/Components' };
+export default {
+  title: 'Packages/Player/Components',
+  parameters: {
+    viewMode: 'story',
+    previewTabs: {
+      'storybook/docs/panel': { hidden: true },
+    },
+  },
+};
 
-// const THEME = '#f76d82';
-// const PROVIDERS = [Html5Provider, YouTubeProvider, DailymotionProvider, VimeoProvider];
+const THEME = '#f76d82';
+const EVENTS = config.Events.COMPLETE;
+const PROVIDERS = [Html5Provider, YouTubeProvider, DailymotionProvider, VimeoProvider];
 
-// below should be knobs etc ...
+const VIDEO_BASE_PROPS = {
+  Component: Player,
+  poster: config.File.POSTER,
+  theme: THEME,
+  events: EVENTS,
+  providers: PROVIDERS,
+  plugins: [Boot],
+  tracks: config.File.TRACKS,
+};
 
-// export const Html5Audio = () => ({
-//   Component: CenterView,
-//   props: {
-//     Component: Player,
-//     src: '/media/audio/the-battle.mp3',
-//     theme: THEME,
-//     providers: PROVIDERS,
-//     plugins: [Boot]
-//   }
-// });
+export const Audio = () => ({
+  Component: InteractiveView,
+  props: {
+    Component: Player,
+    src: config.File.AUDIO,
+    theme: THEME,
+    providers: PROVIDERS,
+    events: EVENTS,
+    plugins: [Boot],
+  },
+});
 
-// export const Html5Video = () => ({
-//   Component: CenterView,
-//   props: {
-//     Component: Player,
-//     src: [
-//       { src: '/media/video/1080p.mp4', type: 'video/mp4', quality: 1080 },
-//       { src: '/media/video/720p.mp4', type: 'video/mp4', quality: 720 },
-//       { src: '/media/video/480p.mp4', type: 'video/mp4', quality: 480 },
-//       { src: '/media/video/360p.mp4', type: 'video/mp4', quality: 360 },
-//       { src: '/media/video/240p.mp4', type: 'video/mp4', quality: 240 },
-//       { src: '/media/video/144p.mp4', type: 'video/mp4', quality: 144 }
-//     ],
-//     poster: '/media/video/poster.png',
-//     theme: THEME,
-//     providers: PROVIDERS,
-//     plugins: [Boot],
-//     tracks: [
-//       {
-//         default: true,
-//         kind: 'subtitles',
-//         label: 'English',
-//         srclang: 'en',
-//         src: '/media/video/tracks/en.vtt'
-//       },
-//       {
-//         kind: 'subtitles',
-//         label: 'Spanish',
-//         srclang: 'es',
-//         src: '/media/video/tracks/es.vtt'
-//       },
-//       {
-//         kind: 'subtitles',
-//         label: 'French',
-//         srclang: 'fr',
-//         src: '/media/video/tracks/fr.vtt'
-//       }
-//     ]
-//   }
-// });
+export const Video = () => ({
+  Component: InteractiveView,
+  props: {
+    ...VIDEO_BASE_PROPS,
+    src: config.File.VIDEO,
+  },
+});
 
-// export const Youtube = () => ({
-//   Component: CenterView,
-//   props: {
-//     ...Html5Video().props,
-//     src: 'youtube/R6MlUcmOul8'
-//   }
-// });
+export const Youtube = () => ({
+  Component: InteractiveView,
+  props: {
+    ...VIDEO_BASE_PROPS,
+    src: config.YouTube.SRC,
+  },
+});
 
-// export const Dailymotion = () => ({
-//   Component: CenterView,
-//   props: {
-//     ...Html5Video().props,
-//     src: 'dailymotion/x3a9qe6'
-//   }
-// });
+export const Dailymotion = () => ({
+  Component: InteractiveView,
+  props: {
+    ...VIDEO_BASE_PROPS,
+    src: config.Dailymotion.SRC,
+  },
+});
 
-// export const Vimeo = () => ({
-//   Component: CenterView,
-//   props: {
-//     ...Html5Video().props,
-//     src: 'vimeo/154225711'
-//   }
-// });
+export const Vimeo = () => ({
+  Component: InteractiveView,
+  props: {
+    ...VIDEO_BASE_PROPS,
+    src: config.Vimeo.SRC,
+  },
+});
 
 // TODO: HLS
 // src: http://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8

@@ -1,31 +1,30 @@
 module.exports = {
   setupFilesAfterEnv: [
     '@testing-library/jest-dom/extend-expect',
-    'jest-svelte-events/extend-expect'
+    'jest-svelte-events/extend-expect',
   ],
   collectCoverageFrom: [
-    "packages/*/src/**/*.js",
-    "packages/*/src/**/*.svelte"
+    'packages/*/src/**/*.js',
+    'packages/*/src/**/*.svelte',
   ],
   transform: {
     '^.+\\.js$': 'babel-jest',
     '^.+\\.svelte$': [
       'svelte-jester',
       {
-        preprocess: true
-      }
+        preprocess: true,
+      },
     ],
-    '^.+\\.svg$': 'jest-svg-transformer'
   },
   moduleFileExtensions: [
     'js',
-    'svelte'
+    'svelte',
   ],
   testEnvironmentOptions: {
-    resources: 'usable'
+    resources: 'usable',
   },
   watchPlugins: [
     'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname'
-  ]
+    'jest-watch-typeahead/testname',
+  ],
 };

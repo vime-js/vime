@@ -1,0 +1,57 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Spinner" />
+
+# Spinner `Plugin`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/Spinner.svelte)
+
+**ID:** `vSpinner`
+
+A spinner is a loading indicator to notify the user that some task is preventing playback.
+
+💡 To see this plugin in action then go to 'Player/Components'.
+
+## Setup
+
+### `plugins`
+
+```js
+import { Spinner } from '@vime-js/player';
+
+player.plugins = [Spinner];
+```
+
+### `PluginsManager`
+```js
+import { Spinner } from '@vime-js/player';
+
+player
+  .getPluginsManager()
+  .addPlugin(Spinner)
+  .then((spinner) => {
+    // ...
+  });
+```
+
+## Props
+
+### `autopilot: boolean`
+
+**Default:** `true`
+
+In autopilot mode the plugin will control certain properties automatically. Set this to `false` if you'd like to 
+control them yourself. Properties marked with `auto` are part of this system.
+
+### `isEnabled: boolean` `(auto)`
+
+**Default:** `true`
+
+Whether the plugin is enabled or not.
+
+### `isActive: boolean` `(auto)`
+
+**Default:** `false`
+
+Whether the spinner is visible or not.

@@ -3,7 +3,7 @@
 {#if shouldUseAudio}
   <audio
     {controls}
-    crossorigin={crossOrigin}
+    {crossorigin}
     bind:this={audio}
   >
     <Source src={currentSrc} />
@@ -13,7 +13,7 @@
 {:else if shouldUseVideo}
   <video
     {controls}
-    crossorigin={crossOrigin}
+    {crossorigin}
     poster={(useNativePoster && !playbackStarted) ? poster : null}
     preload="metadata"
     playsinline={playsinline}
@@ -86,14 +86,13 @@
   import Tracks from './Tracks.svelte';
 
   import {
-    DROPBOX_ORIGIN, DROPBOX_CONTENT_ORIGIN, is_media_stream,
-    is_dropbox_url, is_qualities_set, run_on_every_src,
+    is_media_stream, is_qualities_set, run_on_every_src,
     is_audio, is_video,
   } from './utils';
   
   import {
     can_fullscreen_video, can_use_pip_in_chrome, can_use_pip_in_safari,
-    get_computed_height, is_string, can_use_pip, is_number,
+    get_computed_width, is_string, can_use_pip, is_number,
   } from '@vime-js/utils';
 
   const disposal = new Disposal();
@@ -116,7 +115,7 @@
   let useNativePoster = false;
 
   export let src;
-  export let crossOrigin = null;
+  export let crossorigin = null;
 
   export const getEl = () => media;
   export const getMedia = () => media;
@@ -143,8 +142,9 @@
   // Picture in Picture
   // --------------------------------------------------------------
 
-  const PIP_NOT_SUPPORTED_ERROR_MSG = 'Html5 PiP not supported.';
+  const PIP_NOT_SUPPORTED_ERROR_MSG = 'PiP not supported.';
 
+  // TODO: should check here if the current pip element matches this video element.
   const setChromePiP = (isActive) => (
     isActive ? video.requestPictureInPicture() : document.exitPictureInPicture()
   );
@@ -160,12 +160,8 @@
   export const supportsPiP = () => can_use_pip();
 
   export const setPiP = (isActive) => {
-    if (can_use_pip_in_chrome()) {
-      return setChromePiP(isActive);
-    }
-    if (can_use_pip_in_safari()) {
-      return setSafariPiP(isActive);
-    }
+    if (can_use_pip_in_chrome()) { return setChromePiP(isActive); }
+    if (can_use_pip_in_safari()) { return setSafariPiP(isActive); }
     return Promise.reject(PIP_NOT_SUPPORTED_ERROR_MSG);
   };
 
@@ -173,13 +169,15 @@
   // Fullscreen
   // --------------------------------------------------------------
 
+  const FULLSCREEN_NOT_SUPPORTED_ERROR_MSG = 'Fullscreen not supported.';
+
   const onFullscreenChange = () => {
     info.fullscreen = (document.webkitFullscreenElement === video)
     || (document.mozFullScreenElement === video);
   };
 
   export const setFullscreen = (active) => {
-    if (!video.webkitSupportsFullscreen) return Promise.reject();
+    if (!video.webkitSupportsFullscreen) return Promise.reject(FULLSCREEN_NOT_SUPPORTED_ERROR_MSG);
     return active ? video.webkitEnterFullscreen() : video.webkitExitFullscreen();
   };
 
@@ -316,10 +314,10 @@
   };
 
   const calcInitialQuality = () => {
-    if (videoQuality) return;
-    const videoHeight = get_computed_height(video);
+    if (!aspectRatio || videoQuality) return;
+    const videoWidth = get_computed_width(video);
     const [w, h] = aspectRatio.split(':');
-    const minQuality = videoHeight * (w / h);
+    const minQuality = (videoWidth / w) * h;
     const qualities = src.map((s) => s.quality);
     // @see https://stackoverflow.com/a/35000557
     const newQuality = qualities.reduce(
@@ -329,10 +327,7 @@
   };
 
   const loadNewSrc = () => {
-    const newSrc = is_dropbox_url(src)
-      ? src.replace(DROPBOX_ORIGIN, DROPBOX_CONTENT_ORIGIN)
-      : src;
-    currentSrc = newSrc;
+    currentSrc = src;
     if (currentSrc) load();
   };
 

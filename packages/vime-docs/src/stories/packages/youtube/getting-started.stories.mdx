@@ -3,6 +3,31 @@ import LinkTo from "@storybook/addon-links/react";
 
 <Meta title="Packages/Youtube/Getting Started" />
 
+<img
+  width="400px"
+  alt="vime"
+  src="/brand/vime-youtube--dark.svg"
+/>
+
+<br/>
+
+[![version-badge]][package]
+[![size-badge]][size]
+[![license-badge]][license]
+[![github-badge]][github]
+[![tweet-badge]][tweet]
+
+[package]: https://www.npmjs.com/package/@vime-js/youtube
+[version-badge]: https://img.shields.io/npm/v/@vime-js/youtube?style=flat-square
+[size]: https://bundlephobia.com/result?p=@vime-js/youtube
+[size-badge]: https://img.shields.io/bundlephobia/minzip/@vime-js/youtube?label=min%2Bgzip
+[license]: https://github.com/vime-js/vime/blob/master/LICENSE
+[license-badge]: https://img.shields.io/github/license/vime-js/vime?color=blue&style=flat-square
+[tweet]: https://twitter.com/intent/tweet?text=Check%20out%20Vime%20%28https%3A%2F%2Fgithub.com%2Fvime-js%2Fvime%29%2C%20it%20makes%20embedding%20and%20using%20media%20players%20for%20the%20web%20simple.%20It%20supports%20Html5%2C%20YouTube%2C%20Dailymotion%2C%20Vimeo%20and%20more%20to%20come%21
+[tweet-badge]: https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fvime-js%2Fvime
+[github]: https://github.com/vime-js/vime
+[github-badge]: https://img.shields.io/github/stars/vime-js/vime?style=social
+
 ## Installation
 
 This package contains a **Lite** (YouTubeLite) and **Standard** (YouTube) player. If you'd like to
@@ -21,26 +46,28 @@ The `dist` folder inside the package contains multiple exports:
 - `youtube.esm.js` is intended for use with modern bundlers like [Webpack](https://webpack.js.org/) or [Rollup](http://rollupjs.org/guide/en/).
 - `youtube.min.js` is a UMD production build that can be used directly in the browser via the `<script>` tag.
 - `youtube.esm.min.js` is an ESM production build that includes the full build (standard + lite), and can be used directly in modern browsers via the `<script type="module">` tag.
-- `youtube-lite.esm.min.js` is similar to `youtube.esm.min.js`, except it only includes the lite player.
 
-📝 **_UMD builds are exported under the `Vime` namespace._**
+📝 UMD builds are exported under the `Vime` namespace.
 
-📝 **_If you're using a bundler then it will automatically pull in the correct files._**
+📝 If you're using a bundler then it will automatically pull in the correct files.
 
-📝 **_If you're using [svelte-loader](https://github.com/sveltejs/svelte-loader) or [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) then you'll receive the uncompiled components._**
+📝 If you're using [svelte-loader](https://github.com/sveltejs/svelte-loader) or [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) then you'll receive the uncompiled components.
 
 ## Setup
 
 ### JavaScript
 
-📝 **_See the Svelte [Client-side component API](https://svelte.dev/docs#Client-side_component_API) for the complete set of component initialization options._**
-
 ```js
-import { YouTube, YouTubeLite } from '@vime-js/html5';
+import { YouTube, YouTubeLite } from '@vime-js/youtube';
 
 // Mount
 const target = document.getElementById('player-target');
-const player = new YouTube({ target });
+
+const player = new YouTube({
+  target,
+  // If you'd like to initialize any props on setup, you can do so here.
+  props: {}
+});
 
 // ...
 
@@ -48,21 +75,46 @@ const player = new YouTube({ target });
 player.$destroy();
 ```
 
+📝 See the Svelte [Client-side component API](https://svelte.dev/docs#Client-side_component_API) for the complete set of component initialization options.
+
 ### Svelte
 
 ```html
-<YouTube />
+<YouTube bind:this={player} />
 
 <script>
-  import { YouTube, YouTubeLite } from '@vime-js/html5';
+  import { onMount } from 'svelte';
+  import { YouTube, YouTubeLite } from '@vime-js/youtube';
+
+  let player;
+
+  onMount(() => {
+    // If you need to call any methods, you have access to the player instance here.
+  });
 </script>
 ```
 
 ## Usage
 
 - The `YouTube` component returns the core Vime player interface (see <LinkTo kind="api-player--page">API/Player</LinkTo>).
-- The `YouTubeLite` component returns the core Lite player interface (see <LinkTo kind="api-lite-player--page">API/Lite Player</LinkTo>).
-- See <LinkTo kind="guides-setting-src--page">Guide/Setting Src</LinkTo> for how you can set the `src` prop.
+- The `YouTubeLite` component returns the core Lite player interface (see <LinkTo kind="api-liteplayer--page">API/LitePlayer</LinkTo>).
+
+### Notes
+
+- When the player is `paused`, `seeking` and `seeked` are fired at the same time (in order), because there is 
+no updates between the events from the embed.
+
+- Vime disables cookies by default for YouTube. If you're using `YouTubeLite` you can enable them via `cookies`, 
+and if you're using `YouTube` you can enable it via `player.provider.cookies`.
+
+- Enabling/disabling the native controls forces the player to reload. We set the player back to the 
+state it was in prior to reloading.
+
+- You cannot change `videoQuality` programmatically, YouTube automatically determines the best quality to play, 
+however you can access `videoQuality` to get the current quality setting.
+
+- Fullscreen events that come from clicking the native fullscreen control are not tracked on iOS, because
+the embed doesn't provide an API for it.
 
 ## Examples
 

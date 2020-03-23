@@ -1,48 +1,145 @@
-{#each controls.filter(validateControl) as Control}
-  <svelte:component
-    {player}
-    this={Control.default}
-    bind:this={instances[Control.ID]}
-  />
-{/each}
+<svelte:options accessors />
+
+{#if isEnabled && controls.length > 0}
+  <div
+    class="group"
+    class:mobile={$isMobile}
+    class:audio={!$isVideoView}
+    class:video={$isVideoView}
+    class:fill={shouldFill}
+    use:vShow={isActive}
+    bind:this={el}
+  >
+    <div 
+      class="container"
+      bind:this={containerEl}
+    >
+      {#each controls as Control}
+        <svelte:component
+          {player}
+          this={Control.default}
+          bind:this={instances[Control.ID]}
+        />
+      {/each}
+    </div>
+  </div>
+{/if}
 
 <script>
-  import { is_svelte_component } from '@vime-js/utils';
+  import { set_style, vShow } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
-  export let id;
   export let player;
 
-  const registry = player.createRegistry(id);
-  const logger = player.createLogger(id);
-
-  const validateControl = (Control) => {
-    if (!Control || !is_svelte_component(Control.default)) {
-      const name = Control && (Control.ID || (Control.default && Control.default.name));
-      logger.error(`control [${name}] has an invalid \`default\` property, must be a SvelteComponent`);
-      return false;
-    }
-    return true;
-  };
+  const { isMobile, isVideoView } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
+  let el;
+  let containerEl;
+
   const instances = {};
 
   export let controls = [];
+  export let isEnabled = true;
+  export let isActive = false;
+  export let shouldFill = false;
+  export let flow = null;
+  export let position = null;
+
+  export const getEl = () => el;
+  export const hasControls = () => controls.length > 0;
 
   export const getInstances = () => {
     const { undefined: _, ...rest } = instances;
     return rest;
   };
 
-  $: controls
-    .filter(validateControl)
-    .filter((c) => c.ID && !registry.has(c.ID) && instances[c.ID])
-    .forEach((c) => registry.register(c.ID, instances[c.ID]));
+  export const reset = () => {
+    controls = [];
+    isEnabled = true;
+    isActive = false;
+    shouldFill = false;
+    flow = null;
+    position = null;
+  };
+
+  const onPositionChange = () => {
+    if (!position) {
+      set_style(el, 'alignItems');
+      set_style(containerEl, 'justifyContent');
+      return;
+    }
+    const [align, justify] = position.split(':');
+    set_style(el, 'alignItems', align);
+    set_style(isColumnFlow ? el : containerEl, 'justifyContent', justify);
+  };
+
+  const onFlowChange = () => {
+    set_style(containerEl, 'flexFlow', flow);
+    set_style(containerEl, 'width', (isColumnFlow) ? 'auto' : null);
+  };
+
+  $: if (el && containerEl) onPositionChange(position, isColumnFlow);
+  $: if (containerEl) onFlowChange(flow, isColumnFlow);
+  $: isColumnFlow = flow && flow.includes('column');
 </script>
+
+<style type="text/scss">
+  @import '../../style/common';
+
+  .group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    padding: $control-spacing;
+    color: #fff;
+    position: relative;
+
+    &.fill {
+      flex: 1;
+    }
+
+    &.audio {
+      background: #fff;
+      color: $color-dark;
+      padding: $control-spacing;
+      box-shadow: 0 0 8px 2px $color-gray-100;
+    }
+    
+    &.video {
+      padding: $control-spacing ($control-spacing / 2) ($control-spacing / 2);
+
+      @media (min-width: $bp-sm) {
+        padding: $control-spacing;
+      }
+
+      &.mobile {
+        padding: $control-spacing;
+      }
+    }
+  }
+
+  .container {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    align-items: center;
+
+    :global(> div),
+    :global(> .control) {
+      margin-left: $control-spacing;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+</style>

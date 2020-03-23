@@ -5,14 +5,15 @@
   class:video={$isVideoView}
   class:fullscreen={$isFullscreenActive}
   class:idle={!$useNativeControls && !$paused && !$isControlsActive}
-  use:setAspectRatio={($isVideoView && !$isFullscreenActive) ? $aspectRatio : null}
+  use:vAspectRatio={($isVideoView && !$isFullscreenActive) ? $aspectRatio : null}
   on:contextmenu={onContextMenu}
   bind:this={el}
 >
   <div>
-    {#if !$useNativeControls && $isVideo}
-      <div class="blocker"></div>
-    {/if}
+    <div 
+      class="blocker"
+      use:vIf={$playbackReady && (!$useNativeControls && $isVideoView)}
+    ></div>
     <InternalPlayer
       parentEl={el}
       Provider={$Provider && $Provider.default}
@@ -25,7 +26,7 @@
     let:intersecting 
   >
     {#if intersecting && mounted}
-      <Plugins
+      <PluginsManager
         player={self}
         on:register={onPluginMount}
         on:deregister={onPluginDestroy}
@@ -37,25 +38,26 @@
 </div>
 
 <script>
-  import { get_current_component } from 'svelte/internal';
+  import { noop, get_current_component } from 'svelte/internal';
   import { get } from 'svelte/store';
-  import Plugins from './Plugins.svelte';
+  import PluginsManager from './PluginsManager.svelte';
   import { buildPlayerStore } from './playerStore';
   import PlayerEvent from './PlayerEvent';
 
   import {
-    onMount, onDestroy, tick, createEventDispatcher,
+    tick as svelteTick, onMount, onDestroy,
+    createEventDispatcher,
   } from 'svelte';
 
   import {
     Registry, Disposal, Lazy,
-    aspectRatio as setAspectRatio,
     Player as InternalPlayer,
   } from '@vime-js/core';
 
   import {
     log as vimeLog, warn as vimeWarn, error as vimeError,
-    map_store_to_component, is_string,
+    map_store_to_component, is_string, vIf,
+    vAspectRatio,
   } from '@vime-js/utils';
 
   // --------------------------------------------------------------
@@ -70,10 +72,10 @@
   let debug;
   let paused;
   let theme;
-  let isVideo;
   let aspectRatio;
   let isVideoView;
   let Provider;
+  let playbackReady;
   let useNativeControls;
   let isControlsActive;
   let isFullscreenActive;
@@ -87,18 +89,20 @@
   const dispatch = createEventDispatcher();
 
   let store = {};
-  let onPropsChange = () => {};
+  let onPropsChange = noop;
   $: onPropsChange($$props);
 
+  let mounted = false;
   onMount(() => {
     store = buildPlayerStore(internalPlayer.getStore());
     onPropsChange = map_store_to_component(self, store);
     ({
-      paused, isVideo, theme,
-      isVideoView, useNativeControls, isControlsActive,
-      debug, isFullscreenActive, aspectRatio,
-      Provider,
+      paused, theme, isVideoView,
+      useNativeControls, isControlsActive, debug,
+      isFullscreenActive, aspectRatio, Provider,
+      playbackReady,
     } = store);
+    mounted = true;
   });
 
   // --------------------------------------------------------------
@@ -108,14 +112,12 @@
   export { classes as class };
   export const getEl = () => el;
   export const getRegistry = () => registry;
-  export const getI18n = () => get(store.i18n);
   export const getInternalPlayer = () => internalPlayer;
   export const getPluginsManager = () => pluginsManager;
   export const getPluginsRegistry = () => pluginsManager && pluginsManager.getRegistry();
 
+  export const tick = () => svelteTick();
   export const dispose = (cb) => disposal.add(cb);
-  export const extendLanguage = (code, language) => { store.languages.set({ [code]: language }); };
-
   export const requestPiP = () => internalPlayer.requestPiP();
   export const exitPiP = () => internalPlayer.exitPiP();
   export const requestFullscreen = () => internalPlayer.requestFullscreen();
@@ -140,24 +142,23 @@
   // Events
   // --------------------------------------------------------------
 
-  let mounted = false;
-  onMount(() => {
-    tick().then(() => dispatch(PlayerEvent.MOUNT));
-    mounted = true;
-  });
-
   onDestroy(() => dispatch(PlayerEvent.DESTROY));
+
+  const onPluginsManagerMount = async () => {
+    await svelteTick();
+    dispatch(PlayerEvent.MOUNT);
+  };
   
   const onPluginMount = (e) => {
-    self[e.detail.id] = e.detail.value;
-    dispatch(`${e.detail.id}mount`, e.detail);
-    dispatch(PlayerEvent.PLUGIN_MOUNT, e.detail);
+    const { id, value: plugin } = e.detail;
+    self[id] = plugin;
+    dispatch(PlayerEvent.PLUGIN_MOUNT, { id, plugin });
   };
 
   const onPluginDestroy = (e) => {
-    if (self) delete self[e.detail];
-    dispatch(`${e.detail}destroy`, e.detail);
-    dispatch(PlayerEvent.PLUGIN_DESTROY, e.detail);
+    const id = e.detail;
+    if (self) delete self[id];
+    dispatch(PlayerEvent.PLUGIN_DESTROY, id);
   };
 
   const onContextMenu = (e) => {
@@ -165,10 +166,11 @@
   };
 
   const onThemeChange = () => (is_string($theme)
-    ? el.style.setProperty('--theme', $theme)
+    ? el.style.setProperty('--color', $theme)
     : Object.keys($theme).forEach((key) => { el.style.setProperty(`--${key}`, $theme[key]); }));
 
   $: if (el && $theme) onThemeChange();
+  $: if (pluginsManager) onPluginsManagerMount();
 </script>
 
 <style type="text/scss">
@@ -176,7 +178,7 @@
   @import '../style/slider';
 
   // List of CSS custom properties.
-  // --theme
+  // --color
   // --fontFamily
   // --fontSizeSmall
   // --fontSizeMedium
@@ -202,7 +204,7 @@
     font-weight: $font-weight-bold;
     line-height: var(--baseLineHeight, 1.7);
     max-width: 100%;
-    min-width: 300px;
+    min-width: 375px;
     position: relative;
     text-shadow: none;
     transition: box-shadow 0.3s ease;
@@ -245,6 +247,10 @@
 
     &.idle {
       cursor: none;
+    }
+
+    &.audio {
+      min-width: 300px;
     }
 
     &.video {

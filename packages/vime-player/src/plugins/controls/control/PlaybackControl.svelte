@@ -2,12 +2,14 @@
   {player}
   {large}
   label={LABEL}
-  activeIcon={$icons.play}
-  inactiveIcon={$icons.pause}
-  activeTitle={$i18n.play}
-  inactiveTitle={$i18n.pause}
+  isActive={!$paused}
+  autopilot={false}
+  activeIcon={$icons.pause}
+  inactiveIcon={$icons.play}
+  activeTitle={$i18n.pause}
+  inactiveTitle={$i18n.play}
   aria-label={$i18n.playback}
-  bind:isActive={$paused}
+  on:click={onToggle}
   bind:this={toggle}
 />
 
@@ -36,4 +38,6 @@
   export let large = false;
 
   export const getToggle = () => toggle;
+
+  const onToggle = () => { $paused = !$paused; };
 </script>

@@ -28,7 +28,7 @@
 
   const {
     icons, i18n, muted, volume,
-} = player.getStore();
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props

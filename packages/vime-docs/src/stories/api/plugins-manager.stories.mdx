@@ -1,0 +1,55 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="API/PluginsManager" />
+
+# PluginsManager `Component`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/core/PluginsManager.svelte)
+
+**ID:** `vPlugin`
+
+The `PluginsManager` is responsible for validating, adding, removing, rendering and registering <LinkTo kind="api-plugin--page">plugins</LinkTo>.
+
+## Methods
+
+### `hasPlugin(plugin: Plugin): boolean`
+
+Whether the given plugin has been added.
+
+### `addPlugin(plugin: Plugin): Promise<Component>`
+
+Adds a new plugin to be validated, rendered and registered. This method returns a `Promise` that 
+resolves with the rendered instance.
+
+### `addPlugins(plugin: Plugin[]): Promise<Component[]>`
+
+Adds a list of plugins, each plugin is passed to `addPlugin`. This method returns a `Promise` that
+resolves with all the rendered instances.
+
+### `removePlugin(plugin: Plugin): Promise<undefined>`
+
+Unmounts and deregisters the given plugin. This method returns a `Promise` that resolves once the operation
+has completed.
+
+### `removePlugins(plugin: Plugin[]): Promise<undefined>`
+
+Removes a list of plugins, each plugin is passed to `removePlugin`. This method returns a `Promise` 
+that resolves once the operation has completed.
+
+### `getPlugins(): Component[]`
+
+All rendered plugin instances.
+
+### `getPlugin(id: string): Component|undefined`
+
+The rendered plugin instance for the given `id`.
+
+### `getRegistry(): Registry`
+
+The managers registry (see <LinkTo kind="api-registry--page">API/Registry</LinkTo>) where all 
+plugin instances are registered.
+
+## Events
+
+See <LinkTo kind="api-registry--page#events">API/Registry - Events.</LinkTo>

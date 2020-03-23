@@ -17,8 +17,8 @@
     <div>
       <Control 
         {player}
-        noTooltip 
-        on:click={onCloseMenu}
+        shouldRenderTooltip={false}
+        on:click={onMenuClose}
       >
         {$i18n.close}
       </Control>
@@ -26,22 +26,20 @@
   </div>
   <Menu
     id={menuId}
-    aria-hidden={!$isMenuActive}
-    aria-labelledby={menuLabelledBy}
-    on:menuclose={onCloseMenu}
+    isActive={$isMenuActive}
+    aria-labelledby={controllerId}
+    on:open
+    on:close
+    on:close={onMenuClose}
     bind:this={menu}
   >
-    {#each Object.values($menuItems) as { id, ...item }}
-      <MenuItem
+    {#each submenus as id (id)}
+      <svelte:component 
         {player}
-        title={item.title}
-        value={item.value}
-        options={item.options}
-        emptyHint={item.emptyHint}
-        isHidden={currentMenuItemId !== null && currentMenuItemId !== id}
-        isDisabled={item.isDisabled}
-        on:valuechange="{(e) => item.onValueChange(e.detail)}"
-        on:menuchange="{(e) => onMenuItemChange(id, e.detail)}"
+        hideController={!is_null($currentSubmenu) && $currentSubmenu !== id}
+        on:open="{() => { onSubmenuOpen(id); }}"
+        on:close={onSubmenuClose}
+        this={submenuType[id]}
         bind:this={instances[id]}
       />
     {/each}
@@ -55,19 +53,25 @@
   export const ROLE = PluginRole.SETTINGS;
 
   let menuIdCounter = 0;
+
+  const Event = {
+    OPEN_SUBMENU: 'opensubmenu',
+    CLOSE_SUBMENU: 'closesubmenu',
+  };
 </script>
 
 <script>
+  import { tick, createEventDispatcher } from 'svelte';
   import { writable } from 'svelte/store';
-  import { map_store_to_component } from '@vime-js/utils';
   import Menu from './menu/Menu.svelte';
-  import MenuItem from './menu/MenuItem.svelte';
-  import Control from '../controls/Control.svelte';
+  import Submenu from './menu/submenu/Submenu.svelte';
+  import Control from '../controls/control/Control.svelte';
+  import { is_null, private_writable, map_store_to_component } from '@vime-js/utils';
 
   // eslint-disable-next-line prefer-const
   menuIdCounter += 1;
-  const menuId = `settings-${menuIdCounter}`;
-  const menuLabelledBy = `settings-control-${menuIdCounter}`;
+  const menuId = `v-settings-${menuIdCounter}`;
+  const controllerId = `v-settings-control-${menuIdCounter}`;
 
   // --------------------------------------------------------------
   // Setup
@@ -75,18 +79,19 @@
 
   export let player;
 
+  const dispatch = createEventDispatcher();
   const registry = player.createRegistry(ID);
   const { i18n, isMobile, isVideoView } = player.getStore();
 
   const store = {
-    menuItems: writable({}),
     isMenuActive: writable(false),
+    currentSubmenu: private_writable(null),
   };
 
   const onPropsChange = map_store_to_component(null, store);
   $: onPropsChange($$props);
 
-  const { menuItems, isMenuActive } = store;
+  const { isMenuActive, currentSubmenu } = store;
 
   // --------------------------------------------------------------
   // Props
@@ -94,26 +99,61 @@
 
   let el;
   let menu;
+  let submenus = [];
+  
+  const submenuType = {};
   const instances = {};
-  let currentMenuItemId = null;
 
   export const getId = () => menuId;
   export const getEl = () => el;
   export const getMenu = () => menu;
+  export const getControllerId = () => controllerId;
   export const getRegistry = () => registry;
-  export const getLabelledBy = () => menuLabelledBy;
-  export const getCurrentMenuItemId = () => currentMenuItemId;
+  export const getSubmenus = () => instances;
+  export const getSubmenu = (id) => instances[id];
+
+  export const createSubmenu = async (id, type = Submenu) => {
+    submenus.push(id);
+    submenuType[id] = type;
+    await tick();
+    return instances[id];
+  };
+
+  export const createSubmenus = (ids, type = Submenu) => {
+    const promises = ids.map((id) => createSubmenu(id, type));
+    return Promise.all(promises);
+  };
+
+  export const removeSubmenu = (id) => {
+    submenus = submenus.filter((itemId) => itemId !== id);
+    delete submenuType[id];
+    return tick();
+  };
+
+  export const removeSubmenus = (ids) => {
+    ids.map(removeSubmenu);
+    return tick();
+  };
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
 
-  const onCloseMenu = () => { $isMenuActive = false; };
-  const onMenuItemChange = (id, isOpen) => { currentMenuItemId = isOpen ? id : null; };
+  const onMenuClose = () => { $isMenuActive = false; };
+  
+  const onSubmenuOpen = (id) => {
+    $currentSubmenu = id;
+    dispatch(Event.OPEN_SUBMENU, id);
+  };
 
-  $: isModalHeaderHidden = !$isMobile || !$isVideoView || (currentMenuItemId !== null);
+  const onSubmenuClose = () => {
+    dispatch(Event.CLOSE_SUBMENU, $currentSubmenu);
+    $currentSubmenu = null;
+  };
 
-  $: Object.keys($menuItems)
+  $: isModalHeaderHidden = !$isMobile || !$isVideoView || !is_null($currentSubmenu);
+
+  $: submenus
     .filter((id) => !registry.has(id) && instances[id])
     .forEach((id) => registry.register(id, instances[id]));
 </script>

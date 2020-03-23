@@ -27,14 +27,14 @@
   // --------------------------------------------------------------
   
   export let autopilot = true;
-  export let isEnabled = false;
+  export let isEnabled = true;
 
   $: if (autopilot) {
     isEnabled = $isControlsEnabled
-    && $canInteract
-    && $isVideoView
-    && !$isMobile
-    && !$useNativeControls;
+      && $canInteract
+      && $isVideoView
+      && !$isMobile
+      && !$useNativeControls;
   }
 
   // --------------------------------------------------------------
@@ -57,7 +57,7 @@
       // TODO: this is probably not ideal, need a better solution.
         const isInputNode = ['BUTTON', 'INPUT'].includes(e.target.nodeName);
         if (e.detail === 1 && !isInputNode) onToggle();
-      }, 150);
+      }, 100);
     };
     onClickListener = listen(player.getEl(), 'click', onClick);
   };

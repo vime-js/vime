@@ -1,13 +1,12 @@
 <svelte:options accessors />
 
-{#if isEnabled}
-  <img
-    class:active={isActive}
-    src={$currentPoster}
-    alt={$title || 'Media Poster'}
-    bind:this={el}
-  />
-{/if}
+<img
+  src={$currentPoster}
+  alt={$title || 'Media Poster'}
+  use:vIf={isEnabled}
+  use:vShow={isActive}
+  bind:this={el}
+/>
 
 <script context="module">
   import PluginRole from '../core/PluginRole';
@@ -17,6 +16,8 @@
 </script>
 
 <script>
+  import { vIf, vShow } from '@vime-js/utils';
+
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
@@ -54,11 +55,5 @@
     z-index: 1;
     pointer-events: none;
     object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-
-    &.active {
-      opacity: 1;
-    }
   }
 </style>

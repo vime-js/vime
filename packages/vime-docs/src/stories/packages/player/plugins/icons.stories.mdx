@@ -1,0 +1,54 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Icons" />
+
+# Icons `Plugin`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/Icons.svelte)
+
+**ID:** `vIcons`
+
+This plugin loads the Vime icons into the browser.
+
+💡 To see our icons go to 'Player/Components'.
+
+### Default Icons
+
+- play
+- pause
+- captionsOn
+- captionsOff
+- enterFullscreen
+- exitFullscreen
+- enterPiP
+- exitPiP
+- seekForward
+- seekBackward
+- volumeLow
+- volumeHigh
+- volumeMute
+- settings
+- checkmark
+
+## Setup
+
+### `plugins`
+
+```js
+import { Icons } from '@vime-js/player';
+
+player.plugins = [Icons];
+```
+
+### `PluginsManager`
+```js
+import { Icons } from '@vime-js/player';
+
+player
+  .getPluginsManager()
+  .addPlugin(Icons)
+  .then((icons) => {
+    // ...
+  });
+```

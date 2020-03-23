@@ -1,11 +1,12 @@
 <svelte:options accessors />
-<svelte:window on:keydown={onKeyDown} />
 
 <script context="module">
   export const ID = 'vKeyboard';
 </script>
 
 <script>
+  import { onMount, onDestroy } from 'svelte';
+  import { listen } from 'svelte/internal';
   import { is_array } from '@vime-js/utils';
   import { ID as TooltipsID } from '../tooltips/Tooltips.svelte';
 
@@ -37,12 +38,25 @@
   export let isEnabled = false;
 
   export const getRegistry = () => registry;
+  export const getShortcuts = registry.getValues();
+  export const getShortcut = (id) => registry.getValue(id);
+  export const addShortcut = (id, shortcut) => { registry.register(id, shortcut); };
+  export const removeShortcut = (id) => { registry.deregister(id); };
+  export const removeShortcuts = (ids) => { ids.map(removeShortcut); };
+
+  export const updateShortcut = (id, shortcut) => {
+    const prevState = registry.getValue(id);
+    removeShortcut(id);
+    addShortcut(id, { ...prevState, ...shortcut });
+  };
   
   $: if (autopilot) isEnabled = !$useNativeControls;
 
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
+
+  let keyDownListener;
 
   const onKeyDown = (e) => {
     if (!$isPlayerActive || !isEnabled) return;
@@ -55,6 +69,14 @@
       listeners.forEach((l) => l.action && l.action(e));
     }
   };
+
+  onMount(() => {
+    keyDownListener = listen(player.getEl(), 'keydown', onKeyDown);
+  });
+
+  onDestroy(() => {
+    if (keyDownListener) keyDownListener();
+  });
 
   // --------------------------------------------------------------
   // Tooltips Plugin

@@ -4,7 +4,6 @@ import PluginRole from './PluginRole';
 
 import {
   IS_MOBILE, listen_for_touch_input, mergeable,
-  private_writable,
 } from '@vime-js/utils';
 
 export const buildPlayerStore = (internalPlayerStore) => {
@@ -12,12 +11,11 @@ export const buildPlayerStore = (internalPlayerStore) => {
   const hasRole = (plugins, role) => plugins.some((p) => p.ROLE === role);
 
   store.locale = writable('en');
-  store.icons = mergeable({});
+  store.icons = writable({});
   store.langauges = mergeable({ en });
   store.theme = writable(null);
   store.plugins = writable([]);
   store.providers = writable([]);
-  store.Provider = private_writable(null);
   store.debug = writable(process.env.NODE_ENV !== 'production');
   store.isMobile = writable(IS_MOBILE);
   store.isTouch = readable(false, (set) => listen_for_touch_input((t) => set(t)));

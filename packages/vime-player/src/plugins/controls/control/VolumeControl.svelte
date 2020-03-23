@@ -19,7 +19,7 @@
     aria-orientation="horizontal"
     class:hidden={$isMobile}
     class:active={isFocused}
-    use:focus
+    use:vFocus
     on:focuschange={onFocus}
     on:input="{onVolumeChange}"
     on:keydown|stopPropagation
@@ -34,7 +34,7 @@
 </script>
 
 <script>
-  import { focus } from '@vime-js/core';
+  import { vFocus } from '@vime-js/utils';
   import MuteControl from './MuteControl.svelte';
 
   // --------------------------------------------------------------
@@ -44,8 +44,9 @@
   export let player;
 
   const {
-    i18n, volume, muted, isMobile,
-} = player.getStore();
+    i18n, volume, muted,
+    isMobile,
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props

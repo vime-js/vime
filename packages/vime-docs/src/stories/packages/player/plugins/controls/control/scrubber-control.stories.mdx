@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Controls/Control/ScrubberControl" />
+
+# ScrubberControl `Component`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/controls/control/ScrubberControl.svelte)
+
+**ID:** `vScrubberControl`
+
+**LABEL:** `seek`
+
+A control that displays the progress of playback and the amount buffered. It also enables
+the user to seek to a new time.
+
+## Relationships
+
+### Tooltips
+
+If the <LinkTo kind="packages-player-plugins-tooltips-tooltips--page">Tooltips</LinkTo> plugin is 
+available then the control will render a tooltip and register it under its `LABEL`. The tooltip
+displays the time the user's mouse pointer is hovering over on the scrubber.
+
+## Methods
+
+### `getEl(): HTMLElement`
+
+The root HTML element of the component.
+
+### `getSlider(): <input type="range">`
+
+The [input range slider](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range) that
+is used to seek to a new time.
+
+### `getTooltip(): Tooltip|undefined`
+
+The rendered `Tooltip` (see <LinkTo kind="packages-player-plugins-tooltips-tooltip--page">Tooltips/Tooltip</LinkTo>) 
+instance.
+
+### `getProgressBar(): <progress>`
+
+The [progress indicator element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) that
+is used to show the amount buffered and when the player is buffering.

@@ -1,9 +1,10 @@
 <ul class="uk-list">
   {#each methods as method (method.id)}
     <li data-uk-scrollspy>
-      <span class="uk-text-emphasis uk-text-small">{method.id}</span> 
-      <pre><code>{JSON.stringify(method.value)}</code></pre>
+      <code>{method.id}</code>
+      <pre><code>{JSON.stringify(method.value, undefined, 2)}</code></pre>
     </li>
+    <hr />
   {/each}
 </ul>
 

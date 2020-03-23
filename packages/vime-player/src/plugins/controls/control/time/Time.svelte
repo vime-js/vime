@@ -1,11 +1,11 @@
 <div aria-label={$$props['aria-label']}>
-  {formatTime(Math.max(0, time))}
+  {format_time(Math.max(0, seconds))}
 </div>
 
 <script>
-  import { formatTime } from '@vime-js/core';
+  import { format_time } from '@vime-js/utils';
 
-  export let time;
+  export let seconds = 0;
 </script>
 
 <style type="text/scss">

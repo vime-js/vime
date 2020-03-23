@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Settings/Menu/MenuItem" />
+
+# MenuItem `Component`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/settings/menu/MenuItem.svelte)
+
+A menu list item that may perform an action when clicked.
+
+## Props
+
+📝 Any unlisted props are bound directly to the underlying `button` element. This is useful
+for setting ARIA attributes.
+
+### `id: string|null`
+
+**Default:** `null`
+
+The `id` property of the underlying `button` element.
+
+### `title: string|null`
+
+**Default:** `null`
+
+The title of the item.
+
+### `hint: string|null`
+
+**Default:** `null`
+
+Optional text to help give more information about the item.
+
+## Methods
+
+### `getMenuControl(): MenuControl`
+
+The underlying `MenuControl` (see <LinkTo kind="packages-player-plugins-settings-menu-menucontrol--page">Menu/MenuControl</LinkTo>) 
+instance.
+
+## Events
+
+Forwards all `MenuControl` events (see <LinkTo kind="packages-player-plugins-settings-menu-menucontrol--page#events">Menu/MenuControl - Events</LinkTo>).

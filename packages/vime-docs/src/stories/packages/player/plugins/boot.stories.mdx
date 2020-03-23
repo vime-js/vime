@@ -1,0 +1,63 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Boot" />
+
+# Boot `Plugin`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/Boot.svelte)
+
+**ID:** `vBoot`
+
+This plugin installs the following plugins:
+
+- <LinkTo kind="packages-player-plugins-icons--page">Icons</LinkTo>
+- <LinkTo kind="packages-player-plugins-poster--page">Poster</LinkTo>
+- <LinkTo kind="packages-player-plugins-scrim--page">Scrim</LinkTo>
+- <LinkTo kind="packages-player-plugins-spinner--page">Spinner</LinkTo>
+- <LinkTo kind="packages-player-plugins-captions--page">Captions</LinkTo>
+- <LinkTo kind="packages-player-plugins-controls-controls--page">Controls</LinkTo>
+- <LinkTo kind="packages-player-plugins-settings-settings--page">Settings</LinkTo>
+- <LinkTo kind="packages-player-plugins-actiondisplay--page">ActionDisplay</LinkTo>
+- <LinkTo kind="packages-player-plugins-tooltips-tooltips--page">Tooltips</LinkTo>
+- <LinkTo kind="packages-player-plugins-keyboard-keyboard--page">Keyboard</LinkTo>
+- <LinkTo kind="packages-player-plugins-clicktoplay--page">ClickToPlay</LinkTo>
+- <LinkTo kind="packages-player-plugins-dblclickfullscreen--page">DblClickFulscreen</LinkTo>
+
+💡 To see any of these plugins in action then go to 'Player/Components'.
+
+## Setup
+
+```js
+import { Boot } from '@vime-js/player';
+
+player.plugins = [Boot];
+```
+
+## Props
+
+### `manifest: { [id]: boolean }`
+
+**Default:** All plugins default to `true`.
+
+The manifest determines which plugins should be installed. All plugins are identified by
+their `ID` with the `v` prefix removed and first letter lowercased.
+
+**Examples**
+
+- `vControls` = `controls`
+- `vActionDisplay` = `actionDisplay`
+- `vClickToPlay` = `clickToPlay`
+
+```js
+// ...
+
+player.$on('mount', () => {
+  // Turn off these plugins.
+  player.vBoot.manifest = {
+    controls: false,
+    actionDisplay: false,
+    clickToPlay: false
+  };
+});
+```

@@ -33,6 +33,7 @@ export const plugins = (options) => {
         // eslint-disable-next-line global-require
         postcss: require('../../postcss')(legacy),
       }),
+      // eslint-disable-next-line no-shadow
       css: (!dev && css) ? (css) => {
         css.write(`${outputDir}${name}${legacy ? '-legacy' : ''}.css`);
       } : true,

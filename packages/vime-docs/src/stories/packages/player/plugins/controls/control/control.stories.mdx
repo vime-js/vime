@@ -1,0 +1,77 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Controls/Control/Control" />
+
+# Control `Component`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/controls/control/Control.svelte)
+
+A `Control` is a button that the user taps or clicks to interact with the player.
+
+## Relationships
+
+### Tooltips
+
+If the <LinkTo kind="packages-player-plugins-tooltips-tooltips--page">Tooltips</LinkTo> plugin is 
+available then the control will render a tooltip and register it under the `label` prop value.
+
+## Props
+
+📝 Any unlisted props are bound directly to the underlying `button` element. This is useful
+for setting ARIA attributes.
+
+### `title: string|null`
+
+**Default:** `null`
+
+The title of the tooltip (if available).
+
+### `label: string|null`
+
+**Default:** `null`
+
+The id to register the tooltip under (if available).
+
+### `shouldRenderTooltip: boolean`
+
+**Default:** `true`
+
+Whether to render a tooltip or not (if available).
+
+### `large: boolean`
+
+**Default:** `false`
+
+Whether to render a larger control or not.
+
+## Methods
+
+### `getEl(): <button>`
+
+The [`button`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button) HTML element.
+
+### `getTooltip(): Tooltip|undefined`
+
+The rendered `Tooltip` (see <LinkTo kind="packages-player-plugins-tooltips-tooltip--page">Tooltips/Tooltip</LinkTo>) instance.
+
+## Events
+
+### `click`
+
+**Data Type:** [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event)
+
+Fired when the button is clicked.
+
+### `keydown`
+
+**Data Type:** [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event)
+
+Fired when the button is focused and a key is pressed down.
+
+### `focuschange`
+
+**Data Type:** `boolean`
+
+Fired when the button's focused state changes. The event data (`event.detail`) contains whether it is being focused
+or not.

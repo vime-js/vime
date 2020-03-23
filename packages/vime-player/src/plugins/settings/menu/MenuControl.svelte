@@ -1,35 +1,39 @@
+<svelte:options accessors />
+
 <button
-  {id}
-  {role}
   class:mobile={$isMobile}
   class:audio={!$isVideoView}
   class:videoFocus={!$isTouch}
   class:audioFocus={!$isVideoView && !$isTouch}
   class:touchHighlight={showHighlight}
-  use:focus
-  use:highlight
+  use:vFocus
+  use:vHighlight
   on:click
   on:highlightchange="{(e) => { showHighlight = e.detail; }}"
   aria-label={title}
-  aria-hidden={$$props['aria-hidden']}
-  aria-checked={$$props['aria-checked']}
-  aria-haspopup={$$props['aria-haspopup']}
-  aria-controls={$$props['aria-controls']}
-  aria-expanded={$$props['aria-expanded']}
-  aria-disabled={$$props['aria-disabled']}
+  {...$$restProps}
 >
   <Icon icon={$icons.checkmark} />
   <span class="arrow left"></span>
   <span>{title}</span>
-  <span class="hint">{hint}</span>
-  {#if badge}
-    <span class="badge">{badge}</span>
-  {/if}
+  <span 
+    class="hint" 
+    use:vIf={hint}
+  >
+    {hint}
+  </span>
+  <span 
+    class="badge"
+    use:vIf={badge}
+  >
+    {badge}
+  </span>
   <span class="arrow right"></span>
 </button>
 
 <script>
-  import { Icon, focus, highlight } from '@vime-js/core';
+  import { Icon } from '@vime-js/core';
+  import { vIf, vFocus, vHighlight } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup
@@ -39,7 +43,7 @@
 
   const {
     isMobile, isVideoView, isTouch, icons,
-} = player.getStore();
+  } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
@@ -47,16 +51,9 @@
 
   let showHighlight = false;
 
-  export let role;
-  export let title;
-  export let id = null;
+  export let title = '';
   export let hint = null;
   export let badge = null;
-
-  export const getId = () => id;
-  export const getTitle = () => title;
-  export const getHint = () => hint;
-  export const getBadge = () => badge;
 </script>
 
 <style type="text/scss">

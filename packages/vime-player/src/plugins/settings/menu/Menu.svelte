@@ -1,17 +1,18 @@
+<svelte:options accessors />
+
 <svelte:window
   on:keydown={onWindowKeyDown}
-  on:click={dispatchMenuClose}
+  on:click="{() => { isActive = false; }}"
 />
 
 <ul
-  id={$$props.id}
   role="menu"
   tabindex="-1"
-  aria-hidden={$$props['aria-hidden']}
-  aria-labelledby={$$props['aria-labelledby']}
+  aria-hidden={!isActive}
+  {...$$restProps}
   on:click|stopPropagation
-  on:mousedown|preventDefault
-  on:keydown={onKeyDown}
+  on:keydown
+  on:keydown|stopPropagation={onKeyDown}
   on:focus={onMenuOpen}
   bind:this={el}
 >
@@ -20,12 +21,13 @@
 
 <script context="module">
   const Event = {
-    MENU_CLOSE: 'menuclose',
+    OPEN: 'open',
+    CLOSE: 'close',
   };
 </script>
 
 <script>
-  import { tick, createEventDispatcher } from 'svelte';
+  import { tick, createEventDispatcher, onMount } from 'svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -53,24 +55,31 @@
   // --------------------------------------------------------------
 
   let el;
-  let items;
-  let activeItem = 0;
+  let choices;
+  let focusedChoiceIndex = -1;
+
+  export let isActive = false;
 
   export const getEl = () => el;
-  export const getSubMenu = (item) => document.getElementById(item.getAttribute('aria-controls'));
+  export const getFocusedChoice = () => choices[focusedChoiceIndex];
+  export const getFocusedChoiceIndex = () => focusedChoiceIndex;
+  export const getChoices = () => choices;
+  export const getSubmenu = (choice) => document.getElementById(choice.getAttribute('aria-controls'));
   
-  export const setFocusToItem = (index) => {
+  export const focus = () => el.focus();
+  
+  export const focusChoice = (index) => {
     if (index === -1) {
-      activeItem = items.length - 1;
-    } else if (index === items.length) {
-      activeItem = 0;
+      focusedChoiceIndex = choices.length - 1;
+    } else if (index === choices.length) {
+      focusedChoiceIndex = 0;
     } else {
-      activeItem = index;
+      focusedChoiceIndex = index;
     }
-    items[activeItem].focus();
+    choices[focusedChoiceIndex].focus();
   };
 
-  export const setFocusToController = () => {
+  export const focusController = () => {
     const controller = document.getElementById($$props['aria-labelledby']);
     if (controller) controller.focus();
   };
@@ -79,80 +88,77 @@
   // Events
   // --------------------------------------------------------------
 
-  const dispatchMenuClose = () => { dispatch(Event.MENU_CLOSE); };
-  const onWindowKeyDown = (e) => { if (e.keyCode === KeyCode.ESC) dispatchMenuClose(); };
-
-  const onItemSelect = async () => {
-    const item = items[activeItem];
-    item.click();
+  const updateChoices = async () => {
     await tick();
-    const subMenu = getSubMenu(item);
-    if (subMenu) subMenu.focus();
+    choices = document.querySelectorAll(`#${$$props.id} > li > button`);
   };
 
-  const onMenuOpen = async () => {
-    await tick();
-    items = document.querySelectorAll(`#${$$props.id} > li > button`);
-    // Prevents forwarding click event that opened the menu to the item.
-    setTimeout(() => { items[activeItem].focus(); }, 10);
+  onMount(updateChoices);
+
+  const onWindowKeyDown = (e) => {
+    if (e.keyCode === KeyCode.ESC) isActive = false;
+  };
+
+  const onMenuOpen = () => {
+    updateChoices();
+    focusedChoiceIndex = 0;
+    // Prevents forwarding click event that opened the menu to the choice.
+    setTimeout(() => { choices[focusedChoiceIndex].focus(); }, 10);
+    isActive = true;
   };
 
   const onMenuClose = () => {
-    activeItem = 0;
-    dispatchMenuClose();
-    setFocusToController();
+    focusedChoiceIndex = -1;
+    focusController();
+    isActive = false;
   };
 
-  const onOpenSubMenu = async () => {
-    const item = items[activeItem];
-    const subMenu = getSubMenu(item);
-    if (!subMenu) return;
-    item.click();
+  const onOpenSubmenu = async () => {
+    const choice = choices[focusedChoiceIndex];
+    choice.click();
     await tick();
-    subMenu.focus();
+    const submenu = getSubmenu(choice);
+    if (submenu) submenu.focus();
   };
 
   const onKeyDown = (e) => {
     const { keyCode } = e;
     const isValidKeyCode = Object.values(KeyCode).includes(keyCode);
-  
-    if (isValidKeyCode) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+
+    if (isValidKeyCode) { e.preventDefault(); }
 
     switch (keyCode) {
       case KeyCode.ESC:
         onMenuClose();
         break;
       case KeyCode.DOWN:
-        setFocusToItem(activeItem + 1);
-        break;
       case KeyCode.TAB:
-        onMenuClose();
+        focusChoice(focusedChoiceIndex + 1);
         break;
       case KeyCode.HOME: case KeyCode.PAGEUP:
-        setFocusToItem(0);
+        focusChoice(0);
         break;
       case KeyCode.END: case KeyCode.PAGEDOWN:
-        setFocusToItem(items.length - 1);
+        focusChoice(choices.length - 1);
         break;
       case KeyCode.UP:
-        setFocusToItem(activeItem - 1);
+        focusChoice(focusedChoiceIndex - 1);
         break;
       case KeyCode.LEFT:
         onMenuClose();
         break;
       case KeyCode.ENTER: case KeyCode.SPACE:
-        onItemSelect();
+        onOpenSubmenu();
         break;
       case KeyCode.RIGHT:
-        onOpenSubMenu();
+        onOpenSubmenu();
         break;
       default:
         break;
     }
   };
+
+  $: dispatch(isActive ? Event.OPEN : Event.CLOSE);
 </script>
 
 <style type="text/scss">

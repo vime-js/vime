@@ -48,8 +48,27 @@
 
   export const getRegistry = () => registry;
   export const getTooltipComponent = () => Tooltip;
+  export const getTooltips = () => registry.getValues();
+  export const getTooltip = (id) => registry.getValue(id);
 
-  $: if (autopilot) isEnabled = !$isMobile && !$isTouch && $isControlsEnabled && !$useNativeControls;
+  export const createTooltip = (id, target) => {
+    const tooltip = new Tooltip({ target });
+    registry.register(id, target);
+    return tooltip;
+  };
+
+  export const removeTooltip = (id) => {
+    const tooltip = registry.getValue(id);
+    tooltip.$destroy();
+    registry.deregister(id);
+  };
+
+  $: if (autopilot) {
+    isEnabled = !$isMobile
+      && !$isTouch
+      && $isControlsEnabled
+      && !$useNativeControls;
+  }
 
   // --------------------------------------------------------------
   // Events

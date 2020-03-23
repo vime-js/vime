@@ -1,0 +1,43 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Packages/Player/Plugins/Settings/Menu/MenuControl" />
+
+# MenuControl `Component`
+
+[View Source](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/plugins/settings/menu/MenuControl.svelte)
+
+A button to be used inside a menu. The button is styled based on its ARIA role and state. It's used
+as the base for the `MenuItem` (see <LinkTo kind="packages-player-plugins-settings-menu-menuitem--page">Menu/MenuItem</LinkTo>) 
+and `MenuItemRadio` (see <LinkTo kind="packages-player-plugins-settings-menu-menuitemradio--page">Menu/MenuItemRadio</LinkTo>) components.
+
+## Props
+
+📝 Any unlisted props are bound directly to the underlying `button` element. This is useful
+for setting ARIA attributes.
+
+### `title: string`
+
+**Default:** `''`
+
+The title of the control.
+
+### `hint: string|null`
+
+**Default:** `null`
+
+Optional text used to provide more information to the user about the control.
+
+### `badge: string|null`
+
+**Default:** `null`
+
+Optional text placed inside a small colored box which provides more information to the user about the control.
+
+## Events
+
+### `click`
+
+**Data Type:** [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event)
+
+Fired when the button is clicked.

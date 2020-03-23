@@ -1,25 +1,16 @@
-<Menu 
-  {id}
-  aria-hidden={$$props['aria-hidden']}
-  aria-labelledby={$$props['aria-labelledby']}
-  on:menuclose
-  bind:this={menu}
->
-  {#each options as option, index}
-    <MenuItemRadio
-      {player}
-      {group}
-      title={option.title}
-      value={option.value}
-      badge={option.badge}
-      on:valuechange
-      bind:this={menuItemRadios[index]}
-    />
-  {/each}
-</Menu>
+<svelte:options accessors />
+
+{#each options as option, index}
+  <MenuItemRadio
+    {player}
+    {group}
+    {...option}
+    on:valuechange
+    bind:this={menuItemRadios[index]}
+  />
+{/each}
 
 <script>
-  import Menu from './Menu.svelte';
   import MenuItemRadio from './MenuItemRadio.svelte';
 
   export let player;
@@ -28,13 +19,10 @@
   // Props
   // --------------------------------------------------------------
 
-  let menu;
   const menuItemRadios = [];
   
-  export let id;
   export let group;
-  export let options;
+  export let options = [];
 
-  export const getMenu = () => menu;
-  export const getMenuItemRadios = () => menuItemRadios.filter(Boolean);
+  export const getRadios = () => menuItemRadios.filter(Boolean);
 </script>

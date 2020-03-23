@@ -1,28 +1,25 @@
 <svelte:options accessors />
 
-{#if isEnabled}
-  <div 
-    class:inactive={!isActive}
-    bind:this={el}
-  >
-    <div>Loading...</div>
-  </div>
-{/if}
+<div 
+  use:vIf={isEnabled}
+  use:vShow={isActive}
+  bind:this={el}
+>
+  <div>Loading...</div>
+</div>
 
 <script context="module">
   export const ID = 'vSpinner';
 </script>
 
 <script>
-  import { ID as ControlsID } from './controls/Controls.svelte';
+  import { vIf, vShow } from '@vime-js/utils';
 
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
 
   export let player;
-
-  const plugins = player.getPluginsRegistry();
 
   const {
     buffering, isVideoView, useNativeControls,
@@ -35,18 +32,11 @@
   let el;
 
   export let autopilot = true;
-  export let isEnabled = false;
+  export let isEnabled = true;
   export let isActive = false;
 
   $: if (autopilot) isActive = $buffering;
   $: if (autopilot) isEnabled = $isVideoView && !$useNativeControls;
-
-  // --------------------------------------------------------------
-  // Controls Plugin
-  // --------------------------------------------------------------
-
-  $: controlsPlugin = $plugins[ControlsID];
-  $: if (el && controlsPlugin) controlsPlugin.centerAssist(el);
 </script>
 
 <style type="text/scss">
@@ -70,13 +60,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.4s ease-in-out;
     z-index: 2;
     pointer-events: none;
-
-    &.inactive {
-      opacity: 0;
-    }
 
     div {
       background: transparent;

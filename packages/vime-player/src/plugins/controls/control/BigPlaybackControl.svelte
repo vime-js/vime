@@ -1,7 +1,8 @@
 <div class:paused={$paused}>
   <PlaybackControl 
     large 
-    {player} 
+    {player}
+    bind:this={playbackControl}
   />
 </div>
 
@@ -12,9 +13,21 @@
 <script>
   import PlaybackControl from './PlaybackControl.svelte';
 
+  // --------------------------------------------------------------
+  // Setup
+  // --------------------------------------------------------------
+
   export let player;
 
   const { paused } = player.getStore();
+
+  // --------------------------------------------------------------
+  // Props
+  // --------------------------------------------------------------
+
+  let playbackControl;
+
+  export const getPlaybackControl = () => playbackControl;
 </script>
 
 <style>
