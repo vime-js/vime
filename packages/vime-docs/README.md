@@ -1,15 +1,14 @@
 <div align="center">
   <a href="#">
     <img
-      width="70%"
+      width="375px"
       alt="vime"
       src="https://raw.githubusercontent.com/vime-js/vime/master/static/brand/vime-docs--dark.svg?sanitize=true"
     />
   </a>
-
-  <br />
-  <br />
 </div>
+
+<br />
 
 This repository houses the Vime documentation site, which is built using [Storybook](https://storybook.js.org/).
 

@@ -1,7 +1,7 @@
 <div align="center">
   <a href="#">
     <img
-      width="60%"
+      width="300px"
       alt="vime"
       src="https://raw.githubusercontent.com/vime-js/vime/master/static/brand/vime-html5--dark.svg?sanitize=true"
     />
@@ -16,6 +16,8 @@
   [![github-badge]][github]
   [![tweet-badge]][tweet]
 </div>
+
+<br />
 
 Documentation coming soon.
 
