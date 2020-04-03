@@ -64,7 +64,7 @@ code (see [Write Less Code][write-less-code]). In addition, Svelte is able to in
 the minimal number of steps required to perform the change you're seeking, whether this is updating
 computed properties or the DOM. Through inserting import statements of only small utility like 
 functions, and taking advantage of treeshaking, the final bundle size is ridiculously small. There is 
-stil the hovering question of does it scale, for that checkout [Yes but does it scale?][does-it-scale]
+still the hovering question of does it scale, for that checkout [Yes but does it scale?][does-it-scale]
 
 * **Performant**. In contrast with a virtual DOM approach, which comes with the overhead of being stored 
 in memory and the cost of diffing (see [Virtual DOM is Pure Overhead][vdom-overhead]),
@@ -160,7 +160,7 @@ IE 11 is important to you, then don't use Vime in production just yet.
 
 * **Responsive Design.** The player and all our plugins are designed for mobile, touch and larger screens.
 
-* **Accessible.** All controls and menus are built with accessiblility in mind, and VTT captions are supported.
+* **Accessible.** All controls and menus are built with accessibility in mind, and VTT captions are supported.
 
 * **Options.** There is an option for whatever your use case. Thumbnails preview, lite player embed, standard
 player for a normalized experience, and a complete system with plugins and all.
