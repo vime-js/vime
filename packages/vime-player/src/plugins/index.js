@@ -19,6 +19,6 @@ export { Boot };
 export { DblClickFullscreen };
 
 export * from './controls';
-export * from './settings'
-export * from './tooltips'
-export * from './keyboard'
+export * from './settings';
+export * from './tooltips';
+export * from './keyboard';
