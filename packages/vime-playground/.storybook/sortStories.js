@@ -1,29 +1,8 @@
 const SIDEBAR_ORDER = {
-  Packages: {
-    'Html 5': [
-      'Audio',
-      'Video',
-    ],
-    Youtube: [
-      'Lite',
-      'Standard',
-    ],
-    Vimeo: [
-      'Lite',
-      'Standard',
-    ],
-    Dailymotion: [
-      'Lite',
-      'Standard',
-    ],
-    Player: [
-      'Audio',
-      'Video',
-      'Youtube',
-      'Dailymotion',
-      'Vimeo',
-    ]
-  }
+  'Preview': null,
+  'Lite': null,
+  'Standard': null,
+  'Complete': null
 };
 
 const getValueForPath = (story) => {

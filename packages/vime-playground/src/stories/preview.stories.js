@@ -3,47 +3,19 @@ import { InteractiveView } from '../views';
 import config from '../config';
 
 export default {
-  title: 'Packages/Preview',
-  parameters: {
-    viewMode: 'story',
-    previewTabs: {
-      'storybook/docs/panel': { hidden: true },
-    },
-  },
+  title: 'Preview',
 };
 
-export const Html5 = () => ({
+const base = (props) => ({
   Component: InteractiveView,
   props: {
     Component: Preview,
-    poster: config.File.POSTER,
     events: config.Events.PREVIEW,
+    ...props,
   },
 });
 
-export const Youtube = () => ({
-  Component: InteractiveView,
-  props: {
-    Component: Preview,
-    src: config.YouTube.SRC,
-    events: config.Events.PREVIEW,
-  },
-});
-
-export const Dailymotion = () => ({
-  Component: InteractiveView,
-  props: {
-    Component: Preview,
-    src: config.Dailymotion.SRC,
-    events: config.Events.PREVIEW,
-  },
-});
-
-export const Vimeo = () => ({
-  Component: InteractiveView,
-  props: {
-    Component: Preview,
-    src: config.Vimeo.SRC,
-    events: config.Events.PREVIEW,
-  },
-});
+export const File = () => base({ poster: config.File.POSTER });
+export const Youtube = () => base({ src: config.YouTube.SRC });
+export const Vimeo = () => base({ src: config.Vimeo.SRC });
+export const Dailymotion = () => base({ src: config.Dailymotion.SRC });

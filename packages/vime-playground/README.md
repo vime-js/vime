@@ -9,7 +9,11 @@
 </div>
 
 <br />
+<br />
 
-This repository houses the Vime playground which is built using [Storybook](https://storybook.js.org/).
+This package houses the [Vime playground][vime-playground] which is built using [Storybook][storybook].
 
 After a fresh install run `yarn && yarn serve` to get started.
+
+[storybook]: https://storybook.js.org
+[vime-playground]: https://playground.vime-js.com
