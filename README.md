@@ -202,13 +202,13 @@ pretty much do whatever you want easily.
 
 Vime is focused on supporting the last 2 versions of all modern browsers and IE 11.
 
-* Safari
-* iOS Safari
-* Firefox
-* Chrome
-* Opera
-* Edge
-* IE 11 (most likely broken at the moment as no testing has been performed on it)
+- [x] Safari
+- [x] iOS Safari
+- [x] Firefox
+- [x] Chrome
+- [x] Opera
+- [x] Edge
+- [ ] IE 11 (most likely broken at the moment as no testing has been performed on it)
 
 ## Questions
 
