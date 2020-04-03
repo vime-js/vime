@@ -1,0 +1,4 @@
+root: ./packages/vime-docs
+
+structure:
+  readme: ../../README.md
