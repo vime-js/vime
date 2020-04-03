@@ -36,7 +36,7 @@
     }
   },
   "lint-staged": {
-    "README.md": [
+    "./README.md": [
       "yarn toc"
     ],
     "packages/*/*.{js,svelte}": [

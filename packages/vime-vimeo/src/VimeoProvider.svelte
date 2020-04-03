@@ -59,7 +59,7 @@
     VM.Event.PLAY,
     VM.Event.PAUSE,
     VM.Event.SEEKING,
-    'seeked',
+    VM.Event.SEEKED,
     'timeupdate',
     VM.Event.VOLUME_CHANGE,
     VM.Event.DURATION_CHANGE,

@@ -10,6 +10,10 @@
   <br />
   <br />
 
+  [Documentation][vime-docs] | [Playground][vime-playground]
+
+  <br />
+
   [![version-badge]][package]
   [![license-badge]][license]
   [![prs-badge]][prs] 
@@ -33,6 +37,7 @@
 - [Features](#features)
 - [Support](#support)
 - [Questions](#questions)
+- [Where to next?](#where-to-next)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -55,9 +60,9 @@ writes code that surgically updates the DOM when the state of your app changes.
 
 ### Why Svelte?
 
-* **Framework Agnostic**. Svelte compiles down to Vanilla JS, you can use it anywhere, regardless of what 
-framework you choose. This all comes without the baggage of the entire Svelte internal system,
-only the parts we need come along for the ride.
+* **Framework Agnostic**. Svelte compiles down to Vanilla JS so you can use it anywhere, regardless of what 
+framework you choose. This comes with all the benefits of a modern JS framework like React or Vue but without 
+all the baggage.
 
 * **Lightweight**. Svelte code is terse in a non-cryptic way, it **can** (not will) enable us to naturally write less
 code (see [Write Less Code][write-less-code]). In addition, Svelte is able to infer at compile-time
@@ -90,42 +95,47 @@ state management flow with a library like RxJS, and the ability to easily switch
 
 The main issue with alternative solutions like [Videojs][github-videojs] and [Plyr][github-plyr] is:
 
-* They are **not treeshakable** and come with too many built-in features that most users simply don't need. This 
-bloats the package size and makes it hard to extend or play with the library.
+* They are **not modular/treeshakable** and come with too many built-in features that most users simply don't need. This 
+bloats the package size and the final bundle includes useless code.
 
-* Poorly implemented **plugin system** or none at all. This makes it difficult for users
-to control and extend the player. Plyr doesn't have a plugin system, and most plugins for Videojs 
-tend to be outdated or not actively maintained (see [videojs-youtube](https://github.com/videojs/videojs-youtube/issues/547) and
-[videojs-vimeo](https://github.com/videojs/videojs-vimeo/issues/151)).
+* Poor **plugin ecosystem** or none at all. Plyr doesn't have a plugin system which makes it difficult
+for the community or devs to extend the player. Videojs has mostly basic plugins and a majority are outdated
+or not actively maintained. 
 
-* **Poor multi-provider support.** Plyr only supports Vimeo and YouTube out of the box and there
+* **Poor multi-provider support.** Plyr only supports Vimeo and YouTube at this time and there
 is no simple way to add a custom provider. Videojs supports multiple providers through custom `Tech`
-but there is technically none supported out of the box. As mentioned in the last point, the community plugins 
-that add support for them are outdated and don't work.
+but there is technically none supported out of the box. The community plugins 
+that add support for them are outdated and don't work (see [videojs-youtube](https://github.com/videojs/videojs-youtube/issues/547) 
+and [videojs-vimeo](https://github.com/videojs/videojs-vimeo/issues/151)).
 
-* Using **Player SDKs** to integrate each provider causes additional bloat. Each SDK is pretty much
+* Both libraries use **Player SDKs** to integrate each provider which causes additional bloat. Each SDK is 
 repeating mostly the same code for mounting and building the `iframe`, cleaning event listeners etc. 
-Each can weigh as much as ~10 kB and is not part of the base package size. This means after adding 
-3 providers such as YouTube, Dailymotion and Vimeo you'll incur an additional 25 - 30 kB overhead.
+Each can weigh as much as ~10 kB. Thus, after adding only 3 providers such as YouTube, Dailymotion and 
+Vimeo you'll incur an additional 25 - 30 kB overhead.
 
-* Not built with modern **UI framework** capabilities. We've learnt for more than a decade that 
-building UI's is hard. It's best to leverage the capabilities of existing frameworks. It's very difficult
-to extend Plyr as it is, but Videojs has it's own [Component](https://github.com/videojs/video.js/blob/master/src/js/component.js)
-class for managing UI state. It's hard to build anything meaningful using their component class. 
-If you're intending on building complex UI components/plugins for your player, then you simply need to find your 
-own recipe for making it happen. This is why most the plugins are generally pretty simple.
+* They are not built with modern **UI framework** capabilities. We've learnt a lot about building user interfaces
+over the last decade. It's best to not reinvent the wheel and use existing frameworks. Most importantly, they help with
+providing structure, solutions to common problems, code reusability, improved development experience 
+and a quicker time-to-contribute (time it takes a dev to understand a new codebase and contribute). Plyr and 
+Videojs are completely Vanilla JS. This was likely a conscious decision to make sure the libraries are interoperable between 
+JS frameworks. However, a new wave of [compile-time frameworks](https://peteroshaughnessy.com/posts/disappearing-frameworks/) 
+like [Svelte](https://svelte.dev), [Stencil](https://stenciljs.com/) and [Ember](https://emberjs.com/)
+are reducing the costs of choosing to use a framework. Two examples of how not using a framework affects Videojs and Plyr is:
 
-* Lack of **testing**. Videojs has a good set of unit tests but no e2e tests that I can find. I know this is
-a difficult task for a video player but it is possible. Plyr has no tests at all. This makes both libraries
-vulnerable to breakage, and new changes should be added with caution. I'll admit Vime has no 
-tests just yet either, but it is one of our highest priorities.
+  * Videojs decided to design its own [Component](https://github.com/videojs/video.js/blob/master/src/js/component.js) class 
+  for managing UI state. Besides the fact that it's 1700 lines of code, it's hard to build anything meaningful with it. 
+  If you're intending on building complex UI components/plugins for your player, then you simply need to find your own recipe for 
+  making it happen.
 
-* Side issue but the **codebase** for Plyr is somewhat a mess. Contributing to the project is very difficult. In my case, 
-I wanted to add another provider and build my own control but there was no simple way to do it. Logic is tangled up all over the
-place. Understanding 1700 lines of code for just the [controls](https://github.com/sampotts/plyr/blob/master/src/js/controls.js)
-is simply too hard. However, this may be fixed in time.
+  * The codebase for Plyr is a jungle with logic tangled up all over the place. For example, understanding 
+  [1700 lines of code](https://github.com/sampotts/plyr/blob/master/src/js/controls.js) for just the controls 
+  is simply too much.
 
-📝  ***Think I got something wrong or you can improve what's been said? Please create a PR as I'd love make any necessary changes.***
+* Lack of **testing**. Videojs has a good set of unit tests but no e2e tests, and Plyr has no tests at all. 
+This makes both libraries vulnerable to breakage. I'll admit Vime has no tests just yet either, 
+but it is one of our highest priorities.
+
+📝  ***If you think I got something wrong or you can improve what's been said then please create a PR.***
 
 ## Warnings
 
@@ -181,7 +191,7 @@ even better experience we'll be building framework intergations starting with Re
 * **Lazy loading.** All players are loaded lazily as soon as they are almost in view.
 
 * **Design**. A minimalistic, modern and sleek design which you can customize with your own icons and theme. See
-Screenshots above for our base design.
+screenshots above for our base design.
 
 * **Modular Design + Plugin System.** Include only the parts you need and benefit from treeshaking to remove the 
 waste. Outside of the core, everything is built as a plugin so you can integrate only what you need. There are 
@@ -212,8 +222,12 @@ Vime is focused on supporting the last 2 versions of all modern browsers and IE 
 
 ## Questions
 
-Simply create an issue and start the title with "***Question:***" 
-or ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/vime-js).
+Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/vime-js) with the tag `vime-js`.
+
+## Where to next?
+
+You can head over to the [playground][vime-playground] to play or you can [get started][vime-getting-started]
+straight away.
 
 ## License
 
@@ -234,3 +248,6 @@ or ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged
 [github-star-badge]: https://img.shields.io/github/stars/vime-js/vime?style=social
 [github-videojs]: https://github.com/videojs/video.js
 [github-plyr]: https://github.com/sampotts/plyr
+[vime-docs]: https://vime-js.com
+[vime-playground]: https://playground.vime-js.com
+[vime-getting-started]: https://vime-js.com/getting-started
