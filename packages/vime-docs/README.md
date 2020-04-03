@@ -26,19 +26,42 @@ Checkout this excellent write up called [Why Svelte?](https://github.com/feltcoo
 
 #### Motivation
 
-The main issue with alternative solutions like [Videojs](https://github.com/videojs/video.js) and [Plyr](https://github.com/sampotts/plyr) is:
+The main issue with alternative solutions like [Videojs][github-videojs] and [Plyr][github-plyr] is:
 
-They are **not treeshakable** and come with too many built-in features that most users simply don't need. This bloats the package size and makes it hard to extend or play with the library. For example, Videojs has a [utility](https://github.com/videojs/mux.js/) for inspecting video container formats, created its own [UI state management](https://github.com/videojs/video.js/blob/master/src/js/component.js), created an [implementation](https://github.com/videojs/vtt.js) of the WebVTT spec, created a [http streaming library](https://github.com/videojs/http-streaming) and more. Decisions like this lead to a package that is a whopping [480.5 kB min and 132 kB min + gzip](https://bundlephobia.com/result?p=video.js@7.6.6). If Videojs was treeshakable that would be cool, but as you can see [here](https://github.com/videojs/video.js/blob/master/src/js/index.js) it isn't. Plyr is a respectable [size](https://bundlephobia.com/result?p=plyr@3.5.10), and has a config to pick and choose some things, but it suffers from the same overall issues.
+* They are **not treeshakable** and come with too many built-in features that most users simply don't need. This 
+bloats the package size and makes it hard to extend or play with the library.
 
-Poorly implemented **plugin system** or none at all. This makes it difficult for users to control and extend the player. Plyr doesn't have a plugin system, and most plugins for Videojs tend to be outdated or not actively maintained \(see [videojs-youtube](https://github.com/videojs/videojs-youtube/issues/547) and [videojs-vimeo](https://github.com/videojs/videojs-vimeo/issues/151)\).
+* Poorly implemented **plugin system** or none at all. This makes it difficult for users
+to control and extend the player. Plyr doesn't have a plugin system, and most plugins for Videojs 
+tend to be outdated or not actively maintained (see [videojs-youtube](https://github.com/videojs/videojs-youtube/issues/547) and
+[videojs-vimeo](https://github.com/videojs/videojs-vimeo/issues/151)).
 
-**Player SDKs** are used to integrate each provider which causes additional bloat. Each SDK is pretty much repeating mostly the same code for mounting and building the `iframe`, cleaning event listeners etc. Each can weigh as much as ~10 kB and is not part of the base package size. This means after adding 3 providers such as YouTube, Dailymotion and Vimeo you'll incur an additional 25 - 30 kB overhead. Both and Plyr and Videojs are guilty here.
+* **Poor multi-provider support.** Plyr only supports Vimeo and YouTube out of the box and there
+is no simple way to add a custom provider. Videojs supports multiple providers through custom `Tech`
+but there is technically none supported out of the box. As mentioned in the last point, the community plugins 
+that add support for them are outdated and don't work.
 
-Not built with modern **UI framework** capabilities. We've learnt for more than a decade that building UI's is hard. It's best to leverage the capabilities of existing frameworks. It's very difficult to extend Plyr as it is, but Videojs has it's own [Component](https://github.com/videojs/video.js/blob/master/src/js/component.js) class for managing UI state. It's hard to build anything meaningful using their component class. If you're intending on building complex UI components/plugins for your player, then you simply need to find your own recipe for making it happen. This is why most the plugins are generally pretty simple.
+* Using **Player SDKs** to integrate each provider causes additional bloat. Each SDK is pretty much
+repeating mostly the same code for mounting and building the `iframe`, cleaning event listeners etc. 
+Each can weigh as much as ~10 kB and is not part of the base package size. This means after adding 
+3 providers such as YouTube, Dailymotion and Vimeo you'll incur an additional 25 - 30 kB overhead.
 
-Lack of **testing**. Videojs has a good set of unit tests but no e2e tests that I can find. I know this is a difficult task for a video player but it is possible. Plyr has no tests at all. This makes both libraries vulnerable to breakage, and new changes should be added with caution. I'll admit Vime has no tests just yet either, but it is one of our highest priorities.
+* Not built with modern **UI framework** capabilities. We've learnt for more than a decade that 
+building UI's is hard. It's best to leverage the capabilities of existing frameworks. It's very difficult
+to extend Plyr as it is, but Videojs has it's own [Component](https://github.com/videojs/video.js/blob/master/src/js/component.js)
+class for managing UI state. It's hard to build anything meaningful using their component class. 
+If you're intending on building complex UI components/plugins for your player, then you simply need to find your 
+own recipe for making it happen. This is why most the plugins are generally pretty simple.
 
-Side issue but the **codebase** for Plyr is somewhat a mess. Contributing to the project is very difficult. In my case, I wanted to add another provider and build my own control but there was no simple way to do it. Logic is tangled up all over the place. Understanding 1700 lines of code for just the [controls](https://github.com/sampotts/plyr/blob/master/src/js/controls.js) is simply too hard. However, this may be fixed in time.
+* Lack of **testing**. Videojs has a good set of unit tests but no e2e tests that I can find. I know this is
+a difficult task for a video player but it is possible. Plyr has no tests at all. This makes both libraries
+vulnerable to breakage, and new changes should be added with caution. I'll admit Vime has no 
+tests just yet either, but it is one of our highest priorities.
+
+* Side issue but the **codebase** for Plyr is somewhat a mess. Contributing to the project is very difficult. In my case, 
+I wanted to add another provider and build my own control but there was no simple way to do it. Logic is tangled up all over the
+place. Understanding 1700 lines of code for just the [controls](https://github.com/sampotts/plyr/blob/master/src/js/controls.js)
+is simply too hard. However, this may be fixed in time.
 
 {% hint style="info" %}
 Think I got something wrong or you can improve what's been said? Create a PR over at our [GitHub repository](https://github.com/vime-js/vime). 
