@@ -28,7 +28,7 @@
   - [What is Svelte?](#what-is-svelte)
   - [Why Svelte?](#why-svelte)
 - [Motivation](#motivation)
-- [Warning](#warning)
+- [Warnings](#warnings)
 - [Screenshots](#screenshots)
 - [Features](#features)
 - [Support](#support)
@@ -91,27 +91,22 @@ state management flow with a library like RxJS, and the ability to easily switch
 The main issue with alternative solutions like [Videojs][github-videojs] and [Plyr][github-plyr] is:
 
 * They are **not treeshakable** and come with too many built-in features that most users simply don't need. This 
-bloats the package size and makes it hard to extend or play with the library. For example, Videojs
-has a [utility](https://github.com/videojs/mux.js/) for inspecting video container formats, created its
-own [UI state management](https://github.com/videojs/video.js/blob/master/src/js/component.js),
-created an [implementation](https://github.com/videojs/vtt.js) of the WebVTT spec, created a 
-[http streaming library](https://github.com/videojs/http-streaming) and more. Decisions like this lead to 
-a package that is a whopping [480.5 kB min and 132 kB min + gzip](https://bundlephobia.com/result?p=video.js@7.6.6).
-If Videojs was treeshakable that would be cool, but as you can see 
-[here](https://github.com/videojs/video.js/blob/master/src/js/index.js) it isn't. Plyr is
-a respectable [size](https://bundlephobia.com/result?p=plyr@3.5.10), and has a config to pick and choose 
-some things, but it suffers from the same overall issues.
+bloats the package size and makes it hard to extend or play with the library.
 
 * Poorly implemented **plugin system** or none at all. This makes it difficult for users
 to control and extend the player. Plyr doesn't have a plugin system, and most plugins for Videojs 
 tend to be outdated or not actively maintained (see [videojs-youtube](https://github.com/videojs/videojs-youtube/issues/547) and
 [videojs-vimeo](https://github.com/videojs/videojs-vimeo/issues/151)).
 
+* **Poor multi-provider support.** Plyr only supports Vimeo and YouTube out of the box and there
+is no simple way to add a custom provider. Videojs supports multiple providers through custom `Tech`
+but there is technically none supported out of the box. As mentioned in the last point, the community plugins 
+that add support for them are outdated and don't work.
+
 * Using **Player SDKs** to integrate each provider causes additional bloat. Each SDK is pretty much
 repeating mostly the same code for mounting and building the `iframe`, cleaning event listeners etc. 
 Each can weigh as much as ~10 kB and is not part of the base package size. This means after adding 
-3 providers such as YouTube, Dailymotion and Vimeo you'll incur an additional 25 - 30 kB overhead. Both
-and Plyr and Videojs are guilty here.
+3 providers such as YouTube, Dailymotion and Vimeo you'll incur an additional 25 - 30 kB overhead.
 
 * Not built with modern **UI framework** capabilities. We've learnt for more than a decade that 
 building UI's is hard. It's best to leverage the capabilities of existing frameworks. It's very difficult
@@ -130,19 +125,17 @@ I wanted to add another provider and build my own control but there was no simpl
 place. Understanding 1700 lines of code for just the [controls](https://github.com/sampotts/plyr/blob/master/src/js/controls.js)
 is simply too hard. However, this may be fixed in time.
 
-📝  ***Think I got something wrong, or you can add to or improve what's been said? Please create a PR as I'd love make any necessary changes.***
+📝  ***Think I got something wrong or you can improve what's been said? Please create a PR as I'd love make any necessary changes.***
 
-## Warning
+## Warnings
 
-If you're looking for something that has battled the test of time and is realiable today in a 
+- If you're looking for something that has battled the test of time and is realiable today in a 
 large production app, then Vime is not for you. You should go ahead and checkout [Videojs][github-videojs] 
-and [Plyr][github-plyr]. I've done my best to go through their source code and try to avoid as many mistakes as possible, 
-and I've performed a bunch of manual laborious testing in browsers, but nothing compares to real world usage.
-Furthermore, IE 11 has not been tested at all. There will definitely be bugs. If 
-IE 11 is important to you, then don't use Vime in production just yet.
+and [Plyr][github-plyr]. 
+
+- IE 11 has not been tested at all. There will definitely be bugs. If this is important to you, then don't use Vime in production just yet.
 
 ## Screenshots
-
 
 <img
   width="100%"
