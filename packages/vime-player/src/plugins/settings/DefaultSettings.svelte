@@ -71,7 +71,7 @@
       value: $playbackRate,
       options: ($playbackRates.length === 1) ? [] : playbackRateOptions,
       emptyHint: $i18n.normal,
-      isDisabled: !$canSetPlaybackRate || ($playbackRates.length === 0),
+      isLocked: !$canSetPlaybackRate || ($playbackRates.length === 0),
     });
   }
 
@@ -90,7 +90,8 @@
       value: $currentTrackIndex,
       options: !$isVideoView ? [] : captionsOptions,
       emptyHint: $i18n.none,
-      isDisabled: !$canSetTrack || ($tracks.length === 0),
+      isEnabled: $isVideoView,
+      isLocked: !$canSetTrack || ($tracks.length === 0),
     });
   }
 
@@ -112,7 +113,8 @@
       value: $videoQuality,
       options: $isAudio ? [] : videoQualityOptions,
       emptyHint: $i18n.default,
-      isDisabled: !$canSetVideoQuality || ($videoQualities.length === 0),
+      isEnabled: !$isAudio,
+      isLocked: !$canSetVideoQuality || ($videoQualities.length === 0),
     });
   }
 

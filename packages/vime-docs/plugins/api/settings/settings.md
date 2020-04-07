@@ -86,7 +86,7 @@ player
       value: player.playbackRate,
       options: (player.playbackRates.length === 1) ? [] : options,
       emptyHint: player.i18n.normal,
-      isDisabled: !player.canSetPlaybackRate || (player.playbackRates.length === 0),
+      isLocked: !player.canSetPlaybackRate || (player.playbackRates.length === 0),
     });
 
     submenu.$on('valuechange', e => {
