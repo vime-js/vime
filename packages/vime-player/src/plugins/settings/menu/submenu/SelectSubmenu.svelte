@@ -3,8 +3,9 @@
   {player}
   {hint}
   {isActive}
+  {isEnabled}
   {hideController}
-  isDisabled={isDisabled || !hasOptions}
+  isLocked={isLocked || !hasOptions}
   on:open
   on:close
   bind:this={submenu}
@@ -36,7 +37,8 @@
   export let options = [];
   export let emptyHint = '';
   export let isActive = false;
-  export let isDisabled = false;
+  export let isLocked = false;
+  export let isEnabled = true;
   export let hideController = false;
 
   export const getSubmenu = () => submenu;

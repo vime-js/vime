@@ -1,35 +1,37 @@
 <svelte:options accessors />
 
-<MenuItem
-  id={controllerId}
-  {player}
-  {title}
-  {hint}
-  aria-hidden={hideController}
-  aria-haspopup={!isDisabled ? true : null}
-  aria-expanded={!isDisabled ? isActive : null}
-  aria-controls={!isDisabled ? id : null}
-  on:click={onToggleMenu}
->
-  {#if !isDisabled}
-    <div 
-      class="divider"
-      class:audio={!$isVideoView}
-      class:active={isActive}
-      bind:this={divider}
-    ></div>
-    <Menu 
-      {id}
-      bind:isActive
-      aria-labelledby={controllerId}
-      on:open
-      on:close
-      bind:this={menu}
-    >
-      <slot />
-    </Menu>
-  {/if}
-</MenuItem>
+{#if isEnabled}
+  <MenuItem
+    id={controllerId}
+    {player}
+    {title}
+    {hint}
+    aria-hidden={hideController}
+    aria-haspopup={!isLocked ? true : null}
+    aria-expanded={!isLocked ? isActive : null}
+    aria-controls={!isLocked ? id : null}
+    on:click={onToggleMenu}
+  >
+    {#if !isLocked}
+      <div 
+        class="divider"
+        class:audio={!$isVideoView}
+        class:active={isActive}
+        bind:this={divider}
+      ></div>
+      <Menu 
+        {id}
+        bind:isActive
+        aria-labelledby={controllerId}
+        on:open
+        on:close
+        bind:this={menu}
+      >
+        <slot />
+      </Menu>
+    {/if}
+  </MenuItem>
+{/if}
 
 <script context="module">
   let menuIdCounter = 0;
@@ -62,7 +64,8 @@
   export let title = null;
   export let hint = null;
   export let isActive = false;
-  export let isDisabled = false;
+  export let isLocked = false;
+  export let isEnabled = true;
   export let hideController = false;
 
   export const getId = () => id;
@@ -75,7 +78,7 @@
   // --------------------------------------------------------------
 
   const onToggleMenu = () => {
-    if (isDisabled) return;
+    if (isLocked) return;
     isActive = !isActive;
   };
 </script>

@@ -26,12 +26,18 @@ Optional text used to provide more information when the menu isn't open.
 
 Whether the menu is visible or not.
 
-### `isDisabled`
+### `isEnabled`
+
+**Type:** `boolean` | **Default:** `true`
+
+Whether the menu and controller should be rendered in the DOM or not.
+
+### `isLocked`
 
 **Type:** `boolean` | **Default:** `false`
 
 Whether the menu is rendered or not. The menu controller responsible for opening/closing the 
-submenu is visible regardless of this prop.
+submenu is visible.
 
 ### `hideController`
 
