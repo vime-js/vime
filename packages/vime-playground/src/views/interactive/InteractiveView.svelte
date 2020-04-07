@@ -11,8 +11,8 @@
 </InteractiveCanvas>
 
 <script>
-  import { tick, onDestroy } from 'svelte';
-  import { run_all, safe_not_equal } from 'svelte/internal';
+  import { onDestroy } from 'svelte';
+  import { tick, run_all, safe_not_equal } from 'svelte/internal';
   import InteractiveCanvas from './InteractiveCanvas.svelte';
   import { is_function } from '@vime-js/utils';
 
@@ -127,10 +127,10 @@
     Object.keys($$restProps).forEach((prop) => {
       component[prop] = $$restProps[prop];
     });
-    await tick();
-    if (is_function(component.getStore)) listenToStore();
-    component.$$.after_update.push(onComponentUpdate);
     listenToEvents();
+    if (is_function(component.getStore)) listenToStore();
+    await tick();
+    component.$$.after_update.push(onComponentUpdate);
     hasComponentMounted = true;
   };
 
