@@ -326,9 +326,7 @@
     if (is_number(info.volume)) onVolumeChange(parseInt(info.volume, 10));
     if (is_boolean(info.muted) && !tempMute) $muted = info.muted;
     if (info.origin) store.origin.set(info.origin);
-    if (is_null(info.videoQuality) || info.videoQuality) {
-      store.videoQuality.forceSet(info.videoQuality);
-    }
+    if (is_number(info.videoQuality)) store.videoQuality.forceSet(info.videoQuality);
     if (info.videoQualities) store.videoQualities.set(info.videoQualities);
     if (info.playbackRate) store.playbackRate.forceSet(info.playbackRate);
     if (info.playbackRates) store.playbackRates.set(info.playbackRates);
