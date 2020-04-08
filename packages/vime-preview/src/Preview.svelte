@@ -9,11 +9,12 @@
   </div>
   <Lazy let:intersecting >
     <img
-      src={poster || nativePoster} 
-      alt="Preview for {src}"
+      src={currentPoster} 
+      alt="Preview of {src || poster}"
       use:vIf={isEnabled && intersecting}
       use:vShow={!isLoading}
       on:load={onLoad}
+      on:error={onLoad}
       bind:this={img}
     />
     <div 
@@ -70,9 +71,10 @@
   export const getNativePoster = () => nativePoster;
 
   const fetchNativePoster = async () => {
+    await tick();
+    isLoading = true;
     nativePoster = cache[src] || await Provider.getPoster(src);
     if (!cache[src]) cache[src] = nativePoster;
-    isLoading = true;
   };
 
   const onLoad = async () => {
@@ -81,19 +83,31 @@
   };
 
   const onPosterChange = async () => {
+    if (!currentPoster) return;
     isLoading = true;
     await tick();
     if (img && img.complete) onLoad();
   };
 
-  $: onPosterChange(poster);
-  
-  $: Provider = providers.find((p) => p.canPlay(src));
-  $: if (!Provider || poster) nativePoster = null;
-  $: if (!poster && src && Provider && is_function(Provider.getPoster)) fetchNativePoster();
+  const onSrcChange = () => { nativePoster = null; };
+  const onProviderChange = () => { nativePoster = null; };
 
-  $: tick().then(() => dispatch(Event.LOADING, isLoading));
-  $: tick().then(() => dispatch(Event.POSTER_CHANGE, poster || nativePoster));
+  $: onSrcChange(src);
+  $: onProviderChange(Provider);
+  $: onPosterChange(currentPoster);
+  
+  $: currentPoster = poster || nativePoster;
+  $: Provider = providers.find((p) => p.canPlay(src));
+
+  $: if (
+    !poster
+    && src
+    && Provider
+    && is_function(Provider.getPoster)
+  ) fetchNativePoster();
+
+  $: dispatch(Event.LOADING, isLoading);
+  $: dispatch(Event.POSTER_CHANGE, currentPoster);
 </script>
 
 <style type="text/scss">
