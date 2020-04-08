@@ -2,7 +2,7 @@
 
 **ID:** `vSpinner` | **Type:** [`Plugin`](../../complete/api/plugin.md)
 
-[View Source](../../../vime-player/src/plugins/Spinner.svelte)
+[View Source](../../../vime-complete/src/plugins/Spinner.svelte)
 
 A spinner is a loading indicator to notify the user that some task is preventing playback.
 
@@ -11,7 +11,7 @@ A spinner is a loading indicator to notify the user that some task is preventing
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, Spinner } from '@vime-js/player';
+import { Player, Spinner } from '@vime-js/complete';
 
 // ...
 
@@ -26,7 +26,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, Spinner } from '@vime-js/player';
+import { Player, Spinner } from '@vime-js/complete';
 
 // ...
 

@@ -2,7 +2,7 @@
 
 **ID:** `vScrim` | **Type:** [`Plugin`](../../complete/api/plugin.md)
 
-[View Source](../../../vime-player/src/plugins/Scrim.svelte)
+[View Source](../../../vime-complete/src/plugins/Scrim.svelte)
 
 A scrim is a temporary low opacity black surface for making controls or other content more visible.
 
@@ -11,7 +11,7 @@ A scrim is a temporary low opacity black surface for making controls or other co
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, Scrim } from '@vime-js/player';
+import { Player, Scrim } from '@vime-js/complete';
 
 // ...
 
@@ -26,7 +26,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, Scrim } from '@vime-js/player';
+import { Player, Scrim } from '@vime-js/complete';
 
 // ...
 

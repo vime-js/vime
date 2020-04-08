@@ -1,12 +1,12 @@
 # Player
 
-[View Source](../../../vime-core/src/player/Player.svelte)
-
 **Type:** `Component`
 
+[View Source](../../../vime-standard/src/StandardPlayer.svelte)
+
 This component is at the heart of Vime. It's responsible for rendering providers, providing an interface
-to interact with them, and assisting in normalizing cross-browser and provider differences. It's 
-referred to in the docs as the Standard Player, and it's internally used by the Complete Player.
+to interact with them, and assisting in normalizing cross-browser and provider differences. It's it'internally used by 
+the Complete Player.
 
 {% hint style="info" %}
 See the [notes](../notes.md) page for more information on provider specifics.
@@ -51,17 +51,6 @@ unsubscribe();
 
 ## Props
 
-{% hint style="danger" %}
-Svelte batches tasks to be performed asynchronously. Rendering component instances, modifying the DOM or
-updating computed properties will not happen synchronously. Svelte automatically schedules these tasks to 
-be performed in the next update cycle. If you do perform a change that causes any of the prior mentioned events, then 
-you'll need to wait for pending state changes to be flushed. You can use `player.tick()` to do exactly that.
-
-```js
-player.tick().then(() => { console.log('changes applied.'); });
-```
-{% endhint %}
-
 ### `src`
 
 **Type:** `any` | **Default:** `null`
@@ -82,14 +71,27 @@ Whether the current provider supports setting a custom poster.
 
 **Type:** `string|null` | **Default:** `null`
 
-A custom poster to load if a provider supports it. You can check [`canSetPoster`](#cansetposter-boolean-readonly) 
+A custom poster to load if a provider supports it. You can check [`canSetPoster`](#cansetposter) 
 before you try setting this property.
+
+### `providers`
+
+**Type:** `Provider[]` | **Default:** `[]`
+
+The current list of providers that are available to the player.
+
+### `Provider`
+
+**Type:** `Provider|null` | **Default:** `null`
+
+The current `Provider` who can play the current `src`. If it is `null` then no provider
+can play the current `src`.
 
 ### `provider`
 
 **Type:** `component|null` | **Default:** `null` | **Readonly**: `true`
 
-The current active provider instance.
+The currently active provider instance.
 
 ### `origin`
 
@@ -107,7 +109,7 @@ The title of the current media.
 
 **Type:** `any` | **Default:** `null` | **Readonly**: `true`
 
-The currently loaded media resources. This is useful when using Html5 video qualities and for future playlist support.
+The currently loaded media resources.
 
 ### `playbackReady`
 
@@ -121,7 +123,7 @@ Whether the current media is ready for playback.
 
 If the provider is currently rebuilding itself. This happens if we are forced to send a new parameter
 to the embed. For example, there is no API for enabling/disabling YouTube controls, so we change it
-via the controls parameter.
+via the controls parameter which requires the embed to reload.
 
 ### `canInteract`
 
@@ -153,7 +155,7 @@ Whether to enable/disable native captions. If `false` then the provider is given
 
 **Type:** `string|null` | **Default:** `null` | **Readonly:** `true`
 
-The absolute URL of the native poster for the current src. For example, the thumbnail for a YouTube video.
+The absolute URL of the native poster for the current `src`. For example, the thumbnail for a YouTube video.
 
 ### `mediaType`
 

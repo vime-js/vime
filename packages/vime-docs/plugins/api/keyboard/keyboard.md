@@ -2,7 +2,7 @@
 
 **ID:** `vKeyboard` | **Type:** [`Plugin`](../../../complete/api/plugin.md)
 
-[View Source](../../../../vime-player/src/plugins/keyboard/Keyboard.svelte)
+[View Source](../../../../vime-complete/src/plugins/keyboard/Keyboard.svelte)
 
 This plugin manages [keyboard shortcuts](./keyboard-shortcut.md).
 
@@ -39,7 +39,7 @@ started with the Vime defaults.
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, Keyboard, DefaultKeyboard } from '@vime-js/player';
+import { Player, Keyboard, DefaultKeyboard } from '@vime-js/complete';
 
 // ...
 
@@ -54,7 +54,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, Keyboard, DefaultKeyboard } from '@vime-js/player';
+import { Player, Keyboard, DefaultKeyboard } from '@vime-js/complete';
 
 // ...
 

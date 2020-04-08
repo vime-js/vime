@@ -2,7 +2,7 @@
 
 **ID:** `vCaptions` | **ROLE:** `CAPTIONS` | **Type:** [`Plugin`](../../complete/api/plugin.md)
 
-[View Source](../../../vime-player/src/plugins/Captions.svelte)
+[View Source](../../../vime-complete/src/plugins/Captions.svelte)
 
 This plugin renders and displays captions/subtitles that are set in the `tracks` prop. The current track 
 is set by the `currentTrackIndex` and `locale` props. If you don't want `locale` changes to affect the 
@@ -13,7 +13,7 @@ captions, see the [`useLocale`](#uselocale) prop below.
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, Captions } from '@vime-js/player';
+import { Player, Captions } from '@vime-js/complete';
 
 // ...
 
@@ -28,7 +28,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, Captions } from '@vime-js/player';
+import { Player, Captions } from '@vime-js/complete';
 
 // ...
 

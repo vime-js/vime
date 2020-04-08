@@ -2,7 +2,7 @@
 
 **Type:** `class`
 
-[View Source](../../../vime-core/src/player/Registry.js)
+[View Source](../../../vime-complete/src/core/Registry.js)
 
 The `Registry` class represents a collection of `id` and `value` pairs known as records. Each `id` is a `string`
 that identifies a `value` (which can be anything, including another `Registry` which we then call a subregistry).
@@ -19,7 +19,7 @@ Each `id` is unique so it can only be registered once, unless it is deregistered
 **Constructor:** `new Registry(id: string, validator: ((id: string, value: any) => boolean)?)`
 
 ```js
-import { Registry } from "@vime-js/core";
+import { Registry } from "@vime-js/complete";
 
 const id = "myRegistry";
 

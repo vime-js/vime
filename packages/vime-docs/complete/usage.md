@@ -11,17 +11,21 @@ Providers are loaded via the `providers` prop.
 
 ```js
 // All providers are named {ProviderName}Provider.
-import { Player, Html5Provider, YouTubeProvider } from '@vime-js/player';
+import { Player, FileProvider, YouTubeProvider } from '@vime-js/complete';
 
 // ...
 
 const player = new Player({ 
   target,
   props: {
-    providers: [Html5Provider, YouTubeProvider]
+    providers: [FileProvider, YouTubeProvider]
   }
 });
 ```
+
+{% hint style="info" %}
+For all available providers see this [page](standard/providers/../../../../vime-standard/src/providers/index.js).
+{% endhint %}
 
 ## Loading Plugins
 
@@ -29,7 +33,7 @@ Plugins are loaded via the `plugins` prop, see the plugins [getting started](../
 page for more information.
 
 ```js
-import { Player, Boot } from '@vime-js/player';
+import { Player, Boot } from '@vime-js/complete';
 
 // ...
 
@@ -51,7 +55,7 @@ Icons are set via the `icons` prop.
 You can load the default Vime icons by using the `Icons` plugin.
 
 ```js
-import { Icons } from '@vime-js/player';
+import { Icons } from '@vime-js/complete';
 
 // If you're using the Boot plugin, it already loads this for you.
 player.plugins = [Icons];
@@ -85,8 +89,8 @@ player.icons = { ...player.icons, play: '#play-svg-id' };
 
 ## Extending Language
 
-You can add your own language via the `languages` prop, see our [english map](https://github.com/vime-js/vime/blob/master/packages/vime-player/src/lang/en.js)
-as an example.
+You can add your own language via the `languages` prop, see our 
+[english map](https://github.com/vime-js/vime/blob/master/packages/vime-complete/src/lang/en.js) as an example.
 
 ```js
 // Add the language.

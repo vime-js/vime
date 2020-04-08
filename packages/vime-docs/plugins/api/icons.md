@@ -2,7 +2,7 @@
 
 **ID:** `vIcons` | **Type:** [`Plugin`](../../complete/api/plugin.md)
 
-[View Source](../../../vime-player/src/plugins/Icons.svelte)
+[View Source](../../../vime-complete/src/plugins/Icons.svelte)
 
 This plugin loads the default Vime icons into the browser.
 
@@ -29,7 +29,7 @@ This plugin loads the default Vime icons into the browser.
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, Icons } from '@vime-js/player';
+import { Player, Icons } from '@vime-js/complete';
 
 // ...
 
@@ -44,7 +44,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, Icons } from '@vime-js/player';
+import { Player, Icons } from '@vime-js/complete';
 
 // ...
 

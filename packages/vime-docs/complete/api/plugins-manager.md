@@ -2,7 +2,7 @@
 
 **ID:** `vPlugin` | **Type:** `Component`
 
-[View Source](../../../vime-player/src/core/PluginsManager.svelte)
+[View Source](../../../vime-complete/src/core/PluginsManager.svelte)
 
 The `PluginsManager` is responsible for validating, adding, removing, rendering and registering 
 [plugins](./plugin.md).

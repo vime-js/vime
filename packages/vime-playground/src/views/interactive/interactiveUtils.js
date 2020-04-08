@@ -1,22 +1,27 @@
-import { Registry } from '@vime-js/core';
+import { Registry } from '@vime-js/complete';
 
 import {
   is_number, is_function, is_boolean,
   is_object, is_array, is_svelte_instance,
   is_element, is_svelte_component, is_instance_of,
+  is_async_function,
 } from '@vime-js/utils';
 
 export const is_getter_method = (methodName, value) => {
   const validPrefixes = ['get', 'is', 'has', 'can', 'should', 'use'];
-  return is_function(value) && validPrefixes.some((prefix) => methodName.startsWith(prefix));
+  return (is_function(value) || is_async_function(value))
+    && validPrefixes.some((prefix) => methodName.startsWith(prefix));
 };
 
 export const is_readonly_prop = (value) => is_function(value)
   || is_svelte_instance(value)
   || is_element(value);
 
-export const is_setter_method = (methodName, value) => is_function(value)
-  && !is_getter_method(methodName, value);
+export const is_setter_method = (methodName, value) => {
+  const validPrefixes = ['set', 'send', 'request', 'exit', 'create', 'tick', 'dispose'];
+  return (is_function(value) || is_async_function(value))
+    && validPrefixes.some((prefix) => methodName.startsWith(prefix));
+};
 
 export const infer_prop_type = (value) => {
   if (is_boolean(value)) { return 'boolean'; }
@@ -35,6 +40,7 @@ export const extract_prop_value = (value) => {
   if (is_instance_of(value, Registry)) { return `${value.getId()} Registry`; }
   if (is_element(value)) { return `${value.tagName} Element`; }
   if (is_function(value)) { return 'Function'; }
+  if (is_async_function(value)) { return 'Async Function'; }
   return value;
 };
 

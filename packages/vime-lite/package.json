@@ -1,0 +1,47 @@
+{
+  "name": "@vime-js/lite",
+  "description": "Vime Lite Player",
+  "version": "1.2.0",
+  "svelte": "src/index.js",
+  "main": "dist/lite.js",
+  "module": "dist/lite.esm.js",
+  "unpkg": "dist/lite.js",
+  "jsdelivr": "dist/lite.js",
+  "sideEffects": false,
+  "license": "MIT",
+  "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
+  "homepage": "https://github.com/vime-js/vime#readme",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/vime-lite",
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "keywords": [
+    "vime",
+    "lite",
+    "video",
+    "audio",
+    "player",
+    "embed",
+    "dailymotion",
+    "vimeo",
+    "youtube",
+    "lazy",
+    "preconnections",
+    "light"
+  ],
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c --environment NODE_ENV:production",
+    "build:dev": "rollup -c --environment NODE_ENV:development"
+  },
+  "dependencies": {
+    "@vime-js/core": "^1.2.0",
+    "@vime-js/utils": "^1.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

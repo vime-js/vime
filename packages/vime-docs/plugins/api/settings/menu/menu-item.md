@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../../vime-player/src/plugins/settings/menu/MenuItem.svelte)
+[View Source](../../../../../vime-complete/src/plugins/settings/menu/MenuItem.svelte)
 
 A menu list item that may perform an action when clicked.
 

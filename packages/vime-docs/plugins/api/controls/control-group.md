@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../vime-player/src/plugins/controls/ControlGroup.svelte)
+[View Source](../../../../vime-complete/src/plugins/controls/ControlGroup.svelte)
 
 Manages rendering and laying out a group of [controls](control/control-interface). The layout is 
 managed via [CSS Flexbox][css-flexbox] properties.

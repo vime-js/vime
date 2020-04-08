@@ -2,9 +2,10 @@ import { InteractiveView } from '../views';
 import config from '../config';
 
 import {
-  Player, Html5Provider, YouTubeProvider,
-  DailymotionProvider, VimeoProvider, Boot,
-} from '@vime-js/player';
+  Player, FileProvider, YouTubeProvider,
+  DailymotionProvider, VimeoProvider,
+  Boot,
+} from '@vime-js/complete';
 
 export default {
   title: 'Complete',
@@ -12,7 +13,11 @@ export default {
 
 const THEME = '#f76d82';
 const EVENTS = config.Events.COMPLETE;
-const PROVIDERS = [Html5Provider, YouTubeProvider, DailymotionProvider, VimeoProvider];
+
+const PROVIDERS = [
+  FileProvider, YouTubeProvider, VimeoProvider,
+  DailymotionProvider,
+];
 
 const videoBase = (props) => ({
   Component: InteractiveView,
@@ -40,21 +45,10 @@ export const AudioFile = () => ({
   },
 });
 
-export const VideoFile = () => videoBase({
-  src: config.File.VIDEO,
-});
-
-export const Youtube = () => videoBase({
-  src: config.YouTube.SRC,
-});
-
-export const Vimeo = () => videoBase({
-  src: config.Vimeo.SRC,
-});
-
-export const Dailymotion = () => videoBase({
-  src: config.Dailymotion.SRC,
-});
+export const VideoFile = () => videoBase({ src: config.File.VIDEO });
+export const Youtube = () => videoBase({ src: config.YouTube.SRC });
+export const Vimeo = () => videoBase({ src: config.Vimeo.SRC });
+export const Dailymotion = () => videoBase({ src: config.Dailymotion.SRC });
 
 // TODO: HLS
 // src: http://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8

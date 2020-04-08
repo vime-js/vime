@@ -16,7 +16,7 @@ See our [guide](../guides/loading-media.md) on how to set this prop.
 
 **Type:** `string|null` | **Default:** `null`
 
-The URL of a custom poster to load. This will override `src`.
+The URL of a custom poster to load. This will override the poster loaded from the `src`.
 
 ### `aspectRatio`
 
@@ -42,7 +42,7 @@ Whether to show or hide the preview. When hidden it is removed from the DOM.
 
 **Return Type:** `string|null`
 
-The URL for the poster of the current `src`. If `poster` is set then this will return `null`.
+The URL for the poster of the current `src`. If `poster` is set before setting `src` then this will return `null`.
 
 ## Events
 
@@ -66,5 +66,4 @@ Fires `true` when the poster begins loading, and `false` when it has loaded.
 
 **Data Type:** `string|null`
 
-Fires when the currently visible poster is changed, useful when setting `src` and waiting to be notified
-of the new poster.
+Fires when the currently visible poster is changed.

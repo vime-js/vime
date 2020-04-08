@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../../vime-player/src/plugins/settings/menu/MenuOptions.svelte)
+[View Source](../../../../../vime-complete/src/plugins/settings/menu/MenuOptions.svelte)
 
 Groups and renders [`MenuItemRadio`](./menu-item-radio.md) components.
 

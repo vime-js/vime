@@ -2,7 +2,7 @@
 
 **ID:** `vMuteControl` | **LABEL:** `toggleMute` | **Type:** [`Control`](./control-interface.md)
 
-[View Source](../../../../../vime-player/src/plugins/controls/control/MuteControl.svelte)
+[View Source](../../../../../vime-complete/src/plugins/controls/control/MuteControl.svelte)
 
 A control that toggles the muted state of the player.
 

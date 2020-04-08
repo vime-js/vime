@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../../vime-player/src/plugins/controls/control/SeekControl.svelte)
+[View Source](../../../../../vime-complete/src/plugins/controls/control/SeekControl.svelte)
 
 A control that enables the user to seek to a new time. It works by having a base value (+/-) and multiplying
 it for each press by the user. If the base is 10 seconds, after 3 presses it would seek forward 30 seconds.

@@ -32,15 +32,12 @@ export default {
   },
   Dailymotion: {
     SRC: 'dailymotion/x3a9qe6',
-    SRC_ID: 'x3a9qe6',
   },
   YouTube: {
     SRC: 'youtube/R6MlUcmOul8',
-    SRC_ID: 'R6MlUcmOul8',
   },
   Vimeo: {
     SRC: 'vimeo/154225711',
-    SRC_ID: '154225711',
   },
   Events: {
     PREVIEW: [
@@ -51,9 +48,10 @@ export default {
       'load',
       'data',
       'rebuild',
-      'srcchange',
+      'ready',
       'titlechange',
       'originchange',
+      'embedurlchange',
       'error',
     ],
     COMPLETE: [

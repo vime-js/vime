@@ -32,12 +32,13 @@
 
 <script>
   import { tick, createEventDispatcher } from 'svelte';
-  import { Lazy } from '@vime-js/core';
-  import { utils as Dailymotion } from '@vime-js/dailymotion';
-  import { utils as YouTube } from '@vime-js/youtube';
-  import { utils as Vimeo } from '@vime-js/vimeo';
+  import Lazy from './Lazy.svelte';
   import PlayIcon from './PlayIcon.svelte';
   
+  import * as YouTube from '@vime-js/core/youtube';
+  import * as Vimeo from '@vime-js/core/vimeo';
+  import * as Dailymotion from '@vime-js/core/dailymotion';
+
   import {
     is_function, vAspectRatio, vIf,
     vShow,
@@ -51,11 +52,11 @@
   };
 
   // TODO: questionable...
-  const buildProvider = (canPlay, getPoster) => ({ canPlay, getPoster });
+  const buildProvider = (canPlay, fetchPoster) => ({ canPlay, fetchPoster });
   const providers = [
-    buildProvider(Dailymotion.can_play, Dailymotion.get_poster),
-    buildProvider(YouTube.can_play, YouTube.get_poster),
-    buildProvider(Vimeo.can_play, Vimeo.get_poster),
+    buildProvider(Dailymotion.can_play, Dailymotion.fetch_poster),
+    buildProvider(YouTube.can_play, YouTube.fetch_poster),
+    buildProvider(Vimeo.can_play, Vimeo.fetch_poster),
   ];
 
   let img;
@@ -73,7 +74,7 @@
   const fetchNativePoster = async () => {
     await tick();
     isLoading = true;
-    nativePoster = cache[src] || await Provider.getPoster(src);
+    nativePoster = cache[src] || await Provider.fetchPoster(src);
     if (!cache[src]) cache[src] = nativePoster;
   };
 
@@ -103,7 +104,7 @@
     !poster
     && src
     && Provider
-    && is_function(Provider.getPoster)
+    && is_function(Provider.fetchPoster)
   ) fetchNativePoster();
 
   $: dispatch(Event.LOADING, isLoading);

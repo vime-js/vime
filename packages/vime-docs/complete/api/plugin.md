@@ -24,7 +24,7 @@ This is a Svelte component that compiles into a valid Plugin.
 <div></div>
 
 <script context="module">
-  import { PluginRole } from '@vime-js/player';
+  import { PluginRole } from '@vime-js/complete';
 
   export const ID = 'myPluginId';
 

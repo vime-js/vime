@@ -1,8 +1,8 @@
 # PlayerState
 
-[View Source](../../../vime-core/src/player/PlayerState.js)
-
 **Type:** `enum<int>`
+
+[View Source](../../../vime-standard/src/PlayerState.js)
 
 Identifies the state of the player by a number and can contain one of these possible values:
 
@@ -16,7 +16,7 @@ Identifies the state of the player by a number and can contain one of these poss
 ## Example
 
 ```js
-import { PlayerState } from '@vime-js/core'
+import { PlayerState } from '@vime-js/standard'
 
 const { state } = player.getStore();
 

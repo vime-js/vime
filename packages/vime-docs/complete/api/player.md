@@ -1,8 +1,8 @@
 # Player
 
-[View Source](../../../vime-player/src/core/Player.svelte)
-
 **Type:** `Component`
+
+[View Source](../../../vime-complete/src/core/CompletePlayer.svelte)
 
 This component extends the Standard Player and exposes its [API](../../standard/api/player.md). 
 Thus, the complete Standard Player API is available directly from this component.
@@ -44,12 +44,12 @@ Determines the current language preference.
 Translation maps that the player uses when the `locale` changes.
 
 {% hint style="info" %}
-See the [en map](../../../vime-player/src/lang/en.js).
+See the [english map](../../../vime-complete/src/lang/en.js).
 {% endhint %}
 
 ### `i18n`
 
-**Type:** `{ [id]: string }` | **Default:** [en map](../../../vime-player/src/lang/en.js)
+**Type:** `{ [id]: string }` | **Default:** [english map](../../../vime-complete/src/lang/en.js)
 
 Contains the current language map. It's basically `languages[locale]` under the hood. If the current 
 `locale` has no language map, it'll fallback to `en`.
@@ -76,24 +76,11 @@ to set the primary color of the player, or an `object` that contains a collectio
 
 CSS classes to be applied to the root player element.
 
-### `providers`
-
-**Type:** `Provider[]` | **Default:** `[]`
-
-The current list of providers that are available to the player.
-
 ### `plugins`
 
 **Type:** `Plugin[]` | **Default:** `[]`
 
 The current list of plugins that the player has installed.
-
-### `Provider`
-
-**Type:** `Provider|null` | **Default:** `null`
-
-The current provider module who can play the current `src`. If it is `null` then no provider
-can play the current `src`.
 
 ### `debug`
 
@@ -160,6 +147,12 @@ The root player element.
 **Return Type:** [`Registry`](./registry.md)
 
 The root player registry.
+
+### `getStandardPlayer`
+
+**Return Type:** [`StandardPlayer`](standard/../../../standard/api/player.md)
+
+The underlying `StandardPlayer` instance.
 
 ### `getPluginsManager`
 

@@ -2,7 +2,7 @@
 
 **ID:** `vDblClickFullscreen` | **Type:** [`Plugin`](../../complete/api/plugin.md)
 
-[View Source](../../../vime-player/src/plugins/DblClickFullscreen.svelte)
+[View Source](../../../vime-complete/src/plugins/DblClickFullscreen.svelte)
 
 This plugin adds the ability to double click the player to toggle fullscreen mode.
 
@@ -11,7 +11,7 @@ This plugin adds the ability to double click the player to toggle fullscreen mod
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, DblClickFullscreen } from '@vime-js/player';
+import { Player, DblClickFullscreen } from '@vime-js/complete';
 
 // ...
 
@@ -26,7 +26,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, DblClickFullscreen } from '@vime-js/player';
+import { Player, DblClickFullscreen } from '@vime-js/complete';
 
 // ...
 

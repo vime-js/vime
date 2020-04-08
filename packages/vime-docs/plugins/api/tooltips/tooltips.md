@@ -24,7 +24,7 @@ unsubscribe();
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, Tooltips } from '@vime-js/player';
+import { Player, Tooltips } from '@vime-js/complete';
 
 // ...
 
@@ -39,7 +39,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, Tooltips } from '@vime-js/player';
+import { Player, Tooltips } from '@vime-js/complete';
 
 // ...
 

@@ -6,18 +6,17 @@
 [![github-badge]][github]
 [![tweet-badge]][tweet]
 
-The Complete Player is Vime's greatest offering. It enables a seamless multi-provider experience
-with plugins and more. If you'd like to know what features it includes and how it compares to other 
-options then see the [getting started](../getting-started.md) page.
+The Complete Player is Vime's greatest offering. It enables complete customization of the player. If you'd like to 
+know what features it includes and how it compares to other options then see the [getting started](../getting-started.md) page.
 
 {% hint style="info" %}
 If you want to try it out before installing then head over to our [playground][vime-playground].
 {% endhint %}
 
-[package]: https://www.npmjs.com/package/@vime-js/player
-[version-badge]: https://img.shields.io/npm/v/@vime-js/player?style=flat-square
-[size]: https://bundlephobia.com/result?p=@vime-js/player
-[size-badge]: https://img.shields.io/bundlephobia/minzip/@vime-js/player?label=min%2Bgzip&style=flat-square
+[package]: https://www.npmjs.com/package/@vime-js/complete
+[version-badge]: https://img.shields.io/npm/v/@vime-js/complete?style=flat-square
+[size]: https://bundlephobia.com/result?p=@vime-js/complete
+[size-badge]: https://img.shields.io/bundlephobia/minzip/@vime-js/complete?label=min%2Bgzip&style=flat-square
 [license]: https://github.com/vime-js/vime/blob/master/LICENSE
 [license-badge]: https://img.shields.io/github/license/vime-js/vime?color=blue&style=flat-square
 [tweet]: https://twitter.com/intent/tweet?text=Check%20out%20Vime%20%28https%3A%2F%2Fgithub.com%2Fvime-js%2Fvime%29%2C%20it%20makes%20embedding%20and%20using%20media%20players%20for%20the%20web%20simple.%20It%20supports%20Html5%2C%20YouTube%2C%20Dailymotion%2C%20Vimeo%20and%20more%20to%20come%21
@@ -31,29 +30,29 @@ If you want to try it out before installing then head over to our [playground][v
 {% tabs %}
 {% tab title="NPM" %}
 ```
-npm install @vime-js/player
+npm install @vime-js/complete
 ```
 {% endtab %}
 
 {% tab title="YARN" %}
 ```
-yarn add @vime-js/player
+yarn add @vime-js/complete
 ```
 {% endtab %}
 
 {% tab title="UNPKG" %}
 ```html
-<script src="https://unpkg.com/@vime-js/player"></script>
+<script src="https://unpkg.com/@vime-js/complete"></script>
 ```
 {% endtab %}
 {% endtabs %}
 
 The `dist` folder inside the package contains multiple exports:
 
-- `player.js` is a UMD development build that can be used directly in the browser via the `<script>` tag.
-- `player.esm.js` is intended for use with modern bundlers like [Webpack][webpack] or [Rollup][rollup].
-- `player.min.js` is a UMD production build that can be used directly in the browser via the `<script>` tag.
-- `player.esm.min.js` is an ESM production build that can be used directly in modern browsers via the `<script type="module">` tag.
+- `complete.js` is a UMD development build that can be used directly in the browser via the `<script>` tag.
+- `complete.esm.js` is intended for use with modern bundlers like [Webpack][webpack] or [Rollup][rollup].
+- `complete.min.js` is a UMD production build that can be used directly in the browser via the `<script>` tag.
+- `complete.esm.min.js` is an ESM production build that can be used directly in modern browsers via the `<script type="module">` tag.
 
 {% hint style="info" %}
 * UMD builds are exported under the `Vime` namespace.
@@ -71,7 +70,7 @@ The `dist` folder inside the package contains multiple exports:
 {% tabs %}
 {% tab title="JavaScript" %}
 ```js
-import { Player } from '@vime-js/player';
+import { Player } from '@vime-js/complete';
 
 const target = document.getElementById('player-target');
 
@@ -108,7 +107,7 @@ See the Svelte [Client-side component API][svelte-client-api] for the complete s
 />
 
 <script>
-  import { Player } from '@vime-js/player';
+  import { Player } from '@vime-js/complete';
 
   let player;
 

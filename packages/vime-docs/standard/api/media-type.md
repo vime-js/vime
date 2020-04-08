@@ -1,8 +1,8 @@
 # MediaType
 
-[View Source](../../../vime-core/src/player/MediaType.js)
-
 **Type:** `enum<int>`
+
+[View Source](../../../vime-standard/src/MediaType.js)
 
 Identifies the type of media by a number and can contain one of these possible values:
 
@@ -13,7 +13,7 @@ Identifies the type of media by a number and can contain one of these possible v
 ## Example
 
 ```js
-import { MediaType } from '@vime-js/core'
+import { MediaType } from '@vime-js/standard'
 
 let isAudio = (player.mediaType === MediaType.AUDIO);
 ```

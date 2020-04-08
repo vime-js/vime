@@ -20,9 +20,6 @@
     "player",
     "vime-core"
   ],
-  "files": [
-    "src"
-  ],
   "dependencies": {
     "@vime-js/utils": "^1.2.0"
   },
