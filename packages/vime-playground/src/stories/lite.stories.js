@@ -1,22 +1,25 @@
-import { InteractiveView } from '../views';
-import { YouTubeLite } from '@vime-js/youtube';
-import { VimeoLite } from '@vime-js/vimeo';
-import { DailymotionLite } from '@vime-js/dailymotion';
 import config from '../config';
+import { InteractiveView } from '../views';
+
+import {
+  Player, YouTubeProvider, VimeoProvider,
+  DailymotionProvider,
+} from '@vime-js/lite';
 
 export default {
   title: 'Lite',
 };
 
-const base = (srcId, Player) => ({
+const base = (src) => ({
   Component: InteractiveView,
   props: {
     Component: Player,
-    srcId,
+    src,
+    providers: [YouTubeProvider, VimeoProvider, DailymotionProvider],
     events: config.Events.LITE,
   },
 });
 
-export const Youtube = () => base(config.YouTube.SRC_ID, YouTubeLite);
-export const Vimeo = () => base(config.Vimeo.SRC_ID, VimeoLite);
-export const Dailymotion = () => base(config.Dailymotion.SRC_ID, DailymotionLite);
+export const Youtube = () => base(config.YouTube.SRC);
+export const Vimeo = () => base(config.Vimeo.SRC);
+export const Dailymotion = () => base(config.Dailymotion.SRC);

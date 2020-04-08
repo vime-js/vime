@@ -23,7 +23,7 @@ If you want more control then you can pick and use only what you need.
 import { 
   Player, ActionDisplay, Keyboard, 
   Tooltips 
-} from '@vime-js/player';
+} from '@vime-js/complete';
 
 const target = document.getElementById('player-target');
 
@@ -47,7 +47,7 @@ const player = new Player({
   import { 
     Player, ActionDisplay, Keyboard, 
     Tooltips 
-  } from '@vime-js/player';
+  } from '@vime-js/complete';
 
   let player;
 
@@ -64,7 +64,7 @@ If you want to dynamically add/remove plugins you can use the [`PluginsManager`]
 {% tabs %}
 {% tab title="JavaScript" %}
 ```js
-import { ActionDisplay, Keyboard, Tooltips } from '@vime-js/player';
+import { ActionDisplay, Keyboard, Tooltips } from '@vime-js/complete';
 
 // ...
 
@@ -97,7 +97,7 @@ pluginsManager
   import { 
     Player, ActionDisplay, Keyboard, 
     Tooltips 
-  } from '@vime-js/player';
+  } from '@vime-js/complete';
 
   let player;
 
@@ -123,16 +123,6 @@ pluginsManager
 
 {% hint style="info" %}
 You can still do this with the `plugins` prop, but the manager has a much better interface for this.
-{% endhint %}
-
-{% hint style="danger" %}
-Svelte batches tasks to be performed asynchronously. Therefore, if you are dynamically adding and removing 
-plugins they will not be mounted/unmounted straight away. You have 4 options for this case:
-
-1. Call `player.tick()` after the change and wait for it to resolve.
-2. Wait for the plugin manager's respective add/remove method to resolve.
-3. Listen to the `pluginmount` and `plugindestroy` events on the player for updates.
-4. Subscribe to the relevant registry to be notified of changes.
 {% endhint %}
 
 ## Interacting with Plugins
@@ -166,7 +156,7 @@ player.$on('mount', () => {
 />
 
 <script>
-  import { Player, Keyboard } from '@vime-js/player';
+  import { Player, Keyboard } from '@vime-js/complete';
 
   let player;
 
@@ -180,17 +170,12 @@ player.$on('mount', () => {
 {% endtab %}
 {% endtabs %}
 
-{% hint style="warning" %}
-Only plugins included during initialization (when creating the player) are available immediately inside 
-the `mount` event.
-{% endhint %}
-
 ### Advanced Example
 
 {% tabs %}
 {% tab title="JavaScript" %}
 ```js
-import { PlayerEvent, Keyboard } from '@vime-js/player';
+import { PlayerEvent, Keyboard } from '@vime-js/complete';
 
 // ...
 
@@ -221,7 +206,7 @@ player.$on(PlayerEvent.PLUGIN_DESTROY, e => {
 />
 
 <script>
-  import { Player, Keyboard } from '@vime-js/player';
+  import { Player, Keyboard } from '@vime-js/complete';
 
   let player;
   let registry;

@@ -176,7 +176,7 @@ included at 54 kB (min + gzip).
 a headache. Vime handles it all so you don't. Enjoy fullscreen, picture-in-picture and more without 
 any pain.
 
-* **Multi-provider support.** Out of the box at the moment we support Html5, YouTube, Vimeo and Dailymotion.
+* **Multi-provider support.** Out of the box at the moment we support Files (via Html5), YouTube, Vimeo and Dailymotion.
 Dont' bother learning a new SDK everytime, just use Vime!
 
 * **Reactive/eventful store.** Behind the scences, all properties are a Svelte store. Subscribe to anything you
@@ -235,12 +235,12 @@ straight away.
 
 [svelte]: https://svelte.dev
 [lerna]: https://lerna.js.org
-[package]: https://www.npmjs.com/package/@vime-js/player
+[package]: https://www.npmjs.com/package/@vime-js/complete
 [license]: https://github.com/vime-js/vime/blob/master/LICENSE
 [license-badge]: https://img.shields.io/github/license/vime-js/vime?color=blue&style=flat-square
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
-[version-badge]: https://img.shields.io/npm/v/@vime-js/player?style=flat-square
+[version-badge]: https://img.shields.io/npm/v/@vime-js/complete?style=flat-square
 [lerna-badge]: https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg?style=flat-square
 [tweet]: https://twitter.com/intent/tweet?text=Check%20out%20Vime%20%28https%3A%2F%2Fgithub.com%2Fvime-js%2Fvime%29%2C%20it%20makes%20embedding%20and%20using%20media%20players%20for%20the%20web%20simple.%20It%20supports%20Html5%2C%20YouTube%2C%20Dailymotion%2C%20Vimeo%20and%20more%20to%20come%21
 [tweet-badge]: https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fvime-js%2Fvime

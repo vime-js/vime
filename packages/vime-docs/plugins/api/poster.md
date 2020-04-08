@@ -2,7 +2,7 @@
 
 **ID:** `vPoster` | **ROLE:** `POSTER` | **Type:** [`Plugin`](../../complete/api/plugin.md)
 
-[View Source](../../../vime-player/src/plugins/Poster.svelte)
+[View Source](../../../vime-complete/src/plugins/Poster.svelte)
 
 This plugin is responsible for loading and showing the poster set in the `currentPoster` prop.
 
@@ -11,7 +11,7 @@ This plugin is responsible for loading and showing the poster set in the `curren
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, Poster } from '@vime-js/player';
+import { Player, Poster } from '@vime-js/complete';
 
 // ...
 
@@ -26,7 +26,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, Poster } from '@vime-js/player';
+import { Player, Poster } from '@vime-js/complete';
 
 // ...
 

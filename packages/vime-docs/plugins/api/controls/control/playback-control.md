@@ -2,7 +2,7 @@
 
 **ID:** `vPlaybackControl` | **LABEL:** `togglePlayback` | **Type:** [`Control`](./control-interface.md)
 
-[View Source](../../../../../vime-player/src/plugins/controls/control/PlaybackControl.svelte)
+[View Source](../../../../../vime-complete/src/plugins/controls/control/PlaybackControl.svelte)
 
 A control that toggles the paused state of the player.
 

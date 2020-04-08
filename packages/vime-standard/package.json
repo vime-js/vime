@@ -1,0 +1,50 @@
+{
+  "name": "@vime-js/standard",
+  "description": "Vime Standard Player",
+  "version": "1.2.0",
+  "svelte": "src/index.js",
+  "main": "dist/standard.js",
+  "module": "dist/standard.esm.js",
+  "unpkg": "dist/standard.js",
+  "jsdelivr": "dist/standard.js",
+  "sideEffects": false,
+  "license": "MIT",
+  "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
+  "homepage": "https://github.com/vime-js/vime#readme",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/vime-standard",
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "keywords": [
+    "vime",
+    "video",
+    "audio",
+    "player",
+    "embed",
+    "dailymotion",
+    "vimeo",
+    "youtube",
+    "lazy",
+    "standard",
+    "preconnections",
+    "multi-provider",
+    "cross-browser",
+    "light"
+  ],
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c --environment NODE_ENV:production",
+    "build:dev": "rollup -c --environment NODE_ENV:development"
+  },
+  "dependencies": {
+    "@vime-js/core": "^1.2.0",
+    "@vime-js/utils": "^1.2.0",
+    "@vime-js/lite": "^1.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

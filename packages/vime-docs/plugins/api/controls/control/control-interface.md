@@ -30,6 +30,6 @@ A Svelte component that accepts a `player` prop.
 
 ## Example
 
-See our [`PlaybackControl`](./../../../../../vime-player/src/plugins/controls/control/PlaybackControl.svelte) 
+See our [`PlaybackControl`](./../../../../../vime-complete/src/plugins/controls/control/PlaybackControl.svelte) 
 as an example.
 

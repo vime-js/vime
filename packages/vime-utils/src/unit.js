@@ -13,6 +13,11 @@ export const is_boolean = (input) => get_constructor(input) === Boolean;
 export const is_function = (input) => get_constructor(input) === Function;
 export const is_array = (input) => Array.isArray(input);
 
+export const is_async_function = (input) => {
+  const constructor = get_constructor(input);
+  return constructor ? (constructor.name === 'AsyncFunction') : false;
+};
+
 export const is_empty = (input) => is_null_or_undefined(input)
     || ((is_string(input) || is_array(input)) && !input.length)
     || (is_object(input) && !Object.keys(input).length);

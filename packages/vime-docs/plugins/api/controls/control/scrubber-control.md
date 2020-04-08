@@ -2,7 +2,7 @@
 
 **ID:** `vScrubberControl` | **LABEL:** `seek` | **Type:** [`Control`](./control-interface.md)
 
-[View Source](../../../../../vime-player/src/plugins/controls/control/ScrubberControl.svelte)
+[View Source](../../../../../vime-complete/src/plugins/controls/control/ScrubberControl.svelte)
 
 A control that displays the progress of playback and the amount buffered. It also enables
 the user to seek to a new time.

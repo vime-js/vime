@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../../vime-player/src/plugins/controls/control/Control.svelte)
+[View Source](../../../../../vime-complete/src/plugins/controls/control/Control.svelte)
 
 A `Control` is a button that the user taps or clicks to interact with the player.
 

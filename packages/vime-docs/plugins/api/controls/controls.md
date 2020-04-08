@@ -2,7 +2,7 @@
 
 **ID:** `vControls` | **ROLE:** `CONTROLS` | **Type:** [`Plugin`](../../../complete/api/plugin.md)
 
-[View Source](../../../../vime-player/src/plugins/controls/Controls.svelte)
+[View Source](../../../../vime-complete/src/plugins/controls/Controls.svelte)
 
 This plugin renders and manages [control groups](./control-group.md).
 
@@ -37,7 +37,7 @@ The default controls depend on:
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, Controls, DefaultControls } from '@vime-js/player';
+import { Player, Controls, DefaultControls } from '@vime-js/complete';
 
 // ...
 
@@ -52,7 +52,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, Controls, DefaultControls } from '@vime-js/player';
+import { Player, Controls, DefaultControls } from '@vime-js/complete';
 
 // ...
 
@@ -71,7 +71,7 @@ player
 ### Create Group
 
 ```js
-import { PlaybackControl, VolumeControl, ScrubberControl } from '@vime-js/player';
+import { PlaybackControl, VolumeControl, ScrubberControl } from '@vime-js/complete';
 
 player
   .vControls

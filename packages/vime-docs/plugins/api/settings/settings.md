@@ -2,7 +2,7 @@
 
 **ID:** `vSettings` | **ROLE:** `SETTINGS` | **Type:** [`Plugin`](../../../complete/api/plugin.md)
 
-[View Source](../../../../vime-player/src/plugins/settings/Settings.svelte)
+[View Source](../../../../vime-complete/src/plugins/settings/Settings.svelte)
 
 This plugin renders and manages submenus. The root menu is a small popup on desktop, and a fullscreen modal on mobile.
 
@@ -32,7 +32,7 @@ playback rate, video quality and captions/subtitles.
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, Settings, DefaultSettings } from '@vime-js/player';
+import { Player, Settings, DefaultSettings } from '@vime-js/complete';
 
 // ...
 
@@ -47,7 +47,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, Settings, DefaultSettings } from '@vime-js/player';
+import { Player, Settings, DefaultSettings } from '@vime-js/complete';
 
 // ...
 
@@ -66,7 +66,7 @@ player
 ### Create a Submenu
 
 ```js
-import { SelectSubmenu } from '@vime-js/player';
+import { SelectSubmenu } from '@vime-js/complete';
 
 player
   .vSettings

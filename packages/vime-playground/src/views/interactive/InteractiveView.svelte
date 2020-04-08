@@ -43,20 +43,25 @@
   };
 
   const onPropUpdate = (prop, value, readonly) => {
-    if (is_setter_method(prop, value)) return;
-    const isMethod = is_getter_method(prop, value);
-    const formattedValue = format_prop_value(isMethod ? value() : value);
+    const isGetterMethod = is_getter_method(prop, value);
+    const isSetterMethod = is_setter_method(prop, value);
+    const formattedValue = !isSetterMethod
+      ? format_prop_value(isGetterMethod ? value() : value)
+      : null;
+  
     if (!props[prop]) {
       props[prop] = {
         id: prop,
-        type: infer_prop_type(formattedValue),
+        type: !isSetterMethod ? infer_prop_type(formattedValue) : null,
         value: formattedValue,
-        method: isMethod,
-        readonly: readonly || isMethod || is_readonly_prop(value),
+        method: isGetterMethod || isSetterMethod,
+        setter: isSetterMethod,
+        readonly: readonly || isGetterMethod || isSetterMethod || is_readonly_prop(value),
       };
       sortProps(props);
     }
-    if (safe_not_equal(props[prop].value, formattedValue)) {
+
+    if (!isSetterMethod && safe_not_equal(props[prop].value, formattedValue)) {
       props[prop].value = formattedValue;
     }
   };

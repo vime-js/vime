@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../../../vime-player/src/plugins/controls/control/time/Time.svelte)
+[View Source](../../../../../../vime-complete/src/plugins/controls/control/time/Time.svelte)
 
 Takes a time represented in seconds and displays it in the form `hh:mm:ss`.
 

@@ -4,7 +4,7 @@ description: This document will guide you on how the `src` prop can be set for a
 
 # Loading Media
 
-## Html5
+## File
 
 ### Empty
 
@@ -36,7 +36,7 @@ player.src = 'https://mysite.com/video.mp4';
 player.src = { src: '/media/video.mp4', type: 'video/mp4' };
 ```
 
-### Array of URL's
+### Array
 
 ```js
 player.src = [

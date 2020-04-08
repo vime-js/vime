@@ -1,8 +1,8 @@
 # VideoQuality
 
-[View Source](../../../vime-core/src/player/VideoQuality.js)
-
 **Type:** `enum<int>`
+
+[View Source](../../../vime-standard/src/VideoQuality.js)
 
 Identifies the type of media by a number and can contain one of these possible values:
 
@@ -19,7 +19,7 @@ Identifies the type of media by a number and can contain one of these possible v
 ## Example
 
 ```js
-import { VideoQuality } from '@vime-js/core'
+import { VideoQuality } from '@vime-js/standard'
 
 if (player.videoQuality === VideoQuality.MAX) {
   console.log('We are in 4k.');

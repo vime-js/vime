@@ -15,18 +15,24 @@ we'll load the thumbnail.
   
   * Utilizes **preconnections** for an approximately [224x faster load][preconnections-benchmark].
   
-  * **Lighter by about 50% on average and minimal overhead**. For example, if you normally wanted to embed a video from YouTube, Dailymotion and Vimeo, the total Player SDK cost would be ~25 kB. In contrast, with Vime it'll be about ~8 kB, and any
-  additional Lite player from a different provider would only increase that cost by about ~1-1.5 kB.
+  * **Lighter**. If you normally wanted to embed a video from YouTube, Dailymotion and Vimeo, the total 
+  Player SDK cost would be ~25 kB. In contrast, with Vime it'll be ~6.7 kB, and any additional Lite player 
+  from a different provider would only increase that cost by about ~300 bytes.
+
+  * **Multi-provider support.** One interface for multiple providers. If you want to switch from YouTube 
+    to Vimeo, no problem. If you want to support both, no problem. All you really need to know is
+    the media you want to embed, we take care of the rest.
   
-  * You send commands and receive messages from the embed via [postmessage][mdn-postmessage]. However, 
+  * You send commands and receive messages from the embed via [`postmessage`][mdn-postmessage]. However, 
   we take the pain out of it by storing your commands and sending them when the player is ready for playback,
   and we decode any messages received into a POJO.
 
-* **Standard** for when you want all Lite features, and you want to interact with the provider/embed through the 
+* **Standard** for when you want all Lite features but you want to interact with the provider/embed through the 
   [core Vime player interface](./standard/api/player.md) (not via `postmessage`). Thus, you avoid browser/provider 
   differences and get access to the store.
 
-* **Complete** for when you want all Lite and Standard features + custom controls, multi-provider support, internationalization, and plugins.
+* **Complete** for when you want all Lite and Standard features + custom controls, internationalization, and plugins. This
+  option is if you want "complete" control of your player.
 
 [lazy-loading-benefits]: https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video
 [preconnections-benchmark]: https://github.com/paulirish/lite-youtube-embed
@@ -34,26 +40,28 @@ we'll load the thumbnail.
 
 ## Features / Differences
 
-| Feature                   | Preview |   Lite   | Standard |   Complete    |
-| :------------------------ | :-----: | :------: | :------: | :-----------: |
-| Size (min + gzip)         | 4.8 kB  | ~ 5.3 kB | ~ 13 kB  | 16 kB - 54 kB |
-| Lazy Loading              |    ✓    |    ✓     |    ✓     |       ✓       |
-| Preconnections            |    ✓    |    ✓     |    ✓     |       ✓       |
-| Thumbnails                |    ✓    |    ✓     |    ✓     |       ✓       |
-| Native Controls           |         |    ✓     |    ✓     |       ✓       |
-| Native Player API         |         |    ✓     |    ✓     |       ✓       |
-| Vime Player API           |         |          |    ✓     |       ✓       |
-| Provider Normalization    |         |          |    ✓     |       ✓       |
-| Browser Normalization     |         |          |    ✓     |       ✓       |
-| Reactive / Eventful Store |         |          |    ✓     |       ✓       |
-| Custom Controls           |         |          |          |       ✓       |
-| Plugins                   |         |          |          |       ✓       |
-| Multi-provider Support    |         |          |          |       ✓       |
-| Internationalization      |         |          |          |       ✓       |
+| Feature                   | Preview |     Lite     |  Standard  |   Complete    |
+| :------------------------ | :-----: | :----------: | :--------: | :-----------: |
+| Size (min + gzip)         | 4.85 kB | 5.5 - 6.6 kB | 14 - 20 kB | 16 kB - 49 kB |
+| Lazy Loading              |    ✓    |      ✓       |     ✓      |       ✓       |
+| Preconnections            |    ✓    |      ✓       |     ✓      |       ✓       |
+| Thumbnails                |    ✓    |      ✓       |     ✓      |       ✓       |
+| Native Controls           |         |      ✓       |     ✓      |       ✓       |
+| Native Player API         |         |      ✓       |     ✓      |       ✓       |
+| Multi-provider Support    |         |      ✓       |     ✓      |       ✓       |
+| Vime Player API           |         |              |     ✓      |       ✓       |
+| Provider Normalization    |         |              |     ✓      |       ✓       |
+| Browser Normalization     |         |              |     ✓      |       ✓       |
+| Reactive / Eventful Store |         |              |     ✓      |       ✓       |
+| Plugins                   |         |              |            |       ✓       |
+| Customization             |         |              |            |       ✓       |
+| Custom Controls           |         |              |            |       ✓       |
+| Internationalization      |         |              |            |       ✓       |
 
 ### Notes
 
 1. Custom controls are available via plugins.
 2. All plugins are designed to be responsive and built with accessibility in mind.
-3. The size of 'Complete' depends on the plugins and providers you use, hence the range.
-4. Sizes may be outdated at the time of reading this, see respective package for more accurate numbers.
+3. The size of 'Standard' depends on the providers you use.
+4. The size of 'Complete' depends on the plugins and providers you use.
+5. Sizes may be outdated at the time of reading this, see respective package for an accurate upper bound.

@@ -172,7 +172,7 @@ export const umdBuild = (options) => {
 };
 
 export const basicBuild = (options) => {
-  const { name, hasLite = true } = options;
+  const { name } = options;
   const input = 'src/index.js';
   return dev ? [
     // eg: vime.js
@@ -186,7 +186,5 @@ export const basicBuild = (options) => {
     umdBuild({ input, name }),
     // eg: vime.esm.min.js
     esmBuild({ input, name }),
-    // eg: vime-lite.esm.min.js
-    hasLite && esmBuild({ input: `src/${name}Lite.svelte`, name: `${name}-lite` }),
-  ].filter(Boolean);
+  ];
 };

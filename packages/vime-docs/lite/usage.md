@@ -5,15 +5,16 @@
 {% tabs %}
 {% tab title="JavaScript" %}
 ```js
-import { YouTubeLite } from '@vime-js/youtube';
+import { Player, YouTubeProvider } from '@vime-js/lite';
 
 const target = document.getElementById('player-target');
 
 // Mount
-const player = new YouTubeLite({
+const player = new Player({
   target,
   props: {
-    srcId: 'R6MlUcmOul8'
+    src: 'youtube/R6MlUcmOul8',
+    providers: [YouTubeProvider]
   }
 });
 
@@ -46,15 +47,16 @@ player.$destroy();
 
 {% tab title="Svelte" %}
 ```html
-<YouTubeLite
-  srcId="R6MlUcmOul8"
+<Player
+  src="youtube/R6MlUcmOul8"
+  providers{[YouTubeProvider]}
   on:data={onData}
   bind:this={player} 
 />
 
 <script>
   import { onMount } from 'svelte';
-  import { YouTubeLite } from '@vime-js/youtube';
+  import { Player, YouTubeProvider } from '@vime-js/lite';
 
   let player;
 
@@ -83,27 +85,26 @@ player.$destroy();
 {% endtabs %}
 
 {% hint style="info" %}
-* See our [`YouTubeProvider`][youtube-provider] as an example.
-* For all available commands see [YouTube API Reference][youtube-api].
+For all available commands see the [YouTube API Reference][youtube-api].
 {% endhint %}
 
 [youtube-api]: https://developers.google.com/youtube/iframe_api_reference#Playback_controls
-[youtube-provider]: https://github.com/vime-js/vime/blob/master/packages/vime-youtube/src/YouTubeProvider.svelte
 
 ## Vimeo
 
 {% tabs %}
 {% tab title="JavaScript" %}
 ```js
-import { VimeoLite } from '@vime-js/vimeo';
+import { Player, VimeoProvider } from '@vime-js/lite';
 
 const target = document.getElementById('player-target');
 
 // Mount
-const player = new VimeoLite({
+const player = new Player({
   target,
   props: {
-    srcId: '154225711'
+    src: 'vimeo/154225711',
+    providers: [VimeoProvider]
   }
 });
 
@@ -154,15 +155,16 @@ player.$destroy();
 
 {% tab title="Svelte" %}
 ```html
-<VimeoLite
-  srcId="154225711"
+<Player
+  src="vimeo/154225711"
+  providers=[[VimeoProvider]]
   on:data={onData}
   bind:this={player} 
 />
 
 <script>
   import { onMount } from 'svelte';
-  import { VimeoLite } from '@vime-js/vimeo';
+  import { Player, VimeoProvider } from '@vime-js/lite';
 
   let player;
 
@@ -211,33 +213,32 @@ player.$destroy();
 {% hint style="warning" %}
 For some reason the event name you pass to the `addEventListener` call is not the same as the 
 name that comes through the `data` event. You can use `console.log` to figure it out or see
-our [VimeoProvider][vimeo-provider] for more information.
+our [VimeoProvider](../../vime-standard/src/providers/Vimeo.svelte) for more information.
 {% endhint %}
 
 {% hint style="info" %}
-* See our [`VimeoProvider`][vimeo-provider] as an example.
-* For all available commands see [Vimeo API Reference][vimeo-api].
-* For all available events see [Vimeo Events Reference][vimeo-events].
+* For all available commands see the [Vimeo API Reference][vimeo-api].
+* For all available events see the [Vimeo Events Reference][vimeo-events].
 {% endhint %}
 
 [vimeo-events]: https://developer.vimeo.com/player/sdk/reference#events-for-playback-controls
 [vimeo-api]: https://developer.vimeo.com/player/sdk/reference#methods-for-playback-controls
-[vimeo-provider]: https://github.com/vime-js/vime/blob/master/packages/vime-vimeo/src/VimeoProvider.svelte
 
 ## Dailymotion
 
 {% tabs %}
 {% tab title="JavaScript" %}
 ```js
-import { DailymotionLite } from '@vime-js/dailymotion';
+import { Player, DailymotionProvider } from '@vime-js/lite';
 
 const target = document.getElementById('player-target');
 
 // Mount
-const player = new DailymotionLite({
+const player = new Player({
   target,
   props: {
-    srcId: 'x3a9qe6'
+    src: 'dailymotion/x3a9qe6',
+    providers: [DailymotionProvider]
   }
 });
 
@@ -273,15 +274,16 @@ player.$destroy();
 
 {% tab title="Svelte" %}
 ```html
-<DailymotionLite
-  srcId="x3a9qe6"
+<Player
+  src="dailymotion/x3a9qe6"
+  providers={[DailymotionProvider]}
   on:data={onData}
   bind:this={player} 
 />
 
 <script>
   import { onMount } from 'svelte';
-  import { DailymotionLite } from '@vime-js/dailymotion';
+  import { Player, DailymotionProvider } from '@vime-js/lite';
 
   let player;
 
@@ -313,11 +315,9 @@ player.$destroy();
 {% endtabs %}
 
 {% hint style="info" %}
-* See our [DailymotionProvider][dailymotion-provider] as an example.
 * For all available commands see the [Dailymotion API Reference][dailymotion-api].
 * For all available events see the [Dailymotion Events Reference][dailymotion-events].
 {% endhint %}
 
 [dailymotion-api]: https://developer.dailymotion.com/player/#player-api-properties
 [dailymotion-events]: https://developer.dailymotion.com/player/#player-api-events
-[dailymotion-provider]: https://github.com/vime-js/vime/blob/master/packages/vime-dailymotion/src/DailymotionProvider.svelte

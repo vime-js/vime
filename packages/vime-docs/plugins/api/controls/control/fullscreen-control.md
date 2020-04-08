@@ -2,7 +2,7 @@
 
 **ID:** `vFullscreenControl` | **LABEL:** `toggleFullscreen` | **Type:** [`Control`](./control-interface.md)
 
-[View Source](../../../../../vime-player/src/plugins/controls/control/FullscreenControl.svelte)
+[View Source](../../../../../vime-complete/src/plugins/controls/control/FullscreenControl.svelte)
 
 A control that toggles the fullscreen state of the player.
 

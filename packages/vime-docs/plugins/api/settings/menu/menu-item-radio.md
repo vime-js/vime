@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../../vime-player/src/plugins/settings/menu/MenuItemRadio.svelte)
+[View Source](../../../../../vime-complete/src/plugins/settings/menu/MenuItemRadio.svelte)
 
 A menu radio button used to select a particular value from a group of values.
 

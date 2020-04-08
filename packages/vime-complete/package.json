@@ -1,0 +1,60 @@
+{
+  "name": "@vime-js/complete",
+  "description": "Vime Complete Player",
+  "version": "1.2.0",
+  "svelte": "src/index.js",
+  "main": "dist/complete.js",
+  "module": "dist/complete.esm.js",
+  "unpkg": "dist/complete.js",
+  "jsdelivr": "dist/complete.js",
+  "sideEffects": false,
+  "license": "MIT",
+  "author": "Rahim Alwer <rahim_alwer@hotmail.com>",
+  "homepage": "https://github.com/vime-js/vime#readme",
+  "repository": "https://github.com/vime-js/vime/tree/master/packages/vime-complete",
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "keywords": [
+    "vime",
+    "player",
+    "complete",
+    "youtube",
+    "dailymotion",
+    "vimeo",
+    "html5",
+    "file",
+    "lazy",
+    "lightweight",
+    "fast",
+    "embed",
+    "plugins",
+    "preconnections",
+    "multi-provider",
+    "cross-browser"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "static"
+  ],
+  "scripts": {
+    "build": "rollup -c --environment NODE_ENV:production",
+    "build:dev": "rollup -c --environment NODE_ENV:development",
+    "svg:min": "svgo --config ./svgo.yml -f static/icons",
+    "svg:sprite": "svgstore --inline -o static/sprite.svg static/icons/*.svg"
+  },
+  "dependencies": {
+    "@vime-js/core": "^1.2.0",
+    "@vime-js/utils": "^1.2.0",
+    "@vime-js/standard": "^1.2.0",
+    "@vime-js/lite": "^1.2.0"
+  },
+  "devDependencies": {
+    "svgo": "^1.3.2",
+    "svgstore-cli": "^1.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

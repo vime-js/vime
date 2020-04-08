@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../../../vime-player/src/plugins/settings/menu/submenu/Submenu.svelte)
+[View Source](../../../../../../vime-complete/src/plugins/settings/menu/submenu/Submenu.svelte)
 
 A menu that is to be nested inside a more general menu.
 

@@ -49,7 +49,7 @@
         <MethodsPanel methods={filteredMethods} />
       {:else if isMethodsPanelActive}
         <span class="uk-text-small uk-text-muted">
-          This component has no getter methods.
+          This component has no methods.
         </span>
       {/if}
     </li>

@@ -2,7 +2,7 @@
 
 **ID:** `vBoot` | **Type:** [`Plugin`](../../complete/api/plugin.md)
 
-[View Source](../../../vime-player/src/plugins/Boot.svelte)
+[View Source](../../../vime-complete/src/plugins/Boot.svelte)
 
 This plugin installs the following plugins:
 
@@ -30,7 +30,7 @@ Head over to our [playground][vime-playground] to see any of these plugins in ac
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, Boot } from '@vime-js/player';
+import { Player, Boot } from '@vime-js/complete';
 
 // ...
 
@@ -45,7 +45,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, Boot } from '@vime-js/player';
+import { Player, Boot } from '@vime-js/complete';
 
 // ...
 
@@ -75,7 +75,7 @@ their `ID` with the `v` prefix removed and first letter lowercased.
 {% tabs %}
 {% tab title="JavaScript" %}
 ```js
-import { Player, Boot } from '@vime-js/player';
+import { Player, Boot } from '@vime-js/complete';
 
 const target = document.getElementById('player-target');
 
@@ -105,7 +105,7 @@ const off = player.$on('mount', () => {
 />
 
 <script>
-  import { Player, Boot } from '@vime-js/player';
+  import { Player, Boot } from '@vime-js/complete';
 
   let player;
 

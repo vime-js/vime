@@ -2,7 +2,7 @@
 
 **ID:** `vActionDisplay` | **Type:** [`Plugin`](../../complete/api/plugin.md)
 
-[View Source](../../../vime-player/src/plugins/ActionDisplay.svelte)
+[View Source](../../../vime-complete/src/plugins/ActionDisplay.svelte)
 
 This plugin displays an icon and/or value in the middle of the player to visualize an 
 action being performed, which fades out after a set amount of time.
@@ -12,7 +12,7 @@ action being performed, which fades out after a set amount of time.
 {% tabs %}
 {% tab title="Basic" %}
 ```js
-import { Player, ActionDisplay } from '@vime-js/player';
+import { Player, ActionDisplay } from '@vime-js/complete';
 
 // ...
 
@@ -27,7 +27,7 @@ const player = new Player({
 
 {% tab title="Manager" %}
 ```js
-import { Player, ActionDisplay } from '@vime-js/player';
+import { Player, ActionDisplay } from '@vime-js/complete';
 
 // ...
 

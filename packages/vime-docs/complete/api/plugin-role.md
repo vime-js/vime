@@ -2,7 +2,7 @@
 
 **Type:** `enum<int>`
 
-[View Source](../../../vime-player/src/core/PluginRole.js)
+[View Source](../../../vime-complete/src/core/PluginRole.js)
 
 Identifies the role of a plugin. In other words, it helps the player identify "special" plugins 
 that provide some core functionality. For example, the `canSetPoster` property will check if there

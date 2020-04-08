@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../../../vime-player/src/plugins/settings/menu/submenu/SelectSubmenu.svelte)
+[View Source](../../../../../../vime-complete/src/plugins/settings/menu/submenu/SelectSubmenu.svelte)
 
 Extends the base [submenu](./submenu.md) with a list of radio buttons.
 

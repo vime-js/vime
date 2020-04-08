@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../../vime-player/src/plugins/settings/menu/MenuControl.svelte)
+[View Source](../../../../../vime-complete/src/plugins/settings/menu/MenuControl.svelte)
 
 A button to be used inside a menu. The button is styled based on its ARIA role and state. It's used
 as the base for the [`MenuItem`](./menu-item.md) and [`MenuItemRadio`](./menu-item-radio.md) components.

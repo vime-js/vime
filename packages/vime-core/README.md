@@ -18,7 +18,7 @@
 
 <br />
 
-This package contains the core code that powers other Vime packages.
+This package contains the core data and helper functions for supported providers.
 
 [package]: https://www.npmjs.com/package/@vime-js/core
 [version-badge]: https://img.shields.io/npm/v/@vime-js/core?style=flat-square

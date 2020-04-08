@@ -2,7 +2,7 @@
 
 **Type:** `Component`
 
-[View Source](../../../../vime-player/src/plugins/tooltips/Tooltip.svelte)
+[View Source](../../../../vime-complete/src/plugins/tooltips/Tooltip.svelte)
 
 A tooltip is a small pop-up box that appears when a user moves their mouse over an element. Their main 
 purpose is to provide the user with a description about that element.

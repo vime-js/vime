@@ -12,7 +12,9 @@
 
 * [Setup](lite/setup.md) 
 * [Usage](lite/usage.md)
-* [API](lite/api.md)
+* API
+  * [Player](lite/api/player.md)
+  * [Embed](lite/api/embed.md)
 
 ## Standard
 
