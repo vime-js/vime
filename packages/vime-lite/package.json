@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/lite",
   "description": "Vime Lite Player",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "svelte": "src/index.js",
   "main": "dist/lite.js",
   "module": "dist/lite.esm.js",

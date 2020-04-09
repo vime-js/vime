@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/standard",
   "description": "Vime Standard Player",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "svelte": "src/index.js",
   "main": "dist/standard.js",
   "module": "dist/standard.esm.js",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@vime-js/core": "^1.4.0",
-    "@vime-js/lite": "^1.4.0",
+    "@vime-js/lite": "^1.4.1",
     "@vime-js/utils": "^1.4.0"
   },
   "publishConfig": {
