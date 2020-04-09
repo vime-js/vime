@@ -225,12 +225,12 @@
     .then((poster) => { info.poster = poster; })
     .catch((e) => dispatch('error', e));
 
-  const fetchVideoDuration = () => fetch_video_duration(srcId)
+  const fetchVideoDuration = () => fetch_video_duration(src)
     .then((duration) => { info.duration = duration; })
     .catch((e) => dispatch('error', e));
 
   $: fetchPoster(src);
-  $: fetchVideoDuration(srcId);
+  $: fetchVideoDuration(src);
 
   $: {
     dispatch('update', info);
