@@ -86,6 +86,7 @@
   export let src = null;
 
   export const getLitePlayer = () => litePlayer;
+  export const getEl = () => (litePlayer ? litePlayer.getEmbed().getIframe() : null);
 
   export const setPlaysinline = () => { /** noop */ };
   export const setVideoQuality = (newQuality) => { send(DM.Command.QUALITY, [newQuality]); };

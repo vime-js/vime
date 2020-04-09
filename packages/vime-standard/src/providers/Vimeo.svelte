@@ -106,6 +106,7 @@
   export let src = null;
 
   export const getLitePlayer = () => litePlayer;
+  export const getEl = () => (litePlayer ? litePlayer.getEmbed().getIframe() : null);
 
   export const setMuted = (isMuted) => { send(VM.Command.SET_MUTED, isMuted); };
   export const setVolume = (newVolume) => { send(VM.Command.SET_VOLUME, newVolume / 100); };
