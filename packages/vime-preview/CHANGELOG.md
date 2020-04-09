@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/vime-js/vime/tree/master/packages/vime-preview/compare/v1.2.0...v1.3.0) (2020-04-09)
+
+
+### Bug Fixes
+
+* **preview:** improve loading detection and event firing ([9dc470f](https://github.com/vime-js/vime/tree/master/packages/vime-preview/commit/9dc470fd56f7ca1f981b5d01064a24847beb2c0b))
+
+
+### Features
+
+* refactor packages from providers to players ([7ff7504](https://github.com/vime-js/vime/tree/master/packages/vime-preview/commit/7ff75045788b267688f4cb7f970ce9bb3426036a))
+
+
+
+
+
 # [1.2.0](https://github.com/vime-js/vime/tree/master/packages/vime-preview/compare/v1.1.3...v1.2.0) (2020-03-22)
 
 
