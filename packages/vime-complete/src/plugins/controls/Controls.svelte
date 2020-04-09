@@ -1,20 +1,18 @@
 <svelte:options accessors />
 
-{#if $isControlsEnabled && !$useNativeControls}
-  <div 
-    class="controls"
-    class:video={$isVideoView}
-    use:vShow={$isControlsActive}
-    bind:this={el}
-  >
-    {#each groups as id (id)}
-      <ControlGroup
-        {player}
-        bind:this={instances[id]}
-      />
-    {/each}
-  </div>
-{/if}
+<div 
+  class="controls"
+  class:video={$isVideoView}
+  use:vShow={$isControlsEnabled && !$useNativeControls && $isControlsActive}
+  bind:this={el}
+>
+  {#each groups as id (id)}
+    <ControlGroup
+      {player}
+      bind:this={instances[id]}
+    />
+  {/each}
+</div>
 
 <script context="module">
   import PluginRole from '../../core/PluginRole';
