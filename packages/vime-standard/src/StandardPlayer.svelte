@@ -17,12 +17,16 @@
 
 <script>
   import { get } from 'svelte/store';
-  import { noop, listen, get_current_component } from 'svelte/internal';
   import { currentPlayer } from './sharedStore';
   import { mapPlayerStoreToComponent } from './standardPlayerStore';
   import { PlayerWrapper } from '@vime-js/lite';
   import MediaType from './MediaType';
   import PlayerState from './PlayerState';
+  
+  import {
+    noop, listen, get_current_component,
+    run_all,
+  } from 'svelte/internal';
 
   import {
     tick as svelteTick, onMount, onDestroy,
@@ -421,7 +425,7 @@
   const FULLSCREEN_NOT_SUPPORTED_ERROR_MSG = 'Fullscreen not supported.';
   const FULLSCREEN_DOC_SUPPORT = !!FullscreenApi.requestFullscreen;
 
-  let onDocFullscreenChangeListener = null;
+  let fsDispose = [];
 
   const isFullscreen = () => {
     const els = [playerWrapper, parentEl, $provider && $provider.getEl()].filter(Boolean);
@@ -480,23 +484,33 @@
 
   onMount(() => {
     if (!FULLSCREEN_DOC_SUPPORT) return;
-    /* *
-     * We have to listen to this on webkit, because when the video element enters
-     * or exits fullscreen by the Html5 fullscreen video control, calling
-     * requestFullscreen from the video element directly, or inside an iframe, then no
-     * `fullscreenchange` event is fired.
-     * */
-    const useWebkit = document.webkitExitFullscreen;
-    onDocFullscreenChangeListener = listen(
+  
+    fsDispose.push(listen(
       document,
-      useWebkit ? 'webkitfullscreenchange' : FullscreenApi.fullscreenchange,
+      FullscreenApi.fullscreenchange,
       onDocumentFullscreenChange,
-    );
+    ));
+
+    /* *
+     * We have to listen to this on webkit, because no `fullscreenchange` event is fired when the
+     * video element enters or exits fullscreen by:
+     *
+     *  1. The native Html5 fullscreen video control.
+     *  2. Calling requestFullscreen from the video element directly.
+     *  3. Calling requestFullscreen inside an iframe.
+     * */
+    if (document.webkitExitFullscreen) {
+      fsDispose.push(listen(
+        document,
+        'webkitfullscreenchange',
+        onDocumentFullscreenChange,
+      ));
+    }
   });
   
   onDestroy(() => {
-    if (onDocFullscreenChangeListener) onDocFullscreenChangeListener();
-    onDocFullscreenChangeListener = null;
+    run_all(fsDispose);
+    fsDispose = [];
   });
 
   $: canProviderFullscreen = $provider

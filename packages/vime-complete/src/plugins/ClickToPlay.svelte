@@ -57,7 +57,7 @@
       // TODO: this is probably not ideal, need a better solution.
         const isInputNode = ['BUTTON', 'INPUT'].includes(e.target.nodeName);
         if (e.detail === 1 && !isInputNode) onToggle();
-      }, 100);
+      }, 300);
     };
     onClickListener = listen(player.getEl(), 'click', onClick);
   };
