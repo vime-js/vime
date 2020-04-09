@@ -92,6 +92,7 @@
   export let cookies = false;
 
   export const getLitePlayer = () => litePlayer;
+  export const getEl = () => (litePlayer ? litePlayer.getEmbed().getIframe() : null);
 
   export const setMuted = (isMuted) => { isMuted ? send(YT.Command.MUTE) : send(YT.Command.UNMUTE); };
   export const setVolume = (newVolume) => { send(YT.Command.SET_VOLUME, [newVolume]); };
