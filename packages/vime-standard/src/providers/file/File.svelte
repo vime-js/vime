@@ -14,7 +14,7 @@
   <video
     {controls}
     {crossorigin}
-    poster={(useNativePoster && !playbackStarted) ? poster : null}
+    poster={!playbackStarted ? poster : null}
     preload="metadata"
     playsinline={playsinline}
     playsInline={playsinline}
@@ -125,7 +125,6 @@
   let paused = true;
   let videoQuality = null;
   let playbackStarted = false;
-  let useNativePoster = false;
 
   export let src;
   export let crossorigin = null;
@@ -142,7 +141,6 @@
   export const setPlaysinline = (isEnabled) => { playsinline = isEnabled || null; };
   export const setAspectRatio = (newRatio) => { aspectRatio = newRatio; };
   export const setVideoQuality = (newVideoQuality) => { videoQuality = newVideoQuality; };
-  export const setView = (isEnabled) => { useNativePoster = isEnabled; };
 
   export const setPoster = (newPoster) => {
     if (poster === newPoster || !is_string(newPoster)) return;
