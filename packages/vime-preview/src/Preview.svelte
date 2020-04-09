@@ -21,7 +21,9 @@
       class="playIcon"
       use:vShow={showPlayIcon && !isLoading}
     >
-      <PlayIcon />
+      <PlayIcon 
+        scale={playIconScale} 
+      />
     </div>
   </Lazy>
 </div>
@@ -68,6 +70,7 @@
   export let isEnabled = true;
   export let aspectRatio = '16:9';
   export let showPlayIcon = false;
+  export let playIconScale = 2;
 
   export const getNativePoster = () => nativePoster;
 
