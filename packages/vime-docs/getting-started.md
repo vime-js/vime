@@ -40,23 +40,23 @@ we'll load the thumbnail.
 
 ## Features / Differences
 
-| Feature                   | Preview |     Lite     |  Standard  |   Complete    |
-| :------------------------ | :-----: | :----------: | :--------: | :-----------: |
-| Size (min + gzip)         | 4.85 kB | 5.5 - 6.6 kB | 14 - 20 kB | 16 kB - 49 kB |
-| Lazy Loading              |    ✓    |      ✓       |     ✓      |       ✓       |
-| Preconnections            |    ✓    |      ✓       |     ✓      |       ✓       |
-| Thumbnails                |    ✓    |      ✓       |     ✓      |       ✓       |
-| Native Controls           |         |      ✓       |     ✓      |       ✓       |
-| Native Player API         |         |      ✓       |     ✓      |       ✓       |
-| Multi-provider Support    |         |      ✓       |     ✓      |       ✓       |
-| Vime Player API           |         |              |     ✓      |       ✓       |
-| Provider Normalization    |         |              |     ✓      |       ✓       |
-| Browser Normalization     |         |              |     ✓      |       ✓       |
-| Reactive / Eventful Store |         |              |     ✓      |       ✓       |
-| Plugins                   |         |              |            |       ✓       |
-| Customization             |         |              |            |       ✓       |
-| Custom Controls           |         |              |            |       ✓       |
-| Internationalization      |         |              |            |       ✓       |
+| Feature                   | Preview |    Lite    |  Standard  |   Complete    |
+| :------------------------ | :-----: | :--------: | :--------: | :-----------: |
+| Size (min + gzip)         | 4.85 kB | 6 - 6.6 kB | 13 - 20 kB | 25 kB - 54 kB |
+| Lazy Loading              |    ✓    |     ✓      |     ✓      |       ✓       |
+| Preconnections            |    ✓    |     ✓      |     ✓      |       ✓       |
+| Thumbnails                |    ✓    |     ✓      |     ✓      |       ✓       |
+| Native Controls           |         |     ✓      |     ✓      |       ✓       |
+| Native Player API         |         |     ✓      |     ✓      |       ✓       |
+| Multi-provider Support    |         |     ✓      |     ✓      |       ✓       |
+| Vime Player API           |         |            |     ✓      |       ✓       |
+| Provider Normalization    |         |            |     ✓      |       ✓       |
+| Browser Normalization     |         |            |     ✓      |       ✓       |
+| Reactive / Eventful Store |         |            |     ✓      |       ✓       |
+| Plugins                   |         |            |            |       ✓       |
+| Customization             |         |            |            |       ✓       |
+| Custom Controls           |         |            |            |       ✓       |
+| Internationalization      |         |            |            |       ✓       |
 
 ### Notes
 
