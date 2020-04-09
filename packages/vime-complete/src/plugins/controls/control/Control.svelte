@@ -82,7 +82,7 @@
 
   // TODO: this is a poor temporary fix, the same control might be reused in different
   // positions, how to register them?
-  $: if (tooltipsRegistry && tooltip && !tooltipsRegistry.has(label)) {
+  $: if (label && tooltipsRegistry && tooltip && !tooltipsRegistry.has(label)) {
     tooltipsRegistry.register(label, tooltip);
   }
 </script>
@@ -124,10 +124,30 @@
     }
 
     &.large {
-      padding: $control-padding * 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: $color-gray-300;
 
-      & :global(svg) {
-        transform: scale(1.5);
+      @media (min-width: 480px) {
+        width: 60px;
+        height: 60px;
+
+        & :global(svg) {
+          transform: scale(1.4);
+        }
+      }
+
+      @media (min-width: 860px) {
+        width: 68px;
+        height: 68px;
+
+        & :global(svg) {
+          transform: scale(1.5);
+        }
       }
     }
 

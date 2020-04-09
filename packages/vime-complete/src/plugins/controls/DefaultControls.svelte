@@ -104,6 +104,13 @@
   const onSetupDesktopVideoControls = () => {
     onResetGroups();
 
+    centerGroup.$set({
+      isActive: true,
+      shouldFill: true,
+      position: 'center:center',
+      controls: [BigPlaybackControl],
+    });
+
     const liveControls = [
       PlaybackControl, VolumeControl, ControlSpacer,
       LiveIndicator, PiPControl, FullscreenControl,
@@ -117,19 +124,28 @@
     ];
 
     lowerGroup.$set({
-      shouldFill: true,
-      isActive: true,
       position: 'flex-end:flex-start',
+      isEnabled: false,
+      isActive: false,
+      shouldFill: true,
       controls: !$isLive ? stdControls : liveControls,
     });
   };
 
-  $: if (
-    controls
-    && $isVideoView
-    && !$isMobile
-    && didMount
-  ) onSetupDesktopVideoControls($isLive);
+  const onDesktopVideoStart = async () => {
+    centerGroup.isActive = false;
+    await tick();
+    setTimeout(async () => {
+      centerGroup.shouldFill = false;
+      lowerGroup.isEnabled = true;
+      await tick();
+      lowerGroup.isActive = true;
+    }, 400);
+  };
+
+  $: isDesktopVideo = $isVideoView && !$isMobile && didMount;
+  $: if (controls && isDesktopVideo) onSetupDesktopVideoControls($isLive);
+  $: if (controls && isDesktopVideo && $playbackStarted) onDesktopVideoStart($isLive);
 
   // --------------------------------------------------------------
   // Mobile Video Controls
@@ -166,5 +182,5 @@
 
   $: isMobileVideo = $isVideoView && $isMobile && didMount;
   $: if (controls && isMobileVideo) onSetupMobileVideoControls($isLive);
-  $: if (controls && isMobileVideo && $playbackStarted) onMobileVideoStart();
+  $: if (controls && isMobileVideo && $playbackStarted) onMobileVideoStart($isLive);
 </script>

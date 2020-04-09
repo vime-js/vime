@@ -4,13 +4,11 @@
   <Control
     {player}
     {title}
-    {label}
-    {large}
+    {...$$restProps}
     on:click
     on:keydown
     on:focuschange
     on:click={autopilot ? onToggle : null}
-    aria-label={$$props['aria-label']}
     aria-pressed={isActive}
     bind:this={control}
   >
@@ -30,14 +28,12 @@
 
   let control;
 
-  export let label;
   export let activeTitle;
   export let inactiveTitle;
   export let activeIcon;
   export let inactiveIcon;
   export let isActive = false;
   export let isEnabled = true;
-  export let large = false;
   export let autopilot = true;
 
   export const getControl = () => control;
