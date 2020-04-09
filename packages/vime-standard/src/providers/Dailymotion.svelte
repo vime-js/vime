@@ -35,6 +35,7 @@
     PAUSE: 'pause',
     START: 'start',
     AD_START: 'ad_start',
+    AD_PLAY: 'ad_play',
     AD_END: 'ad_end',
     TIME_UPDATE: 'timeupdate',
     VIDEO_START: 'video_start',
@@ -195,6 +196,9 @@
         break;
       case DM.Event.AD_END:
         isAdsPlaying = false;
+        break;
+      case DM.Event.AD_PLAY:
+        send(DM.Command.PLAY);
         break;
       case DM.Event.PLAY:
         info.play = true;
