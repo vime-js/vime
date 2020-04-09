@@ -365,7 +365,7 @@
 
   $: if ($autoplay && $playbackReady) onAutoplay();
   $: if ($provider && !$rebuilding) $provider.setPlaysinline($playsinline);
-  $: if ($canSetPoster && !$rebuilding) $provider.setPoster($poster);
+  $: if ($canSetPoster && !$rebuilding) $provider.setPoster($useNativeControls ? $poster : null);
   $: if ($provider && is_function($provider.setAspectRatio)) $provider.setAspectRatio($aspectRatio);
   
   $: if ($provider && !$rebuilding && is_function($provider.setView)) {
