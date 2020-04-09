@@ -70,8 +70,6 @@
   let srcId;
   let litePlayer;
   let info = {};
-  let qualities = null;
-  let isAdsPlaying = false;
 
   // DM commands don't go through until ads have finished, so we store them and then replay them
   // once the video starts.
@@ -79,6 +77,7 @@
   let startVolume = null;
   let startMuted = null;
   let started = false;
+  let isAdsPlaying = false;
 
   const params = {};
   const dispatch = createEventDispatcher();
@@ -143,7 +142,6 @@
         startVolume = null;
         startMuted = null;
         started = false;
-        qualities = null;
         isAdsPlaying = false;
         info.state = PlayerState.CUED;
         break;
@@ -151,6 +149,7 @@
         info.state = PlayerState.BUFFERING;
         break;
       case DM.Event.VIDEO_START:
+        if (started) return;
         if (is_number(startTime) && startTime > 0) {
           setCurrentTime(startTime);
           info.seeking = true;
@@ -181,15 +180,10 @@
         info.buffered = parseFloat(data.time);
         break;
       case DM.Event.QUALITIES_AVAILABLE:
-        qualities = data.qualities;
-        info.videoQualities = qualities;
+        info.videoQualities = data.qualities.map((quality) => parseInt(quality, 10));
         break;
       case DM.Event.QUALITY_CHANGE:
-        info.videoQuality = data.quality;
-        // Sometimes quality gets messed up before starting and gets set to 144.
-        if (!started && qualities && data.quality === 144) {
-          setVideoQuality(qualities[1]);
-        }
+        info.videoQuality = parseInt(data.quality, 10);
         break;
       case DM.Event.AD_START:
         isAdsPlaying = true;
