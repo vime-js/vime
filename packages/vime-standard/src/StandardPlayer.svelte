@@ -1,7 +1,7 @@
 <svelte:options accessors />
 
 <PlayerWrapper
-  isEnabled={!parentEl}
+  isEnabled={hasWrapper}
   aspectRatio={($isVideoView && !$isFullscreenActive) ? $aspectRatio : null}
   on:mount="{(e) => { playerWrapper = e.detail; }}"
 >
@@ -18,7 +18,7 @@
 <script>
   import { get } from 'svelte/store';
   import { currentPlayer } from './sharedStore';
-  import { mapPlayerStoreToComponent } from './standardPlayerStore';
+  import { buildStandardStore } from './standardStore';
   import { PlayerWrapper } from '@vime-js/lite';
   import MediaType from './MediaType';
   import PlayerState from './PlayerState';
@@ -40,7 +40,9 @@
 
   let self = get_current_component();
 
-  const { store, resetStore, onPropsChange } = mapPlayerStoreToComponent(self);
+  // eslint-disable-next-line no-underscore-dangle
+  export let _standardStore = buildStandardStore(self);
+  const { store, resetStore, onPropsChange } = _standardStore;
   $: onPropsChange($$props);
 
   const {
@@ -67,6 +69,7 @@
   let playerWrapper;
 
   export let parentEl = null;
+  export let hasWrapper = true;
 
   export const tick = () => svelteTick();
 

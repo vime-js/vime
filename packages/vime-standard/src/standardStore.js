@@ -37,7 +37,18 @@ const playerDefaults = () => ({
   isControlsActive: true,
 });
 
-const buildPlayerStore = (player) => {
+const resetStore = (store) => {
+  const defaults = playerDefaults();
+  Object.keys(defaults)
+    .forEach((prop) => store[prop] && store[prop].set(defaults[prop]));
+};
+
+const fillStore = async (store) => {
+  store.canAutoplay.set(await can_autoplay(false));
+  store.canMutedAutoplay.set(await can_autoplay(true));
+};
+
+export const buildStandardStore = (player) => {
   const store = {};
   const defaults = playerDefaults();
 
@@ -272,27 +283,11 @@ const buildPlayerStore = (player) => {
   store.autoplay = writable(false);
   store.loop = writable(false);
 
-  return store;
-};
-
-const resetStore = (store) => {
-  const defaults = playerDefaults();
-  Object.keys(defaults)
-    .forEach((prop) => store[prop] && store[prop].set(defaults[prop]));
-};
-
-const fillStore = async (store) => {
-  store.canAutoplay.set(await can_autoplay(false));
-  store.canMutedAutoplay.set(await can_autoplay(true));
-};
-
-export const mapPlayerStoreToComponent = (player) => {
-  const store = buildPlayerStore(player);
   fillStore(store);
-  const onPropsChange = map_store_to_component(player, store);
+
   return {
     store,
-    onPropsChange,
+    onPropsChange: map_store_to_component(player, store),
     resetStore: () => resetStore(store),
   };
 };
