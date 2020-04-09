@@ -1,6 +1,6 @@
 <div class="canvas">
   <div class="view">
-    <Center>
+    <Center small={smallView}>
       <slot />
     </Center>
   </div>
@@ -19,6 +19,7 @@
   export let props = [];
   export let events = [];
   export let storeChanges = [];
+  export let smallView = false;
 </script>
 
 <style>

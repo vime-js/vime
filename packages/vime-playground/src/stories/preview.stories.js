@@ -11,6 +11,7 @@ const base = (props) => ({
   props: {
     Component: Preview,
     events: config.Events.PREVIEW,
+    smallView: true,
     ...props,
   },
 });

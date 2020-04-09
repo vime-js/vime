@@ -1,4 +1,5 @@
 <InteractiveCanvas
+  {smallView}
   props={Object.values(props)}
   events={firedEvents}
   {storeChanges}
@@ -31,6 +32,7 @@
 
   export let Component;
   export let events = [];
+  export let smallView = false;
 
   const sortProps = (unsortedProps) => {
     const result = {};
