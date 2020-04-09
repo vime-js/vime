@@ -34,9 +34,11 @@ export const is_plugin = (value) => value
   && (value.id || value.ID)
   && (value.plugin || value.default);
 
+export const format_name = (name) => (name.includes('_svelte') ? name.match(/_svelte_(.+)/)[1] : name);
+
 export const extract_prop_value = (value) => {
-  if (is_svelte_component(value)) { return `${value.name} Component`; }
-  if (is_svelte_instance(value)) { return `${value.constructor.name} Instance`; }
+  if (is_svelte_component(value)) { return `${format_name(value.name)} Component`; }
+  if (is_svelte_instance(value)) { return `${format_name(value.constructor.name)} Instance`; }
   if (is_instance_of(value, Registry)) { return `${value.getId()} Registry`; }
   if (is_element(value)) { return `${value.tagName} Element`; }
   if (is_function(value)) { return 'Function'; }
