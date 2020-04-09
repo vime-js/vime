@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/standard",
   "description": "Vime Standard Player",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "svelte": "src/index.js",
   "main": "dist/standard.js",
   "module": "dist/standard.esm.js",
@@ -40,9 +40,9 @@
     "build:dev": "rollup -c --environment NODE_ENV:development"
   },
   "dependencies": {
-    "@vime-js/core": "^1.3.0",
-    "@vime-js/lite": "^1.3.0",
-    "@vime-js/utils": "^1.3.0"
+    "@vime-js/core": "^1.4.0",
+    "@vime-js/lite": "^1.4.0",
+    "@vime-js/utils": "^1.4.0"
   },
   "publishConfig": {
     "access": "public"
