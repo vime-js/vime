@@ -30,6 +30,12 @@ The aspect ratio of the preview expressed as `width:height`.
 
 Whether to show a play icon in the center of the preview.
 
+### `playIconScale`
+
+**Type:** `double` | **Default:** `2`
+
+Resizes the play icon based on the amount of scaling given.
+
 ### `isEnabled`
 
 **Type:** `boolean` | **Default:** `true`

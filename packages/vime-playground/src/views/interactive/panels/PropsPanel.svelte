@@ -71,7 +71,9 @@
         value = target.checked;
         break;
       case 'number':
-        value = parseInt(target.value, 10);
+        value = Number.isInteger(target.value)
+          ? parseInt(target.value, 10)
+          : parseFloat(target.value);
         break;
       default:
         value = target.value;
