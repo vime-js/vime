@@ -157,10 +157,10 @@
 
   const PIP_NOT_SUPPORTED_ERROR_MSG = 'PiP not supported.';
 
-  // TODO: should check here if the current pip element matches this video element.
-  const setChromePiP = (isActive) => (
-    isActive ? video.requestPictureInPicture() : document.exitPictureInPicture()
-  );
+  const setChromePiP = (isActive) => {
+    if (!isActive && document.pictureInPictureElement !== video) Promise.reject();
+    isActive ? video.requestPictureInPicture() : document.exitPictureInPicture();
+  };
 
   const setSafariPiP = (isActive) => {
     const mode = isActive ? Html5.WebkitPresentationMode.PIP : Html5.WebkitPresentationMode.INLINE;
@@ -186,12 +186,12 @@
 
   const onFullscreenChange = () => {
     info.fullscreen = (document.webkitFullscreenElement === video)
-    || (document.mozFullScreenElement === video);
+      || (document.mozFullScreenElement === video);
   };
 
-  export const setFullscreen = (active) => {
+  export const setFullscreen = (isActive) => {
     if (!video.webkitSupportsFullscreen) return Promise.reject(FULLSCREEN_NOT_SUPPORTED_ERROR_MSG);
-    return active ? video.webkitEnterFullscreen() : video.webkitExitFullscreen();
+    return isActive ? video.webkitEnterFullscreen() : video.webkitExitFullscreen();
   };
 
   export const supportsFullscreen = () => can_fullscreen_video();

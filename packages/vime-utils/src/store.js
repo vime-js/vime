@@ -5,7 +5,7 @@ import { try_on_svelte_destroy, try_create_svelte_dispatcher } from './svelte';
 
 import {
   noop, not_equal, validate_store,
-  get_current_component,
+  get_current_component, flush,
 } from 'svelte/internal';
 
 export const safe_unsubscribe = (unsubscribe) => {
@@ -178,9 +178,10 @@ export const map_store_to_component = (comp, stores) => {
     canWrite = {};
   });
 
-  const onUpdateProp = (prop, newValue) => {
+  const onUpdateProp = (prop, newValue, shouldFlush = false) => {
     if (!canWrite[prop] || !not_equal(get(stores[prop]), newValue)) return;
     stores[prop].set(newValue);
+    if (shouldFlush) flush();
   };
 
   Object.keys(stores).forEach((prop) => {
@@ -188,7 +189,7 @@ export const map_store_to_component = (comp, stores) => {
     canWrite[prop] = !!store.set && !store.private;
     create_prop(component, prop, {
       get: () => get(store),
-      set: canWrite[prop] ? ((v) => { onUpdateProp(prop, v); }) : undefined,
+      set: canWrite[prop] ? ((v) => { onUpdateProp(prop, v, true); }) : undefined,
       configurable: true,
     });
   });

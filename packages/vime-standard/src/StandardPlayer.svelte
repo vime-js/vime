@@ -403,7 +403,6 @@
   const NO_PIP_SUPPORT_ERROR_MSG = 'Provider does not support PiP.';
   const VIDEO_NOT_READY_ERROR_MSG = 'Action not supported, must be a video that is ready for playback.';
   
-  // TODO: check if the player has mounted.
   const pipRequest = (active) => {
     if (!$isVideoReady) { return Promise.reject(VIDEO_NOT_READY_ERROR_MSG); }
     if (!$canSetPiP) { return Promise.reject(NO_PIP_SUPPORT_ERROR_MSG); }
@@ -426,18 +425,17 @@
 
   const isFullscreen = () => {
     const els = [playerWrapper, parentEl, $provider && $provider.getEl()].filter(Boolean);
-    let active = els.includes(document[FullscreenApi.fullscreenElement]);
-    if (!active) active = els.some((el) => el.matches && el.matches(`:${FullscreenApi.fullscreen}`));
-    return active;
+    let isActive = els.includes(document[FullscreenApi.fullscreenElement]);
+    if (!isActive) isActive = els.some((el) => el.matches && el.matches(`:${FullscreenApi.fullscreen}`));
+    return isActive;
   };
 
   const onDocumentFullscreenChange = () => {
-    const active = isFullscreen();
-    $isFullscreenActive = active;
+    $isFullscreenActive = isFullscreen();
   };
 
-  const onFullscreenChange = (active) => {
-    $isFullscreenActive = active;
+  const onFullscreenChange = (isActive) => {
+    $isFullscreenActive = isActive;
     if (!$isFullscreenActive) tempControls = false;
     tempPause = false;
     // iOS pauses the video when exiting fullscreen.
@@ -448,12 +446,11 @@
     }
   };
 
-  // TODO: check when exiting if current element is this player.
-  const requestDocumentFullscreen = (active) => {
+  const requestDocumentFullscreen = (shouldEnter) => {
     const el = parentEl || playerWrapper;
-    if (!el) return Promise.reject();
-    if (active === isFullscreen()) return Promise.resolve();
-    const request = active
+    if (!el || (!shouldEnter && !isFullscreen())) return Promise.reject();
+    if (shouldEnter && isFullscreen()) return Promise.resolve();
+    const request = shouldEnter
       ? el[FullscreenApi.requestFullscreen]()
       : document[FullscreenApi.exitFullscreen]();
     return Promise.resolve(request);
@@ -461,19 +458,19 @@
 
   // TODO: the two providers which can set fullscreen at the moment (File/Dailymotion) don't
   // require a rebuild when enabling controls, if at some point a provider does this won't work.
-  const requestProviderFullscreen = (active) => {
-    if (active) tempControls = true;
+  const requestProviderFullscreen = (shouldEnter) => {
+    if (shouldEnter) tempControls = true;
     tempPause = true;
-    return Promise.resolve($provider.setFullscreen(active));
+    return Promise.resolve($provider.setFullscreen(shouldEnter));
   };
 
-  const fullscreenRequest = (active) => {
+  const fullscreenRequest = (shouldEnter) => {
     if (!$isVideoReady) {
       return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
     } if (FULLSCREEN_DOC_SUPPORT) {
-      return requestDocumentFullscreen(active);
+      return requestDocumentFullscreen(shouldEnter);
     } if (canProviderFullscreen) {
-      return requestProviderFullscreen(active);
+      return requestProviderFullscreen(shouldEnter);
     }
     return Promise.reject(FULLSCREEN_NOT_SUPPORTED_ERROR_MSG);
   };
