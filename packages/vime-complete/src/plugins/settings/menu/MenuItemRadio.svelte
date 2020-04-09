@@ -33,9 +33,9 @@
 
   let menuControl;
 
-  export let title;
-  export let value;
   export let group;
+  export let title = null;
+  export let value = null;
   export let badge = null;
 
   export const getMenuControl = () => menuControl;

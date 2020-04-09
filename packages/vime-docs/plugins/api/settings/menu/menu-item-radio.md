@@ -10,13 +10,13 @@ A menu radio button used to select a particular value from a group of values.
 
 ### `title`
 
-**Type:** `string|undefined` | **Default:** `undefined`
+**Type:** `string|null` | **Default:** `null`
 
 The title of the radio button.
 
 ### `value`
 
-**Type:** `any` | **Default:** `undefined`
+**Type:** `any` | **Default:** `null`
 
 The value of the radio button.
 
