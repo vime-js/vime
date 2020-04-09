@@ -19,7 +19,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "@storybook/addon-viewport": "^5.3.17",
     "@storybook/svelte": "^5.3.18",
     "babel-loader": "^8.1.0",
     "node-sass": "^4.13.1",
