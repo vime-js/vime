@@ -153,6 +153,14 @@
     }
   }
 
+  @media (min-width: 980px) {
+    .interactives {
+      width: 30%;
+      min-width: 350px;
+      max-width: 600px;
+    }
+  }
+
   .interactives :global(input:focus) {
     border: 1px solid #1ea7fd;
   }
