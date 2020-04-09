@@ -1,8 +1,8 @@
 <svelte:options accessors />
 
 <img
+  {alt}
   src={$currentPoster}
-  alt={$title || 'Media Poster'}
   use:vIf={isEnabled}
   use:vShow={isActive}
   bind:this={el}
@@ -41,6 +41,7 @@
 
   export const getEl = () => el;
 
+  $: alt = $title ? `Poster for ${title}` : 'Media Poster';
   $: if (autopilot) isEnabled = !$useNativeControls && !!$currentPoster;
   $: if (autopilot) isActive = !$playbackStarted;
 </script>
