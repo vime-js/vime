@@ -43,8 +43,11 @@
   // --------------------------------------------------------------
 
   const onToggle = () => {
-    player.requestFullscreen().catch(noop);
-    const icon = get_fullscreen_icon($icons, !$isFullscreenActive);
+    (!$isFullscreenActive
+      ? player.requestFullscreen().catch(noop)
+      : player.exitFullscreen().catch(noop)
+    );
+    const icon = get_fullscreen_icon($icons, $isFullscreenActive);
     if (player[ActionDisplayId]) player[ActionDisplayId].run(icon);
   };
 
