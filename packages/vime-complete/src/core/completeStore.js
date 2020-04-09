@@ -6,7 +6,7 @@ import {
   IS_MOBILE, listen_for_touch_input, mergeable,
 } from '@vime-js/utils';
 
-export const buildPlayerStore = (standardPlayerStore) => {
+export const buildCompleteStore = (standardStore) => {
   const store = {};
   const hasRole = (plugins, role) => plugins.some((p) => p.ROLE === role);
 
@@ -21,7 +21,7 @@ export const buildPlayerStore = (standardPlayerStore) => {
   store.isContextMenuEnabled = writable(false);
 
   store.currentPoster = derived(
-    [standardPlayerStore.poster, standardPlayerStore.nativePoster],
+    [standardStore.poster, standardStore.nativePoster],
     ([$poster, $nativePoster]) => ($poster || $nativePoster),
   );
 
@@ -31,38 +31,38 @@ export const buildPlayerStore = (standardPlayerStore) => {
   );
 
   store.hasControls = derived(
-    [store.plugins, standardPlayerStore.useNativeControls],
+    [store.plugins, standardStore.useNativeControls],
     ([$plugins, $useNativeControls]) => hasRole($plugins, PluginRole.CONTROLS)
       || $useNativeControls,
   );
 
   store.hasCaptions = derived(
-    [store.plugins, standardPlayerStore.useNativeCaptions, standardPlayerStore.canSetTracks],
+    [store.plugins, standardStore.useNativeCaptions, standardStore.canSetTracks],
     ([$plugins, $useNativeCaptions, $canSetNativeTracks]) => hasRole($plugins, PluginRole.CAPTIONS)
       || ($useNativeCaptions && $canSetNativeTracks),
   );
 
   store.hasSettings = derived(
-    [store.plugins, standardPlayerStore.useNativeControls],
+    [store.plugins, standardStore.useNativeControls],
     ([$plugins, $useNativeControls]) => hasRole($plugins, PluginRole.SETTINGS)
       || $useNativeControls,
   );
 
   // Internal player overrides.
 
-  standardPlayerStore.useNativeView.set(false);
-  standardPlayerStore.useNativeControls.set(false);
-  standardPlayerStore.useNativeCaptions.set(false);
+  standardStore.useNativeView.set(false);
+  standardStore.useNativeControls.set(false);
+  standardStore.useNativeCaptions.set(false);
 
   // eslint-disable-next-line no-underscore-dangle
   store._isControlsActive = writable(false);
   store.isControlsActive = derived(
     [
-      standardPlayerStore.isControlsEnabled,
+      standardStore.isControlsEnabled,
       // eslint-disable-next-line no-underscore-dangle
       store._isControlsActive,
-      standardPlayerStore.useNativeControls,
-      standardPlayerStore.isControlsActive,
+      standardStore.useNativeControls,
+      standardStore.isControlsActive,
     ],
     ([
       $isControlsEnabled,
@@ -75,29 +75,29 @@ export const buildPlayerStore = (standardPlayerStore) => {
   );
 
   store.canSetTrack = derived(
-    [store.plugins, standardPlayerStore.useNativeCaptions, standardPlayerStore.canSetTrack],
+    [store.plugins, standardStore.useNativeCaptions, standardStore.canSetTrack],
     ([$plugins, $useNativeCaptions, $canSetNativeTrack]) => hasRole($plugins, PluginRole.CAPTIONS)
       || ($useNativeCaptions && $canSetNativeTrack),
   );
 
   store.canSetTracks = derived(
-    [store.plugins, standardPlayerStore.useNativeCaptions, standardPlayerStore.canSetTracks],
+    [store.plugins, standardStore.useNativeCaptions, standardStore.canSetTracks],
     ([$plugins, $useNativeCaptions, $canSetNativeTracks]) => hasRole($plugins, PluginRole.CAPTIONS)
       || ($useNativeCaptions && $canSetNativeTracks),
   );
 
   store.canSetPoster = derived(
-    [store.plugins, standardPlayerStore.canSetPoster],
+    [store.plugins, standardStore.canSetPoster],
     ([$plugins, $canSetPoster]) => {
       const hasPlugin = hasRole($plugins, PluginRole.POSTER);
       // eslint-disable-next-line no-underscore-dangle
-      standardPlayerStore._posterPlugin.set(hasPlugin);
+      standardStore._posterPlugin.set(hasPlugin);
       return hasPlugin || $canSetPoster;
     },
   );
 
   return {
-    ...standardPlayerStore,
+    ...standardStore,
     ...store,
   };
 };

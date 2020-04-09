@@ -9,22 +9,21 @@
   on:contextmenu={onContextMenu}
   bind:this={el}
 >
-  <div>
-    <div 
-      class="blocker"
-      use:vIf={$playbackReady && (!$useNativeControls && $isVideoView)}
-    ></div>
-    <StandardPlayer
-      parentEl={el}
-      bind:this={standardPlayer}
-      on:error
-    />
-  </div>
-  <Lazy
-    container={el}
-    let:intersecting 
-  >
-    {#if intersecting && mounted}
+  <Lazy let:intersecting>
+    {#if intersecting}
+      <div>
+        <div 
+          class="blocker"
+          use:vIf={$playbackReady && (!$useNativeControls && $isVideoView)}
+        ></div>
+        <StandardPlayer
+          parentEl={el}
+          hasWrapper={false}
+          _standardStore={standardStore}
+          bind:this={standardPlayer}
+          on:error
+        />
+      </div>
       <PluginsManager
         player={self}
         on:register={onPluginMount}
@@ -37,20 +36,20 @@
 </div>
 
 <script>
-  import { noop, get_current_component } from 'svelte/internal';
+  import { get_current_component } from 'svelte/internal';
+  import { tick as svelteTick, onDestroy, createEventDispatcher } from 'svelte';
   import { get } from 'svelte/store';
+  import { buildCompleteStore } from './completeStore';
+  import { Lazy } from '@vime-js/lite';
   import PluginsManager from './PluginsManager.svelte';
   import PlayerEvent from './PlayerEvent';
-  import { buildPlayerStore } from './completePlayerStore';
   import Registry from './Registry';
   import Disposal from './Disposal';
-  import { Player as StandardPlayer } from '@vime-js/standard';
-  import { Lazy } from '@vime-js/lite';
 
   import {
-    tick as svelteTick, onMount, onDestroy,
-    createEventDispatcher,
-  } from 'svelte';
+    buildStandardStore,
+    Player as StandardPlayer,
+  } from '@vime-js/standard';
 
   import {
     log as vimeLog, warn as vimeWarn, error as vimeError,
@@ -67,16 +66,6 @@
   let pluginsManager;
   let classes = null;
 
-  let debug;
-  let paused;
-  let theme;
-  let aspectRatio;
-  let isVideoView;
-  let playbackReady;
-  let useNativeControls;
-  let isControlsActive;
-  let isFullscreenActive;
-
   let self = get_current_component();
   onDestroy(() => { self = null; });
 
@@ -85,21 +74,17 @@
   const registry = new Registry(ID);
   const dispatch = createEventDispatcher();
 
-  let store = {};
-  let onPropsChange = noop;
+  const standardStore = buildStandardStore(self);
+  const store = buildCompleteStore(standardStore.store);
+  
+  const onPropsChange = map_store_to_component(self, store);
   $: onPropsChange($$props);
-
-  let mounted = false;
-  onMount(() => {
-    store = buildPlayerStore(standardPlayer.getStore());
-    onPropsChange = map_store_to_component(self, store);
-    ({
-      paused, theme, isVideoView,
-      useNativeControls, isControlsActive, debug,
-      isFullscreenActive, aspectRatio, playbackReady,
-    } = store);
-    mounted = true;
-  });
+  
+  const {
+    paused, theme, isVideoView,
+    useNativeControls, isControlsActive, debug,
+    isFullscreenActive, aspectRatio, playbackReady,
+  } = store;
 
   // --------------------------------------------------------------
   // Props

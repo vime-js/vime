@@ -1,15 +1,15 @@
 {#if isEnabled}
-<Lazy let:intersecting>
-  {#if intersecting}
-    <div
-      class:bg={!is_null(aspectRatio)}
-      use:vAspectRatio={isEnabled ? aspectRatio : null} 
-      bind:this={el}
-    >
-      <slot />
-    </div>
-  {/if}
-</Lazy>
+  <Lazy let:intersecting>
+    {#if intersecting}
+      <div
+        class:bg={!is_null(aspectRatio)}
+        use:vAspectRatio={isEnabled ? aspectRatio : null} 
+        bind:this={el}
+      >
+        <slot />
+      </div>
+    {/if}
+  </Lazy>
 {:else}
   <slot />
 {/if}

@@ -11,30 +11,27 @@
   let el;
   let intersecting = false;
   
-  export let container = null;
   export let threshold = 0.75;
 
   onMount(() => {
-    const observedEl = container || el;
-
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver((entries) => {
         intersecting = entries[0].isIntersecting;
-        if (intersecting) observer.unobserve(observedEl);
+        if (intersecting) observer.unobserve(el);
       }, { threshold });
 
-      observer.observe(observedEl);
-      return () => observer.unobserve(observedEl);
+      observer.observe(el);
+      return () => observer.unobserve(el);
     }
 
     function onScroll() {
-      const rect = observedEl.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
 
       intersecting = (
         rect.bottom > 0
-      && rect.right > 0
-      && (rect.top * (1 + threshold)) < window.innerHeight
-      && rect.left < window.innerWidth
+        && rect.right > 0
+        && (rect.top * (1 + threshold)) < window.innerHeight
+        && rect.left < window.innerWidth
       );
 
       if (intersecting) window.removeEventListener('scroll', onScroll);
