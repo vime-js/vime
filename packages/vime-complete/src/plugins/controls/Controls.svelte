@@ -3,7 +3,7 @@
 <div 
   class="controls"
   class:video={$isVideoView}
-  use:vShow={$isControlsEnabled && !$useNativeControls && $isControlsActive}
+  use:vShow={isActive}
   bind:this={el}
 >
   {#each groups as id (id)}
@@ -25,6 +25,7 @@
   import { tick, onMount, onDestroy } from 'svelte';
   import { listen } from 'svelte/internal';
   import { vShow } from '@vime-js/utils';
+  import { ID as SettingsID } from '../settings/Settings.svelte';
   import ControlGroup from './ControlGroup.svelte';
 
   // --------------------------------------------------------------
@@ -34,6 +35,7 @@
   export let player;
 
   const registry = player.createRegistry(ID);
+  const plugins = player.getPluginsRegistry();
 
   const {
     paused, isVideoView, isControlsEnabled,
@@ -90,6 +92,9 @@
     .filter((id) => !registry.has(id) && instances[id])
     .forEach((id) => registry.register(id, instances[id]));
 
+  $: isActive = ($isControlsEnabled && !$useNativeControls)
+    && ($isControlsActive || (settings && $isMenuActive));
+
   // --------------------------------------------------------------
   // Events
   // --------------------------------------------------------------
@@ -100,6 +105,15 @@
     const showControlsEvents = ['focus', 'keydown', 'click', 'mousemove', 'touchstart'];
     showControlsEvents.forEach((event) => onDestroy(listen(player.getEl(), event, onShowControls)));
   });
+  
+  // --------------------------------------------------------------
+  // Settings Plugin
+  // --------------------------------------------------------------
+
+  let isMenuActive;
+
+  $: settings = $plugins[SettingsID];
+  $: if (settings) { ({ isMenuActive } = settings.getStore()); }
 </script>
 
 <style type="text/scss">
