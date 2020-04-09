@@ -6,11 +6,9 @@ A [`Control`](./control.md) which toggles between an active and inactive state w
 
 ## Props
 
-### `label`
-
-**Type:** `string|undefined` | **Default:** `undefined`
-
-The `Control` [`label`](./control.md#label).
+{% hint style="info" %}
+Any unlisted props are passed to the underlying [`Control`](./control.md) instance.
+{% endhint %}
 
 ### `activeTitle`
 
@@ -47,12 +45,6 @@ Whether to render the control in the DOM or not.
 **Type:** `boolean` | **Default:** `false`
 
 Whether the control is in an active state or not.
-
-### `large`
-
-**Type:** `boolean` | **Default:** `false`
-
-Sets the `Control` [`large`](./control.md#large) property.
 
 ## Methods
 

@@ -1,6 +1,5 @@
 <ToggleControl
   {player}
-  {large}
   label={LABEL}
   isActive={!$paused}
   autopilot={false}
@@ -34,8 +33,6 @@
   // --------------------------------------------------------------
 
   let toggle;
-
-  export let large = false;
 
   export const getToggle = () => toggle;
 

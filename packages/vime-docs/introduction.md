@@ -153,12 +153,9 @@ Vime in production just yet.
 
 ## Screenshots
 
-![Vime player screenshot][vime-screenshot]
+![Vime player screenshot](../../static/images/player-example.png)
 
-![Vime player mid-playback screenshot][vime-mid-pb-screenshot]
-
-[vime-screenshot]: https://raw.githubusercontent.com/vime-js/vime/master/static/images/player-example.png
-[vime-mid-pb-screenshot]: https://raw.githubusercontent.com/vime-js/vime/master/static/images/player-example-2.png
+![Vime player mid-playback screenshot](../../static/images/player-example-2.png)
 
 ## Features
 

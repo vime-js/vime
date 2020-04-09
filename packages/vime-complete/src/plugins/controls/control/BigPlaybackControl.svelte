@@ -1,8 +1,15 @@
 <div class:paused={$paused}>
-  <PlaybackControl 
-    large 
+  <ToggleControl
     {player}
-    bind:this={playbackControl}
+    large={true}
+    shoudlRenderTooltip={false}
+    isActive={!$paused}
+    autopilot={false}
+    activeIcon={$icons.pause}
+    inactiveIcon={$icons.play}
+    aria-label={$i18n.playback}
+    on:click={onToggle}
+    bind:this={toggle}
   />
 </div>
 
@@ -11,7 +18,7 @@
 </script>
 
 <script>
-  import PlaybackControl from './PlaybackControl.svelte';
+  import ToggleControl from './ToggleControl.svelte';
 
   // --------------------------------------------------------------
   // Setup
@@ -19,15 +26,17 @@
 
   export let player;
 
-  const { paused } = player.getStore();
+  const { paused, i18n, icons } = player.getStore();
 
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
 
-  let playbackControl;
+  let toggle;
 
-  export const getPlaybackControl = () => playbackControl;
+  export const getToggle = () => toggle;
+  
+  const onToggle = () => { $paused = !$paused; };
 </script>
 
 <style>
