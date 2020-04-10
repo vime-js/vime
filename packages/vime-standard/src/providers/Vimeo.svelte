@@ -139,7 +139,7 @@
   
   const onEmbedURLChange = (e) => {
     info.currentSrc = e.detail;
-    info.srcId = litePlayer.getSrcId();
+    info.mediaId = litePlayer.getMediaId();
   };
 
   const onReload = () => {

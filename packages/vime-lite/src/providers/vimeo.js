@@ -1,7 +1,7 @@
 import {
   NAME, EMBED_ORIGIN as ORIGIN, DECODER,
   PRECONNECTIONS, can_play, build_embed_url,
-  extract_src_id,
+  extract_media_id,
 } from '@vime-js/core/vimeo';
 
 export default {
@@ -10,7 +10,7 @@ export default {
   preconnections: PRECONNECTIONS,
   canPlay: can_play,
   buildEmbedURL: build_embed_url,
-  extractSrcId: extract_src_id,
+  extractMediaId: extract_media_id,
   onLoad: () => {},
   buildOrigin: () => ORIGIN,
   buildPostMessage: (command, args) => ({

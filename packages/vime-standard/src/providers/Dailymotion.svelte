@@ -67,7 +67,7 @@
   import MediaType from '../MediaType';
   import PlayerState from '../PlayerState';
 
-  let srcId;
+  let mediaId;
   let litePlayer;
   let info = {};
 
@@ -127,9 +127,9 @@
   const onTitleChange = (e) => { info.title = e.detail; };
   
   const onEmbedURLChange = (e) => {
-    srcId = litePlayer.getSrcId();
+    mediaId = litePlayer.getMediaId();
     info.currentSrc = e.detail;
-    info.srcId = srcId;
+    info.mediaId = mediaId;
   };
 
   const onData = (e) => {

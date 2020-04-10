@@ -1,7 +1,7 @@
 import {
   NAME, ORIGIN, DECODER,
   PRECONNECTIONS, can_play, build_embed_url,
-  extract_src_id,
+  extract_media_id,
 } from '@vime-js/core/dailymotion';
 
 export default {
@@ -9,7 +9,7 @@ export default {
   decoder: DECODER,
   preconnections: PRECONNECTIONS,
   canPlay: can_play,
-  extractSrcId: extract_src_id,
+  extractMediaId: extract_media_id,
   buildEmbedURL: build_embed_url,
   onLoad: () => {},
   buildOrigin: () => ORIGIN,

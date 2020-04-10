@@ -1,7 +1,7 @@
 import {
   NAME, DECODER, PRECONNECTIONS,
   can_play, build_embed_url, build_origin,
-  extract_src_id,
+  extract_media_id,
 } from '@vime-js/core/youtube';
 
 export default {
@@ -10,7 +10,7 @@ export default {
   preconnections: PRECONNECTIONS,
   canPlay: can_play,
   buildOrigin: build_origin,
-  extractSrcId: extract_src_id,
+  extractMediaId: extract_media_id,
   buildEmbedURL: build_embed_url,
   onLoad: (embed) => {
     // Seems like we have to wait a random small delay or else YT player isn't ready.

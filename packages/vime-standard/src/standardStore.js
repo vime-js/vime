@@ -22,7 +22,7 @@ const playerDefaults = () => ({
   title: '',
   duration: 0,
   buffered: 0,
-  srcId: null,
+  mediaId: null,
   currentSrc: null,
   buffering: false,
   videoQuality: VideoQuality.UNKNOWN,
@@ -75,7 +75,7 @@ export const buildStandardStore = (player) => {
   // --------------------------------------------------------------
 
   store.src = writable(null);
-  store.srcId = private_writable(defaults.srcId);
+  store.mediaId = private_writable(defaults.mediaId);
   store.poster = writable(null);
   store.provider = private_writable(null);
   store.providers = writable([]);

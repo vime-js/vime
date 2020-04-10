@@ -326,7 +326,7 @@
     if (is_number(info.mediaType)) store.mediaType.set(info.mediaType);
     if (info.title) store.title.set(info.title);
     if (info.currentSrc) store.currentSrc.set(info.currentSrc);
-    if (info.srcId) store.srcId.set(info.srcId);
+    if (info.mediaId) store.mediaId.set(info.mediaId);
     if (is_number(info.volume)) onVolumeChange(parseInt(info.volume, 10));
     if (is_boolean(info.muted) && !tempMute) $muted = info.muted;
     if (info.origin) store.origin.set(info.origin);
