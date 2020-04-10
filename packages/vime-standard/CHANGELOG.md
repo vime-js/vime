@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.4](https://github.com/vime-js/vime/tree/master/packages/vime-standard/compare/v1.4.3...v1.4.4) (2020-04-10)
+
+
+### Bug Fixes
+
+* **standard:** current player not set correctly ([daf51b7](https://github.com/vime-js/vime/tree/master/packages/vime-standard/commit/daf51b7123a1579cfc40e8513203bcd8dad22eb8))
+
+
+
+
+
 ## [1.4.3](https://github.com/vime-js/vime/tree/master/packages/vime-standard/compare/v1.4.2...v1.4.3) (2020-04-10)
 
 

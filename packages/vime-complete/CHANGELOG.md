@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.4](https://github.com/vime-js/vime/tree/master/packages/vime-complete/compare/v1.4.3...v1.4.4) (2020-04-10)
+
+**Note:** Version bump only for package @vime-js/complete
+
+
+
+
+
 ## [1.4.3](https://github.com/vime-js/vime/tree/master/packages/vime-complete/compare/v1.4.2...v1.4.3) (2020-04-10)
 
 **Note:** Version bump only for package @vime-js/complete
