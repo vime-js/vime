@@ -19,19 +19,19 @@ export const DECODER = decode_json;
 
 export const can_play = (src) => is_string(src) && !FILE_URL.test(src) && SRC.test(src);
 
-export const extract_src_id = (src) => {
+export const extract_media_id = (src) => {
   const match = src ? src.match(SRC) : null;
   return match ? match[1] : null;
 };
 
 export const build_embed_url = (src) => {
-  const srcId = extract_src_id(src);
-  return `${EMBED_ORIGIN}/video/${srcId || BLANK_SRC_ID}`;
+  const mediaId = extract_media_id(src);
+  return `${EMBED_ORIGIN}/video/${mediaId || BLANK_SRC_ID}`;
 };
 
 export const build_watch_url = (src) => {
-  const srcId = extract_src_id(src);
-  return srcId ? `${ORIGIN}/${srcId}` : null;
+  const mediaId = extract_media_id(src);
+  return mediaId ? `${ORIGIN}/${mediaId}` : null;
 };
 
 export const fetch_poster = (src) => {

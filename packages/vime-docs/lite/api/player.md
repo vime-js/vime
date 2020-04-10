@@ -84,7 +84,7 @@ The URL used to embed the current media.
 
 The currently active provider. The provider becomes active if it recognizes the current `src`. 
 
-### `getSrcId`
+### `getMediaId`
 
 **Return Type:** `string|null`
 

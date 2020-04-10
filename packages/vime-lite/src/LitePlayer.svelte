@@ -56,7 +56,7 @@
   export const getEmbedURL = () => embedURL;
   export const getTitle = () => mediaTitle;
   export const getProvider = () => Provider;
-  export const getSrcId = () => (Provider ? Provider.extractSrcId(src) : null);
+  export const getMediaId = () => (Provider ? Provider.extractMediaId(src) : null);
 
   export const sendCommand = async (command, args, force) => {
     if (!Provider) return;

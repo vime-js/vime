@@ -20,25 +20,25 @@ export const build_origin = (cookies) => (cookies ? ORIGIN : ORIGIN_NO_COOKIES);
 
 export const can_play = (src) => is_string(src) && SRC.test(src);
 
-export const extract_src_id = (src) => {
+export const extract_media_id = (src) => {
   const match = src ? src.match(SRC) : null;
   return match ? match[1] : null;
 };
 
 export const build_embed_url = (src, cookies) => {
-  const srcId = extract_src_id(src);
-  return srcId ? `${build_origin(cookies)}/embed/${srcId}?enablejsapi=1` : null;
+  const mediaId = extract_media_id(src);
+  return mediaId ? `${build_origin(cookies)}/embed/${mediaId}?enablejsapi=1` : null;
 };
 
 export const build_watch_url = (src) => {
-  const srcId = extract_src_id(src);
-  return srcId ? `${ORIGIN}/watch?v=${srcId}` : null;
+  const mediaId = extract_media_id(src);
+  return mediaId ? `${ORIGIN}/watch?v=${mediaId}` : null;
 };
 
 export const fetch_poster = (src) => {
-  const srcId = extract_src_id(src);
-  if (!srcId) return Promise.resolve(null);
-  const posterSrc = (quality) => `https://i.ytimg.com/vi/${srcId}/${quality}.jpg`;
+  const mediaId = extract_media_id(src);
+  if (!mediaId) return Promise.resolve(null);
+  const posterSrc = (quality) => `https://i.ytimg.com/vi/${mediaId}/${quality}.jpg`;
   // We are testing a that the image has a min-width of 121px because if the thumbnail does
   // not exist YouTube returns a blank/error image that is 120px wide.
   return load_image(posterSrc('maxresdefault'), 121) // 1080p (no padding)
