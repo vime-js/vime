@@ -35,52 +35,6 @@ More of a visual or hands on person? We got you. Head over to our [playground][v
 
 [vime-playground]: https://playground.vime-js.com/?path=/story/complete
 
-## Svelte
-
-### What is Svelte?
-
-> Svelte is a radical new approach to building user interfaces. Whereas traditional frameworks like 
-React and Vue do the bulk of their work in the browser, Svelte shifts that work into a compile step 
-that happens when you build your app. Instead of using techniques like virtual DOM diffing, Svelte 
-writes code that surgically updates the DOM when the state of your app changes.
-
-### Why Svelte?
-
-**Framework Agnostic**. Svelte compiles down to Vanilla JS so you can use it anywhere, regardless of what 
-framework you choose. This comes with all the benefits of a modern JS framework like React or Vue but 
-without all the baggage.
-
-**Lightweight**. Svelte code is terse in a non-cryptic way, it **can** \(not will\) enable us to 
-naturally write less code (see [Write Less Code][write-less-code]). In addition, Svelte is able to 
-infer at compile-time the minimal number of steps required to perform the change you're seeking, 
-whether this is updating computed properties or the DOM. Through inserting import statements of 
-only small utility like functions, and taking advantage of treeshaking, the final bundle size is 
-ridiculously small. There is still the hovering question of does it scale, for that checkout 
-[Yes but does it scale?][does-it-scale]
-
-**Performant**. In contrast with a virtual DOM approach, which comes with the overhead of being 
-stored in memory and the cost of diffing (see [Virtual DOM is Pure Overhead][vdom-overhead]), Svelte 
-inserts code that interfaces with only the part of the DOM that is necessary. Thus, when a change 
-occurs, only the part of the DOM that is affected is recomputed and updated if necessary. In addition, 
-Svelte is able to at compile-time analyze our code and make optimizations to increase performance, 
-an example of this is using dependency graph resolution on computed properties to propagate changes 
-with minimal overhead.
-
-**Store Flexibility**. Svelte's [store contract][svelte-store] interoperates with libraries like RxJS. 
-Today we rely on Svelte's simple built-in store in the background for storing state and propagating changes, 
-but we are planning on moving towards a more declarative and predictable state management flow with a 
-library like RxJS, and the ability to easily switch over is crucial.
-
-{% hint style="info" %}
-Checkout this excellent write up called [Why Svelte?][why-svelte]
-{% endhint %}
-
-[why-svelte]: https://github.com/feltcoop/why-svelte
-[svelte-store]: https://svelte.dev/docs#svelte_store
-[vdom-overhead]: https://svelte.dev/blog/virtual-dom-is-pure-overhead
-[does-it-scale]: https://github.com/sveltejs/svelte/issues/2546
-[write-less-code]: https://svelte.dev/blog/write-less-code
-
 ## Motivation
 
 The main issue with alternative solutions like [Videojs][videojs-youtube] and [Plyr][plyr] is:
