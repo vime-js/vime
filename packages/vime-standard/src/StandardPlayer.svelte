@@ -93,7 +93,7 @@
     self = null;
   });
 
-  if (is_null(currentPlayer)) currentPlayer.set(self);
+  if (is_null($currentPlayer)) $currentPlayer = self;
   $: $isPlayerActive = ($currentPlayer === self);
 
   // --------------------------------------------------------------
