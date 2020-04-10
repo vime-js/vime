@@ -12,7 +12,7 @@ export const buildCompleteStore = (standardStore) => {
 
   store.locale = writable('en');
   store.icons = writable({});
-  store.langauges = mergeable({ en });
+  store.languages = mergeable({ en });
   store.theme = writable(null);
   store.plugins = writable([]);
   store.debug = writable(process.env.NODE_ENV !== 'production');
@@ -26,7 +26,7 @@ export const buildCompleteStore = (standardStore) => {
   );
 
   store.i18n = derived(
-    [store.locale, store.langauges],
+    [store.locale, store.languages],
     ([$locale, $languages]) => $languages[$locale] || $languages.en,
   );
 
