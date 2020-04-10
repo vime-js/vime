@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/core",
   "description": "Vime core",
-  "version": "1.4.0",
+  "version": "1.4.2",
   "svelte": "src/index.js",
   "module": "src/index.js",
   "sideEffects": false,
