@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/standard",
   "description": "Vime Standard Player",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "svelte": "src/index.js",
   "main": "dist/standard.js",
   "module": "dist/standard.esm.js",
