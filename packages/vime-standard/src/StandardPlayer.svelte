@@ -41,8 +41,15 @@
   let self = get_current_component();
 
   // eslint-disable-next-line no-underscore-dangle
-  export let _standardStore = buildStandardStore(self);
-  const { store, resetStore, onPropsChange } = _standardStore;
+  export let _standardStore = null;
+
+  let onPropsChange = noop;
+  if (is_null(_standardStore)) {
+    _standardStore = buildStandardStore(self);
+    ({ onPropsChange } = _standardStore);
+  }
+
+  const { store, resetStore } = _standardStore;
   $: onPropsChange($$props);
 
   const {
@@ -57,7 +64,7 @@
     currentTrackIndex, provider, rebuilding,
     isVideoReady, canInteract, isFullscreenActive,
     useNativeView, useNativeControls, useNativeCaptions,
-    duration, Provider,
+    duration, Provider, isPlayerActive,
   } = store;
 
   const {
@@ -86,7 +93,8 @@
     self = null;
   });
 
-  $: if (!$currentPlayer) $currentPlayer = self;
+  if (is_null(currentPlayer)) currentPlayer.set(self);
+  $: $isPlayerActive = ($currentPlayer === self);
 
   // --------------------------------------------------------------
   // Provider Events

@@ -1,5 +1,4 @@
 import { writable, derived } from 'svelte/store';
-import { currentPlayer } from './sharedStore';
 import PlayerState from './PlayerState';
 import MediaType from './MediaType';
 import VideoQuality from './VideoQuality';
@@ -187,7 +186,7 @@ export const buildStandardStore = (player) => {
   store.playbackEnded = private_writable(defaults.playbackEnded);
   store.playbackStarted = private_writable(defaults.playbackStarted);
   store.seeking = private_writable(defaults.seeking);
-  store.isPlayerActive = derived(currentPlayer, ($currentPlayer) => $currentPlayer === player);
+  store.isPlayerActive = private_writable(false);
 
   store.state = derived(
     [
