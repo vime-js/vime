@@ -58,7 +58,7 @@
     fileProvider.setVideoQuality(newVideoQuality);
   };
 
-  // Can't reload when setting a poster because it HLS deattaches from the player.
+  // Can't reload when setting a poster because HLS deattaches from the player.
   export const setPoster = (newPoster) => fileProvider.setPoster(newPoster, false);
 
   export const supportsPiP = () => fileProvider.supportsPiP();
