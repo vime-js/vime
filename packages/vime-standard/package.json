@@ -26,6 +26,8 @@
     "youtube",
     "lazy",
     "standard",
+    "hls",
+    "dash",
     "preconnections",
     "multi-provider",
     "cross-browser",

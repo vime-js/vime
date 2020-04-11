@@ -17,6 +17,8 @@
   },
   "keywords": [
     "vime",
+    "audio",
+    "video",
     "player",
     "complete",
     "youtube",
@@ -28,6 +30,8 @@
     "lightweight",
     "fast",
     "embed",
+    "hls",
+    "dash",
     "plugins",
     "preconnections",
     "multi-provider",
