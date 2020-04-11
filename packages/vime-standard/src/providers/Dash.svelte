@@ -17,6 +17,7 @@
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import File from './file/File.svelte';
   import { load_library } from '@vime-js/utils';
+  import MediaType from '../MediaType';
   
   // --------------------------------------------------------------
   // Setup
@@ -72,6 +73,8 @@
   // --------------------------------------------------------------
 
   onMount(async () => {
+    dispatch('update', { mediaType: MediaType.VIDEO });
+
     try {
       const url = 'https://cdn.dashjs.org/{V}/dash.all.min.js'.replace('{V}', version);
       const Dash = await load_library(url, 'dashjs');
