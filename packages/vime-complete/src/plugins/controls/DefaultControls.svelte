@@ -128,6 +128,7 @@
       isEnabled: false,
       isActive: false,
       shouldFill: true,
+      gradientUp: true,
       controls: !$isLive ? stdControls : liveControls,
     });
   };

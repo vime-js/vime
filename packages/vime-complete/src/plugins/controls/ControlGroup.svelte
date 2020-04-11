@@ -3,15 +3,17 @@
 {#if isEnabled && controls.length > 0}
   <div
     class="group"
-    class:mobile={$isMobile}
-    class:audio={!$isVideoView}
-    class:video={$isVideoView}
     class:fill={shouldFill}
     use:vShow={isActive}
     bind:this={el}
   >
     <div 
       class="container"
+      class:mobile={$isMobile}
+      class:audio={!$isVideoView}
+      class:video={$isVideoView}
+      class:gradientUp
+      class:gradientDown
       bind:this={containerEl}
     >
       {#each controls as Control}
@@ -51,6 +53,8 @@
   export let shouldFill = false;
   export let flow = null;
   export let position = null;
+  export let gradientUp = false;
+  export let gradientDown = false;
 
   export const getEl = () => el;
   export const hasControls = () => controls.length > 0;
@@ -98,31 +102,11 @@
     display: flex;
     align-items: center;
     flex-flow: row wrap;
-    padding: $control-spacing;
     color: #fff;
     position: relative;
 
     &.fill {
       flex: 1;
-    }
-
-    &.audio {
-      background: #fff;
-      color: $color-dark;
-      padding: $control-spacing;
-      box-shadow: 0 0 8px 2px $color-gray-100;
-    }
-    
-    &.video {
-      padding: $control-spacing ($control-spacing / 2) ($control-spacing / 2);
-
-      @media (min-width: $bp-sm) {
-        padding: $control-spacing;
-      }
-
-      &.mobile {
-        padding: $control-spacing;
-      }
     }
   }
 
@@ -132,6 +116,35 @@
     flex-flow: row wrap;
     width: 100%;
     align-items: center;
+    padding: $control-spacing;
+
+    &.audio {
+      background: #fff;
+      color: $color-dark;
+      padding: $control-spacing;
+      box-shadow: 0 0 8px 2px $color-gray-100;
+    }
+    
+    &.video {
+      background-clip: padding-box;
+      padding: $control-spacing ($control-spacing / 2) ($control-spacing / 2);
+
+      @media (min-width: $bp-sm) {
+        padding: $control-spacing;
+      }
+
+      &.gradientUp {
+        background: linear-gradient(transparent, rgba(90, 90, 90, 0.4));
+      }
+
+      &.gradientDown {
+        background: linear-gradient(rgba(90, 90, 90, 0.4), transparent);
+      }
+
+      &.mobile {
+        padding: $control-spacing;
+      }
+    }
 
     :global(> div),
     :global(> .control) {
