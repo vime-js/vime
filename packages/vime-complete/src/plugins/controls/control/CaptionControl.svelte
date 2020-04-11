@@ -2,7 +2,7 @@
   {player}
   autopilot={false}
   label={LABEL}
-  isEnabled={$canSetTracks}
+  isEnabled={$canSetTracks && $tracks.length > 0}
   isActive={$isCaptionsActive}
   activeIcon={$icons.captionsOn}
   inactiveIcon={$icons.captionsOff}
@@ -30,6 +30,7 @@
   const {
     icons, i18n, isCaptionsActive,
     canSetTracks, currentTrackIndex,
+    tracks,
   } = player.getStore();
 
   // --------------------------------------------------------------
