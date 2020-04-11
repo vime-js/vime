@@ -1,6 +1,5 @@
 <div 
   class="break"
-  class:mobile={$isMobile}
   bind:this={el}
 ></div>
 
@@ -16,10 +15,6 @@
   // --------------------------------------------------------------
   // Props
   // --------------------------------------------------------------
-
-  export let player;
-
-  const { isMobile } = player.getStore();
 
   let el;
   let nextControl;
