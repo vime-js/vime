@@ -42,8 +42,14 @@
   export const getEl = () => el;
 
   $: alt = $title ? `Poster for ${title}` : 'Media Poster';
+  
   $: if (autopilot) isEnabled = !$useNativeControls && !!$currentPoster;
-  $: if (autopilot) isActive = !$playbackStarted;
+  
+  $: if (autopilot) {
+    $playbackStarted
+      ? (setTimeout(() => { isActive = false; }, 300))
+      : (isActive = true);
+  }
 </script>
 
 <style type="text/scss">
