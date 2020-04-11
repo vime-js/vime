@@ -45,10 +45,5 @@
 <style type="text/scss">
   .break {
     width: 100%;
-    margin-bottom: 8px;
-
-    &.mobile {
-      margin-bottom: 4px;
-    }
   }
 </style>

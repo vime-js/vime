@@ -167,10 +167,16 @@
     margin-right: $scrubber-offset;
     position: relative;
     pointer-events: auto;
+    margin-bottom: 3px;
+
+    :global([role='tooltip']) {
+      margin-bottom: 6px;
+    }
   }
 
   input[type='range'],
   progress {
+    height: 12px;
     margin-left: -($scrubber-offset / 2);
     margin-right: -($scrubber-offset / 2);
     width: calc(100% + #{$scrubber-offset});
