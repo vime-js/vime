@@ -3,7 +3,7 @@ import config from '../config';
 
 import {
   Player, FileProvider, YouTubeProvider,
-  DailymotionProvider, VimeoProvider,
+  DailymotionProvider, VimeoProvider, HlsProvider,
   Boot,
 } from '@vime-js/complete';
 
@@ -16,7 +16,7 @@ const EVENTS = config.Events.COMPLETE;
 
 const PROVIDERS = [
   FileProvider, YouTubeProvider, VimeoProvider,
-  DailymotionProvider,
+  DailymotionProvider, HlsProvider,
 ];
 
 const videoBase = (props) => ({
@@ -50,12 +50,8 @@ export const Youtube = () => videoBase({ src: config.YouTube.SRC });
 export const Vimeo = () => videoBase({ src: config.Vimeo.SRC });
 export const Dailymotion = () => videoBase({ src: config.Dailymotion.SRC });
 
-// TODO: HLS
-// src: http://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8
-// poster: https://i.ytimg.com/vi/YvbgprhDDMM/maxresdefault.jpg
-
-// TODO: Dash
-// src: http://dash.edgesuite.net/envivio/EnvivioDash3/manifest.mpd
-
-// TODO: Live Stream (Dash)
-// src: 'http://livesim.dashif.org/livesim/testpic_2s/Manifest.mpd'
+export const HLS = () => videoBase({
+  src: config.Hls.SRC,
+  poster: config.Hls.POSTER,
+  tracks: [],
+});
