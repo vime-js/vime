@@ -10,7 +10,7 @@
 <script context="module">
   import { is_hls } from '@vime-js/core/file';
 
-  export const canPlay = (src) => is_hls(src);
+  export const canPlay = is_hls;
 </script>
 
 <script>
@@ -71,20 +71,16 @@
   // Events
   // --------------------------------------------------------------
 
-  const loadSDK = () => {
-    const url = 'https://unpkg.com/hls.js@{V}/dist/hls.min.js'.replace('{V}', version);
-    return load_library(url, 'Hls');
-  };
-
   onMount(async () => {
-    const Hls = await loadSDK();
-
-    if (!Hls.isSupported()) {
-      dispatch('error', Error('hls.js is not supported'));
-      return;
-    }
-
     try {
+      const url = 'https://unpkg.com/hls.js@{V}/dist/hls.min.js'.replace('{V}', version);
+      const Hls = await load_library(url, 'Hls');
+
+      if (!Hls.isSupported()) {
+        dispatch('error', Error('hls.js is not supported'));
+        return;
+      }
+
       hls = new Hls(config);
       hls.attachMedia(fileProvider.getMedia());
       hls.on(window.Hls.Events.MEDIA_ATTACHED, () => { isHlsAttached = true; });
