@@ -78,6 +78,8 @@ export const buildStandardStore = (player) => {
   store.poster = writable(null);
   store.provider = private_writable(null);
   store.providers = writable([]);
+  store.providerConfig = writable({});
+  store.providerVersion = writable('latest');
   store.origin = private_writable(null);
   store.title = private_writable(defaults.title);
   store.currentSrc = private_writable(defaults.currentSrc);

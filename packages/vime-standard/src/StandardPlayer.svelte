@@ -8,6 +8,8 @@
   <svelte:component
     {...props}
     src={$src}
+    config={$providerConfig}
+    version={$providerVersion}
     this={$Provider && $Provider.default}
     bind:this={$provider}
     on:update={onUpdate}
@@ -65,6 +67,7 @@
     isVideoReady, canInteract, isFullscreenActive,
     useNativeView, useNativeControls, useNativeCaptions,
     duration, Provider, isPlayerActive,
+    providerConfig, providerVersion,
   } = store;
 
   const {
@@ -326,6 +329,7 @@
     if (info.rebuild) onRebuildStart();
     if ($rebuilding) return;
     if ((is_null(info.poster) || info.poster)) store.nativePoster.set(info.poster);
+    if (is_boolean(info.isLive)) store.isLive.set(info.isLive);
     if (is_number(info.duration)) $duration = parseFloat(info.duration);
     if (is_number(info.currentTime)) onTimeUpdate(parseFloat(info.currentTime));
     if (is_number(info.buffered)) onBuffered(parseFloat(info.buffered));

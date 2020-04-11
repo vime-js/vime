@@ -1,3 +1,5 @@
+<svelte:options accessors />
+
 <div 
   tabindex="0"
   class="vime player{classes ? ` ${classes}` : ''}"
@@ -17,6 +19,7 @@
           use:vIf={$playbackReady && (!$useNativeControls && $isVideoView)}
         ></div>
         <StandardPlayer
+          {...$$restProps}
           parentEl={el}
           hasWrapper={false}
           _standardStore={standardStore}

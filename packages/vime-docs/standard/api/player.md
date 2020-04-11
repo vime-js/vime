@@ -93,6 +93,18 @@ can play the current `src`.
 
 The currently active provider instance.
 
+### `providerConfig`
+
+**Type:** `object` | **Default:** `{}`
+
+Provider specific configuration.
+
+### `providerVersion`
+
+**Type:** `string` | **Default:** `'latest'`
+
+The NPM version of a provider package to load into the browser.
+
 ### `origin`
 
 **Type:** `string|null` | **Default:** `16:9` | **Readonly**: `true`

@@ -128,6 +128,7 @@
 
   export let src;
   export let crossorigin = null;
+  export let forceVideo = false;
 
   export const getEl = () => media;
   export const getMedia = () => media;
@@ -142,11 +143,11 @@
   export const setAspectRatio = (newRatio) => { aspectRatio = newRatio; };
   export const setVideoQuality = (newVideoQuality) => { videoQuality = newVideoQuality; };
 
-  export const setPoster = (newPoster) => {
+  export const setPoster = (newPoster, canReload = true) => {
     if (poster === newPoster || !is_string(newPoster)) return;
     poster = newPoster || null;
     // eslint-disable-next-line no-use-before-define
-    if (poster) rebuild();
+    if (poster && canReload) rebuild();
   };
 
   // --------------------------------------------------------------
@@ -269,8 +270,11 @@
       paused = true;
       info.state = PlayerState.PAUSED;
     });
+    listenToMedia(Html5.Event.DURATION_CHANGE, () => {
+      info.duration = media.duration;
+      info.isLive = media.duration === Infinity;
+    });
     listenToMedia(Html5.Event.PLAYING, () => { info.state = PlayerState.PLAYING; });
-    listenToMedia(Html5.Event.DURATION_CHANGE, () => { info.duration = media.duration; });
     listenToMedia(Html5.Event.RATE_CHANGE, () => { info.playbackRate = media.playbackRate; });
     listenToMedia(Html5.Event.SEEKING, () => {
       info.currentTime = media.currentTime;
@@ -360,10 +364,15 @@
   $: srcHasQualities = video && is_qualities_set(src);
   $: if (srcHasQualities) calcInitialQuality(src, aspectRatio);
   $: if (is_number(videoQuality)) loadNewQuality(videoQuality);
-  $: shouldUseAudio = run_on_every_src(src, is_audio) && !is_string(poster);
-  $: shouldUseVideo = run_on_every_src(src, is_video) || is_media_stream(src) || is_string(poster);
   $: (playbackReady && !paused) ? getTimeUpdates() : cancelTimeUpdates();
   $: tick().then(() => { info.currentSrc = currentSrc; });
+  
+  $: shouldUseAudio = run_on_every_src(src, is_audio) && !is_string(poster);
+
+  $: shouldUseVideo = forceVideo
+    || run_on_every_src(src, is_video)
+    || is_media_stream(src)
+    || is_string(poster);
 
   // If media is initialized or changed (audio/video/false).
   $: if (prevMedia !== media) {
