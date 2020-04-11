@@ -35,8 +35,8 @@ export default {
     POSTER: 'https://i.ytimg.com/vi/YvbgprhDDMM/maxresdefault.jpg',
   },
   Dash: {
-    SRC: 'https://dash.edgesuite.net/envivio/EnvivioDash3/manifest.mpd',
-    LIVE_SRC: 'https://livesim.dashif.org/livesim/testpic_2s/Manifest.mpd',
+    SRC: 'http://dash.edgesuite.net/envivio/EnvivioDash3/manifest.mpd',
+    LIVE_SRC: 'http://livesim.dashif.org/livesim/testpic_2s/Manifest.mpd',
   },
   Dailymotion: {
     SRC: 'dailymotion/x3a9qe6',

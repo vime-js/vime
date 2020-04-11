@@ -4,6 +4,7 @@ import config from '../config';
 import {
   Player, FileProvider, YouTubeProvider,
   VimeoProvider, DailymotionProvider, HlsProvider,
+  DashProvider,
 } from '@vime-js/standard';
 
 export default {
@@ -16,7 +17,7 @@ const base = (props) => ({
     Component: Player,
     providers: [
       FileProvider, YouTubeProvider, VimeoProvider,
-      DailymotionProvider, HlsProvider,
+      DailymotionProvider, HlsProvider, DashProvider,
     ],
     ...props,
   },
@@ -33,9 +34,6 @@ export const VideoFile = () => base({
 export const Youtube = () => base({ src: config.YouTube.SRC });
 export const Vimeo = () => base({ src: config.Vimeo.SRC });
 export const Dailymotion = () => base({ src: config.Dailymotion.SRC });
-
-export const HLS = () => base({
-  src: config.Hls.SRC,
-  // poster: config.Hls.POSTER,
-});
-
+export const HLS = () => base({ src: config.Hls.SRC });
+export const Dash = () => base({ src: config.Dash.SRC });
+export const DashLive = () => base({ src: config.Dash.LIVE_SRC });
