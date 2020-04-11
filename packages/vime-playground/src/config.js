@@ -30,6 +30,14 @@ export default {
       src: '/media/video/tracks/fr.vtt',
     }],
   },
+  Hls: {
+    SRC: 'http://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+    POSTER: 'https://i.ytimg.com/vi/YvbgprhDDMM/maxresdefault.jpg',
+  },
+  Dash: {
+    SRC: 'http://dash.edgesuite.net/envivio/EnvivioDash3/manifest.mpd',
+    LIVE_SRC: 'http://livesim.dashif.org/livesim/testpic_2s/Manifest.mpd',
+  },
   Dailymotion: {
     SRC: 'dailymotion/x3a9qe6',
   },

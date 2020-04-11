@@ -8,10 +8,9 @@ export const VIDEO_EXT = /\.(mp4|og[gv]|webm|mov|m4v)($|\?)/i;
 export const HLS_EXT = /\.(m3u8)($|\?)/i;
 
 export const is_media_stream = (src) => is_instance_of(src, window.MediaStream);
+export const is_hls = (src) => is_string(src) && HLS_EXT.test(src);
 export const is_audio = (src) => AUDIO_EXT.test(src);
-
-export const is_video = (src) => VIDEO_EXT.test(src)
-  || (can_play_hls_natively() && HLS_EXT.test(src));
+export const is_video = (src) => VIDEO_EXT.test(src) || (can_play_hls_natively() && is_hls(src));
 
 export const is_qualities_set = (src) => is_array(src)
   && src.every((resource) => is_number(resource.quality));

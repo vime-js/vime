@@ -35,3 +35,14 @@ export const load_sprite = (src) => fetch(src)
     firstLinkTag.parentNode.insertBefore(div, firstLinkTag);
     return div;
   });
+
+// @see https://github.com/CookPete/react-player/blob/master/src/utils.js#L64
+export const load_library = (url, global) => {
+  if (window[global]) return Promise.resolve(window[global]);
+
+  return new Promise((resolve, reject) => {
+    const onLoad = () => { resolve(window[global]); };
+    const onError = (error) => { reject(error); };
+    load_script(url, onLoad, onError);
+  });
+};
