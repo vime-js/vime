@@ -88,7 +88,7 @@
     captionsMenu.$set({
       title: $i18n.subtitlesOrCc,
       value: $currentTrackIndex,
-      options: !$isVideoView ? [] : captionsOptions,
+      options: (!$isVideoView || captionsOptions.length === 1) ? [] : captionsOptions,
       emptyHint: $i18n.none,
       isEnabled: $isVideoView,
       isLocked: !$canSetTrack || ($tracks.length === 0),
