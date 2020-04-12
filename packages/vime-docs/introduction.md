@@ -24,7 +24,7 @@ description: All your media player needs in one place - a modern alternative to 
 [github-repo]: https://github.com/vime-js/vime
 [github-star-badge]: https://img.shields.io/github/stars/vime-js/vime?style=social
 
-![Vime player mid-playback screenshot](../../static/images/player-example-2.png)
+![Vime player mid-playback screenshot](../../static/images/player-example-3.png)
 
 ## What is Vime?
 

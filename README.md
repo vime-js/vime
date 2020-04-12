@@ -25,7 +25,7 @@
 <img
   width="100%"
   alt="vime"
-  src="https://raw.githubusercontent.com/vime-js/vime/master/static/images/player-example-2.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/static/images/player-example-3.png"
 />
 
 ## Table of Contents
