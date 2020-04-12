@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/mihar-22/vime/compare/v1.4.4...v1.5.0) (2020-04-12)
+
+
+### Bug Fixes
+
+* **complete:** controls have poor visibility on light background ([4b276d5](https://github.com/mihar-22/vime/commit/4b276d5b1d99dc0b3cc0e38db583ceb7c8ae274d))
+* **complete:** delay poster fading out to avoid flashes ([7704d78](https://github.com/mihar-22/vime/commit/7704d78a54f354c633f57186f5f17c3342aa8141))
+* **complete:** hide captions control if there are no tracks ([bbaca4c](https://github.com/mihar-22/vime/commit/bbaca4c5355d81c10143021fb322591aaea29a09))
+* **complete:** hls + dash should update media type on mount ([12e1a1a](https://github.com/mihar-22/vime/commit/12e1a1a44bc250c49c975520b6f43f8560c4af65))
+* **complete:** increase clickable target of scrubber ([1340fc8](https://github.com/mihar-22/vime/commit/1340fc8fff7279f465b26576041bc6fc20ce39fb)), closes [#3](https://github.com/mihar-22/vime/issues/3)
+* **complete:** languages store typo ([ecfc601](https://github.com/mihar-22/vime/commit/ecfc6018997fde37aa87eb2ee2e7ebb1c8ddfabd))
+* **complete:** loading hls library error not caught ([58c39af](https://github.com/mihar-22/vime/commit/58c39af992fabe52cdcd68029b520f9397b90a35))
+* **complete:** settings should display none when there are no captions ([c5d6b6a](https://github.com/mihar-22/vime/commit/c5d6b6abc736a23b0a5666b68c35cd28296c2617))
+* **playground:** hls src should be loaded with https ([1ba597f](https://github.com/mihar-22/vime/commit/1ba597f4cd06d2079e1cdf54f2ae43b4b5df9fbd))
+* **playground:** use https files for dash demos ([c1685b7](https://github.com/mihar-22/vime/commit/c1685b7a425f4352f3eaad4178a4b91d8c94f953))
+
+
+### Features
+
+* dash support ([0b18a89](https://github.com/mihar-22/vime/commit/0b18a89c17e66a70b838f7c6aa548dd6ae3462fc)), closes [#8](https://github.com/mihar-22/vime/issues/8)
+* hls support ([a7e6a44](https://github.com/mihar-22/vime/commit/a7e6a448f70a98858df3fee5cd92e7b5736da7da))
+
+
+
+
+
 ## [1.4.4](https://github.com/vime-js/vime/compare/v1.4.3...v1.4.4) (2020-04-10)
 
 
