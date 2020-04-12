@@ -60,9 +60,9 @@ keep in mind that this is **super simplified** and each package is full of treat
 
 - **Preview:** displays custom or provider loaded thumbnails.
 - **Lite:** lightweight and super powerful media embed at half the cost of traditional player SDK's.
-- **Standard:** extends Lite to give you our core player interface that normalizes browser and provider
-  differences and you get access to the store.
-- **Complete:** this is our greatest offering which extends Lite and Standard but with the ability
+- **Standard:** extends Lite with our core player interface that normalizes browser and provider
+  differences and gives you access to the store.
+- **Complete:** this is our greatest offering which extends Lite and Standard with the ability
   to completely customize the player via plugins. We have a long list of plugins we've created already 
   for custom controls, settings, tooltips and more!
 
@@ -118,7 +118,7 @@ repeating mostly the same code for mounting and building the `iframe`, cleaning 
 Each can weigh as much as ~10 kB. Thus, after adding only 3 providers such as YouTube, Dailymotion and 
 Vimeo you'll incur an additional 25 - 30 kB overhead.
 
-* **Poor documentation**. This is mostly directed at Videojs, there documentation feels clunky and
+* **Poor documentation**. This is mostly directed at Videojs, their documentation feels clunky and
 difficult to navigate and understand.
 
 * Lack of **testing**. Videojs has a good set of unit tests but no e2e tests, and Plyr has no tests at all. 
@@ -201,7 +201,7 @@ pretty much do whatever you want easily.
 
 ## Warnings
 
-- If you're looking for something that has battled the test of time and is realiable today in a 
+- If you're looking for something that has battled the test of time and is reliable today in a 
 large production app, then Vime is not for you. You should go ahead and checkout [Videojs][github-videojs] 
 and [Plyr][github-plyr]. 
 
