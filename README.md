@@ -22,17 +22,24 @@
   [![tweet-badge]][tweet]
 </div>
 
+<img
+  width="100%"
+  alt="vime"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/static/images/player-example-2.png"
+/>
+
 ## Table of Contents
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [What is Vime?](#what-is-vime)
+- [Offerings](#offerings)
+- [Provider Support](#provider-support)
+- [Browser Support](#browser-support)
 - [Motivation](#motivation)
-- [Warnings](#warnings)
-- [Screenshots](#screenshots)
 - [Features](#features)
-- [Support](#support)
+- [Warnings](#warnings)
 - [Questions](#questions)
 - [Where to next?](#where-to-next)
 - [License](#license)
@@ -41,10 +48,53 @@
 
 ## What is Vime?
 
-Vime is an open-sourced library built with [Svelte][svelte], focused on making embedding and using media elements 
-for the web simple. The idea behind Vime is **we want you to control the player, not the other way around**. We built all of Vime 
-with that in mind. Thus, we focus on normalizing cross-browser and provider (YouTube, Vimeo, Dailymotion etc.) 
-differences, all powered by an reactive/eventful store, modular design, powerful plugin system and much more.
+Vime is an open-sourced library focused on giving users and developers the best possible media player
+experience on the web. The idea behind Vime is **we want you to control the player, not the other way around**. 
+We built all of Vime with that in mind. Thus, we focus on normalizing cross-browser and provider differences, 
+all powered by an reactive/eventful store, modular design, powerful plugin system and much more.
+
+## Offerings
+
+The following is a brief summary of what packages Vime contains and what they can offer. Please
+keep in mind that this is **super simplified** and each package is full of treats.
+
+- **Preview:** displays custom or provider loaded thumbnails.
+- **Lite:** lightweight and super powerful media embed at half the cost of traditional player SDK's.
+- **Standard:** extends Lite to give you our core player interface that normalizes browser and provider
+  differences and you get access to the store.
+- **Complete:** this is our greatest offering which extends Lite and Standard but with the ability
+  to completely customize the player via plugins. We have a long list of plugins we've created already 
+  for custom controls, settings, tooltips and more!
+
+💡 You can play with all of these in our [playground][vime-playground].
+
+## Provider Support
+
+- [Html5][mdn-media-element]
+- [Hls][hls-github]
+- [Dash][dash-github]
+- [YouTube][youtube-player]
+- [Vimeo][vimeo-player]
+- [Dailymotion][dailymotion-player]
+
+[hls-github]: https://github.com/video-dev/hls.js/
+[dash-github]: https://github.com/Dash-Industry-Forum/dash.js?
+[mdn-media-element]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
+[youtube-player]: https://developers.google.com/youtube/iframe_api_reference
+[vimeo-player]: https://developer.vimeo.com/player/sdk
+[dailymotion-player]: https://developer.dailymotion.com/player/
+
+## Browser Support
+
+Vime is focused on supporting the last 2 versions of all modern browsers and IE 11.
+
+- [x] Safari
+- [x] iOS Safari
+- [x] Firefox
+- [x] Chrome
+- [x] Opera
+- [x] Edge
+- [ ] IE 11 (most likely broken at the moment as no testing has been performed on it)
 
 ## Motivation
 
@@ -68,6 +118,13 @@ repeating mostly the same code for mounting and building the `iframe`, cleaning 
 Each can weigh as much as ~10 kB. Thus, after adding only 3 providers such as YouTube, Dailymotion and 
 Vimeo you'll incur an additional 25 - 30 kB overhead.
 
+* **Poor documentation**. This is mostly directed at Videojs, there documentation feels clunky and
+difficult to navigate + understand.
+
+* Lack of **testing**. Videojs has a good set of unit tests but no e2e tests, and Plyr has no tests at all. 
+This makes both libraries vulnerable to breakage. I'll admit Vime has no tests just yet either, 
+but it is one of our highest priorities.
+
 * They are not built with modern **UI framework** capabilities. We've learnt a lot about building user interfaces
 over the last decade. It's best to not reinvent the wheel and use existing frameworks. Most importantly, they help with
 providing structure, solutions to common problems, code reusability, improved development experience 
@@ -86,33 +143,7 @@ are reducing the costs of choosing to use a framework. Two examples of how not u
   [1700 lines of code](https://github.com/sampotts/plyr/blob/master/src/js/controls.js) for just the controls 
   is simply too much.
 
-* Lack of **testing**. Videojs has a good set of unit tests but no e2e tests, and Plyr has no tests at all. 
-This makes both libraries vulnerable to breakage. I'll admit Vime has no tests just yet either, 
-but it is one of our highest priorities.
-
 📝  ***If you think I got something wrong or you can improve what's been said then please create a PR.***
-
-## Warnings
-
-- If you're looking for something that has battled the test of time and is realiable today in a 
-large production app, then Vime is not for you. You should go ahead and checkout [Videojs][github-videojs] 
-and [Plyr][github-plyr]. 
-
-- IE 11 has not been tested at all. There will definitely be bugs. If this is important to you, then don't use Vime in production just yet.
-
-## Screenshots
-
-<img
-  width="100%"
-  alt="vime"
-  src="https://raw.githubusercontent.com/vime-js/vime/master/static/images/player-example.png"
-/>
-
-<img
-  width="100%"
-  alt="vime"
-  src="https://raw.githubusercontent.com/vime-js/vime/master/static/images/player-example-2.png"
-/>
 
 ## Features
 
@@ -123,7 +154,7 @@ and [Plyr][github-plyr].
 * **Options.** There is an option for whatever your use case. Thumbnails preview, lite player embed, standard
 player for a normalized experience, and a complete system with plugins and all.
 
-* **Lightweight.** 0 external dependencies, modular, treeshakable, no additional SDK's loaded, and compiled with 
+* **Lightweight.** 0 external dependencies, modular, treeshakable, no additional SDK's loaded for embeds, and compiled with 
 Svelte to have the smallest footprint possible. Sizes ranging from 5.5 kB (min + gzip) up to everything 
 included at 54 kB (min + gzip).
 
@@ -131,19 +162,21 @@ included at 54 kB (min + gzip).
 a headache. Vime handles it all so you don't. Enjoy fullscreen, picture-in-picture and more without 
 any pain.
 
-* **Multi-provider support.** Out of the box at the moment we support Files (via Html5), YouTube, Vimeo and Dailymotion.
-Dont' bother learning a new SDK everytime, just use Vime!
+* **Multi-provider support.** Don't bother learning a new SDK everytime, just use Vime!
 
-* **Reactive/eventful store.** Behind the scences, all properties are a Svelte store. Subscribe to anything you
+* **Reactive/eventful store.** Behind the scences, all properties are a store. Subscribe to anything you
 like and receive updates in realtime.
 
 * **I18n.** Internationalization is built right in. Easy to add, extend and change as needed. English
 is provided out of the box and more languages to come.
 
-* **Portable.** Since Svelte compiles down to Vanilla JS, you can use it anywhere you like. For an 
-even better experience we'll be building framework intergations starting with React and Vue.
+* **Portable.** The final bundle is Vanilla JS, use it anywhere you like. For an even better experience 
+we'll be building framework intergations starting with React and Vue.
 
 * **Lazy loading.** All players are loaded lazily as soon as they are almost in view.
+
+* **Preconnections.** Thanks to [`rel='preconnect'`][css-tricks-preconnect] we can establish a network connection
+early to increase rendering speed of embedded media by up to [224x][youtube-embed-comparison].
 
 * **Design**. A minimalistic, modern and sleek design which you can customize with your own icons and theme. See
 screenshots above for our base design.
@@ -163,17 +196,16 @@ benefits of auto-subscriptions since all props are powered by a store.
 built all of Vime with that in mind. Pick what you want, extend what you want, interact with what you want, 
 pretty much do whatever you want easily.
 
-## Support
+[youtube-embed-comparison]: https://github.com/paulirish/lite-youtube-embed#comparison
+[css-tricks-preconnect]: https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance/
 
-Vime is focused on supporting the last 2 versions of all modern browsers and IE 11.
+## Warnings
 
-- [x] Safari
-- [x] iOS Safari
-- [x] Firefox
-- [x] Chrome
-- [x] Opera
-- [x] Edge
-- [ ] IE 11 (most likely broken at the moment as no testing has been performed on it)
+- If you're looking for something that has battled the test of time and is realiable today in a 
+large production app, then Vime is not for you. You should go ahead and checkout [Videojs][github-videojs] 
+and [Plyr][github-plyr]. 
+
+- IE 11 has not been tested at all. There will definitely be bugs. If this is important to you, then don't use Vime in production just yet.
 
 ## Questions
 

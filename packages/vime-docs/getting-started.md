@@ -6,18 +6,20 @@ description: This page is about helping you find what option best suits your nee
 
 The following 4 options are available:
 
-* **Preview** for displaying thumbnails. If your `src` points to a supported external provider then 
-we'll load the thumbnail.
+* **Preview** for displaying custom or provider loaded thumbnails. These are loaded lazily, have an 
+optional play icon and a few other treats.
 
-* **Lite** for a simple player embed. The difference between Lite and traditional Player SDKs is:
+* **Lite** lightweight and super powerful media embed. The difference between Lite and traditional methods
+  for embedding media is:
   
   * **Loaded lazily**. See the benefits of lazy loading [here][lazy-loading-benefits].
   
   * Utilizes **preconnections** for an approximately [224x faster load][preconnections-benchmark].
   
-  * **Lighter**. If you normally wanted to embed a video from YouTube, Dailymotion and Vimeo, the total 
-  Player SDK cost would be ~25 kB. In contrast, with Vime it'll be ~6.7 kB, and any additional Lite player 
-  from a different provider would only increase that cost by about ~300 bytes.
+  * **Lighter than tranditional SDK's**. Lite comes in at ~ 6 kB which is on average 50% lighter than traditional player 
+  SDK's. Furthermore, each additional provider added only increases the total cost by about ~ 300 bytes. For 
+  example, if you normally wanted to embed media from YouTube, Dailymotion and Vimeo, the total 
+  Player SDK cost would be ~25 kB. In contrast, with Vime it'll be ~ 6.5 kB.
 
   * **Multi-provider support.** One interface for multiple providers. If you want to switch from YouTube 
     to Vimeo, no problem. If you want to support both, no problem. All you really need to know is
@@ -31,8 +33,8 @@ we'll load the thumbnail.
   [core Vime player interface](./standard/api/player.md) (not via `postmessage`). Thus, you avoid browser/provider 
   differences and get access to the store.
 
-* **Complete** for when you want all Lite and Standard features + custom controls, internationalization, and plugins. This
-  option is if you want "complete" control of your player.
+* **Complete** for when you want all Lite and Standard features + the ability to completely customize 
+  the player with plugins.
 
 [lazy-loading-benefits]: https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video
 [preconnections-benchmark]: https://github.com/paulirish/lite-youtube-embed

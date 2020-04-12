@@ -7,8 +7,8 @@
 [![tweet-badge]][tweet]
 
 Preview is used to display a thumbnail. If your `src` points to an external provider then the
-thumbnail is automatically loaded. If you'd like to know what features it includes and how it
-compares to other options then see the [getting started](../getting-started.md) page.
+thumbnail is automatically loaded. If you'd like to know how it compares to other options then see 
+the [getting started](../getting-started.md) page.
 
 {% hint style="info" %}
 If you want to try it out before installing then head over to our [playground][vime-playground].
