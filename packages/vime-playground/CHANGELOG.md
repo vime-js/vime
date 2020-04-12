@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/mihar-22/vime/compare/v1.4.4...v1.5.0) (2020-04-12)
+
+
+### Bug Fixes
+
+* **playground:** hls src should be loaded with https ([1ba597f](https://github.com/mihar-22/vime/commit/1ba597f4cd06d2079e1cdf54f2ae43b4b5df9fbd))
+* **playground:** use https files for dash demos ([c1685b7](https://github.com/mihar-22/vime/commit/c1685b7a425f4352f3eaad4178a4b91d8c94f953))
+
+
+### Features
+
+* dash support ([0b18a89](https://github.com/mihar-22/vime/commit/0b18a89c17e66a70b838f7c6aa548dd6ae3462fc)), closes [#8](https://github.com/mihar-22/vime/issues/8)
+* hls support ([a7e6a44](https://github.com/mihar-22/vime/commit/a7e6a448f70a98858df3fee5cd92e7b5736da7da))
+
+
+
+
+
 ## [1.4.4](https://github.com/vime-js/vime/compare/v1.4.3...v1.4.4) (2020-04-10)
 
 **Note:** Version bump only for package @vime-js/playground

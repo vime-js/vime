@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/mihar-22/vime/compare/v1.4.4...v1.5.0) (2020-04-12)
+
+
+### Features
+
+* hls support ([a7e6a44](https://github.com/mihar-22/vime/commit/a7e6a448f70a98858df3fee5cd92e7b5736da7da))
+
+
+
+
+
 ## [1.4.2](https://github.com/vime-js/vime/compare/v1.4.1...v1.4.2) (2020-04-10)
 
 

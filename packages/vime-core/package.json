@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/core",
   "description": "Vime core",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "svelte": "src/index.js",
   "module": "src/index.js",
   "sideEffects": false,
@@ -21,7 +21,7 @@
     "vime-core"
   ],
   "dependencies": {
-    "@vime-js/utils": "^1.4.0"
+    "@vime-js/utils": "^1.5.0"
   },
   "publishConfig": {
     "access": "public"

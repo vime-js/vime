@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/vime-js/vime/tree/master/packages/vime-standard/compare/v1.4.4...v1.5.0) (2020-04-12)
+
+
+### Bug Fixes
+
+* **complete:** hls + dash should update media type on mount ([12e1a1a](https://github.com/vime-js/vime/tree/master/packages/vime-standard/commit/12e1a1a44bc250c49c975520b6f43f8560c4af65))
+* **complete:** loading hls library error not caught ([58c39af](https://github.com/vime-js/vime/tree/master/packages/vime-standard/commit/58c39af992fabe52cdcd68029b520f9397b90a35))
+
+
+### Features
+
+* dash support ([0b18a89](https://github.com/vime-js/vime/tree/master/packages/vime-standard/commit/0b18a89c17e66a70b838f7c6aa548dd6ae3462fc)), closes [#8](https://github.com/vime-js/vime/tree/master/packages/vime-standard/issues/8)
+* hls support ([a7e6a44](https://github.com/vime-js/vime/tree/master/packages/vime-standard/commit/a7e6a448f70a98858df3fee5cd92e7b5736da7da))
+
+
+
+
+
 ## [1.4.4](https://github.com/vime-js/vime/tree/master/packages/vime-standard/compare/v1.4.3...v1.4.4) (2020-04-10)
 
 
