@@ -1,6 +1,5 @@
 ---
-description: All your media player needs in one place - a modern alternative to Videojs and Plyr. 
-Supports Html5, Hls, Dash, YouTube, Vimeo, Dailymotion and more to come.
+description: All your media player needs in one place - a modern alternative to Videojs and Plyr. Supports Html5, Hls, Dash, YouTube, Vimeo, Dailymotion and more to come.
 ---
 
 # Introduction
