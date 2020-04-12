@@ -106,7 +106,7 @@ Each can weigh as much as ~10 kB. Thus, after adding only 3 providers such as Yo
 Vimeo you'll incur an additional 25 - 30 kB overhead.
 
 * **Poor documentation**. This is mostly directed at Videojs, there documentation feels clunky and
-difficult to navigate + understand.
+difficult to navigate and understand.
 
 * Lack of **testing**. Videojs has a good set of unit tests but no e2e tests, and Plyr has no tests at all. 
 This makes both libraries vulnerable to breakage. I'll admit Vime has no tests just yet either, 
