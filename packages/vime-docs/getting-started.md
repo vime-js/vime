@@ -16,10 +16,10 @@ optional play icon and a few other treats.
   
   * Utilizes **preconnections** for an approximately [224x faster load][preconnections-benchmark].
   
-  * **Lighter than tranditional SDK's**. Lite comes in at ~ 6 kB which is on average 50% lighter than traditional player 
-  SDK's. Furthermore, each additional provider added only increases the total cost by about ~ 300 bytes. For 
+  * **Lighter than provider SDK's**. Lite comes in at ~ 6 kB which is on average 50% lighter than provider built
+  player SDK's. Furthermore, each additional provider added only increases the total cost by about ~ 300 bytes. For 
   example, if you normally wanted to embed media from YouTube, Dailymotion and Vimeo, the total 
-  Player SDK cost would be ~25 kB. In contrast, with Vime it'll be ~ 6.5 kB.
+  player SDK cost would be ~25 kB. In contrast, with Vime it'll be ~ 6.5 kB.
 
   * **Multi-provider support.** One interface for multiple providers. If you want to switch from YouTube 
     to Vimeo, no problem. If you want to support both, no problem. All you really need to know is
