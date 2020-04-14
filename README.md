@@ -42,6 +42,7 @@
 - [Warnings](#warnings)
 - [Questions](#questions)
 - [Where to next?](#where-to-next)
+- [Sponsors](#sponsors)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -215,6 +216,18 @@ Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/vi
 
 You can head over to the [playground][vime-playground] to play or you can [get started][vime-getting-started]
 straight away.
+
+## Sponsors
+
+**A huge thanks to our sponsors who support open-source projects like Vime.**
+
+<a href="https://zeit.co">
+  <img
+    width="100%"
+    alt="zeit now"
+    src="./static/sponsors/zeit.png"
+  />
+</a>
 
 ## License
 
