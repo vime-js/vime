@@ -209,6 +209,12 @@ Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/vi
 
 You can head over to the [playground][vime-playground] to play or you can [get started](./getting-started.md) straight away.
 
+## Sponsors
+
+**A huge thanks to our sponsors who support open-source projects like Vime.**
+
+![Zeit (https://zeit.co)](../../static/sponsors/zeit.png)
+
 ## License
 
 [MIT][license]
