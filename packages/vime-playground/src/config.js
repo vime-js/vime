@@ -1,13 +1,12 @@
 export default {
   File: {
-    AUDIO: '/media/audio/the-battle.mp3',
+    AUDIO: '/media/audio/40-years-later.mp3',
     VIDEO: [
       { src: '/media/video/1080p.mp4', type: 'video/mp4', quality: 1080 },
       { src: '/media/video/720p.mp4', type: 'video/mp4', quality: 720 },
       { src: '/media/video/480p.mp4', type: 'video/mp4', quality: 480 },
       { src: '/media/video/360p.mp4', type: 'video/mp4', quality: 360 },
       { src: '/media/video/240p.mp4', type: 'video/mp4', quality: 240 },
-      { src: '/media/video/144p.mp4', type: 'video/mp4', quality: 144 },
     ],
     POSTER: '/media/video/poster.png',
     TRACKS: [{
@@ -15,37 +14,51 @@ export default {
       kind: 'subtitles',
       label: 'English',
       srclang: 'en',
-      src: '/media/video/tracks/en.vtt',
+      src: '/media/video/subs/english.vtt',
     },
     {
       kind: 'subtitles',
       label: 'Spanish',
       srclang: 'es',
-      src: '/media/video/tracks/es.vtt',
+      src: '/media/video/subs/spanish.vtt',
     },
     {
       kind: 'subtitles',
       label: 'French',
       srclang: 'fr',
-      src: '/media/video/tracks/fr.vtt',
+      src: '/media/video/subs/french.vtt',
+    }, {
+      kind: 'subtitles',
+      label: 'German',
+      srclang: 'ger',
+      src: '/media/video/subs/german.vtt',
+    }, {
+      kind: 'subtitles',
+      label: 'Italian',
+      srclang: 'ita',
+      src: '/media/video/subs/italian.vtt',
+    }, {
+      kind: 'subtitles',
+      label: 'Russian',
+      srclang: 'rus',
+      src: '/media/video/subs/russian.vtt',
     }],
   },
   Hls: {
-    SRC: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
-    POSTER: 'https://i.ytimg.com/vi/YvbgprhDDMM/maxresdefault.jpg',
+    SRC: '/media/video/hls/index.m3u8',
   },
   Dash: {
-    SRC: 'https://bitmovin-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd',
+    SRC: '/media/video/mpd/manifest.mpd',
     LIVE_SRC: 'https://livesim.dashif.org/livesim/testpic_2s/Manifest.mpd',
   },
   Dailymotion: {
-    SRC: 'dailymotion/x3a9qe6',
+    SRC: 'dailymotion/k3b11PemcuTrmWvYe0q',
   },
   YouTube: {
-    SRC: 'youtube/R6MlUcmOul8',
+    SRC: 'youtube/DyTCOwB0DVw',
   },
   Vimeo: {
-    SRC: 'vimeo/154225711',
+    SRC: 'vimeo/411652396',
   },
   Events: {
     PREVIEW: [

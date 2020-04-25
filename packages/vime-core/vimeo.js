@@ -6,7 +6,7 @@ export const EMBED_ORIGIN = 'https://player.vimeo.com';
 export const SRC = /vimeo(?:\.com|)\/([0-9]{9,})/;
 export const FILE_URL = /vimeo\.com\/external\/[0-9]+\..+/;
 export const THUMBNAIL_URL = /vimeocdn\.com\/video\/([0-9]+)/;
-export const BLANK_SRC_ID = '390460225';
+export const BLANK_SRC_ID = '411655713';
 
 export const PRECONNECTIONS = [
   ORIGIN,

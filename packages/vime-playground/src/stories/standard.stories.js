@@ -36,4 +36,4 @@ export const Vimeo = () => base({ src: config.Vimeo.SRC });
 export const Dailymotion = () => base({ src: config.Dailymotion.SRC });
 export const HLS = () => base({ src: config.Hls.SRC });
 export const Dash = () => base({ src: config.Dash.SRC });
-export const DashLive = () => base({ src: config.Dash.LIVE_SRC });
+export const DashLive = () => base({ src: config.Dash.LIVE_SRC, hideCredits: true });

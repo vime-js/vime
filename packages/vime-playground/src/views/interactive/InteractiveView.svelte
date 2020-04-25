@@ -9,6 +9,16 @@
     this={Component}
     bind:this={component}
   />
+  {#if !hideCredits} 
+    <div class="credits">
+      <div>
+        Media made with ❤️ by <a href="https://www.blender.org/">Blender Org</a>
+      </div>
+      <div>
+        Licensed under <a href="https://creativecommons.org/licenses/by-nd/2.0/">CC-BY-ND</a>
+      </div>
+    </div>
+  {/if}
 </InteractiveCanvas>
 
 <script>
@@ -33,6 +43,7 @@
   export let Component;
   export let events = [];
   export let smallView = false;
+  export let hideCredits = false;
 
   const sortProps = (unsortedProps) => {
     const result = {};
@@ -145,3 +156,18 @@
 
   $: onComponentMount(component);
 </script>
+
+<style>
+
+.credits {
+  margin-top: 24px;
+}
+
+.credits > div {
+  margin-top: 8px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #bfbfbf;
+}
+</style>

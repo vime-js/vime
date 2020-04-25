@@ -52,13 +52,11 @@ export const Dailymotion = () => videoBase({ src: config.Dailymotion.SRC });
 
 export const HLS = () => videoBase({
   src: config.Hls.SRC,
-  poster: config.Hls.POSTER,
   tracks: [],
 });
 
 export const Dash = () => videoBase({
   src: config.Dash.SRC,
-  poster: null,
   tracks: [],
 });
 
@@ -66,5 +64,6 @@ export const DashLive = () => videoBase({
   src: config.Dash.LIVE_SRC,
   poster: null,
   tracks: [],
+  hideCredits: true,
 });
 
