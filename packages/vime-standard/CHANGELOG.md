@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/vime-js/vime/tree/master/packages/vime-standard/compare/v1.5.0...v1.5.1) (2020-04-26)
+
+
+### Bug Fixes
+
+* **standard:** recommended quality by the filerprovider is too low ([69bf62d](https://github.com/vime-js/vime/tree/master/packages/vime-standard/commit/69bf62dbcafa169c0b6d5f88cd25229d422b1dda)), closes [#33](https://github.com/vime-js/vime/tree/master/packages/vime-standard/issues/33)
+* vimeo controls are not being hidden ([3690633](https://github.com/vime-js/vime/tree/master/packages/vime-standard/commit/36906336f94aebe31a97fcfa860036f2bf5525da)), closes [#32](https://github.com/vime-js/vime/tree/master/packages/vime-standard/issues/32)
+
+
+
+
+
 # [1.5.0](https://github.com/vime-js/vime/tree/master/packages/vime-standard/compare/v1.4.4...v1.5.0) (2020-04-12)
 
 

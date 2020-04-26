@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/mihar-22/vime/compare/v1.5.0...v1.5.1) (2020-04-26)
+
+
+### Bug Fixes
+
+* **standard:** audio player not visible ([00f2c90](https://github.com/mihar-22/vime/commit/00f2c90219c9f7d1923235184923df1addc4d8e1))
+* **standard:** recommended quality by the filerprovider is too low ([69bf62d](https://github.com/mihar-22/vime/commit/69bf62dbcafa169c0b6d5f88cd25229d422b1dda)), closes [#33](https://github.com/mihar-22/vime/issues/33)
+* vimeo controls are not being hidden ([3690633](https://github.com/mihar-22/vime/commit/36906336f94aebe31a97fcfa860036f2bf5525da)), closes [#32](https://github.com/mihar-22/vime/issues/32)
+* **lite:** vimeo embed is not responsive ([d74b846](https://github.com/mihar-22/vime/commit/d74b846ca80d783152446612ccabf8dbe48c9aad)), closes [#31](https://github.com/mihar-22/vime/issues/31)
+
+
+
+
+
 # [1.5.0](https://github.com/mihar-22/vime/compare/v1.4.4...v1.5.0) (2020-04-12)
 
 

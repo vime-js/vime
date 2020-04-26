@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/vime-js/vime/tree/master/packages/vime-complete/compare/v1.5.0...v1.5.1) (2020-04-26)
+
+
+### Bug Fixes
+
+* vimeo controls are not being hidden ([3690633](https://github.com/vime-js/vime/tree/master/packages/vime-complete/commit/36906336f94aebe31a97fcfa860036f2bf5525da)), closes [#32](https://github.com/vime-js/vime/tree/master/packages/vime-complete/issues/32)
+
+
+
+
+
 # [1.5.0](https://github.com/vime-js/vime/tree/master/packages/vime-complete/compare/v1.4.4...v1.5.0) (2020-04-12)
 
 

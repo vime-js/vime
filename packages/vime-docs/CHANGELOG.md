@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/mihar-22/vime/compare/v1.5.0...v1.5.1) (2020-04-26)
+
+
+### Bug Fixes
+
+* **lite:** vimeo embed is not responsive ([d74b846](https://github.com/mihar-22/vime/commit/d74b846ca80d783152446612ccabf8dbe48c9aad)), closes [#31](https://github.com/mihar-22/vime/issues/31)
+
+
+
+
+
 # [1.5.0](https://github.com/mihar-22/vime/compare/v1.4.4...v1.5.0) (2020-04-12)
 
 
