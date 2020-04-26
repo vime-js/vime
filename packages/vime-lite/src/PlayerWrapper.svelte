@@ -32,6 +32,8 @@
 <style>
   div {
     position: relative;
+    height: 0;
+    overflow: hidden;
   }
 
   .bg {

@@ -1,16 +1,18 @@
-<LitePlayer 
-  {src}
-  {params}
-  providers={[VimeoProvider]}
-  hasWrapper={false}
-  on:error
-  on:titlechange={onTitleChange}
-  on:rebuild={onReload}
-  on:rebuild={onRebuildStart}
-  on:embedurlchange={onEmbedURLChange}
-  on:data={onData}
-  bind:this={litePlayer}
-/>
+<div class:wrapper={!isControlsEnabled}>
+  <LitePlayer 
+    {src}
+    {params}
+    providers={[VimeoProvider]}
+    hasWrapper={false}
+    on:error
+    on:titlechange={onTitleChange}
+    on:rebuild={onReload}
+    on:rebuild={onRebuildStart}
+    on:embedurlchange={onEmbedURLChange}
+    on:data={onData}
+    bind:this={litePlayer}
+  />
+</div>
 
 <script context="module">
   import { can_play } from '@vime-js/core/vimeo';
@@ -94,6 +96,7 @@
   let seeking = false;
   let playbackReady = false;
   let internalTime = 0;
+  let isControlsEnabled = true;
 
   const params = {
     // Controlled by Vime.
@@ -112,7 +115,7 @@
   export const setVolume = (newVolume) => { send(VM.Command.SET_VOLUME, newVolume / 100); };
   export const setCurrentTime = (newTime) => { send(VM.Command.SET_CURRENT_TIME, newTime); };
   export const setPlaysinline = (isEnabled) => { params.playsinline = isEnabled; };
-  export const setControls = (isEnabled) => { params.controls = isEnabled; };
+  export const setControls = (isEnabled) => { isControlsEnabled = isEnabled; };
   export const setPlaybackRate = (newRate) => { send(VM.Command.SET_PLAYBACK_RATE, newRate); };
 
   export const setPaused = (isPaused) => {
@@ -257,3 +260,11 @@
     info = {};
   }
 </script>
+
+<style>
+  .wrapper {
+    position: relative;
+    padding-bottom: 200%;
+    transform: translateY(-35.95%);
+  }
+</style>

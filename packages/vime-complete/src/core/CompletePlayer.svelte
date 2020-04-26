@@ -238,6 +238,7 @@
     }
 
     &.video {
+      height: 0;
       background: #000;
       overflow: hidden;
     }

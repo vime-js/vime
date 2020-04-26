@@ -23,6 +23,7 @@
 
   const {
     buffering, isVideoView, useNativeControls,
+    Provider, playbackStarted,
   } = player.getStore();
 
   // --------------------------------------------------------------
@@ -31,12 +32,18 @@
 
   let el;
 
+  const bannedProviders = ['Vimeo', 'YouTube'];
+
   export let autopilot = true;
   export let isEnabled = true;
   export let isActive = false;
 
   $: if (autopilot) isActive = $buffering;
-  $: if (autopilot) isEnabled = $isVideoView && !$useNativeControls;
+  
+  $: if (autopilot) {
+    isEnabled = ($isVideoView && !$useNativeControls)
+    && !($Provider && bannedProviders.includes($Provider.default.name) && $playbackStarted);
+  }
 </script>
 
 <style type="text/scss">

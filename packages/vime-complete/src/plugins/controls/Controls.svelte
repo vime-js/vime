@@ -3,7 +3,7 @@
 <div 
   class="controls"
   class:video={$isVideoView}
-  use:vShow={isActive}
+  use:vIf={isActive}
   bind:this={el}
 >
   {#each groups as id (id)}
@@ -24,7 +24,7 @@
 <script>
   import { tick, onMount, onDestroy } from 'svelte';
   import { listen } from 'svelte/internal';
-  import { vShow } from '@vime-js/utils';
+  import { vIf } from '@vime-js/utils';
   import { ID as SettingsID } from '../settings/Settings.svelte';
   import ControlGroup from './ControlGroup.svelte';
 
