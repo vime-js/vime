@@ -335,10 +335,11 @@
     const minQuality = (videoWidth / w) * h;
     const qualities = src.map((s) => s.quality);
     // @see https://stackoverflow.com/a/35000557
-    const newQuality = qualities.reduce(
+    const recommendedQuality = qualities.reduce(
       (prev, curr) => (Math.abs(curr - minQuality) < Math.abs(prev - minQuality) ? curr : prev),
     );
-    videoQuality = newQuality;
+    const recommendedIndex = qualities.findIndex((quality) => quality === recommendedQuality);
+    videoQuality = qualities[Math.max(0, (recommendedIndex - 1))];
   };
 
   const loadNewSrc = () => {
