@@ -2,7 +2,7 @@
   <Lazy let:intersecting>
     {#if intersecting}
       <div
-        class:bg={!is_null(aspectRatio)}
+        class:video={!is_null(aspectRatio)}
         use:vAspectRatio={isEnabled ? aspectRatio : null} 
         bind:this={el}
       >
@@ -32,11 +32,11 @@
 <style>
   div {
     position: relative;
-    height: 0;
-    overflow: hidden;
   }
 
-  .bg {
+  .video {
+    height: 0;
+    overflow: hidden;
     background: #000;
   }
 </style>
