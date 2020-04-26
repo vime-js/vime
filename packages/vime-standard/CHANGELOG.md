@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/vime-js/vime/tree/master/packages/vime-standard/compare/v1.5.1...v1.6.0) (2020-04-26)
+
+
+### Features
+
+* replace unpkg with jsdelivr for faster loads ([a80398f](https://github.com/vime-js/vime/tree/master/packages/vime-standard/commit/a80398ff6dc45ba28d88566585b73c57eedd7d82))
+
+
+
+
+
 ## [1.5.1](https://github.com/vime-js/vime/tree/master/packages/vime-standard/compare/v1.5.0...v1.5.1) (2020-04-26)
 
 
