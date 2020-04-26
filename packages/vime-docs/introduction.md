@@ -178,7 +178,7 @@ plugins for Keyboard shortcuts, Controls, Tooltips, Settings and much more. Ther
 to use everything with no additional setup required. The plugin system utilizes `svelte:component` so you can extend 
 the player with the full power of Svelte.
 
-* **Built with Svelte.** Enjoy great performance and a smaller bundler thanks to Svelte. If you're using 
+* **Built with Svelte.** Enjoy great performance and smaller bundles thanks to Svelte. If you're using 
 Vime inside a Svelte project, we've provided a `svelte` key so you can compile the player yourself 
 and share the same Svelte internals. This will reduce the overhead cost of Vime, and you get all the 
 benefits of auto-subscriptions since all props are powered by a store.
