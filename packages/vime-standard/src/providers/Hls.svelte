@@ -76,7 +76,7 @@
     dispatch('update', { mediaType: MediaType.VIDEO });
 
     try {
-      const url = 'https://unpkg.com/hls.js@{V}/dist/hls.min.js'.replace('{V}', version);
+      const url = 'https://cdn.jsdelivr.net/npm/hls.js@{V}'.replace('{V}', version);
       const Hls = await load_library(url, 'Hls');
 
       if (!Hls.isSupported()) {

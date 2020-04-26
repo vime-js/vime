@@ -41,7 +41,7 @@
       };
     });
 
-    load_sprite('https://unpkg.com/@vime-js/complete/static/sprite.svg')
+    load_sprite('https://cdn.jsdelivr.net/npm/@vime-js/complete/static/sprite.svg')
       .then((container) => { iconsContainer = container; });
   });
 

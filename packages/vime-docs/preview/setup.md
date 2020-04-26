@@ -46,6 +46,12 @@ yarn add @vime-js/preview
 <script src="https://unpkg.com/@vime-js/preview"></script>
 ```
 {% endtab %}
+
+{% tab title="JSDELIVR" %}
+```html
+<script src="https://cdn.jsdelivr.net/npm/@vime-js/preview"></script>
+```
+{% endtab %}
 {% endtabs %}
 
 The `dist` folder inside the package contains multiple exports:

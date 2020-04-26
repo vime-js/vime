@@ -76,7 +76,7 @@
     dispatch('update', { mediaType: MediaType.VIDEO });
 
     try {
-      const url = 'https://cdn.dashjs.org/{V}/dash.all.min.js'.replace('{V}', version);
+      const url = 'https://cdn.jsdelivr.net/npm/dashjs@{V}/dist/dash.all.min.js'.replace('{V}', version);
       const Dash = await load_library(url, 'dashjs');
       dash = Dash.MediaPlayer(config).create();
       dash.initialize(fileProvider.getMedia(), null, false);

@@ -45,6 +45,12 @@ yarn add @vime-js/lite
 <script src="https://unpkg.com/@vime-js/lite"></script>
 ```
 {% endtab %}
+
+{% tab title="JSDELIVR" %}
+```html
+<script src="https://cdn.jsdelivr.net/npm/@vime-js/lite"></script>
+```
+{% endtab %}
 {% endtabs %}
 
 The `dist` folder inside the package contains multiple exports:

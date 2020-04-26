@@ -45,6 +45,12 @@ yarn add @vime-js/complete
 <script src="https://unpkg.com/@vime-js/complete"></script>
 ```
 {% endtab %}
+
+{% tab title="JSDELIVR" %}
+```html
+<script src="https://cdn.jsdelivr.net/npm/@vime-js/complete"></script>
+```
+{% endtab %}
 {% endtabs %}
 
 The `dist` folder inside the package contains multiple exports:

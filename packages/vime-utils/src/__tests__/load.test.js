@@ -4,7 +4,7 @@ describe('utils', () => {
   describe('load', () => {
     describe('load_script', () => {
       // Arbitrary lightweight script.
-      const src = 'https://unpkg.com/mitt/dist/mitt.umd.js';
+      const src = 'https://cdn.jsdelivr.net/npm/mitt';
 
       beforeEach(() => {
         const script = document.createElement('script');
