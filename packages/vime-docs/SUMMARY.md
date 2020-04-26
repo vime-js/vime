@@ -3,6 +3,10 @@
 * [Introduction](introduction.md)
 * [Getting Started](getting-started.md)
 
+## Integrations
+
+* [Svelte](integrations/svelte.md)
+
 ## Preview
 
 * [Setup](preview/setup.md) 
