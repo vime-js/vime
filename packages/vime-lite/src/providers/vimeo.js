@@ -11,6 +11,9 @@ export default {
   canPlay: can_play,
   buildEmbedURL: build_embed_url,
   extractMediaId: extract_media_id,
+  defaultParams: {
+    transparent: false,
+  },
   onLoad: () => {},
   buildOrigin: () => ORIGIN,
   buildPostMessage: (command, args) => ({

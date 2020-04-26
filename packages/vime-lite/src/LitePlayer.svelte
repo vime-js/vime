@@ -5,10 +5,10 @@
   isEnabled={hasWrapper} 
 >
   <Embed
-    {params}
     {decoder}
     {preconnections}
     src={embedURL}
+    params={allParams}
     title={iframeTitle}
     origin={origin}
     on:load
@@ -50,6 +50,7 @@
   export let cookies = false;
   export let hasWrapper = true;
   export let aspectRatio = '16:9';
+  export let ignoreDefaultParams = false;
 
   export const getOrigin = () => origin;
   export const getEmbed = () => embed;
@@ -106,6 +107,10 @@
   $: decoder = Provider ? Provider.decoder : null;
   $: preconnections = Provider ? Provider.preconnections : [];
   $: onData = (!initialized || !mediaTitle) ? onDataHandler : null;
+  
+  $: allParams = (!ignoreDefaultParams && Provider && Provider.defaultParams)
+    ? { ...Provider.defaultParams, ...params }
+    : params;
 
   $: dispatch(Event.SRC_CHANGE, src);
   $: dispatch(Event.TITLE_CHANGE, mediaTitle);

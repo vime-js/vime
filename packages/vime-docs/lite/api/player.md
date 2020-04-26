@@ -51,6 +51,13 @@ Whether cookies should be enabled on the embed or not. This currently only works
 
 The aspect ratio of the player expressed as `width:height`.
 
+### `ignoreDefaultParams`
+
+**Type:** `boolean` | **Default:** `false`
+
+Whether any default parameters passed to the embed by Vime should be ignored. Default parameters are 
+only passed in to resolve any visual or functional issues between the embed and Vime.
+
 ### `hasWrapper`
 
 **Type:** `boolean` | **Default:** `true`
