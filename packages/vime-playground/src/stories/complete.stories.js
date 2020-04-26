@@ -49,16 +49,8 @@ export const VideoFile = () => videoBase({ src: config.File.VIDEO });
 export const Youtube = () => videoBase({ src: config.YouTube.SRC });
 export const Vimeo = () => videoBase({ src: config.Vimeo.SRC });
 export const Dailymotion = () => videoBase({ src: config.Dailymotion.SRC });
-
-export const HLS = () => videoBase({
-  src: config.Hls.SRC,
-  tracks: [],
-});
-
-export const Dash = () => videoBase({
-  src: config.Dash.SRC,
-  tracks: [],
-});
+export const HLS = () => videoBase({ src: config.Hls.SRC });
+export const Dash = () => videoBase({ src: config.Dash.SRC });
 
 export const DashLive = () => videoBase({
   src: config.Dash.LIVE_SRC,

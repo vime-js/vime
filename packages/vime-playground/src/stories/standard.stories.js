@@ -23,17 +23,18 @@ const base = (props) => ({
   },
 });
 
-export const AudioFile = () => base({ src: config.File.AUDIO });
-
-export const VideoFile = () => base({
-  src: config.File.VIDEO,
+const videoFileBase = (src) => base({
+  src,
   poster: config.File.POSTER,
   tracks: config.File.TRACKS,
 });
 
+export const AudioFile = () => base({ src: config.File.AUDIO });
+
+export const VideoFile = () => videoFileBase(config.File.VIDEO);
 export const Youtube = () => base({ src: config.YouTube.SRC });
 export const Vimeo = () => base({ src: config.Vimeo.SRC });
 export const Dailymotion = () => base({ src: config.Dailymotion.SRC });
-export const HLS = () => base({ src: config.Hls.SRC });
-export const Dash = () => base({ src: config.Dash.SRC });
+export const HLS = () => videoFileBase(config.Hls.SRC);
+export const Dash = () => videoFileBase(config.Dash.SRC);
 export const DashLive = () => base({ src: config.Dash.LIVE_SRC, hideCredits: true });
