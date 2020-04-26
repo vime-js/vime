@@ -24,7 +24,7 @@ const player = new Player({
 ```
 
 {% hint style="info" %}
-For all available providers see this [page](standard/providers/../../../../vime-standard/src/providers/index.js).
+For all available providers see this [page](../../vime-standard/src/providers/index.js).
 {% endhint %}
 
 ## Loading Plugins
@@ -89,8 +89,8 @@ player.icons = { ...player.icons, play: '#play-svg-id' };
 
 ## Extending Language
 
-You can add your own language via the `languages` prop, see our 
-[english map](https://github.com/vime-js/vime/blob/master/packages/vime-complete/src/lang/en.js) as an example.
+You can add your own language via the `languages` prop, see our [english map](../../vime-complete/src/lang/en.js) 
+as an example.
 
 ```js
 // Add the language.
