@@ -40,7 +40,7 @@ registry.destroy();
 
 ## Store
 
-A registry is powered by a [Svelte store][svelte-store]. Thus, you can subscribe to the `Registry` and 
+A registry is powered by a [store][svelte-store]. Thus, you can subscribe to the `Registry` and 
 be updated of any changes to its records.
 
 ```js

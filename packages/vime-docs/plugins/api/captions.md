@@ -89,7 +89,7 @@ The cues ([`VTTCue`][mdn-vtt-cue]) that are currently active. Cues are active if
 
 ## Store
 
-The following props are backed by a Svelte store which you can access via the [`getStore`](#getstore) method.
+The following props are backed by a store which you can access via the [`getStore`](#getstore) method.
 
 - [`cues`](#cues)
 - [`currentCueIndex`](#currentcueindex)

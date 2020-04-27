@@ -149,7 +149,7 @@ player.vSettings.getRegistry().subscribe(menus => {
 
 ## Store
 
-All properties for this plugin are backed by a Svelte store which you can access via the `getStore`
+All properties for this plugin are backed by a store which you can access via the `getStore`
 method.
 
 ```js

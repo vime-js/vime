@@ -5,7 +5,7 @@
 [View Source](../../../vime-standard/src/StandardPlayer.svelte)
 
 This component is at the heart of Vime. It's responsible for rendering providers, providing an interface
-to interact with them, and assisting in normalizing cross-browser and provider differences. It's it'internally used by 
+to interact with them, and assisting in normalizing cross-browser and provider differences. It's internally used by 
 the Complete Player.
 
 {% hint style="info" %}
@@ -14,25 +14,12 @@ See the [notes](../notes.md) page for more information on provider specifics.
 
 ## Store
 
-**Stores are plain JS objects and can be used anywhere, not just inside a Svelte component/application.**
-
-All props below are powered behind the scenes by a [Svelte store][svelte-store]. It basically enables 
-reactive values via the [Publish-subscribe pattern][pub-sub-pattern]. Here's a [simple demonstration][svelte-store-demo] 
-to see how they work. You can also checkout the [Svelte tutorial on stores][svelte-store-tutorial].
-
-Simply put, they are plain JS objects that contain a `subscribe` function and an optional `set` function.
-You can subscribe to receive updates of some value as it changes over time. The `subscribe` function
-returns an `unsubscribe` function that you can call to stop listening.
-
-{% hint style="info" %}
-When you are getting a prop `player.someProp` we are simply calling `get(propStore)`, and when setting
-a prop `player.someProp = 1` we are calling `propStore.set(newValue)` if the value has changed.
-{% endhint %}
+All props below are powered behind the scenes by a [store][svelte-store]. They are plain JS objects that 
+contain a `subscribe` function and an optional `set` function. You can subscribe to receive updates 
+of some value as it changes over time. The `subscribe` function returns an `unsubscribe` function that 
+you can call to stop listening.
 
 [svelte-store]: https://svelte.dev/docs#svelte_store
-[pub-sub-pattern]: https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
-[svelte-store-demo]: https://svelte.dev/repl/491fe50dea394e0b9a872af9f79b2416?version=3.20.1
-[svelte-store-tutorial]: https://svelte.dev/tutorial/writable-stores
 
 ### Usage
 
