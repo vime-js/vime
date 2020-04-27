@@ -73,10 +73,22 @@ The `dist` folder inside the package contains multiple exports:
 
 ## Setup
 
+{% hint style="info" %}
+  - To see how to set the `src` prop checkout the [loading media guide](../guides/loading-media.md).
+  - If you want more control over which plugins are loaded then see the [plugins getting started page](../plugins/getting-started.md).
+  - For all providers see this [page](../../vime-standard/src/providers/index.js).
+  - You don't need to load any Vime specific icons or CSS, they're all loaded via plugins.
+  - Vime only has a few basic [events](./api/player.md#events), you listen to changes through store subscriptions. For example, 
+    if you wanted to get updates on the `currentTime`, you'd subscribe to it. More information can be found 
+    [here](./api/player.md#store).
+  - This player extends the Standard Player, all the props/methods/events listed [here](../standard/api/player.md) are 
+    also available directly from the Complete Player.
+{% endhint %}
+
 {% tabs %}
 {% tab title="JavaScript" %}
 ```js
-import { Player } from '@vime-js/complete';
+import { Player, Boot, FileProvider } from '@vime-js/complete';
 
 const target = document.getElementById('player-target');
 
@@ -84,7 +96,11 @@ const target = document.getElementById('player-target');
 const player = new Player({
   target,
   // If you'd like to initialize any props on setup, you can do so here.
-  props: {}
+  props: {
+    src: '/media/my-video.mp4',
+    plugins: [Boot],
+    providers: [FileProvider]
+  }
 });
 
 const off = player.$on('mount', () => {
@@ -99,7 +115,7 @@ player.$destroy();
 ```
 
 {% hint style="info" %}
-See the Svelte [Client-side component API][svelte-client-api] for the complete set of component initialization options.
+See the [client-side component API][svelte-client-api] for the complete set of component initialization options.
 {% endhint %}
 {% endtab %}
 
@@ -108,12 +124,15 @@ See the Svelte [Client-side component API][svelte-client-api] for the complete s
 {% tab title="Svelte" %}
 ```html
 <Player
+  src="/media/my-video.mp4"
+  plugins={[Boot]}
+  providers={[FileProvider]}
   on:mount={onPlayerMount}
   bind:this={player} 
 />
 
 <script>
-  import { Player } from '@vime-js/complete';
+  import { Player, Boot, FileProvider } from '@vime-js/complete';
 
   let player;
 
@@ -124,3 +143,9 @@ See the Svelte [Client-side component API][svelte-client-api] for the complete s
 ```
 {% endtab %}
 {% endtabs %}
+
+## Where to next?
+
+To customize the player go to the [customization](./customization.md) page, otherwise go to the [API](./api/player.md) 
+to find out how to interact with the player. Also checkout the [provider notes](../standard/notes.md) for 
+any provider specific issues or features.

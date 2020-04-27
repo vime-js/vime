@@ -134,3 +134,8 @@ See the Svelte [Client-side component API][svelte-client-api] for the complete s
 {% hint style="info" %}
 For all available providers see this [page](standard/providers/../../../../vime-standard/src/providers/index.js).
 {% endhint %}
+
+## Where to next?
+
+See the [provider notes](./notes.md) page for any provider specific issues or features and then go to 
+the [API](./api/player.md) to find out how to interact with the player.

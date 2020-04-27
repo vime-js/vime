@@ -33,7 +33,7 @@
 ## Complete
 
 * [Setup](complete/setup.md) 
-* [Usage](complete/usage.md)
+* [Customization](complete/customization.md)
 * API
   * [Player](complete/api/player.md)
   * [Plugin](complete/api/plugin.md)

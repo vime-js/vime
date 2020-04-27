@@ -4,24 +4,36 @@
 
 [View Source](../../../vime-complete/src/core/CompletePlayer.svelte)
 
-This component extends the Standard Player and exposes its [API](../../standard/api/player.md). 
-Thus, the complete Standard Player API is available directly from this component.
+This component extends the Standard Player and exposes its [API](../../standard/api/player.md) so it can be 
+accessed directly from this component. 
 
-**API Differences**
+**Standard Player API Differences**
 
 - `useNativeView`, `useNativeControls` and `useNativeCaptions` default to `false`.
 - `canSetPoster`, `canSetTracks` and `canSetTrack` now check for both plugin and provider support.
 
 ## Store
 
-In addition to the props listed in the [Standard Player API](../../standard/api/player.md#props), 
-all the props listed below are now also available in the store.
+All props below are powered behind the scenes by a [store][svelte-store]. They are plain JS objects that 
+contain a `subscribe` function and an optional `set` function. You can subscribe to receive updates 
+of some value as it changes over time. The `subscribe` function returns an `unsubscribe` function that 
+you can call to stop listening.
+
+[svelte-store]: https://svelte.dev/docs#svelte_store
+
+{% hint style="info" %}
+In addition to the props listed below, all props listed in the [Standard Player API](../../standard/api/player.md#props), 
+are also available via `getStore`.
+{% endhint %}
+
+### Usage
 
 ```js
-const { locale } = player.getStore();
+// All props below are available here.
+const { paused } = player.getStore();
 
-const unsubscribe = locale.subscribe(newLocale => {
-  console.log('current locale is', newLocale);
+const unsubscribe = paused.subscribe(isPaused => {
+  console.log('paused state changed to:', isPaused);
 });
 
 // ...
@@ -191,6 +203,11 @@ Returns an object with functions that format and forward messages to the respect
 This method is generally used by plugins.
 
 ## Events
+
+{% hint style="info" %}
+Vime only has some basic events below because updates can be received via stores. whether it's `currentTime` changes, 
+fullscreen changes, or for any player state change we subscribe to the respective [store](#store).
+{% endhint %}
 
 ```js
 // Start listening.

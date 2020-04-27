@@ -1,9 +1,7 @@
-# Usage
+# Customization
 
-## Getting Started
-
-Please refer to the [Player API](./api/player.md) for what properties and methods are available. The
-rest of this page will guide you on how to extend or customize the player.
+This page will guide you on how to extend or customize the player. Refer to the [Player API](./api/player.md) 
+for what props/methods/events are available and how to interact with them.
 
 ## Loading Providers
 
@@ -24,7 +22,8 @@ const player = new Player({
 ```
 
 {% hint style="info" %}
-For all available providers see this [page](../../vime-standard/src/providers/index.js).
+- For all available providers see this [page](../../vime-standard/src/providers/index.js).
+- Checkout the [provider notes](../standard/notes.md) for any provider specific issues or features.
 {% endhint %}
 
 ## Loading Plugins
