@@ -71,7 +71,7 @@ optional play icon and a few other treats.
 ## Where to next?
 
 If you're not using good old HTML/CSS/JS and are interested in any specific library/framework integration, 
-you can follow one these guides:
+you can follow one of these guides:
 
 - [Svelte](./integrations/svelte.md)
 
