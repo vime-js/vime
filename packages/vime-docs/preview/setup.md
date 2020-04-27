@@ -95,7 +95,7 @@ preview.$destroy();
 ```
 
 {% hint style="info" %}
-See the Svelte [Client-side component API][svelte-client-api] for the complete set of component initialization options.
+See the [client-side component API][svelte-client-api] for the complete set of component initialization options.
 {% endhint %}
 {% endtab %}
 
@@ -122,10 +122,11 @@ See the Svelte [Client-side component API][svelte-client-api] for the complete s
 {% endtab %}
 {% endtabs %}
 
+## Where to next?
 
+Go to the [API](./api.md) page to see what props/methods/events are exposed and how you can interact 
+with them. 
 
-
-
-
-
-
+{% hint style="info" %}
+Don't forget you can always head over to the [playground][vime-playground] if you want some examples to play with.
+{% endhint %}

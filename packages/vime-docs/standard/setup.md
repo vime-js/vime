@@ -87,6 +87,7 @@ const player = new Player({
   target,
   // If you'd like to initialize any props on setup, you can do so here.
   props: {
+    src: '/media/my-video.mp4',
     providers: [FileProvider, YouTubeProvider]
   }
 });
@@ -98,7 +99,7 @@ player.$destroy();
 ```
 
 {% hint style="info" %}
-See the Svelte [Client-side component API][svelte-client-api] for the complete set of component initialization options.
+See the [client-side component API][svelte-client-api] for the complete set of component initialization options.
 {% endhint %}
 {% endtab %}
 
@@ -107,6 +108,7 @@ See the Svelte [Client-side component API][svelte-client-api] for the complete s
 {% tab title="Svelte" %}
 ```html
 <Player
+  src="/media/my-video.mp4"
   {providers}
   bind:this={player} 
 />
@@ -131,11 +133,13 @@ See the Svelte [Client-side component API][svelte-client-api] for the complete s
 {% endtab %}
 {% endtabs %}
 
-{% hint style="info" %}
-For all available providers see this [page](standard/providers/../../../../vime-standard/src/providers/index.js).
-{% endhint %}
-
 ## Where to next?
 
 See the [provider notes](./notes.md) page for any provider specific issues or features, and then go to 
 the [API](./api/player.md) section to find out how to interact with the player.
+
+{% hint style="info" %}
+- For all available providers see this [page](../../vime-standard/src/providers/index.js).
+- See the [loading media](../guides/loading-media.md) guide to see how you can set the `src` prop.
+- Don't forget you can always head over to the [playground][vime-playground] if you want some examples to play with.
+{% endhint %}

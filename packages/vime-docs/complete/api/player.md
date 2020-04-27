@@ -22,7 +22,7 @@ you can call to stop listening.
 [svelte-store]: https://svelte.dev/docs#svelte_store
 
 {% hint style="info" %}
-In addition to the props listed below, all props listed in the [Standard Player API](../../standard/api/player.md#props), 
+In addition to the props listed below, all props listed in the [Standard Player API](../../standard/api/player.md#props) 
 are also available via `getStore`.
 {% endhint %}
 
@@ -205,8 +205,8 @@ This method is generally used by plugins.
 ## Events
 
 {% hint style="info" %}
-Vime only has some basic events below because updates can be received via stores. whether it's `currentTime` changes, 
-fullscreen changes, or for any player state change we subscribe to the respective [store](#store).
+Vime only has some basic events below because state change updates are received via stores. Whether it's `currentTime` changes, 
+fullscreen changes, or for any player state change, we subscribe to the respective [store](#store) for updates.
 {% endhint %}
 
 ```js
