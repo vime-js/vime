@@ -67,3 +67,17 @@ optional play icon and a few other treats.
 3. The size of 'Standard' depends on the providers you use.
 4. The size of 'Complete' depends on the plugins and providers you use.
 5. Sizes may be outdated at the time of reading this, see respective package for an accurate upper bound.
+
+## Where to next?
+
+If you're not using good old HTML/CSS/JS and are interested in any specific library/framework integration, 
+you can follow one these guides:
+
+- [Svelte](./integrations/svelte.md)
+
+After that you can get started with any of the following packages:
+
+- [Preview](./preview/setup.md)
+- [Lite](./lite/setup.md)
+- [Standard](./standard/setup.md)
+- [Complete](./complete/setup.md)
