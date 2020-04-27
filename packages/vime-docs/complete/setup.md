@@ -73,18 +73,6 @@ The `dist` folder inside the package contains multiple exports:
 
 ## Setup
 
-{% hint style="info" %}
-  - To see how to set the `src` prop checkout the [loading media guide](../guides/loading-media.md).
-  - If you want more control over which plugins are loaded then see the [plugins getting started page](../plugins/getting-started.md).
-  - For all providers see this [page](../../vime-standard/src/providers/index.js).
-  - You don't need to load any Vime specific icons or CSS, they're all loaded via plugins.
-  - Vime only has a few basic [events](./api/player.md#events), you listen to changes through store subscriptions. For example, 
-    if you wanted to get updates on the `currentTime`, you'd subscribe to it. More information can be found 
-    [here](./api/player.md#store).
-  - This player extends the Standard Player, all the props/methods/events listed [here](../standard/api/player.md) are 
-    also available directly from the Complete Player.
-{% endhint %}
-
 {% tabs %}
 {% tab title="JavaScript" %}
 ```js
@@ -144,8 +132,20 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 {% endtab %}
 {% endtabs %}
 
+## Important Notes
+
+- To see how to set the `src` prop checkout the [loading media guide](../guides/loading-media.md).
+- If you want more control over which plugins are loaded then see the [plugins getting started page](../plugins/getting-started.md).
+- For all providers see this [page](../../vime-standard/src/providers/index.js).
+- You don't need to load any Vime specific icons or CSS, they're all loaded via plugins.
+- Vime only has a few basic [events](./api/player.md#events), you listen to changes through store subscriptions. For example, 
+  if you wanted to get updates on the `currentTime`, you'd subscribe to it. More information can be found 
+  [here](./api/player.md#store).
+- This player extends the Standard Player, all the props/methods/events listed [here](../standard/api/player.md) are 
+  also available directly from the Complete Player.
+
 ## Where to next?
 
-To customize the player go to the [customization](./customization.md) page, otherwise go to the [API](./api/player.md) 
-to find out how to interact with the player. Also checkout the [provider notes](../standard/notes.md) for 
+To customize the player go to the [customization](./customization.md) page, and then go to the [API](./api/player.md) 
+section to find out how to interact with the player. Also checkout the [provider notes](../standard/notes.md) for 
 any provider specific issues or features.
