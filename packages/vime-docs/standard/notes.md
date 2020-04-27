@@ -5,8 +5,8 @@
 - When the player is `paused`, `seeking` and `seeked` are fired at the same time (in order), because there is 
 no updates between the events from the embed.
 
-- Vime disables cookies by default for YouTube. If you're using `YouTubeLite` you can enable them via `cookies`, 
-and if you're using `YouTube` you can enable it via `player.provider.cookies`.
+- Vime disables cookies by default for YouTube. If you're using `@vime-js/lite` you can enable them via the `cookies` 
+prop, otherwise you can enable it via `player.provider.cookies`.
 
 - Enabling/disabling the native controls forces the player to reload. We set the player back to the 
 state it was in prior to reloading.
@@ -20,12 +20,12 @@ the embed doesn't provide an API for it.
 ## Vimeo
 
 - Only [Vimeo PRO](https://vimeo.com/professionals) members can set/change the `playbackRate`.
-- Enabling/disabling the native controls forces the player to reload. We set the player back to the 
-state it was in prior to reloading.
+
 - Video quality/qualities are not supported because there is no API for it.
 
 ## Dailymotion
 
 - An ad plays for 10 seconds at the start of every video which delays playback. The embed ignores
 all commands whilst the ad is playing. We store your commands and replay them once the ad finishes.
+
 - Playback rate/rates are not supported because there is no API for it.
