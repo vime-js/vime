@@ -210,7 +210,7 @@ and [Plyr][github-plyr].
 
 ## Questions
 
-Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/vime-js) with the tag `vime-js`.
+If you have a question then feel free to raise an issue and start the title with `Question:`.
 
 ## Where to next?
 

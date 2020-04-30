@@ -130,8 +130,7 @@ are reducing the costs of choosing to use a framework. Two examples of how not u
   is simply too much.
 
 {% hint style="info" %}
-Think I got something wrong or you can improve what's been said? Create a PR over at 
-our [GitHub repository][vime-github].
+Think I got something wrong or you can improve what's been said? Create a PR over at our [GitHub][vime-github].
 {% endhint %}
 
 [vime-github]: https://github.com/vime-js/vime
@@ -203,7 +202,8 @@ Vime in production just yet.
 
 ## Questions
 
-Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/vime-js) with the tag `vime-js`.
+If you have a question then feel free to raise an issue over at our [GitHub][vime-github] and you can 
+start the title with `Question:`.
 
 ## Where to next?
 
