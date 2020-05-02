@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/vime-js/vime/tree/master/packages/vime-lite/compare/v1.6.0...v1.6.1) (2020-05-02)
+
+
+### Bug Fixes
+
+* ssr support ([f157485](https://github.com/vime-js/vime/tree/master/packages/vime-lite/commit/f157485266a047e738edbc5fb24576bc52fad52a)), closes [#38](https://github.com/vime-js/vime/tree/master/packages/vime-lite/issues/38)
+
+
+
+
+
 # [1.6.0](https://github.com/vime-js/vime/tree/master/packages/vime-lite/compare/v1.5.1...v1.6.0) (2020-04-26)
 
 **Note:** Version bump only for package @vime-js/lite

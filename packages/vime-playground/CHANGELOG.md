@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/vime-js/vime/compare/v1.6.0...v1.6.1) (2020-05-02)
+
+
+### Bug Fixes
+
+* **playground:** subtitles missing for hls and dash ([967ed1b](https://github.com/vime-js/vime/commit/967ed1b057e14c382b347e1987893fa1c8fbc38b))
+
+
+
+
+
 # [1.6.0](https://github.com/mihar-22/vime/compare/v1.5.1...v1.6.0) (2020-04-26)
 
 **Note:** Version bump only for package @vime-js/playground
