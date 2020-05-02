@@ -122,7 +122,7 @@ const off = player.$on('data', e => {
   // We extract the event name and payload.
   const { event, data: payload } = data;
 
-  if (event === 'timeupdate') {
+  if (event === 'playProgress') {
     console.log(payload);
   }
 
