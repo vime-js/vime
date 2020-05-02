@@ -23,7 +23,7 @@
 </PlayerWrapper>
 
 <script>
-  import { tick, createEventDispatcher } from 'svelte';
+  import { tick, createEventDispatcher, onMount } from 'svelte';
   import { noop } from 'svelte/internal';
   import { deferred } from '@vime-js/utils';
   import Embed from './Embed.svelte';
@@ -96,6 +96,9 @@
     if (!mediaTitle) mediaTitle = Provider.extractMediaTitle(data);
   };
 
+  let hasMounted = false;
+  onMount(() => { hasMounted = true; });
+
   onReload();
 
   $: onSrcChange(src);
@@ -112,8 +115,8 @@
     ? { ...Provider.defaultParams, ...params }
     : params;
 
-  $: dispatch(Event.SRC_CHANGE, src);
-  $: dispatch(Event.TITLE_CHANGE, mediaTitle);
-  $: dispatch(Event.ORIGIN_CHANGE, origin);
-  $: dispatch(Event.EMBED_URL_CHANGE, embedURL);
+  $: if (hasMounted) dispatch(Event.SRC_CHANGE, src);
+  $: if (hasMounted) dispatch(Event.TITLE_CHANGE, mediaTitle);
+  $: if (hasMounted) dispatch(Event.ORIGIN_CHANGE, origin);
+  $: if (hasMounted) dispatch(Event.EMBED_URL_CHANGE, embedURL);
 </script>

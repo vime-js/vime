@@ -134,8 +134,12 @@
     send(VM.Command.ENABLE_TEXT_TRACK, { language, kind });
   };
 
-  onMount(() => { info.origin = litePlayer.getOrigin(); });
-  onMount(() => { info.mediaType = MediaType.VIDEO; });
+  let hasMounted = false;
+  onMount(() => {
+    info.origin = litePlayer.getOrigin();
+    info.mediaType = MediaType.VIDEO;
+    hasMounted = true;
+  });
   
   const onRebuildStart = () => { info.rebuild = true; };
   const onTitleChange = (e) => { info.title = e.detail; };
@@ -252,10 +256,10 @@
     .then((poster) => { info.poster = poster; })
     .catch((e) => dispatch('error', e));
 
-  $: fetchPoster(src);
+  $: if (hasMounted) fetchPoster(src);
   $: (!seeking && playbackReady) ? getTimeUpdates() : cancelTimeUpdates();
 
-  $: {
+  $: if (hasMounted) {
     dispatch('update', info);
     info = {};
   }

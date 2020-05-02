@@ -32,6 +32,7 @@
 
   let el;
 
+  // Providers that have their own spinners which can't be hidden.
   const bannedProviders = ['Vimeo', 'YouTube'];
 
   export let autopilot = true;

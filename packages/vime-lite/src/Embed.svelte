@@ -16,7 +16,7 @@
 </script>
 
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import { is_string, prefetch, add_params_to_url } from '@vime-js/utils';
 
   let iframe = null;
@@ -62,19 +62,25 @@
     if (data) dispatch(Event.DATA, data);
   };
 
-  $: srcWithParams = src ? add_params_to_url(src, params) : null;
-  $: dispatch(Event.SRC_CHANGE, srcWithParams);
-  $: if (srcWithParams) dispatch(Event.REBUILD);
+  let hasMounted = false;
+  onMount(() => { hasMounted = true; });
 
-  $: if (srcWithParams && !iframe && !PRECONNECTED.includes(srcWithParams)) {
+  $: if (hasMounted) dispatch(Event.SRC_CHANGE, srcWithParams);
+  $: if (hasMounted && srcWithParams) dispatch(Event.REBUILD);
+
+  $: if (hasMounted) srcWithParams = src ? add_params_to_url(src, params) : null;
+
+  $: if (hasMounted && srcWithParams && !iframe && !PRECONNECTED.includes(srcWithParams)) {
     if (prefetch('preconnect', srcWithParams)) PRECONNECTED.push(srcWithParams);
   }
 
   // TODO: improve preconnections
   // @see https://github.com/ampproject/amphtml/blob/master/src/preconnect.js
-  $: preconnections
-    .filter((p) => !PRECONNECTED.includes(p))
-    .forEach((url) => { if (prefetch('preconnect', url)) PRECONNECTED.push(url); });
+  $: if (hasMounted) {
+    preconnections
+      .filter((p) => !PRECONNECTED.includes(p))
+      .forEach((url) => { if (prefetch('preconnect', url)) PRECONNECTED.push(url); });
+  }
 </script>
 
 <style>

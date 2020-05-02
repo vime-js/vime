@@ -120,8 +120,12 @@
   export const supportsPiP = () => false;
   export const supportsFullscreen = () => true;
 
-  onMount(() => { info.origin = litePlayer.getOrigin(); });
-  onMount(() => { info.mediaType = MediaType.VIDEO; });
+  let hasMounted = false;
+  onMount(() => {
+    info.origin = litePlayer.getOrigin();
+    info.mediaType = MediaType.VIDEO;
+    hasMounted = true;
+  });
   
   const onRebuildStart = () => { info.rebuild = true; };
   const onTitleChange = (e) => { info.title = e.detail; };
@@ -228,10 +232,10 @@
     .then((duration) => { info.duration = duration; })
     .catch((e) => dispatch('error', e));
 
-  $: fetchPoster(src);
-  $: fetchVideoDuration(src);
+  $: if (hasMounted) fetchPoster(src);
+  $: if (hasMounted) fetchVideoDuration(src);
 
-  $: {
+  $: if (hasMounted) {
     dispatch('update', info);
     info = {};
   }

@@ -9,6 +9,7 @@ export let error = noop;
 if (
   // eslint-disable-next-line no-undef
   process.env.NODE_ENV === 'development'
+  && typeof window !== 'undefined'
   && window.console !== undefined
 ) {
   log = function vimeLog(...args) { console.log('[Vime]', ...args); };

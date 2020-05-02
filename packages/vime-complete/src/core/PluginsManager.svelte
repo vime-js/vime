@@ -80,10 +80,10 @@
   };
 
   // Wait till component has mounted so plugins have access to it through Vime.
-  let mounted = false;
-  onMount(() => { mounted = true; });
+  let hasMounted = false;
+  onMount(() => { hasMounted = true; });
 
-  $: if (mounted) {
+  $: if (hasMounted) {
     validatedPlugins = isEnabled ? $plugins.filter(validatePlugin).map((p) => ({ ...p })) : [];
   }
 

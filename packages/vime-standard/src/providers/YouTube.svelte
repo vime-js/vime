@@ -112,7 +112,11 @@
   export const supportsPiP = () => false;
   export const supportsFullscreen = () => true;
 
-  onMount(() => { info.mediaType = MediaType.VIDEO; });
+  let hasMounted = false;
+  onMount(() => {
+    info.mediaType = MediaType.VIDEO;
+    hasMounted = true;
+  });
   
   const onRebuildStart = () => { info.rebuild = true; };
   const onOriginChange = (e) => { info.origin = e.detail; };
@@ -219,9 +223,9 @@
     .then((poster) => { info.poster = poster; })
     .catch((e) => dispatch('error', e));
 
-  $: fetchPoster(src);
+  $: if (hasMounted) fetchPoster(src);
 
-  $: {
+  $: if (hasMounted) {
     dispatch('update', info);
     info = {};
   }

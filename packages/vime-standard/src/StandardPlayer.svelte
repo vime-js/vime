@@ -435,17 +435,18 @@
   // Fullscreen
   // --------------------------------------------------------------
 
-  import FullscreenApi from './FullscreenApi';
+  import LoadFullscreenApi from './FullscreenApi';
 
   const FULLSCREEN_NOT_SUPPORTED_ERROR_MSG = 'Fullscreen not supported.';
-  const FULLSCREEN_DOC_SUPPORT = !!FullscreenApi.requestFullscreen;
 
   let fsDispose = [];
+  let fullscreenApi = null;
+  let doesDocumentSupportFullscreenApi = false;
 
   const isFullscreen = () => {
     const els = [playerWrapper, parentEl, $provider && $provider.getEl()].filter(Boolean);
-    let isActive = els.includes(document[FullscreenApi.fullscreenElement]);
-    if (!isActive) isActive = els.some((el) => el.matches && el.matches(`:${FullscreenApi.fullscreen}`));
+    let isActive = els.includes(document[fullscreenApi.fullscreenElement]);
+    if (!isActive) isActive = els.some((el) => el.matches && el.matches(`:${fullscreenApi.fullscreen}`));
     return isActive;
   };
 
@@ -470,8 +471,8 @@
     if (!el || (!shouldEnter && !isFullscreen())) return Promise.reject();
     if (shouldEnter && isFullscreen()) return Promise.resolve();
     const request = shouldEnter
-      ? el[FullscreenApi.requestFullscreen]()
-      : document[FullscreenApi.exitFullscreen]();
+      ? el[fullscreenApi.requestFullscreen]()
+      : document[fullscreenApi.exitFullscreen]();
     return Promise.resolve(request);
   };
 
@@ -486,7 +487,7 @@
   const fullscreenRequest = (shouldEnter) => {
     if (!$isVideoReady) {
       return Promise.reject(VIDEO_NOT_READY_ERROR_MSG);
-    } if (FULLSCREEN_DOC_SUPPORT) {
+    } if (doesDocumentSupportFullscreenApi) {
       return requestDocumentFullscreen(shouldEnter);
     } if (canProviderFullscreen) {
       return requestProviderFullscreen(shouldEnter);
@@ -498,11 +499,14 @@
   export const exitFullscreen = () => fullscreenRequest(false);
 
   onMount(() => {
-    if (!FULLSCREEN_DOC_SUPPORT) return;
+    fullscreenApi = LoadFullscreenApi();
+    doesDocumentSupportFullscreenApi = !!fullscreenApi.requestFullscreen;
+
+    if (!doesDocumentSupportFullscreenApi) return;
   
     fsDispose.push(listen(
       document,
-      FullscreenApi.fullscreenchange,
+      fullscreenApi.fullscreenchange,
       onDocumentFullscreenChange,
     ));
 
@@ -533,6 +537,6 @@
     && is_function($provider.setFullscreen);
   
   $: store.canSetFullscreen.set(
-    $isVideoReady && (FULLSCREEN_DOC_SUPPORT || canProviderFullscreen),
+    $isVideoReady && (doesDocumentSupportFullscreenApi || canProviderFullscreen),
   );
 </script>

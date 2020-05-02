@@ -79,12 +79,16 @@
 </script>
 
 <script>
-  import { tick, createEventDispatcher, onDestroy } from 'svelte';
   import Source from './Source.svelte';
   import Tracks from './Tracks.svelte';
   import MediaType from '../../MediaType';
   import PlayerState from '../../PlayerState';
   
+  import {
+    tick, createEventDispatcher, onMount,
+    onDestroy,
+  } from 'svelte';
+
   import {
     listen, raf, noop,
     run_all,
@@ -97,7 +101,8 @@
   
   import {
     can_fullscreen_video, can_use_pip_in_chrome, can_use_pip_in_safari,
-    get_computed_width, is_string, can_use_pip, is_number,
+    get_computed_width, is_string, can_use_pip,
+    is_number,
   } from '@vime-js/utils';
 
   let disposal = [];
@@ -108,6 +113,9 @@
   };
 
   onDestroy(dispose);
+
+  let hasMounted = false;
+  onMount(() => { hasMounted = true; });
 
   const dispatch = createEventDispatcher();
 
@@ -301,6 +309,7 @@
   };
 
   const load = async () => {
+    if (!media) return;
     // Wait for media to load.
     await tick();
     media.load();
@@ -361,13 +370,14 @@
   $: media = audio || video;
   $: if (media) media.muted = muted;
 
-  $: onSrcChange(src, srcHasQualities);
   $: srcHasQualities = video && is_qualities_set(src);
   $: if (srcHasQualities) calcInitialQuality(src, aspectRatio);
-  $: if (is_number(videoQuality)) loadNewQuality(videoQuality);
   $: (playbackReady && !paused) ? getTimeUpdates() : cancelTimeUpdates();
-  $: tick().then(() => { info.currentSrc = currentSrc; });
-  
+
+  $: onSrcChange(src, srcHasQualities);
+  $: if (hasMounted && is_number(videoQuality)) loadNewQuality(videoQuality);
+  $: if (hasMounted) tick().then(() => { info.currentSrc = currentSrc; });
+
   $: shouldUseAudio = run_on_every_src(src, is_audio) && !is_string(poster);
 
   $: shouldUseVideo = forceVideo
@@ -382,7 +392,7 @@
     prevMedia = media;
   }
 
-  $: {
+  $: if (hasMounted) {
     dispatch('update', info);
     info = {};
   }

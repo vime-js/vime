@@ -42,6 +42,7 @@ export const listen_for_touch_input = (cb) => {
 
 // @see https://developer.apple.com/documentation/webkitjs/htmlvideoelement/1633500-webkitenterfullscreen
 export const can_fullscreen_video = () => {
+  if (!IS_CLIENT) return false;
   const video = element('video');
   return is_function(video.webkitEnterFullscreen);
 };

@@ -46,25 +46,27 @@ const apiMap = [
   ],
 ];
 
-const specApi = apiMap[0];
-let browserApi;
+export default function () {
+  const specApi = apiMap[0];
+  let browserApi;
 
-// Determine the supported set of functions.
-for (let i = 0; i < apiMap.length; i += 1) {
-  // Check for exitFullscreen function.
-  if (apiMap[i][1] in document) {
-    browserApi = apiMap[i];
-    break;
-  }
-}
-
-// Map the browser API names to the spec API names.
-if (browserApi) {
-  for (let i = 0; i < browserApi.length; i += 1) {
-    FullscreenApi[specApi[i]] = browserApi[i];
+  // Determine the supported set of functions.
+  for (let i = 0; i < apiMap.length; i += 1) {
+    // Check for exitFullscreen function.
+    if (apiMap[i][1] in document) {
+      browserApi = apiMap[i];
+      break;
+    }
   }
 
-  FullscreenApi.prefixed = browserApi[0] !== specApi[0];
-}
+  // Map the browser API names to the spec API names.
+  if (browserApi) {
+    for (let i = 0; i < browserApi.length; i += 1) {
+      FullscreenApi[specApi[i]] = browserApi[i];
+    }
 
-export default FullscreenApi;
+    FullscreenApi.prefixed = browserApi[0] !== specApi[0];
+  }
+
+  return FullscreenApi;
+}

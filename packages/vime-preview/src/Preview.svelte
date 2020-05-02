@@ -33,7 +33,7 @@
 </script>
 
 <script>
-  import { tick, createEventDispatcher } from 'svelte';
+  import { tick, createEventDispatcher, onMount } from 'svelte';
   import Lazy from './Lazy.svelte';
   import PlayIcon from './PlayIcon.svelte';
   
@@ -93,6 +93,9 @@
     if (img && img.complete) onLoad();
   };
 
+  let hasMounted = true;
+  onMount(() => { hasMounted = false; });
+
   const onSrcChange = () => { nativePoster = null; };
   const onProviderChange = () => { nativePoster = null; };
 
@@ -104,14 +107,15 @@
   $: Provider = providers.find((p) => p.canPlay(src));
 
   $: if (
-    !poster
+    hasMounted
+    && !poster
     && src
     && Provider
     && is_function(Provider.fetchPoster)
   ) fetchNativePoster();
 
-  $: dispatch(Event.LOADING, isLoading);
-  $: dispatch(Event.POSTER_CHANGE, currentPoster);
+  $: if (hasMounted) dispatch(Event.LOADING, isLoading);
+  $: if (hasMounted) dispatch(Event.POSTER_CHANGE, currentPoster);
 </script>
 
 <style type="text/scss">
