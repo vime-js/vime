@@ -6,6 +6,7 @@
 ## Integrations
 
 * [Svelte](integrations/svelte.md)
+* [Sapper](integrations/sapper.md)
 
 ## Preview
 
