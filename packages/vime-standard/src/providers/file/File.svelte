@@ -331,7 +331,7 @@
   };
 
   const loadNewQuality = async () => {
-    const didChange = currentSrc.some((s) => s.quality !== videoQuality);
+    const didChange = src.some((s) => s.quality !== videoQuality);
     if (!didChange) return;
     currentSrc = src.filter((s) => s.quality === videoQuality);
     rebuild();
@@ -362,7 +362,7 @@
     playbackStarted = false;
     if (is_media_stream(src)) {
       loadMediaStream();
-    } else if (!srcHasQualities) {
+    } else {
       loadNewSrc();
     }
   };
@@ -372,11 +372,10 @@
 
   $: srcHasQualities = video && is_qualities_set(src);
   $: if (srcHasQualities) calcInitialQuality(src, aspectRatio);
-  $: (playbackReady && !paused) ? getTimeUpdates() : cancelTimeUpdates();
-
-  $: onSrcChange(src, srcHasQualities);
+  $: if (!srcHasQualities) onSrcChange(src);
   $: if (hasMounted && is_number(videoQuality)) loadNewQuality(videoQuality);
   $: if (hasMounted) tick().then(() => { info.currentSrc = currentSrc; });
+  $: (playbackReady && !paused) ? getTimeUpdates() : cancelTimeUpdates();
 
   $: shouldUseAudio = run_on_every_src(src, is_audio) && !is_string(poster);
 
