@@ -1,6 +1,6 @@
 {
   "name": "@vime-js/playground",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -11,7 +11,7 @@
     "@vime-js/complete": "^1.6.1",
     "@vime-js/core": "^1.6.1",
     "@vime-js/lite": "^1.6.1",
-    "@vime-js/preview": "^1.6.1",
+    "@vime-js/preview": "^1.6.2",
     "@vime-js/standard": "^1.6.1",
     "@vime-js/utils": "^1.6.1",
     "fuzzy": "^0.1.3",

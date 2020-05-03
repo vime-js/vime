@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.2](https://github.com/vime-js/vime/tree/master/packages/vime-preview/compare/v1.6.1...v1.6.2) (2020-05-03)
+
+
+### Bug Fixes
+
+* **preview:** poster not displaying ([8f1c901](https://github.com/vime-js/vime/tree/master/packages/vime-preview/commit/8f1c9012af34163313c7779f229b7a56fd9b998f))
+
+
+
+
+
 ## [1.6.1](https://github.com/vime-js/vime/tree/master/packages/vime-preview/compare/v1.6.0...v1.6.1) (2020-05-02)
 
 

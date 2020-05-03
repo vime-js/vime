@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/preview",
   "description": "Vime Preview",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "svelte": "src/index.js",
   "main": "dist/preview.js",
   "module": "dist/preview.esm.js",
