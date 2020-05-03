@@ -93,8 +93,8 @@
     if (img && img.complete) onLoad();
   };
 
-  let hasMounted = true;
-  onMount(() => { hasMounted = false; });
+  let hasMounted = false;
+  onMount(() => { hasMounted = true; });
 
   const onSrcChange = () => { nativePoster = null; };
   const onProviderChange = () => { nativePoster = null; };
