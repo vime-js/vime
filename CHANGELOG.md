@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.3](https://github.com/vime-js/vime/compare/v1.6.2...v1.6.3) (2020-05-24)
+
+
+### Bug Fixes
+
+* **complete:** media not visible on safari fullscreen ([3efc72d](https://github.com/vime-js/vime/commit/3efc72d8e383e1e84061a35ce6a17c87ba244308)), closes [#43](https://github.com/vime-js/vime/issues/43)
+
+
+
+
+
 ## [1.6.2](https://github.com/vime-js/vime/compare/v1.6.1...v1.6.2) (2020-05-03)
 
 
