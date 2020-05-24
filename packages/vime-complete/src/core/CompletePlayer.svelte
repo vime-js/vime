@@ -1,6 +1,6 @@
 <svelte:options accessors />
 
-<div 
+<div
   tabindex="0"
   class="vime player{classes ? ` ${classes}` : ''}"
   class:audio={!$isVideoView}
@@ -14,7 +14,7 @@
   <Lazy let:intersecting>
     {#if intersecting}
       <div>
-        <div 
+        <div
           class="blocker"
           use:vIf={$playbackReady && (!$useNativeControls && $isVideoView)}
         ></div>
@@ -63,7 +63,7 @@
   // --------------------------------------------------------------
   // Setup
   // --------------------------------------------------------------
-  
+
   let el;
   let standardPlayer;
   let pluginsManager;
@@ -79,10 +79,10 @@
 
   const standardStore = buildStandardStore(self);
   const store = buildCompleteStore(standardStore.store);
-  
+
   const onPropsChange = map_store_to_component(self, store);
   $: onPropsChange($$props);
-  
+
   const {
     paused, theme, isVideoView,
     useNativeControls, isControlsActive, debug,
@@ -106,7 +106,7 @@
   export const exitPiP = () => standardPlayer.exitPiP();
   export const requestFullscreen = () => standardPlayer.requestFullscreen();
   export const exitFullscreen = () => standardPlayer.exitFullscreen();
-  
+
   export const createRegistry = (id) => {
     const subRegistry = new Registry(id);
     registry.register(id, subRegistry);
@@ -132,7 +132,7 @@
     await svelteTick();
     dispatch(PlayerEvent.MOUNT);
   };
-  
+
   const onPluginMount = (e) => {
     const { id, value: plugin } = e.detail;
     self[id] = plugin;
@@ -226,7 +226,7 @@
       margin: 0;
       border-radius: 0 !important;
       width: 100%;
-      height: 100%;
+      height: 100% !important;
     }
 
     &.idle {
