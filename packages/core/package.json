@@ -1,0 +1,32 @@
+{
+  "name": "@vime/core",
+  "version": "1.0.0",
+  "description": "Media player built for the modern web.",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/vime/vime.js",
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "build": "stencil build --docs",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test:watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate",
+    "release": "semantic-release -e ../../tools/semantic-release"
+  },
+  "devDependencies": {
+    "@stencil/core": "^1.15.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
