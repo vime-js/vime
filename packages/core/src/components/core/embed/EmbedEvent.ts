@@ -1,4 +1,4 @@
-import { Params } from '../../utils/network';
+import { Params } from '../../../utils/network';
 
 export enum EmbedEvent {
   SrcChange = 'vimeEmbedSrcChange',

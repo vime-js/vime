@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { isString } from '../../utils/unit';
+import { isString } from '../../../utils/unit';
 
 /**
  * Displays an SVG icon inline or loaded from a sprite.

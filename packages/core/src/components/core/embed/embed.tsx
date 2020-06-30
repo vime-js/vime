@@ -11,10 +11,10 @@ import {
   State,
   Watch,
 } from '@stencil/core';
-import { isString } from '../../utils/unit';
+import { isString } from '../../../utils/unit';
 import { EmbedEvent, EmbedEventPayload } from './EmbedEvent';
-import { appendParamsToURL, Params, preconnect } from '../../utils/network';
-import { onElementEntersViewport } from '../../utils/dom';
+import { appendParamsToURL, Params, preconnect } from '../../../utils/network';
+import { onElementEntersViewport } from '../../../utils/dom';
 
 let embedIdCount = 0;
 const connected = new Set();
@@ -88,17 +88,23 @@ export class Embed implements ComponentInterface {
    * Emitted when the `embedSrc` or `params` props change. The payload contains the `params`
    * serialized into a query string and appended to `embedSrc`.
    */
-  @Event() vimeEmbedSrcChange!: EventEmitter<EmbedEventPayload[EmbedEvent.SrcChange]>;
+  @Event({
+    bubbles: false,
+  }) vimeEmbedSrcChange!: EventEmitter<EmbedEventPayload[EmbedEvent.SrcChange]>;
 
   /**
    * Emitted when a new message is received from the embedded player via `postMessage`.
    */
-  @Event() vimeEmbedMessage!: EventEmitter<EmbedEventPayload[EmbedEvent.Message]>;
+  @Event({
+    bubbles: false,
+  }) vimeEmbedMessage!: EventEmitter<EmbedEventPayload[EmbedEvent.Message]>;
 
   /**
    * Emitted when the embedded player and any new media has loaded.
    */
-  @Event() vimeEmbedLoaded!: EventEmitter<EmbedEventPayload[EmbedEvent.Loaded]>;
+  @Event({
+    bubbles: false,
+  }) vimeEmbedLoaded!: EventEmitter<EmbedEventPayload[EmbedEvent.Loaded]>;
 
   @Watch('preconnections')
   preconnectionsChangeHandler() {
