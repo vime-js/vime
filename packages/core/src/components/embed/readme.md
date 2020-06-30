@@ -1,4 +1,4 @@
-# vime-player-embed
+# vime-embed
 
 
 
