@@ -1,0 +1,21 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 24px;
+}
+
+.media-container-16-9 {
+  width: 100%;
+  padding-bottom: 56.25%;
+  position: relative;
+}
+
+.push-out-of-view {
+  margin-top: 100vh;
+  margin-bottom: 24px;
+}

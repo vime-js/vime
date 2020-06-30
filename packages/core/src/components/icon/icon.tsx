@@ -1,19 +1,18 @@
 import { Component, h, Prop } from '@stencil/core';
-import { is_string } from '../../utils';
+import { isString } from '../../utils/unit';
 
 /**
  * Displays an SVG icon inline or loaded from a sprite.
  */
 @Component({
   tag: 'vime-icon',
-  styleUrl: 'vime-icon.css',
-  shadow: true
+  styleUrl: 'icon.css',
 })
 export class Icon {
   /**
-   * The icon SVG identifier if a sprite is loaded otherwise plain svg to inline.
+   * The icon SVG identifier. It's expected that this points to an SVG inside a loaded sprite.
    */
-  @Prop() icon!: string | SVGElement;
+  @Prop() icon?: string;
 
   /**
    * The color (fill) of the icon.
@@ -30,19 +29,20 @@ export class Icon {
    */
   @Prop() opacity = 1;
 
-  render () {
+  render() {
     return (
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        role="presentation" 
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        role="presentation"
         focusable="false"
-        style={{ 
-          color: this.color, 
+        style={{
+          color: this.color,
           transform: `scale(${this.scale})`,
           opacity: `${this.opacity}`,
         }}
       >
-        {is_string(this.icon) ? <use href={this.icon as string}></use> : this.icon}
+        {isString(this.icon) ? <use href={this.icon as string} /> : ''}
+        <slot />
       </svg>
     );
   }

@@ -1,7 +1,7 @@
 {
   "name": "@vime/core",
   "version": "1.0.0",
-  "description": "Media player built for the modern web.",
+  "description": "Declarative media player library.",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -18,13 +18,25 @@
   "scripts": {
     "build": "stencil build --docs",
     "start": "stencil build --dev --watch --serve",
-    "test": "stencil test --spec --e2e",
-    "test:watch": "stencil test --spec --e2e --watchAll",
+    "test": "stencil test --spec --e2e --max-workers=2",
+    "test:spec": "stencil test --spec --max-workers=2",
+    "test:spec.debug": "pnpx --node-arg=\"--inspect-brk\" stencil test --spec",
+    "test:spec.watch": "stencil test --spec --watchAll --max-workers=2",
+    "test:e2e": "stencil test --e2e --max-workers=2",
+    "test:e2e.watch": "stencil test --e2e --watchAll --max-workers=2",
+    "test:screenshot": "stencil test --e2e --screenshot --max-workers=2",
     "generate": "stencil generate",
     "release": "semantic-release -e ../../tools/semantic-release"
   },
   "devDependencies": {
-    "@stencil/core": "^1.15.0"
+    "@stencil/core": "^1.15.0",
+    "@types/jest": "25.2.3",
+    "@types/puppeteer": "2.0.1",
+    "jest": "26.0.1",
+    "jest-cli": "26.0.1",
+    "prettier": "^2.0.5",
+    "puppeteer": "2.1.1",
+    "puppeteer-core": "2.1.1"
   },
   "publishConfig": {
     "access": "public"

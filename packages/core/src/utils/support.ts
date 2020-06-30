@@ -1,4 +1,4 @@
-import { is_function } from "./unit.utils";
+import { isFunction } from './unit';
 
 export const IS_CLIENT = typeof window !== 'undefined';
 export const UA = (IS_CLIENT && window.navigator.userAgent.toLowerCase());
@@ -15,26 +15,29 @@ export type WebKitPresentationMode = 'picture-in-picture' | 'inline' | 'fullscre
 
 /**
  * Checks if a video player can enter fullscreen.
- * 
+ *
  * @see https://developer.apple.com/documentation/webkitjs/htmlvideoelement/1633500-webkitenterfullscreen
  */
-export const can_fullscreen_video = () => {
+export const canFullscreenVideo = (): boolean => {
   if (!IS_CLIENT) return false;
   const video = document.createElement('video');
-  return is_function(video['webkitEnterFullscreen']);
+  // @ts-ignore
+  return isFunction(video.webkitEnterFullscreen);
 };
 
 /**
  * Reduced motion iOS & MacOS setting.
- * 
+ *
  * @see https://webkit.org/blog/7551/responsive-design-for-motion/
  */
-export const is_reduced_motion_preferred = () => IS_CLIENT
+export const isReducedMotionPreferred = (): boolean => IS_CLIENT
   && 'matchMedia' in window
   && window.matchMedia('(prefers-reduced-motion)').matches;
 
-// Checks if the native HTML5 video player can play HLS.
-export const can_play_hls_natively = () => {
+/**
+ * Checks if the native HTML5 video player can play HLS.
+ */
+export const canPlayHLSNatively = (): boolean => {
   if (!IS_CLIENT) return false;
   const video = document.createElement('video');
   return video.canPlayType('application/vnd.apple.mpegurl').length > 0;
@@ -43,32 +46,35 @@ export const can_play_hls_natively = () => {
 /**
  * Checks if the native HTML5 video player can enter picture-in-picture (PIP) mode when using
  * the Chrome browser.
- * 
+ *
  * @see  https://developers.google.com/web/updates/2018/10/watch-video-using-picture-in-picture
  */
-export const can_use_pip_in_chrome = () => {
+export const canUsePiPInChrome = (): boolean => {
   if (!IS_CLIENT) return false;
   const video = document.createElement('video');
-  return !!document['pictureInPictureEnabled'] && !video['disablePictureInPicture'];
+  // @ts-ignore
+  return !!document.pictureInPictureEnabled && !video.disablePictureInPicture;
 };
 
 /**
  * Checks if the native HTML5 video player can enter picture-in-picture (PIP) mode when using
- * the desktop Safari browser, iOS Safari appears to "support" PiP through the check, however PiP 
+ * the desktop Safari browser, iOS Safari appears to "support" PiP through the check, however PiP
  * does not function.
- * 
+ *
  * @see https://developer.apple.com/documentation/webkitjs/adding_picture_in_picture_to_your_safari_media_controls
  */
-export const can_use_pip_in_safari = () => {
+export const canUsePiPInSafari = (): boolean => {
   if (!IS_CLIENT) return false;
   const video = document.createElement('video');
-  return is_function(video['webkitSupportsPresentationMode'])
-    && is_function(video['webkitSetPresentationMode'])
+  // @ts-ignore
+  return isFunction(video.webkitSupportsPresentationMode)
+    // @ts-ignore
+    && isFunction(video.webkitSetPresentationMode)
     && !IS_IPHONE;
 };
 
 // Checks if the native HTML5 video player can enter PIP.
-export const can_use_pip = () => can_use_pip_in_chrome() || can_use_pip_in_safari();
+export const canUsePiP = (): boolean => canUsePiPInChrome() || canUsePiPInSafari();
 
 /**
  * To detect autoplay, we create a video element and call play on it, if it is `paused` after
@@ -77,7 +83,7 @@ export const can_use_pip = () => can_use_pip_in_chrome() || can_use_pip_in_safar
  *
  * @see https://github.com/ampproject/amphtml/blob/9bc8756536956780e249d895f3e1001acdee0bc0/src/utils/video.js#L25
  */
-export const can_autoplay = (muted = true, playsinline = true) => {
+export const canAutoplay = (muted = true, playsinline = true): Promise<boolean> => {
   if (!IS_CLIENT) return Promise.resolve(false);
 
   const video = document.createElement('video');

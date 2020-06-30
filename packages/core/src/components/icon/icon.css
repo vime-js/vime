@@ -1,0 +1,7 @@
+ vime-icon > svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  pointer-events: none;
+}

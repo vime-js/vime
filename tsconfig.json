@@ -3,6 +3,13 @@
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "declaration": false,
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "lib": [
       "dom",
@@ -11,8 +18,6 @@
     "moduleResolution": "node",
     "module": "esnext",
     "target": "es2017",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "jsx": "react",
     "jsxFactory": "h"
   },

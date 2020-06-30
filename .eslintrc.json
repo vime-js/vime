@@ -3,11 +3,24 @@
     "project": "./tsconfig.json"
   },
   "extends": [
+    "airbnb-typescript",
     "plugin:@stencil/recommended"
   ],
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
+  "rules": {
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "@typescript-eslint/no-unused-vars": ["error", {
+      "varsIgnorePattern": "^h$"
+    }],
+    "@typescript-eslint/no-unused-expressions": ["error", {
+      "allowTernary": true
+    }],
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": true
+    }],
+    "react/jsx-no-bind": "off",
+    "react/react-in-jsx-scope": "off",
+    "default-case": "off",
+    "class-methods-use-this": "off"
   }
 }
