@@ -5,7 +5,7 @@ let page: E2EPage;
 
 beforeEach(async () => {
   page = await newE2EPage({
-    url: '/src/components/embed/tests',
+    url: '/src/components/core/embed/tests',
   });
 });
 
