@@ -19,17 +19,14 @@ import { onElementEntersViewport } from '../../../utils/dom';
 let embedIdCount = 0;
 const connected = new Set();
 
-/**
- * Embeds an external media player and enables interacting with it via `postMessage`.
- */
 @Component({
   tag: 'vime-embed',
-  styleUrl: 'embed.css',
+  styleUrl: 'embed.scss',
 })
 export class Embed implements ComponentInterface {
   private intersectionObserverCleanup?: (() => void);
 
-  @Element() el?: HTMLVimeEmbedElement;
+  @Element() el!: HTMLVimeEmbedElement;
 
   @State() srcWithParams = '';
 
@@ -41,8 +38,7 @@ export class Embed implements ComponentInterface {
   @Prop() embedSrc = '';
 
   /**
-   * Reflects the title attribute of the root iframe. It should contain the title of the
-   * current media.
+   * The title of the current media so it can be set on the inner `iframe` for screen readers.
    */
   @Prop() mediaTitle = '';
 
@@ -50,7 +46,7 @@ export class Embed implements ComponentInterface {
    * The parameters to pass to the embedded player. These are encoded as a query string and
    * appended to the `embedSrc` prop.
    */
-  @Prop() params: Params = {};
+  @Prop({ attribute: 'params' }) params: Params = {};
 
   @Watch('embedSrc')
   @Watch('params')
@@ -64,7 +60,7 @@ export class Embed implements ComponentInterface {
       if (preconnect(this.srcWithParams)) connected.add(this.embedSrc);
     }
 
-    this.vimeEmbedSrcChange.emit(this.srcWithParams);
+    this.vEmbedSrcChange.emit(this.srcWithParams);
   }
 
   /**
@@ -76,13 +72,13 @@ export class Embed implements ComponentInterface {
    * A collection of URLs to that the browser should immediately start establishing a connection
    * with.
    */
-  @Prop() preconnections: string[] = [];
+  @Prop({ attribute: 'preconnections' }) preconnections: string[] = [];
 
   /**
    * A function which accepts the raw message received from the embedded media player via
    * `postMessage` and converts it into a POJO.
    */
-  @Prop() decoder?: (data: string) => Params;
+  @Prop({ attribute: 'decoder' }) decoder?: (data: string) => Params;
 
   /**
    * Emitted when the `embedSrc` or `params` props change. The payload contains the `params`
@@ -90,21 +86,21 @@ export class Embed implements ComponentInterface {
    */
   @Event({
     bubbles: false,
-  }) vimeEmbedSrcChange!: EventEmitter<EmbedEventPayload[EmbedEvent.SrcChange]>;
+  }) vEmbedSrcChange!: EventEmitter<EmbedEventPayload[EmbedEvent.SrcChange]>;
 
   /**
    * Emitted when a new message is received from the embedded player via `postMessage`.
    */
   @Event({
     bubbles: false,
-  }) vimeEmbedMessage!: EventEmitter<EmbedEventPayload[EmbedEvent.Message]>;
+  }) vEmbedMessage!: EventEmitter<EmbedEventPayload[EmbedEvent.Message]>;
 
   /**
    * Emitted when the embedded player and any new media has loaded.
    */
   @Event({
     bubbles: false,
-  }) vimeEmbedLoaded!: EventEmitter<EmbedEventPayload[EmbedEvent.Loaded]>;
+  }) vEmbedLoaded!: EventEmitter<EmbedEventPayload[EmbedEvent.Loaded]>;
 
   @Watch('preconnections')
   preconnectionsChangeHandler() {
@@ -119,7 +115,7 @@ export class Embed implements ComponentInterface {
 
   componentWillLoad() {
     this.intersectionObserverCleanup = onElementEntersViewport(
-      this.el!,
+      this.el,
       () => { this.inViewport = true; },
     );
 
@@ -138,7 +134,7 @@ export class Embed implements ComponentInterface {
     if (!originMatches) return;
 
     const message = this.decoder?.(e.data) ?? e.data;
-    if (message) this.vimeEmbedMessage.emit(message);
+    if (message) this.vEmbedMessage.emit(message);
   }
 
   /**
@@ -150,11 +146,11 @@ export class Embed implements ComponentInterface {
   }
 
   get iframe() {
-    return this.el?.querySelector<HTMLIFrameElement>('iframe');
+    return this.el.querySelector<HTMLIFrameElement>('iframe');
   }
 
   private onLoad() {
-    this.vimeEmbedLoaded.emit();
+    this.vEmbedLoaded.emit();
   }
 
   private getEmbedId() {

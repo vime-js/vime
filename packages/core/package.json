@@ -28,16 +28,19 @@
     "generate": "stencil generate",
     "release": "semantic-release -e ../../tools/semantic-release"
   },
+  "dependencies": {
+    "@stencil/state-tunnel": "^1.0.1"
+  },
   "devDependencies": {
-    "@stencil/core": "^1.15.0",
-    "@stencil/store": "^1.3.0",
-    "@types/jest": "25.2.3",
-    "@types/puppeteer": "2.0.1",
-    "jest": "26.0.1",
-    "jest-cli": "26.0.1",
-    "prettier": "^2.0.5",
-    "puppeteer": "2.1.1",
-    "puppeteer-core": "2.1.1"
+    "@stencil/core": "^1.16.0",
+    "@stencil/sass": "^1.3.2",
+    "@types/jest": "26.0.4",
+    "@types/puppeteer": "3.0.1",
+    "jest": "26.1.0",
+    "jest-cli": "26.1.0",
+    "jest-watch-typeahead": "^0.6.0",
+    "puppeteer": "5.0.0",
+    "puppeteer-core": "5.0.0"
   },
   "publishConfig": {
     "access": "public"

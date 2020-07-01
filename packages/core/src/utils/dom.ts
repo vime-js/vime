@@ -3,6 +3,19 @@ import { isUndefined } from './unit';
 type RemoveIntersectionObserverCallback = () => void;
 
 /**
+ * Listen to an event on the given DOM node. Returns a callback to remove the event listener.
+ */
+export function listen(
+  node: EventTarget,
+  event: string,
+  handler: EventListenerOrEventListenerObject,
+  options?: boolean | AddEventListenerOptions | EventListenerOptions,
+) {
+  node.addEventListener(event, handler, options);
+  return () => node.removeEventListener(event, handler, options);
+}
+
+/**
  * Fires the given callback when the given element is visible in the viewport. Returns a
  * cleanup function.
  */

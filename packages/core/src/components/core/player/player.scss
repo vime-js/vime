@@ -1,0 +1,70 @@
+vime-player {
+  /**
+   * @prop --vime-font-family: A custom font family to be used throughout the player.
+  */
+
+  --vime-font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  box-sizing: border-box;
+  direction: ltr;
+  font-family: var(--vime-font-family);
+  -moz-osx-font-smoothing: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-tap-highlight-color: transparent;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  line-height: 1.7;
+  max-width: 100%;
+  min-width: 414px;
+  position: relative;
+  text-shadow: none;
+  transition: box-shadow 0.3s ease;
+
+  *,
+  *::after,
+  *::before {
+    box-sizing: inherit;
+  }
+
+  button {
+    font: inherit;
+    line-height: inherit;
+    width: auto;
+
+    &::-moz-focus-inner {
+      border:0;
+    }
+  }
+
+  // Fix 300ms delay
+  a,
+  button,
+  input,
+  label {
+    touch-action: manipulation;
+  }
+
+  &.video {
+    height: 0;
+    background: #000;
+    overflow: hidden;
+  }
+
+  &.fullscreen {
+    background: #000;
+    margin: 0;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .blocker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: $z-index-blocker;
+    display: inline-block;
+  }
+}

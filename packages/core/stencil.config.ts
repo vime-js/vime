@@ -1,8 +1,24 @@
 import { Config } from '@stencil/core';
+import { sass } from "@stencil/sass";
 
 export const config: Config = {
   namespace: 'Vime',
   taskQueue: 'async',
+  buildEs5: false,
+  extras: {
+    cssVarsShim: false,
+    dynamicImportShim: false,
+    safari10: false,
+    scriptDataOpts: false,
+    shadowDomShim: false
+  },
+  plugins: [
+    sass({
+      injectGlobalPaths: [
+        'src/globals/variables.scss'
+      ]
+    })
+  ],
   outputTargets: [
     {
       type: 'dist',
@@ -13,6 +29,16 @@ export const config: Config = {
     },
   ],
   testing: {
+    globals: {
+      'ts-jest': {
+        diagnostics: false
+      }
+    },
+    // @ts-ignore
+    watchPlugins: [
+      'jest-watch-typeahead/filename',
+      'jest-watch-typeahead/testname',
+    ],
     allowableMismatchedPixels: 200,
     pixelmatchThreshold: 0.05,
     waitBeforeScreenshot: 20,

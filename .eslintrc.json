@@ -6,21 +6,26 @@
     "airbnb-typescript",
     "plugin:@stencil/recommended"
   ],
+  "ignorePatterns": [
+    "ProviderTemplate.ts"
+  ],
   "rules": {
-    "import/prefer-default-export": "off",
+    "no-console": "off",
+    "default-case": "off",
+    "class-methods-use-this": "off",
+    "react/jsx-no-bind": "off",
+    "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/no-unknown-property": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": true
+    }],
     "@typescript-eslint/no-unused-vars": ["error", {
       "varsIgnorePattern": "^h$"
     }],
     "@typescript-eslint/no-unused-expressions": ["error", {
       "allowTernary": true
-    }],
-    "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": true
-    }],
-    "react/jsx-no-bind": "off",
-    "react/react-in-jsx-scope": "off",
-    "default-case": "off",
-    "class-methods-use-this": "off"
+    }]
   }
 }

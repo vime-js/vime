@@ -11,11 +11,7 @@ beforeEach(async () => {
 });
 
 it('should be structurally sound', () => {
-  expect(page.root).toMatchInlineSnapshot(`
-    <vime-embed>
-      <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="1" id="vime-embed-1" src=""></iframe>
-    </vime-embed>
-  `);
+  expect(page.root).toMatchSnapshot();
 });
 
 it('should set the iframe title', async () => {

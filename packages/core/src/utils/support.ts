@@ -1,9 +1,10 @@
-import { isFunction } from './unit';
+import { isFunction, isString } from './unit';
+import { listen } from './dom';
 
 export const IS_CLIENT = typeof window !== 'undefined';
 export const UA = (IS_CLIENT && window.navigator.userAgent.toLowerCase());
-export const IS_IOS = (UA && /iphone|ipad|ipod|ios/.test(UA));
-export const IS_ANDROID = (UA && /android/.test(UA));
+export const IS_IOS = (isString(UA) ? /iphone|ipad|ipod|ios/.test(UA as string) : false);
+export const IS_ANDROID = (isString(UA) ? /android/.test(UA as string) : false);
 export const IS_MOBILE = (IS_IOS || IS_ANDROID);
 export const IS_IPHONE = (IS_CLIENT && /(iPhone|iPod)/gi.test(navigator.platform));
 
@@ -12,6 +13,28 @@ export const ORIGIN = (window.location.protocol !== 'file:')
   : undefined;
 
 export type WebKitPresentationMode = 'picture-in-picture' | 'inline' | 'fullscreen';
+
+export const onTouchInputChange = (callback: (isTouch: boolean) => void) => {
+  if (!IS_CLIENT) return () => {};
+
+  let lastTouchTime = 0;
+
+  const offTouchListener = listen(document, 'touchstart', () => {
+    lastTouchTime = new Date().getTime();
+    callback(true);
+  }, true);
+
+  const offMouseListener = listen(document, 'mousemove', () => {
+    // Filter emulated events coming from touch events
+    if ((new Date().getTime()) - lastTouchTime < 500) return;
+    callback(false);
+  }, true);
+
+  return () => {
+    offTouchListener();
+    offMouseListener();
+  };
+};
 
 /**
  * Checks if a video player can enter fullscreen.

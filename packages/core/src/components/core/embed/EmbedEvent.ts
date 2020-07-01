@@ -1,9 +1,9 @@
 import { Params } from '../../../utils/network';
 
 export enum EmbedEvent {
-  SrcChange = 'vimeEmbedSrcChange',
-  Message = 'vimeEmbedMessage',
-  Loaded = 'vimeEmbedLoaded'
+  SrcChange = 'vEmbedSrcChange',
+  Message = 'vEmbedMessage',
+  Loaded = 'vEmbedLoaded'
 }
 
 export interface EmbedEventPayload {
