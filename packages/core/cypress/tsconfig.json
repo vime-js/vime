@@ -1,0 +1,10 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "../node_modules",
+    "types": ["cypress", "cypress-plugin-snapshots"]
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}

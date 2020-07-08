@@ -1,20 +1,22 @@
-import { ComponentInterface } from '@stencil/core';
+import { ComponentInterface, EventEmitter } from '@stencil/core';
+import { PlayerProp, PlayerProps } from '../core/player/PlayerProp';
+import { openPlayerWormhole } from '../core/player/PlayerWormhole';
 
 export interface MediaProviderAdapter<InternalPlayerType = any> {
-  getInternalPlayer(): InternalPlayerType
+  getInternalPlayer(): Promise<InternalPlayerType>
   play(): Promise<void>
   pause(): Promise<void>
-  canPlay(type: string): boolean
-  setCurrentTime(time: number): void;
-  setMuted(muted: boolean): void;
-  setVolume(volume: number): void;
+  canPlay(type: string): Promise<boolean>
+  setCurrentTime(time: number): Promise<void>;
+  setMuted(muted: boolean): Promise<void>;
+  setVolume(volume: number): Promise<void>;
   canSetPlaybackRate?(): Promise<boolean>
-  setPlaybackRate?(rate: number): void;
-  canSetMediaQuality?(): Promise<boolean>
-  setMediaQuality?(quality: string): void;
-  canSetFullscreen?(): boolean
+  setPlaybackRate?(rate: number): Promise<void>;
+  canSetPlaybackQuality?(): Promise<boolean>
+  setPlaybackQuality?(quality: string): Promise<void>;
+  canSetFullscreen?(): Promise<boolean>
   enterFullscreen?(options?: FullscreenOptions): Promise<void>;
-  canSetPiP?(): boolean
+  canSetPiP?(): Promise<boolean>
   enterPiP?(): Promise<void>;
   exitPiP?(): Promise<void>;
 }
@@ -24,39 +26,29 @@ export type MockMediaProviderAdapter = {
 };
 
 export interface MediaProvider<InternalPlayerType = any> extends ComponentInterface {
-  /**
-   * **INTERNAL:** Do not interact with this prop, refer to the `vime-player` component.
-   */
-  controls: boolean
-
-  /**
-   * **INTERNAL:** Do not interact with this prop, refer to `vime-player` component.
-   */
-  debug: boolean
-
-  /**
-   * **INTERNAL:** Do not interact with this prop, refer to the `vime-player` component.
-   */
-  loop: boolean
-
-  /**
-   * **INTERNAL:** Do not interact with this prop, refer to the `vime-player` component.
-   */
-  autoplay: boolean
-
-  /**
-   * **INTERNAL:** Do not interact with this prop, refer to the `vime-player` component.
-   */
-  playsinline: boolean
-
-  /**
-   * **INTERNAL:** Do not interact with this prop, refer to the `vime-player` component.
-   */
-  muted: boolean
-
-  /**
-   * **INTERNAL:** Returns the adapter that each provider must implement, to enable the core player
-   * component (`vime-player`) to control it. Do not interact with this method directly.
-   */
+  [PlayerProp.Controls]: PlayerProps[PlayerProp.Controls]
+  [PlayerProp.Language]: PlayerProps[PlayerProp.Language]
+  [PlayerProp.Debug]: PlayerProps[PlayerProp.Debug]
+  [PlayerProp.Loop]: PlayerProps[PlayerProp.Loop]
+  [PlayerProp.Autoplay]: PlayerProps[PlayerProp.Autoplay]
+  [PlayerProp.Playsinline]: PlayerProps[PlayerProp.Playsinline]
+  [PlayerProp.Muted]: PlayerProps[PlayerProp.Muted]
+  vLoadStart: EventEmitter<void>
   getAdapter(): Promise<MediaProviderAdapter<InternalPlayerType>>
 }
+
+export interface MediaProviderConstructor {
+  new(...args: any[]): MediaProvider
+}
+
+export const openProviderWormhole = (
+  Provider: MediaProviderConstructor,
+) => openPlayerWormhole(Provider, [
+  PlayerProp.Autoplay,
+  PlayerProp.Controls,
+  PlayerProp.Language,
+  PlayerProp.Muted,
+  PlayerProp.Debug,
+  PlayerProp.Loop,
+  PlayerProp.Playsinline,
+]);

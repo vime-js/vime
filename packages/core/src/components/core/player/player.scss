@@ -1,6 +1,9 @@
 vime-player {
   /**
    * @prop --vime-font-family: A custom font family to be used throughout the player.
+   * 
+   * @prop --vime-theme: A custom theme (color) to be used throughout the player. Any valid CSS 
+   * `color` property should work (HEX, RGBA, HLS, ...).
   */
 
   --vime-font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
@@ -14,6 +17,8 @@ vime-player {
   font-variant-numeric: tabular-nums;
   font-weight: 500;
   line-height: 1.7;
+  width: 100%;
+  display: block;
   max-width: 100%;
   min-width: 414px;
   position: relative;
@@ -56,6 +61,7 @@ vime-player {
     border-radius: 0;
     width: 100%;
     height: 100%;
+    padding-bottom: 0 !important;
   }
 
   .blocker {

@@ -28,7 +28,7 @@ export const en = {
   speed: 'Speed',
   normal: 'Normal',
   none: 'None',
-  mediaQuality: 'Media Quality',
+  playbackQuality: 'Playback Quality',
   loop: 'Loop',
   disabled: 'Disabled',
   off: 'Off',

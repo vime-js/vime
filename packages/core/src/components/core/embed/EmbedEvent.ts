@@ -1,13 +1,11 @@
-import { Params } from '../../../utils/network';
-
 export enum EmbedEvent {
-  SrcChange = 'vEmbedSrcChange',
-  Message = 'vEmbedMessage',
-  Loaded = 'vEmbedLoaded'
+  SrcChange = 'embedSrcChange',
+  Message = 'embedMessage',
+  Loaded = 'embedLoaded'
 }
 
 export interface EmbedEventPayload {
   [EmbedEvent.SrcChange]: string,
   [EmbedEvent.Loaded]: void,
-  [EmbedEvent.Message]: Params
+  [EmbedEvent.Message]: any
 }

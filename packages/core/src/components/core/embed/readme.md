@@ -7,23 +7,23 @@ Embeds an external media player and enables interacting with it via `postMessage
 
 ## Properties
 
-| Property         | Attribute     | Description                                                                                                                     | Type                                                                                       | Default     |
-| ---------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ----------- |
-| `decoder`        | --            | A function which accepts the raw message received from the embedded media player via `postMessage` and converts it into a POJO. | `((data: string) => Record<string, string \| number \| boolean \| string[]>) \| undefined` | `undefined` |
-| `embedSrc`       | `embed-src`   | A URL that will load the external player and media (Eg: https://www.youtube.com/embed/DyTCOwB0DVw).                             | `string`                                                                                   | `''`        |
-| `mediaTitle`     | `media-title` | The title of the current media so it can be set on the inner `iframe` for screen readers.                                       | `string`                                                                                   | `''`        |
-| `origin`         | `origin`      | Where the src request had originated from without any path information.                                                         | `string \| undefined`                                                                      | `undefined` |
-| `params`         | --            | The parameters to pass to the embedded player. These are encoded as a query string and appended to the `embedSrc` prop.         | `{ [x: string]: string \| number \| boolean \| string[]; }`                                | `{}`        |
-| `preconnections` | --            | A collection of URLs to that the browser should immediately start establishing a connection with.                               | `string[]`                                                                                 | `[]`        |
+| Property         | Attribute     | Description                                                                                                                     | Type                                                                | Default     |
+| ---------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ----------- |
+| `decoder`        | --            | A function which accepts the raw message received from the embedded media player via `postMessage` and converts it into a POJO. | `((data: string) => Record<string, any> \| undefined) \| undefined` | `undefined` |
+| `embedSrc`       | `embed-src`   | A URL that will load the external player and media (Eg: https://www.youtube.com/embed/DyTCOwB0DVw).                             | `string`                                                            | `''`        |
+| `mediaTitle`     | `media-title` | The title of the current media so it can be set on the inner `iframe` for screen readers.                                       | `string`                                                            | `''`        |
+| `origin`         | `origin`      | Where the src request had originated from without any path information.                                                         | `string \| undefined`                                               | `undefined` |
+| `params`         | --            | The parameters to pass to the embedded player. These are encoded as a query string and appended to the `embedSrc` prop.         | `{ [x: string]: any; }`                                             | `{}`        |
+| `preconnections` | --            | A collection of URLs to that the browser should immediately start establishing a connection with.                               | `string[]`                                                          | `[]`        |
 
 
 ## Events
 
-| Event             | Description                                                                                                                                        | Type                                                                     |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `vEmbedLoaded`    | Emitted when the embedded player and any new media has loaded.                                                                                     | `CustomEvent<void>`                                                      |
-| `vEmbedMessage`   | Emitted when a new message is received from the embedded player via `postMessage`.                                                                 | `CustomEvent<{ [x: string]: string \| number \| boolean \| string[]; }>` |
-| `vEmbedSrcChange` | Emitted when the `embedSrc` or `params` props change. The payload contains the `params` serialized into a query string and appended to `embedSrc`. | `CustomEvent<string>`                                                    |
+| Event            | Description                                                                                                                                        | Type                  |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `embedLoaded`    | Emitted when the embedded player and any new media has loaded.                                                                                     | `CustomEvent<void>`   |
+| `embedMessage`   | Emitted when a new message is received from the embedded player via `postMessage`.                                                                 | `CustomEvent<any>`    |
+| `embedSrcChange` | Emitted when the `embedSrc` or `params` props change. The payload contains the `params` serialized into a query string and appended to `embedSrc`. | `CustomEvent<string>` |
 
 
 ## Methods
@@ -38,6 +38,19 @@ Type: `Promise<void>`
 
 
 
+
+## Dependencies
+
+### Used by
+
+ - [vime-youtube](../../providers/youtube)
+
+### Graph
+```mermaid
+graph TD;
+  vime-youtube --> vime-embed
+  style vime-embed fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

@@ -1,9 +1,9 @@
 import {
-  Prop, Method, Component, Element,
+  Prop, Method, Component, Event, EventEmitter,
 } from '@stencil/core';
-import { MediaProvider, MockMediaProviderAdapter } from '../MediaProvider';
+import { MediaProvider, MockMediaProviderAdapter, openProviderWormhole } from '../MediaProvider';
 import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/player/PlayerState';
-import { PlayerProp } from '../../core/player/PlayerProps';
+import { PlayerProp } from '../../core/player/PlayerProp';
 
 @Component({
   tag: 'vime-faketube',
@@ -11,44 +11,52 @@ import { PlayerProp } from '../../core/player/PlayerProps';
 export class FakeTube implements MediaProvider {
   private dispatch!: PlayerStateDispatcher;
 
-  @Element() el!: HTMLVimeFaketubeElement;
+  /**
+   * @internal
+   */
+  @Prop({ attribute: null }) language!: string;
 
   /**
-   * @inheritDoc
+   * @internal
    */
-  @Prop({ attribute: null }) autoplay = false;
+  @Prop({ attribute: null }) autoplay!: boolean;
 
   /**
-   * @inheritDoc
+   * @internal
    */
-  @Prop({ attribute: null }) controls = false;
+  @Prop({ attribute: null }) controls!: boolean;
 
   /**
-   * @inheritDoc
+   * @internal
    */
-  @Prop({ attribute: null }) debug = false;
+  @Prop({ attribute: null }) debug!: boolean;
 
   /**
-   * @inheritDoc
+   * @internal
    */
-  @Prop({ attribute: null }) loop = false;
+  @Prop({ attribute: null }) loop!: boolean;
 
   /**
-   * @inheritDoc
+   * @internal
    */
-  @Prop({ attribute: null }) muted = false;
+  @Prop({ attribute: null }) muted!: boolean;
 
   /**
-   * @inheritDoc
+   * @internal
    */
-  @Prop({ attribute: null }) playsinline = false;
+  @Prop({ attribute: null }) playsinline!: boolean;
+
+  /**
+   * @internal
+   */
+  @Event() vLoadStart!: EventEmitter<void>;
 
   connectedCallback() {
-    this.dispatch = createPlayerStateDispatcher(this.el);
+    this.dispatch = createPlayerStateDispatcher(this);
   }
 
   /**
-   * @inheritDoc
+   * Returns a mock adapter.
    */
   @Method()
   async getAdapter(): Promise<MockMediaProviderAdapter> {
@@ -62,13 +70,21 @@ export class FakeTube implements MediaProvider {
       setVolume: jest.fn(),
       canSetPlaybackRate: jest.fn(),
       setPlaybackRate: jest.fn(),
-      canSetMediaQuality: jest.fn(),
-      setMediaQuality: jest.fn(),
+      canSetPlaybackQuality: jest.fn(),
+      setPlaybackQuality: jest.fn(),
       canSetFullscreen: jest.fn(),
       enterFullscreen: jest.fn(),
       enterPiP: jest.fn(),
       exitPiP: jest.fn(),
     };
+  }
+
+  /**
+   * Dispatches the `vLoadStart` event.
+   */
+  @Method()
+  async dispatchLoadStart() {
+    this.vLoadStart.emit();
   }
 
   /**
@@ -79,3 +95,5 @@ export class FakeTube implements MediaProvider {
     this.dispatch(prop as any, value);
   }
 }
+
+openProviderWormhole(FakeTube);

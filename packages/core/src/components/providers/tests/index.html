@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="../../globals/test.css">
+  <script type="module" src="../../../../dist/vime/vime.esm.js"></script>
+</head>
+<body>
+
+<div id="container"></div>
+
+<div class="buttons">
+  <button id="youtube" type="button">YouTube</button>
+</div>
+
+<script>
+  const addClickEvent = (id, callback) => {
+    document.getElementById(id).addEventListener('click', callback);
+  }
+
+  const addProvider = (provider) => {
+    const container = document.getElementById('container');
+    container.innerHTML = `<vime-player muted controls>${provider}</vime-player>`
+  }
+
+  addClickEvent('youtube', () => { addProvider('<vime-youtube video-id="DyTCOwB0DVw" />') });
+</script>
+
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #container {
+    width: 80%;
+  }
+
+  .buttons {
+    margin-top: 16px;
+  }
+</style>
+</body>
+</html>

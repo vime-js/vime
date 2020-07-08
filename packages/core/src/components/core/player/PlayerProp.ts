@@ -8,6 +8,7 @@ export enum PlayerProp {
   Duration = 'duration',
   MediaTitle = 'mediaTitle',
   CurrentSrc = 'currentSrc',
+  CurrentPoster = 'currentPoster',
   CurrentTime = 'currentTime',
   Seeking = 'seeking',
   Debug = 'debug',
@@ -15,12 +16,11 @@ export enum PlayerProp {
   PlaybackEnded = 'playbackEnded',
   PlaybackRate= 'playbackRate',
   PlaybackRates = 'playbackRates',
-  MediaQuality = 'mediaQuality',
-  MediaQualities= 'mediaQualities',
+  PlaybackQuality = 'playbackQuality',
+  PlaybackQualities= 'playbackQualities',
   TextTracks = 'textTracks',
   Errors = 'errors',
   PlaybackReady = 'playbackReady',
-  LoadedMetadata = 'loadedMetadata',
   Buffered = 'buffered',
   Buffering = 'buffering',
   // eslint-disable-next-line no-shadow
@@ -34,7 +34,7 @@ export enum PlayerProp {
   IsLive = 'isLive',
   IsMobile = 'isMobile',
   IsTouch = 'isTouch',
-  isPiPActive = 'isPiPActive',
+  IsPiPActive = 'isPiPActive',
   IsFullscreenActive = 'isFullscreenActive',
   Playsinline = 'playsinline',
   Muted = 'muted',
@@ -81,7 +81,7 @@ const externalWritable = new Set([
   PlayerProp.CurrentTime,
   PlayerProp.Language,
   PlayerProp.Loop,
-  PlayerProp.MediaQuality,
+  PlayerProp.PlaybackQuality,
   PlayerProp.Muted,
   PlayerProp.PlaybackRate,
   PlayerProp.Playsinline,
@@ -117,29 +117,32 @@ const internalReadonly = new Set<InternalReadonlyPlayerProp>([
  */
 export const isInternalReadonlyPlayerProp = (prop: PlayerProp) => internalReadonly.has(prop as any);
 
-const dontResetOnMediaChange = new Set([
-  PlayerProp.Playsinline,
-  PlayerProp.Muted,
-  PlayerProp.Volume,
-  PlayerProp.Debug,
-  PlayerProp.Autopause,
-  PlayerProp.IsMobile,
-  PlayerProp.IsTouch,
-  PlayerProp.Controls,
-  PlayerProp.Autoplay,
-  PlayerProp.Loop,
-  PlayerProp.ViewType,
-  PlayerProp.AspectRatio,
-  PlayerProp.Language,
-  PlayerProp.Languages,
-  PlayerProp.Translations,
-  PlayerProp.I18N,
-]);
-
 /**
- * Whether the given prop should reset to it's default state when the media changes.
+ * Used when the media changes to reset certain properties to their default value. Properties not
+ * listed here are NOT reset.
  */
-export const shouldResetPropOnMediaChange = (prop: PlayerProp) => !dontResetOnMediaChange.has(prop);
+export const resetablePlayerProps = {
+  [PlayerProp.Paused]: true,
+  [PlayerProp.CurrentTime]: 0,
+  [PlayerProp.Duration]: -1,
+  [PlayerProp.Buffered]: 0,
+  [PlayerProp.Seeking]: false,
+  [PlayerProp.Playing]: false,
+  [PlayerProp.Buffering]: false,
+  [PlayerProp.PlaybackReady]: false,
+  [PlayerProp.MediaTitle]: undefined,
+  [PlayerProp.CurrentSrc]: undefined,
+  [PlayerProp.CurrentPoster]: undefined,
+  [PlayerProp.PlaybackRate]: 1,
+  [PlayerProp.PlaybackRates]: [1],
+  [PlayerProp.PlaybackQuality]: undefined,
+  [PlayerProp.PlaybackQualities]: [],
+  [PlayerProp.PlaybackStarted]: false,
+  [PlayerProp.PlaybackEnded]: false,
+  [PlayerProp.TextTracks]: [],
+  [PlayerProp.MediaType]: undefined,
+  [PlayerProp.IsLive]: false,
+};
 
 export interface PlayerProps {
   /**
@@ -149,28 +152,34 @@ export interface PlayerProps {
   [PlayerProp.Paused]: boolean
 
   /**
-   * **READONLY:** Whether media is actively playing back. Defaults to `false` if no media has
+   * `@readonly` Whether media is actively playing back. Defaults to `false` if no media has
    * loaded or playback has not started.
    */
   [PlayerProp.Playing]: boolean
 
   /**
-   * **READONLY:** A `double` indicating the total playback length of the media in seconds. Defaults
+   * `@readonly` A `double` indicating the total playback length of the media in seconds. Defaults
    * to `-1` if no media has been loaded.
    */
   [PlayerProp.Duration]: number
 
   /**
-   * **READONLY:** The title of the current media. Defaults to an empty string if no media has been
+   * `@readonly` The title of the current media. Defaults to `undefined` if no media has been
    * loaded.
    */
-  [PlayerProp.MediaTitle]: string
+  [PlayerProp.MediaTitle]?: string
 
   /**
-   * **READONLY:** The absolute URL of the media resource that has been chosen. Defaults to
+   * `@readonly` The absolute URL of the media resource that has been chosen. Defaults to
    * `undefined` if no media has been loaded.
    */
   [PlayerProp.CurrentSrc]?: string
+
+  /**
+   * `@readonly` The absolute URL of the poster for the current media resource. Defaults to
+   * `undefined` if no media/poster has been loaded.
+   */
+  [PlayerProp.CurrentPoster]?: string
 
   /**
    * A `double` indicating the current playback time in seconds. Defaults to `0` if the media has
@@ -189,12 +198,7 @@ export interface PlayerProps {
   [PlayerProp.Autoplay]: boolean
 
   /**
-   * **READONLY:** Whether the metadata for current media resource has loaded.
-   */
-  [PlayerProp.LoadedMetadata]: boolean
-
-  /**
-   * **READONLY:** Whether media is ready for playback to begin.
+   * `@readonly` Whether media is ready for playback to begin.
    */
   [PlayerProp.PlaybackReady]: boolean
 
@@ -209,7 +213,7 @@ export interface PlayerProps {
   [PlayerProp.Muted]: boolean
 
   /**
-   * **READONLY:** The length of the media in seconds that has been downloaded by the browser.
+   * `@readonly` The length of the media in seconds that has been downloaded by the browser.
    */
   [PlayerProp.Buffered]: number
 
@@ -222,7 +226,7 @@ export interface PlayerProps {
   [PlayerProp.PlaybackRate]: number
 
   /**
-   * **READONLY:** The playback rates available for the current media.
+   * `@readonly` The playback rates available for the current media.
    */
   [PlayerProp.PlaybackRates]: number[]
 
@@ -232,41 +236,42 @@ export interface PlayerProps {
    * second (kbps) and sample rate in kilohertz (kHZ). For video this will be the number of vertical
    * pixels it supports. For example, if the video has a resolution of `1920x1080` then the quality
    * will return `1080p`. Defaults to `undefined` which you can interpret as the quality is unknown.
-   * The quality can only be set to a quality found in the `mediaQualities` prop. Some providers
-   * may not allow changing the quality, you can check if it's possible via `canSetMediaQuality()`.
+   * The quality can only be set to a quality found in the `playbackQualities` prop. Some providers
+   * may not allow changing the quality, you can check if it's possible via
+   * `canSetPlaybackQuality()`.
    */
-  [PlayerProp.MediaQuality]?: string
+  [PlayerProp.PlaybackQuality]?: string
 
   /**
-   * **READONLY:** The media qualities available for the current media.
+   * `@readonly` The media qualities available for the current media.
    */
-  [PlayerProp.MediaQualities]: string[]
+  [PlayerProp.PlaybackQualities]: string[]
 
   /**
-   * **READONLY:** Whether the player is in the process of seeking to a new time position.
+   * `@readonly` Whether the player is in the process of seeking to a new time position.
    */
   [PlayerProp.Seeking]: boolean
 
   /**
-   * **READONLY:** Whether the player is in debug mode and should `console.log` information about
+   * `@readonly` Whether the player is in debug mode and should `console.log` information about
    * its internal state.
    */
   [PlayerProp.Debug]: boolean
 
   /**
-   * **READONLY:** Whether the media has initiated playback. In other words it will be true if
+   * `@readonly` Whether the media has initiated playback. In other words it will be true if
    * `currentTime > 0`.
    */
   [PlayerProp.PlaybackStarted]: boolean
 
   /**
-   * **READONLY:** Whether media playback has reached the end. In other words it'll be true if
+   * `@readonly` Whether media playback has reached the end. In other words it'll be true if
    * `currentTime === duration`.
    */
   [PlayerProp.PlaybackEnded]: boolean
 
   /**
-   * **READONLY:** Whether playback has temporarily stopped because of a lack of temporary data.
+   * `@readonly` Whether playback has temporarily stopped because of a lack of temporary data.
    */
   [PlayerProp.Buffering]: boolean
 
@@ -278,12 +283,12 @@ export interface PlayerProps {
   [PlayerProp.Controls]: boolean
 
   /**
-   * **READONLY:** A collection of errors that have occurred ordered by `[oldest, ..., newest]`.
+   * `@readonly` A collection of errors that have occurred ordered by `[oldest, ..., newest]`.
    */
   [PlayerProp.Errors]: Error[]
 
   /**
-   * **READONLY:** The text tracks (WebVTT) associated with the current media.
+   * `@readonly` The text tracks (WebVTT) associated with the current media.
    */
   [PlayerProp.TextTracks]: TextTrack[]
 
@@ -293,7 +298,7 @@ export interface PlayerProps {
   [PlayerProp.Volume]: number
 
   /**
-   * **READONLY:** Whether the player is currently in fullscreen mode.
+   * `@readonly` Whether the player is currently in fullscreen mode.
    */
   [PlayerProp.IsFullscreenActive]: boolean
 
@@ -304,7 +309,7 @@ export interface PlayerProps {
   [PlayerProp.AspectRatio]: string
 
   /**
-   * **READONLY:** The type of player view that is being used, whether it's an audio player view or
+   * `@readonly` The type of player view that is being used, whether it's an audio player view or
    * video player view. Normally if the media type is of audio then the view is of type audio, but
    * in some cases it might be desirable to show a different view type. For example, when playing
    * audio with a poster. This is subject to the provider allowing it. Defaults to `undefined`
@@ -313,56 +318,56 @@ export interface PlayerProps {
   [PlayerProp.ViewType]?: ViewType
 
   /**
-   * **READONLY:** Whether the current view is of type `audio`, shorthand for
+   * `@readonly` Whether the current view is of type `audio`, shorthand for
    * `viewType === ViewType.Audio`.
    */
   [PlayerProp.IsAudioView]: boolean
 
   /**
-   * **READONLY:** Whether the current view is of type `video`, shorthand for
+   * `@readonly` Whether the current view is of type `video`, shorthand for
    * `viewType === ViewType.Video`.
    */
   [PlayerProp.IsVideoView]: boolean
 
   /**
-   * **READONLY:** The type of media that is currently active, whether it's audio or video. Defaults
+   * `@readonly` The type of media that is currently active, whether it's audio or video. Defaults
    * to `undefined` when no media has been loaded or the type cannot be determined.
    */
   [PlayerProp.MediaType]?: MediaType
 
   /**
-   * **READONLY:** Whether the current media is of type `audio`, shorthand for
+   * `@readonly` Whether the current media is of type `audio`, shorthand for
    * `mediaType === MediaType.Audio`.
    */
   [PlayerProp.IsAudio]: boolean
 
   /**
-   * **READONLY:** Whether the current media is of type `video`, shorthand for
+   * `@readonly` Whether the current media is of type `video`, shorthand for
    * `mediaType === MediaType.Video`.
    */
   [PlayerProp.IsVideo]: boolean
 
   /**
-   * **READONLY:** Whether the player is in mobile mode. This is determined by parsing
+   * `@readonly` Whether the player is in mobile mode. This is determined by parsing
    * `window.navigator.userAgent`.
    */
   [PlayerProp.IsMobile]: boolean
 
   /**
-   * **READONLY:** Whether the player is in touch mode. This is determined by listening for
-   * mouse and touch events and toggling this value.
+   * `@readonly` Whether the player is in touch mode. This is determined by listening for
+   * mouse/touch events and toggling this value.
    */
   [PlayerProp.IsTouch]: boolean
 
   /**
-   * **READONLY:** Whether the current media is being broadcast live.
+   * `@readonly` Whether the current media is being broadcast live.
    */
   [PlayerProp.IsLive]: boolean
 
   /**
-   * **READONLY:** Whether the player is currently in picture-in-picture mode.
+   * `@readonly` Whether the player is currently in picture-in-picture mode.
    */
-  [PlayerProp.isPiPActive]: boolean
+  [PlayerProp.IsPiPActive]: boolean
 
   /**
    * Whether the player should automatically pause when another Vime player starts/resumes playback.
@@ -383,18 +388,18 @@ export interface PlayerProps {
   [PlayerProp.Language]: string
 
   /**
-   * **READONLY:** The languages that are currently available. You can add new languages via the
+   * `@readonly` The languages that are currently available. You can add new languages via the
    * `extendLanguage` method.
    */
   [PlayerProp.Languages]: string[]
 
   /**
-   * **READONLY:** Contains each language and it's respective translation map.
+   * `@readonly` Contains each language and it's respective translation map.
    */
   [PlayerProp.Translations]: Record<string, Record<string, string>>,
 
   /**
-   * **READONLY:** A dictionary of translations for the current language.
+   * `@readonly` A dictionary of translations for the current language.
    */
   [PlayerProp.I18N]: Record<string, string>
 }

@@ -22,13 +22,11 @@ export function listen(
 export const onElementEntersViewport = (
   el: HTMLElement,
   cb: () => void,
-  options = { threshold: 0.75 },
+  options = { threshold: 0.25 },
 ): RemoveIntersectionObserverCallback => {
   if (!isUndefined(window.IntersectionObserver)) {
     const observer = new window.IntersectionObserver((entries) => {
-      const { isIntersecting } = entries[0];
-
-      if (isIntersecting) {
+      if (entries[0].isIntersecting) {
         cb();
         observer.unobserve(el);
       }

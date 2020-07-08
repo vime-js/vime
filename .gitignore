@@ -5,6 +5,7 @@ loader/
 packages/*/dist/
 packages/*/www/
 packages/*/loader/
+packages/*/cypress/videos/
 
 *~
 *.sw[mnpcod]

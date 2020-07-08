@@ -1,7 +1,9 @@
-import { InternalWritablePlayerProp, InternalWritablePlayerProps } from './PlayerProps';
+import { getElement } from '@stencil/core';
+import { HTMLStencilElement } from '@stencil/core/internal';
+import { InternalWritablePlayerProp, InternalWritablePlayerProps } from './PlayerProp';
 
 export type PlayerStateChange = {
-  by: string,
+  by: HTMLStencilElement,
   prop: InternalWritablePlayerProp,
   value: any
 };
@@ -12,11 +14,14 @@ export type PlayerStateDispatcher = <P extends keyof InternalWritablePlayerProps
 ) => void;
 
 export const createPlayerStateDispatcher = (
-  el: HTMLElement,
+  ref: any,
 ): PlayerStateDispatcher => (prop: any, value: any) => {
+  const el = getElement(ref);
+
   const event = new CustomEvent<PlayerStateChange>('vStateChange', {
     bubbles: true,
-    detail: { by: el.nodeName, prop, value },
+    composed: true,
+    detail: { by: el, prop, value },
   });
 
   el.dispatchEvent(event);

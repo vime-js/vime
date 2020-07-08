@@ -26,11 +26,13 @@ const connected = new Set();
 export class Embed implements ComponentInterface {
   private intersectionObserverCleanup?: (() => void);
 
+  private iframe?: HTMLIFrameElement;
+
   @Element() el!: HTMLVimeEmbedElement;
 
   @State() srcWithParams = '';
 
-  @State() inViewport = false;
+  @State() hasEnteredViewport = false;
 
   /**
    * A URL that will load the external player and media (Eg: https://www.youtube.com/embed/DyTCOwB0DVw).
@@ -50,17 +52,17 @@ export class Embed implements ComponentInterface {
 
   @Watch('embedSrc')
   @Watch('params')
-  srcChangeHandler() {
+  srcChange() {
     this.srcWithParams = appendParamsToURL(this.embedSrc, this.params);
   }
 
   @Watch('srcWithParams')
-  srcWithParamsChangeHandler() {
-    if (!this.inViewport && !connected.has(this.embedSrc)) {
+  srcWithParamsChange() {
+    if (!this.hasEnteredViewport && !connected.has(this.embedSrc)) {
       if (preconnect(this.srcWithParams)) connected.add(this.embedSrc);
     }
 
-    this.vEmbedSrcChange.emit(this.srcWithParams);
+    this.embedSrcChange.emit(this.srcWithParams);
   }
 
   /**
@@ -78,7 +80,7 @@ export class Embed implements ComponentInterface {
    * A function which accepts the raw message received from the embedded media player via
    * `postMessage` and converts it into a POJO.
    */
-  @Prop({ attribute: 'decoder' }) decoder?: (data: string) => Params;
+  @Prop({ attribute: 'decoder' }) decoder?: (data: string) => Params | undefined;
 
   /**
    * Emitted when the `embedSrc` or `params` props change. The payload contains the `params`
@@ -86,25 +88,25 @@ export class Embed implements ComponentInterface {
    */
   @Event({
     bubbles: false,
-  }) vEmbedSrcChange!: EventEmitter<EmbedEventPayload[EmbedEvent.SrcChange]>;
+  }) embedSrcChange!: EventEmitter<EmbedEventPayload[EmbedEvent.SrcChange]>;
 
   /**
    * Emitted when a new message is received from the embedded player via `postMessage`.
    */
   @Event({
     bubbles: false,
-  }) vEmbedMessage!: EventEmitter<EmbedEventPayload[EmbedEvent.Message]>;
+  }) embedMessage!: EventEmitter<EmbedEventPayload[EmbedEvent.Message]>;
 
   /**
    * Emitted when the embedded player and any new media has loaded.
    */
   @Event({
     bubbles: false,
-  }) vEmbedLoaded!: EventEmitter<EmbedEventPayload[EmbedEvent.Loaded]>;
+  }) embedLoaded!: EventEmitter<EmbedEventPayload[EmbedEvent.Loaded]>;
 
   @Watch('preconnections')
-  preconnectionsChangeHandler() {
-    if (this.inViewport) { return; }
+  preconnectionsChange() {
+    if (this.hasEnteredViewport) { return; }
 
     this.preconnections
       .filter((connection) => !connected.has(connection))
@@ -116,10 +118,10 @@ export class Embed implements ComponentInterface {
   componentWillLoad() {
     this.intersectionObserverCleanup = onElementEntersViewport(
       this.el,
-      () => { this.inViewport = true; },
+      () => { this.hasEnteredViewport = true; },
     );
 
-    this.srcChangeHandler();
+    this.srcChange();
   }
 
   disconnectedCallback() {
@@ -127,14 +129,14 @@ export class Embed implements ComponentInterface {
   }
 
   @Listen('message', { target: 'window' })
-  onMessage(e: MessageEvent) {
+  onWindowMessage(e: MessageEvent) {
     const originMatches = (e.source === this.iframe?.contentWindow)
       && (!isString(this.origin) || this.origin === e.origin);
 
     if (!originMatches) return;
 
     const message = this.decoder?.(e.data) ?? e.data;
-    if (message) this.vEmbedMessage.emit(message);
+    if (message) this.embedMessage.emit(message);
   }
 
   /**
@@ -142,15 +144,11 @@ export class Embed implements ComponentInterface {
    */
   @Method()
   async postMessage(message: any, target?: string) {
-    this.iframe?.contentWindow?.postMessage(JSON.stringify(message), (target ?? origin) ?? '*');
-  }
-
-  get iframe() {
-    return this.el.querySelector<HTMLIFrameElement>('iframe');
+    this.iframe?.contentWindow?.postMessage(JSON.stringify(message), (target ?? '*'));
   }
 
   private onLoad() {
-    this.vEmbedLoaded.emit();
+    this.embedLoaded.emit();
   }
 
   private getEmbedId() {
@@ -165,11 +163,15 @@ export class Embed implements ComponentInterface {
       <iframe
         id={this.getEmbedId()}
         title={this.mediaTitle}
-        src={this.inViewport ? this.srcWithParams : ''}
+        src={this.srcWithParams}
+        style={{
+          display: !this.hasEnteredViewport ? 'none': undefined
+        }}
         // @ts-ignore
-        allowFullScreen="1"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen="1"
+        allow="autoplay; encrypted-media; picture-in-picture"
         onLoad={this.onLoad.bind(this)}
+        ref={(el: any) => { this.iframe = el; }}
       />
     );
   }

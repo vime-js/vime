@@ -1,4 +1,4 @@
-import { getFullscreenApi } from './getFullscreenApi';
+import { getFullscreenApi } from './FullscreenApi';
 import { isUndefined } from '../../../../utils/unit';
 import { listen } from '../../../../utils/dom';
 

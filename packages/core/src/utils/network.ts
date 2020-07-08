@@ -6,7 +6,7 @@ import { IS_CLIENT } from './support';
 /**
  * Attempt to parse json into a POJO.
  */
-export function tryParseJSON(json: string): object | undefined {
+export function tryParseJSON<T>(json: string): T | undefined {
   if (!isString(json)) return undefined;
 
   try {
@@ -25,7 +25,7 @@ export const isObjOrJSON = (input: any): boolean => !isNullOrUndefined(input)
 /**
  * If an object return otherwise try to parse it as json.
  */
-export const objOrParseJSON = (input: any): object | undefined => (isObject(input)
+export const objOrParseJSON = <T>(input: any): T | undefined => (isObject(input)
   ? input
   : tryParseJSON(input));
 
@@ -49,7 +49,7 @@ export const loadImage = (src: string, minWidth = 1): Promise<HTMLImageElement> 
 /**
  * Tries to parse json and return a object.
  */
-export const decodeJSON = (data: any): object | undefined => {
+export const decodeJSON = <T>(data: any): T | undefined => {
   if (!isObjOrJSON(data)) return undefined;
   return objOrParseJSON(data);
 };
@@ -72,7 +72,7 @@ export const tryDecodeURIComponent = (component: string, fallback = ''): string 
  * @see https://github.com/ampproject/amphtml/blob/c7c46cec71bac92f5c5da31dcc6366c18577f566/src/url-parse-query-string.js#L31
  */
 const QUERY_STRING_REGEX = /(?:^[#?]?|&)([^=&]+)(?:=([^&]*))?/g;
-export const parseQueryString = (qs?: string): Params => {
+export const parseQueryString = <T>(qs?: string): T => {
   const params = Object.create(null);
 
   if (isUndefined(qs)) return params;
@@ -97,10 +97,11 @@ export const parseQueryString = (qs?: string): Params => {
   return params;
 };
 
+export type Params = Record<string, any>;
+
 /**
  * Serializes the given params into a query string.
  */
-export type Params = Record<string, string | number | boolean | string[]>;
 export const serializeQueryString = (params: Params): string => {
   const qs: string[] = [];
 
@@ -165,7 +166,7 @@ export const appendParamsToURL = (
 /**
  * Tries to convert a query string into a object.
  */
-export const decodeQueryString = (qs: string): Params | undefined => {
+export const decodeQueryString = <T>(qs: string): T | undefined => {
   if (!isString(qs)) return undefined;
   return parseQueryString(qs);
 };

@@ -11,27 +11,30 @@ import {
   Method,
   Prop,
   Watch,
+  forceUpdate,
 } from '@stencil/core';
+import { Universe } from 'stencil-wormhole';
 import { MediaType } from './MediaType';
 import { MediaProvider, MediaProviderAdapter } from '../../providers/MediaProvider';
-import { isUndefined } from '../../../utils/unit';
+import { isUndefined, isString } from '../../../utils/unit';
 import { MediaPlayer } from './MediaPlayer';
 import {
   isExternalReadonlyPlayerProp,
   isInternalReadonlyPlayerProp,
   PlayerProp,
   PlayerProps,
-  shouldResetPropOnMediaChange,
-} from './PlayerProps';
+  resetablePlayerProps,
+} from './PlayerProp';
 import { ViewType } from './ViewType';
 import { canAutoplay, IS_MOBILE, onTouchInputChange } from '../../../utils/support';
 import { Fullscreen } from './fullscreen/Fullscreen';
 import { en } from './lang/en';
 import { PlayerStateChange } from './PlayerState';
-import { PlayerTunnel } from './PlayerTunnel';
-import { firePlayerEvent } from './firePlayerEvent';
 import { TextTrack } from './TextTrack';
 import { Autopause } from './Autopause';
+import { getEventName } from './PlayerEvent';
+
+let playerIdCount = 0;
 
 /**
  * @slot - Used to pass in providers, plugins and UI components.
@@ -51,15 +54,38 @@ export class Player implements MediaPlayer {
 
   private dispose: (() => void)[] = [];
 
-  private playbackReadyQueue: (() => Promise<any>)[] = [];
-
-  private flushingQueue?: Promise<any>;
-
+  /**
+   * Cache of all property values to determine what events to fire when the component updates. This
+   * is updated in the `componentDidUpdate` lifecycle method.
+   */
   private cache = new Map<PlayerProp, any>();
 
-  private cachedDefaults = new Map<PlayerProp, any>();
-
+  /**
+   * Tracks changes that come from providers/plugins/components and not from the user. This is used
+   * to check if the user changes any external readonly properties.
+   */
   private internalStateChanges = new Set<PlayerProp>();
+
+  /**
+   * Tracks changes that come specifically from the current provider. This is used to avoid
+   * providers triggering adapter calls to make the same change back to the provider, leading
+   * to an infinite loop.
+   */
+  private providerStateChanges: Record<PlayerProp, number> = {} as any;
+
+  /**
+   * Internal state management to sync changes across user, provider, plugin and component updates.
+   * This is flushed every Stencil.js render cycle in the `componentWillRender` lifecycle method.
+   */
+  // eslint-disable-next-line no-spaced-func
+  private pendingStateChanges = new Map<symbol, () => Promise<void>>();
+
+  /**
+   * Tracks any adapter calls that are made before the media is ready for playback. This is flushed
+   * once the media is ready.
+   */
+  // eslint-disable-next-line no-spaced-func
+  private playbackReadyCalls?: Map<PlayerProp, () => Promise<void>> = new Map();
 
   @Element() el!: HTMLVimePlayerElement;
 
@@ -75,8 +101,9 @@ export class Player implements MediaPlayer {
   @Prop({ mutable: true, reflect: true }) paused = true;
 
   @Watch('paused')
-  async onPausedChangeHandler() {
-    this.callAdapterOrQueue(this.paused ? 'pause' : 'play');
+  async onPausedChange() {
+    await this.queueAdapterCall(PlayerProp.Paused, this.paused ? 'pause' : 'play');
+    if (this.paused) await this.queuePropChange(PlayerProp.Playing, false);
   }
 
   /**
@@ -92,7 +119,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, attribute: null }) mediaTitle = '';
+  @Prop({ mutable: true, attribute: null }) mediaTitle?: string;
 
   /**
    * @inheritDoc
@@ -102,28 +129,26 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) currentTime = 0;
+  @Prop({ mutable: true, attribute: null }) currentPoster?: string;
 
-  private previousCurrentTime = 0;
+  /**
+   * @inheritDoc
+   */
+  @Prop({ mutable: true, reflect: true }) currentTime = 0;
 
   @Watch('currentTime')
   async onCurrentTimeChange() {
-    if ((this.currentTime - this.previousCurrentTime) > 1) {
-      this.callAdapterOrQueue('setCurrentTime', this.currentTime);
-    }
-
-    this.previousCurrentTime = this.currentTime;
+    await this.queueAdapterCall(
+      PlayerProp.CurrentTime,
+      'setCurrentTime',
+      Math.max(0, Math.min(this.currentTime, this.playbackReady ? this.duration : Infinity)),
+    );
   }
 
   /**
    * @inheritDoc
    */
   @Prop() autoplay = false;
-
-  /**
-   * @inheritDoc
-   */
-  @Prop({ mutable: true, attribute: null }) loadedMetadata = false;
 
   /**
    * @inheritDoc
@@ -141,8 +166,8 @@ export class Player implements MediaPlayer {
   @Prop({ mutable: true, reflect: true }) muted = false;
 
   @Watch('muted')
-  async onMutedChangeHandler() {
-    this.callAdapterOrQueue('setMuted', this.muted);
+  async onMutedChange() {
+    await this.queueAdapterCall(PlayerProp.Muted, 'setMuted', this.muted);
   }
 
   /**
@@ -158,25 +183,31 @@ export class Player implements MediaPlayer {
   private prevPlaybackRate = 1;
 
   @Watch('playbackRate')
-  async onPlaybackRateChangeHandler() {
-    if (this.prevPlaybackRate === this.playbackRate) return;
+  async onPlaybackRateChange() {
+    this.queueAdapterCall(
+      PlayerProp.PlaybackRate,
+      'setPlaybackRate',
+      this.playbackRate,
+      async () => {
+        if (!(await this.canSetPlaybackRate())) {
+          console.warn('Cannot change `playbackRate`.');
+          await this.queuePropChange(PlayerProp.PlaybackRate, this.prevPlaybackRate);
+          return false;
+        }
 
-    if (!(await this.canSetPlaybackRate())) {
-      console.warn('Cannot change `playbackRate`.');
-      this.playbackRate = this.prevPlaybackRate;
-      return;
-    }
-
-    if (!this.playbackRates.includes(this.playbackRate)) {
-      console.warn(
-        `Invalid \`playbackRate\` of ${this.playbackRate}. `
+        if (!this.playbackRates.includes(this.playbackRate)) {
+          console.warn(
+            `Invalid \`playbackRate\` of ${this.playbackRate}. `
         + `Valid values are [${this.playbackRates.join(', ')}]`,
-      );
-      this.playbackRate = this.prevPlaybackRate;
-      return;
-    }
+          );
+          await this.queuePropChange(PlayerProp.PlaybackRate, this.prevPlaybackRate);
+          return false;
+        }
 
-    this.callAdapterOrQueue('setPlaybackRate', this.playbackRate);
+        this.prevPlaybackRate = this.playbackRate;
+        return true;
+      },
+    );
   }
 
   /**
@@ -187,36 +218,42 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true, attribute: 'media-quality' }) mediaQuality?: string;
+  @Prop({ mutable: true, reflect: true }) playbackQuality?: string;
 
-  private prevMediaQuality?: string;
+  private prevPlaybackQuality?: string;
 
-  @Watch('mediaQuality')
-  async onMediaQualityChangeHandler() {
-    if (this.prevMediaQuality === this.mediaQuality) return;
+  @Watch('playbackQuality')
+  async onPlaybackQualityChange() {
+    this.queueAdapterCall(
+      PlayerProp.PlaybackQuality,
+      'setPlaybackQuality',
+      this.playbackQuality,
+      async () => {
+        if (!(await this.canSetPlaybackQuality())) {
+          console.warn('Cannot change `playbackQuality`.');
+          await this.queuePropChange(PlayerProp.PlaybackQuality, this.prevPlaybackQuality);
+          return false;
+        }
 
-    if (!(await this.canSetMediaQuality())) {
-      console.warn('Cannot change `mediaQuality`.');
-      this.mediaQuality = this.prevMediaQuality;
-      return;
-    }
+        if (!this.playbackQualities.includes(this.playbackQuality!)) {
+          console.warn(
+            `Invalid \`playbackQuality\` of ${this.playbackQuality}. `
+        + `Valid values are [${this.playbackQualities.join(', ')}]`,
+          );
+          await this.queuePropChange(PlayerProp.PlaybackQuality, this.prevPlaybackQuality);
+          return false;
+        }
 
-    if (!this.mediaQualities.includes(this.mediaQuality!)) {
-      console.warn(
-        `Invalid \`mediaQuality\` of ${this.mediaQuality}. `
-        + `Valid values are [${this.mediaQualities.join(', ')}]`,
-      );
-      this.mediaQuality = this.prevMediaQuality;
-      return;
-    }
-
-    this.callAdapterOrQueue('setMediaQuality', this.mediaQuality);
+        this.prevPlaybackQuality = this.playbackQuality;
+        return true;
+      },
+    );
   }
 
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, attribute: null }) mediaQualities: string[] = [];
+  @Prop({ mutable: true, attribute: null }) playbackQualities: string[] = [];
 
   /**
    * @inheritDoc
@@ -264,8 +301,12 @@ export class Player implements MediaPlayer {
   @Prop({ mutable: true, reflect: true }) volume = 50;
 
   @Watch('volume')
-  async onVolumeChangeHandler() {
-    this.callAdapterOrQueue('setVolume', this.volume);
+  async onVolumeChange() {
+    await this.queueAdapterCall(
+      PlayerProp.Volume,
+      'setVolume',
+      Math.max(0, Math.min(this.volume, 100)),
+    );
   }
 
   /**
@@ -284,12 +325,9 @@ export class Player implements MediaPlayer {
   @Prop({ mutable: true, reflect: true }) viewType?: ViewType;
 
   @Watch('viewType')
-  onViewTypeChangeHandler() {
-    this.isAudioView = (this.viewType === ViewType.Audio);
-    this.internalStateChanges.add(PlayerProp.IsAudioView);
-
-    this.isVideoView = (this.viewType === ViewType.Video);
-    this.internalStateChanges.add(PlayerProp.IsVideoView);
+  async onViewTypeChange() {
+    await this.queuePropChange(PlayerProp.IsAudioView, (this.viewType === ViewType.Audio));
+    await this.queuePropChange(PlayerProp.IsVideoView, (this.viewType === ViewType.Video));
   }
 
   /**
@@ -308,12 +346,9 @@ export class Player implements MediaPlayer {
   @Prop({ mutable: true, reflect: true }) mediaType?: MediaType;
 
   @Watch('mediaType')
-  onMediaTypeChangeHandler() {
-    this.isAudio = (this.mediaType === MediaType.Audio);
-    this.internalStateChanges.add(PlayerProp.IsAudio);
-
-    this.isVideo = (this.mediaType === MediaType.Video);
-    this.internalStateChanges.add(PlayerProp.IsVideo);
+  async onMediaTypeChange() {
+    await this.queuePropChange(PlayerProp.IsAudio, (this.mediaType === MediaType.Audio));
+    await this.queuePropChange(PlayerProp.IsVideo, (this.mediaType === MediaType.Video));
   }
 
   /**
@@ -374,9 +409,8 @@ export class Player implements MediaPlayer {
   @Prop({ mutable: true, attribute: null }) languages = ['en'];
 
   @Watch('translations')
-  onLanguagesUpdateHandler() {
-    this.languages = Object.keys(this.translations);
-    this.internalStateChanges.add(PlayerProp.Languages);
+  async onLanguagesUpdate() {
+    await this.queuePropChange(PlayerProp.Languages, Object.keys(this.translations));
   }
 
   /**
@@ -386,9 +420,8 @@ export class Player implements MediaPlayer {
 
   @Watch('language')
   @Watch('translations')
-  onI18NUpdateHandler() {
-    this.i18n = { ...(this.translations[this.language] ?? en) };
-    this.internalStateChanges.add(PlayerProp.I18N);
+  async onI18NUpdate() {
+    await this.queuePropChange(PlayerProp.I18N, { ...(this.translations[this.language] ?? en) });
   }
 
   /**
@@ -475,12 +508,12 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event() vLoadedMetadata!: EventEmitter<void>;
+  @Event() vCurrentSrcChange!: EventEmitter<PlayerProps[PlayerProp.CurrentSrc]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vCurrentSrcChange!: EventEmitter<PlayerProps[PlayerProp.CurrentSrc]>;
+  @Event() vCurrentPosterChange!: EventEmitter<PlayerProps[PlayerProp.CurrentPoster]>;
 
   /**
    * @inheritDoc
@@ -500,12 +533,17 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event() vMediaQualityChange!: EventEmitter<PlayerProps[PlayerProp.MediaQuality]>;
+  @Event() vPlaybackQualityChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQuality]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vMediaQualitiesChange!: EventEmitter<PlayerProps[PlayerProp.MediaQualities]>;
+  @Event() vPlaybackQualitiesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQualities]>;
+
+  /**
+   * @inheritDoc
+   */
+  @Event() vMutedChange!: EventEmitter<PlayerProps[PlayerProp.Muted]>;
 
   /**
    * @inheritDoc
@@ -550,7 +588,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event() vPiPChange!: EventEmitter<PlayerProps[PlayerProp.isPiPActive]>;
+  @Event() vPiPChange!: EventEmitter<PlayerProps[PlayerProp.IsPiPActive]>;
 
   /**
    * ------------------------------------------------------
@@ -582,7 +620,7 @@ export class Player implements MediaPlayer {
   }
 
   /**
-   * @inheritDoc
+   * @internal
    */
   @Method()
   async getAdapter<InternalPlayerType = any>(): Promise<MediaProviderAdapter<InternalPlayerType>> {
@@ -650,9 +688,9 @@ export class Player implements MediaPlayer {
    * @inheritDoc
    */
   @Method()
-  async canSetMediaQuality(): Promise<boolean> {
+  async canSetPlaybackQuality() {
     const adapter = await this.getAdapter();
-    return adapter.canSetMediaQuality?.() ?? false;
+    return adapter.canSetPlaybackQuality?.() ?? false;
   }
 
   /**
@@ -672,7 +710,8 @@ export class Player implements MediaPlayer {
     if (!this.isVideoView) throw Error('Cannot enter fullscreen when in an audio player view.');
     if (this.fullscreen!.isSupported) return this.fullscreen!.enterFullscreen(options);
     const adapter = await this.getAdapter();
-    if (adapter.canSetFullscreen?.() ?? false) return adapter.enterFullscreen?.(options);
+    const canProviderSetFullscreen = await adapter.canSetFullscreen?.();
+    if (canProviderSetFullscreen ?? false) return adapter.enterFullscreen?.(options);
     throw Error('Fullscreen API is not available.');
   }
 
@@ -701,7 +740,7 @@ export class Player implements MediaPlayer {
     if (!this.isVideoView) throw Error('Cannot enter PiP mode when in an audio player view.');
     if (!(await this.canSetPiP())) throw Error('Picture-in-Picture API is not available.');
     const adapter = await this.getAdapter();
-    return adapter.enterPiP!();
+    return adapter.enterPiP?.();
   }
 
   /**
@@ -718,73 +757,118 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async extendLanguage(language: string, translations: Record<string, string>) {
-    this.translations = {
+    await this.queuePropChange(PlayerProp.Translations, {
       ...this.translations,
       [language]: {
         ...(this.translations[language] ?? {}),
         ...translations,
       },
-    };
-
-    this.internalStateChanges.add(PlayerProp.Translations);
+    });
   }
 
-  /**
-   * **TESTING:** Used to wait for the playback ready queue to be flushed.
-   */
-  @Method()
-  async waitForQueueToFlush() {
-    return this.flushingQueue;
+  private isFirstMediaChange = true;
+
+  @Listen('vLoadStart')
+  async onMediaChange() {
+    Object.values(PlayerProp).forEach((prop) => { this.providerStateChanges[prop] = 0; });
+
+    /**
+     * We don't want to clear any queues/changes on first load, because that would lose the initial
+     * state of the player via the props the user passed in.
+     */
+    if (this.isFirstMediaChange) {
+      this.isFirstMediaChange = false;
+      return;
+    }
+
+    this.playbackReadyCalls?.clear();
+    this.pendingStateChanges.clear();
+
+    await this.queueStateChange('[VIME-PLAYER]: media change', async () => {
+      Object.keys(resetablePlayerProps).forEach((prop) => {
+        this.internalStateChanges.add(prop as PlayerProp);
+        (this as any)[prop] = (resetablePlayerProps as any)[prop];
+      });
+    });
+
+    forceUpdate(this);
   }
 
   @Listen('vStateChange')
-  async onStateChangeHandler(event: CustomEvent<PlayerStateChange>) {
-    const change = event.detail;
+  async onStateChange(event: CustomEvent<PlayerStateChange>) {
+    const { by, prop, value } = event.detail;
 
-    if (this.debug) {
-      console.log(`STATECHANGE [${change.by}]: ${change.prop} -> ${change.value}`);
+    if (isInternalReadonlyPlayerProp(prop)) {
+      throw Error(
+        `INTERNAL STATECHANGE [${by.nodeName}]: attempted to change readonly prop \`${prop}\`.`,
+      );
     }
 
-    if (isInternalReadonlyPlayerProp(change.prop)) {
-      throw Error(`INTERNAL: ${change.by} attempted to change readonly prop \`${change.prop}\`.`);
+    /**
+     * This is to track changes that come from the provider directly, so we don't call any adapter
+     * methods on these changes and end up in an infinite loop.
+     */
+    if ((this.provider as any) === by) {
+      this.providerStateChanges[prop] += 1;
+      if (prop === PlayerProp.PlaybackRate) this.prevPlaybackRate = value;
+      if (prop === PlayerProp.PlaybackQuality) this.prevPlaybackQuality = value;
     }
 
-    if (change.prop === PlayerProp.CurrentSrc) this.onMediaChange();
-    if (change.prop === PlayerProp.PlaybackRate) this.prevPlaybackRate = change.value;
-    if (change.prop === PlayerProp.MediaQuality) this.prevMediaQuality = change.value;
-
-    if (change.prop === PlayerProp.PlaybackReady && change.value) {
-      this.flushPlaybackReadyQueue().then(() => {});
-    }
-
-    (this as any)[change.prop] = change.value;
-    this.internalStateChanges.add(change.prop);
+    await this.queuePropChange(prop, value, by.nodeName);
   }
 
   connectedCallback() {
-    // Cache default states so we can reset them when media changes.
+    const initialValues: any = {};
+
     Object.values(PlayerProp).forEach((prop) => {
-      this.cachedDefaults.set(prop, this[prop]);
+      initialValues[prop] = this[prop];
+      this.providerStateChanges[prop] = 0;
+      this.cache.set(prop, this[prop]);
     });
 
-    this.cache = new Map(this.cachedDefaults);
-
+    Universe.create(this, { ...initialValues });
     this.autopauseMgr = new Autopause(this);
 
     this.fullscreen = new Fullscreen(
       this.el,
-      (isActive) => {
-        this.isFullscreenActive = isActive;
-        this.internalStateChanges.add(PlayerProp.IsFullscreenActive);
-      },
+      (isActive) => { this.queuePropChange(PlayerProp.IsFullscreenActive, isActive); },
     );
 
     this.dispose.push(
-      onTouchInputChange((isTouchInput) => {
-        this.isTouch = isTouchInput;
+      onTouchInputChange((isTouch) => {
         this.internalStateChanges.add(PlayerProp.IsTouch);
+        this.isTouch = isTouch;
       }),
     );
+
+    /**
+     * We call these watchers because they're not called on first load, and we want to queue the
+     * adapter calls to run when media is ready for playback.
+     */
+    this.onMutedChange();
+    this.onVolumeChange();
+    if (!this.paused) this.onPausedChange();
+    if (this.currentTime > 0) this.onCurrentTimeChange();
+  }
+
+  componentWillLoad() {
+    return this.getProvider() as Promise<any>;
+  }
+
+  componentWillRender() {
+    if (this.debug) {
+      console.log(`======> RENDER [${this.pendingStateChanges.size}] <=====`);
+      console.log(Array.from(this.pendingStateChanges.keys()));
+    }
+
+    return Promise
+      .all(Array.from(this.pendingStateChanges.values()).map((fn) => fn()))
+      .then(() => this.flushPlaybackReadyCalls());
+  }
+
+  componentDidRender() {
+    // Queue another render if any state changes occurred while rendering.
+    if (this.pendingStateChanges.size > 0) forceUpdate(this);
   }
 
   componentDidUpdate() {
@@ -798,7 +882,7 @@ export class Player implements MediaPlayer {
 
         if ((prop === PlayerProp.Paused) && !(newVal as boolean)) { this.autopauseMgr!.willPlay(); }
 
-        firePlayerEvent(this, prop, newVal);
+        this.fireEvent(prop, newVal);
         this.cache.set(prop, newVal);
       }
 
@@ -811,15 +895,20 @@ export class Player implements MediaPlayer {
     this.fullscreen!.destroy();
     this.dispose.forEach((fn) => fn);
     this.dispose = [];
-    this.playbackReadyQueue = [];
-    this.flushingQueue = undefined;
-    this.cache = new Map();
-    this.cachedDefaults = new Map();
-    this.internalStateChanges = new Set();
+    this.pendingStateChanges.clear();
+    this.playbackReadyCalls = undefined;
     this.provider = undefined;
     this.fullscreen = undefined;
     this.autopauseMgr = undefined;
     this.adapter = undefined;
+  }
+
+  private fireEvent(prop: PlayerProp, value: any) {
+    (this as any)[getEventName(prop)]?.emit(value);
+    if ((prop === PlayerProp.Paused) && !value) this.vPlay.emit();
+    if ((prop === PlayerProp.Seeking) && this.cache.get(PlayerProp.Seeking) && !value) {
+      this.vSeeked.emit();
+    }
   }
 
   private calcAspectRatio() {
@@ -827,62 +916,116 @@ export class Player implements MediaPlayer {
     return (100 / Number(width)) * Number(height);
   }
 
-  private onMediaChange() {
-    this.playbackReadyQueue = [];
+  private async executeStateChange(change: () => Promise<void>) {
+    try {
+      await change();
+    } catch (e) {
+      if (this.debug) console.error(e);
+      this.internalStateChanges.add(PlayerProp.Errors);
+      this.errors = [...this.errors, e];
+    }
+  }
 
-    Object.values(PlayerProp).forEach((prop) => {
-      if (shouldResetPropOnMediaChange(prop)) {
-        (this as any)[prop] = this.cachedDefaults.get(prop);
-        this.internalStateChanges.add(prop);
-      }
+  private async flushPlaybackReadyCalls() {
+    if (isUndefined(this.playbackReadyCalls) || !this.playbackReady) return;
+    await Promise.all(Array.from(this.playbackReadyCalls!.values())
+      .map((adapterCall) => this.executeStateChange(adapterCall)));
+    this.playbackReadyCalls = undefined;
+  }
+
+  /**
+   * @internal Exposed for E2E testing.
+   */
+  @Method()
+  async callAdapter(method: keyof MediaProviderAdapter, value?: any) {
+    const adapter = await this.getAdapter();
+    return (adapter as any)[method](value);
+  }
+
+  /**
+   * @internal Exposed for E2E testing.
+   */
+  @Method()
+  async queuePropChange(prop: PlayerProp, value: any, by?: string) {
+    this.queueStateChange(`[${by ?? 'VIME-PLAYER'}]: ${prop} -> ${value}`, async () => {
+      this.internalStateChanges.add(prop);
+      (this as any)[prop] = value;
     });
   }
 
-  private async flushPlaybackReadyQueue() {
-    try {
-      this.flushingQueue = Promise.all(this.playbackReadyQueue.map((fn) => fn()));
-      await this.flushingQueue;
-    } catch (e) {
-      this.errors = [...this.errors, e];
-      this.internalStateChanges.add(PlayerProp.Errors);
-    }
+  /**
+   * @internal Exposed for E2E testing.
+   */
+  @Method()
+  async queueStateChange(description: string, change: () => Promise<void>) {
+    const stateChangeId = Symbol(description) as any;
 
-    this.playbackReadyQueue = [];
+    this.pendingStateChanges.set(stateChangeId, async () => {
+      await this.executeStateChange(change);
+      this.pendingStateChanges.delete(stateChangeId);
+    });
+
+    forceUpdate(this);
   }
 
-  private callAdapterOrQueue(method: keyof MediaProviderAdapter, value?: any) {
-    const action = async () => {
-      const adapter = await this.getAdapter();
-      return ((adapter as any)[method])(value);
+  private queueAdapterCall(
+    changedProp: PlayerProp,
+    method: keyof MediaProviderAdapter,
+    value?: any,
+    validator?: () => Promise<boolean>,
+  ) {
+    /**
+     * If the provider triggered this change then don't make an adapter call because we can end
+     * up in an infinite loop.
+     */
+    if (this.providerStateChanges[changedProp] > 0) {
+      this.providerStateChanges[changedProp] -= 1;
+      return;
+    }
+
+    const callAdapter = async () => {
+      const isValid = await validator?.();
+      if (!isUndefined(validator) && !isValid) return;
+      await this.callAdapter(method, value);
     };
 
-    this.playbackReadyQueue.push(() => action());
-    if (this.playbackReady) this.flushPlaybackReadyQueue().then(() => {});
+    if (!isUndefined(this.playbackReadyCalls) && !this.playbackReady) {
+      this.playbackReadyCalls!.set(changedProp, callAdapter);
+      return;
+    }
+
+    this.queueStateChange(`[VIME-PLAYER]: ${method}(${value})`, callAdapter);
+  }
+
+  private getPlayerId() {
+    const id = this.el?.id;
+    if (isString(id) && id.length > 0) return id;
+    playerIdCount += 1;
+    return `vime-player-${playerIdCount}`;
   }
 
   render() {
-    const playerState: any = Object
+    const playerState = Object
       .values(PlayerProp)
       .reduce((state, prop) => ({ ...state, [prop]: this[prop] }), {});
 
     return (
       <Host
+        id={this.getPlayerId()}
         tabindex="0"
         style={{
-          paddingBottom: this.isVideoView && !this.isFullscreenActive
-            ? `${this.calcAspectRatio()}%`
-            : undefined,
+          paddingBottom: this.isVideoView ? `${this.calcAspectRatio()}%` : undefined,
         }}
         class={{
           video: this.isVideoView,
           fullscreen: this.isFullscreenActive,
         }}
       >
-        <PlayerTunnel.Provider state={playerState}>
+        <Universe.Provider state={playerState}>
           { !this.controls && this.isVideoView && <div class="blocker" /> }
 
           <slot />
-        </PlayerTunnel.Provider>
+        </Universe.Provider>
       </Host>
     );
   }

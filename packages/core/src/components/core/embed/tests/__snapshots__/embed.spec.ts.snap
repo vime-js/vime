@@ -2,6 +2,6 @@
 
 exports[`should be structurally sound 1`] = `
 <vime-embed>
-  <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="1" id="vime-embed-1" src=""></iframe>
+  <iframe allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen="1" id="vime-embed-1" src=""></iframe>
 </vime-embed>
 `;

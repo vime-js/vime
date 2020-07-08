@@ -22,6 +22,9 @@
     "jsxFactory": "h"
   },
   "include": [
-    "packages/*/src"
+    "tools/*.js",
+    "packages/**/*.js",
+    "packages/**/*.ts",
+    "packages/**/*.tsx"
   ]
 }

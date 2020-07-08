@@ -1,5 +1,6 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { Embed } from '../embed';
+import { EmbedEvent } from '../EmbedEvent';
 
 let page: SpecPage;
 
@@ -12,6 +13,29 @@ beforeEach(async () => {
 
 it('should be structurally sound', () => {
   expect(page.root).toMatchSnapshot();
+});
+
+it('should increment embed id', async () => {
+  page = await newSpecPage({
+    components: [Embed],
+    html: '<vime-embed></vime-embed><vime-embed></vime-embed>',
+  });
+  const frames = page.doc.querySelectorAll('iframe');
+  expect(frames).toHaveLength(2);
+  // Starts at 3 because of the 2 prior tests.
+  expect(frames[0].id).toEqual('vime-embed-3');
+  expect(frames[1].id).toEqual('vime-embed-4');
+});
+
+it('should fire event when src/params change', async () => {
+  const cb = jest.fn();
+  page.root!.addEventListener(EmbedEvent.SrcChange, cb);
+  page.rootInstance!.embedSrc = 'http://apples.com';
+  await page.waitForChanges();
+  expect(cb).toHaveBeenCalled();
+  page.rootInstance!.params = { controls: 0 };
+  await page.waitForChanges();
+  expect(cb).toHaveBeenCalledTimes(2);
 });
 
 it('should set the iframe title', async () => {
