@@ -18,16 +18,16 @@
     "javascript-time-ago": "^2.0.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@storybook/svelte": "^5.3.18",
+    "@babel/core": "^7.10.4",
+    "@storybook/svelte": "^5.3.19",
     "babel-loader": "^8.1.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
-    "svelte": "^3.20.1",
+    "svelte": "^3.24.0",
     "svelte-loader": "^2.13.6",
-    "svelte-preprocess": "^3.5.0",
-    "webpack": "^4.41.5"
+    "svelte-preprocess": "^4.0.6",
+    "webpack": "^4.43.0"
   }
 }
