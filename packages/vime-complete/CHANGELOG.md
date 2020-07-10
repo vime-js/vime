@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.5](https://github.com/vime-js/vime/tree/master/packages/vime-complete/compare/v1.6.4...v1.6.5) (2020-07-10)
+
+
+### Bug Fixes
+
+* **complete:** player freezing and locking entire ui ([4664277](https://github.com/vime-js/vime/tree/master/packages/vime-complete/commit/4664277646a4bdf311999c51ee31124454a65f53))
+
+
+
+
+
 ## [1.6.4](https://github.com/vime-js/vime/tree/master/packages/vime-complete/compare/v1.6.3...v1.6.4) (2020-07-10)
 
 **Note:** Version bump only for package @vime-js/complete

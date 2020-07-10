@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/complete",
   "description": "Vime Complete Player",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "svelte": "src/index.js",
   "main": "dist/complete.js",
   "module": "dist/complete.esm.js",

@@ -1,6 +1,6 @@
 {
   "name": "@vime-js/playground",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -8,7 +8,7 @@
     "serve": "start-storybook -p 6006 -s ../../static"
   },
   "dependencies": {
-    "@vime-js/complete": "^1.6.4",
+    "@vime-js/complete": "^1.6.5",
     "@vime-js/core": "^1.6.4",
     "@vime-js/lite": "^1.6.4",
     "@vime-js/preview": "^1.6.4",
