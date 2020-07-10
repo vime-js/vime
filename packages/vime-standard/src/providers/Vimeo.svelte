@@ -1,5 +1,5 @@
 <div class:wrapper={!isControlsEnabled}>
-  <LitePlayer 
+  <LitePlayer
     {src}
     {params}
     providers={[VimeoProvider]}
@@ -47,7 +47,7 @@
     LOADED: 'loaded',
     FINISH: 'finish',
     SEEKING: 'seeking',
-    SEEKED: 'seeked',
+    SEEKED: 'seek',
     CUE_CHANGE: 'cuechange',
     FULLSCREEN_CHANGE: 'fullscreenchange',
     VOLUME_CHANGE: 'volumechange',
@@ -62,7 +62,7 @@
     VM.Event.PLAY,
     VM.Event.PAUSE,
     VM.Event.SEEKING,
-    VM.Event.SEEKED,
+    'seeked',
     'timeupdate',
     VM.Event.VOLUME_CHANGE,
     VM.Event.DURATION_CHANGE,
@@ -140,10 +140,10 @@
     info.mediaType = MediaType.VIDEO;
     hasMounted = true;
   });
-  
+
   const onRebuildStart = () => { info.rebuild = true; };
   const onTitleChange = (e) => { info.title = e.detail; };
-  
+
   const onEmbedURLChange = (e) => {
     info.currentSrc = e.detail;
     info.mediaId = litePlayer.getMediaId();
