@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.4](https://github.com/vime-js/vime/compare/v1.6.3...v1.6.4) (2020-07-10)
+
+
+### Bug Fixes
+
+* vimeo current time not updating after seeking ([3af6e08](https://github.com/vime-js/vime/commit/3af6e08900730fb06be889441368373aaf800260)), closes [#53](https://github.com/vime-js/vime/issues/53)
+* window leakage breaking SSR ([6373b0a](https://github.com/vime-js/vime/commit/6373b0af64fc55748888806e9002711e2ea9f102)), closes [#55](https://github.com/vime-js/vime/issues/55)
+
+
+
+
+
 ## [1.6.3](https://github.com/vime-js/vime/compare/v1.6.2...v1.6.3) (2020-05-24)
 
 
