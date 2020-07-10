@@ -14,7 +14,7 @@ export const IS_CHROME = (UA && /chrome\/\d+/.test(UA) && !IS_EDGE);
 export const IS_IPHONE = (IS_CLIENT && /(iPhone|iPod)/gi.test(navigator.platform));
 export const IS_MOBILE = (IS_IOS || IS_ANDROID);
 
-export const ORIGIN = (window.location.protocol !== 'file:')
+export const ORIGIN = (IS_CLIENT && window.location.protocol !== 'file:')
   ? `${window.location.protocol}//${window.location.hostname}`
   : null;
 
