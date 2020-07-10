@@ -46,6 +46,7 @@ const apiMap = [
   ],
 ];
 
+// eslint-disable-next-line func-names
 export default function () {
   const specApi = apiMap[0];
   let browserApi;
