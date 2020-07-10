@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.4](https://github.com/vime-js/vime/tree/master/packages/vime-preview/compare/v1.6.3...v1.6.4) (2020-07-10)
+
+**Note:** Version bump only for package @vime-js/preview
+
+
+
+
+
 ## [1.6.2](https://github.com/vime-js/vime/tree/master/packages/vime-preview/compare/v1.6.1...v1.6.2) (2020-05-03)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.4](https://github.com/vime-js/vime/tree/master/packages/vime-standard/compare/v1.6.3...v1.6.4) (2020-07-10)
+
+
+### Bug Fixes
+
+* vimeo current time not updating after seeking ([3af6e08](https://github.com/vime-js/vime/tree/master/packages/vime-standard/commit/3af6e08900730fb06be889441368373aaf800260)), closes [#53](https://github.com/vime-js/vime/tree/master/packages/vime-standard/issues/53)
+
+
+
+
+
 ## [1.6.1](https://github.com/vime-js/vime/tree/master/packages/vime-standard/compare/v1.6.0...v1.6.1) (2020-05-02)
 
 

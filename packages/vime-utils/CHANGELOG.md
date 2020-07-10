@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.4](https://github.com/vime-js/vime/tree/master/packages/vime-utils/compare/v1.6.3...v1.6.4) (2020-07-10)
+
+
+### Bug Fixes
+
+* window leakage breaking SSR ([6373b0a](https://github.com/vime-js/vime/tree/master/packages/vime-utils/commit/6373b0af64fc55748888806e9002711e2ea9f102)), closes [#55](https://github.com/vime-js/vime/tree/master/packages/vime-utils/issues/55)
+
+
+
+
+
 ## [1.6.1](https://github.com/vime-js/vime/tree/master/packages/vime-utils/compare/v1.6.0...v1.6.1) (2020-05-02)
 
 

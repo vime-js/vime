@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/lite",
   "description": "Vime Lite Player",
-  "version": "1.6.1",
+  "version": "1.6.4",
   "svelte": "src/index.js",
   "main": "dist/lite.js",
   "module": "dist/lite.esm.js",
@@ -38,8 +38,8 @@
     "build:dev": "rollup -c --environment NODE_ENV:development"
   },
   "dependencies": {
-    "@vime-js/core": "^1.6.1",
-    "@vime-js/utils": "^1.6.1"
+    "@vime-js/core": "^1.6.4",
+    "@vime-js/utils": "^1.6.4"
   },
   "publishConfig": {
     "access": "public"
