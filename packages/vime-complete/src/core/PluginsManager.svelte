@@ -84,7 +84,7 @@
   onMount(() => { hasMounted = true; });
 
   $: if (hasMounted) {
-    validatedPlugins = isEnabled ? $plugins.filter(validatePlugin).map((p) => ({ ...p })) : [];
+    validatedPlugins = isEnabled ? $plugins.filter(validatePlugin) : [];
   }
 
   $: validatedPlugins
