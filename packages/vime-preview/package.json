@@ -1,7 +1,7 @@
 {
   "name": "@vime-js/preview",
   "description": "Vime Preview",
-  "version": "1.6.4",
+  "version": "1.6.6",
   "svelte": "src/index.js",
   "main": "dist/preview.js",
   "module": "dist/preview.esm.js",
@@ -36,8 +36,8 @@
     "build:dev": "rollup -c --environment NODE_ENV:development"
   },
   "dependencies": {
-    "@vime-js/core": "^1.6.4",
-    "@vime-js/utils": "^1.6.4"
+    "@vime-js/core": "^1.6.6",
+    "@vime-js/utils": "^1.6.6"
   },
   "publishConfig": {
     "access": "public"
