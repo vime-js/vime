@@ -16,6 +16,7 @@ export interface MediaProviderAdapter<InternalPlayerType = any> {
   setPlaybackQuality?(quality: string): Promise<void>;
   canSetFullscreen?(): Promise<boolean>
   enterFullscreen?(options?: FullscreenOptions): Promise<void>;
+  exitFullscreen?(): Promise<void>;
   canSetPiP?(): Promise<boolean>
   enterPiP?(): Promise<void>;
   exitPiP?(): Promise<void>;

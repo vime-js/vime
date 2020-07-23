@@ -2,6 +2,24 @@
 
 Embeds an external media player and enables interacting with it via `postMessage`.
 
+## Example
+
+```html
+<vime-embed
+  embed-src="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
+  media-title="Agent 327: Operation Barbershop"
+  origin="https://www.youtube-nocookie.com"
+/>
+
+<script>
+  const embed = document.querySelector('vime-embed');
+  embed.params = { autoplay: 1, muted: 1, controls: 0 };
+  embed.addEventListener('embedMessage', (e) => {
+    const message = e.detail;
+  });
+</script>
+```
+
 <!-- Auto Generated Below -->
 
 
@@ -44,12 +62,14 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [vime-dailymotion](../../providers/dailymotion)
  - [vime-vimeo](../../providers/vimeo)
  - [vime-youtube](../../providers/youtube)
 
 ### Graph
 ```mermaid
 graph TD;
+  vime-dailymotion --> vime-embed
   vime-vimeo --> vime-embed
   vime-youtube --> vime-embed
   style vime-embed fill:#f9f,stroke:#333,stroke-width:4px

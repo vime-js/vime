@@ -1,7 +1,7 @@
 import 'cypress-plugin-snapshots/commands';
 import { PlayerProp } from '../../src/components/core/player/PlayerProp';
 
-Cypress.Commands.add('player', () => cy.get('vime-player', { timeout: 60000 }));
+Cypress.Commands.add('player', () => cy.get('vime-player', { timeout: 25000 }));
 
 Cypress.Commands.add('play', () => cy.player()
   .then(($player) => {
@@ -44,6 +44,11 @@ Cypress.Commands.add('playbackQuality', (quality: string) => cy.player()
     $player[0].callAdapter('setPlaybackQuality', quality);
     return $player;
   }));
+
+Cypress.Commands.add('raf', () => cy.window()
+  .then((window) => new Promise((res) => { 
+    window.requestAnimationFrame(res) 
+  })));
 
 Cypress.Commands.add('enterFullscreen', () => cy.player()
   .then(async ($player) => $player[0].enterFullscreen()));

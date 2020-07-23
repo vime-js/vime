@@ -1,9 +1,10 @@
 import { getFullscreenApi } from './FullscreenApi';
 import { isUndefined } from '../../../../utils/unit';
 import { listen } from '../../../../utils/dom';
+import { Disposal } from '../Disposal';
 
 export class Fullscreen {
-  private dispose: (() => void)[] = [];
+  private disposal = new Disposal();
 
   private api = getFullscreenApi();
 
@@ -12,10 +13,10 @@ export class Fullscreen {
     private readonly listener: (isActive: boolean) => void,
   ) {
     if (this.isSupported) {
-      this.dispose.push(listen(
+      this.disposal.add(listen(
         document,
         this.api.fullscreenchange!,
-        this.onFullscreenChange,
+        this.onFullscreenChange.bind(this),
       ));
 
       /* *
@@ -27,29 +28,41 @@ export class Fullscreen {
        *  3. Calling requestFullscreen inside an iframe.
        * */
       if ((document as any).webkitExitFullscreen) {
-        this.dispose.push(listen(
+        this.disposal.add(listen(
           document,
           'webkitfullscreenchange',
-          this.onFullscreenChange,
+          this.onFullscreenChange.bind(this),
+        ));
+      }
+
+      // We listen to this for the same reasons as above except when the browser is Firefox.
+      if ((document as any).mozCancelFullScreen) {
+        this.disposal.add(listen(
+          document,
+          'mozfullscreenchange',
+          this.onFullscreenChange.bind(this),
         ));
       }
     }
   }
 
   async enterFullscreen(options?: FullscreenOptions) {
-    if (!this.isSupported) throw Error('Fullscreen API not available.');
+    if (!this.isSupported) throw Error('Fullscreen API is not available.');
     return (this.el as any)[this.api.requestFullscreen!](options);
   }
 
   async exitFullscreen() {
-    if (!this.isSupported) throw Error('Fullscreen API not available.');
+    if (!this.isSupported) throw Error('Fullscreen API is not available.');
+    if (!this.isActive) throw Error('Player is not currently in fullscreen mode to exit.');
     return (document as any)[this.api.exitFullscreen!]();
   }
 
   get isActive() {
     if (!this.isSupported) return false;
     const fullscreenEl = (document as any)[this.api.fullscreenElement!] as Document['fullscreenElement'];
-    return (this.el === fullscreenEl) || (this.el.matches(`:${this.api.fullscreen}`));
+    return (this.el === fullscreenEl) 
+      || this.el.matches(`:${this.api.fullscreen}`)
+      || this.el.contains(fullscreenEl);
   }
 
   get isSupported() {
@@ -61,7 +74,6 @@ export class Fullscreen {
   }
 
   destroy() {
-    this.dispose.forEach((fn) => fn());
-    this.dispose = [];
+    this.disposal.empty();
   }
 }

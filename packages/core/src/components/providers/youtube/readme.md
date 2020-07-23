@@ -2,6 +2,17 @@
 
 Enables loading, playing and controlling videos from [YouTube](https://www.youtube.com).
 
+> You don't interact with this component for passing player properties, controlling playback, listening to player events and so on, that is all done through the `vime-player` component.
+
+## Example
+
+```html
+<vime-player controls autoplay muted>
+  <vime-youtube video-id="DyTCOwB0DVw" />
+  <!-- ... -->
+</vime-player>
+```
+
 ## Quirks
 
 - When the player is `paused`, `seeking` and `seeked` are fired at the same time (in order), because 

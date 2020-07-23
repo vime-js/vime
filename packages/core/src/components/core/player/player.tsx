@@ -30,9 +30,9 @@ import { canAutoplay, IS_MOBILE, onTouchInputChange } from '../../../utils/suppo
 import { Fullscreen } from './fullscreen/Fullscreen';
 import { en } from './lang/en';
 import { PlayerStateChange } from './PlayerState';
-import { TextTrack } from './TextTrack';
 import { Autopause } from './Autopause';
 import { getEventName } from './PlayerEvent';
+import { Disposal } from './Disposal';
 
 let playerIdCount = 0;
 
@@ -52,7 +52,7 @@ export class Player implements MediaPlayer {
 
   private autopauseMgr?: Autopause;
 
-  private dispose: (() => void)[] = [];
+  private disposal = new Disposal();
 
   /**
    * Cache of all property values to determine what events to fire when the component updates. This
@@ -288,12 +288,17 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, attribute: null }) errors: Error[] = [];
+  @Prop({ mutable: true, attribute: null }) errors: any[] = [];
+
+  @Watch('errors')
+  onErrorsChange() {
+    if (this.debug) console.error(this.errors[this.errors.length - 1])
+  }
 
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, attribute: null }) textTracks: TextTrack[] = [];
+  @Prop({ mutable: true, attribute: null }) textTracks?: TextTrackList;
 
   /**
    * @inheritDoc
@@ -433,162 +438,162 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event() vPausedChange!: EventEmitter<PlayerProps[PlayerProp.Paused]>;
+  @Event({ bubbles: false }) vPausedChange!: EventEmitter<PlayerProps[PlayerProp.Paused]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlay!: EventEmitter<void>;
+  @Event({ bubbles: false }) vPlay!: EventEmitter<void>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlayingChange!: EventEmitter<PlayerProps[PlayerProp.Playing]>;
+  @Event({ bubbles: false }) vPlayingChange!: EventEmitter<PlayerProps[PlayerProp.Playing]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vSeekingChange!: EventEmitter<PlayerProps[PlayerProp.Seeking]>;
+  @Event({ bubbles: false }) vSeekingChange!: EventEmitter<PlayerProps[PlayerProp.Seeking]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vSeeked!: EventEmitter<void>;
+  @Event({ bubbles: false }) vSeeked!: EventEmitter<void>;
 
   /**
    * @inheritDoc
    */
-  @Event() vBufferingChange!: EventEmitter<PlayerProps[PlayerProp.Buffering]>;
+  @Event({ bubbles: false }) vBufferingChange!: EventEmitter<PlayerProps[PlayerProp.Buffering]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vDurationChange!: EventEmitter<PlayerProps[PlayerProp.Duration]>;
+  @Event({ bubbles: false }) vDurationChange!: EventEmitter<PlayerProps[PlayerProp.Duration]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vCurrentTimeChange!: EventEmitter<PlayerProps[PlayerProp.CurrentTime]>;
+  @Event({ bubbles: false }) vCurrentTimeChange!: EventEmitter<PlayerProps[PlayerProp.CurrentTime]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackReady!: EventEmitter<void>;
+  @Event({ bubbles: false }) vPlaybackReady!: EventEmitter<void>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackStarted!: EventEmitter<void>;
+  @Event({ bubbles: false }) vPlaybackStarted!: EventEmitter<void>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackEnded!: EventEmitter<void>;
+  @Event({ bubbles: false }) vPlaybackEnded!: EventEmitter<void>;
 
   /**
    * @inheritDoc
    */
-  @Event() vBufferedChange!: EventEmitter<PlayerProps[PlayerProp.Buffered]>;
+  @Event({ bubbles: false }) vBufferedChange!: EventEmitter<PlayerProps[PlayerProp.Buffered]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vTextTracksChange!: EventEmitter<PlayerProps[PlayerProp.TextTracks]>;
+  @Event({ bubbles: false }) vTextTracksChange!: EventEmitter<PlayerProps[PlayerProp.TextTracks]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vErrorsChange!: EventEmitter<PlayerProps[PlayerProp.Errors]>;
+  @Event({ bubbles: false }) vErrorsChange!: EventEmitter<PlayerProps[PlayerProp.Errors]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event({ bubbles: false }) vLoadStart!: EventEmitter<void>;
 
   /**
    * @inheritDoc
    */
-  @Event() vCurrentSrcChange!: EventEmitter<PlayerProps[PlayerProp.CurrentSrc]>;
+  @Event({ bubbles: false }) vCurrentSrcChange!: EventEmitter<PlayerProps[PlayerProp.CurrentSrc]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vCurrentPosterChange!: EventEmitter<PlayerProps[PlayerProp.CurrentPoster]>;
+  @Event({ bubbles: false }) vCurrentPosterChange!: EventEmitter<PlayerProps[PlayerProp.CurrentPoster]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vMediaTitleChange!: EventEmitter<PlayerProps[PlayerProp.MediaTitle]>;
+  @Event({ bubbles: false }) vMediaTitleChange!: EventEmitter<PlayerProps[PlayerProp.MediaTitle]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackRateChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackRate]>;
+  @Event({ bubbles: false }) vPlaybackRateChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackRate]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackRatesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackRates]>;
+  @Event({ bubbles: false }) vPlaybackRatesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackRates]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackQualityChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQuality]>;
+  @Event({ bubbles: false }) vPlaybackQualityChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQuality]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackQualitiesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQualities]>;
+  @Event({ bubbles: false }) vPlaybackQualitiesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQualities]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vMutedChange!: EventEmitter<PlayerProps[PlayerProp.Muted]>;
+  @Event({ bubbles: false }) vMutedChange!: EventEmitter<PlayerProps[PlayerProp.Muted]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vVolumeChange!: EventEmitter<PlayerProps[PlayerProp.Volume]>;
+  @Event({ bubbles: false }) vVolumeChange!: EventEmitter<PlayerProps[PlayerProp.Volume]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vViewTypeChange!: EventEmitter<PlayerProps[PlayerProp.ViewType]>;
+  @Event({ bubbles: false }) vViewTypeChange!: EventEmitter<PlayerProps[PlayerProp.ViewType]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vMediaTypeChange!: EventEmitter<PlayerProps[PlayerProp.MediaType]>;
+  @Event({ bubbles: false }) vMediaTypeChange!: EventEmitter<PlayerProps[PlayerProp.MediaType]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vLiveChange!: EventEmitter<PlayerProps[PlayerProp.IsLive]>;
+  @Event({ bubbles: false }) vLiveChange!: EventEmitter<PlayerProps[PlayerProp.IsLive]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vTouchChange!: EventEmitter<PlayerProps[PlayerProp.IsTouch]>;
+  @Event({ bubbles: false }) vTouchChange!: EventEmitter<PlayerProps[PlayerProp.IsTouch]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vLanguageChange!: EventEmitter<PlayerProps[PlayerProp.Language]>;
+  @Event({ bubbles: false }) vLanguageChange!: EventEmitter<PlayerProps[PlayerProp.Language]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vLanguagesChange!: EventEmitter<PlayerProps[PlayerProp.Languages]>;
+  @Event({ bubbles: false }) vLanguagesChange!: EventEmitter<PlayerProps[PlayerProp.Languages]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vFullscreenChange!: EventEmitter<PlayerProps[PlayerProp.IsFullscreenActive]>;
+  @Event({ bubbles: false }) vFullscreenChange!: EventEmitter<PlayerProps[PlayerProp.IsFullscreenActive]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPiPChange!: EventEmitter<PlayerProps[PlayerProp.IsPiPActive]>;
+  @Event({ bubbles: false }) vPiPChange!: EventEmitter<PlayerProps[PlayerProp.IsPiPActive]>;
 
   /**
    * ------------------------------------------------------
@@ -707,11 +712,10 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async enterFullscreen(options?: FullscreenOptions) {
-    if (!this.isVideoView) throw Error('Cannot enter fullscreen when in an audio player view.');
+    if (!this.isVideoView) throw Error('Cannot enter fullscreen on an audio player view.');
     if (this.fullscreen!.isSupported) return this.fullscreen!.enterFullscreen(options);
     const adapter = await this.getAdapter();
-    const canProviderSetFullscreen = await adapter.canSetFullscreen?.();
-    if (canProviderSetFullscreen ?? false) return adapter.enterFullscreen?.(options);
+    if (await adapter.canSetFullscreen?.()) return adapter.enterFullscreen?.(options);
     throw Error('Fullscreen API is not available.');
   }
 
@@ -720,7 +724,9 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async exitFullscreen() {
-    return this.fullscreen!.exitFullscreen();
+    if (this.fullscreen!.isSupported) return this.fullscreen!.exitFullscreen();
+    const adapter = await this.getAdapter();
+    return adapter.exitFullscreen?.();
   }
 
   /**
@@ -737,7 +743,7 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async enterPiP() {
-    if (!this.isVideoView) throw Error('Cannot enter PiP mode when in an audio player view.');
+    if (!this.isVideoView) throw Error('Cannot enter PiP mode on an audio player view.');
     if (!(await this.canSetPiP())) throw Error('Picture-in-Picture API is not available.');
     const adapter = await this.getAdapter();
     return adapter.enterPiP?.();
@@ -769,7 +775,9 @@ export class Player implements MediaPlayer {
   private isFirstMediaChange = true;
 
   @Listen('vLoadStart')
-  async onMediaChange() {
+  async onMediaChange(event: Event) {
+    event.stopPropagation();
+
     Object.values(PlayerProp).forEach((prop) => { this.providerStateChanges[prop] = 0; });
 
     /**
@@ -796,6 +804,8 @@ export class Player implements MediaPlayer {
 
   @Listen('vStateChange')
   async onStateChange(event: CustomEvent<PlayerStateChange>) {
+    event.stopImmediatePropagation();
+
     const { by, prop, value } = event.detail;
 
     if (isInternalReadonlyPlayerProp(prop)) {
@@ -805,7 +815,7 @@ export class Player implements MediaPlayer {
     }
 
     if (prop === PlayerProp.Errors) {
-      this.queuePropChange(prop, [...this.errors, value], by.nodeName);
+      this.queuePropChange(prop, [...this.errors, ...value], by.nodeName);
       return;
     }
 
@@ -813,7 +823,9 @@ export class Player implements MediaPlayer {
      * This is to track changes that come from the provider directly, so we don't call any adapter
      * methods on these changes and end up in an infinite loop.
      */
-    if ((this.provider as any) === by) {
+    const isProvider = ((this.provider as any) === by)
+    const isProviderChild = (this.provider as any)?.contains(by);
+    if (isProvider || isProviderChild) {
       this.providerStateChanges[prop] += 1;
       if (prop === PlayerProp.PlaybackRate) this.prevPlaybackRate = value;
       if (prop === PlayerProp.PlaybackQuality) this.prevPlaybackQuality = value;
@@ -835,7 +847,7 @@ export class Player implements MediaPlayer {
       (isActive) => { this.queuePropChange(PlayerProp.IsFullscreenActive, isActive); },
     );
 
-    this.dispose.push(
+    this.disposal.add(
       onTouchInputChange((isTouch) => {
         this.internalStateChanges.add(PlayerProp.IsTouch);
         this.isTouch = isTouch;
@@ -895,8 +907,7 @@ export class Player implements MediaPlayer {
   disconnectedCallback() {
     this.autopauseMgr!.destroy();
     this.fullscreen!.destroy();
-    this.dispose.forEach((fn) => fn);
-    this.dispose = [];
+    this.disposal.empty();
     this.pendingStateChanges.clear();
     this.playbackReadyCalls = undefined;
     this.provider = undefined;
@@ -927,7 +938,6 @@ export class Player implements MediaPlayer {
     try {
       await change();
     } catch (e) {
-      if (this.debug) console.error(e);
       this.internalStateChanges.add(PlayerProp.Errors);
       this.errors = [...this.errors, e];
     }

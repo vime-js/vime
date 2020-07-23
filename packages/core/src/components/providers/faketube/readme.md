@@ -2,6 +2,15 @@
 
 Fake media provider that is used for testing.
 
+## Example
+
+```html
+<vime-player>
+  <vime-faketube />
+  <!-- ... -->
+</vime-player>
+```
+
 <!-- Auto Generated Below -->
 
 

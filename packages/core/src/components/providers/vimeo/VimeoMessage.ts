@@ -1,4 +1,4 @@
-import { VimeoCommand } from './VimeoCommands';
+import { VimeoCommand } from './VimeoCommand';
 import { VimeoDataEvent } from './VimeoEvent';
 
 export interface VimeoMessage {

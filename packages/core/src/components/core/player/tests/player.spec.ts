@@ -38,6 +38,7 @@ describe('props', () => {
       PlayerProp.MediaType,
       PlayerProp.ViewType,
       PlayerProp.MediaTitle,
+      PlayerProp.TextTracks,
       PlayerProp.CurrentSrc,
       PlayerProp.CurrentPoster,
     ]);

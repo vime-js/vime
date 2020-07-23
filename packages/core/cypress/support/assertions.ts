@@ -3,13 +3,15 @@
 import { PlayerProp } from '../../src/components/core/player/PlayerProp';
 import { PlayerEvent } from '../../src/components/core/player/PlayerEvent';
 
-const isPlayer = ($player: any) => chai.expect($player).to.have.prop('nodeName', 'VIME-PLAYER');
+const isPlayer = ($player: any) => {
+  if ($player) chai.expect($player).to.have.prop('nodeName', 'VIME-PLAYER');
+};
 
 chai.Assertion.addMethod('readyForPlayback', function () {
   const $player: JQuery<HTMLVimePlayerElement> = this._obj;
   isPlayer($player);
   this.assert(
-    $player.prop(PlayerProp.PlaybackReady),
+    $player && $player.prop(PlayerProp.PlaybackReady),
     'expected #{this} to be ready for playback',
     'expected #{this} to not be ready for playback',
     $player,

@@ -8,7 +8,7 @@ import { decodeJSON } from '../../../utils/network';
 import { isString, isUndefined, isNumber } from '../../../utils/unit';
 import { ViewType } from '../../core/player/ViewType';
 import { VimeoParams } from './VimeoParams';
-import { VimeoCommand, VimeoCommandArg } from './VimeoCommands';
+import { VimeoCommand, VimeoCommandArg } from './VimeoCommand';
 import { VimeoMessage } from './VimeoMessage';
 import { VimeoDataEvent, VimeoDataEventPayload, VimeoEvent } from './VimeoEvent';
 import { MediaType } from '../../core/player/MediaType';
@@ -18,7 +18,7 @@ import { DeferredPromise, deferredPromise } from '../../../utils/promise';
   tag: 'vime-vimeo',
   styleUrl: 'vimeo.scss',
 })
-export class Vimeo implements MediaProvider {
+export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   private embed!: HTMLVimeEmbedElement;
 
   private dispatch!: PlayerStateDispatcher;
@@ -123,8 +123,8 @@ export class Vimeo implements MediaProvider {
 
   connectedCallback() {
     this.dispatch = createPlayerStateDispatcher(this);
-    this.onVideoIdChange();
     this.dispatch(PlayerProp.ViewType, ViewType.Video);
+    this.onVideoIdChange();
   }
 
   componentWillLoad() {
@@ -194,7 +194,7 @@ export class Vimeo implements MediaProvider {
       this.internalState.seeking = true;
       this.dispatch(PlayerProp.Seeking, true);
 
-      if (this.internalState.paused || (this.internalState.buffered < time)) {
+      if (this.internalState.playing && (this.internalState.buffered < time)) {
         this.dispatch(PlayerProp.Buffering, true);
       }
 
@@ -300,6 +300,7 @@ export class Vimeo implements MediaProvider {
         this.internalState.paused = true;
         this.internalState.playing = false;
         this.dispatch(PlayerProp.Paused, true);
+        this.dispatch(PlayerProp.Buffering, false);
         break;
       case VimeoDataEvent.LoadProgress:
         this.internalState.buffered = payload.seconds;
@@ -337,14 +338,17 @@ export class Vimeo implements MediaProvider {
         this.dispatch(PlayerProp.IsFullscreenActive, payload.fullscreen);
         break;
       case VimeoDataEvent.Finish:
-        this.dispatch(PlayerProp.PlaybackEnded, true);
         if (this.loop) {
           this.remoteControl(VimeoCommand.SetCurrentTime, 0);
-          this.internalState.playRequest = true;
+          setTimeout(() => {
+            this.remoteControl(VimeoCommand.Play);
+          }, 200);
+        } else {
+          this.dispatch(PlayerProp.PlaybackEnded, true);
         }
         break;
       case VimeoDataEvent.Error:
-        this.dispatch(PlayerProp.Errors, payload);
+        this.dispatch(PlayerProp.Errors, [new Error(payload)]);
         break;
     }
   }

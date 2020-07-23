@@ -46,6 +46,15 @@ export const loadImage = (src: string, minWidth = 1): Promise<HTMLImageElement> 
   },
 );
 
+export const loadScript = (src: string, onLoad: () => void, onError: (e: any) => void) => {
+  const script = document.createElement('script');
+  script.src = src;
+  script.onload = onLoad;
+  script.onerror = onError;
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode!.insertBefore(script, firstScriptTag);
+};
+
 /**
  * Tries to parse json and return a object.
  */
@@ -170,3 +179,61 @@ export const decodeQueryString = <T>(qs: string): T | undefined => {
   if (!isString(qs)) return undefined;
   return parseQueryString(qs);
 };
+
+/**
+ * Loads an SDK into the global window namespace.
+ * 
+ * @see https://github.com/CookPete/react-player/blob/master/src/utils.js#L77
+ */
+type PendingSDKRequest = {  resolve: (value?: any) => void, reject: (reason?: any) => void  }
+const pendingSDKRequests: Record<string, PendingSDKRequest[]> = {};
+export const loadSDK = <SDKType = any>(
+  url: string, 
+  sdkGlobalVar: string, 
+  sdkReadyVar?: string,
+  isLoaded = (_sdk: SDKType) => true, 
+  loadScriptFn = loadScript
+) => {
+  const getGlobal = (key: any) => {
+    if (window[key]) return window[key];
+    if (window.exports && window.exports[key]) return window.exports[key];
+    if (window.module && window.module.exports && window.module.exports[key]) {
+      return window.module.exports[key]
+    }
+    return undefined
+  }
+
+  const existingGlobal = getGlobal(sdkGlobalVar)
+
+  if (existingGlobal && isLoaded(existingGlobal)) {
+    return Promise.resolve(existingGlobal)
+  }
+
+  return new Promise<SDKType>((resolve, reject) => {
+    if (pendingSDKRequests[url]) {
+      pendingSDKRequests[url].push({ resolve, reject })
+      return
+    }
+
+    pendingSDKRequests[url] = [{ resolve, reject }]
+
+    const onLoaded = (sdk: SDKType) => {
+      pendingSDKRequests[url].forEach(request => request.resolve(sdk))
+    }
+
+    if (!isUndefined(sdkReadyVar)) {
+      const previousOnReady: () => void = window[(sdkReadyVar as any)] as any;
+      (window as any)[(sdkReadyVar as any)] = function () {
+        if (previousOnReady) previousOnReady()
+        onLoaded(getGlobal(sdkGlobalVar))
+      }
+    }
+
+    loadScriptFn(url, () => {
+      if (isUndefined(sdkReadyVar)) onLoaded(getGlobal(sdkGlobalVar))
+    }, (e) => { 
+      pendingSDKRequests[url].forEach((request) => { request.reject(e) }); 
+      delete pendingSDKRequests[url];
+    });
+  });
+}

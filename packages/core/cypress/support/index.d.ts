@@ -16,6 +16,11 @@ declare namespace Cypress {
       thresholdType: 'percent' | 'pixels',
       name: string
     }> & Partial<ScreenshotDefaultsOptions>): Chainable<null>;
+    
+    /**
+     * Requests an animation frame and waits for its completion.
+     */
+    raf(): Chainable<void>
 
     /**
      * Finds and returns the `vime-player` element.

@@ -1,5 +1,4 @@
 import { MediaType } from './MediaType';
-import { TextTrack } from './TextTrack';
 import { ViewType } from './ViewType';
 
 export enum PlayerProp {
@@ -139,7 +138,7 @@ export const resetablePlayerProps = {
   [PlayerProp.PlaybackQualities]: [],
   [PlayerProp.PlaybackStarted]: false,
   [PlayerProp.PlaybackEnded]: false,
-  [PlayerProp.TextTracks]: [],
+  [PlayerProp.TextTracks]: undefined,
   [PlayerProp.MediaType]: undefined,
   [PlayerProp.IsLive]: false,
 };
@@ -287,12 +286,12 @@ export interface PlayerProps {
   /**
    * `@readonly` A collection of errors that have occurred ordered by `[oldest, ..., newest]`.
    */
-  [PlayerProp.Errors]: Error[]
+  [PlayerProp.Errors]: any[]
 
   /**
    * `@readonly` The text tracks (WebVTT) associated with the current media.
    */
-  [PlayerProp.TextTracks]: TextTrack[]
+  [PlayerProp.TextTracks]?: TextTrackList
 
   /**
    * An `int` between `0` (silent) and `100` (loudest) indicating the audio volume.

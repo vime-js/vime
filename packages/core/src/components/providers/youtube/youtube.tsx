@@ -4,7 +4,7 @@ import {
 import { MediaProvider, openProviderWormhole } from '../MediaProvider';
 import { decodeJSON, loadImage } from '../../../utils/network';
 import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/player/PlayerState';
-import { YouTubeCommand, YouTubeCommandArg } from './YouTubeCommands';
+import { YouTubeCommand, YouTubeCommandArg } from './YouTubeCommand';
 import { YouTubeParams } from './YouTubeParams';
 import {
   isString, isNumber, isArray, isBoolean, isObject,
@@ -109,8 +109,8 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
 
   connectedCallback() {
     this.dispatch = createPlayerStateDispatcher(this);
-    this.onVideoIdChange();
     this.dispatch(PlayerProp.ViewType, ViewType.Video);
+    this.onVideoIdChange();
   }
 
   componentWillLoad() {
@@ -221,6 +221,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     if (this.internalState.paused && (isBuffering || isPlaying)) {
       this.internalState.paused = false;
       this.dispatch(PlayerProp.Paused, false);
+
       if (!this.internalState.playbackStarted) {
         this.dispatch(PlayerProp.PlaybackStarted, true);
         this.internalState.playbackStarted = true;
@@ -245,11 +246,10 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
         this.dispatch(PlayerProp.Paused, true);
         break;
       case YouTubePlayerState.Ended:
-        this.dispatch(PlayerProp.PlaybackEnded, true);
         if (this.loop) {
-          this.remoteControl(YouTubeCommand.Seek, 0);
-          // Command is ignored if fired immediately after seeking.
           window.setTimeout(() => { this.remoteControl(YouTubeCommand.Play); }, 150);
+        } else {
+          this.dispatch(PlayerProp.PlaybackEnded, true);
         }
         break;
     }
@@ -276,7 +276,6 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     if (Math.abs(this.internalState.currentTime - currentTime) > 1.5) {
       this.internalState.seeking = true;
       this.dispatch(PlayerProp.Seeking, true);
-      if (this.internalState.paused) this.dispatch(PlayerProp.Buffering, true);
     }
 
     this.internalState.currentTime = currentTime;
@@ -294,7 +293,6 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
       window.setTimeout(() => {
         this.internalState.seeking = false;
         this.dispatch(PlayerProp.Seeking, false);
-        if (this.internalState.paused) this.dispatch(PlayerProp.Buffering, false);
       }, this.internalState.paused ? 100 : 0);
     }
   }
@@ -306,8 +304,6 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     if (!info) return;
 
     if (isObject(info.videoData)) this.dispatch(PlayerProp.MediaTitle, info.videoData!.title);
-
-    if (isNumber(info.playerState)) this.onPlayerStateChange(info.playerState!);
 
     if (isNumber(info.duration)) {
       this.internalState.duration = info.duration!;
@@ -347,6 +343,8 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     if (isString(info.playbackQuality)) {
       this.dispatch(PlayerProp.PlaybackQuality, mapYouTubePlaybackQuality(info.playbackQuality!));
     }
+
+    if (isNumber(info.playerState)) this.onPlayerStateChange(info.playerState!);
   }
 
   render() {
