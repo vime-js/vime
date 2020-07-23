@@ -11,6 +11,7 @@ Embeds an external media player and enables interacting with it via `postMessage
 | ---------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ----------- |
 | `decoder`        | --            | A function which accepts the raw message received from the embedded media player via `postMessage` and converts it into a POJO. | `((data: string) => Record<string, any> \| undefined) \| undefined` | `undefined` |
 | `embedSrc`       | `embed-src`   | A URL that will load the external player and media (Eg: https://www.youtube.com/embed/DyTCOwB0DVw).                             | `string`                                                            | `''`        |
+| `lazy`           | `lazy`        | Whether the embedded player should defer loading until it enters the viewport.                                                  | `boolean`                                                           | `true`      |
 | `mediaTitle`     | `media-title` | The title of the current media so it can be set on the inner `iframe` for screen readers.                                       | `string`                                                            | `''`        |
 | `origin`         | `origin`      | Where the src request had originated from without any path information.                                                         | `string \| undefined`                                               | `undefined` |
 | `params`         | --            | The parameters to pass to the embedded player. These are encoded as a query string and appended to the `embedSrc` prop.         | `{ [x: string]: any; }`                                             | `{}`        |
@@ -43,11 +44,13 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [vime-vimeo](../../providers/vimeo)
  - [vime-youtube](../../providers/youtube)
 
 ### Graph
 ```mermaid
 graph TD;
+  vime-vimeo --> vime-embed
   vime-youtube --> vime-embed
   style vime-embed fill:#f9f,stroke:#333,stroke-width:4px
 ```

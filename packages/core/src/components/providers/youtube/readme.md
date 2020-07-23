@@ -1,6 +1,19 @@
 # vime-youtube
 
-The YouTube media provider.
+Enables loading, playing and controlling videos from [YouTube](https://www.youtube.com).
+
+## Quirks
+
+- When the player is `paused`, `seeking` and `seeked` are fired at the same time (in order), because 
+  there are no updates between the events from the embed.
+
+- Chaning the `controls` prop forces the player to reload.
+  
+- You cannot change `playbackQuality` programmatically, YouTube automatically determines the best 
+  quality to play.
+
+- Fullscreen changes that come from clicking the YouTube fullscreen control are not tracked on iOS, 
+  because the embed doesn't provide an API for it.
 
 <!-- Auto Generated Below -->
 

@@ -3,16 +3,20 @@
  *
  * @see https://developers.google.com/youtube/player_parameters
  */
-export interface YouTubePlayerParams {
+export interface YouTubeParams {
   /**
    * This parameter specifies whether the initial video will automatically start to play when the
-   * player loads. Supported values are 0 or 1. The default value is 0.
+   * player loads. Supported values are 0 or 1.
+   *
+   * @default 0
    */
   autoplay?: 0 | 1
 
   /**
    * This parameter specifies whether the initial video will load with audio muted. Supported values
-   * are 0 or 1. The default value is 0.
+   * are 0 or 1.
+   *
+   * @default 0
    */
   mute?: 0 | 1
 
@@ -40,6 +44,8 @@ export interface YouTubePlayerParams {
    * the YouTube API blog for more information about color options.
    *
    * Note: Setting the color parameter to white will disable the `modestbranding` option.
+   *
+   * @default 'red'
    */
   color?: 'red' | 'white'
 
@@ -47,7 +53,9 @@ export interface YouTubePlayerParams {
    * This parameter indicates whether the video player controls are displayed:
    *
    * - `controls=0` – Player controls do not display in the player.
-   * - `controls=1` (default) – Player controls display in the player.
+   * - `controls=1` – Player controls display in the player.
+   *
+   * @default 1
    */
   controls?: 0 | 1
 
@@ -67,6 +75,8 @@ export interface YouTubePlayerParams {
    * - [m]: Mute or unmute the video
    * - [0-9]: Jump to a point in the video. 0 jumps to the beginning of the video, 1 jumps to the
    * point 10% into the video, 2 jumps to the point 20% into the video, and so forth.
+   *
+   * @default 0
    */
   disablekb?: 0 | 1
 
@@ -77,6 +87,8 @@ export interface YouTubePlayerParams {
    *
    * For more information on the IFrame API and how to use it, see the IFrame API documentation.
    * (The JavaScript Player API has already been deprecated.)
+   *
+   * @default 0
    */
   enablejsapi?: 0 | 1
 
@@ -86,6 +98,8 @@ export interface YouTubePlayerParams {
    * the seekTo function, the player will look for the closest keyframe to the time you specify.
    * This means that sometimes the play head may seek to just before the requested time, usually no
    * more than around two seconds.
+   *
+   * @default undefined
    */
   start?: number
 
@@ -96,12 +110,16 @@ export interface YouTubePlayerParams {
    * Note: The time is measured from the beginning of the video and not from either the value of
    * the start player parameter or the startSeconds parameter, which is used in YouTube Player API
    * functions for loading or queueing a video.
+   *
+   * @default undefined
    */
   end?: number
 
   /**
    * Setting this parameter to 0 prevents the fullscreen button from displaying in the player. The
    * default value is 1, which causes the fullscreen button to display.
+   *
+   * @default 1
    */
   fs?: 0 | 1
 
@@ -118,7 +136,9 @@ export interface YouTubePlayerParams {
 
   /**
    * Setting the parameter's value to 1 causes video annotations to be shown by default, whereas
-   * setting to 3 causes video annotations to not be shown by default. The default value is 1.
+   * setting to 3 causes video annotations to not be shown by default.
+   *
+   * @default 1
    */
   iv_load_policy?: 1 | 3
 
@@ -138,6 +158,8 @@ export interface YouTubePlayerParams {
    *
    * Note: If you specify values for the `list` and `listType` parameters, the IFrame embed URL does
    * not need to specify a video ID.
+   *
+   * @default undefined
    */
   list?: string
 
@@ -147,6 +169,8 @@ export interface YouTubePlayerParams {
    *
    * Note: If you specify values for the list and listType parameters, the IFrame embed URL does
    * not need to specify a video ID.
+   *
+   * @default undefined
    */
   listType?: 'playlist' | 'search' | 'user_uploads'
 
@@ -155,7 +179,7 @@ export interface YouTubePlayerParams {
    * video again and again. In the case of a playlist player (or custom player), the player plays
    * the entire playlist and then starts again at the first video.
    *
-   * Supported values are 0 and 1, and the default value is 0.
+   * @default 0
    */
   loop?: 0 | 1
 
@@ -164,6 +188,8 @@ export interface YouTubePlayerParams {
    * parameter value to 1 to prevent the YouTube logo from displaying in the control bar. Note that
    * a small YouTube text label will still display in the upper-right corner of a paused video when
    * the user's mouse pointer hovers over the player.
+   *
+   * @default undefined
    */
   modestbranding?: 1
 
@@ -171,6 +197,8 @@ export interface YouTubePlayerParams {
    * This parameter provides an extra security measure for the IFrame API and is only supported for
    * IFrame embeds. If you are using the IFrame API, which means you are setting the enablejsapi
    * parameter value to 1, you should always specify your domain as the origin parameter value.
+   *
+   * @default undefined
    */
   origin?: string
 
@@ -178,6 +206,8 @@ export interface YouTubePlayerParams {
    * This parameter specifies a comma-separated list of video IDs to play. If you specify a value,
    * the first video that plays will be the VIDEO_ID specified in the URL path, and the videos
    * specified in the playlist parameter will play thereafter.
+   *
+   * @default undefined
    */
   playlist?: string
 
@@ -186,11 +216,12 @@ export interface YouTubePlayerParams {
    *
    * Valid values are:
    *
-   * - 0: This value causes fullscreen playback. This is currently the default value, though the
-   * default is subject to change
+   * - 0: This value causes fullscreen playback.
    *
    * - 1: This value causes inline playback for UIWebViews created with the
-   * allowsInlineMediaPlayback property set to TRUE.
+   * `allowsInlineMediaPlayback` property set to `true`.
+   *
+   * @default 0
    */
   playsinline?: 0 | 1
 
@@ -198,6 +229,8 @@ export interface YouTubePlayerParams {
    * If the rel parameter is set to 0, related videos will come from the same channel as the video
    * that was just played. If the parameter's value is set to 1, which is the default value, then
    * the player shows related videos.
+   *
+   * @default 1
    */
   rel?: 0 | 1
 
@@ -208,6 +241,8 @@ export interface YouTubePlayerParams {
    * widget provider's domain, but YouTube Analytics should not identify the widget provider as the
    * actual traffic source. Instead, YouTube Analytics uses the widget_referrer parameter value to
    * identify the domain associated with the traffic source.
+   *
+   * @default undefined
    */
   widget_referrer?: string
 }

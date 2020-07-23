@@ -194,6 +194,7 @@ export interface PlayerProps {
    * will only work if the browsers `autoplay` policies have been satisfied. It'll generally work
    * if the player is muted, or the user frequently interacts with your site. You can check
    * if it's possible to autoplay via the `canAutoplay()` or `canMutedAutoplay()` methods.
+   * Depending on the provider, changing this prop may cause the player to completely reset.
    */
   [PlayerProp.Autoplay]: boolean
 
@@ -278,7 +279,8 @@ export interface PlayerProps {
   /**
    * Indicates whether a user interface should be shown for controlling the resource. Set this to
    * `false` when you want to provide your own custom controls, and `true` if you want the current
-   * provider to supply its own default controls.
+   * provider to supply its own default controls. Depending on the provider, changing this prop
+   * may cause the player to completely reset.
    */
   [PlayerProp.Controls]: boolean
 
@@ -377,6 +379,7 @@ export interface PlayerProps {
   /**
    * Whether the video is to be played "inline", that is within the element's playback area. Note
    * that setting this to false does not imply that the video will always be played in fullscreen.
+   * Depending on the provider, changing this prop may cause the player to completely reset.
    */
   [PlayerProp.Playsinline]: boolean
 

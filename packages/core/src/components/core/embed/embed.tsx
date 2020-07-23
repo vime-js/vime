@@ -45,6 +45,11 @@ export class Embed implements ComponentInterface {
   @Prop() mediaTitle = '';
 
   /**
+   * Whether the embedded player should defer loading until it enters the viewport.
+   */
+  @Prop() lazy = true;
+
+  /**
    * The parameters to pass to the embedded player. These are encoded as a query string and
    * appended to the `embedSrc` prop.
    */
@@ -115,7 +120,7 @@ export class Embed implements ComponentInterface {
       });
   }
 
-  componentWillLoad() {
+  connectedCallback() {
     this.intersectionObserverCleanup = onElementEntersViewport(
       this.el,
       () => { this.hasEnteredViewport = true; },
@@ -163,10 +168,7 @@ export class Embed implements ComponentInterface {
       <iframe
         id={this.getEmbedId()}
         title={this.mediaTitle}
-        src={this.srcWithParams}
-        style={{
-          display: !this.hasEnteredViewport ? 'none': undefined
-        }}
+        src={(!this.lazy || this.hasEnteredViewport) ? this.srcWithParams : undefined}
         // @ts-ignore
         allowfullscreen="1"
         allow="autoplay; encrypted-media; picture-in-picture"

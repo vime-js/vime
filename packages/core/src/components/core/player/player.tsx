@@ -804,6 +804,11 @@ export class Player implements MediaPlayer {
       );
     }
 
+    if (prop === PlayerProp.Errors) {
+      this.queuePropChange(prop, [...this.errors, value], by.nodeName);
+      return;
+    }
+
     /**
      * This is to track changes that come from the provider directly, so we don't call any adapter
      * methods on these changes and end up in an infinite loop.
@@ -818,15 +823,11 @@ export class Player implements MediaPlayer {
   }
 
   connectedCallback() {
-    const initialValues: any = {};
-
     Object.values(PlayerProp).forEach((prop) => {
-      initialValues[prop] = this[prop];
       this.providerStateChanges[prop] = 0;
       this.cache.set(prop, this[prop]);
     });
 
-    Universe.create(this, { ...initialValues });
     this.autopauseMgr = new Autopause(this);
 
     this.fullscreen = new Fullscreen(
@@ -852,6 +853,7 @@ export class Player implements MediaPlayer {
   }
 
   componentWillLoad() {
+    Universe.create(this, this.getPlayerState());
     return this.getProvider() as Promise<any>;
   }
 
@@ -901,6 +903,11 @@ export class Player implements MediaPlayer {
     this.fullscreen = undefined;
     this.autopauseMgr = undefined;
     this.adapter = undefined;
+  }
+
+  private getPlayerState() {
+    return Object.values(PlayerProp)
+      .reduce((state, prop) => ({ ...state, [prop]: this[prop] }), {});
   }
 
   private fireEvent(prop: PlayerProp, value: any) {
@@ -1005,10 +1012,6 @@ export class Player implements MediaPlayer {
   }
 
   render() {
-    const playerState = Object
-      .values(PlayerProp)
-      .reduce((state, prop) => ({ ...state, [prop]: this[prop] }), {});
-
     return (
       <Host
         id={this.getPlayerId()}
@@ -1021,7 +1024,7 @@ export class Player implements MediaPlayer {
           fullscreen: this.isFullscreenActive,
         }}
       >
-        <Universe.Provider state={playerState}>
+        <Universe.Provider state={this.getPlayerState()}>
           { !this.controls && this.isVideoView && <div class="blocker" /> }
 
           <slot />

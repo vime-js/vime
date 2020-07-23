@@ -1,33 +1,33 @@
 import 'cypress-plugin-snapshots/commands';
 import { PlayerProp } from '../../src/components/core/player/PlayerProp';
 
-Cypress.Commands.add('getPlayer', () => cy.get('vime-player', { timeout: 15000 }));
+Cypress.Commands.add('player', () => cy.get('vime-player', { timeout: 60000 }));
 
-Cypress.Commands.add('play', () => cy.getPlayer()
+Cypress.Commands.add('play', () => cy.player()
   .then(($player) => {
     $player[0].play();
     return $player;
   }));
 
-Cypress.Commands.add('pause', () => cy.getPlayer()
+Cypress.Commands.add('pause', () => cy.player()
   .then(($player) => {
     $player[0].pause();
     return $player;
   }));
 
-Cypress.Commands.add('volume', (level: number) => cy.getPlayer()
+Cypress.Commands.add('volume', (level: number) => cy.player()
   .then(($player) => {
     $player[0].callAdapter('setVolume', level);
     return $player;
   }));
 
-Cypress.Commands.add('mute', (muted: boolean) => cy.getPlayer()
+Cypress.Commands.add('mute', (muted: boolean) => cy.player()
   .then(($player) => {
     $player[0].callAdapter('setMuted', muted);
     return $player;
   }));
 
-Cypress.Commands.add('playbackRate', (rate: number) => cy.getPlayer()
+Cypress.Commands.add('playbackRate', (rate: number) => cy.player()
   .then(async ($player) => {
     const canSet = await $player[0].canSetPlaybackRate();
     const rates: number[] = $player.prop(PlayerProp.PlaybackRates);
@@ -36,7 +36,7 @@ Cypress.Commands.add('playbackRate', (rate: number) => cy.getPlayer()
     return $player;
   }));
 
-Cypress.Commands.add('playbackQuality', (quality: string) => cy.getPlayer()
+Cypress.Commands.add('playbackQuality', (quality: string) => cy.player()
   .then(async ($player) => {
     const canSet = await $player[0].canSetPlaybackQuality();
     const qualities: string[] = $player.prop(PlayerProp.PlaybackQualities);
@@ -45,19 +45,19 @@ Cypress.Commands.add('playbackQuality', (quality: string) => cy.getPlayer()
     return $player;
   }));
 
-Cypress.Commands.add('enterFullscreen', () => cy.getPlayer()
+Cypress.Commands.add('enterFullscreen', () => cy.player()
   .then(async ($player) => $player[0].enterFullscreen()));
 
-Cypress.Commands.add('exitFullscreen', () => cy.getPlayer()
+Cypress.Commands.add('exitFullscreen', () => cy.player()
   .then(async ($player) => $player[0].exitFullscreen()));
 
-Cypress.Commands.add('enterPiP', () => cy.getPlayer()
+Cypress.Commands.add('enterPiP', () => cy.player()
   .then(async ($player) => $player[0].enterPiP()));
 
-Cypress.Commands.add('exitPiP', () => cy.getPlayer()
+Cypress.Commands.add('exitPiP', () => cy.player()
   .then(async ($player) => $player[0].exitPiP()));
 
-Cypress.Commands.add('seekTo', (time: number) => cy.getPlayer()
+Cypress.Commands.add('seekTo', (time: number) => cy.player()
   .then(($player) => {
     $player[0].callAdapter('setCurrentTime', time);
     return $player;

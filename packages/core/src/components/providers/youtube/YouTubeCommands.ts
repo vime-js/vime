@@ -1,3 +1,6 @@
+/**
+ * @see https://developers.google.com/youtube/iframe_api_reference#Playback_controls
+ */
 export enum YouTubeCommand {
   Play = 'playVideo',
   Pause = 'pauseVideo',
@@ -8,7 +11,7 @@ export enum YouTubeCommand {
   SetPlaybackRate = 'setPlaybackRate'
 }
 
-export interface YouTubeCommands {
+export interface YouTubeCommandArg {
   [YouTubeCommand.Play]: void;
   [YouTubeCommand.Pause]: void;
   [YouTubeCommand.Seek]: number;

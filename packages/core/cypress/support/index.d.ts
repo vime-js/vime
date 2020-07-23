@@ -13,14 +13,14 @@ declare namespace Cypress {
     toMatchImageSnapshot(options?: Partial<{
       createDiffImage: boolean,
       threshold: number,
-      thresholdType: "percent" | "pixels",
+      thresholdType: 'percent' | 'pixels',
       name: string
     }> & Partial<ScreenshotDefaultsOptions>): Chainable<null>;
 
     /**
      * Finds and returns the `vime-player` element.
      */
-    getPlayer(): Chainable<JQuery<HTMLVimePlayerElement>>
+    player(): Chainable<JQuery<HTMLVimePlayerElement>>
 
     /**
      * Finds the `vime-player` element and begins/resumes playback.

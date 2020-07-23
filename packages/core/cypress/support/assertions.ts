@@ -67,7 +67,6 @@ chai.Assertion.addMethod('seekedForwards', function (seeked: { from: number, to:
   isPlayer($player);
 
   const hasSeeked = !$player.prop(PlayerProp.Seeking)
-    && !$player.prop(PlayerProp.Buffering)
     && ($player.prop(PlayerProp.CurrentTime) > seeked.from)
     && ($player.prop(PlayerProp.CurrentTime) >= seeked.to);
 
@@ -85,7 +84,6 @@ chai.Assertion.addMethod('seekedBackwards', function (seeked: { from: number, to
   isPlayer($player);
 
   const hasSeeked = !$player.prop(PlayerProp.Seeking)
-    && !$player.prop(PlayerProp.Buffering)
     && ($player.prop(PlayerProp.CurrentTime) < seeked.from)
     && ($player.prop(PlayerProp.CurrentTime) >= seeked.to);
 
@@ -115,17 +113,6 @@ chai.Assertion.addMethod('firedSeekingChange', (
   chai.expect(events[PlayerEvent.SeekingChange])
     .to.have.been.calledWith(true)
     .and.to.have.been.calledWith(false);
-  chai.expect(events[PlayerEvent.BufferingChange])
-    .to.have.been.calledWith(true)
-    .and.to.have.been.calledWith(false);
   chai.expect(events[PlayerEvent.Seeked]).to.have.been.called;
-  // order => [seeking=true] -> [buffering=true] -> [buffering=false] -> [seeking=false] -> seeked
-  chai.expect(events[PlayerEvent.SeekingChange])
-    .to.be.calledBefore(events[PlayerEvent.BufferingChange]);
-  chai.expect(events[PlayerEvent.BufferingChange])
-    .to.be.calledBefore(events[PlayerEvent.SeekingChange]);
-  chai.expect(events[PlayerEvent.BufferingChange])
-    .to.be.calledBefore(events[PlayerEvent.Seeked]);
-  chai.expect(events[PlayerEvent.SeekingChange])
-    .to.be.calledBefore(events[PlayerEvent.Seeked]);
+  chai.expect(events[PlayerEvent.SeekingChange]).to.be.calledBefore(events[PlayerEvent.Seeked]);
 });

@@ -15,6 +15,8 @@
 
 <div class="buttons">
   <button id="youtube" type="button">YouTube</button>
+  <button id="vimeo" type="button">Vimeo</button>
+  <button id="dailymotion" type="button">Dailymotion</button>
 </div>
 
 <script>
@@ -22,12 +24,16 @@
     document.getElementById(id).addEventListener('click', callback);
   }
 
-  const addProvider = (provider) => {
-    const container = document.getElementById('container');
-    container.innerHTML = `<vime-player muted controls>${provider}</vime-player>`
+  const container = document.getElementById('container');
+  const addProvider = (id, cmp) => {
+    addClickEvent(id, () => { 
+      container.innerHTML = `<vime-player muted controls>${cmp}</vime-player>`;
+    });
   }
 
-  addClickEvent('youtube', () => { addProvider('<vime-youtube video-id="DyTCOwB0DVw" />') });
+  addProvider('youtube', '<vime-youtube video-id="DyTCOwB0DVw" />');
+  addProvider('vimeo', '<vime-vimeo video-id="411652396" />');
+  addProvider('dailymotion', '<vime-dailymotion video-id="k3b11PemcuTrmWvYe0q" />');
 </script>
 
 <style>
