@@ -8,7 +8,7 @@ Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.c
 
 ```html
 <vime-player controls autoplay muted>
-  <vime-vimeo video-id="411652396" />
+  <vime-vimeo video-id="411652396"></vime-vimeo>
   <!-- ... -->
 </vime-player>
 ```

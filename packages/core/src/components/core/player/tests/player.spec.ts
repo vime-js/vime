@@ -11,7 +11,7 @@ import { PlayerEvent } from '../PlayerEvent';
 let page: SpecPage;
 let player: Player;
 let adapter: MockMediaProviderAdapter;
-let fakeTube: HTMLVimeFaketubeElement;
+let provider: HTMLVimeFaketubeElement;
 
 const buildPage = async (opts?: Partial<NewSpecPageOptions>) => {
   page = await newSpecPage({
@@ -21,7 +21,7 @@ const buildPage = async (opts?: Partial<NewSpecPageOptions>) => {
   });
 
   player = page.rootInstance!;
-  fakeTube = page.root!.querySelector('vime-faketube')!;
+  provider = page.root!.querySelector('vime-faketube')!;
   adapter = await player.getAdapter() as MockMediaProviderAdapter;
 };
 
@@ -63,11 +63,11 @@ describe('props', () => {
   it('should watch `mediaType` prop', async () => {
     expect(player.isAudio).toBeFalsy();
     expect(player.isVideo).toBeFalsy();
-    await fakeTube.dispatchStateChange(PlayerProp.MediaType, MediaType.Audio);
+    await provider.dispatchStateChange(PlayerProp.MediaType, MediaType.Audio);
     await page.waitForChanges();
     expect(player.isAudio).toBeTruthy();
     expect(player.isVideo).toBeFalsy();
-    await fakeTube.dispatchStateChange(PlayerProp.MediaType, MediaType.Video);
+    await provider.dispatchStateChange(PlayerProp.MediaType, MediaType.Video);
     await page.waitForChanges();
     expect(player.isAudio).toBeFalsy();
     expect(player.isVideo).toBeTruthy();
@@ -76,11 +76,11 @@ describe('props', () => {
   it('should watch `viewType` prop', async () => {
     expect(player.isAudioView).toBeFalsy();
     expect(player.isVideoView).toBeFalsy();
-    await fakeTube.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
+    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
     await page.waitForChanges();
     expect(player.isAudioView).toBeTruthy();
     expect(player.isVideoView).toBeFalsy();
-    await fakeTube.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
     await page.waitForChanges();
     expect(player.isAudioView).toBeFalsy();
     expect(player.isVideoView).toBeTruthy();
@@ -88,7 +88,7 @@ describe('props', () => {
 
   it('should set playing to false when paused changes to true', async () => {
     player.paused = false;
-    await fakeTube.dispatchStateChange(PlayerProp.Playing, true);
+    await provider.dispatchStateChange(PlayerProp.Playing, true);
     await page.waitForChanges();
     player.paused = true;
     await page.waitForChanges();
@@ -115,7 +115,7 @@ describe('props', () => {
   it('should call adapter when paused is changed', async () => {
     expect(adapter.play).not.toHaveBeenCalled();
     expect(adapter.pause).not.toHaveBeenCalled();
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     player.paused = false;
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalled();
@@ -128,7 +128,7 @@ describe('props', () => {
 
   it('should call adapter when muted is changed', async () => {
     expect(adapter.setMuted).not.toHaveBeenCalled();
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     player.muted = true;
     await page.waitForChanges();
     expect(adapter.setMuted).toHaveBeenCalledWith(true);
@@ -139,7 +139,7 @@ describe('props', () => {
 
   it('should call adapter when volume is changed', async () => {
     expect(adapter.setVolume).not.toHaveBeenCalled();
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     player.volume = 30;
     await page.waitForChanges();
     expect(adapter.setVolume).toHaveBeenCalledWith(30);
@@ -147,8 +147,8 @@ describe('props', () => {
 
   it('should call adapter when currentTime is changed', async () => {
     expect(adapter.setCurrentTime).not.toHaveBeenCalled();
-    await fakeTube.dispatchStateChange(PlayerProp.Duration, 100);
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.Duration, 100);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     await page.waitForChanges();
     player.currentTime = 30;
     await page.waitForChanges();
@@ -158,7 +158,7 @@ describe('props', () => {
   it('should not change playbackRate if provider can\'t set it', async () => {
     const spy = jest.spyOn(console, 'warn').mockImplementation();
     adapter.canSetPlaybackRate!.mockImplementation(() => Promise.resolve(false));
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     player.playbackRate = 2;
     await page.waitForChanges();
     expect(player.playbackRate).toEqual(1);
@@ -169,8 +169,8 @@ describe('props', () => {
   it('should not change playbackRate if not in playbackRates', async () => {
     const spy = jest.spyOn(console, 'warn').mockImplementation();
     adapter.canSetPlaybackRate!.mockImplementationOnce(() => Promise.resolve(true));
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackRates, [1, 2, 3]);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackRates, [1, 2, 3]);
     await page.waitForChanges();
     player.playbackRate = 4;
     await page.waitForChanges();
@@ -181,8 +181,8 @@ describe('props', () => {
 
   it('should call adapter when playbackRate is changed', async () => {
     adapter.canSetPlaybackRate!.mockImplementationOnce(() => Promise.resolve(true));
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackRates, [1, 2]);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackRates, [1, 2]);
     await page.waitForChanges();
     player.playbackRate = 2;
     await page.waitForChanges();
@@ -192,7 +192,7 @@ describe('props', () => {
   it('should not change playbackQuality if provider can\'t set it', async () => {
     const spy = jest.spyOn(console, 'warn').mockImplementation();
     adapter.canSetPlaybackQuality!.mockImplementationOnce(() => Promise.resolve(false));
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     player.playbackQuality = '720p';
     await page.waitForChanges();
     expect(player.playbackQuality).toBeUndefined();
@@ -203,8 +203,8 @@ describe('props', () => {
   it('should not change playbackQuality if not in playbackQualities', async () => {
     const spy = jest.spyOn(console, 'warn').mockImplementation();
     adapter.canSetPlaybackQuality!.mockImplementationOnce(() => Promise.resolve(true));
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackQualities, ['1080p', '720p']);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackQualities, ['1080p', '720p']);
     await page.waitForChanges();
     player.playbackQuality = '480p';
     await page.waitForChanges();
@@ -215,8 +215,8 @@ describe('props', () => {
 
   it('should call adapter when playbackQuality is changed', async () => {
     adapter.canSetPlaybackQuality!.mockImplementationOnce(() => Promise.resolve(true));
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackQualities, ['1080p', '720p']);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackQualities, ['1080p', '720p']);
     await page.waitForChanges();
     player.playbackQuality = '720p';
     await page.waitForChanges();
@@ -225,22 +225,22 @@ describe('props', () => {
 
   // Test doesn't work for some unknown reason.
   it.skip('should throw if writing to internal readonly prop', async () => {
-    await expect(fakeTube.dispatchStateChange(PlayerProp.IsAudio, true)).rejects.toThrow();
+    await expect(provider.dispatchStateChange(PlayerProp.IsAudio, true)).rejects.toThrow();
   });
 
   it('should adjust paddingBottom according to aspectRatio', async () => {
     expect(page.root!.style.paddingBottom).toEqual('');
-    await fakeTube.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
     await page.waitForChanges();
     expect(page.root!.style.paddingBottom).toEqual('56.25%');
-    await fakeTube.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
+    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
     await page.waitForChanges();
     expect(page.root!.style.paddingBottom).toEqual('');
   });
 
   it('should render blocker', async () => {
     expect(page.root!.querySelector('.blocker')).toBeNull();
-    await fakeTube.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
     await page.waitForChanges();
     expect(page.root!.querySelector('.blocker')).toBeDefined();
   });
@@ -249,18 +249,18 @@ describe('props', () => {
     player.currentTime = 40;
     player.volume = 80;
     await page.waitForChanges();
-    await fakeTube.dispatchLoadStart();
+    await provider.dispatchLoadStart();
     await page.waitForChanges();
     expect(player.currentTime).toEqual(40);
     expect(player.volume).toEqual(80);
   });
 
   it('should reset props on subsequent media changes', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     player.currentTime = 40;
     player.volume = 80;
-    await fakeTube.dispatchLoadStart();
-    await fakeTube.dispatchLoadStart();
+    await provider.dispatchLoadStart();
+    await provider.dispatchLoadStart();
     await page.waitForChanges();
     expect(player.playbackReady).toBeFalsy();
     expect(player.currentTime).toEqual(0);
@@ -295,14 +295,14 @@ describe('props', () => {
   });
 
   it('should update isTouch when input device changes', async () => {
-    fakeTube.dispatchEvent(new Event('touchstart', { bubbles: true }));
+    provider.dispatchEvent(new Event('touchstart', { bubbles: true }));
     await page.waitForChanges();
     expect(player.isTouch).toBeTruthy();
   });
 
   it('should bound currentTime between 0 and duration', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.Duration, 100);
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.Duration, 100);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     await page.waitForChanges();
     player.currentTime = -1;
     await page.waitForChanges();
@@ -316,7 +316,7 @@ describe('props', () => {
   });
 
   it('should bound volume between 0 and 100', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     await page.waitForChanges();
     player.volume = -1;
     await page.waitForChanges();
@@ -339,7 +339,7 @@ describe('props', () => {
 describe('methods', () => {
   it('should return provider when calling getProvider()', async () => {
     const provider = await player.getProvider();
-    expect(provider).toEqual(fakeTube);
+    expect(provider).toEqual(provider);
   });
 
   it('should call play on adapter when calling play()', async () => {
@@ -360,25 +360,25 @@ describe('methods', () => {
   });
 
   it('should throw if calling enterFullscreen() in audio view', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
+    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
     await page.waitForChanges();
     await expect(player.enterFullscreen()).rejects.toThrow(/audio player view/);
   });
 
   it('should throw if calling enterFullscreen() and no API is available', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
     await page.waitForChanges();
     await expect(player.enterFullscreen()).rejects.toThrow(/API is not available/);
   });
 
   it('should throw if calling enterPiP() in audio view', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
+    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
     await page.waitForChanges();
     await expect(player.enterPiP()).rejects.toThrow(/audio player view/);
   });
 
   it('should throw if calling enterPiP() and no API is available', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
     await page.waitForChanges();
     await expect(player.enterPiP()).rejects.toThrow(/API is not available/);
   });
@@ -402,7 +402,7 @@ describe('events', () => {
   it('should fire toggle state event', async () => {
     const cb = jest.fn();
     page.root!.addEventListener(PlayerEvent.FullscreenChange, cb);
-    await fakeTube.dispatchStateChange(PlayerProp.IsFullscreenActive, true);
+    await provider.dispatchStateChange(PlayerProp.IsFullscreenActive, true);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
   });
@@ -410,7 +410,7 @@ describe('events', () => {
   it('should fire shortened event', async () => {
     const cb = jest.fn();
     page.root!.addEventListener(PlayerEvent.PlaybackStarted, cb);
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackStarted, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackStarted, true);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
   });
@@ -418,7 +418,7 @@ describe('events', () => {
   it('should fire play event', async () => {
     const cb = jest.fn();
     page.root!.addEventListener(PlayerEvent.Play, cb);
-    await fakeTube.dispatchStateChange(PlayerProp.Paused, false);
+    await provider.dispatchStateChange(PlayerProp.Paused, false);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
   });
@@ -426,9 +426,9 @@ describe('events', () => {
   it('should fire seeked event', async () => {
     const cb = jest.fn();
     page.root!.addEventListener(PlayerEvent.Seeked, cb);
-    await fakeTube.dispatchStateChange(PlayerProp.Seeking, true);
+    await provider.dispatchStateChange(PlayerProp.Seeking, true);
     await page.waitForChanges();
-    await fakeTube.dispatchStateChange(PlayerProp.Seeking, false);
+    await provider.dispatchStateChange(PlayerProp.Seeking, false);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
   });
@@ -437,8 +437,8 @@ describe('events', () => {
 describe('state changes', () => {
   it('should flush state changes', async () => {
     player.currentTime = 33;
-    await fakeTube.dispatchStateChange(PlayerProp.Seeking, true);
-    await fakeTube.dispatchStateChange(PlayerProp.Volume, 66);
+    await provider.dispatchStateChange(PlayerProp.Seeking, true);
+    await provider.dispatchStateChange(PlayerProp.Volume, 66);
     await page.waitForChanges();
     expect(player.currentTime).toEqual(33);
     expect(player.volume).toEqual(66);
@@ -448,25 +448,25 @@ describe('state changes', () => {
   it('should clear state changes when media changes', async () => {
     const initialCurrentTime = player.currentTime;
     player.currentTime = 33;
-    await fakeTube.dispatchLoadStart();
-    await fakeTube.dispatchLoadStart();
+    await provider.dispatchLoadStart();
+    await provider.dispatchLoadStart();
     await page.waitForChanges();
     expect(player.currentTime).toEqual(initialCurrentTime);
   });
 
   it('should flush state changes in correct order', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.Volume, 33);
-    await fakeTube.dispatchStateChange(PlayerProp.Volume, 66);
-    await fakeTube.dispatchStateChange(PlayerProp.Volume, 99);
+    await provider.dispatchStateChange(PlayerProp.Volume, 33);
+    await provider.dispatchStateChange(PlayerProp.Volume, 66);
+    await provider.dispatchStateChange(PlayerProp.Volume, 99);
     await page.waitForChanges();
     expect(player.volume).toEqual(99);
   });
 
   it('should not delete state changes made while flushing', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.Volume, 33);
+    await provider.dispatchStateChange(PlayerProp.Volume, 33);
     await player.queueStateChange('reque', async () => {
       await player.queueStateChange('change volume', async () => {
-        await fakeTube.dispatchStateChange(PlayerProp.Volume, 66);
+        await provider.dispatchStateChange(PlayerProp.Volume, 66);
       });
     });
     await page.waitForChanges();
@@ -479,7 +479,7 @@ describe('adapter calls', () => {
     player.paused = false;
     player.volume = 30;
     player.muted = true;
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalled();
     expect(adapter.setVolume).toHaveBeenCalledWith(30);
@@ -491,7 +491,7 @@ describe('adapter calls', () => {
     await page.waitForChanges();
     player.paused = true;
     await page.waitForChanges();
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     await page.waitForChanges();
     expect(adapter.play).not.toHaveBeenCalled();
     expect(adapter.pause).toHaveBeenCalled();
@@ -501,8 +501,8 @@ describe('adapter calls', () => {
     await buildPage({
       html: '<vime-player paused="false" muted="true" current-time="50"><vime-faketube /></vime-player>',
     });
-    await fakeTube.dispatchStateChange(PlayerProp.Duration, 100);
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.Duration, 100);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalled();
     expect(adapter.setCurrentTime).toHaveBeenCalledWith(50);
@@ -514,7 +514,7 @@ describe('adapter calls', () => {
     await buildPage({
       html: '<vime-player paused="false" muted="true" current-time="50"><vime-faketube /></vime-player>',
     });
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     await page.waitForChanges();
     player.language = 'en';
     await page.waitForChanges();
@@ -525,19 +525,19 @@ describe('adapter calls', () => {
   });
 
   it('should not call adapter if change comes from provider', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     await page.waitForChanges();
-    await fakeTube.dispatchStateChange(PlayerProp.CurrentTime, 50);
+    await provider.dispatchStateChange(PlayerProp.CurrentTime, 50);
     await page.waitForChanges();
     expect(adapter.setCurrentTime).not.toHaveBeenCalled();
   });
 
   it('should call adapter if change comes from user', async () => {
-    await fakeTube.dispatchStateChange(PlayerProp.Duration, 200);
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.Duration, 200);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     await page.waitForChanges();
     const changes = new Array(20).map(
-      () => () => fakeTube
+      () => () => provider
         .dispatchStateChange(PlayerProp.CurrentTime, Math.floor(Math.random() * 100)),
     );
     changes[Math.floor(Math.random() * changes.length)] = async () => { player.currentTime = 33; };
@@ -553,10 +553,10 @@ describe('adapter calls', () => {
 
   it('should clear queued adapter calls when media changes', async () => {
     player.volume = 30;
-    await fakeTube.dispatchLoadStart();
-    await fakeTube.dispatchLoadStart();
+    await provider.dispatchLoadStart();
+    await provider.dispatchLoadStart();
     await page.waitForChanges();
-    await fakeTube.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
     await page.waitForChanges();
     expect(adapter.setVolume).not.toHaveBeenCalled();
   });
@@ -568,8 +568,8 @@ describe('stencil-wormhole', () => {
     player.playsinline = true;
     player.muted = true;
     await page.waitForChanges();
-    expect(fakeTube.controls).toBeTruthy();
-    expect(fakeTube.muted).toBeTruthy();
-    expect(fakeTube.playsinline).toBeTruthy();
+    expect(provider.controls).toBeTruthy();
+    expect(provider.muted).toBeTruthy();
+    expect(provider.playsinline).toBeTruthy();
   });
 });

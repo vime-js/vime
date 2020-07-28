@@ -9,7 +9,7 @@ based media. It uses [`dashjs`](https://github.com/Dash-Industry-Forum/dash.js) 
 
 ```html
 <vime-player controls autoplay muted>
-  <vime-dash src="/media/manifest.mpd" version="latest" poster="/media/poster.png" />
+  <vime-dash src="/media/manifest.mpd" version="latest" poster="/media/poster.png"></vime-dash>
   <!-- ... -->
 </vime-player>
 

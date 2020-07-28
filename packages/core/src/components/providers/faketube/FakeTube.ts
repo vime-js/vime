@@ -7,6 +7,7 @@ import { PlayerProp } from '../../core/player/PlayerProp';
 
 @Component({
   tag: 'vime-faketube',
+  styleUrl: 'faketube.css',
 })
 export class FakeTube implements MediaProvider {
   private dispatch!: PlayerStateDispatcher;

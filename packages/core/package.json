@@ -38,7 +38,8 @@
     "@stencil/core": "1.17.1",
     "@stencil/sass": "^1.3.2",
     "@types/hls.js": "^0.13.0",
-    "@types/jest": "26.0.5",
+    "@types/jest": "^26.0.7",
+    "@types/puppeteer": "^3.0.1",
     "babel-loader": "^8.1.0",
     "concurrently": "^5.2.0",
     "cypress": "^4.11.0",
@@ -48,7 +49,7 @@
     "js-base64": "2.5.2",
     "sirv-cli": "^1.0.3",
     "ts-loader": "^8.0.1",
-    "webpack": "^4.43.0"
+    "webpack": "^4.44.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,0 +1,65 @@
+vime-spinner {
+  /**
+   * @prop --width: The width of the spinner.
+   * @prop --height: The height of the spinner.
+   * @prop --thickness: The thickness of the spinner in px.
+   * @prop --track-color: The color of the track the spinner is rotating in.
+   * @prop --progress-color: The color of the progress within the track.
+   * @prop --spin-duration: How long it takes the spinner to complete a full rotation.
+   * @prop --spin-timing-func: The animation timing function to use.
+   */
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: $z-index-spinner;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: $fade-transition;
+    
+  &.enabled {
+    display: flex;
+  }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  & > div {
+    background: transparent;
+    margin: 60px auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: var(--thickness, 3px) solid var(--progress-color, #fff);
+    border-left: var(--thickness, 3px) solid var(--progress-color, #fff);
+    border-right: var(--thickness, 3px) solid var(--track-color, $color-white-200);
+    border-bottom: var(--thickness, 3px) solid var(--track-color, $color-white-200);
+    transform: translateZ(0);
+    animation: spin var(--spin-duration, 1.1s) infinite var(--spin-timing-func, linear);
+
+    &,
+    &::after {
+      border-radius: 50%;
+      width: var(--width, 80px);
+      height: var(--height, 80px);
+    }
+  }
+}

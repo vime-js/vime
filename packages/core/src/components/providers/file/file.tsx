@@ -389,9 +389,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       <audio {...mediaProps}>
         <slot />
         Your browser does not support the
-        {' '}
         <code>audio</code>
-        {' '}
         element.
       </audio>
     );
@@ -406,9 +404,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       >
         <slot />
         Your browser does not support the
-        {' '}
         <code>video</code>
-        {' '}
         element.
       </video>
     );

@@ -9,6 +9,17 @@ body {
   padding: 24px;
 }
 
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#container {
+  width: 80%;
+}
+
 .media-container-16-9 {
   width: 100%;
   padding-bottom: 56.25%;

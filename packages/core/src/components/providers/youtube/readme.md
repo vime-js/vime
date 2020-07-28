@@ -8,7 +8,7 @@ Enables loading, playing and controlling videos from [YouTube](https://www.youtu
 
 ```html
 <vime-player controls autoplay muted>
-  <vime-youtube video-id="DyTCOwB0DVw" />
+  <vime-youtube video-id="DyTCOwB0DVw"></vime-youtube>
   <!-- ... -->
 </vime-player>
 ```

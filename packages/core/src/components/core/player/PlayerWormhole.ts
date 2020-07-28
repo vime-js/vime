@@ -1,7 +1,8 @@
-import { openWormhole, WormholeConsumerConstructor } from 'stencil-wormhole';
+import { openWormhole } from 'stencil-wormhole';
+import { ComponentInterface } from '@stencil/core';
 import { PlayerProp } from './PlayerProp';
 
 export const openPlayerWormhole = (
-  Component: WormholeConsumerConstructor,
+  Component: ComponentInterface,
   props: PlayerProp[],
-) => openWormhole(Component, props);
+) => openWormhole(Component as any, props);

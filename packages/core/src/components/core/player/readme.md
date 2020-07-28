@@ -16,12 +16,12 @@ it.
   </vime-video>
 
   <vime-ui>
-    <vime-poster />
+    <vime-poster></vime-poster>
     <!-- ... -->
   </vime-ui>
 
   <vime-plugins>
-    <vime-chromecast />
+    <vime-chromecast></vime-chromecast>
     <!-- ... -->
   </vime-plugins>
 </vime-player>

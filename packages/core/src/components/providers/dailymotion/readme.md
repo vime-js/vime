@@ -8,7 +8,7 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
 
 ```html
 <vime-player controls autoplay muted>
-  <vime-dailymotion video-id="k3b11PemcuTrmWvYe0q" />
+  <vime-dailymotion video-id="k3b11PemcuTrmWvYe0q"></vime-dailymotion>
   <!-- ... -->
 </vime-player>
 ```

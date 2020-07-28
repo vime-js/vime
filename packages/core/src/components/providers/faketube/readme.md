@@ -6,7 +6,7 @@ Fake media provider that is used for testing.
 
 ```html
 <vime-player>
-  <vime-faketube />
+  <vime-faketube></vime-faketube>
   <!-- ... -->
 </vime-player>
 ```

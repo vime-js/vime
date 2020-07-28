@@ -6,6 +6,6 @@ import { h, Component } from '@stencil/core';
 })
 export class UI {
   render() {
-    return <slot />;
+    return (<slot />);
   }
 }
