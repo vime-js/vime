@@ -11,7 +11,9 @@ import { MediaFileProvider, MediaPreloadOption } from './MediaFileProvider';
 import { isString, isNumber, isUndefined } from '../../../utils/unit';
 import { audioRegex, videoRegex, hlsRegex } from './utils';
 import { WebkitPresentationMode } from './WebkitPresentationMode';
-import { canUsePiP, canUsePiPInChrome, canUsePiPInSafari, canFullscreenVideo } from '../../../utils/support';
+import {
+  canUsePiP, canUsePiPInChrome, canUsePiPInSafari, canFullscreenVideo,
+} from '../../../utils/support';
 import { MediaType } from '../../core/player/MediaType';
 import { listen } from '../../../utils/dom';
 import { Disposal } from '../../core/player/Disposal';
@@ -27,15 +29,15 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   private dispatch!: PlayerStateDispatcher;
 
   private mediaEl?: HTMLMediaElement;
-  
+
   private timeRAF?: number;
 
   private disposal = new Disposal();
 
   private playbackStarted = false;
-  
+
   private wasPausedBeforeSeeking = true;
-  
+
   /**
    * @internal Whether an external SDK will attach itself to the media player and control it.
    */
@@ -166,7 +168,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private getMediaType() {
-    const currentSrc = this.mediaEl!.currentSrc;
+    const { currentSrc } = this.mediaEl!;
     if (audioRegex.test(currentSrc)) return MediaType.Audio;
     if (videoRegex.test(currentSrc) || hlsRegex.test(currentSrc)) return MediaType.Video;
     return undefined;
@@ -180,7 +182,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.onTracksChange();
     if (!this.willAttach) {
       this.dispatch(PlayerProp.CurrentSrc, this.mediaEl!.currentSrc);
-      this.dispatch(PlayerProp.MediaType, this.getMediaType())
+      this.dispatch(PlayerProp.MediaType, this.getMediaType());
       this.dispatch(PlayerProp.PlaybackReady, true);
     }
   }
@@ -188,9 +190,9 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   private onProgress() {
     const { buffered, duration } = this.mediaEl!;
     const end = (buffered.length === 0) ? 0 : buffered.end(buffered.length - 1);
-    this.dispatch(PlayerProp.Buffered, (end > duration) ? duration : end)
+    this.dispatch(PlayerProp.Buffered, (end > duration) ? duration : end);
   }
-  
+
   private onPlay() {
     this.requestTimeUpdates();
     this.dispatch(PlayerProp.Paused, false);
@@ -199,7 +201,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       this.dispatch(PlayerProp.PlaybackStarted, true);
     }
   }
-  
+
   private onPause() {
     this.cancelTimeUpdates();
     this.dispatch(PlayerProp.Paused, true);
@@ -208,44 +210,44 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   private onPlaying() {
     this.dispatch(PlayerProp.Playing, true);
   }
-  
+
   private onSeeking() {
     if (!this.wasPausedBeforeSeeking) this.wasPausedBeforeSeeking = this.mediaEl!.paused;
     this.dispatch(PlayerProp.CurrentTime, this.mediaEl!.currentTime);
     this.dispatch(PlayerProp.Seeking, true);
   }
-  
+
   private onSeeked() {
     this.dispatch(PlayerProp.Seeking, false);
-    if (!this.playbackStarted || !this.wasPausedBeforeSeeking) this.attemptToPlay(); 
+    if (!this.playbackStarted || !this.wasPausedBeforeSeeking) this.attemptToPlay();
     this.wasPausedBeforeSeeking = true;
   }
-  
+
   private onRateChange() {
     this.dispatch(PlayerProp.PlaybackRate, this.mediaEl!.playbackRate);
   }
-  
+
   private onVolumeChange() {
     this.dispatch(PlayerProp.Muted, this.mediaEl!.muted);
     this.dispatch(PlayerProp.Volume, this.mediaEl!.volume * 100);
   }
-  
+
   private onDurationChange() {
     this.dispatch(PlayerProp.Duration, this.mediaEl!.duration);
   }
-  
+
   private onWaiting() {
     this.dispatch(PlayerProp.Buffering, true);
   }
-  
+
   private onSuspend() {
     this.dispatch(PlayerProp.Buffering, false);
   }
-  
+
   private onEnded() {
     if (!this.loop) this.dispatch(PlayerProp.PlaybackEnded, true);
   }
-  
+
   private onError(event: Event) {
     this.dispatch(PlayerProp.Errors, [event]);
   }
@@ -259,11 +261,11 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private togglePiPInChrome(toggle: boolean) {
-    return toggle 
-      ? (this.mediaEl as any)?.requestPictureInPicture() 
+    return toggle
+      ? (this.mediaEl as any)?.requestPictureInPicture()
       : (document as any).exitPictureInPicture();
   }
-  
+
   private togglePiPInSafari(toggle: boolean) {
     const mode = toggle ? WebkitPresentationMode.PiP : WebkitPresentationMode.Inline;
 
@@ -285,36 +287,36 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       throw new Error('Fullscreen API is not available.');
     }
 
-    return toggle 
-      ? (this.mediaEl as any)?.webkitEnterFullscreen() 
+    return toggle
+      ? (this.mediaEl as any)?.webkitEnterFullscreen()
       : (this.mediaEl as any)?.webkitExitFullscreen();
   }
 
   private onPresentationModeChange() {
     const mode = (this.mediaEl as any)?.webkitPresentationMode;
-    this.dispatch(PlayerProp.IsPiPActive, (mode === WebkitPresentationMode.PiP))
-    this.dispatch(PlayerProp.IsFullscreenActive, (mode === WebkitPresentationMode.Fullscreen))
+    this.dispatch(PlayerProp.IsPiPActive, (mode === WebkitPresentationMode.PiP));
+    this.dispatch(PlayerProp.IsFullscreenActive, (mode === WebkitPresentationMode.Fullscreen));
   }
 
   private onEnterPiP() {
     this.dispatch(PlayerProp.IsPiPActive, true);
   }
-  
+
   private onLeavePiP() {
     this.dispatch(PlayerProp.IsPiPActive, false);
   }
-  
+
   private onTracksChange() {
-    this.dispatch(PlayerProp.TextTracks, this.mediaEl!.textTracks)
+    this.dispatch(PlayerProp.TextTracks, this.mediaEl!.textTracks);
   }
 
   private listenToTextTracksChanges() {
     if (isUndefined(this.mediaEl)) return;
     this.disposal.add(
-      listen(this.mediaEl!.textTracks, 'change', this.onTracksChange.bind(this))
+      listen(this.mediaEl!.textTracks, 'change', this.onTracksChange.bind(this)),
     );
   }
-  
+
   /**
    * @internal
    */
@@ -324,12 +326,21 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       getInternalPlayer: async () => this.mediaEl!,
       play: async () => this.mediaEl?.play(),
       pause: async () => this.mediaEl?.pause(),
-      canPlay: async (type: any) => isString(type) && (audioRegex.test(type) || videoRegex.test(type)),
-      setCurrentTime: async (time: number) => { if (this.mediaEl) this.mediaEl.currentTime = time; },
-      setMuted: async (muted: boolean) => { if (this.mediaEl) this.mediaEl.muted = muted; },
-      setVolume: async (volume: number) => { if (this.mediaEl) this.mediaEl.volume = (volume / 100); },
+      canPlay: async (type: any) => isString(type)
+        && (audioRegex.test(type) || videoRegex.test(type)),
+      setCurrentTime: async (time: number) => {
+        if (this.mediaEl) this.mediaEl.currentTime = time;
+      },
+      setMuted: async (muted: boolean) => {
+        if (this.mediaEl) this.mediaEl.muted = muted;
+      },
+      setVolume: async (volume: number) => {
+        if (this.mediaEl) this.mediaEl.volume = (volume / 100);
+      },
       canSetPlaybackRate: async () => true,
-      setPlaybackRate: async (rate: number) => { if (this.mediaEl) this.mediaEl.playbackRate = rate; },
+      setPlaybackRate: async (rate: number) => {
+        if (this.mediaEl) this.mediaEl.playbackRate = rate;
+      },
       canSetPiP: async () => canUsePiP(),
       enterPiP: () => this.togglePiP(true),
       exitPiP: () => this.togglePiP(false),
@@ -373,16 +384,20 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       onEnded: this.onEnded.bind(this),
       onError: this.onError.bind(this),
     };
-    
+
     const audio = (
       <audio {...mediaProps}>
         <slot />
-        Your browser does not support the <code>audio</code> element.
+        Your browser does not support the
+        {' '}
+        <code>audio</code>
+        {' '}
+        element.
       </audio>
     );
 
     const video = (
-      <video 
+      <video
         {...mediaProps}
         // @ts-ignore
         onwebkitpresentationmodechanged={this.onPresentationModeChange.bind(this)}
@@ -390,7 +405,11 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
         onleavepictureinpicture={this.onLeavePiP.bind(this)}
       >
         <slot />
-        Your browser does not support the <code>video</code> element.
+        Your browser does not support the
+        {' '}
+        <code>video</code>
+        {' '}
+        element.
       </video>
     );
 

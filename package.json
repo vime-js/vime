@@ -8,7 +8,7 @@
     "pnpm": ">=5"
   },
   "scripts": {
-    "lint": "eslint packages/**/*{.js,.ts,.tsx} --ignore-path .gitignore --fix",
+    "lint": "eslint packages/*/src/**/*.{ts,tsx} packages/*/cypress/**/*.{js,ts} --ignore-path .gitignore --fix",
     "build": "pnpm run build --recursive",
     "test": "pnpm run test --recursive",
     "generate": "pnpm run generate --recursive",

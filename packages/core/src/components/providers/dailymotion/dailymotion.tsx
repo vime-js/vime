@@ -323,7 +323,7 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
       },
       canSetFullscreen: async () => true,
       enterFullscreen: async () => { this.remoteControl(DailymotionCommand.Fullscreen, true); },
-      exitFullscreen: async () => { this.remoteControl(DailymotionCommand.Fullscreen, false); }
+      exitFullscreen: async () => { this.remoteControl(DailymotionCommand.Fullscreen, false); },
     };
   }
 

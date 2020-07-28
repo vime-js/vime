@@ -14,7 +14,7 @@ import { audioRegex } from '../utils';
 })
 export class Audio implements MediaFileProvider<HTMLMediaElement> {
   private fileProvider!: HTMLVimeFileElement;
-  
+
   /**
    * @internal Whether an external SDK will attach itself to the media player and control it.
    */

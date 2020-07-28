@@ -46,8 +46,8 @@ Cypress.Commands.add('playbackQuality', (quality: string) => cy.player()
   }));
 
 Cypress.Commands.add('raf', () => cy.window()
-  .then((window) => new Promise((res) => { 
-    window.requestAnimationFrame(res) 
+  .then((window) => new Promise((res) => {
+    window.requestAnimationFrame(res);
   })));
 
 Cypress.Commands.add('enterFullscreen', () => cy.player()

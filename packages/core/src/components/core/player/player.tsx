@@ -292,7 +292,7 @@ export class Player implements MediaPlayer {
 
   @Watch('errors')
   onErrorsChange() {
-    if (this.debug) console.error(this.errors[this.errors.length - 1])
+    if (this.debug) console.error(this.errors[this.errors.length - 1]);
   }
 
   /**
@@ -518,32 +518,44 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event({ bubbles: false }) vCurrentPosterChange!: EventEmitter<PlayerProps[PlayerProp.CurrentPoster]>;
+  @Event({
+    bubbles: false,
+  }) vCurrentPosterChange!: EventEmitter<PlayerProps[PlayerProp.CurrentPoster]>;
 
   /**
    * @inheritDoc
    */
-  @Event({ bubbles: false }) vMediaTitleChange!: EventEmitter<PlayerProps[PlayerProp.MediaTitle]>;
+  @Event({
+    bubbles: false,
+  }) vMediaTitleChange!: EventEmitter<PlayerProps[PlayerProp.MediaTitle]>;
 
   /**
    * @inheritDoc
    */
-  @Event({ bubbles: false }) vPlaybackRateChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackRate]>;
+  @Event({
+    bubbles: false,
+  }) vPlaybackRateChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackRate]>;
 
   /**
    * @inheritDoc
    */
-  @Event({ bubbles: false }) vPlaybackRatesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackRates]>;
+  @Event({
+    bubbles: false,
+  }) vPlaybackRatesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackRates]>;
 
   /**
    * @inheritDoc
    */
-  @Event({ bubbles: false }) vPlaybackQualityChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQuality]>;
+  @Event({
+    bubbles: false,
+  }) vPlaybackQualityChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQuality]>;
 
   /**
    * @inheritDoc
    */
-  @Event({ bubbles: false }) vPlaybackQualitiesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQualities]>;
+  @Event({
+    bubbles: false,
+  }) vPlaybackQualitiesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQualities]>;
 
   /**
    * @inheritDoc
@@ -588,7 +600,9 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event({ bubbles: false }) vFullscreenChange!: EventEmitter<PlayerProps[PlayerProp.IsFullscreenActive]>;
+  @Event({
+    bubbles: false,
+  }) vFullscreenChange!: EventEmitter<PlayerProps[PlayerProp.IsFullscreenActive]>;
 
   /**
    * @inheritDoc
@@ -823,7 +837,7 @@ export class Player implements MediaPlayer {
      * This is to track changes that come from the provider directly, so we don't call any adapter
      * methods on these changes and end up in an infinite loop.
      */
-    const isProvider = ((this.provider as any) === by)
+    const isProvider = ((this.provider as any) === by);
     const isProviderChild = (this.provider as any)?.contains(by);
     if (isProvider || isProviderChild) {
       this.providerStateChanges[prop] += 1;

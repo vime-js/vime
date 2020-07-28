@@ -1,4 +1,6 @@
-import { h, Method, Component, Prop, State } from '@stencil/core';
+import {
+  h, Method, Component, Prop, State,
+} from '@stencil/core';
 import { MediaFileProvider, MediaPreloadOption } from '../file/MediaFileProvider';
 import { isString, isUndefined } from '../../../utils/unit';
 import { loadSDK } from '../../../utils/network';
@@ -7,7 +9,7 @@ import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../core/p
 import { canPlayHLSNatively } from '../../../utils/support';
 import { hlsRegex, hlsTypeRegex } from '../file/utils';
 import { MediaType } from '../../core/player/MediaType';
-    
+
 /**
  * @slot - Pass `<source>` and  `<track>` elements to the underlying HTML5 media player.
  */
@@ -18,7 +20,7 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
   private hls?: Hls;
 
   private dispatch!: PlayerStateDispatcher;
-  
+
   private videoProvider!: HTMLVimeVideoElement;
 
   @State() hasAttached = false;
@@ -27,8 +29,8 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
    * The NPM package version of the `hls.js` library to download and use if HLS is not natively
    * supported.
    */
-  @Prop() version = 'latest'
-  
+  @Prop() version = 'latest';
+
   /**
    * The `hls.js` configuration.
    */
@@ -80,14 +82,14 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
       const url = `https://cdn.jsdelivr.net/npm/hls.js@${this.version}`;
       const Hls = await loadSDK<Hls>(url, 'Hls');
       const video = this.videoProvider.querySelector('video')!;
-        
+
       if (!Hls.isSupported()) {
         this.dispatch(PlayerProp.Errors, [new Error('hls.js is not supported')]);
         return;
       }
 
       this.hls = new Hls(this.config);
-      this.hls!.on('hlsMediaAttached', () => { 
+      this.hls!.on('hlsMediaAttached', () => {
         this.hasAttached = true;
         this.onSrcChange();
       });
@@ -96,7 +98,7 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
         this.dispatch(PlayerProp.MediaType, MediaType.Video);
         this.dispatch(PlayerProp.CurrentSrc, this.src);
         this.dispatch(PlayerProp.PlaybackReady, true);
-      })
+      });
       this.hls!.attachMedia(video);
     } catch (e) {
       this.dispatch(PlayerProp.Errors, [e]);
@@ -115,14 +117,15 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
   }
 
   get src(): string | undefined {
-    if (isUndefined(this.videoProvider)) return;
+    if (isUndefined(this.videoProvider)) return undefined;
     const sources = this.videoProvider.querySelectorAll('source');
-    const source = Array.from(sources)
-      .find((source) => hlsRegex.test(source.src) || hlsTypeRegex.test(source.type))
-    return source?.src;
+    const currSource = Array.from(sources)
+      .find((source) => hlsRegex.test(source.src) || hlsTypeRegex.test(source.type));
+    return currSource?.src;
   }
 
   private prevSrc?: string;
+
   private onSrcChange() {
     if (canPlayHLSNatively()) return;
     if ((this.src !== this.prevSrc) && this.hasAttached) {
@@ -141,7 +144,7 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
     return {
       ...adapter,
       getInternalPlayer: async () => this.hls,
-      canPlay: async (type: any) => (isString(type) && hlsRegex.test(type)) 
+      canPlay: async (type: any) => (isString(type) && hlsRegex.test(type))
         || canVideoProviderPlay(type),
     };
   }

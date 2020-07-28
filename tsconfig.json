@@ -23,8 +23,9 @@
   },
   "include": [
     "tools/*.js",
-    "packages/**/*.js",
-    "packages/**/*.ts",
-    "packages/**/*.tsx"
+    "packages/*/src/**/*.ts",
+    "packages/*/src/**/*.tsx",
+    "packages/*/cypress/**/*.js",
+    "packages/*/cypress/**/*.ts"
   ]
 }

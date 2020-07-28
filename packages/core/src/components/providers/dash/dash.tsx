@@ -1,13 +1,13 @@
 import {
-  h, Method, Component, Prop, Watch, State
+  h, Method, Component, Prop, Watch, State,
 } from '@stencil/core';
+import { openWormhole } from 'stencil-wormhole';
 import { MediaFileProvider, MediaPreloadOption } from '../file/MediaFileProvider';
 import { isString } from '../../../utils/unit';
 import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../core/player/PlayerState';
 import { dashRegex } from '../file/utils';
 import { PlayerProp } from '../../core/player/PlayerProp';
 import { loadSDK } from '../../../utils/network';
-import { openWormhole } from 'stencil-wormhole';
 import { MediaType } from '../../core/player/MediaType';
 
 @Component({
@@ -33,17 +33,17 @@ export class Dash implements MediaFileProvider<any> {
     if (!this.hasAttached) return;
     this.dash!.attachSource(this.src);
   }
-  
+
   /**
    * The NPM package version of the `dashjs` library to download and use.
    */
-  @Prop() version = 'latest'
-  
+  @Prop() version = 'latest';
+
   /**
    * The `dashjs` configuration.
    */
   @Prop({ attribute: 'config' }) config: Record<string, any> = {};
-  
+
   /**
    * @internal
    */
@@ -90,18 +90,19 @@ export class Dash implements MediaFileProvider<any> {
 
   async componentDidLoad() {
     try {
-      const url = `https://cdn.jsdelivr.net/npm/dashjs@${this.version}/dist/dash.all.min.js`
+      const url = `https://cdn.jsdelivr.net/npm/dashjs@${this.version}/dist/dash.all.min.js`;
+      // eslint-disable-next-line no-shadow
       const Dash = await loadSDK(url, 'dashjs');
       const video = this.videoProvider.querySelector('video')!;
-      
+
       this.dash = Dash.MediaPlayer(this.config).create();
       this.dash!.initialize(video, null, this.autoplay);
-      this.dash!.on(Dash.MediaPlayer.events.CAN_PLAY, () => { 
+      this.dash!.on(Dash.MediaPlayer.events.CAN_PLAY, () => {
         this.dispatch(PlayerProp.MediaType, MediaType.Video);
         this.dispatch(PlayerProp.CurrentSrc, this.src);
         this.dispatch(PlayerProp.PlaybackReady, true);
       });
-      this.dash!.on(Dash.MediaPlayer.events.ERROR, (e: any) => { 
+      this.dash!.on(Dash.MediaPlayer.events.ERROR, (e: any) => {
         this.dispatch(PlayerProp.Errors, [e]);
       });
 
@@ -127,7 +128,7 @@ export class Dash implements MediaFileProvider<any> {
     return {
       ...adapter,
       getInternalPlayer: async () => this.dash,
-      canPlay: async (type: any) => (isString(type) && dashRegex.test(type)) 
+      canPlay: async (type: any) => (isString(type) && dashRegex.test(type))
         || canVideoProviderPlay(type),
     };
   }
@@ -135,7 +136,7 @@ export class Dash implements MediaFileProvider<any> {
   render() {
     return (
       <vime-video
-        willAttach={true}
+        willAttach
         crossOrigin={this.crossOrigin}
         preload={this.preload}
         poster={this.poster}
