@@ -13,6 +13,7 @@ export type PlayerStateDispatcher = <P extends keyof InternalWritablePlayerProps
   value: InternalWritablePlayerProps[P]
 ) => void;
 
+// @TODO this might cause a memory leak by holding onto the `el` reference.
 export const createPlayerStateDispatcher = (
   ref: any,
 ): PlayerStateDispatcher => (prop: any, value: any) => {

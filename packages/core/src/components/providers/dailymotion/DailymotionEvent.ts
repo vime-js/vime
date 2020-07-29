@@ -14,6 +14,7 @@ export enum DailymotionEvent {
   QualitiesAvailable = 'qualitiesavailable',
   FullscreenChange = 'fullscreenchange',
   DurationChange = 'durationchange',
+  ControlsChange = 'controlschange',
   Playing = 'playing',
   Play = 'play',
   Pause = 'pause',

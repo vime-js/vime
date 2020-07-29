@@ -1,5 +1,5 @@
 import {
-  h, Method, Component, Prop, Watch, State,
+  h, Method, Component, Prop, Watch, State, Event, EventEmitter,
 } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { MediaFileProvider, MediaPreloadOption } from '../file/MediaFileProvider';
@@ -31,6 +31,7 @@ export class Dash implements MediaFileProvider<any> {
   @Watch('hasAttached')
   onSrcChange() {
     if (!this.hasAttached) return;
+    this.vLoadStart.emit();
     this.dash!.attachSource(this.src);
   }
 
@@ -83,6 +84,11 @@ export class Dash implements MediaFileProvider<any> {
    * @inheritdoc
    */
   @Prop() disableRemotePlayback?: boolean;
+
+  /**
+   * @internal
+   */
+  @Event() vLoadStart!: EventEmitter<void>;
 
   connectedCallback() {
     this.dispatch = createPlayerStateDispatcher(this);

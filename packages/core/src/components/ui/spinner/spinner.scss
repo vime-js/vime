@@ -44,6 +44,7 @@ vime-spinner {
     font-size: 10px;
     position: relative;
     text-indent: -9999em;
+    pointer-events: none;
     border-top: var(--spinner-thickness, 3px) solid var(--spinner-progress-color, #fff);
     border-left: var(--spinner-thickness, 3px) solid var(--spinner-progress-color, #fff);
     border-right: var(--spinner-thickness, 3px) solid var(--spinner-track-color, $color-white-200);

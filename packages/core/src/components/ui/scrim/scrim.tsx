@@ -16,15 +16,15 @@ export class Scrim {
    */
   @Prop() isVideoView!: PlayerProps[PlayerProp.IsVideoView];
 
+  @Watch('isVideoView')
+  onVideoViewChange() {
+    this.isEnabled = this.isVideoView;
+  }
+
   /**
    * Whether the scrim is visible or not.
    */
   @Prop() active = false;
-
-  @Watch('isVideoView')
-  onEnabledChange() {
-    this.isEnabled = this.isVideoView;
-  }
 
   render() {
     return (

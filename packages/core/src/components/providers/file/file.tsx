@@ -12,7 +12,10 @@ import { isString, isNumber, isUndefined } from '../../../utils/unit';
 import { audioRegex, videoRegex, hlsRegex } from './utils';
 import { WebkitPresentationMode } from './WebkitPresentationMode';
 import {
-  canUsePiP, canUsePiPInChrome, canUsePiPInSafari, canFullscreenVideo,
+  canUsePiP,
+  canUsePiPInChrome,
+  canUsePiPInSafari,
+  canFullscreenVideo,
 } from '../../../utils/support';
 import { MediaType } from '../../core/player/MediaType';
 import { listen } from '../../../utils/dom';

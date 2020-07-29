@@ -288,6 +288,11 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
+  @Prop() isControlsActive = false;
+
+  /**
+   * @inheritDoc
+   */
   @Prop({ mutable: true, attribute: null }) errors: any[] = [];
 
   @Watch('errors')
@@ -528,6 +533,13 @@ export class Player implements MediaPlayer {
   @Event({
     bubbles: false,
   }) vMediaTitleChange!: EventEmitter<PlayerProps[PlayerProp.MediaTitle]>;
+
+  /**
+   * @inheritDoc
+   */
+  @Event({
+    bubbles: false,
+  }) vControlsChange!: EventEmitter<PlayerProps[PlayerProp.IsControlsActive]>;
 
   /**
    * @inheritDoc
@@ -886,6 +898,7 @@ export class Player implements MediaPlayer {
   componentWillRender() {
     if (this.debug) {
       console.log(`======> RENDER [${this.pendingStateChanges.size}] <=====`);
+      console.log(this.getPlayerState());
       console.log(Array.from(this.pendingStateChanges.keys()));
     }
 

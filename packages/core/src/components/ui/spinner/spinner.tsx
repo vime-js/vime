@@ -18,15 +18,15 @@ export class Spinner {
    */
   @Prop() isVideoView!: PlayerProps[PlayerProp.IsVideoView];
 
+  @Watch('isVideoView')
+  onVideoViewChange() {
+    this.isEnabled = this.isVideoView;
+  }
+
   /**
    * @internal
    */
   @Prop() buffering!: PlayerProps[PlayerProp.Buffering];
-
-  @Watch('isVideoView')
-  onEnabledChange() {
-    this.isEnabled = this.isVideoView;
-  }
 
   @Watch('buffering')
   onActiveChange() {

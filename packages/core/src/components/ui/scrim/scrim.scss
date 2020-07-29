@@ -11,6 +11,7 @@ vime-scrim {
   z-index: $z-index-scrim;
   background: var(--scrim-bg-color, $color-gray-300);
   display: none;
+  pointer-events: none;
   @include hidden();
   
   &.enabled {

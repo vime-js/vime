@@ -4,6 +4,7 @@ import { PlayerProp, PlayerProps } from './PlayerProp';
 // Events that toggle state and the prop is named `is{PropName}Active`.
 const isToggleStateEvent = new Set([
   PlayerProp.IsFullscreenActive,
+  PlayerProp.IsControlsActive,
   PlayerProp.IsPiPActive,
   PlayerProp.IsLive,
   PlayerProp.IsTouch,
@@ -62,6 +63,7 @@ export enum PlayerEvent {
   VolumeChange = 'vVolumeChange',
   MediaTypeChange = 'vMediaTypeChange',
   ViewTypeChange = 'vViewTypeChange',
+  ControlsChange = 'vControlsChange',
   LiveChange = 'vLiveChange',
   TouchChange = 'vTouchChange',
   LanguageChange = 'vLanguageChange',
@@ -206,6 +208,11 @@ export interface PlayerEvents {
    * Emitted when the `viewType` prop changes value.
    */
   [PlayerEvent.ViewTypeChange]: EventEmitter<PlayerProps[PlayerProp.ViewType]>
+
+  /**
+   * Emitted when the `isControlsActive` prop changes value.
+   */
+  [PlayerEvent.ControlsChange]: EventEmitter<PlayerProps[PlayerProp.IsControlsActive]>
 
   /**
    * Emitted when the `isLive` prop changes value.

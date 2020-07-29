@@ -1,5 +1,5 @@
 import {
-  h, Method, Component, Prop, State,
+  h, Method, Component, Prop, State, Event, EventEmitter,
 } from '@stencil/core';
 import { MediaFileProvider, MediaPreloadOption } from '../file/MediaFileProvider';
 import { isString, isUndefined } from '../../../utils/unit';
@@ -71,6 +71,11 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
    */
   @Prop() disableRemotePlayback?: boolean;
 
+  /**
+   * @internal
+   */
+  @Event() vLoadStart!: EventEmitter<void>;
+
   connectedCallback() {
     this.dispatch = createPlayerStateDispatcher(this);
   }
@@ -129,6 +134,7 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
   private onSrcChange() {
     if (canPlayHLSNatively()) return;
     if ((this.src !== this.prevSrc) && this.hasAttached) {
+      this.vLoadStart.emit();
       if (!isUndefined(this.src)) this.hls!.loadSource(this.src!);
       this.prevSrc = this.src;
     }

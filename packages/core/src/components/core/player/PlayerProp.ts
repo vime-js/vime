@@ -40,6 +40,7 @@ export enum PlayerProp {
   Volume = 'volume',
   Autopause = 'autopause',
   Controls = 'controls',
+  IsControlsActive = 'isControlsActive',
   Autoplay = 'autoplay',
   Loop = 'loop',
   AspectRatio = 'aspectRatio',
@@ -282,6 +283,12 @@ export interface PlayerProps {
    * may cause the player to completely reset.
    */
   [PlayerProp.Controls]: boolean
+
+  /**
+   * Whether the controls are currently visible. This is currently only supported by custom
+   * controls.
+   */
+  [PlayerProp.IsControlsActive]: boolean
 
   /**
    * `@readonly` A collection of errors that have occurred ordered by `[oldest, ..., newest]`.

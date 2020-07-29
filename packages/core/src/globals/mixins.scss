@@ -1,7 +1,6 @@
   @mixin hidden() {
     opacity: 0;
     visibility: hidden;
-    pointer-events: none;
     transition: $fade-transition;
   }
   
