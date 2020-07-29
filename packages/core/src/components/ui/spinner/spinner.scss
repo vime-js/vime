@@ -1,12 +1,12 @@
 vime-spinner {
   /**
-   * @prop --width: The width of the spinner.
-   * @prop --height: The height of the spinner.
-   * @prop --thickness: The thickness of the spinner in px.
-   * @prop --track-color: The color of the track the spinner is rotating in.
-   * @prop --progress-color: The color of the progress within the track.
-   * @prop --spin-duration: How long it takes the spinner to complete a full rotation.
-   * @prop --spin-timing-func: The animation timing function to use.
+   * @prop --spinner-width: The width of the spinner.
+   * @prop --spinner-height: The height of the spinner.
+   * @prop --spinner-thickness: The thickness of the spinner in px.
+   * @prop --spinner-track-color: The color of the track the spinner is rotating in.
+   * @prop --spinner-progress-color: The color of the progress within the track.
+   * @prop --spinner-spin-duration: How long it takes the spinner to complete a full rotation.
+   * @prop --spinner-timing-func: The animation timing function to use for the spin.
    */
 
   position: absolute;
@@ -19,18 +19,14 @@ vime-spinner {
   pointer-events: none;
   z-index: $z-index-spinner;
   display: none;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: $fade-transition;
+  @include hidden();
     
   &.enabled {
     display: flex;
   }
 
   &.active {
-    opacity: 1;
-    visibility: visible;
+    @include visible();
   }
   
   @keyframes spin {
@@ -48,18 +44,18 @@ vime-spinner {
     font-size: 10px;
     position: relative;
     text-indent: -9999em;
-    border-top: var(--thickness, 3px) solid var(--progress-color, #fff);
-    border-left: var(--thickness, 3px) solid var(--progress-color, #fff);
-    border-right: var(--thickness, 3px) solid var(--track-color, $color-white-200);
-    border-bottom: var(--thickness, 3px) solid var(--track-color, $color-white-200);
+    border-top: var(--spinner-thickness, 3px) solid var(--spinner-progress-color, #fff);
+    border-left: var(--spinner-thickness, 3px) solid var(--spinner-progress-color, #fff);
+    border-right: var(--spinner-thickness, 3px) solid var(--spinner-track-color, $color-white-200);
+    border-bottom: var(--spinner-thickness, 3px) solid var(--spinner-track-color, $color-white-200);
     transform: translateZ(0);
-    animation: spin var(--spin-duration, 1.1s) infinite var(--spin-timing-func, linear);
+    animation: spin var(--spinner-spin-duration, 1.1s) infinite var(--spinner-timing-func, linear);
 
     &,
     &::after {
       border-radius: 50%;
-      width: var(--width, 80px);
-      height: var(--height, 80px);
+      width: var(--spinner-width, 80px);
+      height: var(--spinner-height, 80px);
     }
   }
 }

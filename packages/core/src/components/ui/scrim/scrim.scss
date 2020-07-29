@@ -1,24 +1,23 @@
-vime-poster {
+vime-scrim {
+  /**
+   * @prop --scrim-bg-color: The background color of the scrim.
+   */
+
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #000;
-  z-index: $z-index-poster;
+  z-index: $z-index-scrim;
+  background: var(--scrim-bg-color, $color-gray-300);
   display: none;
   @include hidden();
-    
+  
   &.enabled {
     display: inline-block;
   }
 
   &.active {
     @include visible();
-  }
-
-  & > img {
-    width: 100%;
-    height: 100%;
   }
 }

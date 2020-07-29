@@ -16,6 +16,7 @@ export const config: Config = {
     sass({
       injectGlobalPaths: [
         'src/globals/variables.scss',
+        'src/globals/mixins.scss',
       ],
     }),
   ],
