@@ -4,20 +4,13 @@ import { Icon } from '../icon';
 it('should be structurally sound', async () => {
   const page = await newSpecPage({
     components: [Icon],
-    html: '<vime-icon icon="#my-icon"></vime-icon>',
+    html: '<vime-icon href="#my-icon"></vime-icon>',
   });
 
-  expect(page.root).toMatchInlineSnapshot(`
-    <vime-icon icon="#my-icon">
-      <!---->
-      <svg focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" style="color: #fff; transform: scale(1); opacity: 1;">
-        <use href="#my-icon"></use>
-      </svg>
-    </vime-icon>
-  `);
+  expect(page.root).toMatchSnapshot();
 });
 
-it('should accept a slotted inline-svg', async () => {
+it('should accept svg markup', async () => {
   const page = await newSpecPage({
     components: [Icon],
     html: `
@@ -27,12 +20,5 @@ it('should accept a slotted inline-svg', async () => {
     `,
   });
 
-  expect(page.root).toMatchInlineSnapshot(`
-    <vime-icon>
-      <!---->
-      <svg focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" style="color: #fff; transform: scale(1); opacity: 1;">
-        <rect height="100" width="300"></rect>
-      </svg>
-    </vime-icon>
-  `);
+  expect(page.root).toMatchSnapshot();
 });

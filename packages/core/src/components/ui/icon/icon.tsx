@@ -2,7 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { isString } from '../../../utils/unit';
 
 /**
- * Displays an SVG icon inline or loaded from a sprite.
+ * @slot - SVG markup to be drawn by the browser.
  */
 @Component({
   tag: 'vime-icon',
@@ -10,9 +10,9 @@ import { isString } from '../../../utils/unit';
 })
 export class Icon {
   /**
-   * The icon SVG identifier. It's expected that this points to an SVG inside a loaded sprite.
+   * The URL to an SVG element or fragment to load.
    */
-  @Prop() icon?: string;
+  @Prop() href?: string;
 
   /**
    * The color (fill) of the icon.
@@ -41,8 +41,7 @@ export class Icon {
           opacity: `${this.opacity}`,
         }}
       >
-        {isString(this.icon) ? <use href={this.icon as string} /> : ''}
-        <slot />
+        {isString(this.href) ? <use href={this.href as string} /> : <slot />}
       </svg>
     );
   }

@@ -13,7 +13,8 @@
   "unpkg": "dist/vime/vime.js",
   "files": [
     "dist/",
-    "loader/"
+    "loader/",
+    "src/icons/"
   ],
   "scripts": {
     "build": "stencil build --docs",

@@ -238,3 +238,16 @@ export const loadSDK = <SDKType = any>(
     });
   });
 };
+
+export const loadSprite = (src: string) => {
+  if (!IS_CLIENT) return;
+
+  window.fetch(src)
+    .then((res) => res.text())
+    .then((sprite) => {
+      const div = document.createElement('div');
+      div.style.display = 'none';
+      div.innerHTML = sprite;
+      document.head.append(div);
+    });
+};
