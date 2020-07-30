@@ -1,5 +1,5 @@
 import {
-  h, Component, State, Prop, Watch, Host,
+  h, Component, State, Prop, Watch, Host, Event, EventEmitter,
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
 import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
@@ -18,9 +18,20 @@ export class Spinner {
    */
   @Prop() isVideoView!: PlayerProps[PlayerProp.IsVideoView];
 
+  /**
+   * Emitted when the spinner will be shown.
+   */
+  @Event({ bubbles: false }) show!: EventEmitter<void>;
+
+  /**
+   * Emitted when the spinner will be hidden.
+   */
+  @Event({ bubbles: false }) hide!: EventEmitter<void>;
+
   @Watch('isVideoView')
   onVideoViewChange() {
     this.isEnabled = this.isVideoView;
+    this.onVisiblityChange();
   }
 
   /**
@@ -31,6 +42,11 @@ export class Spinner {
   @Watch('buffering')
   onActiveChange() {
     this.isActive = this.buffering;
+    this.onVisiblityChange();
+  }
+
+  private onVisiblityChange() {
+    (this.isEnabled && this.isActive) ? this.show.emit() : this.hide.emit();
   }
 
   render() {

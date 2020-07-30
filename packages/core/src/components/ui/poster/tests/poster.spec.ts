@@ -57,7 +57,7 @@ it('should set the alt text based on the media title', async () => {
   expect(findImage()).toEqualAttribute('alt', 'Apples Poster');
 });
 
-it('should emit showing event when poster is visible', async () => {
+it('should emit show event when poster is visible', async () => {
   const cb = jest.fn();
   poster.addEventListener('show', cb);
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
@@ -66,7 +66,7 @@ it('should emit showing event when poster is visible', async () => {
   expect(cb).toHaveBeenCalled();
 });
 
-it('should emit hiding event when poster is not visible', async () => {
+it('should emit hide event when poster is not visible', async () => {
   const cb = jest.fn();
   poster.addEventListener('hide', cb);
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
