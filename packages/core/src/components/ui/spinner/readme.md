@@ -16,6 +16,14 @@ Displays a loading indicator when the video is `buffering`.
 <!-- Auto Generated Below -->
 
 
+## Events
+
+| Event      | Description                              | Type                |
+| ---------- | ---------------------------------------- | ------------------- |
+| `willHide` | Emitted when the spinner will be hidden. | `CustomEvent<void>` |
+| `willShow` | Emitted when the spinner will be shown.  | `CustomEvent<void>` |
+
+
 ## CSS Custom Properties
 
 | Name                       | Description                                                |

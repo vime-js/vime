@@ -21,12 +21,12 @@ export class Spinner {
   /**
    * Emitted when the spinner will be shown.
    */
-  @Event({ bubbles: false }) show!: EventEmitter<void>;
+  @Event({ bubbles: false }) willShow!: EventEmitter<void>;
 
   /**
    * Emitted when the spinner will be hidden.
    */
-  @Event({ bubbles: false }) hide!: EventEmitter<void>;
+  @Event({ bubbles: false }) willHide!: EventEmitter<void>;
 
   @Watch('isVideoView')
   onVideoViewChange() {
@@ -46,7 +46,7 @@ export class Spinner {
   }
 
   private onVisiblityChange() {
-    (this.isEnabled && this.isActive) ? this.show.emit() : this.hide.emit();
+    (this.isEnabled && this.isActive) ? this.willShow.emit() : this.willHide.emit();
   }
 
   render() {

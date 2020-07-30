@@ -45,18 +45,18 @@ it('should not be visible if not buffering', async () => {
   expect(spinner).not.toHaveClass('active');
 });
 
-it('should emit show event when visible', async () => {
+it('should emit willShow event when visible', async () => {
   const cb = jest.fn();
-  spinner.addEventListener('show', cb);
+  spinner.addEventListener('willShow', cb);
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await provider.dispatchStateChange(PlayerProp.Buffering, true);
   await page.waitForChanges();
   expect(cb).toHaveBeenCalled();
 });
 
-it('should emit hide event when not visible', async () => {
+it('should emit willHide event when not visible', async () => {
   const cb = jest.fn();
-  spinner.addEventListener('hide', cb);
+  spinner.addEventListener('willHide', cb);
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await provider.dispatchStateChange(PlayerProp.Buffering, true);
   await page.waitForChanges();

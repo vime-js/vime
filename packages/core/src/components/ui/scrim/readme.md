@@ -23,6 +23,14 @@ A darkened overlay that covers the current video to enable content placed on it 
 | `active` | `active`  | Whether the scrim is visible or not. | `boolean` | `false` |
 
 
+## Events
+
+| Event      | Description                            | Type                |
+| ---------- | -------------------------------------- | ------------------- |
+| `willHide` | Emitted when the scrim will be hidden. | `CustomEvent<void>` |
+| `willShow` | Emitted when the scrim will be shown.  | `CustomEvent<void>` |
+
+
 ## CSS Custom Properties
 
 | Name               | Description                        |

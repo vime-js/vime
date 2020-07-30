@@ -29,17 +29,17 @@ export class Scrim {
   /**
    * Emitted when the scrim will be shown.
    */
-  @Event({ bubbles: false }) show!: EventEmitter<void>;
+  @Event({ bubbles: false }) willShow!: EventEmitter<void>;
 
   /**
    * Emitted when the scrim will be hidden.
    */
-  @Event({ bubbles: false }) hide!: EventEmitter<void>;
+  @Event({ bubbles: false }) willHide!: EventEmitter<void>;
 
   @Watch('active')
   @Watch('isEnabled')
   onVisibilityChange() {
-    (this.isEnabled && this.active) ? this.show.emit() : this.hide.emit();
+    (this.isEnabled && this.active) ? this.willShow.emit() : this.willHide.emit();
   }
 
   render() {
