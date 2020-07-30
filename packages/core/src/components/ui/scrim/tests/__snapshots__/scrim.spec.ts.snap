@@ -1,3 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should be structurally sound 1`] = `<vime-scrim></vime-scrim>`;
+exports[`should be structurally sound 1`] = `
+<vime-scrim class="hidden">
+  <div></div>
+</vime-scrim>
+`;

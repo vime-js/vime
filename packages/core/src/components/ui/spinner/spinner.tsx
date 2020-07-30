@@ -9,14 +9,14 @@ import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
   styleUrl: 'spinner.scss',
 })
 export class Spinner {
-  @State() isEnabled = false;
+  @State() isHidden = true;
 
   @State() isActive = false;
 
   /**
    * @internal
    */
-  @Prop() isVideoView!: PlayerProps[PlayerProp.IsVideoView];
+  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
 
   /**
    * Emitted when the spinner will be shown.
@@ -30,7 +30,7 @@ export class Spinner {
 
   @Watch('isVideoView')
   onVideoViewChange() {
-    this.isEnabled = this.isVideoView;
+    this.isHidden = !this.isVideoView;
     this.onVisiblityChange();
   }
 
@@ -46,14 +46,14 @@ export class Spinner {
   }
 
   private onVisiblityChange() {
-    (this.isEnabled && this.isActive) ? this.willShow.emit() : this.willHide.emit();
+    (!this.isHidden && this.isActive) ? this.willShow.emit() : this.willHide.emit();
   }
 
   render() {
     return (
       <Host
         class={{
-          enabled: this.isEnabled,
+          hidden: this.isHidden,
           active: this.isActive,
         }}
       >

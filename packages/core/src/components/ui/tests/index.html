@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>User Interface</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="../../globals/test.css">
+  <link rel="stylesheet" href="../../../../../dist/vime/vime.css">
+  <script type="module" src="../../../../../dist/vime/vime.esm.js"></script>
+</head>
+
+<body class="center">
+
+<div id="container"></div>
+
+<div class="buttons">
+  <button id="audio" type="button">Audio</button>
+  <button id="video" type="button">Video</button>
+</div>
+
+<script>
+  const addClickEvent = (id, callback) => {
+    document.getElementById(id).addEventListener('click', callback);
+  }
+
+  const container = document.getElementById('container');
+  const addPlayer = (id, player) => { 
+    addClickEvent(id, () => { container.innerHTML = player; }); 
+  };
+
+  const audio = `
+    <vime-audio cross-origin>
+      <source src="http://localhost:3334/audio/audio.mp3" type="audio/mp3">
+    </vime-audio>
+  `
+  
+  const video = `
+    <vime-video cross-origin>
+      <source src="http://localhost:3334/video/720p.mp4" type="video/mp4">
+      <track default kind="subtitles" src="http://localhost:3334/video/subs/english.vtt" srclang="en" label="English" >
+    </vime-video> 
+  `
+
+  const player = (provider) => `
+    <vime-player>
+      ${provider}
+      <vime-ui>
+        <vime-icons></vime-icons>
+        <vime-click-to-play></vime-click-to-play>
+        <vime-default-controls></vime-default-controls>
+        <vime-captions></vime-captions>
+        <vime-poster></vime-poster>
+        <vime-spinner></vime-spinner>
+      </vime-ui>
+    </vime-player>
+  `;
+
+  addPlayer('audio', player(audio));
+  addPlayer('video', player(video));
+</script>
+
+<style>
+  .buttons {
+    margin-top: 24px;
+  }
+</style>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should be structurally sound 1`] = `
+<vime-tooltip aria-hidden="true" class="onTop" id="vime-tooltip-1" role="tooltip">
+  <!---->
+  Play
+</vime-tooltip>
+`;

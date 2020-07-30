@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tooltip</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="../../../globals/test.css">
+  <link rel="stylesheet" href="../../../../../dist/vime/vime.css">
+  <script type="module" src="../../../../../dist/vime/vime.esm.js"></script>
+</head>
+<body class="center">
+
+<div id="container">
+  <vime-player>
+    <vime-faketube></vime-faketube>
+
+    <vime-ui>
+      <vime-controls>
+        <div id="fake-control">
+          <vime-tooltip>Play</vime-tooltip>
+        </div>
+      </vime-controls>
+    </vime-ui>
+  </vime-player>
+</div>
+
+<script type="module">
+  const control = document.querySelector('#fake-control');
+  const tooltip = document.querySelector('vime-tooltip');
+  const provider = document.querySelector('vime-faketube');
+
+  provider.dispatchStateChange('viewType', 'video');
+  provider.dispatchStateChange('playbackReady', 'true');
+
+  control.addEventListener('mouseenter', () => {
+    tooltip.active = true;
+  });
+
+  control.addEventListener('mouseleave', () => {
+    tooltip.active = false;
+  });
+</script>
+
+<style>
+  #fake-control {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: white;
+    cursor: pointer;
+  }
+</style>
+</body>
+</html>

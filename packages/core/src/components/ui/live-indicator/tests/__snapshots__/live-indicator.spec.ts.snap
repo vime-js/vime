@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should be structurally sound 1`] = `
+<vime-live-indicator class="hidden">
+  <div class="indicator"></div>
+  LIVE
+</vime-live-indicator>
+`;

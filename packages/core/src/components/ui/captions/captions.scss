@@ -15,8 +15,8 @@
     bottom: 0;
     width: 100%;
     text-align: center;
-    color: var(--captions-text-color,#fff);
-    font-size: var(--captions-font-size, 14px);
+    color: var(--captions-text-color);
+    font-size: var(--captions-font-size);
     padding: $control-spacing;
     z-index: $z-index-captions;
     display: none;
@@ -32,24 +32,24 @@
     }
     
     @media (min-width: $bp-md) {
-      font-size: var(--captions-font-size-medium, 18px);
+      font-size: var(--captions-font-size-medium);
     }
       
     @media (min-width: $bp-lg) {
-      font-size: var(--captions-font-size-large, 20px);
+      font-size: var(--captions-font-size-large);
     }
     
     @media (min-width: $bp-xl) {
-      font-size: var(--captions-font-size-xlarge, 22px);
+      font-size: var(--captions-font-size-xlarge);
     }
   
     & > span {
       display: inline-block;
-      background: var(--captions-cue-bg-color, $color-gray-600);
-      border-radius: var(--captions-cue-border-radius, 2px);
+      background: var(--captions-cue-bg-color);
+      border-radius: var(--captions-cue-border-radius);
       box-decoration-break: clone;
       line-height: 185%;
-      padding: var(--captions-cue-padding, 0.2em 0.5em);
+      padding: var(--captions-cue-padding);
       white-space: pre-wrap;
       pointer-events: none;
       

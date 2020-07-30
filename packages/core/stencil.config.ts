@@ -5,6 +5,7 @@ export const config: Config = {
   namespace: 'Vime',
   taskQueue: 'async',
   buildEs5: false,
+  globalStyle: 'src/globals/theme.css',
   extras: {
     cssVarsShim: false,
     dynamicImportShim: false,

@@ -14,9 +14,10 @@ import {
   forceUpdate,
 } from '@stencil/core';
 import { Universe } from 'stencil-wormhole';
+import { HTMLStencilElement } from '@stencil/core/internal';
 import { MediaType } from './MediaType';
 import { MediaProvider, MediaProviderAdapter } from '../../providers/MediaProvider';
-import { isUndefined, isString } from '../../../utils/unit';
+import { isUndefined, isString, isNull } from '../../../utils/unit';
 import { MediaPlayer } from './MediaPlayer';
 import {
   isExternalReadonlyPlayerProp,
@@ -26,13 +27,16 @@ import {
   resetablePlayerProps,
 } from './PlayerProp';
 import { ViewType } from './ViewType';
-import { canAutoplay, IS_MOBILE, onTouchInputChange } from '../../../utils/support';
+import {
+  canAutoplay, IS_MOBILE, onTouchInputChange, IS_IOS,
+} from '../../../utils/support';
 import { Fullscreen } from './fullscreen/Fullscreen';
 import { en } from './lang/en';
 import { PlayerStateChange } from './PlayerState';
 import { Autopause } from './Autopause';
 import { getEventName } from './PlayerEvent';
 import { Disposal } from './Disposal';
+import { listen } from '../../../utils/dom';
 
 let playerIdCount = 0;
 
@@ -53,6 +57,9 @@ export class Player implements MediaPlayer {
   private autopauseMgr?: Autopause;
 
   private disposal = new Disposal();
+
+  // Keeps track of the active caption as we toggle mode/visibility.
+  private toggledCaption?: TextTrack;
 
   /**
    * Cache of all property values to determine what events to fire when the component updates. This
@@ -86,6 +93,13 @@ export class Player implements MediaPlayer {
    */
   // eslint-disable-next-line no-spaced-func
   private playbackReadyCalls?: Map<PlayerProp, () => Promise<void>> = new Map();
+
+  // State changes that require a little special treatment such as calling a method when changed.
+  private specialStateChange = new Set([
+    PlayerProp.IsFullscreenActive,
+    PlayerProp.IsPiPActive,
+    PlayerProp.IsCaptionsActive,
+  ]);
 
   @Element() el!: HTMLVimePlayerElement;
 
@@ -308,6 +322,36 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
+  @Prop({ mutable: true, attribute: null }) currentCaption?: TextTrack;
+
+  /**
+   * @inheritDoc
+   */
+  @Prop({ mutable: true, attribute: null }) isCaptionsActive = false;
+
+  private textTracksChangeListener?: (() => void);
+
+  @Watch('textTracks')
+  onTextTracksChange() {
+    if (isUndefined(this.textTracks)) {
+      this.textTracksChangeListener?.();
+      this.queuePropChange(PlayerProp.CurrentCaption, undefined);
+      this.queuePropChange(PlayerProp.IsCaptionsActive, false);
+      return;
+    }
+
+    this.onActiveCaptionChange();
+
+    this.textTracksChangeListener = listen(
+      this.textTracks!,
+      'change',
+      this.onActiveCaptionChange.bind(this),
+    );
+  }
+
+  /**
+   * @inheritDoc
+   */
   @Prop({ mutable: true, reflect: true }) volume = 50;
 
   @Watch('volume')
@@ -375,6 +419,11 @@ export class Player implements MediaPlayer {
    * @inheritDoc
    */
   @Prop({ mutable: true, attribute: null }) isLive = false;
+
+  @Watch('duration')
+  onLiveChange() {
+    this.queuePropChange(PlayerProp.IsLive, (this.duration === Infinity));
+  }
 
   /**
    * @inheritDoc
@@ -851,6 +900,11 @@ export class Player implements MediaPlayer {
       if (prop === PlayerProp.PlaybackQuality) this.prevPlaybackQuality = value;
     }
 
+    if (!isProvider && this.specialStateChange.has(prop)) {
+      this.onSpecialStateChange(by, prop, value);
+      return;
+    }
+
     await this.queuePropChange(prop, value, by.nodeName, isProvider);
   }
 
@@ -908,7 +962,7 @@ export class Player implements MediaPlayer {
 
   componentDidUpdate() {
     this.cache.forEach((oldVal, prop) => {
-      const newVal = this[prop];
+      const newVal = (this as any)[prop];
 
       if (newVal !== oldVal) {
         if (isExternalReadonlyPlayerProp(prop) && !this.internalStateChanges.has(prop)) {
@@ -926,11 +980,13 @@ export class Player implements MediaPlayer {
   }
 
   disconnectedCallback() {
+    this.textTracksChangeListener?.();
     this.autopauseMgr!.destroy();
     this.fullscreen!.destroy();
     this.disposal.empty();
     this.pendingStateChanges.clear();
     this.playbackReadyCalls = undefined;
+    this.toggledCaption = undefined;
     this.provider = undefined;
     this.fullscreen = undefined;
     this.autopauseMgr = undefined;
@@ -953,6 +1009,12 @@ export class Player implements MediaPlayer {
   private calcAspectRatio() {
     const [width, height] = this.aspectRatio.split(':');
     return (100 / Number(width)) * Number(height);
+  }
+
+  private async onSpecialStateChange(by: HTMLStencilElement, prop: string, value: any) {
+    if (prop === PlayerProp.IsPiPActive) this.queuePiPChange(by, value);
+    if (prop === PlayerProp.IsFullscreenActive) this.queueFullscreenChange(by, value);
+    if (prop === PlayerProp.IsCaptionsActive) this.toggleCaptionsVisiblity(value);
   }
 
   private async executeStateChange(change: () => Promise<void>) {
@@ -1008,6 +1070,62 @@ export class Player implements MediaPlayer {
     forceUpdate(this);
   }
 
+  private async queuePiPChange(by: HTMLStencilElement, toggle: boolean) {
+    await this.queueStateChange(
+      `[${by.nodeName}]: ${toggle ? 'enter' : 'exit'}PiP()`,
+      async () => {
+        await (toggle ? this.enterPiP() : this.exitPiP());
+      },
+    );
+  }
+
+  private async queueFullscreenChange(by: HTMLStencilElement, toggle: boolean) {
+    await this.queueStateChange(
+      `[${by.nodeName}]: ${toggle ? 'enter' : 'exit'}Fullscreen()`,
+      async () => {
+        await (toggle ? this.enterFullscreen() : this.exitFullscreen());
+      },
+    );
+  }
+
+  private hasCustomControls() {
+    return !isNull(this.el.querySelector('vime-ui > vime-controls'));
+  }
+
+  private hasCustomCaptions() {
+    return !isNull(this.el.querySelector('vime-ui > vime-captions'));
+  }
+
+  private getActiveCaption() {
+    return Array.from(this.textTracks ?? [])
+      .filter((track) => (track.kind === 'subtitles') || (track.kind === 'captions'))
+      .find((track) => track.mode === (this.hasCustomCaptions() ? 'hidden' : 'showing'));
+  }
+
+  private onActiveCaptionChange() {
+    const activeCaption = this.getActiveCaption();
+    this.queuePropChange(PlayerProp.CurrentCaption, activeCaption || this.toggledCaption);
+    this.queuePropChange(PlayerProp.IsCaptionsActive, !isUndefined(activeCaption));
+  }
+
+  private async toggleCaptionsVisiblity(toggle: boolean) {
+    if (
+      isUndefined(this.textTracks)
+      || (toggle && isUndefined(this.toggledCaption))
+      || (!toggle && isUndefined(this.getActiveCaption()))
+    ) return;
+
+    if (toggle) {
+      this.toggledCaption!.mode = 'showing';
+      this.toggledCaption = undefined;
+      return;
+    }
+
+    const activeCaption = this.getActiveCaption();
+    this.toggledCaption = activeCaption;
+    activeCaption!.mode = this.hasCustomCaptions() ? 'disabled' : 'hidden';
+  }
+
   private queueAdapterCall(
     changedProp: PlayerProp,
     method: keyof MediaProviderAdapter,
@@ -1045,20 +1163,40 @@ export class Player implements MediaPlayer {
   }
 
   render() {
+    const label = `${this.isAudioView ? 'Audio Player' : 'Video Player'}`
+      + `${!isUndefined(this.mediaTitle) ? ` - ${this.mediaTitle}` : ''}`;
+
+    const canShowCustomUI = !IS_IOS
+      || !this.isVideoView
+      || (this.playsinline && !this.isFullscreenActive);
+
     return (
       <Host
         id={this.getPlayerId()}
         tabindex="0"
+        aria-label={label}
+        aria-hidden={!this.playbackReady ? 'true' : 'false'}
         style={{
           paddingBottom: this.isVideoView ? `${this.calcAspectRatio()}%` : undefined,
         }}
         class={{
+          idle: canShowCustomUI
+            && this.hasCustomControls()
+            && this.isVideoView
+            && !this.paused
+            && !this.isControlsActive,
+          audio: this.isAudioView,
           video: this.isVideoView,
           fullscreen: this.isFullscreenActive,
         }}
       >
         <Universe.Provider state={this.getPlayerState()}>
-          { !this.controls && this.isVideoView && <div class="blocker" /> }
+          {
+            !this.controls
+            && canShowCustomUI
+            && this.isVideoView
+            && <div class="blocker" />
+          }
 
           <slot />
         </Universe.Provider>

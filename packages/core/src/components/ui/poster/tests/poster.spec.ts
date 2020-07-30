@@ -26,18 +26,18 @@ it('should be structurally sound', () => {
 it('should not render if not a video view', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
   await page.waitForChanges();
-  expect(poster).not.toHaveClass('enabled');
+  expect(poster).toHaveClass('hidden');
 });
 
 it('should render if currentPoster exists', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await provider.dispatchStateChange(PlayerProp.CurrentPoster, '');
   await page.waitForChanges();
-  expect(poster).toHaveClass('enabled');
+  expect(poster).not.toHaveClass('hidden');
 });
 
 it('should not render if currentPoster does not exist', async () => {
-  expect(poster).not.toHaveClass('enabled');
+  expect(poster).toHaveClass('hidden');
 });
 
 it('should be visible if playback has not started', () => {

@@ -68,7 +68,7 @@ export const runTestHarness = (provider: MediaProvider) => {
       // Need a small delay between tests or else some player commands won't go through.
       cy.wait(200);
     });
-    
+
     after(() => {
       cy.pause();
     });
@@ -252,7 +252,7 @@ export const runTestHarness = (provider: MediaProvider) => {
           });
         });
     });
-    
+
     it('should loop', () => {
       cy.player().then(($player) => { $player.prop(PlayerProp.Loop, true); });
       cy.raf();
@@ -272,7 +272,7 @@ export const runTestHarness = (provider: MediaProvider) => {
           expect($player.prop(PlayerProp.CurrentTime)).to.be.lessThan(30).and.greaterThan(0);
         });
     });
-    
+
     it('should end playback', () => {
       cy.player().then(($player) => { $player.prop(PlayerProp.Loop, false); });
       cy.raf();
@@ -300,9 +300,9 @@ export const runTestHarness = (provider: MediaProvider) => {
           cy.player()
             .should(() => {
               expect(events[PlayerEvent.PlaybackRateChange]).to.have.been.calledWith(newRate);
-            })
+            });
           let startTime = 0;
-          cy.player().then($player => { startTime =  $player.prop(PlayerProp.CurrentTime) })
+          cy.player().then(() => { startTime = $player.prop(PlayerProp.CurrentTime); });
           cy.wait(1000);
           cy.pause();
           cy.player()
@@ -333,7 +333,7 @@ export const runTestHarness = (provider: MediaProvider) => {
         });
     });
 
-    // @TODO doesn't work on HTML5 because the video fullscreen API is deprecated in WebKit but 
+    // @TODO doesn't work on HTML5 because the video fullscreen API is deprecated in WebKit but
     // required on iOS.
     it.skip('should toggle fullscreen', () => {
       cy.player()
@@ -366,8 +366,8 @@ export const runTestHarness = (provider: MediaProvider) => {
           cy.enterPiP();
           cy.player().should('be.pip');
           cy.document()
-          .its('pictureInPictureElement')
-          .should((el) => { expect($player[0].contains(el)).to.be.true });
+            .its('pictureInPictureElement')
+            .should((el) => { expect($player[0].contains(el)).to.be.true; });
           cy.player().should('be.playing');
           cy.exitPiP();
           cy.player().should('not.be.pip');
@@ -377,7 +377,7 @@ export const runTestHarness = (provider: MediaProvider) => {
           cy.player().should('be.playing');
         });
     });
-    
+
     it('should seek before playback starts', () => {
       resetPlayerIfNeeded();
       const seekTo = 60;
@@ -388,7 +388,7 @@ export const runTestHarness = (provider: MediaProvider) => {
         .and('be.playing');
     });
 
-    // @TODO can't test this at the moment because setting the prop has no effect after load on the 
+    // @TODO can't test this at the moment because setting the prop has no effect after load on the
     // HTML5 player.
     if (!mediaFileProvider.has(provider)) {
       it('should autoplay', () => {

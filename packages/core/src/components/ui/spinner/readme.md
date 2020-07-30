@@ -26,15 +26,15 @@ Displays a loading indicator when the video is `buffering`.
 
 ## CSS Custom Properties
 
-| Name                       | Description                                                |
-| -------------------------- | ---------------------------------------------------------- |
-| `--spinner-height`         | The height of the spinner.                                 |
-| `--spinner-progress-color` | The color of the progress within the track.                |
-| `--spinner-spin-duration`  | How long it takes the spinner to complete a full rotation. |
-| `--spinner-thickness`      | The thickness of the spinner in px.                        |
-| `--spinner-timing-func`    | The animation timing function to use for the spin.         |
-| `--spinner-track-color`    | The color of the track the spinner is rotating in.         |
-| `--spinner-width`          | The width of the spinner.                                  |
+| Name                         | Description                                                |
+| ---------------------------- | ---------------------------------------------------------- |
+| `--spinner-fill-color`       | The color of the progress within the track.                |
+| `--spinner-height`           | The height of the spinner.                                 |
+| `--spinner-spin-duration`    | How long it takes the spinner to complete a full rotation. |
+| `--spinner-spin-timing-func` | The animation timing function to use for the spin.         |
+| `--spinner-thickness`        | The thickness of the spinner in px.                        |
+| `--spinner-track-color`      | The color of the track the spinner is rotating in.         |
+| `--spinner-width`            | The width of the spinner.                                  |
 
 
 ----------------------------------------------

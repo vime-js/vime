@@ -1,16 +1,18 @@
 vime-player {
   /**
-   * @prop --vime-font-family: A custom font family to be used throughout the player.
-   * 
-   * @prop --vime-theme: A custom theme (color) to be used throughout the player. Any valid CSS 
-   * `color` property should work (HEX, RGBA, HLS, ...).
+   * @prop --player-font-family: A custom font family to be used throughout the player.
+   * @prop --player-theme: A custom theme (color) to be used throughout the player. Any valid CSS 
+   * `color` property (HEX, RGBA, HLS, ...) can be used.
+   * @prop --player-fade-transition: The default transition used throughout the player for fading 
+   * elements in and out.
+   * @prop --player-box-shadow: The shadow cast around the player frame.
    */
 
-  --vime-font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
+  --player-font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
 
   box-sizing: border-box;
   direction: ltr;
-  font-family: var(--vime-font-family);
+  font-family: var(--player-font-family);
   -moz-osx-font-smoothing: auto;
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-tap-highlight-color: transparent;
@@ -25,6 +27,7 @@ vime-player {
   text-shadow: none;
   outline: 0;
   transition: box-shadow 0.3s ease;
+  box-shadow: var(--player-box-shadow);
 
   *,
   *::after,
@@ -50,27 +53,31 @@ vime-player {
     touch-action: manipulation;
   }
 
+  &.idle {
+    cursor: none;
+  }
+
   &.video {
     height: 0;
-    background: #000;
     overflow: hidden;
+    background-color: #000;
   }
 
   &.fullscreen {
-    background: #000;
     margin: 0;
     border-radius: 0;
     width: 100%;
     height: 100%;
     padding-bottom: 0 !important;
+    background-color: #000;
   }
 
-  .blocker {
+  & > .blocker {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
     z-index: $z-index-blocker;
     display: inline-block;
   }

@@ -61,6 +61,16 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
    */
   @Prop() poster?: string;
 
+  /**
+   * The title of the current media.
+   */
+  @Prop() mediaTitle?: string;
+
+  @Watch('mediaTitle')
+  onMediaTitleChange() {
+    this.dispatch(PlayerProp.MediaTitle, this.mediaTitle);
+  }
+
   @Watch('poster')
   onPosterChange() {
     this.dispatch(PlayerProp.CurrentPoster, this.poster);
@@ -145,6 +155,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.dispatch = createPlayerStateDispatcher(this);
     this.onViewTypeChange();
     this.onPosterChange();
+    this.onMediaTitleChange();
     this.listenToTextTracksChanges();
   }
 
@@ -208,10 +219,12 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   private onPause() {
     this.cancelTimeUpdates();
     this.dispatch(PlayerProp.Paused, true);
+    this.dispatch(PlayerProp.Buffering, false);
   }
 
   private onPlaying() {
     this.dispatch(PlayerProp.Playing, true);
+    this.dispatch(PlayerProp.Buffering, false);
   }
 
   private onSeeking() {

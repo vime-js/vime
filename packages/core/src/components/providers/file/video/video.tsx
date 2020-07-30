@@ -54,6 +54,11 @@ export class Video implements MediaFileProvider<HTMLMediaElement> {
   @Prop() disableRemotePlayback?: boolean;
 
   /**
+   * The title of the current media.
+   */
+  @Prop() mediaTitle?: string;
+
+  /**
    * @internal
    */
   @Method()
@@ -73,6 +78,7 @@ export class Video implements MediaFileProvider<HTMLMediaElement> {
         autoPiP={this.autoPiP}
         disablePiP={this.disablePiP}
         disableRemotePlayback={this.disableRemotePlayback}
+        mediaTitle={this.mediaTitle}
         viewType={ViewType.Video}
         ref={(el: any) => { this.fileProvider = el; }}
       >

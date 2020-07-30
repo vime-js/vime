@@ -16,6 +16,13 @@ Enables toggling playback by clicking the player.
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property      | Attribute       | Description                                                                                            | Type      | Default |
+| ------------- | --------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------- |
+| `useOnMobile` | `use-on-mobile` | By default this is disabled on mobile to not interfere with playback, set this to `true` to enable it. | `boolean` | `false` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

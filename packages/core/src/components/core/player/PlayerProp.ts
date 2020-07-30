@@ -31,6 +31,8 @@ export enum PlayerProp {
   IsAudioView = 'isAudioView',
   IsVideoView = 'isVideoView',
   IsLive = 'isLive',
+  IsCaptionsActive = 'isCaptionsActive',
+  CurrentCaption = 'currentCaption',
   IsMobile = 'isMobile',
   IsTouch = 'isTouch',
   IsPiPActive = 'isPiPActive',
@@ -60,6 +62,8 @@ export type InternalReadonlyPlayerProps = Pick<PlayerProps, PlayerProp.Autoplay
 | PlayerProp.IsTouch
 | PlayerProp.IsAudioView
 | PlayerProp.IsVideoView
+| PlayerProp.IsLive
+| PlayerProp.CurrentCaption
 | PlayerProp.Autopause
 | PlayerProp.AspectRatio
 | PlayerProp.Playsinline
@@ -102,6 +106,8 @@ const internalReadonly = new Set<InternalReadonlyPlayerProp>([
   PlayerProp.IsVideo,
   PlayerProp.IsMobile,
   PlayerProp.IsTouch,
+  PlayerProp.IsLive,
+  PlayerProp.CurrentCaption,
   PlayerProp.IsAudioView,
   PlayerProp.IsVideoView,
   PlayerProp.Autopause,
@@ -142,6 +148,8 @@ export const resetablePlayerProps = {
   [PlayerProp.TextTracks]: undefined,
   [PlayerProp.MediaType]: undefined,
   [PlayerProp.IsLive]: false,
+  [PlayerProp.IsCaptionsActive]: false,
+  [PlayerProp.CurrentCaption]: undefined,
 };
 
 export interface PlayerProps {
@@ -159,7 +167,8 @@ export interface PlayerProps {
 
   /**
    * `@readonly` A `double` indicating the total playback length of the media in seconds. Defaults
-   * to `-1` if no media has been loaded.
+   * to `-1` if no media has been loaded. If the media is being streamed live then the duration is
+   * equal to `Infinity`.
    */
   [PlayerProp.Duration]: number
 
@@ -368,7 +377,19 @@ export interface PlayerProps {
   [PlayerProp.IsTouch]: boolean
 
   /**
-   * `@readonly` Whether the current media is being broadcast live.
+   * `@readonly` Whether any captions or subtitles are currently showing.
+   */
+  [PlayerProp.IsCaptionsActive]: boolean
+
+  /**
+   * `@readonly` The selected caption/subtitle text track to display. Defaults to `undefined` if
+   * there is none. This does not mean this track is active, only that is the current selection. To
+   * know if it is active, check the `isCaptionsActive` prop.
+   */
+  [PlayerProp.CurrentCaption]?: TextTrack
+
+  /**
+   * `@readonly` Whether the current media is being broadcast live (`duration === Infinity`).
    */
   [PlayerProp.IsLive]: boolean
 

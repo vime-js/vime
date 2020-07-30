@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Slider</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="../../../globals/test.css">
+  <link rel="stylesheet" href="../../../../../dist/vime/vime.css">
+  <script type="module" src="../../../../../dist/vime/vime.esm.js"></script>
+</head>
+<body class="center">
+
+<div id="container">
+  <vime-player controls>
+    <vime-faketube></vime-faketube>
+    
+    <vime-ui>
+      <vime-controls full-width>
+        <vime-slider></vime-slider>
+      </vime-controls>
+    </vime-ui>
+  </vime-player>
+</div>
+
+<script type="module">
+  const provider = document.querySelector('vime-faketube');
+  provider.dispatchStateChange('viewType', 'video');
+  provider.dispatchStateChange('playbackReady', 'true');
+</script>
+
+</body>
+</html>

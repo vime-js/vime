@@ -1,10 +1,10 @@
-  @mixin hidden() {
-    opacity: 0;
-    visibility: hidden;
-    transition: $fade-transition;
-  }
-  
-  @mixin visible() {
-    opacity: 1;
-    visibility: visible;
-  }
+@mixin invisible() {
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--player-fade-transition, $fade-transition);
+}
+
+@mixin visible() {
+  opacity: 1;
+  visibility: visible;
+}

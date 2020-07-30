@@ -3,7 +3,7 @@
 exports[`should accept svg markup 1`] = `
 <vime-icon>
   <!---->
-  <svg focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" style="color: #fff; transform: scale(1); opacity: 1;">
+  <svg focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" style="transform: scale(1); opacity: 1;">
     <rect height="100" width="300"></rect>
   </svg>
 </vime-icon>
@@ -12,7 +12,7 @@ exports[`should accept svg markup 1`] = `
 exports[`should be structurally sound 1`] = `
 <vime-icon href="#my-icon">
   <!---->
-  <svg focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" style="color: #fff; transform: scale(1); opacity: 1;">
+  <svg focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" style="transform: scale(1); opacity: 1;">
     <use href="#my-icon"></use>
   </svg>
 </vime-icon>

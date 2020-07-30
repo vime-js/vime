@@ -36,6 +36,11 @@ export class Audio implements MediaFileProvider<HTMLMediaElement> {
   @Prop() disableRemotePlayback?: boolean;
 
   /**
+   * The title of the current media.
+   */
+  @Prop() mediaTitle?: string;
+
+  /**
    * @internal
    */
   @Method()
@@ -53,6 +58,7 @@ export class Audio implements MediaFileProvider<HTMLMediaElement> {
         crossOrigin={this.crossOrigin}
         preload={this.preload}
         disableRemotePlayback={this.disableRemotePlayback}
+        mediaTitle={this.mediaTitle}
         viewType={ViewType.Audio}
         ref={(el: any) => { this.fileProvider = el; }}
       >

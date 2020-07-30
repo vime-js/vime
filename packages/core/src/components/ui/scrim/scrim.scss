@@ -1,6 +1,6 @@
 vime-scrim {
   /**
-   * @prop --scrim-bg-color: The background color of the scrim.
+   * @prop --scrim-bg: The background color of the scrim.
    */
 
   position: absolute;
@@ -9,13 +9,13 @@ vime-scrim {
   width: 100%;
   height: 100%;
   z-index: $z-index-scrim;
-  background: var(--scrim-bg-color, $color-gray-300);
-  display: none;
+  background: var(--scrim-bg);
+  display: inline-block;
   pointer-events: none;
-  @include hidden();
+  @include invisible();
   
-  &.enabled {
-    display: inline-block;
+  &.hidden {
+    display: none;
   }
 
   &.active {

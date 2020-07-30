@@ -6,12 +6,12 @@ vime-poster {
   height: 100%;
   background: #000;
   z-index: $z-index-poster;
-  display: none;
+  display: inline-block;
   pointer-events: none;
-  @include hidden();
+  @include invisible();
     
-  &.enabled {
-    display: inline-block;
+  &.hidden {
+    display: none;
   }
 
   &.active {

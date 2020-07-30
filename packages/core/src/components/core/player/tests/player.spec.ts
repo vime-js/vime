@@ -41,6 +41,7 @@ describe('props', () => {
       PlayerProp.TextTracks,
       PlayerProp.CurrentSrc,
       PlayerProp.CurrentPoster,
+      PlayerProp.CurrentCaption,
     ]);
 
     Object.values(PlayerProp).forEach((prop) => {

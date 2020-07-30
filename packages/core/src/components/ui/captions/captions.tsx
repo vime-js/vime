@@ -48,22 +48,22 @@ export class Captions {
   /**
    * @internal
    */
-  @Prop() isControlsActive!: PlayerProps[PlayerProp.IsControlsActive];
+  @Prop() isControlsActive: PlayerProps[PlayerProp.IsControlsActive] = false;
 
   /**
    * @internal
    */
-  @Prop() isVideoView!: PlayerProps[PlayerProp.IsVideoView];
+  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
 
   /**
    * @internal
    */
-  @Prop() playbackStarted!: PlayerProps[PlayerProp.PlaybackStarted];
+  @Prop() playbackStarted: PlayerProps[PlayerProp.PlaybackStarted] = false;
 
   /**
    * @internal
    */
-  @Prop() textTracks: PlayerProps[PlayerProp.TextTracks];
+  @Prop() textTracks?: PlayerProps[PlayerProp.TextTracks];
 
   /**
    * Emitted when the current track changes.

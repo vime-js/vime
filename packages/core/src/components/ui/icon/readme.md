@@ -23,7 +23,7 @@ property.
 
 | Property  | Attribute | Description                                                                       | Type                  | Default     |
 | --------- | --------- | --------------------------------------------------------------------------------- | --------------------- | ----------- |
-| `color`   | `color`   | The color (fill) of the icon.                                                     | `string`              | `'#fff'`    |
+| `color`   | `color`   | The color (fill) of the icon.                                                     | `string \| undefined` | `undefined` |
 | `href`    | `href`    | The URL to an SVG element or fragment to load.                                    | `string \| undefined` | `undefined` |
 | `opacity` | `opacity` | The amount of transparency to add to the icon.                                    | `number`              | `1`         |
 | `scale`   | `scale`   | The amount to scale the size of the icon (respecting aspect ratio) up or down by. | `number`              | `1`         |
@@ -31,9 +31,9 @@ property.
 
 ## Slots
 
-| Slot | Description                            |
-| ---- | -------------------------------------- |
-|      | SVG markup to be drawn by the browser. |
+| Slot | Description                                            |
+| ---- | ------------------------------------------------------ |
+|      | Used to pass in SVG markup to be drawn by the browser. |
 
 
 ## CSS Custom Properties
@@ -43,6 +43,29 @@ property.
 | `--icon-height` | The height of the icon. |
 | `--icon-width`  | The width of the icon.  |
 
+
+## Dependencies
+
+### Used by
+
+ - [vime-caption-control](../controls/caption-control)
+ - [vime-fullscreen-control](../controls/fullscreen-control)
+ - [vime-mute-control](../controls/mute-control)
+ - [vime-pip-control](../controls/pip-control)
+ - [vime-playback-control](../controls/playback-control)
+ - [vime-settings-control](../controls/settings-control)
+
+### Graph
+```mermaid
+graph TD;
+  vime-caption-control --> vime-icon
+  vime-fullscreen-control --> vime-icon
+  vime-mute-control --> vime-icon
+  vime-pip-control --> vime-icon
+  vime-playback-control --> vime-icon
+  vime-settings-control --> vime-icon
+  style vime-icon fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

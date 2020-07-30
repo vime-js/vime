@@ -4,9 +4,9 @@ vime-spinner {
    * @prop --spinner-height: The height of the spinner.
    * @prop --spinner-thickness: The thickness of the spinner in px.
    * @prop --spinner-track-color: The color of the track the spinner is rotating in.
-   * @prop --spinner-progress-color: The color of the progress within the track.
+   * @prop --spinner-fill-color: The color of the progress within the track.
    * @prop --spinner-spin-duration: How long it takes the spinner to complete a full rotation.
-   * @prop --spinner-timing-func: The animation timing function to use for the spin.
+   * @prop --spinner-spin-timing-func: The animation timing function to use for the spin.
    */
 
   position: absolute;
@@ -18,11 +18,11 @@ vime-spinner {
   align-items: center;
   pointer-events: none;
   z-index: $z-index-spinner;
-  display: none;
-  @include hidden();
+  display: flex;
+  @include invisible();
     
-  &.enabled {
-    display: flex;
+  &.hidden {
+    display: none;
   }
 
   &.active {
@@ -45,18 +45,18 @@ vime-spinner {
     position: relative;
     text-indent: -9999em;
     pointer-events: none;
-    border-top: var(--spinner-thickness, 3px) solid var(--spinner-progress-color, #fff);
-    border-left: var(--spinner-thickness, 3px) solid var(--spinner-progress-color, #fff);
-    border-right: var(--spinner-thickness, 3px) solid var(--spinner-track-color, $color-white-200);
-    border-bottom: var(--spinner-thickness, 3px) solid var(--spinner-track-color, $color-white-200);
+    border-top: var(--spinner-thickness) solid var(--spinner-fill-color);
+    border-left: var(--spinner-thickness) solid var(--spinner-fill-color);
+    border-right: var(--spinner-thickness) solid var(--spinner-track-color);
+    border-bottom: var(--spinner-thickness) solid var(--spinner-track-color);
     transform: translateZ(0);
-    animation: spin var(--spinner-spin-duration, 1.1s) infinite var(--spinner-timing-func, linear);
+    animation: spin var(--spinner-spin-duration) infinite var(--spinner-spin-timing-func);
 
     &,
     &::after {
       border-radius: 50%;
-      width: var(--spinner-width, 80px);
-      height: var(--spinner-height, 80px);
+      width: var(--spinner-width);
+      height: var(--spinner-height);
     }
   }
 }

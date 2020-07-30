@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should be structurally sound 1`] = `
+<vime-current-time>
+  <vime-time label="Current time" seconds="120"></vime-time>
+</vime-current-time>
+`;

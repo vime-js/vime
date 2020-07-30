@@ -33,10 +33,23 @@ A darkened overlay that covers the current video to enable content placed on it 
 
 ## CSS Custom Properties
 
-| Name               | Description                        |
-| ------------------ | ---------------------------------- |
-| `--scrim-bg-color` | The background color of the scrim. |
+| Name         | Description                        |
+| ------------ | ---------------------------------- |
+| `--scrim-bg` | The background color of the scrim. |
 
+
+## Dependencies
+
+### Used by
+
+ - [vime-default-controls](../controls/default-controls)
+
+### Graph
+```mermaid
+graph TD;
+  vime-default-controls --> vime-scrim
+  style vime-scrim fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

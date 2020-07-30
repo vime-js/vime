@@ -9,16 +9,16 @@ import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
   styleUrl: 'scrim.scss',
 })
 export class Scrim {
-  @State() isEnabled = false;
+  @State() isHidden = true;
 
   /**
    * @internal
    */
-  @Prop() isVideoView!: PlayerProps[PlayerProp.IsVideoView];
+  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
 
   @Watch('isVideoView')
   onVideoViewChange() {
-    this.isEnabled = this.isVideoView;
+    this.isHidden = !this.isVideoView;
   }
 
   /**
@@ -37,19 +37,21 @@ export class Scrim {
   @Event({ bubbles: false }) willHide!: EventEmitter<void>;
 
   @Watch('active')
-  @Watch('isEnabled')
+  @Watch('isHidden')
   onVisibilityChange() {
-    (this.isEnabled && this.active) ? this.willShow.emit() : this.willHide.emit();
+    (!this.isHidden && this.active) ? this.willShow.emit() : this.willHide.emit();
   }
 
   render() {
     return (
       <Host
         class={{
-          enabled: this.isEnabled,
+          hidden: this.isHidden,
           active: this.active,
         }}
-      />
+      >
+        <div />
+      </Host>
     );
   }
 }

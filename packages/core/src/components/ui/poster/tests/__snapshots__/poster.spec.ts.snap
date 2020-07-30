@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should be structurally sound 1`] = `
-<vime-poster class="active">
+<vime-poster class="active hidden">
   <img alt="Media Poster" style="object-fit: cover;">
 </vime-poster>
 `;

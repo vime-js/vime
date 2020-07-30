@@ -24,13 +24,13 @@ it('should be structurally sound', () => {
 it('should not render if not a video view', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
   await page.waitForChanges();
-  expect(spinner).not.toHaveClass('enabled');
+  expect(spinner).toHaveClass('hidden');
 });
 
 it('should render if a video view', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await page.waitForChanges();
-  expect(spinner).toHaveClass('enabled');
+  expect(spinner).not.toHaveClass('hidden');
 });
 
 it('should be visible if buffering', async () => {

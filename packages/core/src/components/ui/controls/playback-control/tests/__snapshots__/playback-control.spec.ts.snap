@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should be structurally sound when not paused 1`] = `
+<vime-playback-control>
+  <vime-control keycodes="32|75" label="Playback">
+    <vime-icon href="#vime-pause"></vime-icon>
+    <vime-tooltip>
+      Pause (space/k)
+    </vime-tooltip>
+  </vime-control>
+</vime-playback-control>
+`;
+
+exports[`should be structurally sound when paused 1`] = `
+<vime-playback-control>
+  <vime-control keycodes="32|75" label="Playback">
+    <vime-icon href="#vime-play"></vime-icon>
+    <vime-tooltip>
+      Play (space/k)
+    </vime-tooltip>
+  </vime-control>
+</vime-playback-control>
+`;

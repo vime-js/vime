@@ -10,7 +10,7 @@ import { isUndefined } from '../../../utils/unit';
   styleUrl: 'poster.scss',
 })
 export class Poster {
-  @State() isEnabled = false;
+  @State() isHidden = true;
 
   @State() isActive = false;
 
@@ -22,7 +22,7 @@ export class Poster {
   /**
    * @internal
    */
-  @Prop() isVideoView!: PlayerProps[PlayerProp.IsVideoView];
+  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
 
   /**
    * @internal
@@ -37,7 +37,7 @@ export class Poster {
   /**
    * @internal
    */
-  @Prop() playbackStarted!: PlayerProps[PlayerProp.PlaybackStarted];
+  @Prop() playbackStarted: PlayerProps[PlayerProp.PlaybackStarted] = false;
 
   /**
    * Emitted when the poster has loaded.
@@ -54,14 +54,19 @@ export class Poster {
    */
   @Event({ bubbles: false }) willHide!: EventEmitter<void>;
 
+  connectedCallback() {
+    this.onEnabledChange();
+    this.onActiveChange();
+  }
+
   private onVisibilityChange() {
-    (this.isEnabled && this.isActive) ? this.willShow.emit() : this.willHide.emit();
+    (!this.isHidden && this.isActive) ? this.willShow.emit() : this.willHide.emit();
   }
 
   @Watch('isVideoView')
   @Watch('currentPoster')
   onEnabledChange() {
-    this.isEnabled = this.isVideoView && !isUndefined(this.currentPoster);
+    this.isHidden = !this.isVideoView || isUndefined(this.currentPoster);
     this.onVisibilityChange();
   }
 
@@ -79,7 +84,7 @@ export class Poster {
     return (
       <Host
         class={{
-          enabled: this.isEnabled,
+          hidden: this.isHidden,
           active: this.isActive,
         }}
       >

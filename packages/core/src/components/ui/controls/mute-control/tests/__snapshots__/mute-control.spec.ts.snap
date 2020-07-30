@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should be structurally sound 1`] = `
+<vime-mute-control>
+  <vime-control keycodes="77" label="Mute">
+    <vime-icon href="#vime-volume-high"></vime-icon>
+    <vime-tooltip>
+      Mute (m)
+    </vime-tooltip>
+  </vime-control>
+</vime-mute-control>
+`;

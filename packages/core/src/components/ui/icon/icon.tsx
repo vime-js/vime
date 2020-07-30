@@ -2,7 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { isString } from '../../../utils/unit';
 
 /**
- * @slot - SVG markup to be drawn by the browser.
+ * @slot - Used to pass in SVG markup to be drawn by the browser.
  */
 @Component({
   tag: 'vime-icon',
@@ -17,7 +17,7 @@ export class Icon {
   /**
    * The color (fill) of the icon.
    */
-  @Prop() color = '#fff';
+  @Prop() color?: string;
 
   /**
    * The amount to scale the size of the icon (respecting aspect ratio) up or down by.

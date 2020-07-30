@@ -86,6 +86,11 @@ export class Dash implements MediaFileProvider<any> {
   @Prop() disableRemotePlayback?: boolean;
 
   /**
+   * The title of the current media.
+   */
+  @Prop() mediaTitle?: string;
+
+  /**
    * @internal
    */
   @Event() vLoadStart!: EventEmitter<void>;
@@ -150,6 +155,7 @@ export class Dash implements MediaFileProvider<any> {
         autoPiP={this.autoPiP}
         disablePiP={this.disablePiP}
         disableRemotePlayback={this.disableRemotePlayback}
+        mediaTitle={this.mediaTitle}
         ref={(el: any) => { this.videoProvider = el; }}
       />
     );

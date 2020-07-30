@@ -4,6 +4,7 @@ import {
 import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/player/PlayerState';
 import { PlayerProp, PlayerProps } from '../../core/player/PlayerProp';
 import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
+import { IS_MOBILE } from '../../../utils/support';
 
 @Component({
   tag: 'vime-click-to-play',
@@ -13,14 +14,20 @@ export class ClickToPlay {
   private dispatch!: PlayerStateDispatcher;
 
   /**
-   * @internal
+   * By default this is disabled on mobile to not interfere with playback, set this to `true` to
+   * enable it.
    */
-  @Prop() paused!: PlayerProps[PlayerProp.Paused];
+  @Prop() useOnMobile = false;
 
   /**
    * @internal
    */
-  @Prop() isVideoView!: PlayerProps[PlayerProp.IsVideoView];
+  @Prop() paused: PlayerProps[PlayerProp.Paused] = true;
+
+  /**
+   * @internal
+   */
+  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
 
   connectedCallback() {
     this.dispatch = createPlayerStateDispatcher(this);
@@ -34,7 +41,7 @@ export class ClickToPlay {
     return (
       <Host
         class={{
-          enabled: this.isVideoView,
+          enabled: this.isVideoView && (!IS_MOBILE || this.useOnMobile),
         }}
         onClick={this.onClick.bind(this)}
       />

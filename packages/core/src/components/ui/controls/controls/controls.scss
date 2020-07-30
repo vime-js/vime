@@ -1,0 +1,44 @@
+vime-controls {
+  /**
+   * @prop --controls-padding: The padding inside the controls.
+   * @prop --controls-bg: The background color of the controls.
+   * @prop --controls-spacing: The space between controls.
+   */
+
+  display: flex;
+  position: absolute;
+  flex-wrap: wrap;
+  pointer-events: auto;
+  z-index: $z-index-controls;
+  background: var(--controls-bg);
+  padding: var(--controls-padding);
+  @include invisible();
+
+  &.audio {
+    position: relative;
+  }
+  
+  &.hidden {
+    display: none;
+  }
+
+  &.active {
+    @include visible();
+  }
+
+  &.fullWidth {
+    width: 100%;
+  }
+  
+  &.fullHeight {
+    height: 100%;
+  }
+
+  & > *:not(vime-control-group) {
+    margin-left: var(--controls-spacing);
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
