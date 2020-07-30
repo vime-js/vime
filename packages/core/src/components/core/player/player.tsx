@@ -845,19 +845,13 @@ export class Player implements MediaPlayer {
       return;
     }
 
-    /**
-     * This is to track changes that come from the provider directly, so we don't call any adapter
-     * methods on these changes and end up in an infinite loop.
-     */
-    const isProvider = ((this.provider as any) === by);
-    const isProviderChild = (this.provider as any)?.contains(by);
-    if (isProvider || isProviderChild) {
-      this.providerStateChanges[prop] += 1;
+    const isProvider = ((this.provider as any) === by) || (this.provider as any)?.contains(by);
+    if ((isProvider)) {
       if (prop === PlayerProp.PlaybackRate) this.prevPlaybackRate = value;
       if (prop === PlayerProp.PlaybackQuality) this.prevPlaybackQuality = value;
     }
 
-    await this.queuePropChange(prop, value, by.nodeName);
+    await this.queuePropChange(prop, value, by.nodeName, isProvider);
   }
 
   connectedCallback() {
@@ -990,8 +984,10 @@ export class Player implements MediaPlayer {
    * @internal Exposed for E2E testing.
    */
   @Method()
-  async queuePropChange(prop: PlayerProp, value: any, by?: string) {
+  async queuePropChange(prop: PlayerProp, value: any, by?: string, byProvider = false) {
     this.queueStateChange(`[${by ?? 'VIME-PLAYER'}]: ${prop} -> ${value}`, async () => {
+      if (this[prop] === value) return;
+      if (byProvider) this.providerStateChanges[prop] += 1;
       this.internalStateChanges.add(prop);
       (this as any)[prop] = value;
     });
