@@ -44,3 +44,23 @@ it('should not be visible if not active', async () => {
   await page.waitForChanges();
   expect(scrim).not.toHaveClass('active');
 });
+
+it('should emit show event when visible', async () => {
+  const cb = jest.fn();
+  scrim.addEventListener('show', cb);
+  scrim.active = true;
+  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+  await page.waitForChanges();
+  expect(cb).toHaveBeenCalled();
+});
+
+it('should emit hide event when not visible', async () => {
+  const cb = jest.fn();
+  scrim.addEventListener('hide', cb);
+  scrim.active = true;
+  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+  await page.waitForChanges();
+  scrim.active = false;
+  await page.waitForChanges();
+  expect(cb).toHaveBeenCalled();
+});

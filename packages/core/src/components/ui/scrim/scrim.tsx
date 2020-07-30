@@ -1,5 +1,5 @@
 import {
-  h, Component, Host, State, Watch, Prop,
+  h, Component, Host, State, Watch, Prop, Event, EventEmitter,
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
 import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
@@ -25,6 +25,22 @@ export class Scrim {
    * Whether the scrim is visible or not.
    */
   @Prop() active = false;
+
+  /**
+   * Emitted when the scrim will be shown.
+   */
+  @Event({ bubbles: false }) show!: EventEmitter<void>;
+
+  /**
+   * Emitted when the scrim will be hidden.
+   */
+  @Event({ bubbles: false }) hide!: EventEmitter<void>;
+
+  @Watch('active')
+  @Watch('isEnabled')
+  onVisibilityChange() {
+    (this.isEnabled && this.active) ? this.show.emit() : this.hide.emit();
+  }
 
   render() {
     return (
