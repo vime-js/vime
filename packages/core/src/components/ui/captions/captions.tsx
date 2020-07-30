@@ -98,19 +98,14 @@ export class Captions {
     this.textTrackDisposal.add(listen(this.activeTrack!, 'cuechange', this.onCueChange.bind(this)));
   }
 
-  private onTracksChange() {
-    if (this.skipNextModeChange > 0) {
-      this.skipNextModeChange -= 1;
-      return;
-    }
-
-    let newTrack: TextTrack;
+  private findActiveTrack() {
+    let activeTrack: TextTrack;
 
     Array.from(this.textTracks!).forEach((track) => {
-      if (isUndefined(newTrack) && (track.mode === 'showing')) {
+      if (isUndefined(activeTrack) && (track.mode === 'showing')) {
         // eslint-disable-next-line no-param-reassign
         track.mode = 'hidden';
-        newTrack = track;
+        activeTrack = track;
         this.skipNextModeChange += 1;
       } else if (track.mode !== 'disabled') {
         // eslint-disable-next-line no-param-reassign
@@ -119,8 +114,18 @@ export class Captions {
       }
     });
 
-    if (this.activeTrack !== newTrack!) {
-      this.activeTrack = newTrack!;
+    return activeTrack!;
+  }
+
+  private onTracksChange() {
+    if (this.skipNextModeChange > 0) {
+      this.skipNextModeChange -= 1;
+      return;
+    }
+
+    const activeTrack = this.findActiveTrack();
+    if (this.activeTrack !== activeTrack) {
+      this.activeTrack = activeTrack;
       this.onTrackChange();
     }
   }

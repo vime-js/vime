@@ -9,7 +9,7 @@ export const IS_MOBILE = (IS_IOS || IS_ANDROID);
 export const IS_IPHONE = (IS_CLIENT && /(iPhone|iPod)/gi.test(window.navigator.platform));
 export const IS_FIREFOX = (/firefox/.test(UA));
 export const IS_CHROME = (IS_CLIENT && (window as any).chrome);
-export const IS_SAFARI = ((IS_CLIENT && (window as any).safari) || IS_IOS || /Apple/.test(UA));
+export const IS_SAFARI = (IS_CLIENT && ((window as any).safari || IS_IOS || /Apple/.test(UA)));
 
 export const ORIGIN = (window.location.protocol !== 'file:')
   ? `${window.location.protocol}//${window.location.hostname}`

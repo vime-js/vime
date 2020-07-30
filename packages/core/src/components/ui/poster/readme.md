@@ -1,6 +1,7 @@
 # vime-poster
 
-Loads the `currentPoster` and displays it when playback has not started.
+Loads the poster set in the player prop `currentPoster` and displays it. The poster will automatically 
+dissapear once playback starts.
 
 ## Example
 
