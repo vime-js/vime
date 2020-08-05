@@ -36,9 +36,11 @@ vime-player {
   --slider-thumb-height: 13px;
   --slider-thumb-bg: #fff;
   --slider-thumb-border: 2px solid transparent;
-  
+
   --slider-track-height: 3px;
   --slider-track-focused-height: 5px;
+  --slider-track-color: var(--color-white-200);
+  --slider-value-color: var(--player-theme, #fff); 
     
   /*******************************
    * Tooltip
@@ -49,8 +51,10 @@ vime-player {
   --tooltip-padding: calc(var(--control-spacing) / 2);
   --tooltip-fade-duration: 0.2s;
   --tooltip-fade-timing-func: ease;
-  --tooltip-spacing: var(--control-spacing);
+  --tooltip-spacing: 14px;
   --tooltip-box-shadow: 0 0 2px var(--color-gray-500);
+  --tooltip-bg: var(--color-dark);
+  --tooltip-color: var(--color-white-700);
   
   /*******************************
    * Spinner
@@ -86,7 +90,8 @@ vime-player {
   /*******************************
    * Controls
    *******************************/
-
+   
+  --controls-bg: transparent;
   --controls-padding: var(--control-spacing);
   --controls-spacing: var(--control-spacing);
   
@@ -102,34 +107,49 @@ vime-player {
 
   --control-border: 0;
   --control-border-radius: 3px;
+  --control-color: #fff;
+  --control-tap-highlight: var(--color-white-200);
+  --control-focus-color: #fff;
+  --control-focus-bg: var(--player-theme, var(--color-white-200));
   
   /*******************************
    * Scrubber Control
    *******************************/
 
   --scrubber-loading-stripe-size: 25px;
-  
+  --scrubber-buffered-bg: var(--color-white-200);
+  --scrubber-loading-stripe-color: var(--color-white-200);
+
   /*******************************
    * Time
    *******************************/
   
   --time-font-size: 14px;
   --time-font-weight: 400;
+  --time-color: var(--color-white-700);
 }
 
 vime-player vime-scrubber-control {
   --tooltip-spacing: 6px;
 }
 
+vime-player.video {
+  --tooltip-spacing: 18px;
+}
+
 vime-player.audio {
+  --controls-bg: var(--color-dark);
+}
+
+vime-player.audio[theme="light"] {
   /*******************************
-   * Audio Player
+   * Light Audio Player
    *******************************/
 
   --player-box-shadow: 0 0 8px 2px var(--color-gray-100);
 
   /*******************************
-   * Audio Slider
+   * Light Audio Slider
    *******************************/
 
   --slider-track-color: var(--color-gray-100);
@@ -137,20 +157,20 @@ vime-player.audio {
   --slider-thumb-shadow: 0 0 1px var(--color-gray-100), 0 0 0 1px var(--color-gray-200);
   
   /*******************************
-   * Audio Tooltip
+   * Light Audio Tooltip
    *******************************/
 
   --tooltip-bg: #fff;
   --tooltip-color: var(--color-dark);
     
   /*******************************
-   * Audio Controls
+   * Light Audio Controls
    *******************************/
 
   --controls-bg: #fff;
       
   /*******************************
-   * Audio Control
+   * Light Audio Control
    *******************************/
 
   --control-color: var(--color-dark);
@@ -159,60 +179,15 @@ vime-player.audio {
   --control-focus-bg: var(--player-theme, var(--color-dark));
 
   /*******************************
-   * Audio Scrubber Control
+   * Light Audio Scrubber Control
    *******************************/
   
   --scrubber-buffered-bg: var(--color-gray-100);
   --scrubber-loading-stripe-color: var(--color-gray-100);
   
   /*******************************
-   * Audio Time
+   * Light Audio Time
    *******************************/
 
   --time-color: var(--color-gray-600);
-}
-
-vime-player.video {
-  /*******************************
-   * Video Slider
-   *******************************/
-
-  --slider-track-color: var(--color-white-200);
-  --slider-value-color: var(--player-theme, #fff);
-
-  /*******************************
-   * Video Tooltip
-   *******************************/
-
-  --tooltip-bg: var(--color-dark);
-  --tooltip-color: var(--color-white-700);
-
-  /*******************************
-   * Video Controls
-   *******************************/
-
-  --controls-bg: transparent;
-  --controls-padding: var(--control-spacing);
-  
-  /*******************************
-   * Video Control
-   *******************************/
-   
-  --control-color: #fff;
-  --control-tap-highlight: var(--color-white-200);
-  --control-focus-color: #fff;
-  --control-focus-bg: var(--player-theme, var(--color-white-200));
-
-  /*******************************
-   * Video Scrubber Control
-   *******************************/
-  
-  --scrubber-buffered-bg: var(--color-white-200);
-  --scrubber-loading-stripe-color: var(--color-white-200);
-  
-  /*******************************
-   * Video Time
-   *******************************/
-
-  --time-color: var(--color-white-700);
 }

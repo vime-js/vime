@@ -5,9 +5,9 @@ import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
 import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
 import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../../core/player/PlayerState';
 import { TooltipDirection } from '../../tooltip/types';
-import { findMyPlayer } from '../../../core/player/utils';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
+import { findRootPlayer } from '../../../core/player/utils';
 
 @Component({
   tag: 'vime-fullscreen-control',
@@ -65,7 +65,7 @@ export class FullscreenControl implements KeyboardControl {
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
-    const player = findMyPlayer(this);
+    const player = findRootPlayer(this);
     this.canSetFullscreen = await player.canSetFullscreen();
   }
 

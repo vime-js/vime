@@ -7,9 +7,9 @@ import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
 import { isNull, isUndefined } from '../../../../utils/unit';
 import { Disposal } from '../../../core/player/Disposal';
-import { findMyPlayer } from '../../../core/player/utils';
 import { listen } from '../../../../utils/dom';
 import { KeyboardControl } from './KeyboardControl';
+import { findRootPlayer } from '../../../core/player/utils';
 
 /**
  * @slot - Used to pass in the content of the control (text/icon/tooltip).
@@ -39,7 +39,7 @@ export class Control implements KeyboardControl {
     this.keyboardDisposal.empty();
     if (isUndefined(this.keyCodes)) return;
 
-    const player = findMyPlayer(this);
+    const player = findRootPlayer(this);
     const codes = (this.keyCodes! as string).split('|').map((code) => parseInt(code, 10));
 
     this.keyboardDisposal.add(listen(player, 'keydown', (event: Event) => {

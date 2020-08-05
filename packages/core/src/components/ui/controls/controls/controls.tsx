@@ -10,7 +10,8 @@ import { Disposal } from '../../../core/player/Disposal';
 import { listen, isColliding } from '../../../../utils/dom';
 import { isNull } from '../../../../utils/unit';
 import { debounce } from '../../../../utils/timing';
-import { findMyPlayer } from '../../../core/player/utils';
+import { findRootPlayer } from '../../../core/player/utils';
+import { findUIRoot } from '../../ui/utils';
 
 /**
  * We want to keep the controls active state in-sync per player.
@@ -130,6 +131,7 @@ export class Controls {
     this.dispatch = createPlayerStateDispatcher(this);
     this.setupPlayerListeners();
     this.checkForCaptionsCollision();
+    this.onControlsChange();
   }
 
   componentDidRender() {
@@ -143,7 +145,7 @@ export class Controls {
   }
 
   private setupPlayerListeners() {
-    const player = findMyPlayer(this);
+    const player = findRootPlayer(this);
     const events = ['focus', 'keydown', 'click', 'mousemove', 'touchstart', 'mouseleave'];
     const callback = debounce(this.onControlsChange, 50, true).bind(this);
     events.forEach((event) => { this.disposal.add(listen(player, event, callback)); });
@@ -152,7 +154,7 @@ export class Controls {
   }
 
   private checkForCaptionsCollision() {
-    const captions = this.el.parentNode!.querySelector('vime-captions') as HTMLVimeCaptionsElement;
+    const captions = findUIRoot(this).querySelector('vime-captions') as HTMLVimeCaptionsElement;
     if (isNull(captions)) return;
     captions!.controlsHeight = isColliding(this.el, captions)
       ? parseFloat(window.getComputedStyle(this.el).height)

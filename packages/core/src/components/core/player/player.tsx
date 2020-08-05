@@ -1089,7 +1089,7 @@ export class Player implements MediaPlayer {
   }
 
   private hasCustomControls() {
-    return !isNull(this.el.querySelector('vime-ui > vime-controls'));
+    return !isNull(this.el.querySelector('vime-ui vime-controls'));
   }
 
   private hasCustomCaptions() {

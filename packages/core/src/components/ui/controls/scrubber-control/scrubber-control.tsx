@@ -6,8 +6,8 @@ import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
 import { formatTime } from '../../../../utils/formatters';
 import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../../core/player/PlayerState';
 import { Disposal } from '../../../core/player/Disposal';
-import { findMyPlayer } from '../../../core/player/utils';
 import { listen } from '../../../../utils/dom';
+import { findRootPlayer } from '../../../core/player/utils';
 
 @Component({
   tag: 'vime-scrubber-control',
@@ -58,7 +58,7 @@ export class ScrubberControl {
   onNoKeyboardChange() {
     this.keyboardDisposal.empty();
     if (this.noKeyboard) return;
-    const player = findMyPlayer(this);
+    const player = findRootPlayer(this);
     this.keyboardDisposal.add(listen(player, 'keydown', (event: Event) => {
       const { keyCode } = event as KeyboardEvent;
       if ((keyCode !== 37) && (keyCode !== 39)) return;

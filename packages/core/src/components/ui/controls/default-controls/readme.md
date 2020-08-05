@@ -41,10 +41,10 @@ the media is audio/video/live, and whether the device is mobile/desktop.
 - [vime-live-indicator](../../live-indicator)
 - [vime-end-time](../../time/end-time)
 - [vime-settings-control](../settings-control)
+- [vime-control-group](../control-group)
+- [vime-fullscreen-control](../fullscreen-control)
 - [vime-scrim](../../scrim)
 - [vime-caption-control](../caption-control)
-- [vime-fullscreen-control](../fullscreen-control)
-- [vime-control-group](../control-group)
 - [vime-time-progress](../../time/time-progress)
 - [vime-pip-control](../pip-control)
 
@@ -60,10 +60,10 @@ graph TD;
   vime-default-controls --> vime-live-indicator
   vime-default-controls --> vime-end-time
   vime-default-controls --> vime-settings-control
+  vime-default-controls --> vime-control-group
+  vime-default-controls --> vime-fullscreen-control
   vime-default-controls --> vime-scrim
   vime-default-controls --> vime-caption-control
-  vime-default-controls --> vime-fullscreen-control
-  vime-default-controls --> vime-control-group
   vime-default-controls --> vime-time-progress
   vime-default-controls --> vime-pip-control
   vime-playback-control --> vime-control
@@ -81,12 +81,12 @@ graph TD;
   vime-settings-control --> vime-control
   vime-settings-control --> vime-icon
   vime-settings-control --> vime-tooltip
-  vime-caption-control --> vime-control
-  vime-caption-control --> vime-icon
-  vime-caption-control --> vime-tooltip
   vime-fullscreen-control --> vime-control
   vime-fullscreen-control --> vime-icon
   vime-fullscreen-control --> vime-tooltip
+  vime-caption-control --> vime-control
+  vime-caption-control --> vime-icon
+  vime-caption-control --> vime-tooltip
   vime-time-progress --> vime-current-time
   vime-time-progress --> vime-end-time
   vime-pip-control --> vime-control
