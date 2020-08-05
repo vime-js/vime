@@ -72,6 +72,11 @@ export class Control implements KeyboardControl {
   @Prop() expanded?: boolean;
 
   /**
+   * Scale the size of the control up/down by the amount given.
+   */
+  @Prop() scale = 1;
+
+  /**
    * @internal
    */
   @Prop() isTouch: PlayerProps[PlayerProp.IsTouch] = false;
@@ -143,6 +148,9 @@ export class Control implements KeyboardControl {
       >
         <button
           type="button"
+          style={{
+            transform: `scale(${this.scale})`,
+          }}
           class={{
             notTouch: !this.isTouch,
             tapHighlight: this.tapHighlight,

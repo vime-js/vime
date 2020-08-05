@@ -39,6 +39,11 @@ export class FullscreenControl implements KeyboardControl {
   @Prop() hideTooltip = false;
 
   /**
+   * Scale the size of the control up/down by the amount given.
+   */
+  @Prop() scale = 1;
+
+  /**
    * @inheritdoc
    */
   @Prop() keyCodes?: string = '70';
@@ -89,6 +94,7 @@ export class FullscreenControl implements KeyboardControl {
         }}
       >
         <vime-control
+          scale={this.scale}
           label={this.i18n.fullscreen}
           keyCodes={this.keyCodes}
           hidden={!this.canSetFullscreen}

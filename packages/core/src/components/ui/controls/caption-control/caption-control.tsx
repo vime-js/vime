@@ -36,6 +36,11 @@ export class CaptionControl implements KeyboardControl {
   @Prop() hideTooltip = false;
 
   /**
+   * Scale the size of the control up/down by the amount given.
+   */
+  @Prop() scale = 1;
+
+  /**
    * @inheritdoc
    */
   @Prop() keyCodes?: string = '67';
@@ -80,6 +85,7 @@ export class CaptionControl implements KeyboardControl {
         }}
       >
         <vime-control
+          scale={this.scale}
           label={this.i18n.captions}
           keyCodes={this.keyCodes}
           hidden={isUndefined(this.currentCaption)}

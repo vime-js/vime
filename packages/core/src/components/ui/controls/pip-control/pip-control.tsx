@@ -49,6 +49,11 @@ export class PiPControl implements KeyboardControl {
   @Prop() keyboardHint?: string = '(p)';
 
   /**
+   * Scale the size of the control up/down by the amount given.
+   */
+  @Prop() scale = 1;
+
+  /**
    * @internal
    */
   @Prop() isPiPActive: PlayerProps[PlayerProp.IsPiPActive] = false;
@@ -89,6 +94,7 @@ export class PiPControl implements KeyboardControl {
         }}
       >
         <vime-control
+          scale={this.scale}
           label={this.i18n.pip}
           keyCodes={this.keyCodes}
           hidden={!this.canSetPiP}
