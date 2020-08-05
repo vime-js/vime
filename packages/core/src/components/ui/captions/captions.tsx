@@ -107,10 +107,6 @@ export class Captions {
         track.mode = 'hidden';
         activeTrack = track;
         this.skipNextModeChange += 1;
-      } else if (track.mode !== 'disabled') {
-        // eslint-disable-next-line no-param-reassign
-        track.mode = 'disabled';
-        this.skipNextModeChange += 1;
       }
     });
 

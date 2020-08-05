@@ -6,9 +6,8 @@ time (even if many are active). The active track can be changed by setting the m
 in the list to `showing`. 
 
 Be aware that after you set the text track mode to `showing`, the component will automatically set 
-it to hidden to avoid double captions, and all other tracks will be set to `disabled`. This also 
-means that this component is **not recommended** to be used in combination with the native HTML5 
-player controls.
+it to hidden to avoid double captions. This also means that this component is **not recommended** 
+to be used in combination with the native HTML5 player controls.
 
 ## Example
 
