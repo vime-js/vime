@@ -37,6 +37,19 @@ Displays a loading indicator when the video is `buffering`.
 | `--spinner-width`            | The width of the spinner.                                  |
 
 
+## Dependencies
+
+### Used by
+
+ - [vime-default-ui](../default-ui)
+
+### Graph
+```mermaid
+graph TD;
+  vime-default-ui --> vime-spinner
+  style vime-spinner fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

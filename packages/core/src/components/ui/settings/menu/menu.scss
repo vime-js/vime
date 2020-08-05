@@ -1,0 +1,30 @@
+vime-menu {
+  /**
+   * @prop --menu-color: The text color within the menu.
+   * @prop --menu-bg: The background color the menu.
+   * @prop --menu-font-size: The font size of text within the menu.
+   * @prop --menu-font-weight: The font weight of text within the menu.
+   */
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+  pointer-events: auto;
+  color: var(--menu-color);
+  background: var(--menu-bg);
+  font-size: var(--menu-font-size);
+  font-weight: var(--menu-font-weight);
+  text-align: left;
+  z-index: $z-index-menu;
+
+  &[aria-hidden='true'] {
+    display: none;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}

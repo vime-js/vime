@@ -1,21 +1,22 @@
 import {
-  h, Host, Component, Prop, State, Element,
+  h, Host, Component, Prop, Element,
 } from '@stencil/core';
 import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
 import { TooltipDirection } from '../../tooltip/types';
-import { isNull } from '../../../../utils/unit';
+import { isUndefined } from '../../../../utils/unit';
+import { findUIRoot } from '../../ui/utils';
+
+let idCount = 0;
 
 @Component({
   tag: 'vime-settings-control',
   styleUrl: 'settings-control.scss',
 })
 export class SettingsControl {
+  private id!: string;
+
   @Element() el!: HTMLVimeSettingsControlElement;
-
-  @State() hasNoSettings = true;
-
-  @State() isMenuActive = false;
 
   /**
    * The URL to an SVG element or fragment to load.
@@ -28,9 +29,14 @@ export class SettingsControl {
   @Prop() tooltipDirection: TooltipDirection;
 
   /**
-   * Whether the tooltip should not be displayed.
+   * @internal
    */
-  @Prop() hideTooltip = false;
+  @Prop() menu?: string;
+
+  /**
+   * @internal
+   */
+  @Prop() expanded = false;
 
   /**
    * @internal
@@ -38,40 +44,35 @@ export class SettingsControl {
   @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
 
   componentWillLoad() {
-    const settings = this.findSettings();
-    this.hasNoSettings = isNull(settings);
+    idCount += 1;
+    this.id = `vime-settings-control-${idCount}`;
+    const settings = findUIRoot(this).querySelector('vime-settings');
+    settings?.setController(this.id, this.el);
   }
 
-  private findSettings() {
-    // @TODO find settings menu.
-    return null;
-  }
-
-  private onToggleMenu() {
-    const settings = this.findSettings();
-    if (isNull(settings)) return;
-    console.log(this.isMenuActive);
-    // @TODO wait for changes then focus menu?
+  private hasSettings() {
+    return !isUndefined(this.menu);
   }
 
   render() {
     return (
       <Host
         class={{
-          hidden: this.hasNoSettings,
+          hidden: !this.hasSettings(),
+          active: this.hasSettings() && this.expanded,
         }}
       >
         <vime-control
-          menu="apples"
-          hidden={this.hasNoSettings}
-          expanded={this.isMenuActive}
+          identifier={this.id}
+          menu={this.menu}
+          hidden={!this.hasSettings()}
+          expanded={this.expanded}
           label={this.i18n.settings}
-          onClick={this.onToggleMenu.bind(this)}
         >
           <vime-icon href={this.icon} />
 
           <vime-tooltip
-            hidden={this.hideTooltip}
+            hidden={this.expanded}
             direction={this.tooltipDirection}
           >
             {this.i18n.settings}

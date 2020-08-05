@@ -15,7 +15,7 @@ it('should be structurally sound', () => {
   expect(page.root).toMatchSnapshot();
 });
 
-it('should increment embed id', async () => {
+it('should increment iframe id', async () => {
   page = await newSpecPage({
     components: [Embed],
     html: '<vime-embed></vime-embed><vime-embed></vime-embed>',
@@ -23,8 +23,8 @@ it('should increment embed id', async () => {
   const frames = page.doc.querySelectorAll('iframe');
   expect(frames).toHaveLength(2);
   // Starts at 3 because of the 2 prior tests.
-  expect(frames[0].id).toEqual('vime-embed-3');
-  expect(frames[1].id).toEqual('vime-embed-4');
+  expect(frames[0].id).toEqual('vime-iframe-3');
+  expect(frames[1].id).toEqual('vime-iframe-4');
 });
 
 it('should fire event when src/params change', async () => {

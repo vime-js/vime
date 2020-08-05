@@ -18,6 +18,7 @@
 <div class="buttons">
   <button id="audio" type="button">Audio</button>
   <button id="video" type="button">Video</button>
+  <button id="theme" type="button">Toggle Theme</button>
 </div>
 
 <script>
@@ -29,6 +30,12 @@
   const addPlayer = (id, player) => { 
     addClickEvent(id, () => { container.innerHTML = player; }); 
   };
+
+  addClickEvent('theme', () => {
+    const player = document.querySelector('vime-player');
+    const currentTheme = player.getAttribute('theme');
+    player.setAttribute('theme', (currentTheme === 'light') ? 'dark' : 'light')
+  });
 
   const audio = `
     <vime-audio cross-origin>
@@ -46,14 +53,7 @@
   const player = (provider) => `
     <vime-player>
       ${provider}
-      <vime-ui>
-        <vime-icons></vime-icons>
-        <vime-click-to-play></vime-click-to-play>
-        <vime-default-controls></vime-default-controls>
-        <vime-captions></vime-captions>
-        <vime-poster></vime-poster>
-        <vime-spinner></vime-spinner>
-      </vime-ui>
+      <vime-default-ui></vime-default-ui>
     </vime-player>
   `;
 

@@ -33,6 +33,19 @@ dissapear once playback starts.
 | `willShow` | Emitted when the poster will be shown.  | `CustomEvent<void>` |
 
 
+## Dependencies
+
+### Used by
+
+ - [vime-default-ui](../default-ui)
+
+### Graph
+```mermaid
+graph TD;
+  vime-default-ui --> vime-poster
+  style vime-poster fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

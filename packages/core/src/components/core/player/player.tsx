@@ -38,7 +38,7 @@ import { getEventName } from './PlayerEvent';
 import { Disposal } from './Disposal';
 import { listen } from '../../../utils/dom';
 
-let playerIdCount = 0;
+let idCount = 0;
 
 /**
  * @slot - Used to pass in providers, plugins and UI components.
@@ -348,6 +348,11 @@ export class Player implements MediaPlayer {
       this.onActiveCaptionChange.bind(this),
     );
   }
+
+  /**
+   * @inheritDoc
+   */
+  @Prop({ mutable: true, attribute: null }) isSettingsActive = false;
 
   /**
    * @inheritDoc
@@ -1155,11 +1160,11 @@ export class Player implements MediaPlayer {
     this.queueStateChange(`[VIME-PLAYER]: ${method}(${value})`, callAdapter);
   }
 
-  private getPlayerId() {
+  private genId() {
     const id = this.el?.id;
     if (isString(id) && id.length > 0) return id;
-    playerIdCount += 1;
-    return `vime-player-${playerIdCount}`;
+    idCount += 1;
+    return `vime-player-${idCount}`;
   }
 
   render() {
@@ -1172,7 +1177,7 @@ export class Player implements MediaPlayer {
 
     return (
       <Host
-        id={this.getPlayerId()}
+        id={this.genId()}
         tabindex="0"
         aria-label={label}
         aria-hidden={!this.playbackReady ? 'true' : 'false'}
@@ -1185,6 +1190,8 @@ export class Player implements MediaPlayer {
             && this.isVideoView
             && !this.paused
             && !this.isControlsActive,
+          mobile: this.isMobile,
+          touch: this.isTouch,
           audio: this.isAudioView,
           video: this.isVideoView,
           fullscreen: this.isFullscreenActive,

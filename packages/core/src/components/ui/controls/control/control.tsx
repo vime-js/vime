@@ -27,7 +27,7 @@ export class Control implements KeyboardControl {
 
   @State() describedBy?: string;
 
-  @State() tapHighlight = false;
+  @State() showTapHighlight = false;
 
   /**
    * @inheritdoc
@@ -48,6 +48,11 @@ export class Control implements KeyboardControl {
       if (match) { this.button.click(); }
     }));
   }
+
+  /**
+   * The `id` attribute of the control.
+   */
+  @Prop() identifier?: string;
 
   /**
    * Whether the control should be displayed or not.
@@ -96,10 +101,8 @@ export class Control implements KeyboardControl {
   }
 
   private onTouchStart() {
-    this.tapHighlight = true;
-    window.requestAnimationFrame(() => {
-      setTimeout(() => { this.tapHighlight = false; }, 100);
-    });
+    this.showTapHighlight = true;
+    setTimeout(() => { this.showTapHighlight = false; }, 100);
   }
 
   private findTooltip() {
@@ -147,16 +150,17 @@ export class Control implements KeyboardControl {
         }}
       >
         <button
-          type="button"
           style={{
             transform: `scale(${this.scale})`,
           }}
           class={{
             notTouch: !this.isTouch,
-            tapHighlight: this.tapHighlight,
+            tapHighlight: this.showTapHighlight,
           }}
+          id={this.identifier}
+          type="button"
           aria-label={this.label}
-          aria-haspopup={!isUndefined(this.menu)}
+          aria-haspopup={!isUndefined(this.menu) ? 'true' : 'false'}
           aria-controls={this.menu}
           aria-expanded={!isUndefined(this.menu) ? (this.expanded ?? false) : undefined}
           aria-hidden={this.hidden ? 'true' : 'false'}

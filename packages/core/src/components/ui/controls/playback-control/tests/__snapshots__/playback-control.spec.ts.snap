@@ -2,10 +2,10 @@
 
 exports[`should be structurally sound when not paused 1`] = `
 <vime-playback-control>
-  <vime-control keycodes="32|75" label="Playback">
+  <vime-control keycodes="75" label="Playback" scale="1">
     <vime-icon href="#vime-pause"></vime-icon>
     <vime-tooltip>
-      Pause (space/k)
+      Pause (k)
     </vime-tooltip>
   </vime-control>
 </vime-playback-control>
@@ -13,10 +13,10 @@ exports[`should be structurally sound when not paused 1`] = `
 
 exports[`should be structurally sound when paused 1`] = `
 <vime-playback-control>
-  <vime-control keycodes="32|75" label="Playback">
+  <vime-control keycodes="75" label="Playback" scale="1">
     <vime-icon href="#vime-play"></vime-icon>
     <vime-tooltip>
-      Play (space/k)
+      Play (k)
     </vime-tooltip>
   </vime-control>
 </vime-playback-control>

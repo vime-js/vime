@@ -37,7 +37,7 @@ export class Spinner {
   /**
    * @internal
    */
-  @Prop() buffering!: PlayerProps[PlayerProp.Buffering];
+  @Prop() buffering: PlayerProps[PlayerProp.Buffering] = false;
 
   @Watch('buffering')
   onActiveChange() {

@@ -16,7 +16,7 @@ import { EmbedEvent, EmbedEventPayload } from './EmbedEvent';
 import { appendParamsToURL, Params, preconnect } from '../../../utils/network';
 import { onElementEntersViewport } from '../../../utils/dom';
 
-let embedIdCount = 0;
+let idCount = 0;
 const connected = new Set();
 
 @Component({
@@ -24,6 +24,8 @@ const connected = new Set();
   styleUrl: 'embed.scss',
 })
 export class Embed implements ComponentInterface {
+  private id!: string;
+
   private intersectionObserverCleanup?: (() => void);
 
   private iframe?: HTMLIFrameElement;
@@ -129,6 +131,10 @@ export class Embed implements ComponentInterface {
     this.srcChange();
   }
 
+  componentWillLoad() {
+    this.genIframeId();
+  }
+
   disconnectedCallback() {
     this.intersectionObserverCleanup?.();
   }
@@ -156,17 +162,15 @@ export class Embed implements ComponentInterface {
     this.embedLoaded.emit();
   }
 
-  private getEmbedId() {
-    const id = this.iframe?.id;
-    if (isString(id)) return id;
-    embedIdCount += 1;
-    return `vime-embed-${embedIdCount}`;
+  private genIframeId() {
+    idCount += 1;
+    this.id = `vime-iframe-${idCount}`;
   }
 
   render() {
     return (
       <iframe
-        id={this.getEmbedId()}
+        id={this.id}
         title={this.mediaTitle}
         src={(!this.lazy || this.hasEnteredViewport) ? this.srcWithParams : undefined}
         // @ts-ignore

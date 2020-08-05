@@ -30,6 +30,7 @@ the player.
 | `keyboardHint`     | `keyboard-hint`     | If the `keyCodes` prop is provided, this prop can provide a hint to the user inside the tooltip for what keys can be pressed to trigger the control. | `string \| undefined`            | `'(m)'`               |
 | `lowVolumeIcon`    | `low-volume-icon`   | The URL to an SVG element or fragment.                                                                                                               | `string`                         | `'#vime-volume-low'`  |
 | `mutedIcon`        | `muted-icon`        | The URL to an SVG element or fragment.                                                                                                               | `string`                         | `'#vime-volume-mute'` |
+| `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                           | `number`                         | `1`                   |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                      | `"left" \| "right" \| undefined` | `undefined`           |
 
 

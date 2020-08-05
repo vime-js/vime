@@ -2,7 +2,7 @@
 
 exports[`should be structurally sound 1`] = `
 <vime-settings-control class="hidden">
-  <vime-control hidden="" label="Settings" menu="apples">
+  <vime-control hidden="" identifier="vime-settings-control-1" label="Settings">
     <vime-icon href="#vime-settings"></vime-icon>
     <vime-tooltip>
       Settings

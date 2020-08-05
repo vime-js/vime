@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should be structurally sound 1`] = `
+<vime-player aria-hidden="true" aria-label="Video Player" aspect-ratio="16:9" buffered="0" current-time="0" duration="-1" id="vime-player-1" language="en" paused="" playback-rate="1" tabindex="0" volume="50">
+  <!---->
+  <vime-faketube></vime-faketube>
+  <vime-ui>
+    <!---->
+    <vime-settings style="bottom: 73px;">
+      <!---->
+      <vime-menu controller="" identifier="vime-settings-1">
+        DefaultSlot
+      </vime-menu>
+    </vime-settings>
+  </vime-ui>
+</vime-player>
+`;

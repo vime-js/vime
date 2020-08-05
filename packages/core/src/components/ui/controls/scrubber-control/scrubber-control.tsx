@@ -59,8 +59,8 @@ export class ScrubberControl {
     this.keyboardDisposal.empty();
     if (this.noKeyboard) return;
     const player = findRootPlayer(this);
-    this.keyboardDisposal.add(listen(player, 'keydown', (event: Event) => {
-      const { keyCode } = event as KeyboardEvent;
+    this.keyboardDisposal.add(listen(player, 'keydown', (event: KeyboardEvent) => {
+      const { keyCode } = event;
       if ((keyCode !== 37) && (keyCode !== 39)) return;
       const isLeftArrow = (keyCode === 37);
       const seekTo = isLeftArrow

@@ -44,13 +44,15 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 
 ## Properties
 
-| Property             | Attribute   | Description                                                                                                                         | Type                   | Default     |
-| -------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
-| `expanded`           | `expanded`  | If the control has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.                 | `boolean \| undefined` | `undefined` |
-| `hidden`             | `hidden`    | Whether the control should be displayed or not.                                                                                     | `boolean`              | `false`     |
-| `keyCodes`           | `key-codes` | A pipe (`\|`) seperated string of JS key codes, that when caught in a `keydown` event, will trigger a `click` event on the control. | `string \| undefined`  | `undefined` |
-| `label` _(required)_ | `label`     | The `aria-label` property of the control.                                                                                           | `string`               | `undefined` |
-| `menu`               | `menu`      | If the control has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                      | `string \| undefined`  | `undefined` |
+| Property             | Attribute    | Description                                                                                                                         | Type                   | Default     |
+| -------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
+| `expanded`           | `expanded`   | If the control has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.                 | `boolean \| undefined` | `undefined` |
+| `hidden`             | `hidden`     | Whether the control should be displayed or not.                                                                                     | `boolean`              | `false`     |
+| `identifier`         | `identifier` | The `id` attribute of the control.                                                                                                  | `string \| undefined`  | `undefined` |
+| `keyCodes`           | `key-codes`  | A pipe (`\|`) seperated string of JS key codes, that when caught in a `keydown` event, will trigger a `click` event on the control. | `string \| undefined`  | `undefined` |
+| `label` _(required)_ | `label`      | The `aria-label` property of the control.                                                                                           | `string`               | `undefined` |
+| `menu`               | `menu`       | If the control has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                      | `string \| undefined`  | `undefined` |
+| `scale`              | `scale`      | Scale the size of the control up/down by the amount given.                                                                          | `number`               | `1`         |
 
 
 ## Events
@@ -78,7 +80,7 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 | `--control-focus-bg`      | The background colour of a control when it is being hovered on or focused. |
 | `--control-focus-color`   | The text colour of a control when it is being hovered on or focused.       |
 | `--control-padding`       | The padding inside the control.                                            |
-| `--control-tap-highlight` | The tap highlight color when a control is tapped.                          |
+| `--control-tap-highlight` | The highlight color when a control is tapped.                              |
 
 
 ## Dependencies

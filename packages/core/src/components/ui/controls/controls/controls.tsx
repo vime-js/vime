@@ -110,6 +110,11 @@ export class Controls {
   /**
    * @internal
    */
+  @Prop() isSettingsActive: PlayerProps[PlayerProp.IsSettingsActive] = false;
+
+  /**
+   * @internal
+   */
   @Prop() playbackReady: PlayerProps[PlayerProp.PlaybackReady] = false;
 
   /**
@@ -131,11 +136,13 @@ export class Controls {
     this.dispatch = createPlayerStateDispatcher(this);
     this.setupPlayerListeners();
     this.checkForCaptionsCollision();
+    this.checkForSettingsCollision();
     this.onControlsChange();
   }
 
   componentDidRender() {
     this.checkForCaptionsCollision();
+    this.checkForSettingsCollision();
   }
 
   disconnectedCallback() {
@@ -156,9 +163,17 @@ export class Controls {
   private checkForCaptionsCollision() {
     const captions = findUIRoot(this).querySelector('vime-captions') as HTMLVimeCaptionsElement;
     if (isNull(captions)) return;
-    captions!.controlsHeight = isColliding(this.el, captions)
-      ? parseFloat(window.getComputedStyle(this.el).height)
-      : 0;
+    captions!.controlsHeight = isColliding(this.el, captions) ? this.getHeight() : 0;
+  }
+
+  private getHeight() {
+    return parseFloat(window.getComputedStyle(this.el).height);
+  }
+
+  private checkForSettingsCollision() {
+    const settings = findUIRoot(this).querySelector('vime-settings') as HTMLVimeSettingsElement;
+    if (isNull(settings)) return;
+    settings!.controlsHeight = isColliding(this.el, settings) ? this.getHeight() : 65;
   }
 
   private show() {
@@ -179,6 +194,7 @@ export class Controls {
   @Watch('hidden')
   @Watch('isAudioView')
   @Watch('isInteracting')
+  @Watch('isSettingsActive')
   @Watch('hideWhenPaused')
   @Watch('hideOnMouseLeave')
   @Watch('playbackStarted')
@@ -203,7 +219,7 @@ export class Controls {
       return;
     }
 
-    if (this.isInteracting) {
+    if (this.isInteracting || this.isSettingsActive) {
       this.show();
       return;
     }
@@ -282,6 +298,7 @@ openPlayerWormhole(Controls, [
   PlayerProp.IsAudioView,
   PlayerProp.PlaybackReady,
   PlayerProp.IsControlsActive,
+  PlayerProp.IsSettingsActive,
   PlayerProp.Paused,
   PlayerProp.PlaybackStarted,
 ]);

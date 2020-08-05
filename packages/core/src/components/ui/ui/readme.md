@@ -22,6 +22,19 @@ is `true`, and the player is not in fullscreen mode.
 <!-- Auto Generated Below -->
 
 
+## Dependencies
+
+### Used by
+
+ - [vime-default-ui](../default-ui)
+
+### Graph
+```mermaid
+graph TD;
+  vime-default-ui --> vime-ui
+  style vime-ui fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

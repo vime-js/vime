@@ -9,7 +9,7 @@ more visible.
 <vime-player>
   <!-- ... -->
   <vime-ui>
-    <vime-scrim active></vime-scrim>
+    <vime-scrim></vime-scrim>
   </vime-ui>
 </vime-player>
 ```

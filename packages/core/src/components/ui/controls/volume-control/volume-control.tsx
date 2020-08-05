@@ -73,8 +73,8 @@ export class VolumeControl {
     this.keyboardDisposal.empty();
     if (this.noKeyboard) return;
     const player = findRootPlayer(this);
-    this.keyboardDisposal.add(listen(player, 'keydown', (event: Event) => {
-      const { keyCode } = event as KeyboardEvent;
+    this.keyboardDisposal.add(listen(player, 'keydown', (event: KeyboardEvent) => {
+      const { keyCode } = event;
       if ((keyCode !== 38) && (keyCode !== 40)) return;
       const isUpArrow = (keyCode === 38);
       const newVolume = isUpArrow ? Math.min(100, this.volume + 5) : Math.max(0, this.volume - 5);

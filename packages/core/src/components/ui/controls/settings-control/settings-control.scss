@@ -9,7 +9,8 @@ vime-settings-control {
 
   &.active {
     svg {
-      transform: rotate(90deg);
+      // Need `!important` to override scaling transformation applied to `svg`.
+      transform: rotate(90deg) !important;
     }
   }
 }

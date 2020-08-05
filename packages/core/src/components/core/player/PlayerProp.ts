@@ -32,6 +32,7 @@ export enum PlayerProp {
   IsVideoView = 'isVideoView',
   IsLive = 'isLive',
   IsCaptionsActive = 'isCaptionsActive',
+  IsSettingsActive = 'isSettingsActive',
   CurrentCaption = 'currentCaption',
   IsMobile = 'isMobile',
   IsTouch = 'isTouch',
@@ -380,6 +381,12 @@ export interface PlayerProps {
    * `@readonly` Whether any captions or subtitles are currently showing.
    */
   [PlayerProp.IsCaptionsActive]: boolean
+
+  /**
+   * `@readonly` Whether the settings menu has been opened and is currently visible. This is
+   * currently only supported by custom settings.
+   */
+  [PlayerProp.IsSettingsActive]: boolean
 
   /**
    * `@readonly` The selected caption/subtitle text track to display. Defaults to `undefined` if

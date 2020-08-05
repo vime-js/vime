@@ -9,10 +9,11 @@ settings (`vime-settings`) has been provided for the current player.
 <vime-player>
   <!-- ... -->
   <vime-ui>
-    <!-- ... -->
     <vime-controls>
       <vime-settings-control></vime-settings-control>
     </vime-controls>
+
+    <vime-default-settings></vime-default-settings>
   </vime-ui>
 <vime-player>
 ```
@@ -24,7 +25,6 @@ settings (`vime-settings`) has been provided for the current player.
 
 | Property           | Attribute           | Description                                     | Type                             | Default            |
 | ------------------ | ------------------- | ----------------------------------------------- | -------------------------------- | ------------------ |
-| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.    | `boolean`                        | `false`            |
 | `icon`             | `icon`              | The URL to an SVG element or fragment to load.  | `string`                         | `'#vime-settings'` |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow. | `"left" \| "right" \| undefined` | `undefined`        |
 

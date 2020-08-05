@@ -53,6 +53,19 @@ to be used in combination with the native HTML5 player controls.
 | `--captions-text-color`        | The color of the captions text.                           |
 
 
+## Dependencies
+
+### Used by
+
+ - [vime-default-ui](../default-ui)
+
+### Graph
+```mermaid
+graph TD;
+  vime-default-ui --> vime-captions
+  style vime-captions fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

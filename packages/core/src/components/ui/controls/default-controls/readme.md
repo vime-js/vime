@@ -30,6 +30,10 @@ the media is audio/video/live, and whether the device is mobile/desktop.
 
 ## Dependencies
 
+### Used by
+
+ - [vime-default-ui](../../default-ui)
+
 ### Depends on
 
 - [vime-controls](../controls)
@@ -92,6 +96,7 @@ graph TD;
   vime-pip-control --> vime-control
   vime-pip-control --> vime-icon
   vime-pip-control --> vime-tooltip
+  vime-default-ui --> vime-default-controls
   style vime-default-controls fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

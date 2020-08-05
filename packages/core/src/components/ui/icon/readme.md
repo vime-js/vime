@@ -50,6 +50,7 @@ property.
 
  - [vime-caption-control](../controls/caption-control)
  - [vime-fullscreen-control](../controls/fullscreen-control)
+ - [vime-menu-item](../settings/menu-item)
  - [vime-mute-control](../controls/mute-control)
  - [vime-pip-control](../controls/pip-control)
  - [vime-playback-control](../controls/playback-control)
@@ -60,6 +61,7 @@ property.
 graph TD;
   vime-caption-control --> vime-icon
   vime-fullscreen-control --> vime-icon
+  vime-menu-item --> vime-icon
   vime-mute-control --> vime-icon
   vime-pip-control --> vime-icon
   vime-playback-control --> vime-icon

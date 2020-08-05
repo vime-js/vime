@@ -127,6 +127,52 @@ vime-player {
   --time-font-size: 14px;
   --time-font-weight: 400;
   --time-color: var(--color-white-700);
+  
+  /*******************************
+   * Menu
+   *******************************/
+
+  --menu-color: var(--color-white-700);
+  --menu-bg: var(--color-dark);
+  --menu-font-size: 14px;
+  --menu-font-weight: 400;
+  
+  /*******************************
+   * Menu Item
+   *******************************/
+
+  --menu-item-padding: 8px;
+  --menu-item-focus-color: var(--menu-color);
+  --menu-item-focus-bg: var(--color-white-100);
+  --menu-item-tap-highlight: var(--color-white-100);
+
+  --menu-item-hint-color: var(--menu-color);
+  --menu-item-hint-font-size: 13px;
+  --menu-item-hint-opacity: 0.54;
+
+  --menu-item-badge-color: var(--menu-color);
+  --menu-item-badge-bg: transparent;
+  --menu-item-badge-font-size: 10px;
+  
+  --menu-item-arrow-color: var(--menu-color);
+
+  --menu-item-check-icon-width: 10px;
+  --menu-item-check-icon-height: 10px;
+  
+  --menu-item-divider-color: var(--color-white-100);
+
+  /*******************************
+   * Settings
+   *******************************/
+
+  --settings-width: 275px;
+  --settings-padding: 0;
+  --settings-border-radius: 2px;
+  --settings-max-height: 65%;
+  --settings-scroll-width: 10px;
+  --settings-shadow: 0 0 8px 2px var(--color-gray-100);
+  --settings-scroll-thumb-color: var(--color-white-200);
+  --settings-scroll-track-color: var(--color-dark);
 }
 
 vime-player vime-scrubber-control {
@@ -141,15 +187,19 @@ vime-player.audio {
   --controls-bg: var(--color-dark);
 }
 
-vime-player.audio[theme="light"] {
+vime-player.mobile {
+  --menu-control-padding: 12px calc(var(--control-padding) * 2); 
+}
+
+vime-player[theme="light"] {
   /*******************************
-   * Light Audio Player
+   * Light Player
    *******************************/
 
   --player-box-shadow: 0 0 8px 2px var(--color-gray-100);
 
   /*******************************
-   * Light Audio Slider
+   * Light Slider
    *******************************/
 
   --slider-track-color: var(--color-gray-100);
@@ -157,20 +207,20 @@ vime-player.audio[theme="light"] {
   --slider-thumb-shadow: 0 0 1px var(--color-gray-100), 0 0 0 1px var(--color-gray-200);
   
   /*******************************
-   * Light Audio Tooltip
+   * Light Tooltip
    *******************************/
 
   --tooltip-bg: #fff;
   --tooltip-color: var(--color-dark);
     
   /*******************************
-   * Light Audio Controls
+   * Light Controls
    *******************************/
 
   --controls-bg: #fff;
       
   /*******************************
-   * Light Audio Control
+   * Light Control
    *******************************/
 
   --control-color: var(--color-dark);
@@ -179,15 +229,31 @@ vime-player.audio[theme="light"] {
   --control-focus-bg: var(--player-theme, var(--color-dark));
 
   /*******************************
-   * Light Audio Scrubber Control
+   * Light Scrubber Control
    *******************************/
   
   --scrubber-buffered-bg: var(--color-gray-100);
   --scrubber-loading-stripe-color: var(--color-gray-100);
   
   /*******************************
-   * Light Audio Time
+   * Light Time
    *******************************/
 
   --time-color: var(--color-gray-600);
+
+  /*******************************
+   * Light Menu
+   *******************************/
+
+   --menu-color: var(--color-gray-600);
+   --menu-bg: #fff;
+  
+   /*******************************
+   * Light Menu Item
+   *******************************/
+
+  --menu-item-focus-bg: var(--color-gray-100);
+  --menu-item-tap-highlight: var(--color-gray-100);
+   
+  --menu-item-divider-color: var(--color-gray-100);
 }

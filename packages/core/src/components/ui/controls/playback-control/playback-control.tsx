@@ -40,12 +40,12 @@ export class PlaybackControl implements KeyboardControl {
   /**
    * @inheritdoc
    */
-  @Prop() keyCodes?: string = '32|75';
+  @Prop() keyCodes?: string = '75';
 
   /**
    * @inheritdoc
    */
-  @Prop() keyboardHint?: string = '(space/k)';
+  @Prop() keyboardHint?: string = '(k)';
 
   /**
    * @internal

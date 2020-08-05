@@ -3,7 +3,7 @@
 exports[`should be structurally sound 1`] = `
 <vime-control>
   <!---->
-  <button aria-hidden="false" class="notTouch" type="button">
+  <button aria-haspopup="false" aria-hidden="false" class="notTouch" type="button" style="transform: scale(1);">
     Control
   </button>
 </vime-control>
