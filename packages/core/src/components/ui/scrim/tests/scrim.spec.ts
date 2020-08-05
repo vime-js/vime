@@ -30,37 +30,24 @@ it('should not render if not a video view', async () => {
 it('should render if a video view', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await page.waitForChanges();
-  expect(scrim).not.toHaveClass('enabled');
+  expect(scrim).not.toHaveClass('hidden');
 });
 
-it('should be visible if active', async () => {
-  scrim.active = true;
+it('should be visible if controls are active', async () => {
+  scrim.isControlsActive = true;
   await page.waitForChanges();
   expect(scrim).toHaveClass('active');
 });
 
-it('should not be visible if not active', async () => {
-  scrim.active = false;
+it('should not be visible if controls are not active', async () => {
+  scrim.isControlsActive = false;
   await page.waitForChanges();
   expect(scrim).not.toHaveClass('active');
 });
 
-it('should emit willShow event when visible', async () => {
-  const cb = jest.fn();
-  scrim.addEventListener('willShow', cb);
-  scrim.active = true;
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+it('should set gradient', async () => {
+  scrim.gradient = 'up';
   await page.waitForChanges();
-  expect(cb).toHaveBeenCalled();
-});
-
-it('should emit willHide event when not visible', async () => {
-  const cb = jest.fn();
-  scrim.addEventListener('willHide', cb);
-  scrim.active = true;
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
-  await page.waitForChanges();
-  scrim.active = false;
-  await page.waitForChanges();
-  expect(cb).toHaveBeenCalled();
+  expect(scrim).toHaveClass('gradient');
+  expect(scrim).toHaveClass('gradientUp');
 });

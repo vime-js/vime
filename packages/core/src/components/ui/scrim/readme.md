@@ -1,6 +1,7 @@
 # vime-scrim
 
-A darkened overlay that covers the current video to enable content placed on it to be more visible.
+A darkened overlay or gradient that covers the current video to enable controls placed on it to be 
+more visible.
 
 ## Example
 
@@ -18,17 +19,9 @@ A darkened overlay that covers the current video to enable content placed on it 
 
 ## Properties
 
-| Property | Attribute | Description                          | Type      | Default |
-| -------- | --------- | ------------------------------------ | --------- | ------- |
-| `active` | `active`  | Whether the scrim is visible or not. | `boolean` | `false` |
-
-
-## Events
-
-| Event      | Description                            | Type                |
-| ---------- | -------------------------------------- | ------------------- |
-| `willHide` | Emitted when the scrim will be hidden. | `CustomEvent<void>` |
-| `willShow` | Emitted when the scrim will be shown.  | `CustomEvent<void>` |
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Type                          | Default     |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------- | ----------- |
+| `gradient` | `gradient` | If this prop is defined, a dark gradient that smoothly fades out without being noticed will be used instead of a set color. This prop also sets the direction in which the dark end of the gradient should start. If the direction is set to `up`, the dark end of the gradient will start at the bottom of the player and fade out to the center. If the direction is set to `down`, the gradient will start at the top of the player and fade out to the center. | `"down" \| "up" \| undefined` | `undefined` |
 
 
 ## CSS Custom Properties

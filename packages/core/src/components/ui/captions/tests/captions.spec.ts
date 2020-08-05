@@ -45,8 +45,8 @@ it('should adjust position based on controls height', async () => {
   await provider.dispatchStateChange(PlayerProp.IsControlsActive, true);
   captions.controlsHeight = 140;
   await page.waitForChanges();
-  expect(captions.style.transform).toEqual('translateY(140);');
+  expect(captions.style.transform).toEqual('translateY(-140px)');
   await provider.dispatchStateChange(PlayerProp.IsControlsActive, false);
   await page.waitForChanges();
-  expect(captions.style.transform).toEqual('translateY(0);');
+  expect(captions.style.transform).toEqual('translateY(-0px)');
 });

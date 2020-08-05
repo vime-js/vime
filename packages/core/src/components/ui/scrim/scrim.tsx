@@ -1,53 +1,43 @@
 import {
-  h, Component, Host, State, Watch, Prop, Event, EventEmitter,
+  h, Component, Host, Prop,
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
 import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
+import { isUndefined } from '../../../utils/unit';
 
 @Component({
   tag: 'vime-scrim',
   styleUrl: 'scrim.scss',
 })
 export class Scrim {
-  @State() isHidden = true;
+  /**
+   * If this prop is defined, a dark gradient that smoothly fades out without being noticed will be
+   * used instead of a set color. This prop also sets the direction in which the dark end of the
+   * gradient should start. If the direction is set to `up`, the dark end of the gradient will
+   * start at the bottom of the player and fade out to the center. If the direction is set to
+   * `down`, the gradient will start at the top of the player and fade out to the center.
+   */
+  @Prop() gradient?: 'up' | 'down';
 
   /**
    * @internal
    */
   @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
 
-  @Watch('isVideoView')
-  onVideoViewChange() {
-    this.isHidden = !this.isVideoView;
-  }
-
   /**
-   * Whether the scrim is visible or not.
+   * @internal
    */
-  @Prop() active = false;
-
-  /**
-   * Emitted when the scrim will be shown.
-   */
-  @Event({ bubbles: false }) willShow!: EventEmitter<void>;
-
-  /**
-   * Emitted when the scrim will be hidden.
-   */
-  @Event({ bubbles: false }) willHide!: EventEmitter<void>;
-
-  @Watch('active')
-  @Watch('isHidden')
-  onVisibilityChange() {
-    (!this.isHidden && this.active) ? this.willShow.emit() : this.willHide.emit();
-  }
+  @Prop() isControlsActive: PlayerProps[PlayerProp.IsControlsActive] = false;
 
   render() {
     return (
       <Host
         class={{
-          hidden: this.isHidden,
-          active: this.active,
+          gradient: !isUndefined(this.gradient),
+          gradientUp: this.gradient === 'up',
+          gradientDown: this.gradient === 'down',
+          hidden: !this.isVideoView,
+          active: this.isControlsActive,
         }}
       >
         <div />
@@ -56,4 +46,7 @@ export class Scrim {
   }
 }
 
-openPlayerWormhole(Scrim, [PlayerProp.IsVideoView]);
+openPlayerWormhole(Scrim, [
+  PlayerProp.IsVideoView,
+  PlayerProp.IsControlsActive,
+]);

@@ -1,17 +1,14 @@
 import {
-  h, Host, Component, Prop, Watch,
+  h, Host, Component, Prop,
 } from '@stencil/core';
 import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
-import { isNullOrUndefined } from '../../../../utils/unit';
 
 @Component({
   tag: 'vime-default-controls',
   styleUrl: 'default-controls.css',
 })
 export class DefaultControls {
-  private scrim?: HTMLVimeScrimElement;
-
   /**
    * The length in milliseconds that the controls are active for before fading out. Audio players
    * are not effected by this prop.
@@ -55,17 +52,6 @@ export class DefaultControls {
    */
   @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
 
-  /**
-   * @internal
-   */
-  @Prop() isControlsActive: PlayerProps[PlayerProp.IsControlsActive] = false;
-
-  @Watch('isControlsActive')
-  onControlsChange() {
-    if (isNullOrUndefined(this.scrim)) return;
-    this.scrim!.active = this.isControlsActive;
-  }
-
   private buildAudioControls() {
     return (
       <vime-controls full-width>
@@ -106,9 +92,7 @@ export class DefaultControls {
 
     return (
       <Host>
-        <vime-scrim
-          ref={(el: any) => { this.scrim = el; }}
-        />
+        <vime-scrim />
 
         <vime-controls
           pin="topLeft"
@@ -146,27 +130,31 @@ export class DefaultControls {
     );
 
     return (
-      <vime-controls
-        activeDuration={this.activeDuration}
-        waitForPlaybackStart={this.waitForPlaybackStart}
-        hideWhenPaused={this.hideWhenPaused}
-        hideOnMouseLeave={this.hideOnMouseLeave}
-        full-width
-      >
-        {!this.isLive && scrubberControlGroup}
+      <Host>
+        <vime-scrim gradient="up" />
 
-        <vime-control-group space={this.isLive ? 'none' : 'top'}>
-          <vime-playback-control tooltip-direction="right" />
-          <vime-volume-control />
-          {!this.isLive && <vime-time-progress />}
-          <vime-control-spacer />
-          {!this.isLive && <vime-caption-control />}
-          {this.isLive && <vime-live-indicator />}
-          <vime-pip-control />
-          {!this.isLive && <vime-settings-control />}
-          <vime-fullscreen-control tooltip-direction="left" />
-        </vime-control-group>
-      </vime-controls>
+        <vime-controls
+          activeDuration={this.activeDuration}
+          waitForPlaybackStart={this.waitForPlaybackStart}
+          hideWhenPaused={this.hideWhenPaused}
+          hideOnMouseLeave={this.hideOnMouseLeave}
+          full-width
+        >
+          {!this.isLive && scrubberControlGroup}
+
+          <vime-control-group space={this.isLive ? 'none' : 'top'}>
+            <vime-playback-control tooltip-direction="right" />
+            <vime-volume-control />
+            {!this.isLive && <vime-time-progress />}
+            <vime-control-spacer />
+            {!this.isLive && <vime-caption-control />}
+            {this.isLive && <vime-live-indicator />}
+            <vime-pip-control />
+            {!this.isLive && <vime-settings-control />}
+            <vime-fullscreen-control tooltip-direction="left" />
+          </vime-control-group>
+        </vime-controls>
+      </Host>
     );
   }
 
@@ -182,6 +170,5 @@ openPlayerWormhole(DefaultControls, [
   PlayerProp.IsMobile,
   PlayerProp.IsAudioView,
   PlayerProp.IsVideoView,
-  PlayerProp.IsControlsActive,
   PlayerProp.IsLive,
 ]);

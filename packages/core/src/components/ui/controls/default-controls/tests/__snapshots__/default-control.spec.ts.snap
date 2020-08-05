@@ -29,6 +29,7 @@ exports[`should be structurally sound when audio 1`] = `
 
 exports[`should be structurally sound when desktop video + live stream 1`] = `
 <vime-default-controls>
+  <vime-scrim gradient="up"></vime-scrim>
   <vime-controls activeduration="2750" full-width="">
     <vime-control-group space="none">
       <vime-playback-control tooltip-direction="right"></vime-playback-control>
@@ -44,6 +45,7 @@ exports[`should be structurally sound when desktop video + live stream 1`] = `
 
 exports[`should be structurally sound when desktop video 1`] = `
 <vime-default-controls>
+  <vime-scrim gradient="up"></vime-scrim>
   <vime-controls activeduration="2750" full-width="">
     <vime-control-group>
       <vime-scrubber-control></vime-scrubber-control>
