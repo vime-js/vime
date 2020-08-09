@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vime</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="/dist/vime/vime.css">
+  <script type="module" src="/dist/vime/vime.esm.js"></script>
+</head>
+
+<body class="center">
+  <div id="container">
+    <vime-player>
+      <vime-video cross-origin poster="/media/video/poster.png">
+        <source data-src="/media/video/720p.mp4" type="video/mp4">
+        <track default kind="subtitles" src="/media/video/subs/english.vtt" srclang="en" label="English" >
+      </vime-video> 
+      <vime-default-ui></vime-default-ui>
+    </vime-player>
+  </div>
+</body>
+
+<style>
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    padding: 24px;
+  }
+
+  .center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #container {
+    width: 80%;
+  }
+</style>
+</html>

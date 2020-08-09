@@ -20,6 +20,7 @@
     "build": "stencil build --docs",
     "serve": "concurrently \"npm run serve:media\" \"npm run serve:app\"",
     "serve:app": "stencil build --dev --watch --serve --port 3333",
+    "serve:prod": "npm run build && sirv --host --dev --cors --brotli --port 3335",
     "serve:media": "sirv media --host --dev --cors --brotli --port 3334 --quiet",
     "test": "stencil test --spec --max-workers=2",
     "test:spec": "stencil test --spec --max-workers=2",
