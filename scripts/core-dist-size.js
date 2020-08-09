@@ -9,11 +9,13 @@ const getFileSizeGzipped = (path) => {
 
 let bytes = 0;
 let gzippedBytes = 0;
-const distDir = './packages/core/dist/vime';
+const distDir = './packages/core/dist/esm';
 const files = fs.readdirSync(distDir);
 files.forEach((file) => { 
   const path = `${distDir}/${file}`;
-  bytes += fs.statSync(path).size;
+  const stats = fs.statSync(path);
+  if (!stats.isFile()) return;
+  bytes += stats.size;
   gzippedBytes += gzipSize.sync(fs.readFileSync(path));
 });
 
