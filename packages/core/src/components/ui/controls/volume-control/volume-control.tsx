@@ -142,6 +142,12 @@ export class VolumeControl {
     this.dispatch(PlayerProp.Muted, newVolume === 0);
   }
 
+  private onKeyDown(event: KeyboardEvent) {
+    const { keyCode } = event;
+    if ((keyCode !== 37) && (keyCode !== 39)) return;
+    event.stopPropagation();
+  }
+
   render() {
     return (
       <Host
@@ -168,6 +174,7 @@ export class VolumeControl {
           max={100}
           value={this.currentVolume}
           label={this.i18n.volume}
+          onKeyDown={this.onKeyDown.bind(this)}
           onFocus={this.onShowSlider.bind(this)}
           onBlur={this.onHideSlider.bind(this)}
           onValueChange={this.onVolumeChange.bind(this)}

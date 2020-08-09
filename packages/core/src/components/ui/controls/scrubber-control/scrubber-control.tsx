@@ -58,16 +58,21 @@ export class ScrubberControl {
   onNoKeyboardChange() {
     this.keyboardDisposal.empty();
     if (this.noKeyboard) return;
+
     const player = findRootPlayer(this);
-    this.keyboardDisposal.add(listen(player, 'keydown', (event: KeyboardEvent) => {
+
+    const onKeyDown = (event: KeyboardEvent) => {
       const { keyCode } = event;
       if ((keyCode !== 37) && (keyCode !== 39)) return;
+      event.preventDefault();
       const isLeftArrow = (keyCode === 37);
       const seekTo = isLeftArrow
         ? Math.max(0, this.currentTime - 5)
         : Math.min(this.duration, this.currentTime + 5);
       this.dispatch(PlayerProp.CurrentTime, seekTo);
-    }));
+    };
+
+    this.keyboardDisposal.add(listen(player, 'keydown', onKeyDown));
   }
 
   @Watch('duration')
