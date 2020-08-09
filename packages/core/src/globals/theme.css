@@ -27,6 +27,14 @@ vime-player {
 
   --control-spacing: 10px;
   --control-padding: calc(var(--control-spacing) * 0.7);
+  
+  /*******************************
+   * Skeleton
+   *******************************/
+
+  --player-skeleton-base-color: #eee;
+  --player-skeleton-highlight-color: #f3f3f3;
+  --player-skeleton-duration: 1.2s;
 
   /*******************************
    * Slider

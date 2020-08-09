@@ -490,6 +490,11 @@ export class Player implements MediaPlayer {
   }
 
   /**
+   * Whether the skeleton loading animation should be shown while media is loading.
+   */
+  @Prop() noSkeleton = false;
+
+  /**
    * ------------------------------------------------------
    * Events
    * ------------------------------------------------------
@@ -1209,14 +1214,25 @@ export class Player implements MediaPlayer {
           fullscreen: this.isFullscreenActive,
         }}
       >
-        <Universe.Provider state={this.getPlayerState()}>
-          {
-            !this.controls
-            && canShowCustomUI
-            && this.isVideoView
-            && <div class="blocker" />
-          }
+        {
+          !this.noSkeleton && (
+            <div
+              class={{
+                skeleton: true,
+                active: !this.playbackReady,
+              }}
+            />
+          )
+        }
 
+        {
+          !this.controls
+          && canShowCustomUI
+          && this.isVideoView
+          && <div class="blocker" />
+        }
+
+        <Universe.Provider state={this.getPlayerState()}>
           <slot />
         </Universe.Provider>
       </Host>
