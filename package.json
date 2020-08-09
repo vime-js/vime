@@ -13,7 +13,8 @@
     "test": "pnpm run test --recursive",
     "generate": "pnpm run generate --recursive",
     "validate": "pnpm run lint && pnpm run test && pnpm run build",
-    "release": "pnpm run validate && pnpm run release --recursive"
+    "release": "pnpm run validate && pnpm run release --recursive",
+    "script:size": "node scripts/core-dist-size.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
@@ -27,7 +28,9 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
     "git-log-parser": "^1.2.0",
+    "gzip-size": "^5.1.1",
     "husky": "^4.2.5",
+    "pretty-bytes": "^5.3.0",
     "react": "^16.13.1",
     "semantic-release": "^17.1.1",
     "typescript": "^3.9.7"
