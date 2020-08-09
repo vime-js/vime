@@ -28,9 +28,16 @@ can be selected at the same time.
 
 ## Properties
 
-| Property     | Attribute     | Description                                | Type                  | Default     |
-| ------------ | ------------- | ------------------------------------------ | --------------------- | ----------- |
-| `groupValue` | `group-value` | The current value selected for this group. | `string \| undefined` | `undefined` |
+| Property | Attribute | Description                                | Type                  | Default     |
+| -------- | --------- | ------------------------------------------ | --------------------- | ----------- |
+| `value`  | `value`   | The current value selected for this group. | `string \| undefined` | `undefined` |
+
+
+## Events
+
+| Event   | Description                                                 | Type                |
+| ------- | ----------------------------------------------------------- | ------------------- |
+| `check` | Emitted when a new radio button is selected for this group. | `CustomEvent<void>` |
 
 
 ## Slots

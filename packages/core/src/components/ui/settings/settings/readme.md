@@ -66,16 +66,17 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                            | Description                                     |
-| ------------------------------- | ----------------------------------------------- |
-| `--settings-border-radius`      | The border radius of the settings menu.         |
-| `--settings-max-height`         | The max height of the settings menu.            |
-| `--settings-padding`            | The padding inside the settings menu.           |
-| `--settings-scroll-thumb-color` | The color of the settings scrollbar thumb.      |
-| `--settings-scroll-track-color` | The color of the settings scrollbar track.      |
-| `--settings-scroll-width`       | The width of the settings scrollbar.            |
-| `--settings-shadow`             | The shadow cast around the settings menu frame. |
-| `--settings-width`              | The width of the settings menu.                 |
+| Name                            | Description                                                  |
+| ------------------------------- | ------------------------------------------------------------ |
+| `--settings-audio-max-height`   | The max height of the settings when outside an audio player. |
+| `--settings-border-radius`      | The border radius of the settings menu.                      |
+| `--settings-max-height`         | The max height of the settings menu.                         |
+| `--settings-padding`            | The padding inside the settings menu.                        |
+| `--settings-scroll-thumb-color` | The color of the settings scrollbar thumb.                   |
+| `--settings-scroll-track-color` | The color of the settings scrollbar track.                   |
+| `--settings-scroll-width`       | The width of the settings scrollbar.                         |
+| `--settings-shadow`             | The shadow cast around the settings menu frame.              |
+| `--settings-width`              | The width of the settings menu.                              |
 
 
 ## Dependencies

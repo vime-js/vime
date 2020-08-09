@@ -21,9 +21,9 @@ changing the playback rate if the current provider allows changing it (`player.c
 
 ## Slots
 
-| Slot | Description                                                                    |
-| ---- | ------------------------------------------------------------------------------ |
-|      | Used to extend the settings with additional menu options (see `vime-submenu`). |
+| Slot | Description                                                                                        |
+| ---- | -------------------------------------------------------------------------------------------------- |
+|      | Used to extend the settings with additional menu options (see `vime-submenu` or `vime-menu-item`). |
 
 
 ## Dependencies
