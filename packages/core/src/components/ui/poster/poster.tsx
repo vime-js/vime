@@ -89,7 +89,9 @@ export class Poster {
         }}
       >
         <img
-          src={this.currentPoster}
+          class="lozad"
+          data-src={this.currentPoster}
+          data-placeholder-background="black"
           alt={!isUndefined(this.mediaTitle) ? `${this.mediaTitle} Poster` : 'Media Poster'}
           style={{ objectFit: this.fit }}
           onLoad={this.onPosterLoad.bind(this)}

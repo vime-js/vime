@@ -14,7 +14,6 @@ import {
 import { isString } from '../../../utils/unit';
 import { EmbedEvent, EmbedEventPayload } from './EmbedEvent';
 import { appendParamsToURL, Params, preconnect } from '../../../utils/network';
-import { onElementEntersViewport } from '../../../utils/dom';
 
 let idCount = 0;
 const connected = new Set();
@@ -25,8 +24,6 @@ const connected = new Set();
 })
 export class Embed implements ComponentInterface {
   private id!: string;
-
-  private intersectionObserverCleanup?: (() => void);
 
   private iframe?: HTMLIFrameElement;
 
@@ -45,11 +42,6 @@ export class Embed implements ComponentInterface {
    * The title of the current media so it can be set on the inner `iframe` for screen readers.
    */
   @Prop() mediaTitle = '';
-
-  /**
-   * Whether the embedded player should defer loading until it enters the viewport.
-   */
-  @Prop() lazy = true;
 
   /**
    * The parameters to pass to the embedded player. These are encoded as a query string and
@@ -123,20 +115,11 @@ export class Embed implements ComponentInterface {
   }
 
   connectedCallback() {
-    this.intersectionObserverCleanup = onElementEntersViewport(
-      this.el,
-      () => { this.hasEnteredViewport = true; },
-    );
-
     this.srcChange();
   }
 
   componentWillLoad() {
     this.genIframeId();
-  }
-
-  disconnectedCallback() {
-    this.intersectionObserverCleanup?.();
   }
 
   @Listen('message', { target: 'window' })
@@ -170,9 +153,10 @@ export class Embed implements ComponentInterface {
   render() {
     return (
       <iframe
+        class="lozad"
         id={this.id}
         title={this.mediaTitle}
-        src={(!this.lazy || this.hasEnteredViewport) ? this.srcWithParams : undefined}
+        data-src={this.srcWithParams}
         // @ts-ignore
         allowfullscreen="1"
         allow="autoplay; encrypted-media; picture-in-picture"

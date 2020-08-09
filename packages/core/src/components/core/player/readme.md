@@ -9,7 +9,7 @@ it.
 ```html
 <vime-player controls autoplay muted>
   <vime-video>
-    <source src="/media/video.mp4" type="video/mp4">
+    <source data-src="/media/video.mp4" type="video/mp4">
     <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" label="English">
     <track kind="captions" src="/media/caps/en.vtt" srclang="en" label="English (CC)">
     <!-- ... -->

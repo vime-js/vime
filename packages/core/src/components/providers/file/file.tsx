@@ -163,6 +163,10 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.vLoadStart.emit();
   }
 
+  componentDidLoad() {
+    this.onViewTypeChange();
+  }
+
   disconnectedCallback() {
     this.mediaEl!.pause();
     this.cancelTimeUpdates();
@@ -377,7 +381,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       controls: this.controls,
       crossorigin: this.crossOrigin,
       controlslist: this.controlsList,
-      poster: this.poster,
+      'data-poster': this.poster,
       loop: this.loop,
       preload: this.preload,
       disablePictureInPicture: this.disablePiP,
@@ -402,7 +406,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     };
 
     const audio = (
-      <audio {...mediaProps}>
+      <audio class="lozad" {...mediaProps}>
         <slot />
         Your browser does not support the
         <code>audio</code>
@@ -412,6 +416,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
     const video = (
       <video
+        class="lozad"
         {...mediaProps}
         // @ts-ignore
         onwebkitpresentationmodechanged={this.onPresentationModeChange.bind(this)}

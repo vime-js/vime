@@ -99,16 +99,20 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
       }
 
       this.hls = new Hls(this.config);
+
       this.hls!.on('hlsMediaAttached', () => {
         this.hasAttached = true;
         this.onSrcChange();
       });
+
       this.hls!.on('hlsError', (e, data) => { this.dispatch(PlayerProp.Errors, [{ e, data }]); });
+
       this.hls!.on('hlsManifestParsed', () => {
         this.dispatch(PlayerProp.MediaType, MediaType.Video);
         this.dispatch(PlayerProp.CurrentSrc, this.src);
         this.dispatch(PlayerProp.PlaybackReady, true);
       });
+
       this.hls!.attachMedia(video);
     } catch (e) {
       this.dispatch(PlayerProp.Errors, [e]);

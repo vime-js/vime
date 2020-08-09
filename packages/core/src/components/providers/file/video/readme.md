@@ -9,7 +9,7 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
 ```html
 <vime-player controls autoplay muted>
   <vime-video poster="/media/poster.png">
-    <source src="/media/video.mp4" type="video/mp4">
+    <source data-src="/media/video.mp4" type="video/mp4">
     <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" >
     <track kind="captions" src="/media/caps/en.vtt" srclang="en" >
   </vime-video>

@@ -36,6 +36,9 @@ export const config: Config = {
         diagnostics: false,
       },
     },
+    setupFilesAfterEnv: [
+      './src/globals/jest.js',
+    ],
     // @ts-ignore
     watchPlugins: [
       'jest-watch-typeahead/filename',

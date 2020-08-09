@@ -108,11 +108,13 @@ export class Dash implements MediaFileProvider<any> {
 
       this.dash = Dash.MediaPlayer(this.config).create();
       this.dash!.initialize(video, null, this.autoplay);
+
       this.dash!.on(Dash.MediaPlayer.events.CAN_PLAY, () => {
         this.dispatch(PlayerProp.MediaType, MediaType.Video);
         this.dispatch(PlayerProp.CurrentSrc, this.src);
         this.dispatch(PlayerProp.PlaybackReady, true);
       });
+
       this.dash!.on(Dash.MediaPlayer.events.ERROR, (e: any) => {
         this.dispatch(PlayerProp.Errors, [e]);
       });
@@ -162,4 +164,6 @@ export class Dash implements MediaFileProvider<any> {
   }
 }
 
-openWormhole(Dash, [PlayerProp.Autoplay]);
+openWormhole(Dash, [
+  PlayerProp.Autoplay,
+]);

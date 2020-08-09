@@ -15,6 +15,7 @@ import {
 } from '@stencil/core';
 import { Universe } from 'stencil-wormhole';
 import { HTMLStencilElement } from '@stencil/core/internal';
+import lozad from 'lozad';
 import { MediaType } from './MediaType';
 import { MediaProvider, MediaProviderAdapter } from '../../providers/MediaProvider';
 import { isUndefined, isString, isNull } from '../../../utils/unit';
@@ -870,7 +871,13 @@ export class Player implements MediaPlayer {
     }
 
     this.playbackReadyCalls?.clear();
-    this.pendingStateChanges.clear();
+
+    // Should only clear necessary state changes.
+    const canResetProp = new Set(Object.keys(resetablePlayerProps));
+    Array.from(this.pendingStateChanges.keys()).forEach((key) => {
+      const prop = key.toString().match(/: ([a-zA-z]+) -/)?.[1];
+      if (canResetProp.has(prop ?? '')) this.pendingStateChanges.delete(key);
+    });
 
     await this.queueStateChange('[VIME-PLAYER]: media change', async () => {
       Object.keys(resetablePlayerProps).forEach((prop) => {
@@ -946,6 +953,11 @@ export class Player implements MediaPlayer {
   componentWillLoad() {
     Universe.create(this, this.getPlayerState());
     return this.getProvider() as Promise<any>;
+  }
+
+  componentDidLoad() {
+    const observer = lozad();
+    observer.observe();
   }
 
   componentWillRender() {

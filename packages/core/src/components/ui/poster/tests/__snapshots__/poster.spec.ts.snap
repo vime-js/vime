@@ -2,6 +2,6 @@
 
 exports[`should be structurally sound 1`] = `
 <vime-poster class="active hidden">
-  <img alt="Media Poster" style="object-fit: cover;">
+  <img alt="Media Poster" class="lozad" data-placeholder-background="black" style="object-fit: cover;">
 </vime-poster>
 `;

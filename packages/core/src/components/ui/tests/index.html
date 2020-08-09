@@ -39,13 +39,13 @@
 
   const audio = `
     <vime-audio cross-origin>
-      <source src="http://localhost:3334/audio/audio.mp3" type="audio/mp3">
+      <source data-src="http://localhost:3334/audio/audio.mp3" type="audio/mp3">
     </vime-audio>
   `
   
   const video = `
     <vime-video cross-origin poster="http://localhost:3334/video/poster.png">
-      <source src="http://localhost:3334/video/720p.mp4" type="video/mp4">
+      <source data-src="http://localhost:3334/video/720p.mp4" type="video/mp4">
       <track default kind="subtitles" src="http://localhost:3334/video/subs/english.vtt" srclang="en" label="English" >
     </vime-video> 
   `

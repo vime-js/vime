@@ -46,7 +46,11 @@ export const loadImage = (src: string, minWidth = 1): Promise<HTMLImageElement> 
   },
 );
 
-export const loadScript = (src: string, onLoad: () => void, onError: (e: any) => void) => {
+export const loadScript = (
+  src: string,
+  onLoad: () => void,
+  onError: (e: any) => void = (() => {}),
+) => {
   const script = document.createElement('script');
   script.src = src;
   script.onload = onLoad;

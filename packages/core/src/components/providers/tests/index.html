@@ -40,9 +40,9 @@
   const baseVideoURL = `${baseURL}/video`
 
   const posterAttr = `poster="${baseVideoURL}/poster.png"`;
-  const audioSrc = `<source src="${baseAudioURL}/audio.mp3" type="audio/mp3" />`;
-  const videoSrc = `<source src="${baseVideoURL}/720p.mp4" type="video/mp4" />`;
-  const hlsSrc = `<source src="${baseVideoURL}/hls/index.m3u8" type="application/x-mpegURL" />`;
+  const audioSrc = `<source data-src="${baseAudioURL}/audio.mp3" type="audio/mp3" />`;
+  const videoSrc = `<source data-src="${baseVideoURL}/720p.mp4" type="video/mp4" />`;
+  const hlsSrc = `<source data-src="${baseVideoURL}/hls/index.m3u8" type="application/x-mpegURL" />`;
   const dashSrc = `${baseVideoURL}/mpd/manifest.mpd`;
 
   addProvider('audio', `<vime-audio>${audioSrc}</vime-audio>`);

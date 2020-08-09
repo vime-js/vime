@@ -9,7 +9,7 @@ Enables loading, playing and controlling audio via the HTML5 [`<audio>`](https:/
 ```html
 <vime-player controls autoplay muted>
   <vime-audio>
-    <source src="/media/audio.mp3" type="audio/mp3">
+    <source data-src="/media/audio.mp3" type="audio/mp3">
     <!-- ... -->
   </vime-audio>
   <!-- ... -->
