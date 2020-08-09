@@ -17,18 +17,14 @@ it.
 
   <vime-ui>
     <vime-poster></vime-poster>
+    <vime-spinner></vime-spinner>
     <!-- ... -->
   </vime-ui>
-
-  <vime-plugins>
-    <vime-chromecast></vime-chromecast>
-    <!-- ... -->
-  </vime-plugins>
 </vime-player>
 
 <script>
   const player = document.querySelector('vime-player');
-  player.addEventListener('vPlaying', () => { console.log('PLAYING'); });
+  player.addEventListener('vPlay', () => { console.log('PLAY'); });
 </script>
 ```
 
