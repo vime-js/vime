@@ -8,7 +8,9 @@ import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/p
 import { PlayerProp } from '../../core/player/PlayerProp';
 import { ViewType } from '../../core/player/ViewType';
 import { MediaFileProvider, MediaPreloadOption } from './MediaFileProvider';
-import { isString, isNumber, isUndefined } from '../../../utils/unit';
+import {
+  isString, isNumber, isUndefined, isNull,
+} from '../../../utils/unit';
 import { audioRegex, videoRegex, hlsRegex } from './utils';
 import { WebkitPresentationMode } from './WebkitPresentationMode';
 import {
@@ -20,6 +22,7 @@ import {
 import { MediaType } from '../../core/player/MediaType';
 import { listen } from '../../../utils/dom';
 import { Disposal } from '../../core/player/Disposal';
+import { findRootPlayer } from '../../core/player/utils';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
@@ -173,6 +176,11 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.disposal.empty();
     this.playbackStarted = false;
     this.wasPausedBeforeSeeking = true;
+  }
+
+  private hasCustomPoster() {
+    const root = findRootPlayer(this);
+    return !isNull(root.querySelector('vime-ui > vime-poster'));
   }
 
   private cancelTimeUpdates() {
@@ -381,7 +389,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       controls: this.controls,
       crossorigin: this.crossOrigin,
       controlslist: this.controlsList,
-      'data-poster': this.poster,
+      'data-poster': !this.hasCustomPoster() ? this.poster : undefined,
       loop: this.loop,
       preload: this.preload,
       disablePictureInPicture: this.disablePiP,
