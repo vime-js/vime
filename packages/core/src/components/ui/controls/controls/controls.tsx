@@ -173,7 +173,9 @@ export class Controls {
   private checkForSettingsCollision() {
     const settings = findUIRoot(this).querySelector('vime-settings') as HTMLVimeSettingsElement;
     if (isNull(settings)) return;
-    settings!.controlsHeight = isColliding(this.el, settings) ? this.getHeight() : 65;
+    settings!.controlsHeight = (this.isAudioView || isColliding(this.el, settings))
+      ? this.getHeight()
+      : 65;
   }
 
   private show() {

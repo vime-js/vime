@@ -172,7 +172,8 @@ vime-player {
   --settings-scroll-width: 10px;
   --settings-shadow: 0 0 8px 2px var(--color-gray-100);
   --settings-scroll-thumb-color: var(--color-white-200);
-  --settings-scroll-track-color: var(--color-dark);
+  --settings-scroll-track-color: var(--menu-bg);
+  --settings-audio-max-height: 275px;
 }
 
 vime-player vime-scrubber-control {
@@ -256,4 +257,10 @@ vime-player[theme="light"] {
   --menu-item-tap-highlight: var(--color-gray-100);
    
   --menu-item-divider-color: var(--color-gray-100);
+   
+  /*******************************
+   * Light Settings
+   *******************************/
+
+  --settings-scroll-thumb-color: var(--color-gray-100);
 }

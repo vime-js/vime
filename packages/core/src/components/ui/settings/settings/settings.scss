@@ -8,6 +8,7 @@ vime-settings {
    * @prop --settings-scroll-width: The width of the settings scrollbar.
    * @prop --settings-scroll-thumb-color: The color of the settings scrollbar thumb.
    * @prop --settings-scroll-track-color: The color of the settings scrollbar track.
+   * @prop --settings-audio-max-height: The max height of the settings when outside an audio player.
    */
 
   display: none;
@@ -42,5 +43,27 @@ vime-settings {
 
   &.active {
     display: block;
+  }
+
+  &.audio {
+    right: 0;
+    max-height: var(--settings-audio-max-height);
+  }
+
+  &.mobile {
+    position: fixed;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100%;
+    min-height: 56px;
+    max-height: 50%;
+    border-radius: 0;
+    z-index: 999;
+
+    vime-menu {
+      padding: 8px 0;
+      height: 100% !important;
+      overflow: auto !important;
+    }
   }
 }

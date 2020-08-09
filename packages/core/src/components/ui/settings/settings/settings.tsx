@@ -8,7 +8,8 @@ import { listen } from '../../../../utils/dom';
 import { isUndefined, isNull } from '../../../../utils/unit';
 import { SettingsController } from './SettingsController';
 import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../../core/player/PlayerState';
-import { PlayerProp } from '../../../core/player/PlayerProp';
+import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
+import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
 
 let idCount = 0;
 
@@ -53,6 +54,16 @@ export class Settings {
     this.controller!.expanded = this.active;
   }
 
+  /**
+   * @internal
+   */
+  @Prop() isMobile: PlayerProps[PlayerProp.IsMobile] = false;
+
+  /**
+   * @internal
+   */
+  @Prop() isAudioView: PlayerProps[PlayerProp.IsAudioView] = false;
+
   connectedCallback() {
     this.dispatch = createPlayerStateDispatcher(this);
   }
@@ -96,6 +107,8 @@ export class Settings {
         }}
         class={{
           active: this.active,
+          mobile: this.isMobile,
+          audio: this.isAudioView,
         }}
       >
         <vime-menu
@@ -111,3 +124,8 @@ export class Settings {
     );
   }
 }
+
+openPlayerWormhole(Settings, [
+  PlayerProp.IsMobile,
+  PlayerProp.IsAudioView,
+]);

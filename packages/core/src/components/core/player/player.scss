@@ -57,6 +57,10 @@ vime-player {
     cursor: none;
   }
 
+  &.audio {
+    min-width: 300px;
+  }
+
   &.video {
     height: 0;
     overflow: hidden;
