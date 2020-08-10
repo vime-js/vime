@@ -83,8 +83,6 @@ export class Captions {
   private cleanup() {
     this.textTracksDisposal.empty();
     this.textTrackDisposal.empty();
-    this.activeCues = [];
-    this.activeTrack = undefined;
   }
 
   private onCueChange() {
