@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
 
 import { isNull } from '../../../utils/unit';
