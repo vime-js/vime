@@ -414,7 +414,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     };
 
     const audio = (
-      <audio class="lozad" {...mediaProps}>
+      <audio class="lazy" {...mediaProps}>
         <slot />
         Your browser does not support the
         <code>audio</code>
@@ -424,7 +424,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
     const video = (
       <video
-        class="lozad"
+        class="lazy"
         {...mediaProps}
         // @ts-ignore
         onwebkitpresentationmodechanged={this.onPresentationModeChange.bind(this)}

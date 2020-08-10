@@ -29,8 +29,10 @@ vime-player {
   --control-padding: calc(var(--control-spacing) * 0.7);
   
   /*******************************
-   * Skeleton
+   * Player
    *******************************/
+
+  --player-bg: var(--color-dark);
 
   --player-skeleton-base-color: #eee;
   --player-skeleton-highlight-color: #f3f3f3;
@@ -205,6 +207,7 @@ vime-player[theme="light"] {
    * Light Player
    *******************************/
 
+  --player-bg: #fff;
   --player-box-shadow: 0 0 8px 2px var(--color-gray-100);
 
   /*******************************

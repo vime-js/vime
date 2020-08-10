@@ -15,7 +15,6 @@ import {
 } from '@stencil/core';
 import { Universe } from 'stencil-wormhole';
 import { HTMLStencilElement } from '@stencil/core/internal';
-import lozad from 'lozad';
 import { MediaType } from './MediaType';
 import { MediaProvider, MediaProviderAdapter } from '../../providers/MediaProvider';
 import { isUndefined, isString, isNull } from '../../../utils/unit';
@@ -38,6 +37,7 @@ import { Autopause } from './Autopause';
 import { getEventName } from './PlayerEvent';
 import { Disposal } from './Disposal';
 import { listen } from '../../../utils/dom';
+import { lazyLoader } from './lazyLoader';
 
 let idCount = 0;
 
@@ -961,8 +961,7 @@ export class Player implements MediaPlayer {
   }
 
   componentDidLoad() {
-    const observer = lozad();
-    observer.observe();
+    this.disposal.add(lazyLoader(this.el));
   }
 
   componentWillRender() {

@@ -1,5 +1,6 @@
 vime-player {
   /**
+   * @prop --player-bg: The background color of the player.
    * @prop --player-font-family: A custom font family to be used throughout the player.
    * @prop --player-theme: A custom theme (color) to be used throughout the player. Any valid CSS 
    * `color` property (HEX, RGBA, HLS, ...) can be used.
@@ -28,11 +29,11 @@ vime-player {
   display: block;
   max-width: 100%;
   min-width: 414px;
-  min-height: 60px;
+  min-height: 40px;
   position: relative;
   text-shadow: none;
   outline: 0;
-  background-color: #000;
+  background-color: var(--player-bg);
   transition: box-shadow 0.3s ease, height 0.3s ease, padding 0.3s ease;
   box-shadow: var(--player-box-shadow);
 

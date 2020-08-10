@@ -153,7 +153,7 @@ export class Embed implements ComponentInterface {
   render() {
     return (
       <iframe
-        class="lozad"
+        class="lazy"
         id={this.id}
         title={this.mediaTitle}
         data-src={this.srcWithParams}
