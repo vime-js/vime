@@ -22,16 +22,15 @@ the player.
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                                          | Type                             | Default               |
-| ------------------ | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | --------------------- |
-| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                         | `boolean`                        | `false`               |
-| `highVolumeIcon`   | `high-volume-icon`  | The URL to an SVG element or fragment.                                                                                                               | `string`                         | `'#vime-volume-high'` |
-| `keyCodes`         | `key-codes`         | A pipe (`\|`) seperated string of JS key codes, that when caught in a `keydown` event, will trigger a `click` event on the control.                  | `string \| undefined`            | `'77'`                |
-| `keyboardHint`     | `keyboard-hint`     | If the `keyCodes` prop is provided, this prop can provide a hint to the user inside the tooltip for what keys can be pressed to trigger the control. | `string \| undefined`            | `'(m)'`               |
-| `lowVolumeIcon`    | `low-volume-icon`   | The URL to an SVG element or fragment.                                                                                                               | `string`                         | `'#vime-volume-low'`  |
-| `mutedIcon`        | `muted-icon`        | The URL to an SVG element or fragment.                                                                                                               | `string`                         | `'#vime-volume-mute'` |
-| `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                           | `number`                         | `1`                   |
-| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                      | `"left" \| "right" \| undefined` | `undefined`           |
+| Property           | Attribute           | Description                                                                                                                                                   | Type                             | Default               |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | --------------------- |
+| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                                  | `boolean`                        | `false`               |
+| `highVolumeIcon`   | `high-volume-icon`  | The URL to an SVG element or fragment.                                                                                                                        | `string`                         | `'#vime-volume-high'` |
+| `keys`             | `keys`              | A slash (`/`) seperated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string \| undefined`            | `'m'`                 |
+| `lowVolumeIcon`    | `low-volume-icon`   | The URL to an SVG element or fragment.                                                                                                                        | `string`                         | `'#vime-volume-low'`  |
+| `mutedIcon`        | `muted-icon`        | The URL to an SVG element or fragment.                                                                                                                        | `string`                         | `'#vime-volume-mute'` |
+| `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                                    | `number`                         | `1`                   |
+| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" \| "right" \| undefined` | `undefined`           |
 
 
 ## Dependencies

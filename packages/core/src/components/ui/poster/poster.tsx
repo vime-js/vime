@@ -14,6 +14,8 @@ export class Poster {
 
   @State() isActive = false;
 
+  @State() hasLoaded = false;
+
   /**
    * How the poster image should be resized to fit the container (sets the `object-fit` property).
    */
@@ -28,6 +30,11 @@ export class Poster {
    * @internal
    */
   @Prop() currentPoster?: PlayerProps[PlayerProp.CurrentPoster];
+
+  @Watch('currentPoster')
+  onCurrentPosterChange() {
+    this.hasLoaded = false;
+  }
 
   /**
    * @internal
@@ -78,6 +85,7 @@ export class Poster {
 
   private onPosterLoad() {
     this.loaded.emit();
+    this.hasLoaded = true;
   }
 
   render() {
@@ -85,7 +93,7 @@ export class Poster {
       <Host
         class={{
           hidden: this.isHidden,
-          active: this.isActive,
+          active: this.isActive && this.hasLoaded,
         }}
       >
         <img

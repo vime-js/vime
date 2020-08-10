@@ -1,5 +1,6 @@
 {
   "baseUrl": "http://localhost:3333/src/components",
+  "watchForFileChanges": false,
   "integrationFolder": "cypress/tests",
   "testFiles": "**/*.e2e.ts",
   "fixturesFolder": false,
@@ -7,5 +8,12 @@
   "ignoreTestFiles": [
     "**/__snapshots__/*",
     "**/__image_snapshots__/*"
-  ]
+  ],
+  "env": {
+    "cypress-plugin-snapshots": {
+      "imageConfig": {
+        "threshold": 0.05
+      }
+    }
+  }
 }

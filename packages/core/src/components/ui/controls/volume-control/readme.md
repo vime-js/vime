@@ -21,16 +21,15 @@ A control for adjusting the volume of the player and toggling the muted state.
 
 ## Properties
 
-| Property           | Attribute            | Description                                                                                                                                                             | Type                             | Default               |
-| ------------------ | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | --------------------- |
-| `hideTooltip`      | `hide-tooltip`       | Whether the tooltip should be hidden.                                                                                                                                   | `boolean`                        | `false`               |
-| `highVolumeIcon`   | `high-volume-icon`   | The URL to an SVG element or fragment.                                                                                                                                  | `string`                         | `'#vime-volume-high'` |
-| `lowVolumeIcon`    | `low-volume-icon`    | The URL to an SVG element or fragment.                                                                                                                                  | `string`                         | `'#vime-volume-low'`  |
-| `muteKeyCodes`     | `mute-key-codes`     | A pipe (`\|`) seperated string of JS key codes, that when caught in a `keydown` event, will toggle the muted state of the player.                                       | `string \| undefined`            | `'77'`                |
-| `muteKeyboardHint` | `mute-keyboard-hint` | If the `keyCodes` prop is provided, this prop can provide a hint to the user inside the control tooltip, on what key presses will toggle the muted state of the player. | `string \| undefined`            | `'(m)'`               |
-| `mutedIcon`        | `muted-icon`         | The URL to an SVG element or fragment.                                                                                                                                  | `string`                         | `'#vime-volume-mute'` |
-| `noKeyboard`       | `no-keyboard`        | Prevents the volume being changed using the Up/Down arrow keys.                                                                                                         | `boolean`                        | `false`               |
-| `tooltipDirection` | `tooltip-direction`  | The direction in which the tooltip should grow.                                                                                                                         | `"left" \| "right" \| undefined` | `undefined`           |
+| Property           | Attribute           | Description                                                                                                                          | Type                             | Default               |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | --------------------- |
+| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should be hidden.                                                                                                | `boolean`                        | `false`               |
+| `highVolumeIcon`   | `high-volume-icon`  | The URL to an SVG element or fragment.                                                                                               | `string`                         | `'#vime-volume-high'` |
+| `lowVolumeIcon`    | `low-volume-icon`   | The URL to an SVG element or fragment.                                                                                               | `string`                         | `'#vime-volume-low'`  |
+| `muteKeys`         | `mute-keys`         | A pipe (`/`) seperated string of JS keyboard keys, that when caught in a `keydown` event, will toggle the muted state of the player. | `string \| undefined`            | `'m'`                 |
+| `mutedIcon`        | `muted-icon`        | The URL to an SVG element or fragment.                                                                                               | `string`                         | `'#vime-volume-mute'` |
+| `noKeyboard`       | `no-keyboard`       | Prevents the volume being changed using the Up/Down arrow keys.                                                                      | `boolean`                        | `false`               |
+| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                      | `"left" \| "right" \| undefined` | `undefined`           |
 
 
 ## Dependencies

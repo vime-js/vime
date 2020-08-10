@@ -2,7 +2,7 @@
 
 exports[`should be structurally sound 1`] = `
 <vime-volume-control>
-  <vime-mute-control highvolumeicon="#vime-volume-high" keyboardhint="(m)" keycodes="77" lowvolumeicon="#vime-volume-low" mutedicon="#vime-volume-mute"></vime-mute-control>
+  <vime-mute-control highvolumeicon="#vime-volume-high" keys="m" lowvolumeicon="#vime-volume-low" mutedicon="#vime-volume-mute"></vime-mute-control>
   <vime-slider label="Volume" max="100" step="5" value="50"></vime-slider>
 </vime-volume-control>
 `;

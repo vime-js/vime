@@ -16,7 +16,7 @@ export class Captions {
 
   private textTrackDisposal = new Disposal();
 
-  private skipNextModeChange = 0;
+  private state = new Map<TextTrack, TextTrackMode>();
 
   @State() isEnabled = false;
 
@@ -81,6 +81,7 @@ export class Captions {
   }
 
   private cleanup() {
+    this.state.clear();
     this.textTracksDisposal.empty();
     this.textTrackDisposal.empty();
   }
@@ -104,7 +105,11 @@ export class Captions {
         // eslint-disable-next-line no-param-reassign
         track.mode = 'hidden';
         activeTrack = track;
-        this.skipNextModeChange += 1;
+        this.state.set(track, 'hidden');
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        track.mode = 'disabled';
+        this.state.set(track, 'disabled');
       }
     });
 
@@ -112,15 +117,22 @@ export class Captions {
   }
 
   private onTracksChange() {
-    if (this.skipNextModeChange > 0) {
-      this.skipNextModeChange -= 1;
-      return;
-    }
+    let hasChanged = false;
 
-    const activeTrack = this.findActiveTrack();
-    if (this.activeTrack !== activeTrack) {
-      this.activeTrack = activeTrack;
-      this.onTrackChange();
+    Array.from(this.textTracks!).forEach((track) => {
+      if (!hasChanged) {
+        hasChanged = !this.state.has(track) || (track.mode !== this.state.get(track));
+      }
+
+      this.state.set(track, track.mode);
+    });
+
+    if (hasChanged) {
+      const activeTrack = this.findActiveTrack();
+      if (this.activeTrack !== activeTrack) {
+        this.activeTrack = activeTrack;
+        this.onTrackChange();
+      }
     }
   }
 

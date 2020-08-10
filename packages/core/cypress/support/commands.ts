@@ -67,3 +67,15 @@ Cypress.Commands.add('seekTo', (time: number) => cy.player()
     $player[0].callAdapter('setCurrentTime', time);
     return $player;
   }));
+
+Cypress.Commands.add('control', (label: string) => cy.get(`*[aria-label="${label}"]`));
+
+Cypress.Commands.add('controls', (
+  position: 'top' | 'center' | 'bottom' = 'bottom',
+) => cy.get(`vime-controls[pin*="${position}"]`));
+
+Cypress.Commands.add('tooltip', { prevSubject: true }, ($subject) => cy
+  .get(`#${$subject.attr('aria-describedby')}`));
+
+Cypress.Commands.add('menu', { prevSubject: true }, ($subject) => cy
+  .get(`#${$subject.attr('aria-controls')}`));

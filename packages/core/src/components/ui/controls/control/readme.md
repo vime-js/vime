@@ -44,15 +44,16 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 
 ## Properties
 
-| Property             | Attribute    | Description                                                                                                                         | Type                   | Default     |
-| -------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
-| `expanded`           | `expanded`   | If the control has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.                 | `boolean \| undefined` | `undefined` |
-| `hidden`             | `hidden`     | Whether the control should be displayed or not.                                                                                     | `boolean`              | `false`     |
-| `identifier`         | `identifier` | The `id` attribute of the control.                                                                                                  | `string \| undefined`  | `undefined` |
-| `keyCodes`           | `key-codes`  | A pipe (`\|`) seperated string of JS key codes, that when caught in a `keydown` event, will trigger a `click` event on the control. | `string \| undefined`  | `undefined` |
-| `label` _(required)_ | `label`      | The `aria-label` property of the control.                                                                                           | `string`               | `undefined` |
-| `menu`               | `menu`       | If the control has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                      | `string \| undefined`  | `undefined` |
-| `scale`              | `scale`      | Scale the size of the control up/down by the amount given.                                                                          | `number`               | `1`         |
+| Property             | Attribute    | Description                                                                                                                                                   | Type                   | Default     |
+| -------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
+| `expanded`           | `expanded`   | If the control has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.                                           | `boolean \| undefined` | `undefined` |
+| `hidden`             | `hidden`     | Whether the control should be displayed or not.                                                                                                               | `boolean`              | `false`     |
+| `identifier`         | `identifier` | The `id` attribute of the control.                                                                                                                            | `string \| undefined`  | `undefined` |
+| `keys`               | `keys`       | A slash (`/`) seperated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string \| undefined`  | `undefined` |
+| `label` _(required)_ | `label`      | The `aria-label` property of the control.                                                                                                                     | `string`               | `undefined` |
+| `menu`               | `menu`       | If the control has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                                                | `string \| undefined`  | `undefined` |
+| `pressed`            | `pressed`    | If the control is a toggle, this indicated whether the control is in a "pressed" state or not. Sets the `aria-pressed` property.                              | `boolean \| undefined` | `undefined` |
+| `scale`              | `scale`      | Scale the size of the control up/down by the amount given.                                                                                                    | `number`               | `1`         |
 
 
 ## Events

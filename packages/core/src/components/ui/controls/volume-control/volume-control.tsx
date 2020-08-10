@@ -52,16 +52,10 @@ export class VolumeControl {
   @Prop() hideTooltip = false;
 
   /**
-   * A pipe (`|`) seperated string of JS key codes, that when caught in a `keydown` event, will
+   * A pipe (`/`) seperated string of JS keyboard keys, that when caught in a `keydown` event, will
    * toggle the muted state of the player.
    */
-  @Prop() muteKeyCodes?: string = '77';
-
-  /**
-   * If the `keyCodes` prop is provided, this prop can provide a hint to the user inside the
-   * control tooltip, on what key presses will toggle the muted state of the player.
-   */
-  @Prop() muteKeyboardHint?: string = '(m)';
+  @Prop() muteKeys?: string = 'm';
 
   /**
    * Prevents the volume being changed using the Up/Down arrow keys.
@@ -74,9 +68,8 @@ export class VolumeControl {
     if (this.noKeyboard) return;
     const player = findRootPlayer(this);
     this.keyboardDisposal.add(listen(player, 'keydown', (event: KeyboardEvent) => {
-      const { keyCode } = event;
-      if ((keyCode !== 38) && (keyCode !== 40)) return;
-      const isUpArrow = (keyCode === 38);
+      if ((event.key !== 'ArrowUp') && (event.key !== 'ArrowDown')) return;
+      const isUpArrow = (event.key === 'ArrowUp');
       const newVolume = isUpArrow ? Math.min(100, this.volume + 5) : Math.max(0, this.volume - 5);
       this.dispatch(PlayerProp.Volume, parseInt(`${newVolume}`, 10));
     }));
@@ -143,8 +136,7 @@ export class VolumeControl {
   }
 
   private onKeyDown(event: KeyboardEvent) {
-    const { keyCode } = event;
-    if ((keyCode !== 37) && (keyCode !== 39)) return;
+    if ((event.key !== 'ArrowLeft') && (event.key !== 'ArrowRight')) return;
     event.stopPropagation();
   }
 
@@ -155,8 +147,7 @@ export class VolumeControl {
         onMouseLeave={this.onHideSlider.bind(this)}
       >
         <vime-mute-control
-          keyCodes={this.muteKeyCodes}
-          keyboardHint={this.muteKeyboardHint}
+          keys={this.muteKeys}
           lowVolumeIcon={this.lowVolumeIcon}
           highVolumeIcon={this.highVolumeIcon}
           mutedIcon={this.mutedIcon}

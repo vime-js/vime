@@ -104,7 +104,7 @@ export class DefaultSettings {
     this.textTracksDisposal.empty();
   }
 
-  private onPlaybackRateSelected(event: Event) {
+  private onPlaybackRateSelect(event: Event) {
     const radio = event.target as HTMLVimeMenuRadioElement;
     this.dispatch(PlayerProp.PlaybackRate, parseFloat(radio.value));
   }
@@ -132,7 +132,7 @@ export class DefaultSettings {
       <vime-submenu label={this.i18n.playbackRate} hint={formatRate(this.playbackRate)}>
         <vime-menu-radio-group
           value={`${this.playbackRate}`}
-          onCheck={this.onPlaybackRateSelected.bind(this)}
+          onCheck={this.onPlaybackRateSelect.bind(this)}
         >
           {radios}
         </vime-menu-radio-group>
@@ -140,7 +140,7 @@ export class DefaultSettings {
     );
   }
 
-  private onPlaybackQualitySelected(event: Event) {
+  private onPlaybackQualitySelect(event: Event) {
     const radio = event.target as HTMLVimeMenuRadioElement;
     this.dispatch(PlayerProp.PlaybackQuality, radio.value);
   }
@@ -178,7 +178,7 @@ export class DefaultSettings {
       <vime-submenu label={this.i18n.playbackQuality} hint={this.playbackQuality}>
         <vime-menu-radio-group
           value={this.playbackQuality}
-          onCheck={this.onPlaybackQualitySelected.bind(this)}
+          onCheck={this.onPlaybackQualitySelect.bind(this)}
         >
           {radios}
         </vime-menu-radio-group>
@@ -186,7 +186,7 @@ export class DefaultSettings {
     );
   }
 
-  private async onCaptionChecked(event: Event) {
+  private async onCaptionSelect(event: Event) {
     const radio = event.target as HTMLVimeMenuRadioElement;
     const index = parseInt(radio.value, 10);
 
@@ -197,6 +197,7 @@ export class DefaultSettings {
 
     const track = Array.from(this.textTracks ?? [])[index];
     if (!isUndefined(track)) {
+      if (!isUndefined(this.currentCaption)) this.currentCaption!.mode = 'disabled';
       track.mode = 'showing';
       this.dispatch(PlayerProp.IsCaptionsActive, true);
     }
@@ -240,7 +241,7 @@ export class DefaultSettings {
       >
         <vime-menu-radio-group
           value={groupValue}
-          onCheck={this.onCaptionChecked.bind(this)}
+          onCheck={this.onCaptionSelect.bind(this)}
         >
           {radios}
         </vime-menu-radio-group>

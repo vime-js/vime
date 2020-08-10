@@ -22,15 +22,14 @@ currently set.
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                                          | Type                             | Default                |
-| ------------------ | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ---------------------- |
-| `hideIcon`         | `hide-icon`         | The URL to an SVG element or fragment to load.                                                                                                       | `string`                         | `'#vime-captions-off'` |
-| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                         | `boolean`                        | `false`                |
-| `keyCodes`         | `key-codes`         | A pipe (`\|`) seperated string of JS key codes, that when caught in a `keydown` event, will trigger a `click` event on the control.                  | `string \| undefined`            | `'67'`                 |
-| `keyboardHint`     | `keyboard-hint`     | If the `keyCodes` prop is provided, this prop can provide a hint to the user inside the tooltip for what keys can be pressed to trigger the control. | `string \| undefined`            | `'(c)'`                |
-| `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                           | `number`                         | `1`                    |
-| `showIcon`         | `show-icon`         | The URL to an SVG element or fragment to load.                                                                                                       | `string`                         | `'#vime-captions-on'`  |
-| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                      | `"left" \| "right" \| undefined` | `undefined`            |
+| Property           | Attribute           | Description                                                                                                                                                   | Type                             | Default                |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ---------------------- |
+| `hideIcon`         | `hide-icon`         | The URL to an SVG element or fragment to load.                                                                                                                | `string`                         | `'#vime-captions-off'` |
+| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                                  | `boolean`                        | `false`                |
+| `keys`             | `keys`              | A slash (`/`) seperated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string \| undefined`            | `'c'`                  |
+| `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                                    | `number`                         | `1`                    |
+| `showIcon`         | `show-icon`         | The URL to an SVG element or fragment to load.                                                                                                                | `string`                         | `'#vime-captions-on'`  |
+| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" \| "right" \| undefined` | `undefined`            |
 
 
 ## Dependencies

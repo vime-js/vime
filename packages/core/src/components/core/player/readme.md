@@ -309,6 +309,7 @@ Type: `Promise<void>`
 
 | Name                                | Description                                                                                                                |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `--player-bg`                       | The background color of the player.                                                                                        |
 | `--player-box-shadow`               | The shadow cast around the player frame.                                                                                   |
 | `--player-fade-transition`          | The default transition used throughout the player for fading elements in and out.                                          |
 | `--player-font-family`              | A custom font family to be used throughout the player.                                                                     |

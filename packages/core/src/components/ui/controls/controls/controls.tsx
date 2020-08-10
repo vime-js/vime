@@ -77,7 +77,9 @@ export class Controls {
    * Pins the controls to the defined position inside the video player. This has no effect when
    * the view is of type `audio`.
    */
-  @Prop() pin: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'center' = 'bottomLeft';
+  @Prop({
+    reflect: true,
+  }) pin: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'center' = 'bottomLeft';
 
   /**
    * The length in milliseconds that the controls are active for before fading out. Audio players

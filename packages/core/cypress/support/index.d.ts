@@ -81,6 +81,28 @@ declare namespace Cypress {
      * Finds the `vime-player` element and seeks to the given time.
      */
     seekTo(time: number): Chainable<JQuery<HTMLVimePlayerElement>>
+
+    /**
+     * Finds a player control by its `aria-label` property.
+     */
+    control(label: string): Chainable<
+    JQuery<HTMLButtonElement | HTMLInputElement | HTMLVimeMenuItemElement>
+    >
+
+    /**
+     * Finds the player controls at the given position.
+     */
+    controls(position?: 'top' | 'center' | 'bottom'): Chainable<JQuery<HTMLVimeControlsElement>>
+
+    /**
+     * Finds the tooltip for the given subject based on its `aria-describedby` property.
+     */
+    tooltip(): Chainable<JQuery<HTMLVimeTooltipElement>>
+
+    /**
+     * Finds the menu for the given subject based on its `aria-controls` property.
+     */
+    menu(): Chainable<JQuery<HTMLVimeMenuElement>>
   }
 
   interface Chainer<Subject> {

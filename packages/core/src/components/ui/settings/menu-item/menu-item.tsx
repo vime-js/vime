@@ -115,7 +115,7 @@ export class MenuItem {
         tabindex="0"
         aria-label={this.label}
         aria-hidden={this.hidden ? 'true' : 'false'}
-        aria-haspopup={isMenuDefined ? 'true' : 'false'}
+        aria-haspopup={isMenuDefined ? 'true' : undefined}
         aria-controls={this.menu}
         aria-expanded={isMenuDefined ? hasExpanded : undefined}
         aria-checked={isCheckedDefined ? isChecked : undefined}

@@ -342,7 +342,6 @@ export class Player implements MediaPlayer {
     }
 
     this.onActiveCaptionChange();
-
     this.textTracksChangeListener = listen(
       this.textTracks!,
       'change',

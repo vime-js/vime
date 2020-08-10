@@ -1,15 +1,11 @@
 export interface KeyboardControl {
   /**
-   * A pipe (`|`) seperated string of JS key codes, that when caught in a `keydown` event, will
-   * trigger a `click` event on the control.
+   * A slash (`/`) seperated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in
+   * a `keydown` event, will trigger a `click` event on the control.
    *
-   * @see https://keycode.info
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
+   *
+   * @example `f/Esc`
    */
-  keyCodes?: string;
-
-  /**
-   * If the `keyCodes` prop is provided, this prop can provide a hint to the user inside the
-   * tooltip for what keys can be pressed to trigger the control.
-   */
-  keyboardHint?: string;
+  keys?: string;
 }

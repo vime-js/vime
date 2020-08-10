@@ -2,7 +2,7 @@
 
 exports[`should be structurally sound when active 1`] = `
 <vime-caption-control class="hidden">
-  <vime-control hidden="" keycodes="67" label="Captions" scale="1">
+  <vime-control hidden="" keys="c" label="Captions" scale="1">
     <vime-icon href="#vime-captions-on"></vime-icon>
     <vime-tooltip>
       Disable subtitles/captions (c)
@@ -13,7 +13,7 @@ exports[`should be structurally sound when active 1`] = `
 
 exports[`should be structurally sound when not active 1`] = `
 <vime-caption-control class="hidden">
-  <vime-control hidden="" keycodes="67" label="Captions" scale="1">
+  <vime-control hidden="" keys="c" label="Captions" scale="1">
     <vime-icon href="#vime-captions-off"></vime-icon>
     <vime-tooltip>
       Enable subtitles/captions (c)

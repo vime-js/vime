@@ -28,7 +28,7 @@ vime-player {
   width: 100%;
   display: block;
   max-width: 100%;
-  min-width: 414px;
+  min-width: 275px;
   min-height: 40px;
   position: relative;
   text-shadow: none;
@@ -63,10 +63,6 @@ vime-player {
 
   &.idle {
     cursor: none;
-  }
-
-  &.audio {
-    min-width: 300px;
   }
 
   &.video {

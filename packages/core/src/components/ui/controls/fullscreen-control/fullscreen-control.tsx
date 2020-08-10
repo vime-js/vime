@@ -46,12 +46,7 @@ export class FullscreenControl implements KeyboardControl {
   /**
    * @inheritdoc
    */
-  @Prop() keyCodes?: string = '70';
-
-  /**
-   * @inheritdoc
-   */
-  @Prop() keyboardHint?: string = '(f)';
+  @Prop() keys?: string = 'f';
 
   /**
    * @internal
@@ -84,8 +79,7 @@ export class FullscreenControl implements KeyboardControl {
 
   render() {
     const tooltip = this.isFullscreenActive ? this.i18n.exitFullscreen : this.i18n.enterFullscreen;
-    const tooltipWithHint = (!isUndefined(this.keyCodes) && !isUndefined(this.keyboardHint))
-      ? `${tooltip} ${this.keyboardHint}` : tooltip;
+    const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
       <Host
@@ -96,7 +90,8 @@ export class FullscreenControl implements KeyboardControl {
         <vime-control
           scale={this.scale}
           label={this.i18n.fullscreen}
-          keyCodes={this.keyCodes}
+          keys={this.keys}
+          pressed={this.isFullscreenActive}
           hidden={!this.canSetFullscreen}
           onClick={this.onClick.bind(this)}
         >

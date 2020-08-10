@@ -45,12 +45,7 @@ export class MuteControl implements KeyboardControl {
   /**
    * @inheritdoc
    */
-  @Prop() keyCodes?: string = '77';
-
-  /**
-   * @inheritdoc
-   */
-  @Prop() keyboardHint?: string = '(m)';
+  @Prop() keys?: string = 'm';
 
   /**
    * @internal
@@ -82,14 +77,14 @@ export class MuteControl implements KeyboardControl {
 
   render() {
     const tooltip = this.muted ? this.i18n.unmute : this.i18n.mute;
-    const tooltipWithHint = (!isUndefined(this.keyCodes) && !isUndefined(this.keyboardHint))
-      ? `${tooltip} ${this.keyboardHint}` : tooltip;
+    const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
       <vime-control
         scale={this.scale}
         label={this.i18n.mute}
-        keyCodes={this.keyCodes}
+        pressed={this.muted}
+        keys={this.keys}
         onClick={this.onClick.bind(this)}
       >
         <vime-icon href={this.getIcon()} />

@@ -333,8 +333,7 @@ export const runTestHarness = (provider: MediaProvider) => {
         });
     });
 
-    // @TODO doesn't work on HTML5 because the video fullscreen API is deprecated in WebKit but
-    // required on iOS.
+    // @TODO wait for Cypress to support native events.
     it.skip('should toggle fullscreen', () => {
       cy.player()
         .then(async ($player) => {
@@ -355,7 +354,7 @@ export const runTestHarness = (provider: MediaProvider) => {
         });
     });
 
-    // @TODO How to disable user gesture requirement for entering PiP?
+    // @TODO wait for Cypress to support native events.
     it.skip('should toggle picture-in-picture', () => {
       cy.player()
         .then(async ($player) => {

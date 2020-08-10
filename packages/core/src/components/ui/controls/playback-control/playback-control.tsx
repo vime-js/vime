@@ -40,12 +40,7 @@ export class PlaybackControl implements KeyboardControl {
   /**
    * @inheritdoc
    */
-  @Prop() keyCodes?: string = '75';
-
-  /**
-   * @inheritdoc
-   */
-  @Prop() keyboardHint?: string = '(k)';
+  @Prop() keys?: string = 'k';
 
   /**
    * @internal
@@ -67,14 +62,14 @@ export class PlaybackControl implements KeyboardControl {
 
   render() {
     const tooltip = this.paused ? this.i18n.play : this.i18n.pause;
-    const tooltipWithHint = (!isUndefined(this.keyCodes) && !isUndefined(this.keyboardHint))
-      ? `${tooltip} ${this.keyboardHint}` : tooltip;
+    const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
       <vime-control
         scale={this.scale}
         label={this.i18n.playback}
-        keyCodes={this.keyCodes}
+        keys={this.keys}
+        pressed={!this.paused}
         onClick={this.onClick.bind(this)}
       >
         <vime-icon href={this.paused ? this.playIcon : this.pauseIcon} />

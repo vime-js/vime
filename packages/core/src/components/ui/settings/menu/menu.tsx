@@ -3,7 +3,6 @@
 import {
   h, Host, Component, Prop, Listen, Event, EventEmitter, Element, State, Watch, Method, writeTask,
 } from '@stencil/core';
-import { MenuKeyCode } from './MenuKeyCode';
 import { buildNoAncestorSelector } from '../../../../utils/dom';
 import { isUndefined, isNull } from '../../../../utils/unit';
 
@@ -171,31 +170,31 @@ export class Menu {
     if (!this.active || this.menuItems.length === 0) return;
     event.preventDefault();
     event.stopPropagation();
-    switch (event.keyCode) {
-      case MenuKeyCode.Esc:
+    switch (event.key) {
+      case 'Escape':
         this.onClose();
         break;
-      case MenuKeyCode.Down:
-      case MenuKeyCode.Tab:
+      case 'ArrowDown':
+      case 'Tab':
         this.focusMenuItem(this.currFocusedMenuItem + 1);
         break;
-      case MenuKeyCode.Up:
+      case 'ArrowUp':
         this.focusMenuItem(this.currFocusedMenuItem - 1);
         break;
-      case MenuKeyCode.Left:
+      case 'ArrowLeft':
         this.onClose();
         break;
-      case MenuKeyCode.Right:
-      case MenuKeyCode.Enter:
-      case MenuKeyCode.Space:
+      case 'ArrowRight':
+      case 'Enter':
+      case ' ':
         this.openSubmenu();
         break;
-      case MenuKeyCode.Home:
-      case MenuKeyCode.PageUp:
+      case 'Home':
+      case 'PageUp':
         this.focusMenuItem(0);
         break;
-      case MenuKeyCode.End:
-      case MenuKeyCode.PageDown:
+      case 'End':
+      case 'PageDown':
         this.focusMenuItem(this.menuItems!.length - 1);
         break;
     }
@@ -241,7 +240,7 @@ export class Menu {
 
   @Listen('keydown', { target: 'window' })
   onWindowKeyDown(event: KeyboardEvent) {
-    if (this.active && (event.keyCode === MenuKeyCode.Esc)) this.onClose();
+    if (this.active && (event.key === 'Escape')) this.onClose();
   }
 
   render() {

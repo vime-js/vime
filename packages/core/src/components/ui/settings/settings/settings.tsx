@@ -87,8 +87,7 @@ export class Settings {
     this.controller.menu = this.id;
     this.disposal.add(listen(this.controller, 'click', () => { this.active = !this.active; }));
     this.disposal.add(listen(this.controller, 'keydown', (event: KeyboardEvent) => {
-      // Enter (13)
-      if (event.keyCode !== 13) return;
+      if (event.key !== 'Enter') return;
       // We're looking for !active because the `click` event above will toggle it to active.
       if (!this.active) this.menu.focusOnOpen();
     }));

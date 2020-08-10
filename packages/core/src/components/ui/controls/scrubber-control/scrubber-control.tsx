@@ -62,10 +62,9 @@ export class ScrubberControl {
     const player = findRootPlayer(this);
 
     const onKeyDown = (event: KeyboardEvent) => {
-      const { keyCode } = event;
-      if ((keyCode !== 37) && (keyCode !== 39)) return;
+      if ((event.key !== 'ArrowLeft') && (event.key !== 'ArrowRight')) return;
       event.preventDefault();
-      const isLeftArrow = (keyCode === 37);
+      const isLeftArrow = (event.key === 'ArrowLeft');
       const seekTo = isLeftArrow
         ? Math.max(0, this.currentTime - 5)
         : Math.min(this.duration, this.currentTime + 5);

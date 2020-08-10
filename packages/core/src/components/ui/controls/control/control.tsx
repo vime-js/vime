@@ -32,20 +32,18 @@ export class Control implements KeyboardControl {
   /**
    * @inheritdoc
    */
-  @Prop() keyCodes?: string;
+  @Prop() keys?: string;
 
-  @Watch('keyCodes')
-  onKeyCodesChange() {
+  @Watch('keys')
+  onKeysChange() {
     this.keyboardDisposal.empty();
-    if (isUndefined(this.keyCodes)) return;
+    if (isUndefined(this.keys)) return;
 
     const player = findRootPlayer(this);
-    const codes = (this.keyCodes! as string).split('|').map((code) => parseInt(code, 10));
+    const codes = (this.keys! as string).split('/');
 
-    this.keyboardDisposal.add(listen(player, 'keydown', (event: Event) => {
-      const { keyCode } = event as KeyboardEvent;
-      const match = (codes as number[]).includes(keyCode);
-      if (match) { this.button.click(); }
+    this.keyboardDisposal.add(listen(player, 'keydown', (event: KeyboardEvent) => {
+      if (codes.includes(event.key)) { this.button.click(); }
     }));
   }
 
@@ -77,6 +75,12 @@ export class Control implements KeyboardControl {
   @Prop() expanded?: boolean;
 
   /**
+   * If the control is a toggle, this indicated whether the control is in a "pressed" state or not.
+   * Sets the `aria-pressed` property.
+   */
+  @Prop() pressed?: boolean;
+
+  /**
    * Scale the size of the control up/down by the amount given.
    */
   @Prop() scale = 1;
@@ -93,7 +97,7 @@ export class Control implements KeyboardControl {
 
   connectedCallback() {
     this.findTooltip();
-    this.onKeyCodesChange();
+    this.onKeysChange();
   }
 
   disconnectedCallback() {
@@ -160,9 +164,12 @@ export class Control implements KeyboardControl {
           id={this.identifier}
           type="button"
           aria-label={this.label}
-          aria-haspopup={!isUndefined(this.menu) ? 'true' : 'false'}
+          aria-haspopup={!isUndefined(this.menu) ? 'true' : undefined}
           aria-controls={this.menu}
-          aria-expanded={!isUndefined(this.menu) ? (this.expanded ?? false) : undefined}
+          // eslint-disable-next-line no-nested-ternary
+          aria-expanded={!isUndefined(this.menu) ? (this.expanded ? 'true' : 'false') : undefined}
+          // eslint-disable-next-line no-nested-ternary
+          aria-pressed={!isUndefined(this.pressed) ? (this.pressed ? 'true' : 'false') : undefined}
           aria-hidden={this.hidden ? 'true' : 'false'}
           aria-describedby={this.describedBy}
           onTouchStart={this.onTouchStart.bind(this)}

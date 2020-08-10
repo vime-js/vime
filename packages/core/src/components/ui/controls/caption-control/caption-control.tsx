@@ -43,12 +43,7 @@ export class CaptionControl implements KeyboardControl {
   /**
    * @inheritdoc
    */
-  @Prop() keyCodes?: string = '67';
-
-  /**
-   * @inheritdoc
-   */
-  @Prop() keyboardHint?: string = '(c)';
+  @Prop() keys?: string = 'c';
 
   /**
    * @internal
@@ -75,8 +70,7 @@ export class CaptionControl implements KeyboardControl {
 
   render() {
     const tooltip = this.isCaptionsActive ? this.i18n.disableCaptions : this.i18n.enableCaptions;
-    const tooltipWithHint = (!isUndefined(this.keyCodes) && !isUndefined(this.keyboardHint))
-      ? `${tooltip} ${this.keyboardHint}` : tooltip;
+    const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
       <Host
@@ -87,8 +81,9 @@ export class CaptionControl implements KeyboardControl {
         <vime-control
           scale={this.scale}
           label={this.i18n.captions}
-          keyCodes={this.keyCodes}
+          keys={this.keys}
           hidden={isUndefined(this.currentCaption)}
+          pressed={this.isCaptionsActive}
           onClick={this.onClick.bind(this)}
         >
           <vime-icon href={this.isCaptionsActive ? this.showIcon : this.hideIcon} />

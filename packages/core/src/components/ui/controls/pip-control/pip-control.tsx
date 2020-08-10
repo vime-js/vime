@@ -41,12 +41,7 @@ export class PiPControl implements KeyboardControl {
   /**
    * @inheritdoc
    */
-  @Prop() keyCodes?: string = '80';
-
-  /**
-   * @inheritdoc
-   */
-  @Prop() keyboardHint?: string = '(p)';
+  @Prop() keys?: string = 'p';
 
   /**
    * Scale the size of the control up/down by the amount given.
@@ -84,8 +79,7 @@ export class PiPControl implements KeyboardControl {
 
   render() {
     const tooltip = this.isPiPActive ? this.i18n.exitPiP : this.i18n.enterPiP;
-    const tooltipWithHint = (!isUndefined(this.keyCodes) && !isUndefined(this.keyboardHint))
-      ? `${tooltip} ${this.keyboardHint}` : tooltip;
+    const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
       <Host
@@ -96,7 +90,8 @@ export class PiPControl implements KeyboardControl {
         <vime-control
           scale={this.scale}
           label={this.i18n.pip}
-          keyCodes={this.keyCodes}
+          keys={this.keys}
+          pressed={this.isPiPActive}
           hidden={!this.canSetPiP}
           onClick={this.onClick.bind(this)}
         >

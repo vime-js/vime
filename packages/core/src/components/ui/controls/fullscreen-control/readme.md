@@ -22,15 +22,14 @@ requested (checked via the `canSetFullscreen()` player method).
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                                          | Type                             | Default                    |
-| ------------------ | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------------------------- |
-| `enterIcon`        | `enter-icon`        | The URL to an SVG element or fragment to display for entering fullscreen.                                                                            | `string`                         | `'#vime-enter-fullscreen'` |
-| `exitIcon`         | `exit-icon`         | The URL to an SVG element or fragment to display for exiting fullscreen.                                                                             | `string`                         | `'#vime-exit-fullscreen'`  |
-| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                         | `boolean`                        | `false`                    |
-| `keyCodes`         | `key-codes`         | A pipe (`\|`) seperated string of JS key codes, that when caught in a `keydown` event, will trigger a `click` event on the control.                  | `string \| undefined`            | `'70'`                     |
-| `keyboardHint`     | `keyboard-hint`     | If the `keyCodes` prop is provided, this prop can provide a hint to the user inside the tooltip for what keys can be pressed to trigger the control. | `string \| undefined`            | `'(f)'`                    |
-| `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                           | `number`                         | `1`                        |
-| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                      | `"left" \| "right" \| undefined` | `undefined`                |
+| Property           | Attribute           | Description                                                                                                                                                   | Type                             | Default                    |
+| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------------------------- |
+| `enterIcon`        | `enter-icon`        | The URL to an SVG element or fragment to display for entering fullscreen.                                                                                     | `string`                         | `'#vime-enter-fullscreen'` |
+| `exitIcon`         | `exit-icon`         | The URL to an SVG element or fragment to display for exiting fullscreen.                                                                                      | `string`                         | `'#vime-exit-fullscreen'`  |
+| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                                  | `boolean`                        | `false`                    |
+| `keys`             | `keys`              | A slash (`/`) seperated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string \| undefined`            | `'f'`                      |
+| `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                                    | `number`                         | `1`                        |
+| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" \| "right" \| undefined` | `undefined`                |
 
 
 ## Dependencies
