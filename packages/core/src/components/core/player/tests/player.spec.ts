@@ -339,6 +339,7 @@ describe('props', () => {
 
 describe('methods', () => {
   it('should return provider when calling getProvider()', async () => {
+    // eslint-disable-next-line no-shadow
     const provider = await player.getProvider();
     expect(provider).toEqual(provider);
   });
