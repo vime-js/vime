@@ -111,7 +111,6 @@ $: npm run serve
 - `serve`: This script will boot the development environment at `http://localhost:3333`.
 - `test:unit.watch`: This script will run all unit tests, and watch for file changes to re-run.
 - `cy:open`: This script will launch the Cypress GUI for performing E2E testing.
-- `cy:run`: This script will run the Cypress tests in headless mode.
 - `generate:provider`: This script will create a new media provider.
 
 ## 🖌️ Code Style
@@ -212,8 +211,8 @@ finalize the `getAdapter` method.
 
 As we're building out our provider we'll want to see and test the player in the browser. There's 
 already a file setup to do this. Go to `tests/providers.html` and add the provider just like the 
-others have already been done so. You can serve the dev environment `npm run serve`, and visit the 
-same file path in the browser to interact with it.
+others have already been done so. You can serve the dev environment `npm run serve`, and select 
+the file through the explorer to begin interacting with it in the browser.
 
 When it comes to running automated E2E tests on the provider we can head over to 
 `cypress/tests/providers` and add our provider just like the others have already been done so. Launch
@@ -224,7 +223,7 @@ the minimum you should definitely run those skipped tests manually.
 ## 🖥️ UI Components
 
 UI components are visually displayed elements inside the media player that may be interactable 
-such as a playback control, captions etc. The [Core](#-core) section above describes mostly what 
+such as a playback control, slider etc. The [Core](#-core) section above describes mostly what 
 you need to know to create a UI component, and you can refer to existing components to guide you.
 
 When creating new components you need to be aware of if it'll be displayed in an audio or video 
@@ -238,22 +237,23 @@ If you're creating any CSS variables then make sure to document them (see existi
 how to do so), and set it's value inside `src/globals/theme.css`. If the component has a light 
 theme, set the variable values inside the `vime-player[theme="light"]` block as well.
 
-UI components can be structurally, visually, unit or E2E tested. All test files are located either 
-in the `tests` directory next to the component, or in the `cypress` directory for E2E testing.
+UI components can be structurally, visually, unit or E2E tested. All UI test files are located 
+either in the `tests` directory next to the component or in `cypress/tests/ui`.
 
 - Structural tests inform us on whether what's rendered in the DOM is correct. We can use Jest 
 snapshots to get the structure of the component's DOM tree and validate it.
 - Visual tests are a manual test in which we validate the correctness of the component by seeing,
 and interacting with it directly in the browser. You can create a `index.html` file in the `tests` 
-directory and setup your component. Visit it by serving the development environment `npm run serve`, 
-and navigating to the file through the explorer.
+directory of the component, and visit it by serving the development environment `npm run serve`, 
+and navigating to the file through the explorer. If it's part of the default UI then see 
+`tests/ui.html` in the root of the `core` package.
 - Unit tests enable us to test specific state changes and their outcomes, such as the changing of a 
-component property. Create the `component.spec.ts` file in the `tests` directory and refer to 
-existing component tests to guide you here. For some additional context, review the 
+component property. Create the `component.spec.ts` file in the `tests` directory of the components,
+and refer to existing tests to guide you here. For some additional context, review the 
 [Stencil unit testing guide](https://stenciljs.com/docs/unit-testing).
 - E2E tests allow us to behave as the end user, and see if components interact with each other 
 correctly in a real world scenario. These are performed with Cypress. Refer to existing tests 
-in the `cypress` directory to guide you.
+in the `cypress/tests/ui` directory to guide you.
 
 When you've finished writing up the component and testing it, run the `npm run build` command to 
 build/update the `readme.md` file for it. Write a small description about the component and add an 

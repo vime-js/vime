@@ -25,15 +25,18 @@
     "test:unit": "stencil test --spec --max-workers=2",
     "test:unit.debug": "pnpx --node-arg=\"--inspect-brk\" stencil test --spec",
     "test:unit.watch": "stencil test --spec --watchAll --max-workers=2",
-    "test:e2e": "npm run build && npm run coverage:instrument && start-server-and-test serve:sirv http://localhost:3334/tests/ui.html cy:run",
-    "test:ci": "rimraf .nyc_output && npm run test:unit --coverage && npm run test:e2e && npm run coverage:combine",
+    "test:e2e.ui": "npm run build && npm run coverage:instrument && start-server-and-test serve:sirv http://localhost:3334/tests/ui.html cy:run.ui",
+    "test:e2e.providers": "npm run build && start-server-and-test serve:sirv http://localhost:3334/tests/providers.html cy:run.providers",
+    "test:ci": "rimraf .nyc_output && npm run test:unit --coverage && npm run test:e2e.ui && npm run coverage:combine",
     "coverage:instrument": "nyc instrument dist --in-place",
     "coverage:combine": "nyc report --reporter lcov --reporter text --report-dir coverage",
     "generate": "stencil generate",
     "generate:provider": "node scripts/new-provider.js",
     "release": "semantic-release -e ../../tools/semantic-release",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "cy:run.ui": "cypress run --spec \"cypress/tests/ui/**/*\"",
+    "cy:run.providers": "cypress run --spec \"cypress/tests/providers/**/*\""
   },
   "dependencies": {
     "stencil-wormhole": "^3.0.1"

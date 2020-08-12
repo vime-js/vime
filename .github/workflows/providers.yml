@@ -1,0 +1,22 @@
+name: Providers
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install pnpm
+        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+      - name: Install dependencies
+        run: pnpm install
+      - name: Test
+        run: pnpm run test:e2e.providers --filter @vime/core
