@@ -9,11 +9,6 @@
   },
   "scripts": {
     "lint": "eslint packages/*/src/**/*.{ts,tsx} packages/*/cypress/**/*.{js,ts} --ignore-path .gitignore --fix",
-    "build": "pnpm run build --recursive",
-    "test": "pnpm run test --recursive",
-    "test:ci": "pnpm run test:ci --recursive",
-    "release": "pnpm run release --recursive",
-    "ci": "npm run lint && npm run test:ci && npm run build && npm run release",
     "script:size": "node scripts/core-dist-size.js"
   },
   "devDependencies": {

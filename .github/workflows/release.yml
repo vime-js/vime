@@ -21,15 +21,15 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Build
-        run: npm run build
+        run: pnpm run build --filter @vime/core
       - name: Test
-        run: npm run test:ci
+        run: pnpm run test:ci --filter @vime/core
       - name: Coverage
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: cd packages/core && npx codecov
+        run: cd packages/core && pnpx codecov
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm run release
+        run: pnpm run release --filter @vime/core
