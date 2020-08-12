@@ -80,6 +80,7 @@ roles/states/properties and keyboard support.
 - 🏎️ &nbsp;Performant with [preconnections](https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance) and [lazy loading](https://www.imperva.com/learn/performance/lazy-loading) out of the box.
 - ️🧰 &nbsp;Awesome default UI's for audio/video/live media on mobile and desktop.
 - 🛠 &nbsp;Comprehensive player API.
+- 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
 - 🏠 &nbsp;Feel right at home with HTML/CSS/JS thanks to web components. 
 - 🍽️ &nbsp;Serve it with your favourite framework whether it's React, Vue, Angular or whatever the cool 
 kids on the block use today.
