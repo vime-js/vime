@@ -19,6 +19,7 @@ log.txt
 *.sublime-project
 *.sublime-workspace
 
+.nyc_output/
 .stencil/
 .idea/
 .vscode/
