@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should be structurally sound if checked radio button 1`] = `
-<vime-menu-item aria-checked="true" aria-haspopup="false" aria-hidden="false" aria-label="Label" class="notTouch" label="Label" role="menuitemradio" tabindex="0">
+<vime-menu-item aria-checked="true" aria-hidden="false" aria-label="Label" class="notTouch" label="Label" role="menuitemradio" tabindex="0">
   <vime-icon href="#vime-checkmark"></vime-icon>
   Label
 </vime-menu-item>
@@ -15,7 +15,7 @@ exports[`should be structurally sound if expanded navigation item 1`] = `
 `;
 
 exports[`should be structurally sound if item has a badge 1`] = `
-<vime-menu-item aria-haspopup="false" aria-hidden="false" aria-label="Label" class="notTouch" label="Label" role="menuitem" tabindex="0">
+<vime-menu-item aria-hidden="false" aria-label="Label" class="notTouch" label="Label" role="menuitem" tabindex="0">
   Label
   <span class="spacer"></span>
   <span class="badge">
@@ -25,7 +25,7 @@ exports[`should be structurally sound if item has a badge 1`] = `
 `;
 
 exports[`should be structurally sound if item has hint 1`] = `
-<vime-menu-item aria-haspopup="false" aria-hidden="false" aria-label="Label" class="notTouch" label="Label" role="menuitem" tabindex="0">
+<vime-menu-item aria-hidden="false" aria-label="Label" class="notTouch" label="Label" role="menuitem" tabindex="0">
   Label
   <span class="spacer"></span>
   <span class="hint">
@@ -46,13 +46,13 @@ exports[`should be structurally sound if navigation item 1`] = `
 `;
 
 exports[`should be structurally sound if plain 1`] = `
-<vime-menu-item aria-haspopup="false" aria-hidden="false" aria-label="Label" class="notTouch" label="Label" role="menuitem" tabindex="0">
+<vime-menu-item aria-hidden="false" aria-label="Label" class="notTouch" label="Label" role="menuitem" tabindex="0">
   Label
 </vime-menu-item>
 `;
 
 exports[`should be structurally sound if unchecked radio button 1`] = `
-<vime-menu-item aria-checked="false" aria-haspopup="false" aria-hidden="false" aria-label="Label" class="notTouch" label="Label" role="menuitemradio" tabindex="0">
+<vime-menu-item aria-checked="false" aria-hidden="false" aria-label="Label" class="notTouch" label="Label" role="menuitemradio" tabindex="0">
   <vime-icon href="#vime-checkmark"></vime-icon>
   Label
 </vime-menu-item>

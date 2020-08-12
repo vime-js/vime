@@ -39,6 +39,7 @@ export const config: Config = {
     setupFilesAfterEnv: [
       './src/globals/jest.js',
     ],
+    coverageDirectory: 'jest-coverage',
     // @ts-ignore
     watchPlugins: [
       'jest-watch-typeahead/filename',

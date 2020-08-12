@@ -6,7 +6,7 @@ exports[`playback quality submenu should be structurally sound 1`] = `
   <vime-menu aria-hidden="true" aria-labelledby="" id="vime-settings-5" role="menu" tabindex="-1">
     <!---->
     <div>
-      <vime-menu-item aria-haspopup="false" aria-hidden="false" aria-label="Playback Rate" class="notTouch" role="menuitem" tabindex="0">
+      <vime-menu-item aria-hidden="false" aria-label="Playback Rate" class="notTouch" role="menuitem" tabindex="0">
         Playback Rate
         <span class="spacer"></span>
         <span class="hint">
@@ -29,7 +29,7 @@ exports[`playback quality submenu should be structurally sound 1`] = `
             <vime-menu-radio-group>
               <!---->
               <vime-menu-radio>
-                <vime-menu-item aria-checked="false" aria-haspopup="false" aria-hidden="false" aria-label="1080p" class="notTouch" role="menuitemradio" tabindex="0">
+                <vime-menu-item aria-checked="false" aria-hidden="false" aria-label="1080p" class="notTouch" role="menuitemradio" tabindex="0">
                   <vime-icon href="#vime-checkmark"></vime-icon>
                   1080p
                   <span class="spacer"></span>
@@ -39,13 +39,13 @@ exports[`playback quality submenu should be structurally sound 1`] = `
                 </vime-menu-item>
               </vime-menu-radio>
               <vime-menu-radio>
-                <vime-menu-item aria-checked="true" aria-haspopup="false" aria-hidden="false" aria-label="720p" class="notTouch" role="menuitemradio" tabindex="0">
+                <vime-menu-item aria-checked="true" aria-hidden="false" aria-label="720p" class="notTouch" role="menuitemradio" tabindex="0">
                   <vime-icon href="#vime-checkmark"></vime-icon>
                   720p
                 </vime-menu-item>
               </vime-menu-radio>
               <vime-menu-radio>
-                <vime-menu-item aria-checked="false" aria-haspopup="false" aria-hidden="false" aria-label="480p" class="notTouch" role="menuitemradio" tabindex="0">
+                <vime-menu-item aria-checked="false" aria-hidden="false" aria-label="480p" class="notTouch" role="menuitemradio" tabindex="0">
                   <vime-icon href="#vime-checkmark"></vime-icon>
                   480p
                 </vime-menu-item>
@@ -54,7 +54,7 @@ exports[`playback quality submenu should be structurally sound 1`] = `
           </div>
         </vime-menu>
       </vime-submenu>
-      <vime-menu-item aria-haspopup="false" aria-hidden="false" aria-label="Subtitles/CC" class="notTouch" role="menuitem" tabindex="0">
+      <vime-menu-item aria-hidden="false" aria-label="Subtitles/CC" class="notTouch" role="menuitem" tabindex="0">
         Subtitles/CC
         <span class="spacer"></span>
         <span class="hint">
@@ -89,19 +89,19 @@ exports[`playback rate submenu should be structurally sound 1`] = `
             <vime-menu-radio-group>
               <!---->
               <vime-menu-radio>
-                <vime-menu-item aria-checked="true" aria-haspopup="false" aria-hidden="false" aria-label="Normal" class="notTouch" role="menuitemradio" tabindex="0">
+                <vime-menu-item aria-checked="true" aria-hidden="false" aria-label="Normal" class="notTouch" role="menuitemradio" tabindex="0">
                   <vime-icon href="#vime-checkmark"></vime-icon>
                   Normal
                 </vime-menu-item>
               </vime-menu-radio>
               <vime-menu-radio>
-                <vime-menu-item aria-checked="false" aria-haspopup="false" aria-hidden="false" aria-label="2" class="notTouch" role="menuitemradio" tabindex="0">
+                <vime-menu-item aria-checked="false" aria-hidden="false" aria-label="2" class="notTouch" role="menuitemradio" tabindex="0">
                   <vime-icon href="#vime-checkmark"></vime-icon>
                   2
                 </vime-menu-item>
               </vime-menu-radio>
               <vime-menu-radio>
-                <vime-menu-item aria-checked="false" aria-haspopup="false" aria-hidden="false" aria-label="3" class="notTouch" role="menuitemradio" tabindex="0">
+                <vime-menu-item aria-checked="false" aria-hidden="false" aria-label="3" class="notTouch" role="menuitemradio" tabindex="0">
                   <vime-icon href="#vime-checkmark"></vime-icon>
                   3
                 </vime-menu-item>
@@ -110,14 +110,14 @@ exports[`playback rate submenu should be structurally sound 1`] = `
           </div>
         </vime-menu>
       </vime-submenu>
-      <vime-menu-item aria-haspopup="false" aria-hidden="false" aria-label="Playback Quality" class="notTouch" role="menuitem" tabindex="0">
+      <vime-menu-item aria-hidden="false" aria-label="Playback Quality" class="notTouch" role="menuitem" tabindex="0">
         Playback Quality
         <span class="spacer"></span>
         <span class="hint">
           Auto
         </span>
       </vime-menu-item>
-      <vime-menu-item aria-haspopup="false" aria-hidden="false" aria-label="Subtitles/CC" class="notTouch" role="menuitem" tabindex="0">
+      <vime-menu-item aria-hidden="false" aria-label="Subtitles/CC" class="notTouch" role="menuitem" tabindex="0">
         Subtitles/CC
         <span class="spacer"></span>
         <span class="hint">
@@ -144,21 +144,21 @@ exports[`should be structurally sound 1`] = `
         <vime-menu aria-hidden="true" aria-labelledby="" id="vime-settings-1" role="menu" tabindex="-1">
           <!---->
           <div>
-            <vime-menu-item aria-haspopup="false" aria-hidden="false" aria-label="Playback Rate" class="notTouch" role="menuitem" tabindex="0">
+            <vime-menu-item aria-hidden="false" aria-label="Playback Rate" class="notTouch" role="menuitem" tabindex="0">
               Playback Rate
               <span class="spacer"></span>
               <span class="hint">
                 Normal
               </span>
             </vime-menu-item>
-            <vime-menu-item aria-haspopup="false" aria-hidden="false" aria-label="Playback Quality" class="notTouch" role="menuitem" tabindex="0">
+            <vime-menu-item aria-hidden="false" aria-label="Playback Quality" class="notTouch" role="menuitem" tabindex="0">
               Playback Quality
               <span class="spacer"></span>
               <span class="hint">
                 Auto
               </span>
             </vime-menu-item>
-            <vime-menu-item aria-haspopup="false" aria-hidden="false" aria-label="Subtitles/CC" class="notTouch" role="menuitem" tabindex="0">
+            <vime-menu-item aria-hidden="false" aria-label="Subtitles/CC" class="notTouch" role="menuitem" tabindex="0">
               Subtitles/CC
               <span class="spacer"></span>
               <span class="hint">

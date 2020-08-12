@@ -1,10 +1,12 @@
 {
-  "baseUrl": "http://localhost:3333/src/components",
+  "baseUrl": "http://localhost:3334/tests",
   "watchForFileChanges": false,
   "integrationFolder": "cypress/tests",
   "testFiles": "**/*.e2e.ts",
   "fixturesFolder": false,
   "supportsFolder": "cypress/support/index.ts",
+  "video": false,
+  "screenshotOnRunFailure": false,
   "ignoreTestFiles": [
     "**/__snapshots__/*",
     "**/__image_snapshots__/*"

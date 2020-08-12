@@ -2,7 +2,7 @@
 
 exports[`should be structurally sound when not paused 1`] = `
 <vime-playback-control>
-  <vime-control keys="k" label="Playback" scale="1">
+  <vime-control keys="k" label="Playback" pressed="" scale="1">
     <vime-icon href="#vime-pause"></vime-icon>
     <vime-tooltip>
       Pause (k)

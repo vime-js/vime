@@ -6,6 +6,7 @@ packages/*/dist/
 packages/*/www/
 packages/*/loader/
 packages/*/cypress/videos/
+packages/*/cypress/screenshots/
 
 *~
 *.sw[mnpcod]
@@ -24,6 +25,9 @@ log.txt
 .sass-cache/
 .versions/
 node_modules/
+coverage/
+jest-coverage/
+cypress-coverage/
 $RECYCLE.BIN/
 
 .DS_Store

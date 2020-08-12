@@ -6,9 +6,9 @@
   <title>User Interface</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <link rel="stylesheet" href="../../globals/test.css">
-  <link rel="stylesheet" href="../../../../../dist/vime/vime.css">
-  <script type="module" src="../../../../../dist/vime/vime.esm.js"></script>
+  <link rel="stylesheet" href="/src/globals/test.css">
+  <link rel="stylesheet" href="/dist/vime/vime.css">
+  <script type="module" src="/dist/vime/vime.esm.js"></script>
 </head>
 
 <body class="center">
@@ -39,15 +39,15 @@
 
   const audio = `
     <vime-audio cross-origin>
-      <source data-src="http://localhost:3334/audio/audio.mp3" type="audio/mp3">
+      <source data-src="http://localhost:3334/media/audio/audio.mp3" type="audio/mp3">
     </vime-audio>
   `
   
   const video = `
-    <vime-video cross-origin poster="http://localhost:3334/video/poster.png">
-      <source data-src="http://localhost:3334/video/720p.mp4" type="video/mp4">
-      <track default kind="subtitles" src="http://localhost:3334/video/subs/english.vtt" srclang="en" label="English" >
-      <track kind="subtitles" src="http://localhost:3334/video/subs/spanish.vtt" srclang="es" label="Spanish" >
+    <vime-video cross-origin poster="http://localhost:3334/media/video/poster.png">
+      <source data-src="http://localhost:3334/media/video/720p.mp4" type="video/mp4">
+      <track default kind="subtitles" src="http://localhost:3334/media/video/subs/english.vtt" srclang="en" label="English" >
+      <track kind="subtitles" src="http://localhost:3334/media/video/subs/spanish.vtt" srclang="es" label="Spanish" >
     </vime-video> 
   `
 

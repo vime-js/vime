@@ -18,18 +18,23 @@
   ],
   "scripts": {
     "build": "stencil build --docs",
-    "serve": "concurrently \"npm run serve:media\" \"npm run serve:app\"",
-    "serve:app": "stencil build --dev --watch --serve --port 3333",
-    "serve:prod": "npm run build && sirv --port 3335",
-    "serve:media": "sirv media --cors --port 3334 --quiet",
+    "serve": "concurrently \"npm run serve:sirv\" \"npm run serve:dev\"",
+    "serve:dev": "stencil build --dev --watch --serve --port 3333 --no-open",
+    "serve:sirv": "sirv --cors --port 3334 --quiet",
+    "serve:prod": "npm run build && npm run serve:sirv",
     "test": "stencil test --spec --max-workers=2",
     "test:spec": "stencil test --spec --max-workers=2",
     "test:spec.debug": "pnpx --node-arg=\"--inspect-brk\" stencil test --spec",
     "test:spec.watch": "stencil test --spec --watchAll --max-workers=2",
+    "test:e2e": "npm run build && npm run coverage:instrument && start-server-and-test serve:sirv http://localhost:3334/tests/ui.html cy:run",
+    "test:ci": "rimraf .nyc_output && npm run test:spec --coverage && npm run test:e2e && npm run coverage:combine",
+    "coverage:instrument": "nyc instrument dist --in-place",
+    "coverage:combine": "nyc report --reporter lcov --reporter text --report-dir coverage",
     "generate": "stencil generate",
     "generate:provider": "node scripts/new-provider.js",
     "release": "semantic-release -e ../../tools/semantic-release",
-    "cypress:open": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "stencil-wormhole": "^3.0.1"
@@ -37,6 +42,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
+    "@cypress/code-coverage": "^3.8.1",
     "@cypress/webpack-preprocessor": "^5.4.1",
     "@stencil/core": "1.17.3",
     "@stencil/sass": "^1.3.2",
@@ -51,7 +57,10 @@
     "jest": "26.1.0",
     "jest-watch-typeahead": "^0.6.0",
     "js-base64": "2.5.2",
+    "nyc": "^15.1.0",
+    "rimraf": "^3.0.2",
     "sirv-cli": "^1.0.3",
+    "start-server-and-test": "^1.11.3",
     "ts-loader": "^8.0.1",
     "webpack": "^4.44.0"
   },
@@ -73,5 +82,8 @@
     "dash",
     "custom",
     "web components"
-  ]
+  ],
+  "nyc": {
+    "report-dir": "cypress-coverage"
+  }
 }

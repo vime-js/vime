@@ -1,6 +1,6 @@
 vime-player {
   /**
-   * @prop --player-bg: The background color of the player.
+   * @prop --player-bg: The background color of the player, has no effect on audio players.
    * @prop --player-font-family: A custom font family to be used throughout the player.
    * @prop --player-theme: A custom theme (color) to be used throughout the player. Any valid CSS 
    * `color` property (HEX, RGBA, HLS, ...) can be used.
@@ -63,6 +63,10 @@ vime-player {
 
   &.idle {
     cursor: none;
+  }
+
+  &.audio {
+    background-color: transparent !important;
   }
 
   &.video {
