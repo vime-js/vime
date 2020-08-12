@@ -117,37 +117,37 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   /**
    * @internal
    */
-  @Prop({ attribute: null }) language!: string;
+  @Prop() language = 'en';
 
   /**
    * @internal
    */
-  @Prop({ attribute: null }) autoplay!: boolean;
+  @Prop() autoplay = false;
 
   /**
    * @internal
    */
-  @Prop({ attribute: null }) controls!: boolean;
+  @Prop() controls = false;
 
   /**
    * @internal
    */
-  @Prop({ attribute: null }) debug!: boolean;
+  @Prop() debug = false;
 
   /**
    * @internal
    */
-  @Prop({ attribute: null }) loop!: boolean;
+  @Prop() loop = false;
 
   /**
    * @internal
    */
-  @Prop({ attribute: null }) muted!: boolean;
+  @Prop() muted = false;
 
   /**
    * @internal
    */
-  @Prop({ attribute: null }) playsinline!: boolean;
+  @Prop() playsinline = false;
 
   /**
    * @internal

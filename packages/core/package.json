@@ -1,7 +1,7 @@
 {
   "name": "@vime/core",
   "version": "1.0.0",
-  "description": "Declarative media player library.",
+  "description": "Collection of web components to build your own media player.",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -27,6 +27,7 @@
     "test:spec.debug": "pnpx --node-arg=\"--inspect-brk\" stencil test --spec",
     "test:spec.watch": "stencil test --spec --watchAll --max-workers=2",
     "generate": "stencil generate",
+    "generate:provider": "node scripts/new-provider.js",
     "release": "semantic-release -e ../../tools/semantic-release",
     "cypress:open": "cypress open"
   },
@@ -56,5 +57,21 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "vime",
+    "player",
+    "media",
+    "audio",
+    "video",
+    "html5",
+    "stenciljs",
+    "youtube",
+    "dailymotion",
+    "vimeo",
+    "hls",
+    "dash",
+    "custom",
+    "web components"
+  ]
 }

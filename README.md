@@ -13,7 +13,7 @@
 />
 
 Vime is simply a collection of [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
-that help you easily build your own media player. See the [features](#features) section for 
+that help you easily build your own media player. See the [Features](#features) section below for 
 some more highlights on what Vime provides.
 
 🍭 They say a picture is worth a thousand words ...
