@@ -143,8 +143,8 @@ A huge thanks to our sponsors who support open-source projects like Vime.
 [docs-badge]: https://img.shields.io/badge/docs-https://vimejs.com-green
 [semantic-release]: https://github.com/semantic-release/semantic-release
 [semantic-release-badge]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
-[coverage-badge]: https://img.shields.io/codecov/c/github/vime-js/vime.svg?style=flat-square
-[coverage]: https://codecov.io/github/vime-js/vime
+[coverage-badge]: https://img.shields.io/codecov/c/github/mihar-22/vime.svg
+[coverage]: https://codecov.io/github/mihar-22/vime
 [discord]: https://discord.gg/PaFFSk
 [discord-badge]: https://img.shields.io/discord/742612686679965696.svg?color=7389D8&labelColor=6A7EC2&logo=discord&logoColor=ffffff
 [hls]: https://github.com/video-dev/hls.js
