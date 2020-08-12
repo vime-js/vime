@@ -10,7 +10,7 @@ export class Icons {
   /**
    * The URL to an SVG sprite to load.
    */
-  @Prop() href = 'https://cdn.jsdelivr.net/npm/@vime-js/complete/static/sprite.svg';
+  @Prop() href = 'https://cdn.jsdelivr.net/npm/@vime/core/icons/sprite.svg';
 
   componentWillLoad() {
     if (!cache.has(this.href)) {
