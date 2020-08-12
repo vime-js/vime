@@ -110,7 +110,6 @@ $: npm run serve
 - `build`: This script will generate/update any new component documentation.
 - `serve`: This script will boot the development environment at `http://localhost:3333`.
 - `test:spec.watch`: This script will run all unit tests, and watch for file changes to re-run.
-- `test:e2e`: This script will launch the dev server and run the Cypress tests in headless mode.
 - `cy:open`: This script will launch the Cypress GUI for performing E2E testing.
 - `cy:run`: This script will run the Cypress tests in headless mode.
 - `generate:provider`: This script will create a new media provider.
@@ -208,15 +207,15 @@ the provider's documentation. Always refer to existing providers for some guidan
 6. The Twitch player is loaded in an `<iframe>` so we'll need to setup the `Embed` component.
 
 From here onwards it's best to refer to existing providers as a guide and slowly implement each 
-method you see. Don't forget to call the `vLoadStart` event when new media is loading, and to
+method you see. Don't forget to emit the `vLoadStart` event when new media is loading, and to
 finalize the `getAdapter` method.
 
 As we're building out our provider we'll want to see and test the player in the browser. There's 
-already a file setup to do this. Go to `src/components/providers/tests/index.html` and add the 
-provider just like others have already been done so. You can serve the dev environment `npm run serve`,
-and visit the same file path in the browser to interact with it.
+already a file setup to do this. Go to `tests/providers.html` and add the provider just like the 
+others have already been done so. You can serve the dev environment `npm run serve`, and visit the 
+same file path in the browser to interact with it.
 
-When it comes to running some automated tests on the provider we can head over to 
+When it comes to running automated E2E tests on the provider we can head over to 
 `cypress/tests/providers` and add our provider just like the others have already been done so. Launch
 the Cypress testing environment `npm run cy:open` and run the test file we just created. Some 
 tests are skipped due to being flaky in a CI environment, but you can run them on your machine. At
@@ -259,6 +258,8 @@ in the `cypress` directory to guide you.
 When you've finished writing up the component and testing it, run the `npm run build` command to 
 build/update the `readme.md` file for it. Write a small description about the component and add an 
 example using it above the `<-- Auto Generated Below -->` comment.
+
+> TIP: You can press "p" when running unit tests with Jest to filter which tests are run.
 
 ## 📖 Documentation
 
