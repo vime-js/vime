@@ -109,7 +109,7 @@ $: npm run serve
 
 - `build`: This script will generate/update any new component documentation.
 - `serve`: This script will boot the development environment at `http://localhost:3333`.
-- `test:spec.watch`: This script will run all unit tests, and watch for file changes to re-run.
+- `test:unit.watch`: This script will run all unit tests, and watch for file changes to re-run.
 - `cy:open`: This script will launch the Cypress GUI for performing E2E testing.
 - `cy:run`: This script will run the Cypress tests in headless mode.
 - `generate:provider`: This script will create a new media provider.
