@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "include": [
     "src",
-    "types/jsx.d.ts"
+    "types/jsx.d.ts",
+    "@types/hls.js"
   ]
 }

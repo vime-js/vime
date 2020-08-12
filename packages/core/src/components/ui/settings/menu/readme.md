@@ -33,12 +33,12 @@ It is rare that you will interact with this component directly, see the `vime-se
 
 ## Events
 
-| Event             | Description                                           | Type                                                            |
-| ----------------- | ----------------------------------------------------- | --------------------------------------------------------------- |
-| `close`           | Emitted when the menu has closed/is not active.       | `CustomEvent<void>`                                             |
-| `focusedMenuItem` | Emitted when the currently focused menu item changes. | `CustomEvent<HTMLVimeMenuItemElement \| undefined>`             |
-| `menuItemsChange` | Emitted when the menu items present changes.          | `CustomEvent<NodeListOf<HTMLVimeMenuItemElement> \| undefined>` |
-| `open`            | Emitted when the menu is open/active.                 | `CustomEvent<void>`                                             |
+| Event             | Description                                           | Type                                        |
+| ----------------- | ----------------------------------------------------- | ------------------------------------------- |
+| `close`           | Emitted when the menu has closed/is not active.       | `CustomEvent<void>`                         |
+| `focusedMenuItem` | Emitted when the currently focused menu item changes. | `CustomEvent<any>`                          |
+| `menuItemsChange` | Emitted when the menu items present changes.          | `CustomEvent<NodeListOf<any> \| undefined>` |
+| `open`            | Emitted when the menu is open/active.                 | `CustomEvent<void>`                         |
 
 
 ## Methods
@@ -64,13 +64,13 @@ Type: `Promise<HTMLElement>`
 
 
 
-### `getFocusedMenuItem() => Promise<HTMLVimeMenuItemElement>`
+### `getFocusedMenuItem() => Promise<any>`
 
 Returns the currently focused menu item.
 
 #### Returns
 
-Type: `Promise<HTMLVimeMenuItemElement>`
+Type: `Promise<any>`
 
 
 
