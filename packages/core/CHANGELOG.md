@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1](https://github.com/vime-js/vime/compare/@vime/core@1.0.0...@vime/core@1.0.1) (2020-08-13)
+
+
+### Bug Fixes
+
+* **core:** icons not loading ([2b48c85](https://github.com/vime-js/vime/commit/2b48c8547b0b7454b48a2c2707e82d74837ae9cb))
+
 # 1.0.0 (2020-08-12)
 
 
