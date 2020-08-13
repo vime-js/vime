@@ -4,6 +4,22 @@ on:
     branches:
       - master
 jobs:
+  providers:
+    name: Providers Test Harness
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install pnpm
+        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+      - name: Install dependencies
+        run: pnpm install
+      - name: Test
+        run: pnpm run test:e2e.providers --filter @vime/core
   release:
     name: Release
     runs-on: ubuntu-latest
@@ -27,7 +43,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: cd packages/core && pnpx codecov
       - name: Build
-        run: pnpm run build --filter @vime/corej
+        run: pnpm run build --filter @vime/core
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
