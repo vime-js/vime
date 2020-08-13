@@ -1,3 +1,4 @@
+import { skipOn } from '@cypress/skip-test';
 import { en } from '../../../src/components/core/player/lang/en';
 
 before(() => {
@@ -14,12 +15,15 @@ before(() => {
 
 // This is a simplified test suite because most tests overlap with `video-ui.e2e.ts`.
 
-it('should load mobile ui', () => {
-  cy.player().toMatchImageSnapshot();
-});
+// @see https://github.com/cypress-io/cypress/issues/2102
+skipOn('headless', () => {
+  it('should load mobile ui', () => {
+    cy.player().toMatchImageSnapshot();
+  });
 
-it('should open mobile settings', () => {
-  cy.control(en.settings).click();
-  cy.control(en.settings).menu().should('be.visible');
-  cy.document().toMatchImageSnapshot();
+  it('should open mobile settings', () => {
+    cy.control(en.settings).click();
+    cy.control(en.settings).menu().should('be.visible');
+    cy.document().toMatchImageSnapshot();
+  });
 });
