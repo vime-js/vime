@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2](https://github.com/vime-js/vime/compare/@vime/core@1.0.1...@vime/core@1.0.2) (2020-08-13)
+
+
+### Bug Fixes
+
+* **core:** point unpkg and jsdelivr to correct file ([8360ad6](https://github.com/vime-js/vime/commit/8360ad62197ab35a3f51986f83e9412c7fd11a3b))
+
 ## [1.0.1](https://github.com/vime-js/vime/compare/@vime/core@1.0.0...@vime/core@1.0.1) (2020-08-13)
 
 
