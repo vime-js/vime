@@ -1,4 +1,5 @@
 dist/
+build/
 www/
 loader/
 
@@ -24,6 +25,8 @@ log.txt
 .idea/
 .vscode/
 .sass-cache/
+.docusaurus/
+.cache-loader/
 .versions/
 node_modules/
 coverage/
@@ -35,3 +38,8 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 .env
+.env.*
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
