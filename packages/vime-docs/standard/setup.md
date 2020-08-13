@@ -11,7 +11,10 @@ If you'd like to know what features it includes and how it compares to other opt
 the [getting started](../getting-started.md) page.
 
 {% hint style="info" %}
-If you want to try it out before installing then head over to our [playground][vime-playground].
+[Vime 2](https://github.com/vime-js/vime) is now out which is a complete rewrite 
+towards [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Vime 1
+will not be receiving any more updates, so we **strongly recommended** you start with or migrate
+over to Vime 2 today.
 {% endhint %}
 
 [package]: https://www.npmjs.com/package/@vime-js/standard
@@ -24,7 +27,6 @@ If you want to try it out before installing then head over to our [playground][v
 [tweet-badge]: https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fvime-js%2Fvime
 [github]: https://github.com/vime-js/vime
 [github-badge]: https://img.shields.io/github/stars/vime-js/vime?style=social
-[vime-playground]: https://playground.vime-js.com/?path=/story/standard
 
 ## Installation
 
@@ -141,5 +143,4 @@ the [API](./api/player.md) section to find out how to interact with the player.
 {% hint style="info" %}
 - For all available providers see this [page](../../vime-standard/src/providers/index.js).
 - See the [loading media](../guides/loading-media.md) guide to see how you can set the `src` prop.
-- Don't forget you can always head over to the [playground][vime-playground] if you want some examples to play with.
 {% endhint %}

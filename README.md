@@ -10,7 +10,7 @@
   <br />
   <br />
 
-  [Documentation][vime-docs] | [Playground][vime-playground]
+  [Documentation][vime-docs]
 
   <br />
 
@@ -66,8 +66,6 @@ keep in mind that this is **super simplified** and each package is full of treat
 - **Complete:** this is our greatest offering which extends Lite and Standard with the ability
   to completely customize the player via plugins. We have a long list of plugins we've created already 
   for custom controls, settings, tooltips and more!
-
-💡 You can play with all of these in our [playground][vime-playground].
 
 ## Provider Support
 
@@ -214,8 +212,7 @@ If you have a question then feel free to raise an issue and start the title with
 
 ## Where to next?
 
-You can head over to the [playground][vime-playground] to play or you can [get started][vime-getting-started]
-straight away.
+You can [get started][vime-getting-started] straight away.
 
 ## Sponsors
 
@@ -249,5 +246,4 @@ straight away.
 [github-videojs]: https://github.com/videojs/video.js
 [github-plyr]: https://github.com/sampotts/plyr
 [vime-docs]: https://vime-js.com
-[vime-playground]: https://playground.vime-js.com
 [vime-getting-started]: https://vime-js.com/getting-started

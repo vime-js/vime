@@ -10,7 +10,10 @@ The Lite Player is used to embed media content. If you'd like to know what featu
 compares to other options then see the [getting started](../getting-started.md) page.
 
 {% hint style="info" %}
-If you want to try it out before installing then head over to our [playground][vime-playground].
+[Vime 2](https://github.com/vime-js/vime) is now out which is a complete rewrite 
+towards [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Vime 1
+will not be receiving any more updates, so we **strongly recommended** you start with or migrate
+over to Vime 2 today.
 {% endhint %}
 
 [package]: https://www.npmjs.com/package/@vime-js/lite
@@ -23,7 +26,6 @@ If you want to try it out before installing then head over to our [playground][v
 [tweet-badge]: https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fvime-js%2Fvime
 [github]: https://github.com/vime-js/vime
 [github-badge]: https://img.shields.io/github/stars/vime-js/vime?style=social
-[vime-playground]: https://playground.vime-js.com/?path=/story/lite
 
 ## Installation
 
@@ -126,7 +128,3 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 
 The [usage](./usage.md) page will guide you on how to get started with any provider, after that go to the 
 [API](./api.md) page to see what props/methods/events are exposed and how you can interact with them.
-
-{% hint style="info" %}
-Don't forget you can always head over to the [playground][vime-playground] if you want some examples to play with.
-{% endhint %}

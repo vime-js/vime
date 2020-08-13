@@ -4,6 +4,13 @@ description: This page is about helping you find what option best suits your nee
 
 # Getting Started
 
+{% hint style="info" %}
+[Vime 2](https://github.com/vime-js/vime) is now out which is a complete rewrite 
+towards [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Vime 1
+will not be receiving any more updates, so we **strongly recommended** you start with or migrate
+over to Vime 2 today.
+{% endhint %}
+
 The following 4 options are available:
 
 * **Preview** for displaying custom or provider loaded thumbnails. These are loaded lazily, have an 

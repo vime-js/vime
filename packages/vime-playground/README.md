@@ -11,9 +11,8 @@
 <br />
 <br />
 
-This package houses the [Vime playground][vime-playground] which is built using [Storybook][storybook].
+This package houses the Vime playground which is built using [Storybook][storybook].
 
 After a fresh install run `yarn && yarn serve` to get started.
 
 [storybook]: https://storybook.js.org
-[vime-playground]: https://playground.vime-js.com

@@ -10,7 +10,7 @@
   <br />
   <br />
 
-  [Documentation][vime-docs] | [Playground][vime-playground]
+  [Documentation][vime-docs]
 
   <br />
 
@@ -32,4 +32,3 @@
 [github]: https://github.com/vime-js/vime
 [github-badge]: https://img.shields.io/github/stars/vime-js/vime?style=social
 [vime-docs]: https://vime-js.com
-[vime-playground]: https://playground.vime-js.com/?path=/story/preview

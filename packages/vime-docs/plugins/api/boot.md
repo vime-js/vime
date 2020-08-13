@@ -19,12 +19,6 @@ This plugin installs the following plugins:
 - [ClickToPlay](click-to-play.md)
 - [DblClickFullscreen](dbl-click-fullscreen.md)
 
-{% hint style="info" %}
-Head over to our [playground][vime-playground] to see any of these plugins in action.
-{% endhint %}
-
-[vime-playground]: https://playground.vime-js.com/?path=/story/complete--video-file
-
 ## Setup
 
 {% tabs %}

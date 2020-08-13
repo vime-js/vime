@@ -34,7 +34,10 @@ We built all of Vime with that in mind. Thus, we focus on normalizing cross-brow
 all powered by an reactive/eventful store, modular design, powerful plugin system and much more.
 
 {% hint style="info" %}
-More of a visual or hands on person? We got you. Head over to our [playground][vime-playground].
+[Vime 2](https://github.com/vime-js/vime) is now out which is a complete rewrite 
+towards [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Vime 1
+will not be receiving any more updates, so we **strongly recommended** you start with or migrate
+over to Vime 2 today.
 {% endhint %}
 
 ## Offerings
@@ -49,10 +52,6 @@ keep in mind that this is **super simplified** and each package is full of treat
 - **Complete:** this is our greatest offering which extends Lite and Standard with the ability
   to completely customize the player via plugins. We have a long list of plugins we've created already 
   for custom controls, settings, tooltips and more!
-
-{% hint style="info" %}
-In case you missed it, you can play with all of these in our [playground][vime-playground].
-{% endhint %}
 
 ## Provider Support
 
@@ -207,7 +206,7 @@ start the title with `Question:`.
 
 ## Where to next?
 
-You can head over to the [playground][vime-playground] to play or you can [get started](./getting-started.md) straight away.
+You can [get started](./getting-started.md) straight away.
 
 ## Sponsors
 
@@ -235,4 +234,3 @@ You can head over to the [playground][vime-playground] to play or you can [get s
 [github-videojs]: https://github.com/videojs/video.js
 [github-plyr]: https://github.com/sampotts/plyr
 [vime-docs]: https://vime-js.com
-[vime-playground]: https://playground.vime-js.com
