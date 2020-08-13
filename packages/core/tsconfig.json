@@ -1,8 +1,11 @@
 {
   "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "jsxFactory": "h",
+  },
   "include": [
     "src",
     "types/jsx.d.ts",
-    "@types/hls.js"
   ]
 }

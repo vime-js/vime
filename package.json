@@ -8,7 +8,7 @@
     "pnpm": ">=5"
   },
   "scripts": {
-    "lint": "eslint packages/*/src/**/*.{ts,tsx} packages/*/cypress/**/*.{js,ts} --ignore-path .gitignore --fix",
+    "lint": "eslint packages/*/src/**/*.{ts,tsx} packages/*/cypress/**/*.{js,ts} examples/*/src/**/*.{ts,tsx} tools/*.js scripts/*.js --fix --ignore-path .gitignore",
     "script:size": "node scripts/core-dist-size.js"
   },
   "devDependencies": {
@@ -25,6 +25,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "git-log-parser": "^1.2.0",
     "gzip-size": "^5.1.1",
     "husky": "^4.2.5",

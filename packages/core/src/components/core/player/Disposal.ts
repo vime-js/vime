@@ -1,6 +1,6 @@
 export class Disposal {
   constructor(
-    private dispose: (() => void)[] = []
+    private dispose: (() => void)[] = [],
   ) {}
 
   add(callback: () => void) {
@@ -8,7 +8,7 @@ export class Disposal {
   }
 
   empty() {
-    this.dispose.forEach(fn => fn());
+    this.dispose.forEach((fn) => fn());
     this.dispose = [];
   }
 }

@@ -60,7 +60,7 @@ export class Fullscreen {
   get isActive() {
     if (!this.isSupported) return false;
     const fullscreenEl = (document as any)[this.api.fullscreenElement!] as Document['fullscreenElement'];
-    return (this.el === fullscreenEl) 
+    return (this.el === fullscreenEl)
       || this.el.matches(`:${this.api.fullscreen}`)
       || this.el.contains(fullscreenEl);
   }

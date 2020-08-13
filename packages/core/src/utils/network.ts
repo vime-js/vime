@@ -38,7 +38,9 @@ export const loadImage = (src: string, minWidth = 1): Promise<HTMLImageElement> 
   (resolve, reject) => {
     const image = new Image();
     const handler = () => {
+      // @ts-ignore
       delete image.onload;
+      // @ts-ignore
       delete image.onerror;
       image.naturalWidth >= minWidth ? resolve(image) : reject(image);
     };

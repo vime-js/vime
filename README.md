@@ -91,8 +91,8 @@ Vime is forward thinking and built for the modern web. All
 [ES6 Compatible](https://caniuse.com/#feat=es6-module) browsers are supported, some of which are 
 listed below.
 
-- Edge 16+
-- Firefox 60+
+- Edge 79+
+- Firefox 68+
 - Chrome 61+
 - Safari 11+
 - iOS Safari 11+

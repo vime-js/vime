@@ -16,16 +16,21 @@
       "es2017"
     ],
     "moduleResolution": "node",
-    "module": "esnext",
+    "module": "es6",
     "target": "es2017",
     "jsx": "react",
-    "jsxFactory": "h"
   },
   "include": [
-    "tools/*.js",
+    "packages/*/src/**/*.js",
     "packages/*/src/**/*.ts",
     "packages/*/src/**/*.tsx",
     "packages/*/cypress/**/*.js",
-    "packages/*/cypress/**/*.ts"
+    "packages/*/cypress/**/*.ts",
+    "packages/*/cypress/**/*.tsx",
+    "examples/*/src/**/*.js",
+    "examples/*/src/**/*.ts",
+    "examples/*/src/**/*.tsx",
+    "tools/*.js",
+    "scripts/*.js",
   ]
 }

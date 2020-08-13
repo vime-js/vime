@@ -16,8 +16,8 @@ import { MediaType } from '../../core/player/MediaType';
 @Component({
   tag: 'vime-hls',
 })
-export class HLS implements MediaFileProvider<Hls | undefined> {
-  private hls?: Hls;
+export class HLS implements MediaFileProvider {
+  private hls?: any;
 
   private dispatch!: PlayerStateDispatcher;
 
@@ -90,7 +90,7 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
 
     try {
       const url = `https://cdn.jsdelivr.net/npm/hls.js@${this.version}`;
-      const Hls = await loadSDK<Hls>(url, 'Hls');
+      const Hls = await loadSDK(url, 'Hls');
       const video = this.videoProvider.querySelector('video')!;
 
       if (!Hls.isSupported()) {
@@ -105,7 +105,9 @@ export class HLS implements MediaFileProvider<Hls | undefined> {
         this.onSrcChange();
       });
 
-      this.hls!.on('hlsError', (e, data) => { this.dispatch(PlayerProp.Errors, [{ e, data }]); });
+      this.hls!.on('hlsError', (e: any, data: any) => { 
+        this.dispatch(PlayerProp.Errors, [{ e, data }]); 
+      });
 
       this.hls!.on('hlsManifestParsed', () => {
         this.dispatch(PlayerProp.MediaType, MediaType.Video);

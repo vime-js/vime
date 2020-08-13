@@ -20,6 +20,9 @@ log.txt
 *.sublime-project
 *.sublime-workspace
 
+/.pnp
+.pnp.js
+.eslintcache/
 .nyc_output/
 .stencil/
 .idea/

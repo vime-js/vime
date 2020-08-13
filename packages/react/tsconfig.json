@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "declarationDir": "dist/types",
+    "inlineSources": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false
+}
