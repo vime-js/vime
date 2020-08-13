@@ -216,9 +216,9 @@ the file through the explorer to begin interacting with it in the browser.
 
 When it comes to running automated E2E tests on the provider we can head over to 
 `cypress/tests/providers` and add our provider just like the others have already been done so. Launch
-the Cypress testing environment `npm run cy:open` and run the test file we just created. Some 
-tests are skipped due to being flaky in a CI environment, but you can run them on your machine. At
-the minimum you should definitely run those skipped tests manually.
+the Cypress testing environment `npm run cy:open`, and run the test file we just created. A few 
+tests are a little flaky, re-run if you're sure something should pass. At the minimum, the test 
+harness should give you a good idea of everything your provider should be able to perform.
 
 ## 🖥️ UI Components
 

@@ -1,4 +1,5 @@
 /// <reference path="../../src/components.d.ts" />
+/// <reference types="@cypress/skip-test" />
 
 declare namespace Cypress {
   interface Chainable<Subject> {

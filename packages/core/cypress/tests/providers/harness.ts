@@ -143,88 +143,87 @@ export const runTestHarness = (provider: MediaProvider) => {
         });
     });
 
-    // Audio file loads too fast so the tests fail.
-    if (provider !== MediaProvider.Audio) {
-      it('should seek forward during playback', () => {
-        const seekTo = 30;
-        cy.play();
-        cy.player().should('be.playing');
-        cy.seekTo(seekTo);
-        cy.player()
-          .should('have.seekedForwards', { from: 0, to: seekTo })
-          .and('not.be.buffering')
-          .and('be.playing')
-          .and('have.firedSeekingChange', events);
-      });
+    it('should seek forward during playback', () => {
+      cy.skipOn('headless');
+      const seekTo = 30;
+      cy.play();
+      cy.player().should('be.playing');
+      cy.seekTo(seekTo);
+      cy.player()
+        .should('have.seekedForwards', { from: 0, to: seekTo })
+        .and('not.be.buffering')
+        .and('be.playing')
+        .and('have.firedSeekingChange', events);
+    });
 
-      it('should seek backwards during playback', () => {
-        const seekTo = 60;
-        const seekFrom = 120;
-        cy.play();
-        cy.player().should('be.playing');
-        cy.seekTo(seekFrom);
-        cy.player()
-          .then(($player) => {
-            cy.player()
-              .should('have.seekedForwards', {
-                from: $player.prop(PlayerProp.CurrentTime),
-                to: seekFrom,
-              });
-          });
-        cy.seekTo(seekTo);
-        cy.player()
-          .should('have.seekedBackwards', { from: seekFrom, to: seekTo })
-          .and('not.be.buffering')
-          .and('be.playing')
-          .and('have.firedSeekingChange', events);
-      });
+    it('should seek backwards during playback', () => {
+      cy.skipOn('headless');
+      const seekTo = 60;
+      const seekFrom = 120;
+      cy.play();
+      cy.player().should('be.playing');
+      cy.seekTo(seekFrom);
+      cy.player()
+        .then(($player) => {
+          cy.player()
+            .should('have.seekedForwards', {
+              from: $player.prop(PlayerProp.CurrentTime),
+              to: seekFrom,
+            });
+        });
+      cy.seekTo(seekTo);
+      cy.player()
+        .should('have.seekedBackwards', { from: seekFrom, to: seekTo })
+        .and('not.be.buffering')
+        .and('be.playing')
+        .and('have.firedSeekingChange', events);
+    });
 
-      // @TODO not sure if this test is worth it.
-      it.skip('should seek forward while paused', () => {
-        cy.play();
-        cy.player().should('be.playing');
-        cy.pause();
-        cy.player().should('not.be.playing');
-        const seekTo = 160;
-        cy.seekTo(seekTo);
-        cy.player()
-          .then(($player) => {
-            cy.player()
-              .should('have.seekedForwards', {
-                from: $player.prop(PlayerProp.CurrentTime),
-                to: seekTo,
-              })
-              .and('not.be.buffering')
-              .and('not.be.playing')
-              .and('have.firedSeekingChange', events);
-          });
-      });
+    it('should seek forward while paused', () => {
+      cy.skipOn('headless');
+      cy.play();
+      cy.player().should('be.playing');
+      cy.pause();
+      cy.player().should('not.be.playing');
+      const seekTo = 160;
+      cy.seekTo(seekTo);
+      cy.player()
+        .then(($player) => {
+          cy.player()
+            .should('have.seekedForwards', {
+              from: $player.prop(PlayerProp.CurrentTime),
+              to: seekTo,
+            })
+            .and('not.be.buffering')
+            .and('not.be.playing')
+            .and('have.firedSeekingChange', events);
+        });
+    });
 
-      // @TODO not sure if this test is worth it.
-      it.skip('should seek backward while paused', () => {
-        const seekTo = 120;
-        const seekFrom = 180;
-        cy.play();
-        cy.player().should('be.playing');
-        cy.pause();
-        cy.player().should('not.be.playing');
-        cy.seekTo(seekFrom);
-        cy.player()
-          .then(($player) => {
-            cy.player()
-              .should('have.seekedForwards', {
-                from: $player.prop(PlayerProp.CurrentTime),
-                to: seekFrom,
-              });
-          });
-        cy.seekTo(seekTo);
-        cy.player()
-          .should('have.seekedBackwards', { from: seekFrom, to: seekTo })
-          .and('not.be.buffering')
-          .and('not.be.playing')
-          .and('have.firedSeekingChange', events);
-      });
-    }
+    it('should seek backward while paused', () => {
+      cy.skipOn('headless');
+      const seekTo = 120;
+      const seekFrom = 180;
+      cy.play();
+      cy.player().should('be.playing');
+      cy.pause();
+      cy.player().should('not.be.playing');
+      cy.seekTo(seekFrom);
+      cy.player()
+        .then(($player) => {
+          cy.player()
+            .should('have.seekedForwards', {
+              from: $player.prop(PlayerProp.CurrentTime),
+              to: seekFrom,
+            });
+        });
+      cy.seekTo(seekTo);
+      cy.player()
+        .should('have.seekedBackwards', { from: seekFrom, to: seekTo })
+        .and('not.be.buffering')
+        .and('not.be.playing')
+        .and('have.firedSeekingChange', events);
+    });
 
     it('should change volume', () => {
       cy.volume(21);
@@ -259,8 +258,8 @@ export const runTestHarness = (provider: MediaProvider) => {
         });
     });
 
-    // @TODO flaky in CI.
-    it.skip('should loop', () => {
+    it('should loop', () => {
+      cy.skipOn('headless');
       cy.player().then(($player) => { $player.prop(PlayerProp.Loop, true); });
       cy.raf();
       cy.play();
@@ -293,8 +292,8 @@ export const runTestHarness = (provider: MediaProvider) => {
         });
     });
 
-    // @TODO flaky in CI.
-    it.skip('should change playback rate', () => {
+    it('should change playback rate', () => {
+      cy.skipOn('headless');
       cy.player()
         .then(async ($player) => {
           const canSet = await $player[0].canSetPlaybackRate();
@@ -324,8 +323,8 @@ export const runTestHarness = (provider: MediaProvider) => {
         });
     });
 
-    // @TODO flaky in CI.
-    it.skip('should change playback quality', () => {
+    it('should change playback quality', () => {
+      cy.skipOn('headless');
       cy.play();
       cy.player().should('be.playing');
       cy.player()
@@ -386,8 +385,8 @@ export const runTestHarness = (provider: MediaProvider) => {
         });
     });
 
-    // @TODO flaky test when set programtically, seems to work fine manually.
-    it.skip('should seek before playback starts', () => {
+    it('should seek before playback starts', () => {
+      cy.skipOn('headless');
       resetPlayerIfNeeded();
       const seekTo = 60;
       cy.seekTo(seekTo);
@@ -397,8 +396,8 @@ export const runTestHarness = (provider: MediaProvider) => {
         .and('be.playing');
     });
 
-    // @TODO flaky in CI.
-    it.skip('should autoplay', () => {
+    it('should autoplay', () => {
+      cy.skipOn('headless');
       resetPlayerIfNeeded();
       cy.player().then(($player) => { $player.prop(PlayerProp.Autoplay, true); });
       cy.raf();

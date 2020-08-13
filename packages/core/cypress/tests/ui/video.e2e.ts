@@ -17,8 +17,8 @@ afterEach(() => {
   cy.wait(50);
 });
 
-// @TODO snapshots not matching in CI.
-it.skip('should load video ui', () => {
+it('should load video ui', () => {
+  cy.wait(1000);
   cy.player().toMatchImageSnapshot();
 });
 
