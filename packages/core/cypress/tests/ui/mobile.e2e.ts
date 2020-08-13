@@ -1,3 +1,4 @@
+// @ts-ignore
 import { skipOn } from '@cypress/skip-test';
 import { en } from '../../../src/components/core/player/lang/en';
 
@@ -15,7 +16,7 @@ before(() => {
 
 // This is a simplified test suite because most tests overlap with `video-ui.e2e.ts`.
 
-// @see https://github.com/cypress-io/cypress/issues/2102
+// Skipping on headless because: https://github.com/cypress-io/cypress/issues/2102
 skipOn('headless', () => {
   it('should load mobile ui', () => {
     cy.player().toMatchImageSnapshot();
