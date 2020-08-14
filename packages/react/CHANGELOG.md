@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.1.0](https://github.com/vime-js/vime/compare/@vime/react@1.0.0...@vime/react@1.1.0) (2020-08-14)
+
+
+### Features
+
+* **vue:** create vue bindings/package ([f162808](https://github.com/vime-js/vime/commit/f1628087df85b02a73a22e9813cacb64b7848b37))
+
 # 1.0.0 (2020-08-13)
 
 

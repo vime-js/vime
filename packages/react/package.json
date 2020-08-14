@@ -1,6 +1,6 @@
 {
   "name": "@vime/react",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Collection of react components to build your own media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
