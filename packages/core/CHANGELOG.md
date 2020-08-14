@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.3.0](https://github.com/vime-js/vime/compare/@vime/core@1.2.0...@vime/core@1.3.0) (2020-08-14)
+
+
+### Features
+
+* **angular:** create angular bindings/package ([ed03bb0](https://github.com/vime-js/vime/commit/ed03bb0a33277f4babba7e4671b491a8f1fc71e3))
+
 # [1.2.0](https://github.com/vime-js/vime/compare/@vime/core@1.1.0...@vime/core@1.2.0) (2020-08-14)
 
 
