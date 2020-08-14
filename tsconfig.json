@@ -27,9 +27,6 @@
     "packages/*/cypress/**/*.js",
     "packages/*/cypress/**/*.ts",
     "packages/*/cypress/**/*.tsx",
-    "examples/*/src/**/*.js",
-    "examples/*/src/**/*.ts",
-    "examples/*/src/**/*.tsx",
     "tools/*.js",
     "scripts/*.js",
   ]

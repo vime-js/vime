@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'angular-example';
+  title = 'angular-example'
 
   onPlaying(event: CustomEvent<boolean>) {
     console.log('playing:', event.detail);
