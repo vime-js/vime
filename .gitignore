@@ -16,6 +16,10 @@ packages/*/cypress/screenshots/
 *-lock
 *.tmp
 *.tmp.*
+*.sln
+*.suo
+*.ntvs*
+*.njsproj
 log.txt
 *.sublime-project
 *.sublime-workspace
@@ -46,3 +50,4 @@ UserInterfaceState.xcuserstate
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*

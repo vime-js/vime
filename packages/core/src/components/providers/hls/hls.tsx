@@ -34,7 +34,7 @@ export class HLS implements MediaFileProvider {
   /**
    * The `hls.js` configuration.
    */
-  @Prop({ attribute: 'config' }) config?: Hls.Config;
+  @Prop({ attribute: 'config' }) config?: any;
 
   /**
    * @inheritdoc

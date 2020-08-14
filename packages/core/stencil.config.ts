@@ -1,6 +1,7 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { reactOutputTarget } from '@stencil/react-output-target';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 export const config: Config = {
   namespace: 'Vime',
@@ -26,6 +27,10 @@ export const config: Config = {
     reactOutputTarget({
       componentCorePackage: '@vime/core',
       proxiesFile: '../react/src/components.ts',
+    }),
+    vueOutputTarget({
+      componentCorePackage: '@vime/core',
+      proxiesFile: '../vue/src/components.ts',
     }),
     {
       type: 'dist',

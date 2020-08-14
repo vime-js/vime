@@ -1,7 +1,7 @@
 {
-  "name": "@vime/react",
+  "name": "@vime/vue",
   "version": "1.0.0",
-  "description": "Collection of react components to build your own media player.",
+  "description": "Collection of vue components to build your own media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -26,17 +26,12 @@
     "@vime/core": "^1.0.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.46",
-    "@types/react-dom": "^16.9.8",
     "cp-cli": "^2.0.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "rimraf": "^3.0.2",
-    "typescript": "^3.9.7"
+    "vue": "^2.6.11"
   },
   "peerDependencies": {
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "vue": "^2.6.11"
   },
   "publishConfig": {
     "access": "public"
@@ -45,7 +40,7 @@
     "vime",
     "player",
     "media",
-    "react",
+    "vue",
     "audio",
     "video",
     "html5",
