@@ -1,0 +1,68 @@
+{
+  "name": "@vime/angular",
+  "version": "1.0.0",
+  "description": "Collection of angular components to build your own media player.",
+  "license": "MIT",
+  "contributors": [
+    "Rahim Alwer <rahim_alwer@outlook.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vime-js/vime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "scripts": {
+    "build": "rimraf dist && npm run build:ng && npm run copy:css",
+    "build:ng": "ng-packagr -p package.json",
+    "copy:css": "cp-cli ../core/dist/vime/vime.css dist/vime.css",
+    "release": "npm run release:ng --prefix dist",
+    "release:ng": "semantic-release -e ../../tools/semantic-release"
+  },
+  "dependencies": {
+    "@vime/core": "^1.0.0",
+    "tslib": "^2.0.1"
+  },
+  "devDependencies": {
+    "@angular/common": "^10.0.9",
+    "@angular/core": "^10.0.9",
+    "cp-cli": "^2.0.0",
+    "ng-packagr": "^10.0.4",
+    "rimraf": "^3.0.2",
+    "rxjs": "^6.6.2",
+    "typescript": "^3.9.7"
+  },
+  "peerDependencies": {
+    "@angular/common": "^10.0.9",
+    "@angular/core": "^10.0.9",
+    "rxjs": "^6.6.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "vime",
+    "player",
+    "media",
+    "angular",
+    "audio",
+    "video",
+    "html5",
+    "stenciljs",
+    "youtube",
+    "dailymotion",
+    "vimeo",
+    "hls",
+    "dash",
+    "custom"
+  ],
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/index.ts"
+    },
+    "whitelistedNonPeerDependencies": [
+      "@vime/core"
+    ]
+  }
+}

@@ -23,7 +23,19 @@ packages/*/cypress/screenshots/
 log.txt
 *.sublime-project
 *.sublime-workspace
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+/libpeerconnection.log
+chrome-profiler-events*.json
+speed-measure-plugin*.json
 
+/tmp
+/out-tsc
+/bazel-out
 /.pnp
 .pnp.js
 .eslintcache/
@@ -44,10 +56,3 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-.env
-.env.*
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*

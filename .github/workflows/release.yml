@@ -44,18 +44,23 @@ jobs:
         run: cd packages/core && pnpx codecov
       - name: Build Packages
         run: pnpm run build --filter ./packages
-      - name: Release Core
+      - name: Release @vime/core
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: pnpm run release --filter @vime/core
-      - name: Release React
+      - name: Release @vime/react
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: pnpm run release --filter @vime/react
-      - name: Release Vue
+      - name: Release @vime/vue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: pnpm run release --filter @vime/vue
+      - name: Release @vime/angular
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm run release --filter @vime/angular

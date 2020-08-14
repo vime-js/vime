@@ -2,6 +2,7 @@ import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { vueOutputTarget } from '@stencil/vue-output-target';
+import { angularOutputTarget } from '@stencil/angular-output-target';
 
 export const config: Config = {
   namespace: 'Vime',
@@ -31,6 +32,10 @@ export const config: Config = {
     vueOutputTarget({
       componentCorePackage: '@vime/core',
       proxiesFile: '../vue/src/components.ts',
+    }),
+    angularOutputTarget({
+      componentCorePackage: '@vime/core',
+      directivesProxyFile: '../angular/src/directives/proxies.ts',
     }),
     {
       type: 'dist',

@@ -1,0 +1,29 @@
+{
+  "extends": "../../tsconfig.json",
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true,
+    "flatModuleOutFile": "core.js",
+    "flatModuleId": "@vime/angular",
+    "skipTemplateCodegen": true,
+    "fullTemplateTypeCheck": false,
+    "enableResourceInlining": true,
+    "enableIvy": false,
+  },
+  "compilerOptions": {
+    "outDir": "dist",
+    "pretty": true,
+    "removeComments": false,
+    "importHelpers": true,
+    "experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "module": "es6",
+    "target": "es6",
+    "paths": {
+      "@vime/core": ["../core"],
+    }
+  },
+  "exclude": ["node_modules"],
+  "files": ["src/index.ts"]
+}
