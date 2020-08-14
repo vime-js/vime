@@ -91,6 +91,22 @@ There are framework specific bindings for:
 
 - [React](https://reactjs.org)
 - [Vue](https://vuejs.org)
+- [Angular](https://angular.io)
+
+Keep in mind, that at its core Vime is still simply web components. Even if your framework is 
+not mentioned in the list above, it most likely still supports Vime natively. You can check 
+[here](https://custom-elements-everywhere.com/) if your framework has complete support for 
+web components.
+
+There are also [examples](./examples) for:
+
+- [HTML](./examples/html)
+- [React](./examples/react)
+- [Preact](./examples/preact)
+- [Vue](./examples/vue)
+- [Angular](./examples/angular)
+- [Svelte](./examples/svelte)
+- [Ember](./examples/ember)
 
 ## 🖥️ Browsers
 
