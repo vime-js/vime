@@ -17,8 +17,7 @@
     "build": "rimraf dist && npm run build:ng && npm run copy:css",
     "build:ng": "ng-packagr -p package.json",
     "copy:css": "cp-cli ../core/dist/vime/vime.css dist/vime.css",
-    "release": "npm run release:ng --prefix dist",
-    "release:ng": "semantic-release -e ../../tools/semantic-release"
+    "release": "semantic-release -e ../../tools/semantic-release"
   },
   "dependencies": {
     "@vime/core": "^1.0.0",
