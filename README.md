@@ -102,11 +102,9 @@ There are also [examples](./examples) for:
 
 - [HTML](./examples/html)
 - [React](./examples/react)
-- [Preact](./examples/preact)
 - [Vue](./examples/vue)
 - [Angular](./examples/angular)
 - [Svelte](./examples/svelte)
-- [Ember](./examples/ember)
 
 ## 🖥️ Browsers
 

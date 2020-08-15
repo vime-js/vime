@@ -6,8 +6,6 @@ for more information.
 
 - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
 - [React](https://reactjs.org)
-- [Preact](https://preactjs.com)
 - [Vue](https://vuejs.org)
 - [Svelte](https://svelte.dev)
 - [Angular](https://angular.io)
-- [Ember](https://emberjs.com)

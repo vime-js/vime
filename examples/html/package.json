@@ -1,0 +1,11 @@
+{
+  "name": "@vime/html-example",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "sirv --dev --port 4444"
+  },
+  "devDependencies": {
+    "sirv-cli": "^1.0.6"
+  }
+}

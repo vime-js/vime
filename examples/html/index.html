@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vime Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core/dist/vime/vime.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@vime/core/dist/vime/vime.esm.js"></script>
+  <style>
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #container {
+      width: 100%;
+      max-width: 960px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <vime-player playsinline>
+      <vime-youtube video-id="DyTCOwB0DVw"></vime-youtube>
+      <vime-default-ui></vime-default-ui>
+    </vime-player>
+  </div>
+
+  <script>
+    const player = document.querySelector('vime-player');
+   
+    player.addEventListener('vPlayingChange', event => {
+      console.log('playing:', event.detail);
+    });
+  </script>
+</body>
+
+</html>
