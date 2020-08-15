@@ -36,15 +36,12 @@
     });
   }
 
-  const baseURL = 'http://localhost:3334/media'
-  const baseAudioURL = `${baseURL}/audio`
-  const baseVideoURL = `${baseURL}/video`
-
-  const posterAttr = `poster="${baseVideoURL}/poster.png"`;
-  const audioSrc = `<source data-src="${baseAudioURL}/audio.mp3" type="audio/mp3" />`;
-  const videoSrc = `<source data-src="${baseVideoURL}/720p.mp4" type="video/mp4" />`;
-  const hlsSrc = `<source data-src="${baseVideoURL}/hls/index.m3u8" type="application/x-mpegURL" />`;
-  const dashSrc = `${baseVideoURL}/mpd/manifest.mpd`;
+  const baseMediaURL = 'http://localhost:3334/node_modules/@vime/media';
+  const posterAttr = `poster="${baseMediaURL}/poster.png"`;
+  const audioSrc = `<source data-src="${baseMediaURL}/audio.mp3" type="audio/mp3" />`;
+  const videoSrc = `<source data-src="${baseMediaURL}/720p.mp4" type="video/mp4" />`;
+  const hlsSrc = `<source data-src="${baseMediaURL}/hls/index.m3u8" type="application/x-mpegURL" />`;
+  const dashSrc = `${baseMediaURL}/mpd/manifest.mpd`;
 
   addProvider('audio', `<vime-audio>${audioSrc}</vime-audio>`);
   addProvider('video', `<vime-video ${posterAttr}>${videoSrc}</vime-video>`);

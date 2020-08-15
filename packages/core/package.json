@@ -65,6 +65,7 @@
     "@types/hls.js": "^0.13.0",
     "@types/jest": "^26.0.7",
     "@types/puppeteer": "^3.0.1",
+    "@vime/media": "^1.0.0",
     "babel-loader": "^8.1.0",
     "concurrently": "^5.2.0",
     "cypress": "^4.12.1",
