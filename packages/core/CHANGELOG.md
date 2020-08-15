@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.5.0](https://github.com/vime-js/vime/compare/@vime/core@1.4.0...@vime/core@1.5.0) (2020-08-15)
+
+
+### Bug Fixes
+
+* **core/ui/time:** time not aligned correctly ([35dbae9](https://github.com/vime-js/vime/commit/35dbae97f10eeeced67fbcbdd3f3c9074616dba5))
+
+
+### Features
+
+* add media package ([9ed3687](https://github.com/vime-js/vime/commit/9ed3687dedb7d53d7bd5efe03b8d27be64058536))
+
 # [1.4.0](https://github.com/vime-js/vime/compare/@vime/core@1.3.0...@vime/core@1.4.0) (2020-08-15)
 
 
