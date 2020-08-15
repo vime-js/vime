@@ -220,6 +220,16 @@ the Cypress testing environment `npm run cy:open`, and run the test file we just
 tests are a little flaky, re-run if you're sure something should pass. At the minimum, the test 
 harness should give you a good idea of everything your provider should be able to perform.
 
+After we wrap up all our testing and we're satisfied, the final steps are:
+
+1. Run the build script `npm run build`.
+2. Add documentation and usage example to the auto-generated `readme.md` file in the provider 
+directory. Make sure to add it above the `<-- Auto Generated Below -->` comment.
+3. Add the new provider component to [`VimeModule`](./packages/angular/src/vime-module.ts) in the 
+`@vime/angular` package.
+5. Commit your changes `git commit -m 'feat(core/providers): add twitch provider'`
+6. Create a PR!
+
 ## 🖥️ UI Components
 
 UI components are visually displayed elements inside the media player that may be interactable 
@@ -255,11 +265,17 @@ and refer to existing tests to guide you here. For some additional context, revi
 correctly in a real world scenario. These are performed with Cypress. Refer to existing tests 
 in the `cypress/tests/ui` directory to guide you.
 
-When you've finished writing up the component and testing it, run the `npm run build` command to 
-build/update the `readme.md` file for it. Write a small description about the component and add an 
-example using it above the `<-- Auto Generated Below -->` comment.
-
 > TIP: You can press "p" when running unit tests with Jest to filter which tests are run.
+
+After we wrap up all our testing and we're satisfied, the final steps are:
+
+1. Run the build script `npm run build`.
+2. Add documentation and usage example to the auto-generated `readme.md` file in the provider 
+directory. Make sure to add it above the `<-- Auto Generated Below -->` comment.
+3. Add the new provider component to [`VimeModule`](./packages/angular/src/vime-module.ts) in the 
+`@vime/angular` package.
+5. Commit your changes `git commit -m 'feat(core/ui): add {component name}'`
+6. Create a PR!
 
 ## 📖 Documentation
 
