@@ -65,5 +65,5 @@ export const config: Config = {
       '/cypress/',
     ],
   },
-  preamble: '(C) Vime https://vime-js.com - MIT License',
+  preamble: '(C) Vime https://vimejs.com - MIT License',
 };
