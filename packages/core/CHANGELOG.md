@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.4.0](https://github.com/vime-js/vime/compare/@vime/core@1.3.0...@vime/core@1.4.0) (2020-08-15)
+
+
+### Bug Fixes
+
+* **core:** remove invalid unpkg/jsdelivr keys ([b0c857a](https://github.com/vime-js/vime/commit/b0c857a15305c19687152f6eb6d71ea17b047c07))
+
+
+### Features
+
+* @stencil/core@2.0.0-2 ([1c175dc](https://github.com/vime-js/vime/commit/1c175dce1d9ef203664f9b513af40541758b3f08))
+
 # [1.3.0](https://github.com/vime-js/vime/compare/@vime/core@1.2.0...@vime/core@1.3.0) (2020-08-14)
 
 
