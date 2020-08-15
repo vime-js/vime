@@ -5,7 +5,8 @@ vime-time {
    * @prop --time-font-weight: The weight of the font displaying the time.
    */
 
-  display: inline-block;
+  display: flex;
+  align-items: center;
   color: var(--time-color);
   font-size: var(--time-font-size);
   font-weight: var(--time-font-weight);
