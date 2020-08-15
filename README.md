@@ -72,7 +72,7 @@ do with Vime ...
     <source data-src="/media/audio.mp3" type="audio/mp3" />
   </vime-audio>
 
-  <!-- Loads the default Vime UI.  -->
+  <!-- Loads the default Vime UI. -->
   <vime-default-ui />
 </vime-player>
 ```
