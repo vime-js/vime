@@ -1,4 +1,4 @@
 # Vime Vue Example
 
-This project was bootstrapped with [Vue CLI](https://cli.vuejs.org/), and demonstrates how to simply
+This example was bootstrapped with [Vue CLI](https://cli.vuejs.org/), and demonstrates how to simply
 use Vime with Vue via the `@vime/vue` package.
