@@ -10,8 +10,6 @@
   "jsnext:main": "dist/index.mjs",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/vime/vime.esm.js",
-  "jsdelivr": "dist/vime/vime.esm.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist/",
