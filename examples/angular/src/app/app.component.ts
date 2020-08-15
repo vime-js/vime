@@ -5,9 +5,19 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'angular-example'
+  title = 'angular-example';
+  
+  currentTime = 0;
 
-  onPlaying(event: CustomEvent<boolean>) {
-    console.log('playing:', event.detail);
+  onTimeUpdate(event: CustomEvent<number>) {
+    this.currentTime = event.detail;
+  }
+
+  onSeekBackward() {
+    this.currentTime -= 5;
+  }
+
+  onSeekForward() {
+    this.currentTime += 5;
   }
 }

@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build"
+    "build": "ng build",
+    "serve": "npm run serve:media & ng serve",
+    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet"
   },
   "dependencies": {
     "@angular/animations": "~10.0.9",
@@ -17,7 +18,9 @@
     "@angular/platform-browser-dynamic": "~10.0.9",
     "@angular/router": "~10.0.9",
     "@vime/angular": "^1.0.0",
+    "@vime/media": "^1.0.0",
     "rxjs": "~6.5.5",
+    "sirv-cli": "^1.0.6",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },

@@ -1,4 +1,20 @@
-.container {
+#container {
   width: 100%;
-  max-width: 980px;
+  max-width: 960px;
+}
+
+#buttons {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+#buttons > button {
+  margin-left: 8px;
+}
+
+#buttons > button:first-child {
+  margin-left: 0px;
 }

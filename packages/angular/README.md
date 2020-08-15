@@ -1,7 +1,7 @@
 # @vime/angular
 
 Vime is simply a collection of [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
-that help you easily build your own media player. These are [Angular](https://angular.io) 
+that help you easily build and customize your own media player. These are [Angular](https://angular.io) 
 specific building blocks on top of [@vime/core](https://www.npmjs.com/package/@vime/core) components.
 
 ## Related

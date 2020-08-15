@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
     "start": "sirv public",
-    "validate": "svelte-check"
+    "validate": "svelte-check",
+    "serve": "npm run serve:media & rollup -c -w",
+    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
@@ -25,6 +26,7 @@
   },
   "dependencies": {
     "sirv-cli": "^1.0.0",
-    "@vime/core": "^1.0.0"
+    "@vime/core": "^1.0.0",
+    "@vime/media": "^1.0.0"
   }
 }

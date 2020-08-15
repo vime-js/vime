@@ -113,7 +113,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) paused = true;
+  @Prop({ mutable: true }) paused = true;
 
   @Watch('paused')
   async onPausedChange() {
@@ -124,12 +124,12 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) playing = false;
+  @Prop({ mutable: true }) playing = false;
 
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) duration = -1;
+  @Prop({ mutable: true }) duration = -1;
 
   /**
    * @inheritDoc
@@ -149,7 +149,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) currentTime = 0;
+  @Prop({ mutable: true }) currentTime = 0;
 
   @Watch('currentTime')
   async onCurrentTimeChange() {
@@ -178,7 +178,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) muted = false;
+  @Prop({ mutable: true }) muted = false;
 
   @Watch('muted')
   async onMutedChange() {
@@ -188,12 +188,12 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) buffered = 0;
+  @Prop({ mutable: true }) buffered = 0;
 
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) playbackRate = 1;
+  @Prop({ mutable: true }) playbackRate = 1;
 
   private prevPlaybackRate = 1;
 
@@ -233,7 +233,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) playbackQuality?: string;
+  @Prop({ mutable: true }) playbackQuality?: string;
 
   private prevPlaybackQuality?: string;
 
@@ -273,7 +273,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) seeking = false;
+  @Prop({ mutable: true }) seeking = false;
 
   /**
    * @inheritDoc
@@ -293,7 +293,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) buffering = false;
+  @Prop({ mutable: true }) buffering = false;
 
   /**
    * @inheritDoc
@@ -357,7 +357,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) volume = 50;
+  @Prop({ mutable: true }) volume = 50;
 
   @Watch('volume')
   async onVolumeChange() {
@@ -376,12 +376,12 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) aspectRatio = '16:9';
+  @Prop({ mutable: true }) aspectRatio = '16:9';
 
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) viewType?: ViewType;
+  @Prop({ mutable: true }) viewType?: ViewType;
 
   @Watch('viewType')
   async onViewTypeChange() {
@@ -402,7 +402,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) mediaType?: MediaType;
+  @Prop({ mutable: true }) mediaType?: MediaType;
 
   @Watch('mediaType')
   async onMediaTypeChange() {
@@ -458,7 +458,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, reflect: true }) language = 'en';
+  @Prop({ mutable: true }) language = 'en';
 
   /**
    * @inheritDoc

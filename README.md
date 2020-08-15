@@ -13,12 +13,14 @@
 />
 
 Vime is simply a collection of [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
-that help you easily build your own media player. See the [Features](#features) section below for 
-some more highlights on what Vime provides.
+that help you easily build and customize your own media player. See the [Features](#features) section 
+below for some more highlights on what Vime provides.
 
-🍭 They say a picture is worth a thousand words ...
+🍭 They say a picture is worth a thousand words, so here's a few little bites of what you can 
+do with Vime ...
 
 ```html
+<!-- Here we are requesting to use the native controls. -->
 <vime-player autoplay muted controls>
   <vime-video poster="/media/poster.png" cross-origin>
     <!-- Why `data-src`? Lazy loading. You can always use `src` if you don't need it. -->
@@ -32,7 +34,9 @@ some more highlights on what Vime provides.
 *Custom UI?*
 
 ```html
-<vime-player autoplay muted>
+<!-- Lets add a little splash of color throughout the player. -->
+<vime-player style="--player-theme: #1873d3" autoplay muted>
+  <!-- Loading a YouTube video. -->
   <vime-youtube video-id="DyTCOwB0DVw" />
 
   <vime-ui>
@@ -42,6 +46,10 @@ some more highlights on what Vime provides.
     <vime-spinner />
     <vime-default-settings />
     <vime-controls pin="bottomLeft" active-duration="2750" full-width>
+      <!-- 
+        These are all predefined controls that you can easily customize. You could also build 
+        your own controls completely from scratch.
+      -->
       <vime-playback-control tooltip-direction="right" />
       <vime-volume-control />
       <vime-time-progress />
@@ -58,11 +66,13 @@ some more highlights on what Vime provides.
 *In a hurry?*
 
 ```html
+<!-- Light themed audio player. -->
 <vime-player theme="light" autoplay muted>
   <vime-audio cross-origin>
     <source data-src="/media/audio.mp3" type="audio/mp3" />
   </vime-audio>
 
+  <!-- Loads the default Vime UI.  -->
   <vime-default-ui />
 </vime-player>
 ```
@@ -77,7 +87,7 @@ some more highlights on what Vime provides.
 roles/states/properties and keyboard support.
 - 🌎 &nbsp;I18N support.
 - 🎨 &nbsp;Style anything you want with [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
-- 🏎️ &nbsp;Performant with [preconnections](https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance) and [lazy loading](https://www.imperva.com/learn/performance/lazy-loading) out of the box.
+- 🏎️ &nbsp;Performant with [preconnections](https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance) and [lazy loading](https://www.imperva.com/learn/performance/lazy-loading) of components + media out of the box.
 - ️🧰 &nbsp;Awesome default UI's for audio/video/live media on mobile and desktop.
 - 🛠 &nbsp;Comprehensive player API.
 - 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
@@ -98,7 +108,7 @@ not mentioned in the list above, it most likely still supports Vime natively. Yo
 [here](https://custom-elements-everywhere.com/) if your framework has complete support for 
 web components.
 
-There are also [examples](./examples) for:
+There are also [examples](./examples) for loading and using Vime with:
 
 - [HTML](./examples/html)
 - [React](./examples/react)

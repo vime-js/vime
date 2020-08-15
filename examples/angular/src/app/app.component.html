@@ -1,8 +1,23 @@
 <div id="container">
-  <vime-player playsinline (vPlayingChange)="onPlaying($event)">
-    <vime-youtube video-id="DyTCOwB0DVw"></vime-youtube>
+  <vime-player 
+    muted 
+    playsinline
+    [currentTime]="currentTime"
+    (vCurrentTimeChange)="onTimeUpdate($event)"
+  >
+    <vime-video cross-origin="true" poster="http://localhost:3335/poster.png">
+      <source data-src="http://localhost:3335/720p.mp4" type="video/mp4" />
+      <track default kind="subtitles" src="http://localhost:3335/subs/english.vtt" srclang="en" label="English" />
+      <track kind="subtitles" src="http://localhost:3335/subs/spanish.vtt" srclang="es" label="Spanish" />
+    </vime-video> 
+
     <vime-default-ui></vime-default-ui>
   </vime-player>
+
+  <div id="buttons">
+    <button (click)="onSeekBackward()">-5s</button>
+    <button (click)="onSeekForward()">+5s</button>
+  </div>
 </div>
 
 <style>
@@ -14,9 +29,25 @@
     justify-content: center;
   }
 
-  :host > #container {
+  #container {
     width: 100%;
     max-width: 960px;
+  }
+
+  #buttons {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  #buttons > button {
+    margin-left: 8px;
+  }
+
+  #buttons > button:first-child {
+    margin-left: 0px;
   }
 </style>
 

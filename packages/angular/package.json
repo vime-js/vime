@@ -1,7 +1,7 @@
 {
   "name": "@vime/angular",
   "version": "1.0.0",
-  "description": "Collection of angular components to build your own media player.",
+  "description": "Collection of angular components to build and customize your own media player.",
   "license": "MIT",
   "contributors": [
     "Rahim Alwer <rahim_alwer@outlook.com>"

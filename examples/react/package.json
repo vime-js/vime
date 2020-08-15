@@ -3,15 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@vime/media": "^1.0.0",
     "@vime/react": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "sirv-cli": "^1.0.6"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "npm run serve:media & react-scripts start",
+    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet"
   },
   "eslintConfig": {
     "extends": "react-app"

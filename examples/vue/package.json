@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "serve": "npm run serve:media & vue-cli-service serve",
+    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet"
   },
   "dependencies": {
     "@vime/vue": "^1.0.0",
+    "@vime/media": "^1.0.0",
+    "sirv-cli": "^1.0.0",
     "tslib": "^2.0.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",

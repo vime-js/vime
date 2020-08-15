@@ -1,10 +1,23 @@
 <template>
   <div id="app">
     <div id="container">
-      <VimePlayer playsinline @vPlayingChange="onPlaying">
-        <VimeYoutube videoId="DyTCOwB0DVw" />
+      <VimePlayer
+        muted
+        playsinline 
+        :currentTime="currentTime"
+        @vCurrentTimeChange="onTimeUpdate"
+      >
+        <VimeVideo crossOrigin="true" poster="http://localhost:3335/poster.png">
+          <source data-src="http://localhost:3335/720p.mp4" type="video/mp4">
+        </VimeVideo>
+
         <VimeDefaultUi />
       </VimePlayer>
+
+      <div id="buttons">
+		    <button @click="onSeekBackward">-5s</button>
+    		<button @click="onSeekForward">+5s</button>
+      </div>
     </div>
   </div>
 </template>
@@ -12,18 +25,28 @@
 <script lang="ts">
 import '@vime/vue/dist/vime.css';
 import { Component, Vue } from 'vue-property-decorator';
-import { VimePlayer, VimeYoutube, VimeDefaultUi } from '@vime/vue';
+import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/vue';
 
 @Component({
   components: {
     VimePlayer,
-    VimeYoutube,
+    VimeVideo,
     VimeDefaultUi,
   },
 })
 export default class App extends Vue {
-  onPlaying(isPlaying: boolean) {
-    console.log('playing:', isPlaying);
+  currentTime = 0;
+  
+  onTimeUpdate(time: number) {
+    this.currentTime = time;
+  }
+
+  onSeekBackward() {
+    this.currentTime -= 5;
+  }
+
+  onSeekForward() {
+    this.currentTime += 5;
   }
 }
 </script>
@@ -37,8 +60,24 @@ export default class App extends Vue {
   justify-content: center;
 }
 
-#app > #container {
+#container {
   width: 100%;
   max-width: 960px;
+}
+
+#buttons {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+#buttons > button {
+  margin-left: 8px;
+}
+
+#buttons > button:first-child {
+  margin-left: 0px;
 }
 </style>

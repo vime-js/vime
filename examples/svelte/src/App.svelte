@@ -1,15 +1,15 @@
 <script lang="ts">
 	let currentTime = 0;
 
-	const onCurrentTimeChange = (event: CustomEvent<number>) => {
+	const onTimeUpdate = (event: CustomEvent<number>) => {
 		currentTime = event.detail;
 	}
 
-	const onSeekForward = () => {
+	const onSeekBackward = () => {
 		currentTime -= 5;
 	};
 
-	const onSeekBackward = () => {
+	const onSeekForward = () => {
 		currentTime += 5;
 	};
 
@@ -17,8 +17,14 @@
 </script>
 
 <div id="container">
-	<vime-player current-time={currentTime} on:vCurrentTimeChange={onCurrentTimeChange}>
-		<vime-youtube video-id="DyTCOwB0DVw"></vime-youtube>
+	<vime-player 
+		current-time={currentTime} 
+		on:vCurrentTimeChange={onTimeUpdate}
+	>
+		<vime-video cross-origin="true" poster="http://localhost:3335/poster.png">
+			<source data-src="http://localhost:3335/720p.mp4" type="video/mp4">
+		</vime-video>
+
 		<vime-default-ui></vime-default-ui>
 	</vime-player>
 
