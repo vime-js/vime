@@ -17,6 +17,10 @@
 </script>
 
 <div id="container">
+	<vime-player current-time={currentTime} on:vCurrentTimeChange={onCurrentTimeChange}>
+		<vime-youtube video-id="DyTCOwB0DVw"></vime-youtube>
+		<vime-default-ui></vime-default-ui>
+	</vime-player>
 
 	<div id="buttons">
 		<button on:click={onSeekBackward}>-5s</button>
