@@ -21,9 +21,9 @@ at https://github.com/sampotts/rangetouch).
 
 ## Events
 
-| Event         | Description                                                     | Type                  |
-| ------------- | --------------------------------------------------------------- | --------------------- |
-| `valueChange` | Emitted when the value of the underlying `input` field changes. | `CustomEvent<number>` |
+| Event          | Description                                                     | Type                  |
+| -------------- | --------------------------------------------------------------- | --------------------- |
+| `vValueChange` | Emitted when the value of the underlying `input` field changes. | `CustomEvent<number>` |
 
 
 ## CSS Custom Properties

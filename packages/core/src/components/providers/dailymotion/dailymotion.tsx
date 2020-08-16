@@ -336,8 +336,8 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
         params={this.buildParams()}
         decoder={decodeQueryString}
         preconnections={this.getPreconnections()}
-        onEmbedMessage={this.onEmbedMessage.bind(this)}
-        onEmbedSrcChange={this.onEmbedSrcChange.bind(this)}
+        onVEmbedMessage={this.onEmbedMessage.bind(this)}
+        onVEmbedSrcChange={this.onEmbedSrcChange.bind(this)}
         ref={(el: any) => { this.embed = el; }}
       />
     );

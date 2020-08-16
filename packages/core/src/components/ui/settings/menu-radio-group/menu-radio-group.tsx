@@ -27,13 +27,13 @@ export class MenuRadioGroup {
   /**
    * Emitted when a new radio button is selected for this group.
    */
-  @Event() check!: EventEmitter<void>;
+  @Event() vCheck!: EventEmitter<void>;
 
   connectedCallback() {
     this.onValueChange();
   }
 
-  @Listen('check')
+  @Listen('vCheck')
   onSelectionChange(event: Event) {
     const radio = event.target as HTMLVimeMenuRadioElement;
     this.value = radio.value;

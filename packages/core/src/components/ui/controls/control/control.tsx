@@ -93,7 +93,7 @@ export class Control implements KeyboardControl {
   /**
    * Emitted when the user is interacting with the control by focusing, touching or hovering on it.
    */
-  @Event() interactionChange!: EventEmitter<boolean>;
+  @Event() vInteractionChange!: EventEmitter<boolean>;
 
   connectedCallback() {
     this.findTooltip();
@@ -118,14 +118,14 @@ export class Control implements KeyboardControl {
   private onShowTooltip() {
     const tooltip = this.findTooltip();
     if (!isNull(tooltip)) tooltip!.active = true;
-    this.interactionChange.emit(true);
+    this.vInteractionChange.emit(true);
   }
 
   private onHideTooltip() {
     const tooltip = this.findTooltip();
     if (!isNull(tooltip)) tooltip!.active = false;
     this.button.blur();
-    this.interactionChange.emit(false);
+    this.vInteractionChange.emit(false);
   }
 
   private onFocus() {

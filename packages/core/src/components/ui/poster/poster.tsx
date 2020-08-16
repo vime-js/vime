@@ -49,17 +49,17 @@ export class Poster {
   /**
    * Emitted when the poster has loaded.
    */
-  @Event({ bubbles: false }) loaded!: EventEmitter<void>;
+  @Event({ bubbles: false }) vLoaded!: EventEmitter<void>;
 
   /**
    * Emitted when the poster will be shown.
    */
-  @Event({ bubbles: false }) willShow!: EventEmitter<void>;
+  @Event({ bubbles: false }) vWillShow!: EventEmitter<void>;
 
   /**
    * Emitted when the poster will be hidden.
    */
-  @Event({ bubbles: false }) willHide!: EventEmitter<void>;
+  @Event({ bubbles: false }) vWillHide!: EventEmitter<void>;
 
   connectedCallback() {
     this.onEnabledChange();
@@ -67,7 +67,7 @@ export class Poster {
   }
 
   private onVisibilityChange() {
-    (!this.isHidden && this.isActive) ? this.willShow.emit() : this.willHide.emit();
+    (!this.isHidden && this.isActive) ? this.vWillShow.emit() : this.vWillHide.emit();
   }
 
   @Watch('isVideoView')
@@ -84,7 +84,7 @@ export class Poster {
   }
 
   private onPosterLoad() {
-    this.loaded.emit();
+    this.vLoaded.emit();
     this.hasLoaded = true;
   }
 

@@ -18,10 +18,10 @@ Displays a loading indicator when the video is `buffering`.
 
 ## Events
 
-| Event      | Description                              | Type                |
-| ---------- | ---------------------------------------- | ------------------- |
-| `willHide` | Emitted when the spinner will be hidden. | `CustomEvent<void>` |
-| `willShow` | Emitted when the spinner will be shown.  | `CustomEvent<void>` |
+| Event       | Description                              | Type                |
+| ----------- | ---------------------------------------- | ------------------- |
+| `vWillHide` | Emitted when the spinner will be hidden. | `CustomEvent<void>` |
+| `vWillShow` | Emitted when the spinner will be shown.  | `CustomEvent<void>` |
 
 
 ## CSS Custom Properties

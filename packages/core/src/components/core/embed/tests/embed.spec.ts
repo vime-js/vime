@@ -1,6 +1,5 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { Embed } from '../embed';
-import { EmbedEvent } from '../EmbedEvent';
 
 let page: SpecPage;
 
@@ -29,7 +28,7 @@ it('should increment iframe id', async () => {
 
 it('should fire event when src/params change', async () => {
   const cb = jest.fn();
-  page.root!.addEventListener(EmbedEvent.SrcChange, cb);
+  page.root!.addEventListener('vEmbedSrcChange', cb);
   page.rootInstance!.embedSrc = 'http://apples.com';
   await page.waitForChanges();
   expect(cb).toHaveBeenCalled();

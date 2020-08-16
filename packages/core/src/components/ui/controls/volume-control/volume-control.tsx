@@ -168,7 +168,7 @@ export class VolumeControl {
           onKeyDown={this.onKeyDown.bind(this)}
           onFocus={this.onShowSlider.bind(this)}
           onBlur={this.onHideSlider.bind(this)}
-          onValueChange={this.onVolumeChange.bind(this)}
+          onVValueChange={this.onVolumeChange.bind(this)}
         />
       </Host>
     );

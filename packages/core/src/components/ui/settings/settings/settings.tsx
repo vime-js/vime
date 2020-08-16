@@ -114,7 +114,7 @@ export class Settings {
           identifier={this.id}
           active={this.active}
           controller={this.controllerId ?? ''}
-          onClose={this.onClose.bind(this)}
+          onVClose={this.onClose.bind(this)}
           ref={(el: any) => { this.menu = el; }}
         >
           <slot />

@@ -26,11 +26,11 @@ dissapear once playback starts.
 
 ## Events
 
-| Event      | Description                             | Type                |
-| ---------- | --------------------------------------- | ------------------- |
-| `loaded`   | Emitted when the poster has loaded.     | `CustomEvent<void>` |
-| `willHide` | Emitted when the poster will be hidden. | `CustomEvent<void>` |
-| `willShow` | Emitted when the poster will be shown.  | `CustomEvent<void>` |
+| Event       | Description                             | Type                |
+| ----------- | --------------------------------------- | ------------------- |
+| `vLoaded`   | Emitted when the poster has loaded.     | `CustomEvent<void>` |
+| `vWillHide` | Emitted when the poster will be hidden. | `CustomEvent<void>` |
+| `vWillShow` | Emitted when the poster will be shown.  | `CustomEvent<void>` |
 
 
 ## Dependencies

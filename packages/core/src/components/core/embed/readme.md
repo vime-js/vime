@@ -37,11 +37,11 @@ Embeds an external media player and enables interacting with it via `postMessage
 
 ## Events
 
-| Event            | Description                                                                                                                                        | Type                  |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| `embedLoaded`    | Emitted when the embedded player and any new media has loaded.                                                                                     | `CustomEvent<void>`   |
-| `embedMessage`   | Emitted when a new message is received from the embedded player via `postMessage`.                                                                 | `CustomEvent<any>`    |
-| `embedSrcChange` | Emitted when the `embedSrc` or `params` props change. The payload contains the `params` serialized into a query string and appended to `embedSrc`. | `CustomEvent<string>` |
+| Event             | Description                                                                                                                                        | Type                  |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `vEmbedLoaded`    | Emitted when the embedded player and any new media has loaded.                                                                                     | `CustomEvent<void>`   |
+| `vEmbedMessage`   | Emitted when a new message is received from the embedded player via `postMessage`.                                                                 | `CustomEvent<any>`    |
+| `vEmbedSrcChange` | Emitted when the `embedSrc` or `params` props change. The payload contains the `params` serialized into a query string and appended to `embedSrc`. | `CustomEvent<string>` |
 
 
 ## Methods

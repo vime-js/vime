@@ -42,7 +42,7 @@ export class Slider {
   /**
    * Emitted when the value of the underlying `input` field changes.
    */
-  @Event() valueChange!: EventEmitter<number>;
+  @Event() vValueChange!: EventEmitter<number>;
 
   private getPercentage() {
     return `${(this.value / this.max) * 100}%`;
@@ -50,7 +50,7 @@ export class Slider {
 
   private onValueChange(event: Event) {
     const value = parseFloat((event.target as HTMLInputElement)?.value);
-    this.valueChange.emit(value);
+    this.vValueChange.emit(value);
   }
 
   private calcTouchedValue(event: TouchEvent) {
@@ -107,7 +107,7 @@ export class Slider {
     if (input.disabled) return;
     event.preventDefault();
     this.value = this.calcTouchedValue(event);
-    this.valueChange.emit(this.value);
+    this.vValueChange.emit(this.value);
     input.dispatchEvent(
       new window.Event((event.type === 'touchend') ? 'change' : 'input', { bubbles: true }),
     );

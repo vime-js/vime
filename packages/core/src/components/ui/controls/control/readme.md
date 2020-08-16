@@ -58,9 +58,9 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 
 ## Events
 
-| Event               | Description                                                                                    | Type                   |
-| ------------------- | ---------------------------------------------------------------------------------------------- | ---------------------- |
-| `interactionChange` | Emitted when the user is interacting with the control by focusing, touching or hovering on it. | `CustomEvent<boolean>` |
+| Event                | Description                                                                                    | Type                   |
+| -------------------- | ---------------------------------------------------------------------------------------------- | ---------------------- |
+| `vInteractionChange` | Emitted when the user is interacting with the control by focusing, touching or hovering on it. | `CustomEvent<boolean>` |
 
 
 ## Slots

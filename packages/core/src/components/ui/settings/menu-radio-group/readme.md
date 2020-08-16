@@ -35,9 +35,9 @@ can be selected at the same time.
 
 ## Events
 
-| Event   | Description                                                 | Type                |
-| ------- | ----------------------------------------------------------- | ------------------- |
-| `check` | Emitted when a new radio button is selected for this group. | `CustomEvent<void>` |
+| Event    | Description                                                 | Type                |
+| -------- | ----------------------------------------------------------- | ------------------- |
+| `vCheck` | Emitted when a new radio button is selected for this group. | `CustomEvent<void>` |
 
 
 ## Slots

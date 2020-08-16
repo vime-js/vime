@@ -79,8 +79,8 @@ export class Submenu {
           identifier={this.id}
           controller={this.getControllerId()}
           active={this.active}
-          onOpen={this.onOpen.bind(this)}
-          onClose={this.onClose.bind(this)}
+          onVOpen={this.onOpen.bind(this)}
+          onVClose={this.onClose.bind(this)}
         >
           <slot />
         </vime-menu>

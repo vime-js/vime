@@ -12,7 +12,6 @@ import {
   Watch,
 } from '@stencil/core';
 import { isString } from '../../../utils/unit';
-import { EmbedEvent, EmbedEventPayload } from './EmbedEvent';
 import { appendParamsToURL, Params, preconnect } from '../../../utils/network';
 
 let idCount = 0;
@@ -61,7 +60,7 @@ export class Embed implements ComponentInterface {
       if (preconnect(this.srcWithParams)) connected.add(this.embedSrc);
     }
 
-    this.embedSrcChange.emit(this.srcWithParams);
+    this.vEmbedSrcChange.emit(this.srcWithParams);
   }
 
   /**
@@ -85,23 +84,17 @@ export class Embed implements ComponentInterface {
    * Emitted when the `embedSrc` or `params` props change. The payload contains the `params`
    * serialized into a query string and appended to `embedSrc`.
    */
-  @Event({
-    bubbles: false,
-  }) embedSrcChange!: EventEmitter<EmbedEventPayload[EmbedEvent.SrcChange]>;
+  @Event({ bubbles: false, }) vEmbedSrcChange!: EventEmitter<string>;
 
   /**
    * Emitted when a new message is received from the embedded player via `postMessage`.
    */
-  @Event({
-    bubbles: false,
-  }) embedMessage!: EventEmitter<EmbedEventPayload[EmbedEvent.Message]>;
+  @Event({ bubbles: false, }) vEmbedMessage!: EventEmitter<any>;
 
   /**
    * Emitted when the embedded player and any new media has loaded.
    */
-  @Event({
-    bubbles: false,
-  }) embedLoaded!: EventEmitter<EmbedEventPayload[EmbedEvent.Loaded]>;
+  @Event({ bubbles: false, }) vEmbedLoaded!: EventEmitter<void>;
 
   @Watch('preconnections')
   preconnectionsChange() {
@@ -130,7 +123,7 @@ export class Embed implements ComponentInterface {
     if (!originMatches) return;
 
     const message = this.decoder?.(e.data) ?? e.data;
-    if (message) this.embedMessage.emit(message);
+    if (message) this.vEmbedMessage.emit(message);
   }
 
   /**
@@ -142,7 +135,7 @@ export class Embed implements ComponentInterface {
   }
 
   private onLoad() {
-    this.embedLoaded.emit();
+    this.vEmbedLoaded.emit();
   }
 
   private genIframeId() {

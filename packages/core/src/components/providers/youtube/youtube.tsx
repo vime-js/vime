@@ -356,9 +356,9 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
         params={this.buildParams()}
         decoder={decodeJSON}
         preconnections={this.getPreconnections()}
-        onEmbedLoaded={this.onEmbedLoaded.bind(this)}
-        onEmbedMessage={this.onEmbedMessage.bind(this)}
-        onEmbedSrcChange={this.onEmbedSrcChange.bind(this)}
+        onVEmbedLoaded={this.onEmbedLoaded.bind(this)}
+        onVEmbedMessage={this.onEmbedMessage.bind(this)}
+        onVEmbedSrcChange={this.onEmbedSrcChange.bind(this)}
         ref={(el: any) => { this.embed = el; }}
       />
     );

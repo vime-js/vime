@@ -37,11 +37,11 @@ export class MenuRadio {
   /**
    * Emitted when the radio button is selected.
    */
-  @Event() check!: EventEmitter<void>;
+  @Event() vCheck!: EventEmitter<void>;
 
   private onClick() {
     this.checked = !this.checked;
-    this.check.emit();
+    this.vCheck.emit();
   }
 
   render() {

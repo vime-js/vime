@@ -27,9 +27,9 @@ it('should set the value text', async () => {
   expect(input.getAttribute('aria-valuetext')).toEqual('70%');
 });
 
-it('should fire valueChange event', async () => {
+it('should fire vValueChange event', async () => {
   const callback = jest.fn();
-  slider.addEventListener('valueChange', callback);
+  slider.addEventListener('vValueChange', callback);
   input.value = '8';
   input.dispatchEvent(new Event('input'));
   await page.waitForChanges();

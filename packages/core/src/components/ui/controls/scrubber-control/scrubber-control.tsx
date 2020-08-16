@@ -170,7 +170,7 @@ export class ScrubberControl {
           value={this.currentTime}
           label={this.i18n.scrubber}
           valueText={sliderValueText}
-          onValueChange={this.onSeek.bind(this)}
+          onVValueChange={this.onSeek.bind(this)}
           ref={(el: any) => { this.slider = el; }}
         />
 

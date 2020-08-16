@@ -132,7 +132,7 @@ export class DefaultSettings {
       <vime-submenu label={this.i18n.playbackRate} hint={formatRate(this.playbackRate)}>
         <vime-menu-radio-group
           value={`${this.playbackRate}`}
-          onCheck={this.onPlaybackRateSelect.bind(this)}
+          onVCheck={this.onPlaybackRateSelect.bind(this)}
         >
           {radios}
         </vime-menu-radio-group>
@@ -178,7 +178,7 @@ export class DefaultSettings {
       <vime-submenu label={this.i18n.playbackQuality} hint={this.playbackQuality}>
         <vime-menu-radio-group
           value={this.playbackQuality}
-          onCheck={this.onPlaybackQualitySelect.bind(this)}
+          onVCheck={this.onPlaybackQualitySelect.bind(this)}
         >
           {radios}
         </vime-menu-radio-group>
@@ -241,7 +241,7 @@ export class DefaultSettings {
       >
         <vime-menu-radio-group
           value={groupValue}
-          onCheck={this.onCaptionSelect.bind(this)}
+          onVCheck={this.onCaptionSelect.bind(this)}
         >
           {radios}
         </vime-menu-radio-group>

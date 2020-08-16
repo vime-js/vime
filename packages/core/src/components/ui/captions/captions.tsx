@@ -24,14 +24,14 @@ export class Captions {
 
   @Watch('activeTrack')
   onActiveTrackChange() {
-    this.trackChange.emit(this.activeTrack);
+    this.vTrackChange.emit(this.activeTrack);
   }
 
   @State() activeCues: TextTrackCue[] = [];
 
   @Watch('activeCues')
   onActiveCuesChange() {
-    this.cuesChange.emit(this.activeCues);
+    this.vCuesChange.emit(this.activeCues);
   }
 
   /**
@@ -68,13 +68,13 @@ export class Captions {
   /**
    * Emitted when the current track changes.
    */
-  @Event({ bubbles: false }) trackChange!: EventEmitter<TextTrack | undefined>;
+  @Event({ bubbles: false }) vTrackChange!: EventEmitter<TextTrack | undefined>;
 
   /**
    * Emitted when the active cues change. A cue is active when
    * `currentTime >= cue.startTime && currentTime <= cue.endTime`.
    */
-  @Event({ bubbles: false }) cuesChange!: EventEmitter<TextTrackCue[]>;
+  @Event({ bubbles: false }) vCuesChange!: EventEmitter<TextTrackCue[]>;
 
   disconnectedCallback() {
     this.cleanup();

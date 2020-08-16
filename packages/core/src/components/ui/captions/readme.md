@@ -33,10 +33,10 @@ to be used in combination with the native HTML5 player controls.
 
 ## Events
 
-| Event         | Description                                                                                                             | Type                                  |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| `cuesChange`  | Emitted when the active cues change. A cue is active when `currentTime >= cue.startTime && currentTime <= cue.endTime`. | `CustomEvent<TextTrackCue[]>`         |
-| `trackChange` | Emitted when the current track changes.                                                                                 | `CustomEvent<TextTrack \| undefined>` |
+| Event          | Description                                                                                                             | Type                                  |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `vCuesChange`  | Emitted when the active cues change. A cue is active when `currentTime >= cue.startTime && currentTime <= cue.endTime`. | `CustomEvent<TextTrackCue[]>`         |
+| `vTrackChange` | Emitted when the current track changes.                                                                                 | `CustomEvent<TextTrack \| undefined>` |
 
 
 ## CSS Custom Properties

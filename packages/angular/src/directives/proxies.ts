@@ -53,19 +53,19 @@ export declare interface VimeCaptions extends Components.VimeCaptions {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   inputs: ['controlsHeight', 'hidden'],
-  outputs: ['trackChange', 'cuesChange']
+  outputs: ['vTrackChange', 'vCuesChange']
 })
 export class VimeCaptions {
   /** Emitted when the current track changes. */
-  trackChange!: ICaptions['trackChange'];
+  vTrackChange!: ICaptions['vTrackChange'];
   /** Emitted when the active cues change. A cue is active when
 `currentTime >= cue.startTime && currentTime <= cue.endTime`. */
-  cuesChange!: ICaptions['cuesChange'];
+  vCuesChange!: ICaptions['vCuesChange'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['trackChange', 'cuesChange']);
+    proxyOutputs(this, this.el, ['vTrackChange', 'vCuesChange']);
   }
 }
 
@@ -98,16 +98,16 @@ export declare interface VimeControl extends Components.VimeControl {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   inputs: ['expanded', 'hidden', 'identifier', 'keys', 'label', 'menu', 'pressed', 'scale'],
-  outputs: ['interactionChange']
+  outputs: ['vInteractionChange']
 })
 export class VimeControl {
   /** Emitted when the user is interacting with the control by focusing, touching or hovering on it. */
-  interactionChange!: IControl['interactionChange'];
+  vInteractionChange!: IControl['vInteractionChange'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['interactionChange']);
+    proxyOutputs(this, this.el, ['vInteractionChange']);
   }
 }
 
@@ -284,21 +284,21 @@ export declare interface VimeEmbed extends Components.VimeEmbed {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   inputs: ['decoder', 'embedSrc', 'mediaTitle', 'origin', 'params', 'preconnections'],
-  outputs: ['embedSrcChange', 'embedMessage', 'embedLoaded']
+  outputs: ['vEmbedSrcChange', 'vEmbedMessage', 'vEmbedLoaded']
 })
 export class VimeEmbed {
   /** Emitted when the `embedSrc` or `params` props change. The payload contains the `params`
 serialized into a query string and appended to `embedSrc`. */
-  embedSrcChange!: IEmbed['embedSrcChange'];
+  vEmbedSrcChange!: IEmbed['vEmbedSrcChange'];
   /** Emitted when a new message is received from the embedded player via `postMessage`. */
-  embedMessage!: IEmbed['embedMessage'];
+  vEmbedMessage!: IEmbed['vEmbedMessage'];
   /** Emitted when the embedded player and any new media has loaded. */
-  embedLoaded!: IEmbed['embedLoaded'];
+  vEmbedLoaded!: IEmbed['vEmbedLoaded'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['embedSrcChange', 'embedMessage', 'embedLoaded']);
+    proxyOutputs(this, this.el, ['vEmbedSrcChange', 'vEmbedMessage', 'vEmbedLoaded']);
   }
 }
 
@@ -461,22 +461,22 @@ export declare interface VimeMenu extends Components.VimeMenu {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   inputs: ['active', 'controller', 'identifier'],
-  outputs: ['open', 'close', 'menuItemsChange', 'focusedMenuItem']
+  outputs: ['vOpen', 'vClose', 'vMenuItemsChange', 'vFocusMenuItemChange']
 })
 export class VimeMenu {
   /** Emitted when the menu is open/active. */
-  open!: IMenu['open'];
+  vOpen!: IMenu['vOpen'];
   /** Emitted when the menu has closed/is not active. */
-  close!: IMenu['close'];
+  vClose!: IMenu['vClose'];
   /** Emitted when the menu items present changes. */
-  menuItemsChange!: IMenu['menuItemsChange'];
+  vMenuItemsChange!: IMenu['vMenuItemsChange'];
   /** Emitted when the currently focused menu item changes. */
-  focusedMenuItem!: IMenu['focusedMenuItem'];
+  vFocusMenuItemChange!: IMenu['vFocusMenuItemChange'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['open', 'close', 'menuItemsChange', 'focusedMenuItem']);
+    proxyOutputs(this, this.el, ['vOpen', 'vClose', 'vMenuItemsChange', 'vFocusMenuItemChange']);
   }
 }
 
@@ -509,16 +509,16 @@ export declare interface VimeMenuRadio extends Components.VimeMenuRadio {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   inputs: ['badge', 'checked', 'checkedIcon', 'label', 'value'],
-  outputs: ['check']
+  outputs: ['vCheck']
 })
 export class VimeMenuRadio {
   /** Emitted when the radio button is selected. */
-  check!: IMenuRadio['check'];
+  vCheck!: IMenuRadio['vCheck'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['check']);
+    proxyOutputs(this, this.el, ['vCheck']);
   }
 }
 
@@ -532,16 +532,16 @@ export declare interface VimeMenuRadioGroup extends Components.VimeMenuRadioGrou
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   inputs: ['value'],
-  outputs: ['check']
+  outputs: ['vCheck']
 })
 export class VimeMenuRadioGroup {
   /** Emitted when a new radio button is selected for this group. */
-  check!: IMenuRadioGroup['check'];
+  vCheck!: IMenuRadioGroup['vCheck'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['check']);
+    proxyOutputs(this, this.el, ['vCheck']);
   }
 }
 
@@ -705,20 +705,20 @@ export declare interface VimePoster extends Components.VimePoster {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   inputs: ['fit'],
-  outputs: ['loaded', 'willShow', 'willHide']
+  outputs: ['vLoaded', 'vWillShow', 'vWillHide']
 })
 export class VimePoster {
   /** Emitted when the poster has loaded. */
-  loaded!: IPoster['loaded'];
+  vLoaded!: IPoster['vLoaded'];
   /** Emitted when the poster will be shown. */
-  willShow!: IPoster['willShow'];
+  vWillShow!: IPoster['vWillShow'];
   /** Emitted when the poster will be hidden. */
-  willHide!: IPoster['willHide'];
+  vWillHide!: IPoster['vWillHide'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['loaded', 'willShow', 'willHide']);
+    proxyOutputs(this, this.el, ['vLoaded', 'vWillShow', 'vWillHide']);
   }
 }
 
@@ -809,16 +809,16 @@ export declare interface VimeSlider extends Components.VimeSlider {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   inputs: ['label', 'max', 'min', 'step', 'value', 'valueText'],
-  outputs: ['valueChange']
+  outputs: ['vValueChange']
 })
 export class VimeSlider {
   /** Emitted when the value of the underlying `input` field changes. */
-  valueChange!: ISlider['valueChange'];
+  vValueChange!: ISlider['vValueChange'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['valueChange']);
+    proxyOutputs(this, this.el, ['vValueChange']);
   }
 }
 
@@ -829,18 +829,18 @@ export declare interface VimeSpinner extends Components.VimeSpinner {}
   selector: 'vime-spinner',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  outputs: ['willShow', 'willHide']
+  outputs: ['vWillShow', 'vWillHide']
 })
 export class VimeSpinner {
   /** Emitted when the spinner will be shown. */
-  willShow!: ISpinner['willShow'];
+  vWillShow!: ISpinner['vWillShow'];
   /** Emitted when the spinner will be hidden. */
-  willHide!: ISpinner['willHide'];
+  vWillHide!: ISpinner['vWillHide'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['willShow', 'willHide']);
+    proxyOutputs(this, this.el, ['vWillShow', 'vWillHide']);
   }
 }
 

@@ -25,7 +25,7 @@ export class Menu {
 
   @Watch('menuItems')
   onMenuItemsChange() {
-    this.menuItemsChange.emit(this.menuItems);
+    this.vMenuItemsChange.emit(this.menuItems);
   }
 
   @State() currFocusedMenuItem = 0;
@@ -33,7 +33,7 @@ export class Menu {
   @Watch('currFocusedMenuItem')
   async onFocusedMenuItemChange() {
     const menuItem = await this.getFocusedMenuItem();
-    this.focusedMenuItem.emit(menuItem);
+    this.vFocusMenuItemChange.emit(menuItem);
   }
 
   /**
@@ -48,7 +48,7 @@ export class Menu {
       this.findSubmenus();
     }
 
-    this.active ? this.open.emit() : this.close.emit();
+    this.active ? this.vOpen.emit() : this.vClose.emit();
   }
 
   /**
@@ -64,22 +64,22 @@ export class Menu {
   /**
    * Emitted when the menu is open/active.
    */
-  @Event() open!: EventEmitter<void>;
+  @Event() vOpen!: EventEmitter<void>;
 
   /**
    * Emitted when the menu has closed/is not active.
    */
-  @Event() close!: EventEmitter<void>;
+  @Event() vClose!: EventEmitter<void>;
 
   /**
    * Emitted when the menu items present changes.
    */
-  @Event() menuItemsChange!: EventEmitter<NodeListOf<HTMLVimeMenuItemElement> | undefined>;
+  @Event() vMenuItemsChange!: EventEmitter<NodeListOf<HTMLVimeMenuItemElement> | undefined>;
 
   /**
    * Emitted when the currently focused menu item changes.
    */
-  @Event() focusedMenuItem!: EventEmitter<HTMLVimeMenuItemElement | undefined>;
+  @Event() vFocusMenuItemChange!: EventEmitter<HTMLVimeMenuItemElement | undefined>;
 
   componentWillLoad() {
     this.findMenuItems();
@@ -221,13 +221,13 @@ export class Menu {
     submenu.active = isActive;
   }
 
-  @Listen('open')
+  @Listen('vOpen')
   onSubmenuOpen(event: CustomEvent<void>) {
     const submenu = event.target as HTMLVimeMenuElement;
     this.toggleSubmenu(submenu, true);
   }
 
-  @Listen('close')
+  @Listen('vClose')
   onSubmenuClose(event: CustomEvent<void>) {
     const submenu = event.target as HTMLVimeMenuElement;
     this.toggleSubmenu(submenu, false);

@@ -39,9 +39,9 @@ of related options). Only one radio button in a group can be selected at the sam
 
 ## Events
 
-| Event   | Description                                | Type                |
-| ------- | ------------------------------------------ | ------------------- |
-| `check` | Emitted when the radio button is selected. | `CustomEvent<void>` |
+| Event    | Description                                | Type                |
+| -------- | ------------------------------------------ | ------------------- |
+| `vCheck` | Emitted when the radio button is selected. | `CustomEvent<void>` |
 
 
 ## Dependencies

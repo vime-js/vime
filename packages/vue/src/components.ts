@@ -110,7 +110,7 @@ export const VimeCaptions = /*@__PURE__*/ Vue.extend({
   },
 
 
-  render: createCommonRender('vime-captions', ['trackChange', 'cuesChange']),
+  render: createCommonRender('vime-captions', ['vTrackChange', 'vCuesChange']),
 });
 
 
@@ -142,7 +142,7 @@ export const VimeControl = /*@__PURE__*/ Vue.extend({
   },
 
 
-  render: createCommonRender('vime-control', ['interactionChange']),
+  render: createCommonRender('vime-control', ['vInteractionChange']),
 });
 
 
@@ -317,7 +317,7 @@ export const VimeEmbed = /*@__PURE__*/ Vue.extend({
   methods: {
     postMessage: createCommonMethod('postMessage') as Components.VimeEmbed['postMessage'],
   },
-  render: createCommonRender('vime-embed', ['embedSrcChange', 'embedMessage', 'embedLoaded']),
+  render: createCommonRender('vime-embed', ['vEmbedSrcChange', 'vEmbedMessage', 'vEmbedLoaded']),
 });
 
 
@@ -480,7 +480,7 @@ export const VimeMenu = /*@__PURE__*/ Vue.extend({
     getFocusedMenuItem: createCommonMethod('getFocusedMenuItem') as Components.VimeMenu['getFocusedMenuItem'],
     focusOnOpen: createCommonMethod('focusOnOpen') as Components.VimeMenu['focusOnOpen'],
   },
-  render: createCommonRender('vime-menu', ['open', 'close', 'menuItemsChange', 'focusedMenuItem']),
+  render: createCommonRender('vime-menu', ['vOpen', 'vClose', 'vMenuItemsChange', 'vFocusMenuItemChange']),
 });
 
 
@@ -515,7 +515,7 @@ export const VimeMenuRadio = /*@__PURE__*/ Vue.extend({
   },
 
 
-  render: createCommonRender('vime-menu-radio', ['check']),
+  render: createCommonRender('vime-menu-radio', ['vCheck']),
 });
 
 
@@ -526,7 +526,7 @@ export const VimeMenuRadioGroup = /*@__PURE__*/ Vue.extend({
   },
 
 
-  render: createCommonRender('vime-menu-radio-group', ['check']),
+  render: createCommonRender('vime-menu-radio-group', ['vCheck']),
 });
 
 
@@ -677,7 +677,7 @@ export const VimePoster = /*@__PURE__*/ Vue.extend({
   },
 
 
-  render: createCommonRender('vime-poster', ['loaded', 'willShow', 'willHide']),
+  render: createCommonRender('vime-poster', ['vLoaded', 'vWillShow', 'vWillHide']),
 });
 
 
@@ -756,7 +756,7 @@ export const VimeSlider = /*@__PURE__*/ Vue.extend({
   },
 
 
-  render: createCommonRender('vime-slider', ['valueChange']),
+  render: createCommonRender('vime-slider', ['vValueChange']),
 });
 
 
@@ -768,7 +768,7 @@ export const VimeSpinner = /*@__PURE__*/ Vue.extend({
   },
 
 
-  render: createCommonRender('vime-spinner', ['willShow', 'willHide']),
+  render: createCommonRender('vime-spinner', ['vWillShow', 'vWillHide']),
 });
 
 
