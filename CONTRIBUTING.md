@@ -53,6 +53,7 @@ $: git clone https://github.com/{my-github-username}/vime
 
 $: cd vime
 
+# Ignore all the warnings.
 $: pnpm install
 
 $: git checkout -b {issue-64}

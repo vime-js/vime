@@ -605,15 +605,15 @@ export class VimePlaybackControl {
 import { Player as IPlayer } from '@vime/core/dist/types/components/core/player/player';
 export declare interface VimePlayer extends Components.VimePlayer {}
 @ProxyCmp({
-  inputs: ['aspectRatio', 'autopause', 'autoplay', 'buffered', 'buffering', 'controls', 'currentCaption', 'currentPoster', 'currentSrc', 'currentTime', 'debug', 'duration', 'errors', 'i18n', 'isAudio', 'isAudioView', 'isCaptionsActive', 'isControlsActive', 'isFullscreenActive', 'isLive', 'isMobile', 'isPiPActive', 'isSettingsActive', 'isTouch', 'isVideo', 'isVideoView', 'language', 'languages', 'loop', 'mediaTitle', 'mediaType', 'muted', 'noSkeleton', 'paused', 'playbackEnded', 'playbackQualities', 'playbackQuality', 'playbackRate', 'playbackRates', 'playbackReady', 'playbackStarted', 'playing', 'playsinline', 'seeking', 'textTracks', 'translations', 'viewType', 'volume'],
-  methods: ['getProvider', 'play', 'pause', 'canPlay', 'canAutoplay', 'canMutedAutoplay', 'canSetPlaybackRate', 'canSetPlaybackQuality', 'canSetFullscreen', 'enterFullscreen', 'exitFullscreen', 'canSetPiP', 'enterPiP', 'exitPiP', 'extendLanguage']
+  inputs: ['aspectRatio', 'autopause', 'autoplay', 'buffered', 'buffering', 'controls', 'currentCaption', 'currentPoster', 'currentSrc', 'currentTime', 'debug', 'duration', 'errors', 'i18n', 'isAudio', 'isAudioView', 'isCaptionsActive', 'isControlsActive', 'isFullscreenActive', 'isLive', 'isMobile', 'isPiPActive', 'isSettingsActive', 'isTouch', 'isVideo', 'isVideoView', 'language', 'languages', 'loop', 'mediaTitle', 'mediaType', 'muted', 'noSkeleton', 'paused', 'playbackEnded', 'playbackQualities', 'playbackQuality', 'playbackRate', 'playbackRates', 'playbackReady', 'playbackStarted', 'playing', 'playsinline', 'ready', 'seeking', 'textTracks', 'translations', 'viewType', 'volume'],
+  methods: ['getProvider', 'play', 'pause', 'canPlay', 'canAutoplay', 'canMutedAutoplay', 'canSetPlaybackRate', 'canSetPlaybackQuality', 'canSetFullscreen', 'enterFullscreen', 'exitFullscreen', 'canSetPiP', 'enterPiP', 'exitPiP', 'extendLanguage', 'toggleCaptionsVisiblity']
 })
 @Component({
   selector: 'vime-player',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['aspectRatio', 'autopause', 'autoplay', 'buffered', 'buffering', 'controls', 'currentCaption', 'currentPoster', 'currentSrc', 'currentTime', 'debug', 'duration', 'errors', 'i18n', 'isAudio', 'isAudioView', 'isCaptionsActive', 'isControlsActive', 'isFullscreenActive', 'isLive', 'isMobile', 'isPiPActive', 'isSettingsActive', 'isTouch', 'isVideo', 'isVideoView', 'language', 'languages', 'loop', 'mediaTitle', 'mediaType', 'muted', 'noSkeleton', 'paused', 'playbackEnded', 'playbackQualities', 'playbackQuality', 'playbackRate', 'playbackRates', 'playbackReady', 'playbackStarted', 'playing', 'playsinline', 'seeking', 'textTracks', 'translations', 'viewType', 'volume'],
-  outputs: ['vPausedChange', 'vPlay', 'vPlayingChange', 'vSeekingChange', 'vSeeked', 'vBufferingChange', 'vDurationChange', 'vCurrentTimeChange', 'vPlaybackReady', 'vPlaybackStarted', 'vPlaybackEnded', 'vBufferedChange', 'vTextTracksChange', 'vErrorsChange', 'vLoadStart', 'vCurrentSrcChange', 'vCurrentPosterChange', 'vMediaTitleChange', 'vControlsChange', 'vPlaybackRateChange', 'vPlaybackRatesChange', 'vPlaybackQualityChange', 'vPlaybackQualitiesChange', 'vMutedChange', 'vVolumeChange', 'vViewTypeChange', 'vMediaTypeChange', 'vLiveChange', 'vTouchChange', 'vLanguageChange', 'vLanguagesChange', 'vFullscreenChange', 'vPiPChange']
+  inputs: ['aspectRatio', 'autopause', 'autoplay', 'buffered', 'buffering', 'controls', 'currentCaption', 'currentPoster', 'currentSrc', 'currentTime', 'debug', 'duration', 'errors', 'i18n', 'isAudio', 'isAudioView', 'isCaptionsActive', 'isControlsActive', 'isFullscreenActive', 'isLive', 'isMobile', 'isPiPActive', 'isSettingsActive', 'isTouch', 'isVideo', 'isVideoView', 'language', 'languages', 'loop', 'mediaTitle', 'mediaType', 'muted', 'noSkeleton', 'paused', 'playbackEnded', 'playbackQualities', 'playbackQuality', 'playbackRate', 'playbackRates', 'playbackReady', 'playbackStarted', 'playing', 'playsinline', 'ready', 'seeking', 'textTracks', 'translations', 'viewType', 'volume'],
+  outputs: ['vPausedChange', 'vPlay', 'vPlayingChange', 'vSeekingChange', 'vSeeked', 'vBufferingChange', 'vDurationChange', 'vCurrentTimeChange', 'vReady', 'vPlaybackReady', 'vPlaybackStarted', 'vPlaybackEnded', 'vBufferedChange', 'vTextTracksChange', 'vErrorsChange', 'vLoadStart', 'vCurrentSrcChange', 'vCurrentPosterChange', 'vMediaTitleChange', 'vControlsChange', 'vPlaybackRateChange', 'vPlaybackRatesChange', 'vPlaybackQualityChange', 'vPlaybackQualitiesChange', 'vMutedChange', 'vVolumeChange', 'vViewTypeChange', 'vMediaTypeChange', 'vLiveChange', 'vTouchChange', 'vLanguageChange', 'vLanguagesChange', 'vFullscreenChange', 'vPiPChange']
 })
 export class VimePlayer {
   /** Emitted when the `paused` prop changes value. @inheritDoc undefined*/
@@ -635,6 +635,8 @@ Event flow: `seeking` -> `seeked`. @inheritDoc undefined*/
   vDurationChange!: IPlayer['vDurationChange'];
   /** Emitted when the `currentTime` prop changes value. @inheritDoc undefined*/
   vCurrentTimeChange!: IPlayer['vCurrentTimeChange'];
+  /** Emitted when the player has loaded and is ready to be interacted with. @inheritDoc undefined*/
+  vReady!: IPlayer['vReady'];
   /** Emitted when the media is ready to begin playback. The following props are guaranteed to be
 defined when this fires: `mediaTitle`, `currentSrc`, `currentPoster`, `duration`, `mediaType`,
 `viewType`. @inheritDoc undefined*/
@@ -691,7 +693,7 @@ defined when this fires: `mediaTitle`, `currentSrc`, `currentPoster`, `duration`
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['vPausedChange', 'vPlay', 'vPlayingChange', 'vSeekingChange', 'vSeeked', 'vBufferingChange', 'vDurationChange', 'vCurrentTimeChange', 'vPlaybackReady', 'vPlaybackStarted', 'vPlaybackEnded', 'vBufferedChange', 'vTextTracksChange', 'vErrorsChange', 'vLoadStart', 'vCurrentSrcChange', 'vCurrentPosterChange', 'vMediaTitleChange', 'vControlsChange', 'vPlaybackRateChange', 'vPlaybackRatesChange', 'vPlaybackQualityChange', 'vPlaybackQualitiesChange', 'vMutedChange', 'vVolumeChange', 'vViewTypeChange', 'vMediaTypeChange', 'vLiveChange', 'vTouchChange', 'vLanguageChange', 'vLanguagesChange', 'vFullscreenChange', 'vPiPChange']);
+    proxyOutputs(this, this.el, ['vPausedChange', 'vPlay', 'vPlayingChange', 'vSeekingChange', 'vSeeked', 'vBufferingChange', 'vDurationChange', 'vCurrentTimeChange', 'vReady', 'vPlaybackReady', 'vPlaybackStarted', 'vPlaybackEnded', 'vBufferedChange', 'vTextTracksChange', 'vErrorsChange', 'vLoadStart', 'vCurrentSrcChange', 'vCurrentPosterChange', 'vMediaTitleChange', 'vControlsChange', 'vPlaybackRateChange', 'vPlaybackRatesChange', 'vPlaybackQualityChange', 'vPlaybackQualitiesChange', 'vMutedChange', 'vVolumeChange', 'vViewTypeChange', 'vMediaTypeChange', 'vLiveChange', 'vTouchChange', 'vLanguageChange', 'vLanguagesChange', 'vFullscreenChange', 'vPiPChange']);
   }
 }
 

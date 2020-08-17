@@ -598,6 +598,7 @@ export const VimePlayer = /*@__PURE__*/ Vue.extend({
     currentPoster: {} as PropOptions<Components.VimePlayer['currentPoster']>,
     currentTime: {} as PropOptions<Components.VimePlayer['currentTime']>,
     autoplay: {} as PropOptions<Components.VimePlayer['autoplay']>,
+    ready: {} as PropOptions<Components.VimePlayer['ready']>,
     playbackReady: {} as PropOptions<Components.VimePlayer['playbackReady']>,
     loop: {} as PropOptions<Components.VimePlayer['loop']>,
     muted: {} as PropOptions<Components.VimePlayer['muted']>,
@@ -659,10 +660,9 @@ export const VimePlayer = /*@__PURE__*/ Vue.extend({
     exitPiP: createCommonMethod('exitPiP') as Components.VimePlayer['exitPiP'],
     extendLanguage: createCommonMethod('extendLanguage') as Components.VimePlayer['extendLanguage'],
     callAdapter: createCommonMethod('callAdapter') as Components.VimePlayer['callAdapter'],
-    queuePropChange: createCommonMethod('queuePropChange') as Components.VimePlayer['queuePropChange'],
-    queueStateChange: createCommonMethod('queueStateChange') as Components.VimePlayer['queueStateChange'],
+    toggleCaptionsVisiblity: createCommonMethod('toggleCaptionsVisiblity') as Components.VimePlayer['toggleCaptionsVisiblity'],
   },
-  render: createCommonRender('vime-player', ['vPausedChange', 'vPlay', 'vPlayingChange', 'vSeekingChange', 'vSeeked', 'vBufferingChange', 'vDurationChange', 'vCurrentTimeChange', 'vPlaybackReady', 'vPlaybackStarted', 'vPlaybackEnded', 'vBufferedChange', 'vTextTracksChange', 'vErrorsChange', 'vLoadStart', 'vCurrentSrcChange', 'vCurrentPosterChange', 'vMediaTitleChange', 'vControlsChange', 'vPlaybackRateChange', 'vPlaybackRatesChange', 'vPlaybackQualityChange', 'vPlaybackQualitiesChange', 'vMutedChange', 'vVolumeChange', 'vViewTypeChange', 'vMediaTypeChange', 'vLiveChange', 'vTouchChange', 'vLanguageChange', 'vLanguagesChange', 'vFullscreenChange', 'vPiPChange']),
+  render: createCommonRender('vime-player', ['vPausedChange', 'vPlay', 'vPlayingChange', 'vSeekingChange', 'vSeeked', 'vBufferingChange', 'vDurationChange', 'vCurrentTimeChange', 'vReady', 'vPlaybackReady', 'vPlaybackStarted', 'vPlaybackEnded', 'vBufferedChange', 'vTextTracksChange', 'vErrorsChange', 'vLoadStart', 'vCurrentSrcChange', 'vCurrentPosterChange', 'vMediaTitleChange', 'vControlsChange', 'vPlaybackRateChange', 'vPlaybackRatesChange', 'vPlaybackQualityChange', 'vPlaybackQualitiesChange', 'vMutedChange', 'vVolumeChange', 'vViewTypeChange', 'vMediaTypeChange', 'vLiveChange', 'vTouchChange', 'vLanguageChange', 'vLanguagesChange', 'vFullscreenChange', 'vPiPChange']),
 });
 
 
