@@ -34,8 +34,6 @@ jobs:
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
       - name: Install dependencies
         run: pnpm install
-      - name: Lint
-        run: npm run lint
       - name: Test
         run: pnpm run test:ci --filter @vime/core
       - name: Coverage

@@ -84,17 +84,17 @@ export class Embed implements ComponentInterface {
    * Emitted when the `embedSrc` or `params` props change. The payload contains the `params`
    * serialized into a query string and appended to `embedSrc`.
    */
-  @Event({ bubbles: false, }) vEmbedSrcChange!: EventEmitter<string>;
+  @Event({ bubbles: false }) vEmbedSrcChange!: EventEmitter<string>;
 
   /**
    * Emitted when a new message is received from the embedded player via `postMessage`.
    */
-  @Event({ bubbles: false, }) vEmbedMessage!: EventEmitter<any>;
+  @Event({ bubbles: false }) vEmbedMessage!: EventEmitter<any>;
 
   /**
    * Emitted when the embedded player and any new media has loaded.
    */
-  @Event({ bubbles: false, }) vEmbedLoaded!: EventEmitter<void>;
+  @Event({ bubbles: false }) vEmbedLoaded!: EventEmitter<void>;
 
   @Watch('preconnections')
   preconnectionsChange() {
@@ -107,11 +107,8 @@ export class Embed implements ComponentInterface {
       });
   }
 
-  connectedCallback() {
-    this.srcChange();
-  }
-
   componentWillLoad() {
+    this.srcChange();
     this.genIframeId();
   }
 

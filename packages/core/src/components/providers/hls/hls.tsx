@@ -81,11 +81,9 @@ export class HLS implements MediaFileProvider {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
-  connectedCallback() {
-    this.dispatch = createPlayerStateDispatcher(this);
-  }
-
   async componentDidLoad() {
+    this.dispatch = createPlayerStateDispatcher(this);
+
     if (canPlayHLSNatively()) return;
 
     try {
@@ -105,8 +103,8 @@ export class HLS implements MediaFileProvider {
         this.onSrcChange();
       });
 
-      this.hls!.on('hlsError', (e: any, data: any) => { 
-        this.dispatch(PlayerProp.Errors, [{ e, data }]); 
+      this.hls!.on('hlsError', (e: any, data: any) => {
+        this.dispatch(PlayerProp.Errors, [{ e, data }]);
       });
 
       this.hls!.on('hlsManifestParsed', () => {

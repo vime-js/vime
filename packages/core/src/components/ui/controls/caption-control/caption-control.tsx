@@ -3,18 +3,16 @@ import {
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
 import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
-import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../../core/player/PlayerState';
 import { TooltipDirection } from '../../tooltip/types';
 import { isUndefined } from '../../../../utils/unit';
 import { KeyboardControl } from '../control/KeyboardControl';
+import { findRootPlayer } from '../../../core/player/utils';
 
 @Component({
   tag: 'vime-caption-control',
   styleUrl: 'caption-control.css',
 })
 export class CaptionControl implements KeyboardControl {
-  private dispatch!: PlayerStateDispatcher;
-
   /**
    * The URL to an SVG element or fragment to load.
    */
@@ -60,12 +58,9 @@ export class CaptionControl implements KeyboardControl {
    */
   @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
 
-  connectedCallback() {
-    this.dispatch = createPlayerStateDispatcher(this);
-  }
-
   private onClick() {
-    this.dispatch(PlayerProp.IsCaptionsActive, !this.isCaptionsActive);
+    const player = findRootPlayer(this);
+    player.toggleCaptionsVisiblity();
   }
 
   render() {

@@ -95,7 +95,7 @@ export class ScrubberControl {
    */
   @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
 
-  connectedCallback() {
+  componentWillLoad() {
     this.dispatch = createPlayerStateDispatcher(this);
     this.timestamp = formatTime(this.currentTime, this.alwaysShowHours);
     this.onNoKeyboardChange();

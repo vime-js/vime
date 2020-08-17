@@ -107,13 +107,10 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.dispatch = createPlayerStateDispatcher(this);
     this.dispatch(PlayerProp.ViewType, ViewType.Video);
     this.onVideoIdChange();
-  }
-
-  componentWillLoad() {
     this.initialMuted = this.muted;
     this.defaultInternalState = { ...this.internalState };
   }

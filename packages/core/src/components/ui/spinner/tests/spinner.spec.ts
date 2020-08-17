@@ -24,11 +24,13 @@ it('should be structurally sound', () => {
 it('should not render if not a video view', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(spinner).toHaveClass('hidden');
 });
 
 it('should render if a video view', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+  await page.waitForChanges();
   await page.waitForChanges();
   expect(spinner).not.toHaveClass('hidden');
 });
@@ -36,11 +38,13 @@ it('should render if a video view', async () => {
 it('should be visible if buffering', async () => {
   await provider.dispatchStateChange(PlayerProp.Buffering, true);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(spinner).toHaveClass('active');
 });
 
 it('should not be visible if not buffering', async () => {
   await provider.dispatchStateChange(PlayerProp.Buffering, false);
+  await page.waitForChanges();
   await page.waitForChanges();
   expect(spinner).not.toHaveClass('active');
 });
@@ -51,6 +55,7 @@ it('should emit vWillShow event when visible', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await provider.dispatchStateChange(PlayerProp.Buffering, true);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(cb).toHaveBeenCalled();
 });
 
@@ -60,7 +65,9 @@ it('should emit vWillHide event when not visible', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await provider.dispatchStateChange(PlayerProp.Buffering, true);
   await page.waitForChanges();
+  await page.waitForChanges();
   await provider.dispatchStateChange(PlayerProp.Buffering, false);
+  await page.waitForChanges();
   await page.waitForChanges();
   expect(cb).toHaveBeenCalled();
 });

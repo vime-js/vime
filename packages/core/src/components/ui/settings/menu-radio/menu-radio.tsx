@@ -40,7 +40,7 @@ export class MenuRadio {
   @Event() vCheck!: EventEmitter<void>;
 
   private onClick() {
-    this.checked = !this.checked;
+    this.checked = true;
     this.vCheck.emit();
   }
 

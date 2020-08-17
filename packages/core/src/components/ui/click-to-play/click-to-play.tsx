@@ -29,7 +29,7 @@ export class ClickToPlay {
    */
   @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.dispatch = createPlayerStateDispatcher(this);
   }
 

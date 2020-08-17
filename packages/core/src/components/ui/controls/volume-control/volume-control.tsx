@@ -107,7 +107,7 @@ export class VolumeControl {
    */
   @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
 
-  connectedCallback() {
+  componentWillLoad() {
     this.prevMuted = this.muted;
     this.dispatch = createPlayerStateDispatcher(this);
     this.onNoKeyboardChange();

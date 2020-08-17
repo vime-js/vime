@@ -29,7 +29,7 @@ export class MenuRadioGroup {
    */
   @Event() vCheck!: EventEmitter<void>;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.onValueChange();
   }
 

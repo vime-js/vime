@@ -36,6 +36,7 @@ it('should become active', async () => {
   await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
   await provider.dispatchStateChange(PlayerProp.IsControlsActive, true);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(controls).toHaveClass('active');
 });
 
@@ -44,8 +45,10 @@ it('should only be active when audio view', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
   await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(controls).toHaveClass('active');
   await provider.dispatchStateChange(PlayerProp.Paused, false);
+  await page.waitForChanges();
   await page.waitForChanges();
   jest.runAllTimers();
   expect(controls).toHaveClass('active');
@@ -126,6 +129,7 @@ it('should change active duration', async () => {
   await provider.dispatchStateChange(PlayerProp.IsControlsActive, true);
   await provider.dispatchStateChange(PlayerProp.Paused, false);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
   requestAnimationFrame(async () => {
     jest.advanceTimersByTime(3000);
@@ -143,8 +147,10 @@ it('should wait for playback to start before showing controls', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await provider.dispatchStateChange(PlayerProp.Paused, false);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(controls.isControlsActive).toBeFalsy();
   await provider.dispatchStateChange(PlayerProp.PlaybackStarted, true);
+  await page.waitForChanges();
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
 });
@@ -155,8 +161,10 @@ it('should hide controls when paused', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await provider.dispatchStateChange(PlayerProp.Paused, false);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
   await provider.dispatchStateChange(PlayerProp.Paused, true);
+  await page.waitForChanges();
   await page.waitForChanges();
   requestAnimationFrame(async () => {
     expect(controls.isControlsActive).toBeTruthy();
@@ -171,8 +179,10 @@ it('should hide controls on mouse leave', async () => {
   await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
   controls.dispatchEvent(new Event('mouseleave', { bubbles: true }));
+  await page.waitForChanges();
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeFalsy();
 });

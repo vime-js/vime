@@ -51,7 +51,7 @@ export class Name implements MediaProvider {
   // @TODO we have to call this event as soon as media starts loading.
   @Event() vLoadStart!: EventEmitter<void>;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.dispatch = createPlayerStateDispatcher(this);
     // @TODO change this if view is of type audio.
     this.dispatch(PlayerProp.ViewType, ViewType.Video);

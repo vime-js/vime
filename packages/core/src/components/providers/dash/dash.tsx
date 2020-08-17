@@ -95,7 +95,7 @@ export class Dash implements MediaFileProvider<any> {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.dispatch = createPlayerStateDispatcher(this);
   }
 

@@ -136,6 +136,9 @@ export class Controls {
 
   connectedCallback() {
     this.dispatch = createPlayerStateDispatcher(this);
+  }
+
+  componentWillLoad() {
     this.setupPlayerListeners();
     this.checkForCaptionsCollision();
     this.checkForSettingsCollision();
@@ -299,8 +302,8 @@ export class Controls {
 }
 
 openPlayerWormhole(Controls, [
-  PlayerProp.IsAudioView,
   PlayerProp.PlaybackReady,
+  PlayerProp.IsAudioView,
   PlayerProp.IsControlsActive,
   PlayerProp.IsSettingsActive,
   PlayerProp.Paused,

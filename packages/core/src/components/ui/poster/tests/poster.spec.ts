@@ -26,12 +26,14 @@ it('should be structurally sound', () => {
 it('should not render if not a video view', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(poster).toHaveClass('hidden');
 });
 
 it('should render if currentPoster exists', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await provider.dispatchStateChange(PlayerProp.CurrentPoster, '');
+  await page.waitForChanges();
   await page.waitForChanges();
   expect(poster).not.toHaveClass('hidden');
 });
@@ -48,12 +50,14 @@ it.skip('should be visible if playback has not started', () => {
 it('should not be visible if playback has started', async () => {
   await provider.dispatchStateChange(PlayerProp.PlaybackStarted, true);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(poster).not.toHaveClass('active');
 });
 
 it('should set the alt text based on the media title', async () => {
   expect(findImage()).toEqualAttribute('alt', 'Media Poster');
   await provider.dispatchStateChange(PlayerProp.MediaTitle, 'Apples');
+  await page.waitForChanges();
   await page.waitForChanges();
   expect(findImage()).toEqualAttribute('alt', 'Apples Poster');
 });
@@ -63,6 +67,7 @@ it('should emit vWillShow event when visible', async () => {
   poster.addEventListener('vWillShow', cb);
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
   await provider.dispatchStateChange(PlayerProp.CurrentPoster, '');
+  await page.waitForChanges();
   await page.waitForChanges();
   expect(cb).toHaveBeenCalled();
 });

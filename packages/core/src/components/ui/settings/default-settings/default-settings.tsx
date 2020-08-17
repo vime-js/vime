@@ -78,7 +78,7 @@ export class DefaultSettings {
     }));
   }
 
-  connectedCallback() {
+  componentWillLoad() {
     this.skipFirstRender = true;
     this.player = findRootPlayer(this);
     this.dispatch = createPlayerStateDispatcher(this);
@@ -189,9 +189,10 @@ export class DefaultSettings {
   private async onCaptionSelect(event: Event) {
     const radio = event.target as HTMLVimeMenuRadioElement;
     const index = parseInt(radio.value, 10);
+    const player = findRootPlayer(this);
 
     if (index === -1) {
-      this.dispatch(PlayerProp.IsCaptionsActive, false);
+      await player.toggleCaptionsVisiblity(false);
       return;
     }
 
@@ -199,7 +200,7 @@ export class DefaultSettings {
     if (!isUndefined(track)) {
       if (!isUndefined(this.currentCaption)) this.currentCaption!.mode = 'disabled';
       track.mode = 'showing';
-      this.dispatch(PlayerProp.IsCaptionsActive, true);
+      await player.toggleCaptionsVisiblity(true);
     }
   }
 

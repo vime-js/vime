@@ -52,7 +52,7 @@ export class PlaybackControl implements KeyboardControl {
    */
   @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
 
-  connectedCallback() {
+  componentWillLoad() {
     this.dispatch = createPlayerStateDispatcher(this);
   }
 

@@ -1,9 +1,7 @@
-import { MediaPlayer } from './MediaPlayer';
-
-let players: MediaPlayer[] = [];
+let players: HTMLVimePlayerElement[] = [];
 
 export class Autopause {
-  constructor(private readonly player: MediaPlayer) {
+  constructor(private readonly player: HTMLVimePlayerElement) {
     players.push(player);
   }
 

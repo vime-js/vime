@@ -64,11 +64,8 @@ export class Settings {
    */
   @Prop() isAudioView: PlayerProps[PlayerProp.IsAudioView] = false;
 
-  connectedCallback() {
-    this.dispatch = createPlayerStateDispatcher(this);
-  }
-
   componentWillLoad() {
+    this.dispatch = createPlayerStateDispatcher(this);
     idCount += 1;
     this.id = `vime-settings-${idCount}`;
   }

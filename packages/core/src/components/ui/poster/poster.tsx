@@ -61,7 +61,7 @@ export class Poster {
    */
   @Event({ bubbles: false }) vWillHide!: EventEmitter<void>;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.onEnabledChange();
     this.onActiveChange();
   }

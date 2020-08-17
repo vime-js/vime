@@ -3,7 +3,6 @@ import {
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
 import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
-import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../../core/player/PlayerState';
 import { TooltipDirection } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
@@ -14,8 +13,6 @@ import { findRootPlayer } from '../../../core/player/utils';
   styleUrl: 'pip-control.css',
 })
 export class PiPControl implements KeyboardControl {
-  private dispatch!: PlayerStateDispatcher;
-
   @State() canSetPiP = false;
 
   /**
@@ -69,12 +66,9 @@ export class PiPControl implements KeyboardControl {
     this.canSetPiP = await player.canSetPiP();
   }
 
-  connectedCallback() {
-    this.dispatch = createPlayerStateDispatcher(this);
-  }
-
   private onClick() {
-    this.dispatch(PlayerProp.IsPiPActive, !this.isPiPActive);
+    const player = findRootPlayer(this);
+    !this.isPiPActive ? player.enterPiP() : player.exitPiP();
   }
 
   render() {

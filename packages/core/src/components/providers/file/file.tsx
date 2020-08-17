@@ -154,15 +154,12 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.dispatch = createPlayerStateDispatcher(this);
     this.onViewTypeChange();
     this.onPosterChange();
     this.onMediaTitleChange();
     this.listenToTextTracksChanges();
-  }
-
-  componentWillLoad() {
     this.vLoadStart.emit();
   }
 

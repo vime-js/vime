@@ -28,7 +28,10 @@
 
   const container = document.getElementById('container');
   const addPlayer = (id, player) => { 
-    addClickEvent(id, () => { container.innerHTML = player; }); 
+    addClickEvent(id, () => { 
+      container.innerHTML = player;
+      window.$ = document.querySelector('vime-player');
+    }); 
   };
 
   addClickEvent('theme', () => {

@@ -95,7 +95,7 @@ export class Control implements KeyboardControl {
    */
   @Event() vInteractionChange!: EventEmitter<boolean>;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.findTooltip();
     this.onKeysChange();
   }

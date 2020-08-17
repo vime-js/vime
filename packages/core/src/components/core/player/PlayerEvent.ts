@@ -16,6 +16,7 @@ const isToggleStateEvent = new Set([
 
 // Events that are emitted without the 'Change' postfix.
 const hasShortenedEventName = new Set([
+  PlayerProp.Ready,
   PlayerProp.PlaybackStarted,
   PlayerProp.PlaybackEnded,
   PlayerProp.PlaybackReady,
@@ -46,6 +47,7 @@ export enum PlayerEvent {
   BufferingChange = 'vBufferingChange',
   DurationChange = 'vDurationChange',
   CurrentTimeChange = 'vCurrentTimeChange',
+  Ready = 'vReady',
   PlaybackReady = 'vPlaybackReady',
   PlaybackStarted = 'vPlaybackStarted',
   PlaybackEnded = 'vPlaybackEnded',
@@ -115,6 +117,11 @@ export interface PlayerEvents {
    * Emitted when the `currentTime` prop changes value.
    */
   [PlayerEvent.CurrentTimeChange]: EventEmitter<PlayerProps[PlayerProp.CurrentTime]>
+
+  /**
+   * Emitted when the player has loaded and is ready to be interacted with.
+   */
+  [PlayerEvent.Ready]: EventEmitter<void>;
 
   /**
    * Emitted when the media is ready to begin playback. The following props are guaranteed to be

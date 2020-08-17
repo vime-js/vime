@@ -3,7 +3,6 @@ import {
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
 import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
-import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../../core/player/PlayerState';
 import { TooltipDirection } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
@@ -14,8 +13,6 @@ import { findRootPlayer } from '../../../core/player/utils';
   styleUrl: 'fullscreen-control.css',
 })
 export class FullscreenControl implements KeyboardControl {
-  private dispatch!: PlayerStateDispatcher;
-
   @State() canSetFullscreen = false;
 
   /**
@@ -69,12 +66,9 @@ export class FullscreenControl implements KeyboardControl {
     this.canSetFullscreen = await player.canSetFullscreen();
   }
 
-  connectedCallback() {
-    this.dispatch = createPlayerStateDispatcher(this);
-  }
-
   private onClick() {
-    this.dispatch(PlayerProp.IsFullscreenActive, !this.isFullscreenActive);
+    const player = findRootPlayer(this);
+    !this.isFullscreenActive ? player.enterFullscreen() : player.exitFullscreen();
   }
 
   render() {

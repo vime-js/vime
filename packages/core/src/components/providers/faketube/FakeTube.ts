@@ -52,7 +52,7 @@ export class FakeTube implements MediaProvider {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.dispatch = createPlayerStateDispatcher(this);
   }
 

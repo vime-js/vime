@@ -18,7 +18,8 @@ export enum PlayerMethod {
   ExitPiP = 'exitPiP',
   ExtendLanguage = 'extendLanguage',
   CallAdapter = 'callAdapter',
-  QueueStateChange = 'queueStateChange'
+  QueueStateChange = 'queueStateChange',
+  ToggleCaptionsVisibility = 'toggleCaptionsVisiblity',
 }
 
 export interface PlayerMethods {
@@ -118,6 +119,11 @@ export interface PlayerMethods {
    * information.
    */
   [PlayerMethod.ExitPiP](): Promise<void>
+
+  /**
+   * Toggles the visibility of the captions.
+   */
+  [PlayerMethod.ToggleCaptionsVisibility](isVisible?: boolean): Promise<void>
 
   /**
    * Extends the translation map for a given language.

@@ -11,6 +11,7 @@ export enum PlayerProp {
   CurrentTime = 'currentTime',
   Seeking = 'seeking',
   Debug = 'debug',
+  Ready = 'ready',
   PlaybackStarted = 'playbackStarted',
   PlaybackEnded = 'playbackEnded',
   PlaybackRate= 'playbackRate',
@@ -57,6 +58,7 @@ export type InternalReadonlyPlayerProps = Pick<PlayerProps, PlayerProp.Autoplay
 | PlayerProp.Controls
 | PlayerProp.Debug
 | PlayerProp.Loop
+| PlayerProp.Ready
 | PlayerProp.IsAudio
 | PlayerProp.IsVideo
 | PlayerProp.IsMobile
@@ -102,6 +104,7 @@ const internalReadonly = new Set<InternalReadonlyPlayerProp>([
   PlayerProp.Autoplay,
   PlayerProp.Controls,
   PlayerProp.Loop,
+  PlayerProp.Ready,
   PlayerProp.Debug,
   PlayerProp.IsAudio,
   PlayerProp.IsVideo,
@@ -207,6 +210,11 @@ export interface PlayerProps {
    * Depending on the provider, changing this prop may cause the player to completely reset.
    */
   [PlayerProp.Autoplay]: boolean
+
+  /**
+   * `@readonly` Whether the player has loaded and is ready to be interacted with.
+   */
+  [PlayerProp.Ready]: boolean
 
   /**
    * `@readonly` Whether media is ready for playback to begin.

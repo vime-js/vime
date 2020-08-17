@@ -24,11 +24,13 @@ it('should be structurally sound', () => {
 it('should not render if not a video view', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
   await page.waitForChanges();
+  await page.waitForChanges();
   expect(scrim).toHaveClass('hidden');
 });
 
 it('should render if a video view', async () => {
   await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+  await page.waitForChanges();
   await page.waitForChanges();
   expect(scrim).not.toHaveClass('hidden');
 });
