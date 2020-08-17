@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.1.0](https://github.com/vime-js/vime/compare/@vime/angular@1.0.0...@vime/angular@1.1.0) (2020-08-17)
+
+
+### Bug Fixes
+
+* all event names should be prefixed with v ([3bf4742](https://github.com/vime-js/vime/commit/3bf4742ff89f04d5664f341da8acb021ee279eca))
+
+
+### Features
+
+* **core:** @stencil/core@2.0.0-3 ([09557d1](https://github.com/vime-js/vime/commit/09557d15ef9cc4a8a012e1104381f04b4a34848e))
+
 # 1.0.0 (2020-08-14)
 
 
