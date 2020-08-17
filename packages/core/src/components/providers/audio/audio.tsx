@@ -1,10 +1,10 @@
 import {
   h, Method, Component, Prop,
 } from '@stencil/core';
-import { ViewType } from '../../../core/player/ViewType';
-import { MediaFileProvider, MediaPreloadOption } from '../MediaFileProvider';
-import { isString } from '../../../../utils/unit';
-import { audioRegex } from '../utils';
+import { ViewType } from '../../core/player/ViewType';
+import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
+import { isString } from '../../../utils/unit';
+import { audioRegex } from '../file/utils';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
@@ -23,7 +23,7 @@ export class Audio implements MediaFileProvider<HTMLMediaElement> {
   /**
    * @inheritdoc
    */
-  @Prop() crossOrigin?: string;
+  @Prop() crossOrigin?: MediaCrossOriginOption;
 
   /**
    * @inheritdoc

@@ -1,17 +1,17 @@
 # vime-captions
 
-Renders and displays VTT cues by hooking into the `textTracks` player property. This is a simple 
-implementation that can only handle rendering one text track, and one cue for the given track at a 
-time (even if many are active). The active track can be changed by setting the mode of any track 
-in the list to `showing`. 
+Renders and displays VTT cues by hooking into the `textTracks` player property. This is a simple
+implementation that can only handle rendering one text track, and one cue for the given track at a
+time (even if many are active). The active track can be changed by setting the mode of any track
+in the list to `showing`.
 
-Be aware that after you set the text track mode to `showing`, the component will automatically set 
-it to hidden to avoid double captions. This also means that this component is **not recommended** 
+Be aware that after you set the text track mode to `showing`, the component will automatically set
+it to hidden to avoid double captions. This also means that this component is **not recommended**
 to be used in combination with the native HTML5 player controls.
 
 ## Example
 
-```html
+```html {4}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -22,7 +22,6 @@ to be used in combination with the native HTML5 player controls.
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property         | Attribute         | Description                                                                                         | Type      | Default |
@@ -30,14 +29,12 @@ to be used in combination with the native HTML5 player controls.
 | `controlsHeight` | `controls-height` | The height of any lower control bar in pixels so that the captions can reposition when it's active. | `number`  | `0`     |
 | `hidden`         | `hidden`          | Whether the captions should be visible or not.                                                      | `boolean` | `false` |
 
-
 ## Events
 
 | Event          | Description                                                                                                             | Type                                  |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
 | `vCuesChange`  | Emitted when the active cues change. A cue is active when `currentTime >= cue.startTime && currentTime <= cue.endTime`. | `CustomEvent<TextTrackCue[]>`         |
 | `vTrackChange` | Emitted when the current track changes.                                                                                 | `CustomEvent<TextTrack \| undefined>` |
-
 
 ## CSS Custom Properties
 
@@ -52,20 +49,20 @@ to be used in combination with the native HTML5 player controls.
 | `--captions-font-size-xlarge`  | Font size of captions when device screen size is >1200px. |
 | `--captions-text-color`        | The color of the captions text.                           |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-ui](../default-ui)
+- [vime-default-ui](../default-ui)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-default-ui --> vime-captions
   style vime-captions fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

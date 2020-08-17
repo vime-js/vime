@@ -1,11 +1,16 @@
 # vime-slider
 
-A custom styled and ARIA friendly `input[type="range"]` component for inputting numeric values. 
-In addition, there are optimizations made for improved touch support (more information can be found 
+A custom styled and ARIA friendly `input[type="range"]` component for inputting numeric values.
+In addition, there are optimizations made for improved touch support (more information can be found
 at https://github.com/sampotts/rangetouch).
 
-<!-- Auto Generated Below -->
+## Example
 
+```html
+<vime-slider step="5" max="100" value="50" label="Volume" />
+```
+
+<!-- Auto Generated Below -->
 
 ## Properties
 
@@ -18,13 +23,11 @@ at https://github.com/sampotts/rangetouch).
 | `value`     | `value`      | The current value.                                                                         | `number`              | `5`         |
 | `valueText` | `value-text` | Human-readable text alternative for the current value. Defaults to `value:max` percentage. | `string \| undefined` | `undefined` |
 
-
 ## Events
 
 | Event          | Description                                                     | Type                  |
 | -------------- | --------------------------------------------------------------- | --------------------- |
 | `vValueChange` | Emitted when the value of the underlying `input` field changes. | `CustomEvent<number>` |
-
 
 ## CSS Custom Properties
 
@@ -39,15 +42,15 @@ at https://github.com/sampotts/rangetouch).
 | `--slider-track-height`         | The height of the track.                                          |
 | `--slider-value-color`          | The color of the part of the track filled upto the current value. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-scrubber-control](../controls/scrubber-control)
- - [vime-volume-control](../controls/volume-control)
+- [vime-scrubber-control](../controls/scrubber-control)
+- [vime-volume-control](../controls/volume-control)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-scrubber-control --> vime-slider
@@ -55,6 +58,6 @@ graph TD;
   style vime-slider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

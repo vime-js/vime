@@ -4,7 +4,7 @@ A control for adjusting the volume of the player and toggling the muted state.
 
 ## Example
 
-```html
+```html {6}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -13,11 +13,10 @@ A control for adjusting the volume of the player and toggling the muted state.
       <vime-volume-control></vime-volume-control>
     </vime-controls>
   </vime-ui>
-<vime-player>
+</vime-player>
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -31,12 +30,11 @@ A control for adjusting the volume of the player and toggling the muted state.
 | `noKeyboard`       | `no-keyboard`       | Prevents the volume being changed using the Up/Down arrow keys.                                                                      | `boolean`                        | `false`               |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                      | `"left" \| "right" \| undefined` | `undefined`           |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-controls](../default-controls)
+- [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -44,6 +42,7 @@ A control for adjusting the volume of the player and toggling the muted state.
 - [vime-slider](../../slider)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-volume-control --> vime-mute-control
@@ -55,6 +54,6 @@ graph TD;
   style vime-volume-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

@@ -6,7 +6,7 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
 
 ## Example
 
-```html
+```html {2}
 <vime-player controls autoplay muted>
   <vime-dailymotion video-id="k3b11PemcuTrmWvYe0q"></vime-dailymotion>
   <!-- ... -->
@@ -22,7 +22,6 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property               | Attribute               | Description                                                                                                                                     | Type                  | Default     |
@@ -36,7 +35,6 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
 | `syndication`          | `syndication`           | Forwards your syndication key to the player.                                                                                                    | `string \| undefined` | `undefined` |
 | `videoId` _(required)_ | `video-id`              | The Dailymotion resource ID of the video to load.                                                                                               | `string`              | `undefined` |
 
-
 ## Dependencies
 
 ### Depends on
@@ -44,12 +42,13 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
 - [vime-embed](../../core/embed)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-dailymotion --> vime-embed
   style vime-dailymotion fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

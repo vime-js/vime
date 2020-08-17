@@ -4,7 +4,7 @@ This can be used to indicate to the user that the current media is being streame
 
 ## Example
 
-```html
+```html {7}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -14,11 +14,10 @@ This can be used to indicate to the user that the current media is being streame
       <vime-live-indicator></vime-live-indicator>
     </vime-controls>
   </vime-ui>
-<vime-player>
+</vime-player>
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## CSS Custom Properties
 
@@ -26,20 +25,20 @@ This can be used to indicate to the user that the current media is being streame
 | ------------------------ | ------------------------------------ |
 | `--live-indicator-color` | The color of the live indicator dot. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-controls](../controls/default-controls)
+- [vime-default-controls](../controls/default-controls)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-default-controls --> vime-live-indicator
   style vime-live-indicator fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

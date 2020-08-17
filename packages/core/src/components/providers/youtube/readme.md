@@ -6,7 +6,7 @@ Enables loading, playing and controlling videos from [YouTube](https://www.youtu
 
 ## Example
 
-```html
+```html {2}
 <vime-player controls autoplay muted>
   <vime-youtube video-id="DyTCOwB0DVw"></vime-youtube>
   <!-- ... -->
@@ -15,19 +15,18 @@ Enables loading, playing and controlling videos from [YouTube](https://www.youtu
 
 ## Quirks
 
-- When the player is `paused`, `seeking` and `seeked` are fired at the same time (in order), because 
+- When the player is `paused`, `seeking` and `seeked` are fired at the same time (in order), because
   there are no updates between the events from the embed.
 
 - Chaning the `controls` prop forces the player to reload.
-  
-- You cannot change `playbackQuality` programmatically, YouTube automatically determines the best 
+
+- You cannot change `playbackQuality` programmatically, YouTube automatically determines the best
   quality to play.
 
-- Fullscreen changes that come from clicking the YouTube fullscreen control are not tracked on iOS, 
+- Fullscreen changes that come from clicking the YouTube fullscreen control are not tracked on iOS,
   because the embed doesn't provide an API for it.
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -37,7 +36,6 @@ Enables loading, playing and controlling videos from [YouTube](https://www.youtu
 | `showFullscreenControl` | `show-fullscreen-control` | Whether the fullscreen control should be shown. | `boolean` | `true`      |
 | `videoId` _(required)_  | `video-id`                | The YouTube resource ID of the video to load.   | `string`  | `undefined` |
 
-
 ## Dependencies
 
 ### Depends on
@@ -45,12 +43,13 @@ Enables loading, playing and controlling videos from [YouTube](https://www.youtu
 - [vime-embed](../../core/embed)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-youtube --> vime-embed
   style vime-youtube fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

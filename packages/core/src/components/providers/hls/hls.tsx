@@ -1,7 +1,7 @@
 import {
   h, Method, Component, Prop, State, Event, EventEmitter,
 } from '@stencil/core';
-import { MediaFileProvider, MediaPreloadOption } from '../file/MediaFileProvider';
+import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
 import { isString, isUndefined } from '../../../utils/unit';
 import { loadSDK } from '../../../utils/network';
 import { PlayerProp } from '../../core/player/PlayerProp';
@@ -39,7 +39,7 @@ export class HLS implements MediaFileProvider {
   /**
    * @inheritdoc
    */
-  @Prop() crossOrigin?: string;
+  @Prop() crossOrigin?: MediaCrossOriginOption;
 
   /**
    * @inheritdoc

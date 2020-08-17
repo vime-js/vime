@@ -2,7 +2,7 @@ import {
   h, Method, Component, Prop, Watch, State, Event, EventEmitter,
 } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { MediaFileProvider, MediaPreloadOption } from '../file/MediaFileProvider';
+import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
 import { isString } from '../../../utils/unit';
 import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../core/player/PlayerState';
 import { dashRegex } from '../file/utils';
@@ -53,7 +53,7 @@ export class Dash implements MediaFileProvider<any> {
   /**
    * @inheritdoc
    */
-  @Prop() crossOrigin?: string;
+  @Prop() crossOrigin?: MediaCrossOriginOption;
 
   /**
    * @inheritdoc

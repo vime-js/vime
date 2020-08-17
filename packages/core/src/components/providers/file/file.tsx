@@ -7,7 +7,7 @@ import { openProviderWormhole, MediaProvider } from '../MediaProvider';
 import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/player/PlayerState';
 import { PlayerProp } from '../../core/player/PlayerProp';
 import { ViewType } from '../../core/player/ViewType';
-import { MediaFileProvider, MediaPreloadOption } from './MediaFileProvider';
+import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from './MediaFileProvider';
 import {
   isString, isNumber, isUndefined, isNull,
 } from '../../../utils/unit';
@@ -52,7 +52,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   /**
    * @inheritdoc
    */
-  @Prop() crossOrigin?: string;
+  @Prop() crossOrigin?: MediaCrossOriginOption;
 
   /**
    * @inheritdoc

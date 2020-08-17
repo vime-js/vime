@@ -1,22 +1,19 @@
 vime-menu-item {
   /**
-   * @prop --menu-item-hint-font-size - The font size of the hint text.
-   * @prop --menu-item-hint-color - The color of the hint text.
-   * @prop --menu-item-hint-opacity - The opacity of the hint text.
-   * @prop --menu-item-badge-color - The color of the badge text.
-   * @prop --menu-item-badge-bg - The background color of the badge.
-   * @prop --menu-item-badge-font-size - The font size of the the badge text. 
-   * @prop --menu-item-arrow-color - The color of the left/right arrow on a navigational menu item.
+   * @prop --menu-item-hint-font-size: The font size of the hint text.
+   * @prop --menu-item-hint-color: The color of the hint text.
+   * @prop --menu-item-hint-opacity: The opacity of the hint text.
+   * @prop --menu-item-badge-color: The color of the badge text.
+   * @prop --menu-item-badge-bg: The background color of the badge.
+   * @prop --menu-item-badge-font-size: The font size of the the badge text. 
+   * @prop --menu-item-arrow-color: The color of the left/right arrow on a navigational menu item.
    * @prop --menu-item-check-icon-width: The width of the checked icon.
    * @prop --menu-item-check-icon-height: The height of the checked icon.
    * @prop --menu-item-padding: The padding within each menu item.
-   * @prop --menu-item-focus-color: The color of a menu item's text when it is being focused or 
-   * hovered on.
-   * @prop --menu-item-focus-bg: The background color of a menu item when it is being focused or 
-   * hovered on.
+   * @prop --menu-item-focus-color: The color of a menu item's text when it is being focused or hovered on.
+   * @prop --menu-item-focus-bg: The background color of a menu item when it is being focused or hovered on.
    * @prop --menu-item-tap-highlight: The highlight color when a menu item is tapped.
-   * @prop --menu-item-divider-color: The color of the divider between a navigational menu item and 
-   * the menu body.
+   * @prop --menu-item-divider-color: The color of the divider between a navigational menu item and the menu body.
    */
 
   display: flex;

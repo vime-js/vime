@@ -1,11 +1,11 @@
 # vime-settings-control
 
-A control for toggling the visiblity of the settings menu. This control is not displayed if no 
+A control for toggling the visiblity of the settings menu. This control is not displayed if no
 settings (`vime-settings`) has been provided for the current player.
 
 ## Example
 
-```html
+```html {5}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -13,13 +13,13 @@ settings (`vime-settings`) has been provided for the current player.
       <vime-settings-control></vime-settings-control>
     </vime-controls>
 
+    <!-- Optional. -->
     <vime-default-settings></vime-default-settings>
   </vime-ui>
-<vime-player>
+</vime-player>
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -28,12 +28,11 @@ settings (`vime-settings`) has been provided for the current player.
 | `icon`             | `icon`              | The URL to an SVG element or fragment to load.  | `string`                         | `'#vime-settings'` |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow. | `"left" \| "right" \| undefined` | `undefined`        |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-controls](../default-controls)
+- [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -42,6 +41,7 @@ settings (`vime-settings`) has been provided for the current player.
 - [vime-tooltip](../../tooltip)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-settings-control --> vime-control
@@ -51,6 +51,6 @@ graph TD;
   style vime-settings-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

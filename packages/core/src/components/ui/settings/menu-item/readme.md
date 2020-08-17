@@ -1,15 +1,15 @@
 # vime-menu-item
 
-A multi-purpose interactable element inside a menu. The behaviour and style of the item depends on 
-the props set. If the `menu` prop is set, the item behaves as a navigational control and displays 
-arrows to indicate whether clicking the control will navigate forwards/backwards. If the `checked` 
-prop is set, the item behaves as a radio button and displays a checkmark icon to indicate whether it 
-is checked or not. By default, it only contains a label and optional hint/badge text that is 
+A multi-purpose interactable element inside a menu. The behaviour and style of the item depends on
+the props set. If the `menu` prop is set, the item behaves as a navigational control and displays
+arrows to indicate whether clicking the control will navigate forwards/backwards. If the `checked`
+prop is set, the item behaves as a radio button and displays a checkmark icon to indicate whether it
+is checked or not. By default, it only contains a label and optional hint/badge text that is
 displayed on the right-hand side of the item.
 
 ## Example
 
-```html
+```html {6}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -22,7 +22,6 @@ displayed on the right-hand side of the item.
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -38,40 +37,39 @@ displayed on the right-hand side of the item.
 | `label` _(required)_ | `label`        | The label/title of the item.                                                                                                                                                                              | `string`               | `undefined`         |
 | `menu`               | `menu`         | If the item has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                                                                                               | `string \| undefined`  | `undefined`         |
 
-
 ## CSS Custom Properties
 
-| Name                                                                                       | Description                                                                  |
-| ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
-| `--menu-item-arrow-color - The color of the left/right arrow on a navigational menu item.` |                                                                              |
-| `--menu-item-badge-bg - The background color of the badge.`                                |                                                                              |
-| `--menu-item-badge-color - The color of the badge text.`                                   |                                                                              |
-| `--menu-item-badge-font-size - The font size of the the badge text.`                       |                                                                              |
-| `--menu-item-check-icon-height`                                                            | The height of the checked icon.                                              |
-| `--menu-item-check-icon-width`                                                             | The width of the checked icon.                                               |
-| `--menu-item-divider-color`                                                                | The color of the divider between a navigational menu item and the menu body. |
-| `--menu-item-focus-bg`                                                                     | The background color of a menu item when it is being focused or hovered on.  |
-| `--menu-item-focus-color`                                                                  | The color of a menu item's text when it is being focused or hovered on.      |
-| `--menu-item-hint-color - The color of the hint text.`                                     |                                                                              |
-| `--menu-item-hint-font-size - The font size of the hint text.`                             |                                                                              |
-| `--menu-item-hint-opacity - The opacity of the hint text.`                                 |                                                                              |
-| `--menu-item-padding`                                                                      | The padding within each menu item.                                           |
-| `--menu-item-tap-highlight`                                                                | The highlight color when a menu item is tapped.                              |
-
+| Name                            | Description                                                                  |
+| ------------------------------- | ---------------------------------------------------------------------------- |
+| `--menu-item-arrow-color`       | The color of the left/right arrow on a navigational menu item.               |
+| `--menu-item-badge-bg`          | The background color of the badge.                                           |
+| `--menu-item-badge-color`       | The color of the badge text.                                                 |
+| `--menu-item-badge-font-size`   | The font size of the the badge text.                                         |
+| `--menu-item-check-icon-height` | The height of the checked icon.                                              |
+| `--menu-item-check-icon-width`  | The width of the checked icon.                                               |
+| `--menu-item-divider-color`     | The color of the divider between a navigational menu item and the menu body. |
+| `--menu-item-focus-bg`          | The background color of a menu item when it is being focused or hovered on.  |
+| `--menu-item-focus-color`       | The color of a menu item's text when it is being focused or hovered on.      |
+| `--menu-item-hint-color`        | The color of the hint text.                                                  |
+| `--menu-item-hint-font-size`    | The font size of the hint text.                                              |
+| `--menu-item-hint-opacity`      | The opacity of the hint text.                                                |
+| `--menu-item-padding`           | The padding within each menu item.                                           |
+| `--menu-item-tap-highlight`     | The highlight color when a menu item is tapped.                              |
 
 ## Dependencies
 
 ### Used by
 
- - [vime-default-settings](../default-settings)
- - [vime-menu-radio](../menu-radio)
- - [vime-submenu](../submenu)
+- [vime-default-settings](../default-settings)
+- [vime-menu-radio](../menu-radio)
+- [vime-submenu](../submenu)
 
 ### Depends on
 
 - [vime-icon](../../icon)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-menu-item --> vime-icon
@@ -81,6 +79,6 @@ graph TD;
   style vime-menu-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

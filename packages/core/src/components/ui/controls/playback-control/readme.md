@@ -4,7 +4,7 @@ A control for toggling the playback state (play/pause) of the current media.
 
 ## Example
 
-```html
+```html {6}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -13,11 +13,10 @@ A control for toggling the playback state (play/pause) of the current media.
       <vime-playback-control></vime-playback-control>
     </vime-controls>
   </vime-ui>
-<vime-player>
+</vime-player>
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -30,12 +29,11 @@ A control for toggling the playback state (play/pause) of the current media.
 | `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                                    | `number`                         | `1`             |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" \| "right" \| undefined` | `undefined`     |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-controls](../default-controls)
+- [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -44,6 +42,7 @@ A control for toggling the playback state (play/pause) of the current media.
 - [vime-tooltip](../../tooltip)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-playback-control --> vime-control
@@ -53,6 +52,6 @@ graph TD;
   style vime-playback-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

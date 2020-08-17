@@ -1,11 +1,11 @@
 # vime-fullscreen-control
 
-A control for toggling fullscreen mode. This control is not displayed if fullscreen cannot be 
+A control for toggling fullscreen mode. This control is not displayed if fullscreen cannot be
 requested (checked via the `canSetFullscreen()` player method).
 
 ## Example
 
-```html
+```html {6}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -14,11 +14,10 @@ requested (checked via the `canSetFullscreen()` player method).
       <vime-fullscreen-control></vime-fullscreen-control>
     </vime-controls>
   </vime-ui>
-<vime-player>
+</vime-player>
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -31,12 +30,11 @@ requested (checked via the `canSetFullscreen()` player method).
 | `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                                    | `number`                         | `1`                        |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" \| "right" \| undefined` | `undefined`                |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-controls](../default-controls)
+- [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -45,6 +43,7 @@ requested (checked via the `canSetFullscreen()` player method).
 - [vime-tooltip](../../tooltip)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-fullscreen-control --> vime-control
@@ -54,6 +53,6 @@ graph TD;
   style vime-fullscreen-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

@@ -5,7 +5,7 @@ currently set.
 
 ## Example
 
-```html
+```html {6}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -14,11 +14,11 @@ currently set.
       <vime-caption-control></vime-caption-control>
     </vime-controls>
   </vime-ui>
-<vime-player>
+  <vime-player></vime-player
+></vime-player>
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -31,12 +31,11 @@ currently set.
 | `showIcon`         | `show-icon`         | The URL to an SVG element or fragment to load.                                                                                                                | `string`                         | `'#vime-captions-on'`  |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" \| "right" \| undefined` | `undefined`            |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-controls](../default-controls)
+- [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -45,6 +44,7 @@ currently set.
 - [vime-tooltip](../../tooltip)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-caption-control --> vime-control
@@ -54,6 +54,6 @@ graph TD;
   style vime-caption-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

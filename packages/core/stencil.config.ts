@@ -44,6 +44,10 @@ export const config: Config = {
     {
       type: 'docs-readme',
     },
+    {
+      type: 'docs-readme',
+      dir: '../docs/docs'
+    }
   ],
   testing: {
     globals: {

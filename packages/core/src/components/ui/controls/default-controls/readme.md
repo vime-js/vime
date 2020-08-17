@@ -1,11 +1,11 @@
 # vime-default-controls
 
-Default set of controls for when you're in a hurry. The controls displayed depend on whether 
-the media is audio/video/live, and whether the device is mobile/desktop. 
+Default set of controls for when you're in a hurry. The controls displayed depend on whether
+the media is audio/video/live, and whether the device is mobile/desktop.
 
 ## Example
 
-```html
+```html {5}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -17,7 +17,6 @@ the media is audio/video/live, and whether the device is mobile/desktop.
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property               | Attribute                 | Description                                                                                                                 | Type      | Default |
@@ -27,12 +26,11 @@ the media is audio/video/live, and whether the device is mobile/desktop.
 | `hideWhenPaused`       | `hide-when-paused`        | Whether the controls should show/hide when paused. Audio players are not effected by this prop.                             | `boolean` | `false` |
 | `waitForPlaybackStart` | `wait-for-playback-start` | Whether the controls should wait for playback to start before being shown. Audio players are not effected by this prop.     | `boolean` | `false` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-ui](../../default-ui)
+- [vime-default-ui](../../default-ui)
 
 ### Depends on
 
@@ -53,6 +51,7 @@ the media is audio/video/live, and whether the device is mobile/desktop.
 - [vime-pip-control](../pip-control)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-default-controls --> vime-controls
@@ -100,6 +99,6 @@ graph TD;
   style vime-default-controls fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

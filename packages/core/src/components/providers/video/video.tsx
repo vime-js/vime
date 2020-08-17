@@ -1,8 +1,8 @@
 import {
   h, Method, Component, Prop,
 } from '@stencil/core';
-import { ViewType } from '../../../core/player/ViewType';
-import { MediaFileProvider, MediaPreloadOption } from '../MediaFileProvider';
+import { ViewType } from '../../core/player/ViewType';
+import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
@@ -21,7 +21,7 @@ export class Video implements MediaFileProvider<HTMLMediaElement> {
   /**
    * @inheritdoc
    */
-  @Prop() crossOrigin?: string;
+  @Prop() crossOrigin?: MediaCrossOriginOption;
 
   /**
    * @inheritdoc

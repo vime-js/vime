@@ -4,7 +4,7 @@ Formats and displays the progression of playback as `currentTime (separator) end
 
 ## Example
 
-```html
+```html {5}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -16,7 +16,6 @@ Formats and displays the progression of playback as `currentTime (separator) end
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property          | Attribute           | Description                                                                                                            | Type      | Default |
@@ -24,19 +23,17 @@ Formats and displays the progression of playback as `currentTime (separator) end
 | `alwaysShowHours` | `always-show-hours` | Whether the times should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`). | `boolean` | `false` |
 | `separator`       | `separator`         | The string used to separate the current time and end time.                                                             | `string`  | `'/'`   |
 
-
 ## CSS Custom Properties
 
 | Name           | Description                                |
 | -------------- | ------------------------------------------ |
 | `--time-color` | The color of the text displaying the time. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-controls](../../controls/default-controls)
+- [vime-default-controls](../../controls/default-controls)
 
 ### Depends on
 
@@ -44,6 +41,7 @@ Formats and displays the progression of playback as `currentTime (separator) end
 - [vime-end-time](../end-time)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-time-progress --> vime-current-time
@@ -54,6 +52,6 @@ graph TD;
   style vime-time-progress fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

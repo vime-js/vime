@@ -1,12 +1,12 @@
 # vime-default-settings
 
-Creates a settings menu with options for changing the playback rate, quality and captions of 
+Creates a settings menu with options for changing the playback rate, quality and captions of
 the current media. This component is provider aware. For example, it will only show options for
 changing the playback rate if the current provider allows changing it (`player.canSetPlaybackRate()`).
 
 ## Example
 
-```html
+```html {5}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -18,19 +18,17 @@ changing the playback rate if the current provider allows changing it (`player.c
 
 <!-- Auto Generated Below -->
 
-
 ## Slots
 
 | Slot | Description                                                                                        |
 | ---- | -------------------------------------------------------------------------------------------------- |
 |      | Used to extend the settings with additional menu options (see `vime-submenu` or `vime-menu-item`). |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-ui](../../default-ui)
+- [vime-default-ui](../../default-ui)
 
 ### Depends on
 
@@ -41,6 +39,7 @@ changing the playback rate if the current provider allows changing it (`player.c
 - [vime-settings](../settings)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-default-settings --> vime-menu-item
@@ -57,6 +56,6 @@ graph TD;
   style vime-default-settings fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

@@ -1,45 +1,21 @@
 import { MediaProviderAdapter } from '../MediaProvider';
 
+export type MediaCrossOriginOption = '' | 'anonymous' | 'use-credentials';
 export type MediaPreloadOption = '' | 'none' | 'metadata' | 'auto';
 
 export interface MediaFileProvider<InternalPlayerType = any> {
   /**
-   * This enumerated attribute indicates whether to use CORS to fetch the related image.
-   *
-   * The allowed values are:
-   *
-   * - `anonymous`: Sends a cross-origin request without a credential. In other words, it sends the
-   * `Origin: HTTP` header without a cookie, X.509 certificate, or performing HTTP Basic
-   * authentication. If the server does not give credentials to the origin site (by not setting the
-   * Access-Control-Allow-Origin: HTTP header), the image will be tainted, and its usage restricted.
-   *
-   * - `use-credentials`: Sends a cross-origin request with a credential. In other words, it sends
-   * the `Origin: HTTP` header with a cookie, a certificate, or performing HTTP Basic
-   * authentication. If the server does not give credentials to the origin site (through
-   * Access-Control-Allow-Credentials: HTTP header), the image will be tainted and its usage
-   * restricted.
-   *
-   * When not present, the resource is fetched without a CORS request (i.e. without sending the
-   * Origin: HTTP header), preventing its non-tainted use in <canvas> elements. If invalid, it is
-   * handled as if the enumerated keyword anonymous was used. See CORS settings attributes for
-   * additional information.
+   * Whether to use CORS to fetch the related image. See
+   * [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more
+   * information.
    */
-  crossOrigin?: string
+  crossOrigin?: MediaCrossOriginOption;
 
   /**
-   * This enumerated attribute is intended to provide a hint to the browser about what the author
-   * thinks will lead to the best user experience with regards to what content is loaded before the
-   * video is played.
-   *
-   * It may have one of the following values:
-   *
-   * - `none`: Indicates that the video should not be preloaded.
-   * - `metadata`: Indicates that only video metadata (e.g. length) is fetched.
-   * - `auto`: Indicates that the whole video file can be downloaded, even if the user is not
-   * expected to use it.
-   * - `''` (empty string): Synonym of the auto value.
-   *
-   * The default value is different for each browser. The spec advises it to be set to metadata.
+   * Provides a hint to the browser about what the author thinks will lead to the best user
+   * experience with regards to what content is loaded before the video is played. See
+   * [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more
+   * information.
    */
   preload?: MediaPreloadOption
 

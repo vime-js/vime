@@ -5,7 +5,7 @@ a new line.
 
 ## Example
 
-```html
+```html {6-8,10-14}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -27,13 +27,11 @@ a new line.
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property | Attribute | Description                                                                                                                | Type                                    | Default  |
 | -------- | --------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- | -------- |
 | `space`  | `space`   | Determines where to add spacing/margin. The amount of spacing is determined by the CSS variable `--control-group-spacing`. | `"both" \| "bottom" \| "none" \| "top"` | `'none'` |
-
 
 ## CSS Custom Properties
 
@@ -41,20 +39,20 @@ a new line.
 | ------------------------- | --------------------------------- |
 | `--control-group-spacing` | The space between control groups. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-controls](../default-controls)
+- [vime-default-controls](../default-controls)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-default-controls --> vime-control-group
   style vime-control-group fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

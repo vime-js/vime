@@ -6,7 +6,7 @@ Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.c
 
 ## Example
 
-```html
+```html {2}
 <vime-player controls autoplay muted>
   <vime-vimeo video-id="411652396"></vime-vimeo>
   <!-- ... -->
@@ -21,7 +21,6 @@ Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.c
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property               | Attribute  | Description                                                                                                      | Type                  | Default     |
@@ -31,7 +30,6 @@ Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.c
 | `portrait`             | `portrait` | Whether to display the video owner's portrait.                                                                   | `boolean`             | `true`      |
 | `videoId` _(required)_ | `video-id` | The Vimeo resource ID of the video to load.                                                                      | `string`              | `undefined` |
 
-
 ## Dependencies
 
 ### Depends on
@@ -39,12 +37,13 @@ Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.c
 - [vime-embed](../../core/embed)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-vimeo --> vime-embed
   style vime-vimeo fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

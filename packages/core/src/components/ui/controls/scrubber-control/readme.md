@@ -1,14 +1,14 @@
 # vime-scrubber-control
 
 A control that displays the progression of playback and the amount buffered on a horizontal timeline.
-The timeline is a slider (`input[type="range"]`) that can be used to change the current playback time. 
+The timeline is a slider (`input[type="range"]`) that can be used to change the current playback time.
 
-If the player is buffering, the scrubber will display an animated candystripe in the porition of the 
+If the player is buffering, the scrubber will display an animated candystripe in the porition of the
 timeline that has not buffered.
 
 ## Example
 
-```html
+```html {6}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -17,11 +17,10 @@ timeline that has not buffered.
       <vime-scrubber-control></vime-scrubber-control>
     </vime-controls>
   </vime-ui>
-<vime-player>
+</vime-player>
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -31,7 +30,6 @@ timeline that has not buffered.
 | `hideTooltip`     | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                       | `boolean` | `false` |
 | `noKeyboard`      | `no-keyboard`       | Prevents seeking forward/backward by using the Left/Right arrow keys.                                                              | `boolean` | `false` |
 
-
 ## CSS Custom Properties
 
 | Name                              | Description                                                                                 |
@@ -40,12 +38,11 @@ timeline that has not buffered.
 | `--scrubber-loading-stripe-color` | The color of each candystripe displayed when media is buffering.                            |
 | `--scrubber-loading-stripe-size`  | The size of each candystripe displayed when media is buffering.                             |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-controls](../default-controls)
+- [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -53,6 +50,7 @@ timeline that has not buffered.
 - [vime-tooltip](../../tooltip)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-scrubber-control --> vime-slider
@@ -61,6 +59,6 @@ graph TD;
   style vime-scrubber-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

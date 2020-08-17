@@ -9,7 +9,7 @@
   },
   "scripts": {
     "lint": "eslint packages/*/src/**/*.{ts,tsx} packages/*/cypress/**/*.{js,ts} --quiet --fix --ignore-path .gitignore",
-    "script:size": "node scripts/core-dist-size.js"
+    "lint:md": "prettier \"packages/**/*.md\" --parser markdown --write --print-width 80 --tab-width 2"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
@@ -29,6 +29,7 @@
     "git-log-parser": "^1.2.0",
     "gzip-size": "^5.1.1",
     "husky": "^4.2.5",
+    "prettier": "^2.0.5",
     "pretty-bytes": "^5.3.0",
     "react": "^16.13.1",
     "semantic-release": "^17.1.1",

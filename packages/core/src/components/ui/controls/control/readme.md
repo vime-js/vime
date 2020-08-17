@@ -1,11 +1,11 @@
 # vime-control
 
-A generic player control that is designed to work with both touch and mouse devices. It also 
+A generic player control that is designed to work with both touch and mouse devices. It also
 seamlessly works with `vime-tooltip`, which can be passed in via the default `slot`.
 
 ## Example
 
-```html
+```html {6-9}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -17,22 +17,22 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
       </vime-control>
     </vime-controls>
   </vime-ui>
-<vime-player>
+</vime-player>
 
 <script>
-  const player = document.getElement('vime-player');
-  const control = document.getElementById('playback-control');
-  const icon = playbackControl.querySelector('vime-icon');
-  const tooltip = playbackControl.querySelector('vime-tooltip');
+  const player = document.getElement("vime-player");
+  const control = document.getElementById("playback-control");
+  const icon = playbackControl.querySelector("vime-icon");
+  const tooltip = playbackControl.querySelector("vime-tooltip");
 
-  control.addEventListener('click', (e) => {
+  control.addEventListener("click", (e) => {
     if (tooltip.innerHTML === player.i18n.play) {
       tooltip.innerHTML = player.i18n.pause;
-      icon.href = '#vime-pause';
+      icon.href = "#vime-pause";
       player.play();
     } else {
       tooltip.innerHTML = player.i18n.play;
-      icon.href = '#vime-play';
+      icon.href = "#vime-play";
       player.pause();
     }
   });
@@ -40,7 +40,6 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -55,20 +54,17 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 | `pressed`            | `pressed`    | If the control is a toggle, this indicated whether the control is in a "pressed" state or not. Sets the `aria-pressed` property.                              | `boolean \| undefined` | `undefined` |
 | `scale`              | `scale`      | Scale the size of the control up/down by the amount given.                                                                                                    | `number`               | `1`         |
 
-
 ## Events
 
 | Event                | Description                                                                                    | Type                   |
 | -------------------- | ---------------------------------------------------------------------------------------------- | ---------------------- |
 | `vInteractionChange` | Emitted when the user is interacting with the control by focusing, touching or hovering on it. | `CustomEvent<boolean>` |
 
-
 ## Slots
 
 | Slot | Description                                                     |
 | ---- | --------------------------------------------------------------- |
 |      | Used to pass in the content of the control (text/icon/tooltip). |
-
 
 ## CSS Custom Properties
 
@@ -83,19 +79,19 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 | `--control-padding`       | The padding inside the control.                                            |
 | `--control-tap-highlight` | The highlight color when a control is tapped.                              |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-caption-control](../caption-control)
- - [vime-fullscreen-control](../fullscreen-control)
- - [vime-mute-control](../mute-control)
- - [vime-pip-control](../pip-control)
- - [vime-playback-control](../playback-control)
- - [vime-settings-control](../settings-control)
+- [vime-caption-control](../caption-control)
+- [vime-fullscreen-control](../fullscreen-control)
+- [vime-mute-control](../mute-control)
+- [vime-pip-control](../pip-control)
+- [vime-playback-control](../playback-control)
+- [vime-settings-control](../settings-control)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-caption-control --> vime-control
@@ -107,6 +103,6 @@ graph TD;
   style vime-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

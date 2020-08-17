@@ -1,11 +1,11 @@
 # vime-default-ui
 
-This component is a shorthand way to setup the entire default vime user interface, such as controls, 
+This component is a shorthand way to setup the entire default vime user interface, such as controls,
 settings, captions and so on.
 
 ## Example
 
-```html
+```html {3}
 <vime-player>
   <!-- ... -->
   <vime-default-ui></vime-default-ui>
@@ -13,7 +13,6 @@ settings, captions and so on.
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Dependencies
 
@@ -29,6 +28,7 @@ settings, captions and so on.
 - [vime-default-settings](../settings/default-settings)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-default-ui --> vime-ui
@@ -93,6 +93,6 @@ graph TD;
   style vime-default-ui fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

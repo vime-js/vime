@@ -1,11 +1,11 @@
 # vime-tooltip
 
-A small pop-up box that appears when a user moves their mouse over an element. Their main purpose 
+A small pop-up box that appears when a user moves their mouse over an element. Their main purpose
 is to provide a description about the function of that element.
 
 ## Example
 
-```html
+```html {9}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -23,7 +23,6 @@ is to provide a description about the function of that element.
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property    | Attribute   | Description                                                                                                                           | Type                             | Default     |
@@ -33,13 +32,11 @@ is to provide a description about the function of that element.
 | `hidden`    | `hidden`    | Whether the tooltip is displayed or not.                                                                                              | `boolean`                        | `false`     |
 | `position`  | `position`  | Determines if the tooltip appears on top/bottom of it's parent.                                                                       | `"bottom" \| "top"`              | `'top'`     |
 
-
 ## Slots
 
 | Slot | Description                                  |
 | ---- | -------------------------------------------- |
 |      | Used to pass in the contents of the tooltip. |
-
 
 ## CSS Custom Properties
 
@@ -55,20 +52,20 @@ is to provide a description about the function of that element.
 | `--tooltip-padding`          | The padding inside the tooltip.                                  |
 | `--tooltip-spacing`          | The space between the tooltip and its parent when active.        |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-caption-control](../controls/caption-control)
- - [vime-fullscreen-control](../controls/fullscreen-control)
- - [vime-mute-control](../controls/mute-control)
- - [vime-pip-control](../controls/pip-control)
- - [vime-playback-control](../controls/playback-control)
- - [vime-scrubber-control](../controls/scrubber-control)
- - [vime-settings-control](../controls/settings-control)
+- [vime-caption-control](../controls/caption-control)
+- [vime-fullscreen-control](../controls/fullscreen-control)
+- [vime-mute-control](../controls/mute-control)
+- [vime-pip-control](../controls/pip-control)
+- [vime-playback-control](../controls/playback-control)
+- [vime-scrubber-control](../controls/scrubber-control)
+- [vime-settings-control](../controls/settings-control)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-caption-control --> vime-tooltip
@@ -81,6 +78,6 @@ graph TD;
   style vime-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

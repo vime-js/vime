@@ -12,16 +12,16 @@ Embeds an external media player and enables interacting with it via `postMessage
 />
 
 <script>
-  const embed = document.querySelector('vime-embed');
+  const embed = document.querySelector("vime-embed");
   embed.params = { autoplay: 1, muted: 1, controls: 0 };
-  embed.addEventListener('embedMessage', (e) => {
+  embed.addEventListener("vEmbedMessage", (e) => {
     const message = e.detail;
+    console.log(message);
   });
 </script>
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -34,7 +34,6 @@ Embeds an external media player and enables interacting with it via `postMessage
 | `params`         | --            | The parameters to pass to the embedded player. These are encoded as a query string and appended to the `embedSrc` prop.         | `{ [x: string]: any; }`                                             | `{}`        |
 | `preconnections` | --            | A collection of URLs to that the browser should immediately start establishing a connection with.                               | `string[]`                                                          | `[]`        |
 
-
 ## Events
 
 | Event             | Description                                                                                                                                        | Type                  |
@@ -42,7 +41,6 @@ Embeds an external media player and enables interacting with it via `postMessage
 | `vEmbedLoaded`    | Emitted when the embedded player and any new media has loaded.                                                                                     | `CustomEvent<void>`   |
 | `vEmbedMessage`   | Emitted when a new message is received from the embedded player via `postMessage`.                                                                 | `CustomEvent<any>`    |
 | `vEmbedSrcChange` | Emitted when the `embedSrc` or `params` props change. The payload contains the `params` serialized into a query string and appended to `embedSrc`. | `CustomEvent<string>` |
-
 
 ## Methods
 
@@ -54,18 +52,16 @@ Posts a message to the embedded media player.
 
 Type: `Promise<void>`
 
-
-
-
 ## Dependencies
 
 ### Used by
 
- - [vime-dailymotion](../../providers/dailymotion)
- - [vime-vimeo](../../providers/vimeo)
- - [vime-youtube](../../providers/youtube)
+- [vime-dailymotion](../../providers/dailymotion)
+- [vime-vimeo](../../providers/vimeo)
+- [vime-youtube](../../providers/youtube)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-dailymotion --> vime-embed
@@ -74,6 +70,6 @@ graph TD;
   style vime-embed fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

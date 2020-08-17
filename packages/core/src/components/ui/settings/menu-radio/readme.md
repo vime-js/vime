@@ -1,11 +1,11 @@
 # vime-menu-radio
 
-Menu radio buttons are presented in radio groups (a collection of radio buttons describing a set 
+Menu radio buttons are presented in radio groups (a collection of radio buttons describing a set
 of related options). Only one radio button in a group can be selected at the same time.
 
 ## Example
 
-```html
+```html {8-10}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -13,9 +13,9 @@ of related options). Only one radio button in a group can be selected at the sam
     <vime-settings>
       <vime-submenu label="Playback Rate">
         <vime-menu-radio-group value="1">
-          <vime-menu-radio label="0.5" value ="0.5" />
-          <vime-menu-radio label="Normal" value ="1" />
-          <vime-menu-radio label="2" value ="2" />
+          <vime-menu-radio label="0.5" value="0.5" />
+          <vime-menu-radio label="Normal" value="1" />
+          <vime-menu-radio label="2" value="2" />
         </vime-menu-radio-group>
       </vime-submenu>
     </vime-settings>
@@ -24,7 +24,6 @@ of related options). Only one radio button in a group can be selected at the sam
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -36,25 +35,24 @@ of related options). Only one radio button in a group can be selected at the sam
 | `label` _(required)_ | `label`        | The title of the radio item displayed to the user.                                                                                                                            | `string`              | `undefined`         |
 | `value` _(required)_ | `value`        | The value associated with this radio item.                                                                                                                                    | `string`              | `undefined`         |
 
-
 ## Events
 
 | Event    | Description                                | Type                |
 | -------- | ------------------------------------------ | ------------------- |
 | `vCheck` | Emitted when the radio button is selected. | `CustomEvent<void>` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-settings](../default-settings)
+- [vime-default-settings](../default-settings)
 
 ### Depends on
 
 - [vime-menu-item](../menu-item)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-menu-radio --> vime-menu-item
@@ -63,6 +61,6 @@ graph TD;
   style vime-menu-radio fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

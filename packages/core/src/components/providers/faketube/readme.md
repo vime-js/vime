@@ -4,7 +4,7 @@ Fake media provider that is used for testing.
 
 ## Example
 
-```html
+```html {2}
 <vime-player>
   <vime-faketube></vime-faketube>
   <!-- ... -->
@@ -12,7 +12,6 @@ Fake media provider that is used for testing.
 ```
 
 <!-- Auto Generated Below -->
-
 
 ## Methods
 
@@ -24,8 +23,6 @@ Dispatches the `vLoadStart` event.
 
 Type: `Promise<void>`
 
-
-
 ### `dispatchStateChange(prop: PlayerProp, value: any) => Promise<void>`
 
 Dispatches a state change event.
@@ -33,8 +30,6 @@ Dispatches a state change event.
 #### Returns
 
 Type: `Promise<void>`
-
-
 
 ### `getAdapter() => Promise<MockMediaProviderAdapter>`
 
@@ -44,9 +39,6 @@ Returns a mock adapter.
 
 Type: `Promise<MockMediaProviderAdapter>`
 
+---
 
-
-
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

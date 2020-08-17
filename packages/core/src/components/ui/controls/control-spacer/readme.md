@@ -4,7 +4,7 @@ Used to space controls out vertically/horizontally. Under the hood it's simply `
 
 ## Example
 
-```html
+```html {8}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -22,20 +22,20 @@ Used to space controls out vertically/horizontally. Under the hood it's simply `
 
 <!-- Auto Generated Below -->
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-controls](../default-controls)
+- [vime-default-controls](../default-controls)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-default-controls --> vime-control-spacer
   style vime-control-spacer fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

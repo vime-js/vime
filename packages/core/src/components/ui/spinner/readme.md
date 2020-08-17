@@ -4,7 +4,7 @@ Displays a loading indicator when the video is `buffering`.
 
 ## Example
 
-```html
+```html {4}
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -15,14 +15,12 @@ Displays a loading indicator when the video is `buffering`.
 
 <!-- Auto Generated Below -->
 
-
 ## Events
 
 | Event       | Description                              | Type                |
 | ----------- | ---------------------------------------- | ------------------- |
 | `vWillHide` | Emitted when the spinner will be hidden. | `CustomEvent<void>` |
 | `vWillShow` | Emitted when the spinner will be shown.  | `CustomEvent<void>` |
-
 
 ## CSS Custom Properties
 
@@ -36,20 +34,20 @@ Displays a loading indicator when the video is `buffering`.
 | `--spinner-track-color`      | The color of the track the spinner is rotating in.         |
 | `--spinner-width`            | The width of the spinner.                                  |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vime-default-ui](../default-ui)
+- [vime-default-ui](../default-ui)
 
 ### Graph
+
 ```mermaid
 graph TD;
   vime-default-ui --> vime-spinner
   style vime-spinner fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
