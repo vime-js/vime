@@ -27,7 +27,8 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "npm run clean:docs && stencil build --docs && node scripts/post-build.js && npm run lint:md",
+    "build": "npm run clean:docs && stencil build --docs && npm run build:post && npm run lint:md",
+    "build:post": "node scripts/post-build.js",
     "clean:docs": "rimraf ../docs/docs/components",
     "lint:md": "npm run lint:md --prefix ../../",
     "serve": "concurrently \"npm run serve:sirv\" \"npm run serve:dev\"",
