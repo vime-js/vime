@@ -128,7 +128,7 @@ listed below.
 ## 🎥 Providers
 
 - [Html5][mdn-media-element]
-- [Hls][hls]
+- [HLS][hls]
 - [Dash][dash]
 - [YouTube][youtube]
 - [Vimeo][vimeo]
@@ -148,7 +148,7 @@ Please remember to be respectful and patient as this is a community driven proje
 ## 🔨 Contributing
 
 If you'd like to contribute and help in building a better media player for the web, then everything 
-you need to get started can be found in the [contributing guide](./CONTRIBUTING.md).
+you need to get started can be found in the [Contributing Guide](./CONTRIBUTING.md).
 
 ## ❤️ Sponsors
 
