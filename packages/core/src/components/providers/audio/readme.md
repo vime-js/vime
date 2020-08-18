@@ -13,8 +13,7 @@ Enables loading, playing and controlling audio via the HTML5 [`<audio>`](https:/
     <!-- ... -->
   </vime-audio>
   <!-- ... -->
-  <vime-player></vime-player
-></vime-player>
+</vime-player>
 ```
 
 <!-- Auto Generated Below -->

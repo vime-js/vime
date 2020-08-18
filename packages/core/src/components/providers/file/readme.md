@@ -14,8 +14,7 @@ Enables loading, playing and controlling media files via the HTML5 [MediaElement
     <track kind="captions" src="/media/caps/en.vtt" srclang="en" />
   </vime-file>
   <!-- ... -->
-  <vime-player></vime-player
-></vime-player>
+</vime-player>
 ```
 
 <!-- Auto Generated Below -->

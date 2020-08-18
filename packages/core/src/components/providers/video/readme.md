@@ -13,9 +13,7 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
     <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
     <track kind="captions" src="/media/caps/en.vtt" srclang="en" />
   </vime-video>
-  <!-- ... -->
-  <vime-player></vime-player
-></vime-player>
+</vime-player>
 ```
 
 <!-- Auto Generated Below -->
