@@ -7,7 +7,7 @@ based media. It uses [`dashjs`](https://github.com/Dash-Industry-Forum/dash.js) 
 
 ## Example
 
-```html {2}
+```html {2-6}
 <vime-player controls autoplay muted>
   <vime-dash
     src="/media/manifest.mpd"
