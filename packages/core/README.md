@@ -54,5 +54,5 @@ UI elements that makeup the building blocks of Vime.
 ## Related
 
 - [GitHub](https://github.com/vime-js/vime)
-- [Discord](https://discord.gg/PaFFSk)
+- [Discord](https://discord.gg/feZ6cAE)
 - [Documentation](https://vimejs.com)

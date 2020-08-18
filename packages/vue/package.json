@@ -24,7 +24,7 @@
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "build:esm": "tsc --module es6 --outDir dist/esm",
     "copy:css": "cp-cli ../core/dist/vime/vime.css dist/vime.css",
-    "release": "semantic-release -e ../../tools/semantic-release"
+    "release": "semantic-release -e ../../scripts/semantic-release"
   },
   "dependencies": {
     "@vime/core": "^1.0.0"

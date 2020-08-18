@@ -45,7 +45,7 @@
     "coverage:combine": "nyc report --reporter lcov --reporter text --report-dir coverage",
     "generate": "stencil generate",
     "generate:provider": "node scripts/new-provider.js",
-    "release": "semantic-release -e ../../tools/semantic-release",
+    "release": "semantic-release -e ../../scripts/semantic-release",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:run.ui": "cypress run --spec \"cypress/tests/ui/**/*\"",

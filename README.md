@@ -87,7 +87,7 @@ do with Vime ...
 roles/states/properties and keyboard support.
 - 🌎 &nbsp;I18N support.
 - 🎨 &nbsp;Style anything you want with [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
-- 🏎️ &nbsp;Performant with [preconnections](https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance) and [lazy loading](https://www.imperva.com/learn/performance/lazy-loading) of components + media out of the box.
+- 🏎️ &nbsp;Performant with [preconnections](https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance) + [lazy loading](https://www.imperva.com/learn/performance/lazy-loading) of components and media out of the box.
 - ️🧰 &nbsp;Awesome default UI's for audio/video/live media on mobile and desktop.
 - 🛠 &nbsp;Comprehensive player API.
 - 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
@@ -95,7 +95,7 @@ roles/states/properties and keyboard support.
 - 🍽️ &nbsp;Serve it with your favourite framework whether it's React, Vue, Angular or whatever the cool 
 kids on the block use today.
 
-# 🏗️ Frameworks
+## 🏗️ Frameworks
 
 There are framework specific bindings for:
 
@@ -176,7 +176,7 @@ A huge thanks to our sponsors who support open-source projects like Vime.
 [semantic-release-badge]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [coverage-badge]: https://img.shields.io/codecov/c/github/mihar-22/vime.svg
 [coverage]: https://codecov.io/github/mihar-22/vime
-[discord]: https://discord.gg/PaFFSk
+[discord]: https://discord.gg/feZ6cAE
 [discord-badge]: https://img.shields.io/discord/742612686679965696.svg?color=7389D8&labelColor=6A7EC2&logo=discord&logoColor=ffffff
 [hls]: https://github.com/video-dev/hls.js
 [dash]: https://github.com/Dash-Industry-Forum/dash.js?
