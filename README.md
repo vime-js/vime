@@ -13,11 +13,25 @@
 />
 
 Vime is simply a collection of [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) 
-that help you easily build and customize your own media player. See the [Features](#features) section 
-below for some more highlights on what Vime provides.
+that enable you to easily build and customize your own media player.
 
-🍭 They say a picture is worth a thousand words, so here's a few little bites of what you can 
-do with Vime ...
+- 🖥 &nbsp;Responsive (mobile/desktop).
+- 👌 &nbsp;Touch input friendly.
+- 🎥 &nbsp;Multi-provider support (HTML5, HLS, YouTube, Vimeo etc.). 
+- ♾️ &nbsp;Avoid cross-browser differences on media related APIs such as fullscreen and picture-in-picture.
+- 👐 &nbsp;[Accessible](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) via ARIA 
+roles/states/properties and keyboard support.
+- 🌎 &nbsp;I18N support.
+- 🎨 &nbsp;Style anything you want with [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
+- 🏎️ &nbsp;Performant with [preconnections](https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance) + [lazy loading](https://www.imperva.com/learn/performance/lazy-loading) of components and media out of the box.
+- ️🧰 &nbsp;Awesome default UI's for audio/video/live media on mobile and desktop.
+- 🛠 &nbsp;Comprehensive [player API](../components/core/player/readme.md).
+- 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
+- 🏠 &nbsp;Feel right at home with HTML/CSS/JS thanks to web components. 
+- 🍽️ &nbsp;Serve it with your favourite framework whether it's React, Vue, Angular or whatever the cool 
+kids on the block use today.
+
+🍭 Here's a few little bites of what you can do with Vime ...
 
 ```html
 <!-- Here we are requesting to use the native controls. -->
@@ -76,24 +90,6 @@ do with Vime ...
   <vime-default-ui />
 </vime-player>
 ```
-
-## Features
-
-- 🖥 &nbsp;Responsive (mobile/desktop).
-- 👌 &nbsp;Touch input friendly.
-- 🎥 &nbsp;Multi-provider support (HTML5, HLS, YouTube, Vimeo etc.). 
-- ♾️ &nbsp;Avoid cross-browser differences on media related APIs such as fullscreen and picture-in-picture.
-- 👐 &nbsp;[Accessible](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) via ARIA 
-roles/states/properties and keyboard support.
-- 🌎 &nbsp;I18N support.
-- 🎨 &nbsp;Style anything you want with [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
-- 🏎️ &nbsp;Performant with [preconnections](https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance) + [lazy loading](https://www.imperva.com/learn/performance/lazy-loading) of components and media out of the box.
-- ️🧰 &nbsp;Awesome default UI's for audio/video/live media on mobile and desktop.
-- 🛠 &nbsp;Comprehensive player API.
-- 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
-- 🏠 &nbsp;Feel right at home with HTML/CSS/JS thanks to web components. 
-- 🍽️ &nbsp;Serve it with your favourite framework whether it's React, Vue, Angular or whatever the cool 
-kids on the block use today.
 
 ## 🏗️ Frameworks
 
