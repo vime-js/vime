@@ -17,9 +17,9 @@ jobs:
       - name: Install pnpm
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
       - name: Install root dependencies
-        run: pnpm install --filter vime 
+        run: pnpm install --filter vime --frozen-lockfile false
       - name: Install core dependencies
-        run: pnpm install --filter @vime/core
+        run: pnpm install --filter @vime/core --frozen-lockfile false
       - name: Test
         run: pnpm run test:e2e.providers --filter @vime/core
   release:
@@ -35,9 +35,9 @@ jobs:
       - name: Install pnpm
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
       - name: Install root dependencies
-        run: pnpm install --filter vime 
+        run: pnpm install --filter vime --frozen-lockfile false
       - name: Install packages/* dependencies
-        run: pnpm install --filter ./packages
+        run: pnpm install --filter ./packages --frozen-lockfile false
       - name: Test
         run: pnpm run test:ci --filter @vime/core
       - name: Coverage
