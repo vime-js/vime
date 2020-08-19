@@ -25,6 +25,8 @@
   },
   "devDependencies": {
     "@angular/common": "^10.0.9",
+    "@angular/compiler": "^10.0.9",
+    "@angular/compiler-cli": "^10.0.9",
     "@angular/core": "^10.0.9",
     "cp-cli": "^2.0.0",
     "ng-packagr": "^10.0.4",
