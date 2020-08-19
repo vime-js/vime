@@ -142,12 +142,19 @@ listed below.
 
 ## 🎥 Providers
 
-- [HTML5][mdn-media-element]
-- [HLS][hls]
-- [Dash][dash]
-- [YouTube][youtube]
-- [Vimeo][vimeo]
-- [Dailymotion][dailymotion]
+- [HTML5][provider-file]
+- [HLS][provider-hls]
+- [Dash][provider-dash]
+- [YouTube][provider-youtube]
+- [Vimeo][provider-vimeo]
+- [Dailymotion][provider-dailymotion]
+
+[provider-hls]: https://vimejs.com/components/providers/hls/api
+[provider-dash]: https://vimejs.com/components/providers/dash/api
+[provider-file]: https://vimejs.com/components/providers/file/api
+[provider-youtube]: https://vimejs.com/components/providers/youtube/api
+[provider-vimeo]: https://vimejs.com/components/providers/vimeo/api
+[provider-dailymotion]: https://vimejs.com/components/providers/dailymotion/api
 
 ## 📖 Documentation
 
@@ -189,9 +196,3 @@ A huge thanks to our sponsors who support open-source projects like Vime.
 [coverage]: https://codecov.io/github/mihar-22/vime
 [discord]: https://discord.gg/feZ6cAE
 [discord-badge]: https://img.shields.io/discord/742612686679965696.svg?color=7389D8&labelColor=6A7EC2&logo=discord&logoColor=ffffff
-[hls]: https://github.com/video-dev/hls.js
-[dash]: https://github.com/Dash-Industry-Forum/dash.js?
-[mdn-media-element]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
-[youtube]: https://developers.google.com/youtube/iframe_api_reference
-[vimeo]: https://developer.vimeo.com/player/sdk
-[dailymotion]: https://developer.dailymotion.com/player
