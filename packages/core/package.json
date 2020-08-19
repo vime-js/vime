@@ -14,7 +14,8 @@
   "files": [
     "dist/",
     "loader/",
-    "icons/"
+    "icons/",
+    "themes/"
   ],
   "contributors": [
     "Rahim Alwer <rahim_alwer@outlook.com>"
@@ -27,12 +28,15 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "npm run clean:docs && stencil build --docs && npm run build:post && npm run lint:md",
+    "build": "npm run clean:docs && stencil build --docs && npm run build:post && npm run lint:md && npm run build:themes",
     "build:post": "node scripts/post-build.js",
+    "build:themes": "rimraf themes/* && npm run min:theme.default && npm run min:theme.light",
+    "min:theme.default": "cleancss -o themes/default.css src/globals/themes/default.css",
+    "min:theme.light": "cleancss -o themes/light.css src/globals/themes/light.css",
     "clean:docs": "rimraf ../../docs/docs/components",
     "lint:md": "npm run lint:md --prefix ../../",
     "serve": "concurrently \"npm run serve:sirv\" \"npm run serve:dev\"",
-    "serve:dev": "stencil build --dev --watch --serve --port 3333 --no-open",
+    "serve:dev": "stencil build --dev --watch --serve --port 3333",
     "serve:sirv": "sirv --cors --port 3334 --quiet",
     "serve:prod": "npm run build && npm run serve:sirv",
     "test:unit": "stencil test --spec --max-workers=2",
@@ -70,6 +74,7 @@
     "@types/puppeteer": "^3.0.1",
     "@vime/media": "^1.0.0",
     "babel-loader": "^8.1.0",
+    "clean-css-cli": "^4.3.0",
     "concurrently": "^5.2.0",
     "cypress": "^4.12.1",
     "cypress-plugin-snapshots": "^1.4.3",

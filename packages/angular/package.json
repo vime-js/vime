@@ -14,9 +14,8 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:ng && npm run copy:css",
+    "build": "rimraf dist && npm run build:ng",
     "build:ng": "ng-packagr -p package.json",
-    "copy:css": "cp-cli ../core/dist/vime/vime.css dist/vime.css",
     "release": "semantic-release -e ../../scripts/semantic-release"
   },
   "dependencies": {
@@ -28,7 +27,6 @@
     "@angular/compiler": "^10.0.9",
     "@angular/compiler-cli": "^10.0.9",
     "@angular/core": "^10.0.9",
-    "cp-cli": "^2.0.0",
     "ng-packagr": "^10.0.4",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.2",

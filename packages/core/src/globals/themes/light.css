@@ -1,0 +1,73 @@
+vime-player[theme="light"] {
+  /*******************************
+   * Light Player
+   *******************************/
+
+  --player-bg: #fff;
+  --player-box-shadow: 0 0 8px 2px var(--color-gray-100);
+
+  /*******************************
+   * Light Slider
+   *******************************/
+
+  --slider-track-color: var(--color-gray-100);
+  --slider-value-color: var(--player-theme, var(--color-dark));
+  --slider-thumb-shadow: 0 0 1px var(--color-gray-100), 0 0 0 1px var(--color-gray-200);
+  
+  /*******************************
+   * Light Tooltip
+   *******************************/
+
+  --tooltip-bg: #fff;
+  --tooltip-color: var(--color-dark);
+    
+  /*******************************
+   * Light Controls
+   *******************************/
+
+  --controls-bg: #fff;
+      
+  /*******************************
+   * Light Control
+   *******************************/
+
+  --control-color: var(--color-dark);
+  --control-tap-highlight: var(--color-gray-100);
+  --control-focus-color: #fff;
+  --control-focus-bg: var(--player-theme, var(--color-dark));
+
+  /*******************************
+   * Light Scrubber Control
+   *******************************/
+  
+  --scrubber-buffered-bg: var(--color-gray-100);
+  --scrubber-loading-stripe-color: var(--color-gray-100);
+  
+  /*******************************
+   * Light Time
+   *******************************/
+
+  --time-color: var(--color-gray-600);
+
+  /*******************************
+   * Light Menu
+   *******************************/
+
+   --menu-color: var(--color-gray-600);
+   --menu-bg: #fff;
+  
+   /*******************************
+   * Light Menu Item
+   *******************************/
+
+  --menu-item-focus-bg: var(--color-gray-100);
+  --menu-item-tap-highlight: var(--color-gray-100);
+   
+  --menu-item-divider-color: var(--color-gray-100);
+   
+  /*******************************
+   * Light Settings
+   *******************************/
+
+  --settings-scroll-thumb-color: var(--color-gray-100);
+}

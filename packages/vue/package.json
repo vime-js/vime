@@ -20,17 +20,15 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:cjs && npm run build:esm && npm run copy:css",
+    "build": "rimraf dist && npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "build:esm": "tsc --module es6 --outDir dist/esm",
-    "copy:css": "cp-cli ../core/dist/vime/vime.css dist/vime.css",
     "release": "semantic-release -e ../../scripts/semantic-release"
   },
   "dependencies": {
     "@vime/core": "^1.0.0"
   },
   "devDependencies": {
-    "cp-cli": "^2.0.0",
     "rimraf": "^3.0.2",
     "vue": "^2.6.11"
   },

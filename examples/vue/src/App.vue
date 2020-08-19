@@ -23,9 +23,12 @@
 </template>
 
 <script lang="ts">
-import '@vime/vue/dist/vime.css';
 import { Component, Vue } from 'vue-property-decorator';
 import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/vue';
+import '@vime/core/themes/default.css';
+
+// Optional light theme (extends default).
+// import '@vime/core/themes/light.css';
 
 @Component({
   components: {

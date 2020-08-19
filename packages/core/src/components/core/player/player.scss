@@ -33,7 +33,7 @@ vime-player {
   position: relative;
   text-shadow: none;
   outline: 0;
-  background-color: var(--player-bg);
+  background-color: var(--player-bg, #000);
   transition: box-shadow 0.3s ease, height 0.3s ease, padding 0.3s ease;
   box-shadow: var(--player-box-shadow);
 

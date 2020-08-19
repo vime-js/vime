@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import './App.css';
 import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/react';
-import '@vime/react/dist/vime.css'
+import '@vime/core/themes/default.css';
+
+// Optional light theme (extends default).
+// import '@vime/core/themes/light.css';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(0);
