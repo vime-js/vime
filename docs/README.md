@@ -8,7 +8,7 @@ code for the Vime documentation site hosted at https://vimejs.com. The website i
 ## Local Development
 
 ```bash
-$: pnpm install --filter @vime/docs
+$: pnpm install --filter vime && pnpm install
 
 $: npm run start
 ```

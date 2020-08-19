@@ -244,7 +244,7 @@ section to see existing z-index levels.
 
 If you're creating any new CSS variables then make sure to document them (see existing components on
 how to do so), and set the values inside the [default theme](./packages/core/src/globals/themes/default.css)
-CSS file. If the component also has a light theme, set the variable values inside the 
+CSS file. If the component also has a light theme, set the variable values inside the
 [light theme](./packages/core/src/globals/themes/light.css) CSS file.
 
 UI components can be structurally, visually, unit or E2E tested. All UI test files are located
