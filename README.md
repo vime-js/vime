@@ -46,12 +46,6 @@ that enable you to easily build and customize your own media player.
       srclang="en"
       label="English"
     />
-    <track
-      kind="subtitles"
-      src="/media/subs/es.vtt"
-      srclang="es"
-      label="Spanish"
-    />
   </vime-video>
 </vime-player>
 ```
