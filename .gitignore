@@ -12,8 +12,8 @@ packages/*/cypress/screenshots/
 *~
 *.sw[mnpcod]
 *.log
-*.lock
-*-lock
+*.lock*
+*-lock*
 *.tmp
 *.tmp.*
 *.sln
