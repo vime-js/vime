@@ -9,24 +9,34 @@ sidebar_label: Introduction
 [![semantic-release-badge]][semantic-release]
 [![discord-badge]][discord]
 
-Vime is simply a collection of [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
-that enable you to easily build and customize your own media player.
+Vime is simply a collection of [web components][web-components] that enable you to easily build and
+customize your own media player.
 
-- 🖥 &nbsp;Responsive (mobile/desktop).
-- 👌 &nbsp;Touch input friendly.
-- 🎥 &nbsp;Multi-provider support (HTML5, HLS, YouTube, Vimeo etc.).
-- ♾️ &nbsp;Avoid cross-browser differences on media related APIs such as fullscreen and picture-in-picture.
-- 👐 &nbsp;[Accessible](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) via ARIA
-  roles/states/properties and keyboard support.
+- 🎥 &nbsp;[Multi-provider support](#-providers) (HTML5, HLS, YouTube, Vimeo etc.).
+- 👑 &nbsp; One API to rule them all! Don't re-learn anything the next time you need a player.
+- ♾️ &nbsp;Avoid cross-browser differences on media related APIs, such as fullscreen and picture-in-picture.
+- 👐 &nbsp;[Accessible][accessibility] to all via ARIA roles/states/properties and keyboard support.
 - 🌎 &nbsp;I18N support.
-- 🎨 &nbsp;Style anything you want with [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
-- 🏎️ &nbsp;Performant with [preconnections](https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance) + [lazy loading](https://www.imperva.com/learn/performance/lazy-loading) of components and media out of the box.
-- ️🧰 &nbsp;Awesome default UI's for audio/video/live media on mobile and desktop.
-- 🛠 &nbsp;Comprehensive [player API](../components/core/player/readme.md).
+- 🖥 &nbsp;Designed witn both mobile and desktop in mind.
+- 👌 &nbsp;Touch input friendly.
+- 🎨 &nbsp;Style anything you want with [CSS variables][css-vars]. Default [light][light-theme] and
+  [dark][dark-theme] themes are included.
+- 🏎️ &nbsp;Performant with [preconnections][preconnections] + [lazy loading][lazy-loading] of components
+  and media out of the box, only load what you use.
+- ️🧰 &nbsp;Awesome default custom UI's for audio/video/live media.
+- 🛠 &nbsp;Comprehensive [player API][player-api] with a heap of properties, methods and events.
 - 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
 - 🏠 &nbsp;Feel right at home with HTML/CSS/JS thanks to web components.
-- 🍽️ &nbsp;Serve it with your favourite framework whether it's React, Vue, Angular or whatever the cool
-  kids on the block use today.
+- 🏗️ &nbsp;Framework specific bindings for React, Vue and Angular.
+
+[web-components]: https://developer.mozilla.org/en-US/docs/Web/Web_Components
+[accessibility]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA
+[css-vars]: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+[light-theme]: https://github.com/vime-js/vime/blob/master/packages/core/src/globals/themes/light.css
+[dark-theme]: https://github.com/vime-js/vime/blob/master/packages/core/src/globals/themes/default.css
+[player-api]: https://vimejs.com/components/core/player/api
+[preconnections]: https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance
+[lazy-loading]: https://www.imperva.com/learn/performance/lazy-loading
 
 🍭 Here's a few little bites of what you can do with Vime ...
 
@@ -97,9 +107,9 @@ _In a hurry?_
 
 There are framework specific bindings for:
 
-- [React](https://reactjs.org)
-- [Vue](https://vuejs.org)
-- [Angular](https://angular.io)
+- [React](../install/react.md)
+- [Vue](../install/vue.md)
+- [Angular](../install/angular.md)
 
 Keep in mind, that at its core Vime is still simply web components. Even if your framework is
 not mentioned in the list above, it most likely still supports Vime natively. You can check
