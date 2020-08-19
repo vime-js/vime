@@ -26,6 +26,7 @@ customize your own media player.
   [dark][dark-theme] themes are included.
 - 🏎️ &nbsp;Performant with [preconnections][preconnections] + [lazy loading][lazy-loading] of components
   and media out of the box.
+- 🗑️ &nbsp; Lightweight - ~25kB (gzip) without custom UI, and ~47kB with the default Vime UI.
 - ️🧰 &nbsp;Awesome default custom UI's for audio/video/live media.
 - 🛠 &nbsp;Comprehensive [player API][player-api] with a heap of properties, methods and events.
 - 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
