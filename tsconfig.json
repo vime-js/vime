@@ -21,12 +21,9 @@
     "jsx": "react",
   },
   "include": [
-    "packages/*/src/**/*.js",
-    "packages/*/src/**/*.ts",
-    "packages/*/src/**/*.tsx",
-    "packages/*/cypress/**/*.js",
-    "packages/*/cypress/**/*.ts",
-    "packages/*/cypress/**/*.tsx",
+    "packages/core/**/*.js",
+    "packages/core/**/*.ts",
+    "packages/core/**/*.tsx",
     "tools/*.js"
   ]
 }

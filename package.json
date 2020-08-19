@@ -8,8 +8,10 @@
     "pnpm": ">=5"
   },
   "scripts": {
-    "lint": "eslint packages/*/src/**/*.{ts,tsx} packages/*/cypress/**/*.{js,ts} --quiet --fix --ignore-path .gitignore",
-    "lint:md": "prettier \"packages/**/*.md\" --parser markdown --write --print-width 80 --tab-width 2"
+    "setup": "pnpm install --filter vime && pnpm install --filter @vime/core",
+    "lint": "eslint packages/core/**/*.{js,ts,tsx} --quiet --fix --ignore-path .gitignore",
+    "lint:md": "prettier \"**/*.md\" --parser markdown --write --print-width 80 --tab-width 2",
+    "clean:node": "rimraf node_modules packages/*/node_modules examples/*/node_modules docs/node_modules"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
@@ -32,6 +34,7 @@
     "prettier": "^2.0.5",
     "pretty-bytes": "^5.3.0",
     "react": "^16.13.1",
+    "rimraf": "^3.0.2",
     "semantic-release": "^17.1.1",
     "typescript": "^3.9.7"
   },

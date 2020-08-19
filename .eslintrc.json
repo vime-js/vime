@@ -6,12 +6,6 @@
     "airbnb-typescript",
     "plugin:@stencil/recommended"
   ],
-  "ignorePatterns": [
-    "media/",
-    "packages/react/src/",
-    "packages/vue/src/",
-    "packages/angular/src/"
-  ],
   "rules": {
     "no-console": "off",
     "default-case": "off",

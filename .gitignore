@@ -33,6 +33,12 @@ pnpm-debug.log*
 chrome-profiler-events*.json
 speed-measure-plugin*.json
 
+packages/angular/src/directives/
+packages/react/src/components.ts
+packages/react/src/react-component-lib/
+packages/vue/src/components.ts
+packages/vue/src/vue-component-lib/
+
 /tmp
 /out-tsc
 /bazel-out

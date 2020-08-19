@@ -46,7 +46,7 @@ export const config: Config = {
     },
     {
       type: 'docs-readme',
-      dir: '../docs/docs'
+      dir: '../../docs/docs'
     }
   ],
   testing: {
