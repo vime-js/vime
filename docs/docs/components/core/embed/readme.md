@@ -4,20 +4,24 @@ sidebar_label: Embed
 slug: api
 ---
 
-Embeds an external media player and enables interacting with it via `postMessage`.
+Embeds an external media player and enables interacting with it via `postMessage`. This is generally
+used internally by other providers, but you could use it if your requirements are simple. You'll
+also get the benefits of preconnections and lazy-loading. Refer to [existing providers](#used-by) to
+see what params you can pass in, how to send commands to the player, and how to listen to events.
 
 ## Example
 
 ```html
 <vime-embed
   embed-src="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
+  params="autoplay=1&muted=1&controls=0"
   media-title="Agent 327: Operation Barbershop"
   origin="https://www.youtube-nocookie.com"
 />
 
 <script>
   const embed = document.querySelector("vime-embed");
-  embed.params = { autoplay: 1, muted: 1, controls: 0 };
+
   embed.addEventListener("vEmbedMessage", (e) => {
     const message = e.detail;
     console.log(message);
@@ -29,14 +33,14 @@ Embeds an external media player and enables interacting with it via `postMessage
 
 ## Properties
 
-| Property         | Attribute     | Description                                                                                                                     | Type                                                              | Default     |
-| ---------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ----------- |
-| `decoder`        | --            | A function which accepts the raw message received from the embedded media player via `postMessage` and converts it into a POJO. | `((data: string) => Record<string, any> ∣ undefined) ∣ undefined` | `undefined` |
-| `embedSrc`       | `embed-src`   | A URL that will load the external player and media (Eg: https://www.youtube.com/embed/DyTCOwB0DVw).                             | `string`                                                          | `''`        |
-| `mediaTitle`     | `media-title` | The title of the current media so it can be set on the inner `iframe` for screen readers.                                       | `string`                                                          | `''`        |
-| `origin`         | `origin`      | Where the src request had originated from without any path information.                                                         | `string ∣ undefined`                                              | `undefined` |
-| `params`         | --            | The parameters to pass to the embedded player. These are encoded as a query string and appended to the `embedSrc` prop.         | `{ [x: string]: any; }`                                           | `{}`        |
-| `preconnections` | --            | A collection of URLs to that the browser should immediately start establishing a connection with.                               | `string[]`                                                        | `[]`        |
+| Property         | Attribute     | Description                                                                                                                                  | Type                                                              | Default     |
+| ---------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ----------- |
+| `decoder`        | --            | A function which accepts the raw message received from the embedded media player via `postMessage` and converts it into a POJO.              | `((data: string) => Record<string, any> ∣ undefined) ∣ undefined` | `undefined` |
+| `embedSrc`       | `embed-src`   | A URL that will load the external player and media (Eg: https://www.youtube.com/embed/DyTCOwB0DVw).                                          | `string`                                                          | `''`        |
+| `mediaTitle`     | `media-title` | The title of the current media so it can be set on the inner `iframe` for screen readers.                                                    | `string`                                                          | `''`        |
+| `origin`         | `origin`      | Where the src request had originated from without any path information.                                                                      | `string ∣ undefined`                                              | `undefined` |
+| `params`         | `params`      | The parameters to pass to the embedded player which are appended to the `embedSrc` prop. These can be passed in as a query string or object. | `string ∣ { [x: string]: any; }`                                  | `''`        |
+| `preconnections` | --            | A collection of URLs to that the browser should immediately start establishing a connection with.                                            | `string[]`                                                        | `[]`        |
 
 ## Events
 

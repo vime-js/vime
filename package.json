@@ -30,6 +30,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "git-log-parser": "^1.2.0",
     "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "rimraf": "^3.0.2",
@@ -38,8 +39,13 @@
   },
   "husky": {
     "hooks": {
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "packages/core/**/*.{js,ts,tsx}": "npm run lint",
+    "**/*.md": "npm run lint:md"
   },
   "commitlint": {
     "extends": [

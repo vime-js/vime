@@ -175,8 +175,11 @@ export const appendQueryStringToURL = (url: string, qs?: string) => {
  */
 export const appendParamsToURL = (
   url: string,
-  params: Params,
-) => appendQueryStringToURL(url, serializeQueryString(params));
+  params: string | Params,
+) => appendQueryStringToURL(
+  url,
+  isObject(params) ? serializeQueryString(params as Params) : (params as string),
+);
 
 /**
  * Tries to convert a query string into a object.

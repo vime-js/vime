@@ -43,10 +43,10 @@ export class Embed implements ComponentInterface {
   @Prop() mediaTitle = '';
 
   /**
-   * The parameters to pass to the embedded player. These are encoded as a query string and
-   * appended to the `embedSrc` prop.
+   * The parameters to pass to the embedded player which are appended to the `embedSrc` prop. These
+   * can be passed in as a query string or object.
    */
-  @Prop({ attribute: 'params' }) params: Params = {};
+  @Prop({ attribute: 'params' }) params: string | Params = '';
 
   @Watch('embedSrc')
   @Watch('params')
