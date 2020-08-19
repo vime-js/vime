@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.2.0](https://github.com/vime-js/vime/compare/@vime/angular@1.1.0...@vime/angular@1.2.0) (2020-08-19)
+
+
+### Features
+
+* **core:** create themes dir and split default/light themes ([fd97368](https://github.com/vime-js/vime/commit/fd97368afd3fed4726352fd31ce733bc7f5b8e4d))
+
 # [1.1.0](https://github.com/vime-js/vime/compare/@vime/angular@1.0.0...@vime/angular@1.1.0) (2020-08-17)
 
 ### Bug Fixes
