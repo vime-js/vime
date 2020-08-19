@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.7.0](https://github.com/vime-js/vime/compare/@vime/core@1.6.0...@vime/core@1.7.0) (2020-08-19)
+
+
+### Features
+
+* allow passing params to embed as query string ([3301f89](https://github.com/vime-js/vime/commit/3301f89489f462a5ea45ff5e2a2eb633cc4fea67))
+* **core:** create themes dir and split default/light themes ([fd97368](https://github.com/vime-js/vime/commit/fd97368afd3fed4726352fd31ce733bc7f5b8e4d))
+
 # [1.6.0](https://github.com/vime-js/vime/compare/@vime/core@1.5.0...@vime/core@1.6.0) (2020-08-17)
 
 ### Bug Fixes
