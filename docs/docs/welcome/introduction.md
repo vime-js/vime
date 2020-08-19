@@ -22,7 +22,7 @@ customize your own media player.
 - 🎨 &nbsp;Style anything you want with [CSS variables][css-vars]. Default [light][light-theme] and
   [dark][dark-theme] themes are included.
 - 🏎️ &nbsp;Performant with [preconnections][preconnections] + [lazy loading][lazy-loading] of components
-  and media out of the box, only load what you use.
+  and media out of the box.
 - ️🧰 &nbsp;Awesome default custom UI's for audio/video/live media.
 - 🛠 &nbsp;Comprehensive [player API][player-api] with a heap of properties, methods and events.
 - 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
