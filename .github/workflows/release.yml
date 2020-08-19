@@ -4,24 +4,6 @@ on:
     branches:
       - master
 jobs:
-  providers:
-    name: Providers Test Harness
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
-      - name: Install pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-      - name: Install root dependencies
-        run: pnpm install --filter vime
-      - name: Install core dependencies
-        run: pnpm install --filter @vime/core
-      - name: Test
-        run: pnpm run test:e2e.providers --filter @vime/core
   release:
     name: Release
     runs-on: ubuntu-latest
