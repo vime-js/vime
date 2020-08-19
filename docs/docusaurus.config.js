@@ -18,7 +18,7 @@ module.exports = {
       hideOnScroll: true,
       logo: {
         alt: 'Vime Logo',
-        src: 'img/logo.svg',
+        src: 'img/vime.svg',
       },
       items: [
         {
