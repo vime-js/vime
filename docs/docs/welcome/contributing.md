@@ -19,7 +19,7 @@ and can be found [here](https://github.com/vime-js/vime/blob/master/CODE_OF_COND
 There are many ways to contribute to Vime, and many of them do not involve writing any code. Here's
 a few ideas to get started:
 
-- Start using Vime. Go through the [Getting Started](../install/html.md) guides. Does
+- Start using Vime. Go through the [Getting Started](../getting-started/installation) guides. Does
   everything work as expected? If not, we're always looking for ways to improve. Let us know by
   [opening an issue](https://github.com/vime-js/vime/issues).
 - Look through the [v2 issues](https://github.com/vime-js/vime/labels/v2). If you find an issue

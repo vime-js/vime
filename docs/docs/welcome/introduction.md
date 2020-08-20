@@ -108,9 +108,9 @@ _In a hurry?_
 
 There are framework specific bindings for:
 
-- [React](../install/react.md)
-- [Vue](../install/vue.md)
-- [Angular](../install/angular.md)
+- [React](https://vimejs.com/getting-started/installation#react)
+- [Vue](https://vimejs.com/getting-started/installation#vue)
+- [Angular](https://vimejs.com/getting-started/installation#angular)
 
 Keep in mind, that at its core Vime is still simply web components. Even if your framework is
 not mentioned in the list above, it most likely still supports Vime natively. You can check
