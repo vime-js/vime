@@ -11,6 +11,9 @@ ignore it and supply your own media files.
 
 ## Usage
 
+Install [pnpm](https://pnpm.js.org/en/installation) and then run the following commands to serve
+the example.
+
 ```bash
 $: pnpm install
 
