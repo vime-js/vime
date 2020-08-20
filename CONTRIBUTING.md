@@ -49,17 +49,16 @@ button in the top right corner. After the project has been forked, run the follo
 your terminal:
 
 ```bash
+# This will take some time (~480MB), but you only have to do it once.
 $: git clone https://github.com/{my-github-username}/vime
 
 $: cd vime
 
+# This might take a few minutes on your first install.
 $: npm run setup
 
 $: git checkout -b {issue-64}
 ```
-
-The first install may take a little while due to some larger development dependencies such as
-Cypress and Jest.
 
 Now it'll help if we keep our `master` branch pointing at the original repository and you make pull
 requests from branches on your fork.

@@ -11,9 +11,7 @@ module.exports = {
   projectName: 'vime',
   themeConfig: {
     announcementBar: {
-      id: 'supportus',
-      content:
-        '⭐️ If you like Vime, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime">GitHub</a>! ⭐️',
+      content: '⭐️ &nbsp;If you like Vime, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime">GitHub</a>!&nbsp;⭐️',
     },
     navbar: {
       title: 'Vime',
