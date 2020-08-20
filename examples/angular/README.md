@@ -1,4 +1,5 @@
 # @vime/angular-example
 
 This example was bootstrapped with [Angular CLI](https://cli.angular.io), and demonstrates how to
-load and use Vime with Angular via the `@vime/angular` package.
+load and use Vime with Angular via the `@vime/angular` package. The main files to look at
+are in the [`app`](./src/app) module directory.
