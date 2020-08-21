@@ -163,7 +163,7 @@ At the root of Vime we always have the [`vime-player`](./packages/core/src/compo
 component, which maintains the current state of the player and keeps plugins, providers and UI components
 in sync. Properties are passed down from the player to update child components through Wormholes (exactly
 like `React.ContextProvider`), and updates are sent to the player via the `vStateChange` custom
-event. The event simply contains the property to update and its new value `{ prop: 'paused', value: false}`).
+event. The event simply contains the property to update and its new value `{ prop: 'paused', value: false }`.
 Any "special" properties that require calling a method on the provider are watched and called
 automatically. For example, updating the `currentTime` property would require calling the provider's
 `setCurrentTime` method.
