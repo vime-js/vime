@@ -9,8 +9,12 @@ sidebar_label: Introduction
 [![semantic-release-badge]][semantic-release]
 [![discord-badge]][discord]
 
-Vime is simply a collection of [web components][web-components] that enable you to easily build and
-customize your own media player.
+<p style={{ fontSize: '18px' }}>
+Vime is a collection of <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">web components</a> that 
+help you to easily build and customize your own media player.
+</p>
+
+## ✨ &nbsp;Features
 
 - 🎥 &nbsp;[Multi-provider support](#-providers) (HTML5, HLS, YouTube, Vimeo etc.).
 - 👑 &nbsp; One API to rule them all! Don't re-learn anything the next time you need a player.
@@ -30,7 +34,6 @@ customize your own media player.
 - 🏠 &nbsp;Feel right at home with HTML/CSS/JS thanks to web components.
 - 🏗️ &nbsp;Framework specific bindings for React, Vue and Angular.
 
-[web-components]: https://developer.mozilla.org/en-US/docs/Web/Web_Components
 [accessibility]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA
 [css-vars]: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 [light-theme]: https://github.com/vime-js/vime/blob/master/packages/core/src/globals/themes/light.css
@@ -39,7 +42,9 @@ customize your own media player.
 [preconnections]: https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance
 [lazy-loading]: https://www.imperva.com/learn/performance/lazy-loading
 
-🍭 Here's a few little bites of what you can do with Vime ...
+## 🍭 &nbsp;Examples
+
+Here's a few little bites of what you can do with Vime ...
 
 ```html
 <!-- Here we are requesting to use the native controls. -->
@@ -104,7 +109,7 @@ _In a hurry?_
 </vime-player>
 ```
 
-## 🏗️ Frameworks
+## 🏗️ &nbsp;Frameworks
 
 There are framework specific bindings for:
 
@@ -126,7 +131,7 @@ using Vime with:
 - [Angular](https://github.com/vime-js/vime/tree/master/examples/angular)
 - [Svelte](https://github.com/vime-js/vime/tree/master/examples/svelte)
 
-## 🖥️ Browsers
+## 🖥️ &nbsp;Browsers
 
 Vime is forward thinking and built for the modern web. All
 [ES6 Compatible](https://caniuse.com/#feat=es6-module) browsers are supported, some of which are
@@ -139,7 +144,7 @@ listed below.
 - iOS Safari 11+
 - Opera 48+
 
-## 🎥 Providers
+## 🎥 &nbsp;Providers
 
 - [HTML5](../components/providers/file/readme.md)
 - [HLS](../components/providers/hls/readme.md)
@@ -148,23 +153,23 @@ listed below.
 - [Vimeo](../components/providers/vimeo/readme.md)
 - [Dailymotion](../components/providers/dailymotion/readme.md)
 
-## 📖 Documentation
+## 📖 &nbsp;Documentation
 
 Documentation can be found at [https://vimejs.com](https://vimejs.com).
 
 ❓ _Looking for V1 docs? -> https://v1.vimejs.com_
 
-## 🙋 Support
+## 🙋 &nbsp;Support
 
 Feel free to join our [Discord channel][discord] if you'd like help with anything related to Vime.
 Please remember to be respectful and patient as this is a community driven project.
 
-## 🔨 Contributing
+## 🔨 &nbsp;Contributing
 
 If you'd like to contribute and help in building a better media player for the web, then everything
 you need to get started can be found in the [Contributing Guide](https://github.com/vime-js/vime/blob/master/CONTRIBUTING.md).
 
-## ❤️ Sponsors
+## ❤️ &nbsp;Sponsors
 
 A huge thanks to our sponsors who support open-source projects like Vime.
 

@@ -1,4 +1,11 @@
-# Vime.
+<div align="center">
+<img
+  width="150"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/static/identity/vime.png"
+  alt="Vime Logo"
+/>
+
+A collection of [web components][web-components] for building and customizing your own media player.
 
 [![package-badge]][package]
 [![license-badge]][license]
@@ -12,8 +19,9 @@
   alt="Vime 2 - Video Player Screenshot"
 />
 
-Vime is simply a collection of [web components][web-components] that enable you to easily build and
-customize your own media player.
+</div>
+
+## ✨ Features
 
 - 🎥 &nbsp;[Multi-provider support](#-providers) (HTML5, HLS, YouTube, Vimeo etc.).
 - 👑 &nbsp; One API to rule them all! Don't re-learn anything the next time you need a player.
@@ -42,7 +50,9 @@ customize your own media player.
 [preconnections]: https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance
 [lazy-loading]: https://www.imperva.com/learn/performance/lazy-loading
 
-🍭 Here's a few little bites of what you can do with Vime ...
+## 🍭 Examples
+
+Here's a few little bites of what you can do with Vime ...
 
 ```html
 <!-- Here we are requesting to use the native controls. -->
