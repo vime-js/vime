@@ -6,21 +6,106 @@ The timeline is a slider (`input[type="range"]`) that can be used to change the 
 If the player is buffering, the scrubber will display an animated candystripe in the porition of the
 timeline that has not buffered.
 
-## Example
+## Visual
 
-```html {6}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/scrubber-control/scrubber-control.png"
+  alt="Vime scrubber control component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {7} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
     <vime-controls>
+      <!-- ... -->
       <vime-scrubber-control></vime-scrubber-control>
     </vime-controls>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### Html
+
+```html {7}
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-controls>
+      <!-- ... -->
+      <vime-scrubber-control></vime-scrubber-control>
+    </vime-controls>
+  </vime-ui>
+</vime-player>
+```
+
+### React
+
+```tsx {6,16}
+import React from 'react';
+import {
+  VimePlayer,
+  VimeUi,
+  VimeControls,
+  VimeScrubberControl,
+} from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeControls>
+          <VimeScrubberControl />
+        </VimeControls>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {7,18,26} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeControls>
+        <VimeScrubberControl />
+      </VimeControls>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import {
+    VimePlayer,
+    VimeUi,
+    VimeControls,
+    VimeScrubberControl,
+  } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeControls,
+      VimeScrubberControl,
+    },
+  };
+</script>
+```
 
 ## Properties
 

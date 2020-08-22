@@ -2,18 +2,78 @@
 
 Loads an SVG sprite and inserts it into the document.
 
-## Example
+<!-- Auto Generated Below -->
 
-```html {4}
+## Usage
+
+### Angular
+
+```html {5} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
+    <!-- ... -->
     <vime-icons href="/icons/sprite.svg"></vime-icons>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### Html
+
+```html {5}
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-icons href="/icons/sprite.svg"></vime-icons>
+  </vime-ui>
+</vime-player>
+```
+
+### React
+
+```tsx {2,10}
+import React from "react";
+import { VimePlayer, VimeUi, VimeIcons } from "@vime/react";
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeIcons href="/icons/sprite.svg">
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {6,12,18} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeIcons href="/icons/sprite.svg">
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeIcons } from "@vime/vue";
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeIcons,
+    },
+  };
+</script>
+```
 
 ## Properties
 

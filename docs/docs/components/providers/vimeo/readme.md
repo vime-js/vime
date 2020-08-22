@@ -4,18 +4,12 @@ sidebar_label: Vimeo
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.com).
 
 > You don't interact with this component for passing player properties, controlling playback, listening to player events and so on, that is all done through the `vime-player` component.
-
-## Example
-
-```html {2}
-<vime-player controls autoplay muted>
-  <vime-vimeo video-id="411652396"></vime-vimeo>
-  <!-- ... -->
-</vime-player>
-```
 
 ## Quirks
 
@@ -24,6 +18,84 @@ Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.c
 - `playbackQuality` and `playbackQualities` are not supported because there is no API for it.
 
 <!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {2}
+<vime-player controls>
+  <vime-vimeo video-id="411652396"></vime-vimeo>
+  <!-- ... -->
+</vime-player>
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,7}
+import React from 'react';
+import { VimePlayer, VimeVimeo } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer controls>
+      <VimeVimeo videoId="411652396" />
+      {/* ... */}
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {3,9,14} title="example.vue"
+<template>
+  <VimePlayer controls>
+    <VimeVimeo videoId="411652396" />
+    <!-- ... -->
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeVimeo } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeVimeo,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {2} title="example.html"
+<vime-player controls>
+  <vime-vimeo cookies="true" video-id="411652396"></vime-vimeo>
+  <!-- ... -->
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

@@ -3,43 +3,193 @@
 A generic player control that is designed to work with both touch and mouse devices. It also
 seamlessly works with `vime-tooltip`, which can be passed in via the default `slot`.
 
-## Example
+## Visual
+
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/control/control.png"
+  alt="Vime control component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {6-14} title="example.html"
+<vime-player [paused]="paused" (vPausedChange)="onPausedChange($event)">
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-controls full-width>
+      <vime-control
+        label="Playback"
+        keys="k"
+        [pressed]="paused"
+        (click)="onClick"
+      >
+        <vime-icon [href]="icon"></vime-icon>
+        <vime-tooltip>{{tooltip}} (k)</vime-tooltip>
+      </vime-control>
+    </vime-controls>
+  </vime-ui>
+</vime-player>
+```
+
+```ts title="example.ts"
+class Example {
+  paused = true;
+
+  icon = '#vime-play';
+
+  tooltip = 'Play';
+
+  onClick() {
+    this.onPausedChange({ detail: !this.paused });
+  }
+
+  onPausedChange(event: CustomEvent<boolean>) {
+    this.paused = event.detail;
+    this.tooltip = this.paused ? 'Play' : 'Pause';
+    this.icon = this.paused ? '#vime-play' : '#vime-pause';
+  }
+}
+```
+
+### Html
 
 ```html {6-9}
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
-    <vime-controls>
-      <vime-control id="playback-control" label="Playback">
+    <vime-controls full-width>
+      <vime-control label="Playback" keys="k" pressed="false">
         <vime-icon href="#vime-play"></vime-icon>
-        <vime-tooltip>Play</vime-tooltip>
+        <vime-tooltip>Play (k)</vime-tooltip>
       </vime-control>
     </vime-controls>
   </vime-ui>
 </vime-player>
-
-<script>
-  const player = document.getElement("vime-player");
-  const control = document.getElementById("playback-control");
-  const icon = playbackControl.querySelector("vime-icon");
-  const tooltip = playbackControl.querySelector("vime-tooltip");
-
-  control.addEventListener("click", (e) => {
-    if (tooltip.innerHTML === player.i18n.play) {
-      tooltip.innerHTML = player.i18n.pause;
-      icon.href = "#vime-pause";
-      player.play();
-    } else {
-      tooltip.innerHTML = player.i18n.play;
-      icon.href = "#vime-play";
-      player.pause();
-    }
-  });
-</script>
 ```
 
-<!-- Auto Generated Below -->
+### React
+
+```tsx {6,32-40}
+import React, { useState } from 'react';
+import {
+  VimePlayer,
+  VimeUi,
+  VimeControls,
+  VimeControl,
+  VimeIcon,
+  VimeTooltip,
+} from '@vime/react';
+
+function Example() {
+  const [paused, setPaused] = useState(true);
+  const [icon, setIcon] = useState('#vime-play');
+  const [tooltip, setTooltip] = useState('Pause');
+
+  const onClick = () => {
+    onPausedChange({ detail: !paused });
+  };
+
+  const onPausedChange = (event: CustomEvent<boolean>) => {
+    setPaused(event.detail);
+    setIcon(paused ? '#vime-play' : '#vime-pause');
+    setTooltip(paused ? 'Play' : 'Pause');
+  };
+
+  return render(
+    <VimePlayer paused={paused} onVPausedChange={onPausedChange}>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeControls fullWidth>
+          <VimeControl
+            label="Playback"
+            keys="k"
+            pressed={paused}
+            onClick={onClick}
+          >
+            <VimeIcon href={icon} />
+            <VimeTooltip>{tooltip} (k)</VimeTooltip>
+          </VimeControl>
+        </VimeControls>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {6-14,25,35} title="example.vue"
+<template>
+  <VimePlayer :paused="paused" @vPausedChange="onPausedChange">
+    <!-- ... -->
+    <VimeUi>
+      <VimeControls fullWidth>
+        <VimeControl
+          label="Playback"
+          keys="k"
+          :pressed="paused"
+          @click="onClick"
+        >
+          <VimeIcon :href="icon" />
+          <VimeTooltip>{{tooltip}} (k)</VimeTooltip>
+        </VimeControl>
+      </VimeControls>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import {
+    VimePlayer,
+    VimeUi,
+    VimeControls,
+    VimeControl,
+    VimeIcon,
+    VimeTooltip,
+  } from "@vime/vue";
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeControls,
+      VimeControl,
+      VimeIcon,
+      VimeTooltip,
+    },
+
+    data: {
+      paused: true,
+    },
+
+    computed: {
+      icon() {
+        return this.paused ? '#vime-play' : '#vime-pause';
+      },
+      tooltip() {
+        return this.paused ? 'Play' : 'Pause';
+      },
+    },
+
+    methods: {
+      onClick() {
+        this.paused = !paused;
+      },
+
+      onPausedChange(paused: boolean) {
+        this.paused = paused;
+      }
+    },
+  };,
+</script>
+```
 
 ## Properties
 

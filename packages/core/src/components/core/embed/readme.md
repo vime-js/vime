@@ -5,7 +5,38 @@ used internally by other providers, but you could use it if your requirements ar
 also get the benefits of preconnections and lazy-loading. Refer to [existing providers](#used-by) to
 see what params you can pass in, how to send commands to the player, and how to listen to events.
 
-## Example
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html title="example.html"
+<vime-embed
+  embed-src="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
+  media-title="Agent 327: Operation Barbershop"
+  origin="https://www.youtube-nocookie.com"
+  [params]="params"
+  (vEmbedMessage)="onMessage($event)"
+/>
+```
+
+```ts title="example.ts"
+class Example {
+  params = {
+    autoplay: 1,
+    muted: 1,
+    controls: 0,
+  };
+
+  onMessage(event: CustomEvent<any>) {
+    const message = event.detail;
+    // ...
+  }
+}
+```
+
+### Html
 
 ```html
 <vime-embed
@@ -16,16 +47,76 @@ see what params you can pass in, how to send commands to the player, and how to 
 />
 
 <script>
-  const embed = document.querySelector("vime-embed");
+  const embed = document.querySelector('vime-embed');
 
-  embed.addEventListener("vEmbedMessage", (e) => {
+  embed.addEventListener('vEmbedMessage', (e) => {
     const message = e.detail;
-    console.log(message);
+    // ...
   });
 </script>
 ```
 
-<!-- Auto Generated Below -->
+### React
+
+```tsx {2,11-16}
+import React from 'react';
+import { VimeEmbed } from '@vime/react';
+
+function Example() {
+  const onMessage = (event: CustomEvent<any>) => {
+    const message = event.detail;
+    // ...
+  };
+
+  return render(
+    <VimeEmbed
+      embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
+      params={{ autoplay: 1, muted: 1, controls: 0 }}
+      mediaTitle="Agent 327: Operation Barbershop"
+      origin="https://www.youtube-nocookie.com"
+      onVEmbedMessage={onMessage}
+    />
+  );
+}
+```
+
+### Vue
+
+```html {2-8,12,16} title="example.vue"
+<template>
+  <VimeEmbed
+    embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
+    mediaTitle="Agent 327: Operation Barbershop"
+    origin="https://www.youtube-nocookie.com"
+    :params="params"
+    @vEmbedMessage="onMessage"
+  />
+</template>
+
+<script>
+  import { VimeEmbed } from '@vime/vue';
+
+  export default {
+    components: {
+      VimeEmbed,
+    },
+
+    data: {
+      params: {
+        autoplay: 1,
+        muted: 1,
+        controls: 0,
+      },
+    },
+
+    methods: {
+      onMessage(message: any) {
+        // ...
+      },
+    },
+  };
+</script>
+```
 
 ## Properties
 

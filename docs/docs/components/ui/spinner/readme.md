@@ -4,20 +4,110 @@ sidebar_label: Spinner
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Displays a loading indicator when the video is `buffering`.
 
-## Example
+## Visual
 
-```html {4}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/spinner/spinner.png"
+  alt="Vime spinner component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {5}
 <vime-player>
   <!-- ... -->
   <vime-ui>
+    <!-- ... -->
     <vime-spinner></vime-spinner>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,10}
+import React from 'react';
+import { VimePlayer, VimeUi, VimeSpinner } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeSpinner />
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {6,12,18} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeSpinner />
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeSpinner } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeSpinner,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {5} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-spinner></vime-spinner>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Events
 

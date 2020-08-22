@@ -5,35 +5,91 @@ displayed as a small popup menu (scroll appears if `height >= maxHeight`) on the
 side of a video player, or slightly above the right-hand side of an audio player. On mobile,
 the settings is displayed as a [bottom sheet](https://material.io/components/sheets-bottom).
 
-## Example
+## Visual
 
-```html {5-21}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/settings/settings.png"
+  alt="Vime settings component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {5-7} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
     <vime-settings>
-      <vime-submenu label="Playback Rate" hint="Normal">
-        <vime-menu-radio-group value="1">
-          <vime-menu-radio label="0.5" value="0.5" />
-          <vime-menu-radio label="Normal" value="1" />
-          <vime-menu-radio label="2" value="2" />
-        </vime-menu-radio-group>
-      </vime-submenu>
-
-      <vime-submenu label="Playback Quality" hint="720p">
-        <vime-menu-radio-group value="720p">
-          <vime-menu-radio label="1080p" value="1080p" />
-          <vime-menu-radio label="720p" value="720p" />
-          <vime-menu-radio label="480p" value="480p" />
-        </vime-menu-radio-group>
-      </vime-submenu>
+      <!-- ... -->
     </vime-settings>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### Html
+
+```html {5-7}
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-settings>
+      <!-- ... -->
+    </vime-settings>
+  </vime-ui>
+</vime-player>
+```
+
+### React
+
+```tsx {2,10}
+import React from 'react';
+import { VimePlayer, VimeUi, VimeSettings } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeSettings>{/* ... */}</VimeSettings>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {6-8,14,20} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeSettings>
+        <!-- ... -->
+      </VimeSettings>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeSettings } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeSettings,
+    },
+  };
+</script>
+```
 
 ## Properties
 

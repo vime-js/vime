@@ -1,0 +1,3 @@
+```html
+<vime-current-time />
+```

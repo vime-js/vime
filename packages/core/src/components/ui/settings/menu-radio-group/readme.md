@@ -3,7 +3,49 @@
 A collection of radio buttons describing a set of related options. Only one radio button in a group
 can be selected at the same time.
 
-## Example
+## Visual
+
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu-radio-group/menu-radio-group.png"
+  alt="Vime settings menu radio group component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {7-11} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-settings>
+      <vime-submenu label="Playback Rate">
+        <vime-menu-radio-group value="1" (vCheck)="onValueChange($event)">
+          <vime-menu-radio label="0.5" value="0.5" />
+          <vime-menu-radio label="Normal" value="1" />
+          <vime-menu-radio label="2" value="2" />
+        </vime-menu-radio-group>
+      </vime-submenu>
+    </vime-settings>
+  </vime-ui>
+</vime-player>
+```
+
+```ts title="example.ts"
+class Example {
+  currentValue = 1;
+
+  onValueChange(event: Event) {
+    const radio = event.target as HTMLVimeMenuRadioElement;
+    this.currentValue = parseFloat(radio.value);
+  }
+}
+```
+
+### Html
 
 ```html {7-11}
 <vime-player>
@@ -23,7 +65,101 @@ can be selected at the same time.
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### React
+
+```tsx {7,26-30}
+import React, { useState } from 'react';
+import {
+  VimePlayer,
+  VimeUi,
+  VimeSettings,
+  VimeSubmenu,
+  VimeMenuRadioGroup,
+  VimeMenuRadio,
+} from '@vime/react';
+
+function Example() {
+  const [value, setValue] = useState(1);
+
+  const onValueChange = (event: Event) => {
+    const radio = event.target as HTMLVimeMenuRadioElement;
+    setValue(parseFloat(radio.value));
+  };
+
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeSettings>
+          <VimeSubmenu label="Playback Rate">
+            <VimeMenuRadioGroup value="1" onVCheck={onValueChange}>
+              <VimeMenuRadio label="0.5" value="0.5" />
+              <VimeMenuRadio label="Normal" value="1" />
+              <VimeMenuRadio label="2" value="2" />
+            </VimeMenuRadioGroup>
+          </VimeSubmenu>
+        </VimeSettings>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {8-12,25,35} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeSettings>
+        <VimeSubmenu label="Playback Rate">
+          <VimeMenuRadioGroup value="1" @vCheck="onValueChange($event)">
+            <VimeMenuRadio label="0.5" value="0.5" />
+            <VimeMenuRadio label="Normal" value="1" />
+            <VimeMenuRadio label="2" value="2" />
+          </VimeMenuRadioGroup>
+        </VimeSubmenu>
+      </VimeSettings>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import {
+    VimePlayer,
+    VimeUi,
+    VimeSettings,
+    VimeSubmenu,
+    VimeMenuRadioGroup,
+    VimeMenuRadio,
+  } from "@vime/vue";
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeSettings,
+      VimeSubmenu,
+      VimeMenuRadioGroup,
+      VimeMenuRadio,
+    },
+
+    data: {
+      value: 1,
+    },
+
+    methods: {
+      onValueChange(event) {
+        const radio = event.target as HTMLVimeMenuRadioElement;
+        this.value = parseFloat(radio.value);
+      },
+    },
+  };
+</script>
+```
 
 ## Properties
 

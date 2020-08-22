@@ -4,23 +4,156 @@ sidebar_label: Video
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Enables loading, playing and controlling videos via the HTML5 [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video) element.
 
 > You don't interact with this component for passing player properties, controlling playback, listening to player events and so on, that is all done through the `vime-player` component.
 
-## Example
+<!-- Auto Generated Below -->
 
-```html {2-6}
-<vime-player controls autoplay muted>
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {2-18}
+<vime-player controls>
   <vime-video poster="/media/poster.png">
     <source data-src="/media/video.mp4" type="video/mp4" />
-    <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
-    <track kind="captions" src="/media/caps/en.vtt" srclang="en" />
+    <track
+      default
+      kind="subtitles"
+      src="/media/subs/en.vtt"
+      srclang="en"
+      label="English"
+    />
+    <track
+      kind="captions"
+      src="/media/caps/es.vtt"
+      srclang="es"
+      label="Spanish"
+    />
+    <!-- ... -->
   </vime-video>
+  <!-- ... -->
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,7-23}
+import React from 'react';
+import { VimePlayer, VimeVideo } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer controls>
+      <VimeVideo>
+        <source data-src="/media/video.mp4" type="video/mp4" />
+        <track
+          default
+          kind="subtitles"
+          src="/media/subs/en.vtt"
+          srclang="en"
+          label="English"
+        />
+        <track
+          kind="captions"
+          src="/media/caps/es.vtt"
+          srclang="es"
+          label="Spanish"
+        />
+        {/* ... */}
+      </VimeVideo>
+      {/* ... */}
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {3-19,25,30} title="example.vue"
+<template>
+  <VimePlayer controls>
+    <VimeVideo>
+      <source data-src="/media/video.mp4" type="video/mp4" />
+      <track
+        default
+        kind="subtitles"
+        src="/media/subs/en.vtt"
+        srclang="en"
+        label="English"
+      />
+      <track
+        kind="captions"
+        src="/media/caps/es.vtt"
+        srclang="es"
+        label="Spanish"
+      />
+      <!-- ... -->
+    </VimeVideo>
+    <!-- ... -->
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeVideo } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeVideo,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {2-18} title="example.html"
+<vime-player controls>
+  <vime-video poster="/media/poster.png">
+    <source data-src="/media/video.mp4" type="video/mp4" />
+    <track
+      default
+      kind="subtitles"
+      src="/media/subs/en.vtt"
+      srclang="en"
+      label="English"
+    />
+    <track
+      kind="captions"
+      src="/media/caps/fr.vtt"
+      srclang="fr"
+      label="French"
+    />
+    <!-- ... -->
+  </vime-video>
+  <!-- ... -->
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

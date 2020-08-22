@@ -4,13 +4,111 @@ A custom styled and ARIA friendly `input[type="range"]` component for inputting 
 In addition, there are optimizations made for improved touch support (more information can be found
 at https://github.com/sampotts/rangetouch).
 
-## Example
+## Visual
+
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/slider/slider.png"
+  alt="Vime slider component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html title="example.html"
+<vime-slider
+  step="5"
+  max="100"
+  label="Volume"
+  [value]="value"
+  (vValueChange)="onValueChange($event)"
+/>
+```
+
+```ts title="example.ts"
+class Example {
+  value = 50;
+
+  onValueChange(event: CustomEvent<number>) {
+    this.value = event.detail;
+  }
+}
+```
+
+### Html
 
 ```html
 <vime-slider step="5" max="100" value="50" label="Volume" />
+
+<script>
+  const slider = document.querySelector('vime-slider');
+
+  slider.addEventListener('vValueChange', (event) => {
+    const newValue = event.detail;
+  });
+</script>
 ```
 
-<!-- Auto Generated Below -->
+### React
+
+```tsx
+import React, { useState } from 'react';
+import { VimeSlider } from '@vime/react';
+
+function Example() {
+  const [value, setValue] = useState(50);
+
+  const onValueChange = (event: CustomEvent<number>) => {
+    setValue(event.detail);
+  };
+
+  return render(
+    <VimeSlider
+      step="5"
+      max="100"
+      label="Volume"
+      value={value}
+      onVValueChange={onValueChange}
+    />
+  );
+}
+```
+
+### Vue
+
+```html title="example.vue"
+<template>
+  <VimeSlider
+    step="5"
+    max="100"
+    label="Volume"
+    :value="value"
+    @vValueChange="onValueChange"
+  />
+</template>
+
+<script>
+  import { VimeSlider } from '@vime/vue';
+
+  export default {
+    components: {
+      VimeSlider,
+    },
+
+    data: {
+      value: 50,
+    },
+
+    methods: {
+      onValueChange(value) {
+        this.value = value;
+      },
+    },
+  };
+</script>
+```
 
 ## Properties
 

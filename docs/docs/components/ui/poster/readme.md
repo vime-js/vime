@@ -4,21 +4,111 @@ sidebar_label: Poster
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Loads the poster set in the player prop `currentPoster` and displays it. The poster will automatically
 dissapear once playback starts.
 
-## Example
+## Visual
 
-```html {4}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/poster/poster.png"
+  alt="Vime poster component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {5}
 <vime-player>
   <!-- ... -->
   <vime-ui>
+    <!-- ... -->
     <vime-poster></vime-poster>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,10}
+import React from 'react';
+import { VimePlayer, VimeUi, VimePoster } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimePoster />
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {6,12,18} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimePoster />
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimePoster } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimePoster,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {5} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-poster></vime-poster>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

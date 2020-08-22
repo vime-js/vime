@@ -4,15 +4,32 @@ sidebar_label: Dash
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Enables loading, playing and controlling [MPEG DASH](https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP)
 based media. It uses [`dashjs`](https://github.com/Dash-Industry-Forum/dash.js) under the hood.
 
 > You don't interact with this component for passing player properties, controlling playback, listening to player events and so on, that is all done through the `vime-player` component.
 
-## Example
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
 
 ```html {2-6}
-<vime-player controls autoplay muted>
+<vime-player controls>
   <vime-dash
     src="/media/manifest.mpd"
     version="latest"
@@ -20,16 +37,106 @@ based media. It uses [`dashjs`](https://github.com/Dash-Industry-Forum/dash.js) 
   ></vime-dash>
   <!-- ... -->
 </vime-player>
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,14-19}
+import React from 'react';
+import { VimePlayer, VimeDash } from '@vime/react';
+
+function Example() {
+  /**
+   * @see https://github.com/Dash-Industry-Forum/dash.js.
+   */
+  const dashConfig = {
+    // ...
+  };
+
+  return render(
+    <VimePlayer controls>
+      <VimeDash
+        src="/media/manifest.mpd"
+        version="latest"
+        config={dashConfig}
+        poster="/media/poster.png"
+      />
+      {/* ... */}
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {3-8,14,19} title="example.vue"
+<template>
+  <VimePlayer controls>
+    <VimeDash
+      src="/media/manifest.mpd"
+      :config="dashConfig"
+      version="latest"
+      poster="/media/poster.png"
+    />
+    <!-- ... -->
+  </VimePlayer>
+</template>
 
 <script>
-  const dash = document.querySelector("vime-dash");
-  dash.config = {
-    // ...
+  import { VimePlayer, VimeDash } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeDash,
+    },
+
+    data: {
+      /**
+       * @see https://github.com/Dash-Industry-Forum/dash.js.
+       */
+      dashConfig: {
+        // ...
+      },
+    },
   };
 </script>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="angular">
+
+```html {2-7} title="example.html"
+<vime-player controls>
+  <vime-dash
+    [config]="dashConfig"
+    src="/media/manifest.mpd"
+    version="latest"
+    poster="/media/poster.png"
+  ></vime-dash>
+  <!-- ... -->
+</vime-player>
+```
+
+```ts title="example.ts"
+class Example {
+  /**
+   * @see https://github.com/Dash-Industry-Forum/dash.js.
+   */
+  dashConfig = {
+    // ...
+  };
+}
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

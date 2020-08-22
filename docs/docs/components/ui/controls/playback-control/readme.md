@@ -4,23 +4,131 @@ sidebar_label: PlaybackControl
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 A control for toggling the playback state (play/pause) of the current media.
 
-## Example
+## Visual
 
-```html {6}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/playback-control/playback-control.png"
+  alt="Vime playback control component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {7}
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
     <vime-controls>
+      <!-- ... -->
       <vime-playback-control></vime-playback-control>
     </vime-controls>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {6,16}
+import React from 'react';
+import {
+  VimePlayer,
+  VimeUi,
+  VimeControls,
+  VimePlaybackControl,
+} from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeControls>
+          <VimePlaybackControl />
+        </VimeControls>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {7,18,26} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeControls>
+        <VimePlaybackControl />
+      </VimeControls>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import {
+    VimePlayer,
+    VimeUi,
+    VimeControls,
+    VimePlaybackControl,
+  } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeControls,
+      VimePlaybackControl,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {7} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-controls>
+      <!-- ... -->
+      <vime-playback-control></vime-playback-control>
+    </vime-controls>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

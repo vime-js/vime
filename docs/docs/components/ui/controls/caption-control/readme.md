@@ -4,25 +4,132 @@ sidebar_label: CaptionControl
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 A control for toggling the visibility of captions. This control is not displayed if there's no track
 currently set.
 
-## Example
+## Visual
 
-```html {6}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/caption-control/caption-contorl.png"
+  alt="Vime caption control component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {7}
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
     <vime-controls>
+      <!-- ... -->
       <vime-caption-control></vime-caption-control>
     </vime-controls>
   </vime-ui>
-  <vime-player></vime-player
-></vime-player>
+</vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {6,16}
+import React from 'react';
+import {
+  VimePlayer,
+  VimeUi,
+  VimeControls,
+  VimeCaptionControl,
+} from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeControls>
+          <VimeCaptionControl />
+        </VimeControls>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {7,18,26} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeControls>
+        <VimeCaptionControl />
+      </VimeControls>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import {
+    VimePlayer,
+    VimeUi,
+    VimeControls,
+    VimeCaptionControl,
+  } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeControls,
+      VimeCaptionControl,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {7} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-controls>
+      <!-- ... -->
+      <vime-caption-control></vime-caption-control>
+    </vime-controls>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

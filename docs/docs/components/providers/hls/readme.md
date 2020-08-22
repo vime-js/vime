@@ -4,14 +4,31 @@ sidebar_label: Hls
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Enables loading, playing and controlling [HLS](https://en.wikipedia.org/wiki/HTTP_Live_Streaming) based media. If the [browser does not support HLS](https://caniuse.com/#search=hls) then the [`hls.js`](https://github.com/video-dev/hls.js) library is downloaded and used as a fallback to play the stream.
 
 > You don't interact with this component for passing player properties, controlling playback, listening to player events and so on, that is all done through the `vime-player` component.
 
-## Example
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
 
 ```html {2-6}
-<vime-player controls autoplay muted>
+<vime-player controls>
   <vime-hls version="latest" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
     <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
@@ -19,16 +36,103 @@ Enables loading, playing and controlling [HLS](https://en.wikipedia.org/wiki/HTT
   </vime-hls>
   <!-- ... -->
 </vime-player>
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,14-18}
+import React from 'react';
+import { VimePlayer, VimeHls } from '@vime/react';
+
+function Example() {
+  /**
+   * @see https://hls-js.netlify.app/api-docs/file/src/config.ts.html.
+   */
+  const hlsConfig = {
+    // ...
+  };
+
+  return render(
+    <VimePlayer controls>
+      <VimeHls version="latest" config={hlsConfig} poster="/media/poster.png">
+        <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
+        <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
+        {/* ... */}
+      </VimeHls>
+      {/* ... */}
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {3-7,13,18} title="example.vue"
+<template>
+  <VimePlayer controls>
+    <VimeHls :config="hlsConfig" version="latest" poster="/media/poster.png">
+      <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
+      <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
+      <!-- ... -->
+    </VimeHls>
+    <!-- ... -->
+  </VimePlayer>
+</template>
 
 <script>
-  const hls = document.querySelector("vime-hls");
-  hls.config = {
-    // ...
+  import { VimePlayer, VimeHls } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeHls,
+    },
+
+    data: {
+      /**
+       * @see https://hls-js.netlify.app/api-docs/file/src/config.ts.html.
+       */
+      hlsConfig: {
+        // ...
+      },
+    },
   };
 </script>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="angular">
+
+```html {2-6} title="example.html"
+<vime-player controls>
+  <vime-hls version="latest" [config]="hlsConfig" poster="/media/poster.png">
+    <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
+    <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
+    <!-- ... -->
+  </vime-hls>
+  <!-- ... -->
+</vime-player>
+```
+
+```ts title="example.ts"
+class Example {
+  /**
+   * @see https://hls-js.netlify.app/api-docs/file/src/config.ts.html.
+   */
+  hlsConfig = {
+    // ...
+  };
+}
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

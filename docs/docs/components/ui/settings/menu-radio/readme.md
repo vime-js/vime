@@ -4,10 +4,34 @@ sidebar_label: MenuRadio
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Menu radio buttons are presented in radio groups (a collection of radio buttons describing a set
 of related options). Only one radio button in a group can be selected at the same time.
 
-## Example
+## Visual
+
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu-radio/menu-radio.png"
+  alt="Vime settings menu radio component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
 
 ```html {8-10}
 <vime-player>
@@ -27,7 +51,113 @@ of related options). Only one radio button in a group can be selected at the sam
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {8,20-22}
+import React from 'react';
+import {
+  VimePlayer,
+  VimeUi,
+  VimeSettings,
+  VimeSubmenu,
+  VimeMenuRadioGroup,
+  VimeMenuRadio,
+} from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeSettings>
+          <VimeSubmenu label="Playback Rate">
+            <VimeMenuRadioGroup value="1">
+              <VimeMenuRadio label="0.5" value="0.5" />
+              <VimeMenuRadio label="Normal" value="1" />
+              <VimeMenuRadio label="2" value="2" />
+            </VimeMenuRadioGroup>
+          </VimeSubmenu>
+        </VimeSettings>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {9-11,26,36} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeSettings>
+        <VimeSubmenu label="Playback Rate">
+          <VimeMenuRadioGroup value="1">
+            <VimeMenuRadio label="0.5" value="0.5" />
+            <VimeMenuRadio label="Normal" value="1" />
+            <VimeMenuRadio label="2" value="2" />
+          </VimeMenuRadioGroup>
+        </VimeSubmenu>
+      </VimeSettings>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import {
+    VimePlayer,
+    VimeUi,
+    VimeSettings,
+    VimeSubmenu,
+    VimeMenuRadioGroup,
+    VimeMenuRadio,
+  } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeSettings,
+      VimeSubmenu,
+      VimeMenuRadioGroup,
+      VimeMenuRadio,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {8-10} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-settings>
+      <vime-submenu label="Playback Rate">
+        <vime-menu-radio-group value="1">
+          <vime-menu-radio label="0.5" value="0.5" />
+          <vime-menu-radio label="Normal" value="1" />
+          <vime-menu-radio label="2" value="2" />
+        </vime-menu-radio-group>
+      </vime-submenu>
+    </vime-settings>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

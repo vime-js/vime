@@ -3,7 +3,37 @@
 This component is a shorthand way to setup the entire default vime user interface, such as controls,
 settings, captions and so on.
 
-## Example
+## Visuals
+
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--audio.png"
+  alt="Vime default audio player"
+/>
+
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--desktop.png"
+  alt="Vime default desktop video player"
+/>
+
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--mobile.png"
+  alt="Vime default desktop mobile player"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {3} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-default-ui></vime-default-ui>
+</vime-player>
+```
+
+### Html
 
 ```html {3}
 <vime-player>
@@ -12,7 +42,43 @@ settings, captions and so on.
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### React
+
+```tsx {2,8}
+import React from 'react';
+import { VimePlayer, VimeDefaultUi } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeDefaultUi />
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {4,9,14} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeDefaultUi />
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeDefaultUi } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeDefaultUi,
+    },
+  };
+</script>
+```
 
 ## Dependencies
 

@@ -3,18 +3,78 @@
 A darkened overlay or gradient that covers the current video to enable controls placed on it to be
 more visible.
 
-## Example
+<!-- Auto Generated Below -->
 
-```html {4}
+## Usage
+
+### Angular
+
+```html {5} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
+    <!-- ... -->
     <vime-scrim></vime-scrim>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### Html
+
+```html {5}
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-scrim></vime-scrim>
+  </vime-ui>
+</vime-player>
+```
+
+### React
+
+```tsx {2,10}
+import React from 'react';
+import { VimePlayer, VimeUi, VimeScrim } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeScrim />
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {6,12,18} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeScrim />
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeScrim } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeScrim,
+    },
+  };
+</script>
+```
 
 ## Properties
 

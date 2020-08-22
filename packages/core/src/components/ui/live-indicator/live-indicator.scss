@@ -8,6 +8,7 @@ vime-live-indicator {
   font-size: 13px;
   font-weight: bold;
   letter-spacing: 0.6px;
+  color: var(--control-color);
 
   &.hidden {
     display: none;

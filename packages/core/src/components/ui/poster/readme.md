@@ -3,18 +3,85 @@
 Loads the poster set in the player prop `currentPoster` and displays it. The poster will automatically
 dissapear once playback starts.
 
-## Example
+## Visual
 
-```html {4}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/poster/poster.png"
+  alt="Vime poster component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {5} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
+    <!-- ... -->
     <vime-poster></vime-poster>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### Html
+
+```html {5}
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-poster></vime-poster>
+  </vime-ui>
+</vime-player>
+```
+
+### React
+
+```tsx {2,10}
+import React from 'react';
+import { VimePlayer, VimeUi, VimePoster } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimePoster />
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {6,12,18} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimePoster />
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimePoster } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimePoster,
+    },
+  };
+</script>
+```
 
 ## Properties
 

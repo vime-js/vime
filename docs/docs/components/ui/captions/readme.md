@@ -4,6 +4,9 @@ sidebar_label: Captions
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Renders and displays VTT cues by hooking into the `textTracks` player property. This is a simple
 implementation that can only handle rendering one text track, and one cue for the given track at a
 time (even if many are active). The active track can be changed by setting the mode of any track
@@ -13,18 +16,105 @@ Be aware that after you set the text track mode to `showing`, the component will
 it to hidden to avoid double captions. This also means that this component is **not recommended**
 to be used in combination with the native HTML5 player controls.
 
-## Example
+## Visual
 
-```html {4}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/captions/captions.png"
+  alt="Vime captions component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {5}
 <vime-player>
   <!-- ... -->
   <vime-ui>
+    <!-- ... -->
     <vime-captions></vime-captions>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,10}
+import React from 'react';
+import { VimePlayer, VimeUi, VimeCaptions } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeCaptions />
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {6,12,18} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeCaptions />
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeCaptions } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeCaptions,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {5} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-captions></vime-captions>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

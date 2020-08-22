@@ -4,20 +4,103 @@ sidebar_label: Icons
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Loads an SVG sprite and inserts it into the document.
 
-## Example
+<!-- Auto Generated Below -->
 
-```html {4}
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {5}
 <vime-player>
   <!-- ... -->
   <vime-ui>
+    <!-- ... -->
     <vime-icons href="/icons/sprite.svg"></vime-icons>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,10}
+import React from "react";
+import { VimePlayer, VimeUi, VimeIcons } from "@vime/react";
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeIcons href="/icons/sprite.svg">
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {6,12,18} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeIcons href="/icons/sprite.svg">
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeIcons } from "@vime/vue";
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeIcons,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {5} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-icons href="/icons/sprite.svg"></vime-icons>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

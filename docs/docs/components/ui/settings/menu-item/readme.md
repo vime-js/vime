@@ -4,14 +4,41 @@ sidebar_label: MenuItem
 slug: api
 ---
 
-A multi-purpose interactable element inside a menu. The behaviour and style of the item depends on
-the props set. If the `menu` prop is set, the item behaves as a navigational control and displays
-arrows to indicate whether clicking the control will navigate forwards/backwards. If the `checked`
-prop is set, the item behaves as a radio button and displays a checkmark icon to indicate whether it
-is checked or not. By default, it only contains a label and optional hint/badge text that is
-displayed on the right-hand side of the item.
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
-## Example
+A multi-purpose interactable element inside a menu. The behaviour and style of the item depends on
+the props set.
+
+- **Default:** By default, the menu item only contains a label and optional hint/badge text that is
+  displayed on the right-hand side of the item.
+- **Navigation:** If the `menu` prop is set, the item behaves as a navigational control and displays
+  arrows to indicate whether clicking the control will navigate forwards/backwards.
+- **Radio:** If the `checked` prop is set, the item behaves as a radio button and displays a
+  checkmark icon to indicate whether it is checked or not.
+
+## Visual
+
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu-item/menu-item.png"
+  alt="Vime settings menu item component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
 
 ```html {6}
 <vime-player>
@@ -19,13 +46,85 @@ displayed on the right-hand side of the item.
   <vime-ui>
     <!-- ... -->
     <vime-settings>
-      <vime-menu-item label="Playback Quality" hint="720p"></vime-menu-item>
+      <vime-menu-item label="Playback Quality" hint="Auto"></vime-menu-item>
     </vime-settings>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,11}
+import React from 'react';
+import { VimePlayer, VimeUi, VimeSettings, VimeMenuItem } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeSettings>
+          <VimeMenuItem label="Playback Quality" hint="Auto" />
+        </VimeSettings>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {7,14,21} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeSettings>
+        <VimeMenuItem label="Playback Quality" hint="Auto" />
+      </VimeSettings>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeSettings, VimeMenuItem } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeSettings,
+      VimeMenuItem,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {6} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-settings>
+      <vime-menu-item label="Playback Quality" hint="Auto"></vime-menu-item>
+    </vime-settings>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

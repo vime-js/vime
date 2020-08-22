@@ -2,20 +2,92 @@
 
 Responsible for positioning and laying out individual/groups of controls.
 
-## Example
+## Visual
 
-```html {4-6}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/controls/controls.png"
+  alt="Vime controls component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {5-7} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
-    <vime-controls pin="bottomLeft" active-duration="3000" full-width>
+    <!-- ... -->
+    <vime-controls full-width active-duration="2750">
       <!-- ... -->
     </vime-controls>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### Html
+
+```html {5-7}
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-controls full-width active-duration="3200">
+      <!-- ... -->
+    </vime-controls>
+  </vime-ui>
+</vime-player>
+```
+
+### React
+
+```tsx {2,10-12}
+import React from 'react';
+import { VimePlayer, VimeUi, VimeControls } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeControls fullWidth activeDuration="3200">
+          {/* ... */}
+        </VimeControls>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {5-7,13,19} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <VimeControls fullWidth activeDuration="3200">
+        <!-- ... -->
+      </VimeControls>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeControls } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeControls,
+    },
+  };
+</script>
+```
 
 ## Properties
 

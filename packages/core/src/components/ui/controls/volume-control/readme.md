@@ -2,21 +2,106 @@
 
 A control for adjusting the volume of the player and toggling the muted state.
 
-## Example
+## Visual
 
-```html {6}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/volume-control/volume-control.png"
+  alt="Vime volume control component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {7} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
     <vime-controls>
+      <!-- ... -->
       <vime-volume-control></vime-volume-control>
     </vime-controls>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### Html
+
+```html {7}
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-controls>
+      <!-- ... -->
+      <vime-volume-control></vime-volume-control>
+    </vime-controls>
+  </vime-ui>
+</vime-player>
+```
+
+### React
+
+```tsx {6,16}
+import React from 'react';
+import {
+  VimePlayer,
+  VimeUi,
+  VimeControls,
+  VimeVolumeControl,
+} from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeControls>
+          <VimeVolumeControl />
+        </VimeControls>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {7,18,26} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeControls>
+        <VimeVolumeControl />
+      </VimeControls>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import {
+    VimePlayer,
+    VimeUi,
+    VimeControls,
+    VimeVolumeControl,
+  } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeControls,
+      VimeVolumeControl,
+    },
+  };
+</script>
+```
 
 ## Properties
 

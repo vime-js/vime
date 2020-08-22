@@ -2,19 +2,57 @@
 
 Formats and displays the current time of playback.
 
-## Example
+## Visual
 
-```html {5}
-<vime-player>
-  <!-- ... -->
-  <vime-ui>
-    <!-- ... -->
-    <vime-current-time></vime-current-time>
-  </vime-ui>
-</vime-player>
-```
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/current-time/current-time.png"
+  alt="Vime current time component"
+/>
 
 <!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html title="example.html"
+<vime-current-time />
+```
+
+### Html
+
+```html
+<vime-current-time />
+```
+
+### React
+
+```tsx {2,5}
+import React from 'react';
+import { VimeCurrentTime } from '@vime/react';
+
+function Example() {
+  return render(<VimeCurrentTime />);
+}
+```
+
+### Vue
+
+```html {2,6,10} title="example.vue"
+<template>
+  <VimeCurrentTime />
+</template>
+
+<script>
+  import { VimeCurrentTime } from '@vime/vue';
+
+  export default {
+    components: {
+      VimeCurrentTime,
+    },
+  };
+</script>
+```
 
 ## Properties
 

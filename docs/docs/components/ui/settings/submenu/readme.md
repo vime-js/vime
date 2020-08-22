@@ -4,39 +4,127 @@ sidebar_label: Submenu
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 A menu that is to be nested inside another menu. A submenu is closed by default and it provides a
 menu item that will open/close it. It's main purpose is to organize a menu by grouping related
 sections/options together that can be navigated to by the user.
 
-## Example
+## Visual
 
-```html {6-12,14-20}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/submenu/submenu.png"
+  alt="Vime submenu component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {6-8}
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
     <vime-settings>
-      <vime-submenu label="Playback Rate" hint="Normal">
-        <vime-menu-radio-group value="1">
-          <vime-menu-radio label="0.5" value="0.5" />
-          <vime-menu-radio label="Normal" value="1" />
-          <vime-menu-radio label="2" value="2" />
-        </vime-menu-radio-group>
-      </vime-submenu>
-
-      <vime-submenu label="Playback Quality" hint="720p">
-        <vime-menu-radio-group value="720p">
-          <vime-menu-radio label="1080p" value="1080p" />
-          <vime-menu-radio label="720p" value="720p" />
-          <vime-menu-radio label="480p" value="480p" />
-        </vime-menu-radio-group>
+      <vime-submenu label="Title">
+        <!-- ... -->
       </vime-submenu>
     </vime-settings>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,11}
+import React from 'react';
+import { VimePlayer, VimeUi, VimeSettings, VimeSubmenu } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeSettings>
+          <VimeSubmenu label="Title">{/* ... */}</VimeSubmenu>
+        </VimeSettings>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {7-9,16,23} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeSettings>
+        <VimeSubmenu label="Title">
+          <!-- ... -->
+        </VimeSubmenu>
+      </VimeSettings>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeSettings, VimeSubmenu } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeSettings,
+      VimeSubmenu,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {6-8} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-settings>
+      <vime-submenu label="Title">
+        <!-- ... -->
+      </vime-submenu>
+    </vime-settings>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

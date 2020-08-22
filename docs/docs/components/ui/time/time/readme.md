@@ -4,21 +4,82 @@ sidebar_label: Time
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Formats and displays a length of time provided in seconds.
 
-## Example
+## Visual
 
-```html {5}
-<vime-player>
-  <!-- ... -->
-  <vime-ui>
-    <!-- ... -->
-    <vime-time label="Current time" seconds="120"></vime-time>
-  </vime-ui>
-</vime-player>
-```
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/time/time.png"
+  alt="Vime time component"
+/>
 
 <!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html
+<vime-time label="Time" seconds="120" />
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,5}
+import React from 'react';
+import { VimeTime } from '@vime/react';
+
+function Example() {
+  return render(<VimeTime label="Time" seconds={120} />);
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {2,6,10} title="example.vue"
+<template>
+  <VimeTime label="Time" seconds="120" />
+</template>
+
+<script>
+  import { VimeTime } from '@vime/vue';
+
+  export default {
+    components: {
+      VimeTime,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html title="example.html"
+<vime-time label="Time" seconds="120" />
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

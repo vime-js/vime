@@ -4,23 +4,104 @@ sidebar_label: Audio
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Enables loading, playing and controlling audio via the HTML5 [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) element.
 
 > You don't interact with this component for passing player properties, controlling playback, listening to player events and so on, that is all done through the `vime-player` component.
 
-## Example
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
 
 ```html {2-5}
-<vime-player controls autoplay muted>
+<vime-player controls>
   <vime-audio>
     <source data-src="/media/audio.mp3" type="audio/mp3" />
-    <!-- ... -->
+    <!-- <source> and <track> elements are placed here. -->
   </vime-audio>
   <!-- ... -->
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,7-10}
+import React from 'react';
+import { VimePlayer, VimeAudio } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer controls>
+      <VimeAudio>
+        <source data-src="/media/audio.mp3" type="audio/mp3" />
+        {/* <source> and <track> elements are placed here. */}
+      </VimeAudio>
+      {/* ... */}
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {3-6,12,17} title="example.vue"
+<template>
+  <VimePlayer controls>
+    <VimeAudio>
+      <source data-src="/media/audio.mp3" type="audio/mp3" />
+      <!-- <source> and <track> elements are placed here. -->
+    </VimeAudio>
+    <!-- ... -->
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeAudio } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeAudio,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {2-5} title="example.html"
+<vime-player controls>
+  <vime-audio>
+    <source data-src="/media/audio.mp3" type="audio/mp3" />
+    <!-- <source> and <track> elements are placed here. -->
+  </vime-audio>
+  <!-- ... -->
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

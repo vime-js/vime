@@ -2,19 +2,57 @@
 
 Formats and displays the duration of the current media.
 
-## Example
+## Visual
 
-```html {5}
-<vime-player>
-  <!-- ... -->
-  <vime-ui>
-    <!-- ... -->
-    <vime-end-time></vime-end-time>
-  </vime-ui>
-</vime-player>
-```
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/end-time/end-time.png"
+  alt="Vime end time component"
+/>
 
 <!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html title="example.html"
+<vime-end-time />
+```
+
+### Html
+
+```html
+<vime-end-time />
+```
+
+### React
+
+```tsx {2,5}
+import React from 'react';
+import { VimeEndTime } from '@vime/react';
+
+function Example() {
+  return render(<VimeEndTime />);
+}
+```
+
+### Vue
+
+```html {2,6,10} title="example.vue"
+<template>
+  <VimeEndTime />
+</template>
+
+<script>
+  import { VimeEndTime } from '@vime/vue';
+
+  export default {
+    components: {
+      VimeEndTime,
+    },
+  };
+</script>
+```
 
 ## Properties
 

@@ -6,19 +6,71 @@ The only important role this component really has is, avoiding overlapping custo
 native iOS media player UI. Therefore, custom UI is only displayed on iOS if the `playsinline` prop
 is `true`, and the player is not in fullscreen mode.
 
-## Example
+<!-- Auto Generated Below -->
 
-```html {3-6}
+## Usage
+
+### Angular
+
+```html {3-5} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
-    <vime-poster />
     <!-- ... -->
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### Html
+
+```html {3-5}
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+  </vime-ui>
+</vime-player>
+```
+
+### React
+
+```tsx {2,8}
+import React from 'react';
+import { VimePlayer, VimeUi } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>{/* ... */}</VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {4-6,11,16} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+    },
+  };
+</script>
+```
 
 ## Dependencies
 

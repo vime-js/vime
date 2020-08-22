@@ -1,21 +1,87 @@
 # vime-default-controls
 
 Default set of controls for when you're in a hurry. The controls displayed depend on whether
-the media is audio/video/live, and whether the device is mobile/desktop.
+the media is audio/video/live, and whether the device is mobile/desktop. See
+[`vime-default-ui`](../../default-ui/readme.md) for visuals.
 
-## Example
+<!-- Auto Generated Below -->
 
-```html {5}
+## Usage
+
+### Angular
+
+```html {5-8} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
-    <vime-default-controls active-duration="3200"></vime-default-controls>
+    <vime-default-controls
+      full-width
+      active-duration="2750"
+    ></vime-default-controls>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### Html
+
+```html {5-8}
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-default-controls
+      full-width
+      active-duration="2750"
+    ></vime-default-controls>
+  </vime-ui>
+</vime-player>
+```
+
+### React
+
+```tsx {2,10}
+import React from 'react';
+import { VimePlayer, VimeUi, VimeDefaultControls } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeDefaultControls fullWidth activeDuration="3200" />
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {6,12,18} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeDefaultControls activeDuration="3200" />
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeDefaultControls } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeDefaultControls,
+    },
+  };
+</script>
+```
 
 ## Properties
 

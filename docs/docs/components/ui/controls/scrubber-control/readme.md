@@ -4,27 +4,135 @@ sidebar_label: ScrubberControl
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 A control that displays the progression of playback and the amount buffered on a horizontal timeline.
 The timeline is a slider (`input[type="range"]`) that can be used to change the current playback time.
 
 If the player is buffering, the scrubber will display an animated candystripe in the porition of the
 timeline that has not buffered.
 
-## Example
+## Visual
 
-```html {6}
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/scrubber-control/scrubber-control.png"
+  alt="Vime scrubber control component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {7}
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
     <vime-controls>
+      <!-- ... -->
       <vime-scrubber-control></vime-scrubber-control>
     </vime-controls>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {6,16}
+import React from 'react';
+import {
+  VimePlayer,
+  VimeUi,
+  VimeControls,
+  VimeScrubberControl,
+} from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeControls>
+          <VimeScrubberControl />
+        </VimeControls>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {7,18,26} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeControls>
+        <VimeScrubberControl />
+      </VimeControls>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import {
+    VimePlayer,
+    VimeUi,
+    VimeControls,
+    VimeScrubberControl,
+  } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeControls,
+      VimeScrubberControl,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {7} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-controls>
+      <!-- ... -->
+      <vime-scrubber-control></vime-scrubber-control>
+    </vime-controls>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

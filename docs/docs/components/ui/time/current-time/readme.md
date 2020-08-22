@@ -4,21 +4,82 @@ sidebar_label: CurrentTime
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Formats and displays the current time of playback.
 
-## Example
+## Visual
 
-```html {5}
-<vime-player>
-  <!-- ... -->
-  <vime-ui>
-    <!-- ... -->
-    <vime-current-time></vime-current-time>
-  </vime-ui>
-</vime-player>
-```
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/current-time/current-time.png"
+  alt="Vime current time component"
+/>
 
 <!-- Auto Generated Below -->
+
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html
+<vime-current-time />
+```
+
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,5}
+import React from 'react';
+import { VimeCurrentTime } from '@vime/react';
+
+function Example() {
+  return render(<VimeCurrentTime />);
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {2,6,10} title="example.vue"
+<template>
+  <VimeCurrentTime />
+</template>
+
+<script>
+  import { VimeCurrentTime } from '@vime/vue';
+
+  export default {
+    components: {
+      VimeCurrentTime,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html title="example.html"
+<vime-current-time />
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

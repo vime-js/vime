@@ -2,19 +2,57 @@
 
 Formats and displays the progression of playback as `currentTime (separator) endTime`.
 
-## Example
+## Visual
 
-```html {5}
-<vime-player>
-  <!-- ... -->
-  <vime-ui>
-    <!-- ... -->
-    <vime-time-progress separator="/"></vime-time-progress>
-  </vime-ui>
-</vime-player>
-```
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/time-progress/time-progress.png"
+  alt="Vime time progress component"
+/>
 
 <!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html title="example.html"
+<vime-time-progress separator="/" />
+```
+
+### Html
+
+```html
+<vime-time-progress separator="/" />
+```
+
+### React
+
+```tsx {2,5}
+import React from 'react';
+import { VimeTimeProgress } from '@vime/react';
+
+function Example() {
+  return render(<VimeTimeProgress separator="/" />);
+}
+```
+
+### Vue
+
+```html {2,6,10} title="example.vue"
+<template>
+  <VimeTimeProgress separator="/" />
+</template>
+
+<script>
+  import { VimeTimeProgress } from '@vime/vue';
+
+  export default {
+    components: {
+      VimeTimeProgress,
+    },
+  };
+</script>
+```
 
 ## Properties
 

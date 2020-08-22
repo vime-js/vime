@@ -4,18 +4,123 @@ This component is responsible for containing and managing menu items and submenu
 friendly by ensuring the correct ARIA properties are set, and enabling keyboard navigation when it
 is focused.
 
-It is rare that you will interact with this component directly, see the `vime-settings` and
-`vime-submenu` components for building out a complete settings menu.
+You can use this component if you'd like to build out a custom settings menu. If you're looking
+to only customize the content of the settings see [`vime-settings`](../settings/readme.md), and if
+you want an easier starting point see [`vime-default-settings`](../default-settings/readme.md).
 
-## Example
+## Visual
 
-```html
-<vime-menu identifer="menu" controller="menu-controller" active>
-  <!-- ... -->
-</vime-menu>
-```
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu/menu.png"
+  alt="Vime settings menu component"
+/>
 
 <!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {5-11} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-menu
+      identifer="menu-id"
+      controller="menu-controller-id"
+      [active]="isMenuActive"
+    >
+      <!-- ... -->
+    </vime-menu>
+  </vime-ui>
+</vime-player>
+```
+
+```ts title="example.ts"
+class Example {
+  isMenuActive = false;
+
+  // ...
+}
+```
+
+### Html
+
+```html {5-7}
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-menu identifer="menu-id" controller="menu-controller-id" active>
+      <!-- ... -->
+    </vime-menu>
+  </vime-ui>
+</vime-player>
+```
+
+### React
+
+```tsx {2,12-18}
+import React, { useState } from "react";
+import { VimePlayer, VimeUi, VimeMenu } from "@vime/react";
+
+function Example() {
+  const [isMenuActive, setIsMenuActive] = useState(false);
+
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeMenu
+          identifer="menu-id"
+          controller="menu-controller-id"
+          active={isMenuActive}
+        >
+          <!-- ... -->
+        </VimeMenu>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {6-12,18,24} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeMenu
+        identifer="menu-id"
+        controller="menu-controller-id"
+        :active="isMenuActive"
+      >
+        <!-- ... -->
+      </VimeMenu>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeMenu } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeMenu,
+    },
+
+    data: {
+      isMenuActive: false,
+    },
+  };
+</script>
+```
 
 ## Properties
 

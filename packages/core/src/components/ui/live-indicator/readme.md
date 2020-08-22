@@ -2,7 +2,33 @@
 
 This can be used to indicate to the user that the current media is being streamed live.
 
-## Example
+## Visual
+
+<img
+  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/live-indicator/live-indicator.png"
+  alt="Vime live indicator component"
+/>
+
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {7} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-controls>
+      <!-- ... -->
+      <vime-live-indicator></vime-live-indicator>
+    </vime-controls>
+  </vime-ui>
+</vime-player>
+```
+
+### Html
 
 ```html {7}
 <vime-player>
@@ -17,7 +43,65 @@ This can be used to indicate to the user that the current media is being streame
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+### React
+
+```tsx {6,16}
+import React from 'react';
+import {
+  VimePlayer,
+  VimeUi,
+  VimeControls,
+  VimeLiveIndicator,
+} from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeControls>
+          <VimeLiveIndicator />
+        </VimeControls>
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {7,18,26} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeControls>
+        <VimeLiveIndicator />
+      </VimeControls>
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import {
+    VimePlayer,
+    VimeUi,
+    VimeControls,
+    VimeLiveIndicator,
+  } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeControls,
+      VimeLiveIndicator,
+    },
+  };
+</script>
+```
 
 ## CSS Custom Properties
 

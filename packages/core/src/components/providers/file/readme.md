@@ -1,21 +1,10 @@
 # vime-file
 
-Enables loading, playing and controlling media files via the HTML5 [MediaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement) API.
+Enables loading, playing and controlling media files via the HTML5 [MediaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement) API. This is used internally by the [`vime-audio`](../audio/readme.md) and
+[`vime-video`](../video/readme.md) components, which are the preferred components to use for
+loading file-based media.
 
 > You don't interact with this component for passing player properties, controlling playback, listening to player events and so on, that is all done through the `vime-player` component.
-
-## Example
-
-```html {2-6}
-<vime-player controls autoplay muted>
-  <vime-file view-type="video" poster="/media/poster.png">
-    <source data-src="/media/video.mp4" type="video/mp4" />
-    <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
-    <track kind="captions" src="/media/caps/en.vtt" srclang="en" />
-  </vime-file>
-  <!-- ... -->
-</vime-player>
-```
 
 <!-- Auto Generated Below -->
 

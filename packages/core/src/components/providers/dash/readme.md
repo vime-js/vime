@@ -5,10 +5,39 @@ based media. It uses [`dashjs`](https://github.com/Dash-Industry-Forum/dash.js) 
 
 > You don't interact with this component for passing player properties, controlling playback, listening to player events and so on, that is all done through the `vime-player` component.
 
-## Example
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {2-7} title="example.html"
+<vime-player controls>
+  <vime-dash
+    [config]="dashConfig"
+    src="/media/manifest.mpd"
+    version="latest"
+    poster="/media/poster.png"
+  ></vime-dash>
+  <!-- ... -->
+</vime-player>
+```
+
+```ts title="example.ts"
+class Example {
+  /**
+   * @see https://github.com/Dash-Industry-Forum/dash.js.
+   */
+  dashConfig = {
+    // ...
+  };
+}
+```
+
+### Html
 
 ```html {2-6}
-<vime-player controls autoplay muted>
+<vime-player controls>
   <vime-dash
     src="/media/manifest.mpd"
     version="latest"
@@ -16,16 +45,71 @@ based media. It uses [`dashjs`](https://github.com/Dash-Industry-Forum/dash.js) 
   ></vime-dash>
   <!-- ... -->
 </vime-player>
+```
+
+### React
+
+```tsx {2,14-19}
+import React from 'react';
+import { VimePlayer, VimeDash } from '@vime/react';
+
+function Example() {
+  /**
+   * @see https://github.com/Dash-Industry-Forum/dash.js.
+   */
+  const dashConfig = {
+    // ...
+  };
+
+  return render(
+    <VimePlayer controls>
+      <VimeDash
+        src="/media/manifest.mpd"
+        version="latest"
+        config={dashConfig}
+        poster="/media/poster.png"
+      />
+      {/* ... */}
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {3-8,14,19} title="example.vue"
+<template>
+  <VimePlayer controls>
+    <VimeDash
+      src="/media/manifest.mpd"
+      :config="dashConfig"
+      version="latest"
+      poster="/media/poster.png"
+    />
+    <!-- ... -->
+  </VimePlayer>
+</template>
 
 <script>
-  const dash = document.querySelector("vime-dash");
-  dash.config = {
-    // ...
+  import { VimePlayer, VimeDash } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeDash,
+    },
+
+    data: {
+      /**
+       * @see https://github.com/Dash-Industry-Forum/dash.js.
+       */
+      dashConfig: {
+        // ...
+      },
+    },
   };
 </script>
 ```
-
-<!-- Auto Generated Below -->
 
 ## Properties
 

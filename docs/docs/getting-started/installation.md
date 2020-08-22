@@ -3,7 +3,7 @@ title: Installation
 sidebar_label: Installation
 ---
 
-Explain.
+Coming soon.
 
 ## CDN
 

@@ -4,22 +4,111 @@ sidebar_label: DefaultControls
 slug: api
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 Default set of controls for when you're in a hurry. The controls displayed depend on whether
-the media is audio/video/live, and whether the device is mobile/desktop.
+the media is audio/video/live, and whether the device is mobile/desktop. See
+[`vime-default-ui`](../../default-ui/readme.md) for visuals.
 
-## Example
+<!-- Auto Generated Below -->
 
-```html {5}
+## Usage
+
+<Tabs
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Angular', value: 'angular' }
+]}>
+
+<TabItem value="html">
+
+```html {5-8}
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
-    <vime-default-controls active-duration="3200"></vime-default-controls>
+    <vime-default-controls
+      full-width
+      active-duration="2750"
+    ></vime-default-controls>
   </vime-ui>
 </vime-player>
 ```
 
-<!-- Auto Generated Below -->
+</TabItem>
+
+<TabItem value="react">
+
+```tsx {2,10}
+import React from 'react';
+import { VimePlayer, VimeUi, VimeDefaultControls } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer>
+      {/* ... */}
+      <VimeUi>
+        {/* ... */}
+        <VimeDefaultControls fullWidth activeDuration="3200" />
+      </VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+</TabItem>
+
+<TabItem value="vue">
+
+```html {6,12,18} title="example.vue"
+<template>
+  <VimePlayer>
+    <!-- ... -->
+    <VimeUi>
+      <!-- ... -->
+      <VimeDefaultControls activeDuration="3200" />
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi, VimeDefaultControls } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+      VimeDefaultControls,
+    },
+  };
+</script>
+```
+
+</TabItem>
+
+<TabItem value="angular">
+
+```html {5-8} title="example.html"
+<vime-player>
+  <!-- ... -->
+  <vime-ui>
+    <!-- ... -->
+    <vime-default-controls
+      full-width
+      active-duration="2750"
+    ></vime-default-controls>
+  </vime-ui>
+</vime-player>
+```
+
+</TabItem>
+    
+</Tabs>
 
 ## Properties
 

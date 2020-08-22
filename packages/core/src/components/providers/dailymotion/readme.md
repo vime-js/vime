@@ -4,15 +4,6 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
 
 > You don't interact with this component for passing player properties, controlling playback, listening to player events and so on, that is all done through the `vime-player` component.
 
-## Example
-
-```html {2}
-<vime-player controls autoplay muted>
-  <vime-dailymotion video-id="k3b11PemcuTrmWvYe0q"></vime-dailymotion>
-  <!-- ... -->
-</vime-player>
-```
-
 ## Quirks
 
 - You cannot change the `playbackRate` prop because there is no API for it.
@@ -21,6 +12,67 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
   is `true`.
 
 <!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {2-5} title="example.html"
+<vime-player controls>
+  <vime-dailymotion
+    color="fff"
+    video-id="k3b11PemcuTrmWvYe0q"
+  ></vime-dailymotion>
+  <!-- ... -->
+</vime-player>
+```
+
+### Html
+
+```html {2}
+<vime-player controls>
+  <vime-dailymotion video-id="k3b11PemcuTrmWvYe0q"></vime-dailymotion>
+  <!-- ... -->
+</vime-player>
+```
+
+### React
+
+```tsx {2,7}
+import React from 'react';
+import { VimePlayer, VimeDailymotion } from '@vime/react';
+
+function Example() {
+  return render(
+    <VimePlayer controls>
+      <VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />
+      {/* ... */}
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {3,9,14} title="example.vue"
+<template>
+  <VimePlayer controls>
+    <VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />
+    <!-- ... -->
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeDailymotion } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeDailymotion,
+    },
+  };
+</script>
+```
 
 ## Properties
 

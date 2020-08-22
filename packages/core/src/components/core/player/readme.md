@@ -1,47 +1,203 @@
 # vime-player
 
 The root component that encapsulates all providers, plugins and UI components. This is the primary
-component developers will interact with to set properties on the player, listen for events and control
-it.
+component you will interact with to set properties on the player, listen for events and call
+methods.
 
-## Example
+<!-- Auto Generated Below -->
 
-```html
-<vime-player controls autoplay muted>
-  <vime-video>
-    <source data-src="/media/video.mp4" type="video/mp4" />
-    <track
-      default
-      kind="subtitles"
-      src="/media/subs/en.vtt"
-      srclang="en"
-      label="English"
-    />
-    <track
-      kind="captions"
-      src="/media/caps/en.vtt"
-      srclang="en"
-      label="English (CC)"
-    />
-    <!-- ... -->
-  </vime-video>
+## Usage
+
+### Angular
+
+```html title="example.html"
+<vime-player
+  #player
+  autoplay
+  muted
+  [currentTime]="currentTime"
+  (vCurrentTimeChange)="onTimeUpdate($event)"
+  (vFullscreenChange)="onFullscreenChange($event)"
+>
+  <!-- Provider component is placed here. -->
 
   <vime-ui>
-    <vime-poster></vime-poster>
-    <vime-spinner></vime-spinner>
-    <!-- ... -->
+    <!-- UI components are placed here. -->
+  </vime-ui>
+</vime-player>
+```
+
+```ts title="example.ts"
+import { ViewChild } from '@angular/core';
+
+class Example {
+  @ViewChild('player') player!: HTMLVimePlayerElement;
+
+  currentTime = 0;
+
+  // Example function to showcase updating property.
+  seekForward() {
+    this.currentTime += 5;
+  }
+
+  // Example function to showcase calling player method.
+  enterFullscreen() {
+    this.player.enterFullscreen();
+  }
+
+  onTimeUpdate(event: CustomEvent<number>) {
+    this.currentTime = event.detail;
+  }
+
+  onFullscreenChange(event: CustomEvent<boolean>) {
+    const isFullscreen = event.detail;
+    // ...
+  }
+}
+```
+
+### Html
+
+```html
+<vime-player controls autoplay muted current-time="30">
+  <!-- Provider component is placed here. -->
+
+  <vime-ui>
+    <!-- UI components are placed here. -->
   </vime-ui>
 </vime-player>
 
 <script>
-  const player = document.querySelector("vime-player");
-  player.addEventListener("vPlay", () => {
-    console.log("PLAY");
+  const player = document.querySelector('vime-player');
+
+  // Listening to an event.
+  player.addEventListener('vCurrentTimeChange', (event) => {
+    const currentTime = event.detail;
+    // ...
   });
+
+  // Example function to showcase updating property.
+  const seekForward = () => {
+    player.currentTime += 5;
+  };
+
+  // Example function to showcase calling player method.
+  const enterFullscreen = () => {
+    player.enterFullscreen();
+  };
 </script>
 ```
 
-<!-- Auto Generated Below -->
+### React
+
+```tsx {2,28-40}
+import React, { useState } from 'react';
+import { VimePlayer, VimeUi } from '@vime/react';
+
+function Example() {
+  const player = useRef<HTMLVimePlayerElement | null>(null);
+  const [currentTime, setCurrentTime] = useState(0);
+
+  // Example function to showcase updating property.
+  const seekForward = () => {
+    setCurrentTime(currentTime + 5);
+  };
+
+  // Example function to showcase calling player method.
+  const enterFullscreen = () => {
+    player.enterFulllscreen();
+  };
+
+  const onTimeUpdate = (event: CustomEvent<number>) => {
+    setCurrentTime(event.detail);
+  };
+
+  const onFullscreenChange = (event: CustomEvent<boolean>) => {
+    const isFullscreen = event.detail;
+    // ...
+  };
+
+  return render(
+    <VimePlayer
+      controls
+      autoplay
+      muted
+      ref={player}
+      currentTime={currentTime}
+      onVCurrentTimeChange={onTimeUpdate}
+      onVFullscreenChange={onFullscreenChange}
+    >
+      {/* Provider component is placed here. */}
+
+      <VimeUi>{/* UI components are placed here. */}</VimeUi>
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {2-16,20,24-25} title="example.vue"
+<template>
+  <VimePlayer
+    controls
+    autoplay
+    muted
+    ref="player"
+    :currentTime="currentTime"
+    @vCurrentTimeChange="onTimeUpdate"
+    @vFullscreenChange="onFullscreenChange"
+  >
+    <!-- Provider component is placed here. -->
+
+    <VimeUi>
+      <!-- UI components are placed here. -->
+    </VimeUi>
+  </VimePlayer>
+</template>
+
+<script>
+  import { VimePlayer, VimeUi } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeUi,
+    },
+
+    computed: {
+      player() {
+        return this.$refs.player;
+      },
+    },
+
+    data: {
+      currentTime: 0,
+    },
+
+    methods: {
+      // Example function to showcase updating property.
+      seekForward() {
+        this.currentTime = this.currentTime + 5;
+      },
+
+      // Example function to showcase calling player method.
+      enterFullscreen() {
+        this.player.enterFulllscreen();
+      },
+
+      onTimeUpdate(time: number) {
+        this.currentTime = time;
+      },
+
+      onFullscreenChange(active: boolean) {
+        const isFullscreen = active;
+        // ...
+      },
+    },
+  };
+</script>
+```
 
 ## Properties
 

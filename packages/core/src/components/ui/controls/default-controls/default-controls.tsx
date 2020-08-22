@@ -57,7 +57,7 @@ export class DefaultControls {
       <vime-controls full-width>
         <vime-playback-control tooltip-direction="right" />
         <vime-volume-control />
-        <vime-current-time />
+        {!this.isLive && <vime-current-time />}
         {this.isLive && <vime-control-spacer />}
         {!this.isLive && <vime-scrubber-control /> }
         {this.isLive && <vime-live-indicator />}

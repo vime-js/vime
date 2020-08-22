@@ -4,16 +4,7 @@ sidebar_label: Faketube
 slug: api
 ---
 
-Fake media provider that is used for testing.
-
-## Example
-
-```html {2}
-<vime-player>
-  <vime-faketube></vime-faketube>
-  <!-- ... -->
-</vime-player>
-```
+It's not what you think &nbsp;😂&nbsp; ... fake media provider that is used for testing.
 
 <!-- Auto Generated Below -->
 

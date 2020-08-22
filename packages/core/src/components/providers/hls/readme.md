@@ -4,10 +4,38 @@ Enables loading, playing and controlling [HLS](https://en.wikipedia.org/wiki/HTT
 
 > You don't interact with this component for passing player properties, controlling playback, listening to player events and so on, that is all done through the `vime-player` component.
 
-## Example
+<!-- Auto Generated Below -->
+
+## Usage
+
+### Angular
+
+```html {2-6} title="example.html"
+<vime-player controls>
+  <vime-hls version="latest" [config]="hlsConfig" poster="/media/poster.png">
+    <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
+    <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
+    <!-- ... -->
+  </vime-hls>
+  <!-- ... -->
+</vime-player>
+```
+
+```ts title="example.ts"
+class Example {
+  /**
+   * @see https://hls-js.netlify.app/api-docs/file/src/config.ts.html.
+   */
+  hlsConfig = {
+    // ...
+  };
+}
+```
+
+### Html
 
 ```html {2-6}
-<vime-player controls autoplay muted>
+<vime-player controls>
   <vime-hls version="latest" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
     <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
@@ -15,16 +43,69 @@ Enables loading, playing and controlling [HLS](https://en.wikipedia.org/wiki/HTT
   </vime-hls>
   <!-- ... -->
 </vime-player>
+```
+
+### React
+
+```tsx {2,14-18}
+import React from 'react';
+import { VimePlayer, VimeHls } from '@vime/react';
+
+function Example() {
+  /**
+   * @see https://hls-js.netlify.app/api-docs/file/src/config.ts.html.
+   */
+  const hlsConfig = {
+    // ...
+  };
+
+  return render(
+    <VimePlayer controls>
+      <VimeHls version="latest" config={hlsConfig} poster="/media/poster.png">
+        <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
+        <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
+        {/* ... */}
+      </VimeHls>
+      {/* ... */}
+    </VimePlayer>
+  );
+}
+```
+
+### Vue
+
+```html {3-7,13,18} title="example.vue"
+<template>
+  <VimePlayer controls>
+    <VimeHls :config="hlsConfig" version="latest" poster="/media/poster.png">
+      <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
+      <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
+      <!-- ... -->
+    </VimeHls>
+    <!-- ... -->
+  </VimePlayer>
+</template>
 
 <script>
-  const hls = document.querySelector("vime-hls");
-  hls.config = {
-    // ...
+  import { VimePlayer, VimeHls } from '@vime/vue';
+
+  export default {
+    components: {
+      VimePlayer,
+      VimeHls,
+    },
+
+    data: {
+      /**
+       * @see https://hls-js.netlify.app/api-docs/file/src/config.ts.html.
+       */
+      hlsConfig: {
+        // ...
+      },
+    },
   };
 </script>
 ```
-
-<!-- Auto Generated Below -->
 
 ## Properties
 
