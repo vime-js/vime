@@ -1,8 +1,8 @@
 # @vime/angular-example
 
 This example was bootstrapped with [Angular CLI](https://cli.angular.io), and demonstrates how to
-load and use Vime with Angular via the `@vime/angular` package. The main files to look at
-are in the [`app`](./src/app) module directory.
+setup Vime with Angular via the `@vime/angular` package. See [`src/styles.css`](./src/styles.css)
+and the [`app`](./src/app) module directory.
 
 For the curious, [`@vime/media`](../../packages/media) is a private package that contains a collection
 of audio and video files, and are used here to help with demonstrating the player. You're free to
@@ -14,7 +14,12 @@ Install [pnpm](https://pnpm.js.org/en/installation) and then run the following c
 the example.
 
 ```bash
-$: pnpm install
+# This will take some time (~480MB), but you only have to do it once.
+$: git clone https://github.com/vime-js/vime
+
+$: cd vime/examples/angular
+
+$: npm run setup
 
 $: npm run serve
 ```

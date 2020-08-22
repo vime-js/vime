@@ -5,21 +5,20 @@
   <meta charset="UTF-8">
   <title>Vime Example</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Default theme. -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@latest/themes/default.css">
   
   <!-- Optional light theme (extends default). -->
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@latest/themes/light.css"> -->
   
   <!-- The library is lazy loaded so you have nothing to worry about, only what you use will be loaded. -->
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@vime/core@latest/dist/vime/vime.esm.js"></script>
+  <script defer type="module" src="https://cdn.jsdelivr.net/npm/@vime/core@latest/dist/vime/vime.esm.js"></script>
 </head>
 
 <body>
   <div id="container">
-    <vime-player
-      muted
-      playsinline
-    >
+    <vime-player muted playsinline>
       <vime-video cross-origin="true" poster="http://localhost:3335/poster.png">
         <source data-src="http://localhost:3335/720p.mp4" type="video/mp4" />
         <track default kind="subtitles" src="http://localhost:3335/subs/english.vtt" srclang="en" label="English" />
@@ -28,29 +27,10 @@
 
       <vime-default-ui></vime-default-ui>
     </vime-player>
-
-    <div id="buttons">
-      <button id="seek-backward">-5s</button>
-      <button id="seek-forward">+5s</button>
-    </div>
   </div>
 
   <script>
-    const player = document.querySelector('vime-player');
-    const seekBwdButton = document.querySelector('#seek-backward');
-    const seekFwdButton = document.querySelector('#seek-forward');
-
-    seekBwdButton.addEventListener('click', () => {
-      player.currentTime -= 5;
-    });
-    
-    seekFwdButton.addEventListener('click', () => {
-      player.currentTime += 5;
-    });
-   
-    player.addEventListener('vCurrentTimeChange', event => {
-      console.log('time:', event.detail);
-    });
+    window.player = document.querySelector('vime-player');
   </script>
 
   <style>
@@ -70,22 +50,6 @@
     #container {
       width: 100%;
       max-width: 960px;
-    }
-
-    #buttons {
-      display: flex;
-      width: 100%;
-      align-items: center;
-      justify-content: center;
-      margin-top: 16px;
-    }
-
-    #buttons > button {
-      margin-left: 8px;
-    }
-
-    #buttons > button:first-child {
-      margin-left: 0px;
     }
   </style>
 </body>

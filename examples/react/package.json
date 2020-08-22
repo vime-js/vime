@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@vime/core": "^1.0.0",
     "@vime/media": "^1.0.0",
     "@vime/react": "^1.0.0",
     "react": "^16.13.1",
@@ -14,7 +15,10 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "serve": "npm run serve:media & react-scripts start",
-    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet"
+    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet",
+    "setup": "npm run setup:install && npm run setup:build",
+    "setup:install": "pnpm install --filter @vime/core --filter @vime/react --filter @vime/react-example",
+    "setup:build": "pnpm run build --filter @vime/core && pnpm run build --filter @vime/react"
   },
   "eslintConfig": {
     "extends": "react-app"

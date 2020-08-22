@@ -66,7 +66,7 @@ import React, { useState } from 'react';
 import { VimePlayer, VimeUi } from '@vime/react';
 
 function Example() {
-  const player = useRef<HTMLVimePlayerElement | null>(null);
+  const player = useRef<HTMLVimePlayerElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
 
   // Example function to showcase updating property.
@@ -76,7 +76,7 @@ function Example() {
 
   // Example function to showcase calling player method.
   const enterFullscreen = () => {
-    player.enterFulllscreen();
+    player.current!.enterFulllscreen();
   };
 
   const onTimeUpdate = (event: CustomEvent<number>) => {
@@ -195,9 +195,10 @@ function Example() {
 
 ```ts title="example.ts"
 import { ViewChild } from '@angular/core';
+import { VimePlayer } from '@vime/angular';
 
 class Example {
-  @ViewChild('player') player!: HTMLVimePlayerElement;
+  @ViewChild('player') player!: VimePlayer;
 
   currentTime = 0;
 

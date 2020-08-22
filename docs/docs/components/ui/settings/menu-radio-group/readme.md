@@ -174,11 +174,13 @@ function Example() {
 ```
 
 ```ts title="example.ts"
+import { VimeMenuRadio } from '@vime/angular';
+
 class Example {
   currentValue = 1;
 
   onValueChange(event: Event) {
-    const radio = event.target as HTMLVimeMenuRadioElement;
+    const radio = event.target as VimeMenuRadio;
     this.currentValue = parseFloat(radio.value);
   }
 }

@@ -1,23 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { VimePlayer } from '@vime/angular';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'angular-example';
-  
-  currentTime = 0;
+  @ViewChild('player') player!: VimePlayer;
 
-  onTimeUpdate(event: CustomEvent<number>) {
-    this.currentTime = event.detail;
-  }
-
-  onSeekBackward() {
-    this.currentTime -= 5;
-  }
-
-  onSeekForward() {
-    this.currentTime += 5;
+  onPlaybackReady() {
+    // ...
   }
 }

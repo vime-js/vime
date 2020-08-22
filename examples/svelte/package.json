@@ -7,7 +7,10 @@
     "start": "sirv public",
     "validate": "svelte-check",
     "serve": "npm run serve:media & rollup -c -w",
-    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet"
+    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet",
+    "setup": "npm run setup:install && npm run setup:build",
+    "setup:install": "pnpm install --filter @vime/core --filter @vime/svelte-example",
+    "setup:build": "pnpm run build --filter @vime/core"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",

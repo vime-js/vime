@@ -1,9 +1,9 @@
 <div id="container">
   <vime-player 
+    #player 
     muted 
     playsinline
-    [currentTime]="currentTime"
-    (vCurrentTimeChange)="onTimeUpdate($event)"
+    (vPlaybackReady)="onPlaybackReady"
   >
     <vime-video cross-origin="true" poster="http://localhost:3335/poster.png">
       <source data-src="http://localhost:3335/720p.mp4" type="video/mp4" />
@@ -13,19 +13,9 @@
 
     <vime-default-ui></vime-default-ui>
   </vime-player>
-
-  <div id="buttons">
-    <button (click)="onSeekBackward()">-5s</button>
-    <button (click)="onSeekForward()">+5s</button>
-  </div>
 </div>
 
 <style>
-  @import "~@vime/core/themes/default.css";
-
-  /* Optional light theme (extends default). */
-  /* @import "~@vime/core/themes/light.css"; */
-
   :host {
     width: 100%;
     height: 100%;
@@ -37,22 +27,6 @@
   #container {
     width: 100%;
     max-width: 960px;
-  }
-
-  #buttons {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    margin-top: 16px;
-  }
-
-  #buttons > button {
-    margin-left: 8px;
-  }
-
-  #buttons > button:first-child {
-    margin-left: 0px;
   }
 </style>
 

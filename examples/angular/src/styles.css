@@ -1,3 +1,9 @@
+/* Default theme. */
+@import "~@vime/core/themes/default.css";
+
+/* Optional light theme (extends default). */
+/* @import "~@vime/core/themes/light.css"; */
+
 html,
 body {
   width: 100%;

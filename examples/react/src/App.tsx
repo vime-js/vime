@@ -1,51 +1,34 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import './App.css';
 import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/react';
+
+// Default theme.
 import '@vime/core/themes/default.css';
 
 // Optional light theme (extends default).
 // import '@vime/core/themes/light.css';
 
 function App() {
-  const [currentTime, setCurrentTime] = useState(0);
-  const [muted, setMuted] = useState(true);
+  const player = useRef<HTMLVimePlayerElement>(null);
 
-  const onTimeUpdate = (event: CustomEvent<number>) => {
-    setCurrentTime(event.detail);
-  }
-
-  const onMutedChange = (event: CustomEvent<boolean>) => {
-    setMuted(event.detail);
-  }
-
-  const onSeekBackward = () => {
-    setCurrentTime(currentTime - 5);
-  }
-
-  const onSeekForward = () => {
-    setCurrentTime(currentTime + 5);
-  }
+  const onPlaybackReady = () => {
+    // ...
+  };
 
   return (
     <div id="container">
       <VimePlayer 
-        playsinline
-        muted={muted}
-        currentTime={currentTime}
-        onVCurrentTimeChange={onTimeUpdate}
-        onVMutedChange={onMutedChange}
+        muted 
+        playsinline 
+        ref={player}
+        onVPlaybackReady={onPlaybackReady}
       >
-        <VimeVideo crossOrigin="true" poster="http://localhost:3335/poster.png">
+        <VimeVideo poster="http://localhost:3335/poster.png">
           <source data-src="http://localhost:3335/720p.mp4" type="video/mp4" />
         </VimeVideo>
 
         <VimeDefaultUi />
       </VimePlayer>
-
-      <div id="buttons">
-		    <button onClick={onSeekBackward}>-5s</button>
-    		<button onClick={onSeekForward}>+5s</button>
-      </div>
     </div>
   );
 }

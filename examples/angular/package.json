@@ -6,7 +6,10 @@
     "ng": "ng",
     "build": "ng build",
     "serve": "npm run serve:media & ng serve",
-    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet"
+    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet",
+    "setup": "npm run setup:install && npm run setup:build",
+    "setup:install": "pnpm install --filter @vime/core --filter @vime/angular --filter @vime/angular-example",
+    "setup:build": "pnpm run build --filter @vime/core && pnpm run build --filter @vime/angular"
   },
   "dependencies": {
     "@angular/animations": "~10.0.9",
@@ -17,6 +20,7 @@
     "@angular/platform-browser": "~10.0.9",
     "@angular/platform-browser-dynamic": "~10.0.9",
     "@angular/router": "~10.0.9",
+    "@vime/core": "^1.0.0",
     "@vime/angular": "^1.0.0",
     "@vime/media": "^1.0.0",
     "rxjs": "~6.5.5",

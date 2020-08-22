@@ -4,20 +4,15 @@
       <VimePlayer
         muted
         playsinline 
-        :currentTime="currentTime"
-        @vCurrentTimeChange="onTimeUpdate"
+        ref="player"
+        @vPlaybackReady="onPlaybackReady"
       >
-        <VimeVideo crossOrigin="true" poster="http://localhost:3335/poster.png">
+        <VimeVideo poster="http://localhost:3335/poster.png">
           <source data-src="http://localhost:3335/720p.mp4" type="video/mp4">
         </VimeVideo>
 
         <VimeDefaultUi />
       </VimePlayer>
-
-      <div id="buttons">
-		    <button @click="onSeekBackward">-5s</button>
-    		<button @click="onSeekForward">+5s</button>
-      </div>
     </div>
   </div>
 </template>
@@ -25,6 +20,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/vue';
+
+// Default theme.
 import '@vime/core/themes/default.css';
 
 // Optional light theme (extends default).
@@ -38,18 +35,12 @@ import '@vime/core/themes/default.css';
   },
 })
 export default class App extends Vue {
-  currentTime = 0;
-  
-  onTimeUpdate(time: number) {
-    this.currentTime = time;
+  get player() {
+    return this.$refs.player as HTMLVimePlayerElement;
   }
 
-  onSeekBackward() {
-    this.currentTime -= 5;
-  }
-
-  onSeekForward() {
-    this.currentTime += 5;
+  onPlaybackReady() {
+    // ...
   }
 }
 </script>
@@ -66,21 +57,5 @@ export default class App extends Vue {
 #container {
   width: 100%;
   max-width: 960px;
-}
-
-#buttons {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  margin-top: 16px;
-}
-
-#buttons > button {
-  margin-left: 8px;
-}
-
-#buttons > button:first-child {
-  margin-left: 0px;
 }
 </style>

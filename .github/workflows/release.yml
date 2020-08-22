@@ -16,10 +16,8 @@ jobs:
           node-version: 14
       - name: Install pnpm
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-      - name: Install root dependencies
-        run: pnpm install --filter vime
-      - name: Install packages/* dependencies
-        run: pnpm install --filter ./packages
+      - name: Install dependencies
+        run: pnpm install --filter vime --filter ./packages
       - name: Test
         run: pnpm run test:ci --filter @vime/core
       - name: Coverage

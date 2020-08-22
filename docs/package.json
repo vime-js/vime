@@ -8,6 +8,7 @@
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "serve": "docusaurus serve",
+    "setup": "pnpm install --filter vime --filter @vime/docs",
     "lint": "npm run lint:md --prefix ../"
   },
   "dependencies": {

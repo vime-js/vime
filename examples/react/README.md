@@ -1,7 +1,7 @@
 # @vime/react-example
 
 This example was bootstrapped with [Create React App](https://github.com/facebook/create-react-app),
-and demonstrates how to load and use Vime with React via the `@vime/react` package. The main
+and demonstrates how to setup Vime with React via the `@vime/react` package. The main
 file to look at is [`App.tsx`](./src/App.tsx).
 
 For the curious, [`@vime/media`](../../packages/media) is a private package that contains a collection
@@ -14,7 +14,12 @@ Install [pnpm](https://pnpm.js.org/en/installation) and then run the following c
 the example.
 
 ```bash
-$: pnpm install
+# This will take some time (~480MB), but you only have to do it once.
+$: git clone https://github.com/vime-js/vime
+
+$: cd vime/examples/react
+
+$: npm run setup
 
 $: npm run serve
 ```

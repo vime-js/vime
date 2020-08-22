@@ -58,6 +58,7 @@
     "cy:run.providers": "cypress run --spec \"cypress/tests/providers/**/*\""
   },
   "dependencies": {
+    "@vime/angular": "workspace:^1.2.0",
     "stencil-wormhole": "^3.0.2"
   },
   "devDependencies": {

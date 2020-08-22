@@ -17,9 +17,10 @@
 
 ```ts title="example.ts"
 import { ViewChild } from '@angular/core';
+import { VimePlayer } from '@vime/angular';
 
 class Example {
-  @ViewChild('player') player!: HTMLVimePlayerElement;
+  @ViewChild('player') player!: VimePlayer;
 
   currentTime = 0;
 
