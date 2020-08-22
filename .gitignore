@@ -11,6 +11,7 @@ packages/*/loader/
 packages/*/cypress/videos/
 packages/*/cypress/screenshots/
 packages/core/themes/*.css
+packages/core/public/
 packages/angular/src/directives/
 packages/react/src/components.ts
 packages/react/src/react-component-lib/
