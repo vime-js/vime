@@ -12,15 +12,24 @@ settings, captions and so on.
 
 ## Visuals
 
+There are also alternative interfaces for live media, and the light player theme, but they're not
+shown here for the sake of brevity.
+
+### Audio
+
 <img
   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--audio.png"
   alt="Vime default audio player"
 />
 
+### Desktop Video
+
 <img
   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--desktop.png"
   alt="Vime default desktop video player"
 />
+
+### Mobile Video
 
 <img
   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--mobile.png"

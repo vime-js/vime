@@ -1,4 +1,4 @@
-```tsx
+```tsx {2,12-17}
 import React, { useState } from 'react';
 import { VimeSlider } from '@vime/react';
 

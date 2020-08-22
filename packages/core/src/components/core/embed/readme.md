@@ -58,7 +58,7 @@ class Example {
 
 ### React
 
-```tsx {2,11-16}
+```tsx {2,11-17}
 import React from 'react';
 import { VimeEmbed } from '@vime/react';
 

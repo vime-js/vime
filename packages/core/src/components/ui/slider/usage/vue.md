@@ -1,4 +1,4 @@
-```html title="example.vue"
+```html {2-8,12,16} title="example.vue"
 <template>
   <VimeSlider
     step="5"

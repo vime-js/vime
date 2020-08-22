@@ -53,7 +53,7 @@ class Example {
 
 ### React
 
-```tsx
+```tsx {2,12-17}
 import React, { useState } from 'react';
 import { VimeSlider } from '@vime/react';
 
@@ -78,7 +78,7 @@ function Example() {
 
 ### Vue
 
-```html title="example.vue"
+```html {2-8,12,16} title="example.vue"
 <template>
   <VimeSlider
     step="5"

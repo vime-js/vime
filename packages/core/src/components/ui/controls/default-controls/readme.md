@@ -65,7 +65,7 @@ function Example() {
     <!-- ... -->
     <VimeUi>
       <!-- ... -->
-      <VimeDefaultControls activeDuration="3200" />
+      <VimeDefaultControls fullWidth activeDuration="3200" />
     </VimeUi>
   </VimePlayer>
 </template>
