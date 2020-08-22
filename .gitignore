@@ -3,6 +3,8 @@ build/
 www/
 loader/
 
+docs/docs/components/
+
 packages/*/dist/
 packages/*/www/
 packages/*/loader/
