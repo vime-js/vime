@@ -44,7 +44,7 @@
     }
   },
   "lint-staged": {
-    "packages/core/**/*.{js,ts,tsx}": "npm run lint",
+    "packages/core/src/**/*.{js,ts,tsx}": "npm run lint",
     "**/*.md": "npm run lint:md"
   },
   "commitlint": {
