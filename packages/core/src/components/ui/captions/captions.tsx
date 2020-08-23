@@ -2,7 +2,7 @@ import {
   h, Component, Prop, Watch, Host, State, Event, EventEmitter,
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../core/player/PlayerContext';
 import { Disposal } from '../../core/player/Disposal';
 import { isUndefined } from '../../../utils/unit';
 import { listen } from '../../../utils/dom';
@@ -175,7 +175,7 @@ export class Captions {
   }
 }
 
-openPlayerWormhole(Captions, [
+withPlayerContext(Captions, [
   PlayerProp.IsVideoView,
   PlayerProp.PlaybackStarted,
   PlayerProp.IsControlsActive,

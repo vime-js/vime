@@ -2,7 +2,6 @@
   <div id="app">
     <div id="container">
       <VimePlayer
-        muted
         playsinline 
         ref="player"
         @vPlaybackReady="onPlaybackReady"

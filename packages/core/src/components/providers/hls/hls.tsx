@@ -5,7 +5,7 @@ import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '.
 import { isString, isUndefined } from '../../../utils/unit';
 import { loadSDK } from '../../../utils/network';
 import { PlayerProp } from '../../core/player/PlayerProp';
-import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../core/player/PlayerState';
+import { PlayerDispatcher, createPlayerDispatcher } from '../../core/player/PlayerDispatcher';
 import { canPlayHLSNatively } from '../../../utils/support';
 import { hlsRegex, hlsTypeRegex } from '../file/utils';
 import { MediaType } from '../../core/player/MediaType';
@@ -19,7 +19,7 @@ import { MediaType } from '../../core/player/MediaType';
 export class HLS implements MediaFileProvider {
   private hls?: any;
 
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   private videoProvider!: HTMLVimeVideoElement;
 
@@ -82,7 +82,7 @@ export class HLS implements MediaFileProvider {
   @Event() vLoadStart!: EventEmitter<void>;
 
   async componentDidLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
 
     if (canPlayHLSNatively()) return;
 

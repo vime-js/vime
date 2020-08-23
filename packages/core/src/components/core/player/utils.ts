@@ -1,8 +1,9 @@
 import { getElement } from '@stencil/core';
 import { HTMLStencilElement } from '@stencil/core/internal';
+import { isInstanceOf } from '../../../utils/unit';
 
 export const findRootPlayer = (ref: any) => {
-  let player = getElement(ref);
+  let player = isInstanceOf(ref, HTMLElement) ? ref : getElement(ref);
 
   while (!(/^VIME-PLAYER$/.test(player?.nodeName))) {
     player = player.parentElement as HTMLStencilElement;

@@ -2,7 +2,7 @@ import {
   h, Host, Component, Prop,
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { TooltipDirection } from '../../tooltip/types';
 import { isUndefined } from '../../../../utils/unit';
 import { KeyboardControl } from '../control/KeyboardControl';
@@ -95,7 +95,7 @@ export class CaptionControl implements KeyboardControl {
   }
 }
 
-openPlayerWormhole(CaptionControl, [
+withPlayerContext(CaptionControl, [
   PlayerProp.IsCaptionsActive,
   PlayerProp.CurrentCaption,
   PlayerProp.I18N,

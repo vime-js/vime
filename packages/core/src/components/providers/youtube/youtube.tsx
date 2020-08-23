@@ -1,9 +1,9 @@
 import {
   h, Component, Method, Prop, State, Watch, EventEmitter, Event,
 } from '@stencil/core';
-import { MediaProvider, openProviderWormhole } from '../MediaProvider';
+import { MediaProvider, withProviderContext } from '../MediaProvider';
 import { decodeJSON, loadImage } from '../../../utils/network';
-import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/player/PlayerState';
+import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
 import { YouTubeCommand, YouTubeCommandArg } from './YouTubeCommand';
 import { YouTubeParams } from './YouTubeParams';
 import {
@@ -22,7 +22,7 @@ import { YouTubeMessage } from './YouTubeMessage';
 export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   private embed!: HTMLVimeEmbedElement;
 
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   private defaultInternalState: any = {};
 
@@ -108,7 +108,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   @Event() vLoadStart!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
     this.dispatch(PlayerProp.ViewType, ViewType.Video);
     this.onVideoIdChange();
     this.initialMuted = this.muted;
@@ -362,4 +362,4 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   }
 }
 
-openProviderWormhole(YouTube);
+withProviderContext(YouTube);

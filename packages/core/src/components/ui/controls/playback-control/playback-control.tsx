@@ -1,7 +1,7 @@
 import { h, Component, Prop } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
-import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../../core/player/PlayerState';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
 import { TooltipDirection } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
@@ -10,7 +10,7 @@ import { isUndefined } from '../../../../utils/unit';
   tag: 'vime-playback-control',
 })
 export class PlaybackControl implements KeyboardControl {
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   /**
    * The URL to an SVG element or fragment to load.
@@ -53,7 +53,7 @@ export class PlaybackControl implements KeyboardControl {
   @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
 
   componentWillLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
   }
 
   private onClick() {
@@ -85,7 +85,7 @@ export class PlaybackControl implements KeyboardControl {
   }
 }
 
-openPlayerWormhole(PlaybackControl, [
+withPlayerContext(PlaybackControl, [
   PlayerProp.Paused,
   PlayerProp.I18N,
 ]);

@@ -137,39 +137,41 @@ exports[`should be structurally sound 1`] = `
   <vime-faketube></vime-faketube>
   <vime-ui>
     <!---->
-    <vime-default-settings>
-      <!---->
-      <vime-settings style="bottom: 73px;">
+    <div>
+      <vime-default-settings>
         <!---->
-        <vime-menu aria-hidden="true" aria-labelledby="" id="vime-settings-1" role="menu" tabindex="-1">
+        <vime-settings style="bottom: 73px;">
           <!---->
-          <div>
-            <vime-menu-item aria-hidden="false" aria-label="Playback Rate" class="notTouch" role="menuitem" tabindex="0">
-              Playback Rate
-              <span class="spacer"></span>
-              <span class="hint">
-                Normal
-              </span>
-            </vime-menu-item>
-            <vime-menu-item aria-hidden="false" aria-label="Playback Quality" class="notTouch" role="menuitem" tabindex="0">
-              Playback Quality
-              <span class="spacer"></span>
-              <span class="hint">
-                Auto
-              </span>
-            </vime-menu-item>
-            <vime-menu-item aria-hidden="false" aria-label="Subtitles/CC" class="notTouch" role="menuitem" tabindex="0">
-              Subtitles/CC
-              <span class="spacer"></span>
-              <span class="hint">
-                None
-              </span>
-            </vime-menu-item>
-            DefaultSlot
-          </div>
-        </vime-menu>
-      </vime-settings>
-    </vime-default-settings>
+          <vime-menu aria-hidden="true" aria-labelledby="" id="vime-settings-1" role="menu" tabindex="-1">
+            <!---->
+            <div>
+              <vime-menu-item aria-hidden="false" aria-label="Playback Rate" class="notTouch" role="menuitem" tabindex="0">
+                Playback Rate
+                <span class="spacer"></span>
+                <span class="hint">
+                  Normal
+                </span>
+              </vime-menu-item>
+              <vime-menu-item aria-hidden="false" aria-label="Playback Quality" class="notTouch" role="menuitem" tabindex="0">
+                Playback Quality
+                <span class="spacer"></span>
+                <span class="hint">
+                  Auto
+                </span>
+              </vime-menu-item>
+              <vime-menu-item aria-hidden="false" aria-label="Subtitles/CC" class="notTouch" role="menuitem" tabindex="0">
+                Subtitles/CC
+                <span class="spacer"></span>
+                <span class="hint">
+                  None
+                </span>
+              </vime-menu-item>
+              DefaultSlot
+            </div>
+          </vime-menu>
+        </vime-settings>
+      </vime-default-settings>
+    </div>
   </vime-ui>
 </vime-player>
 `;

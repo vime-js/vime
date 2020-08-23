@@ -1,7 +1,7 @@
 import {
   h, Component, Prop, State, Watch, Host, Event, EventEmitter,
 } from '@stencil/core';
-import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../core/player/PlayerProp';
 import { isUndefined } from '../../../utils/unit';
 
@@ -108,7 +108,7 @@ export class Poster {
   }
 }
 
-openPlayerWormhole(Poster, [
+withPlayerContext(Poster, [
   PlayerProp.MediaTitle,
   PlayerProp.CurrentPoster,
   PlayerProp.PlaybackStarted,

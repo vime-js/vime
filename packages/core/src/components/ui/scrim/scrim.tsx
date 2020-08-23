@@ -2,7 +2,7 @@ import {
   h, Component, Host, Prop,
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../core/player/PlayerContext';
 import { isUndefined } from '../../../utils/unit';
 
 @Component({
@@ -46,7 +46,7 @@ export class Scrim {
   }
 }
 
-openPlayerWormhole(Scrim, [
+withPlayerContext(Scrim, [
   PlayerProp.IsVideoView,
   PlayerProp.IsControlsActive,
 ]);

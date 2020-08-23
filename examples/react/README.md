@@ -2,7 +2,8 @@
 
 This example was bootstrapped with [Create React App](https://github.com/facebook/create-react-app),
 and demonstrates how to setup Vime with React via the `@vime/react` package. The main
-file to look at is [`App.tsx`](./src/App.tsx).
+file to look at is [`App.tsx`](./src/App.tsx), and if you're interested in building custom UI
+components see [`ClickSidesToSeek.tsx`](./src/ClickSidesToSeek.tsx).
 
 For the curious, [`@vime/media`](../../packages/media) is a private package that contains a collection
 of audio and video files, and are used here to help with demonstrating the player. You're free to

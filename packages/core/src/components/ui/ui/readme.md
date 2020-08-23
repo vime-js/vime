@@ -72,6 +72,12 @@ function Example() {
 </script>
 ```
 
+## Slots
+
+| Slot | Description                                   |
+| ---- | --------------------------------------------- |
+|      | Used to pass in UI components for the player. |
+
 ## Dependencies
 
 ### Used by

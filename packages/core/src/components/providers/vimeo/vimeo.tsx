@@ -1,8 +1,8 @@
 import {
   h, Prop, Method, Component, Event, EventEmitter, State, Watch,
 } from '@stencil/core';
-import { MediaProvider, openProviderWormhole } from '../MediaProvider';
-import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/player/PlayerState';
+import { MediaProvider, withProviderContext } from '../MediaProvider';
+import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
 import { PlayerProp } from '../../core/player/PlayerProp';
 import { decodeJSON } from '../../../utils/network';
 import { isString, isUndefined, isNumber } from '../../../utils/unit';
@@ -21,7 +21,7 @@ import { DeferredPromise, deferredPromise } from '../../../utils/promise';
 export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   private embed!: HTMLVimeEmbedElement;
 
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   private initialMuted!: boolean;
 
@@ -122,7 +122,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   @Event() vLoadStart!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
     this.dispatch(PlayerProp.ViewType, ViewType.Video);
     this.onVideoIdChange();
     this.initialMuted = this.muted;
@@ -415,4 +415,4 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   }
 }
 
-openProviderWormhole(Vimeo);
+withProviderContext(Vimeo);

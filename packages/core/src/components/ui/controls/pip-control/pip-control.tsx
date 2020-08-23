@@ -2,7 +2,7 @@ import {
   h, Host, Component, Prop, Watch, State,
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { TooltipDirection } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
@@ -103,7 +103,7 @@ export class PiPControl implements KeyboardControl {
   }
 }
 
-openPlayerWormhole(PiPControl, [
+withPlayerContext(PiPControl, [
   PlayerProp.IsPiPActive,
   PlayerProp.PlaybackReady,
   PlayerProp.I18N,

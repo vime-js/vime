@@ -7,9 +7,9 @@ import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
 import { isUndefined, isNull } from '../../../../utils/unit';
 import { SettingsController } from './SettingsController';
-import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../../core/player/PlayerState';
+import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 
 let idCount = 0;
 
@@ -29,7 +29,7 @@ export class Settings {
 
   private controller?: SettingsController;
 
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   @Element() el!: HTMLVimeSettingsElement;
 
@@ -65,7 +65,7 @@ export class Settings {
   @Prop() isAudioView: PlayerProps[PlayerProp.IsAudioView] = false;
 
   componentWillLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
     idCount += 1;
     this.id = `vime-settings-${idCount}`;
   }
@@ -121,7 +121,7 @@ export class Settings {
   }
 }
 
-openPlayerWormhole(Settings, [
+withPlayerContext(Settings, [
   PlayerProp.IsMobile,
   PlayerProp.IsAudioView,
 ]);

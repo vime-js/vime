@@ -7,12 +7,14 @@ exports[`should be structurally sound 1`] = `
   <vime-faketube></vime-faketube>
   <vime-ui>
     <!---->
-    <vime-settings style="bottom: 73px;">
-      <!---->
-      <vime-menu controller="" identifier="vime-settings-1">
-        DefaultSlot
-      </vime-menu>
-    </vime-settings>
+    <div>
+      <vime-settings style="bottom: 73px;">
+        <!---->
+        <vime-menu controller="" identifier="vime-settings-1">
+          DefaultSlot
+        </vime-menu>
+      </vime-settings>
+    </div>
   </vime-ui>
 </vime-player>
 `;

@@ -1,14 +1,14 @@
 import {
   h, Prop, Method, Event, EventEmitter,
 } from '@stencil/core';
-import { MediaProvider, openProviderWormhole, MediaProviderAdapter } from '../MediaProvider';
-import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/player/PlayerState';
+import { MediaProvider, withProviderContext, MediaProviderAdapter } from '../MediaProvider';
+import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
 import { PlayerProp } from '../../core/player/PlayerProp';
 import { ViewType } from '../../core/player/ViewType';
 
 // @component
 export class Name implements MediaProvider {
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   /**
    * @internal
@@ -52,7 +52,7 @@ export class Name implements MediaProvider {
   @Event() vLoadStart!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
     // @TODO change this if view is of type audio.
     this.dispatch(PlayerProp.ViewType, ViewType.Video);
   }
@@ -90,4 +90,4 @@ export class Name implements MediaProvider {
   }
 }
 
-openProviderWormhole(Name);
+withProviderContext(Name);

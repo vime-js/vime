@@ -24,7 +24,7 @@ import {
 } from '../../../utils/support';
 import { Fullscreen } from './fullscreen/Fullscreen';
 import { en } from './lang/en';
-import { PlayerStateChange } from './PlayerState';
+import { PlayerStateChange } from './PlayerDispatcher';
 import { Disposal } from './Disposal';
 import { listen } from '../../../utils/dom';
 import { lazyLoader } from './lazyLoader';
@@ -880,7 +880,7 @@ export class Player implements MediaPlayer {
   }
 
   private hasCustomCaptions() {
-    return !isNull(this.el.querySelector('vime-ui > vime-captions'));
+    return !isNull(this.el.querySelector('vime-ui vime-captions'));
   }
 
   private getActiveCaption() {

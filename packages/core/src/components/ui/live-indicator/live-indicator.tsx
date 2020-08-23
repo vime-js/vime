@@ -2,7 +2,7 @@ import {
   h, Host, Component, Prop,
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../core/player/PlayerContext';
 
 @Component({
   tag: 'vime-live-indicator',
@@ -33,7 +33,7 @@ export class LiveIndicator {
   }
 }
 
-openPlayerWormhole(LiveIndicator, [
+withPlayerContext(LiveIndicator, [
   PlayerProp.IsLive,
   PlayerProp.I18N,
 ]);

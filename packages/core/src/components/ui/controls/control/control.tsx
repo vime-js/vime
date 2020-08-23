@@ -3,7 +3,7 @@ import {
   Event, EventEmitter,
   Watch,
 } from '@stencil/core';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
 import { isNull, isUndefined } from '../../../../utils/unit';
 import { Disposal } from '../../../core/player/Disposal';
@@ -186,6 +186,6 @@ export class Control implements KeyboardControl {
   }
 }
 
-openPlayerWormhole(Control, [
+withPlayerContext(Control, [
   PlayerProp.IsTouch,
 ]);

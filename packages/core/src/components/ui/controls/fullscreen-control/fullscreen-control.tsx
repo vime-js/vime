@@ -2,7 +2,7 @@ import {
   h, Host, Component, Prop, State, Watch,
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { TooltipDirection } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
@@ -103,7 +103,7 @@ export class FullscreenControl implements KeyboardControl {
   }
 }
 
-openPlayerWormhole(FullscreenControl, [
+withPlayerContext(FullscreenControl, [
   PlayerProp.IsFullscreenActive,
   PlayerProp.PlaybackReady,
   PlayerProp.I18N,

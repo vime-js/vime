@@ -21,9 +21,9 @@
     "jsx": "react",
   },
   "include": [
-    "packages/core/**/*.js",
-    "packages/core/**/*.ts",
-    "packages/core/**/*.tsx",
+    "packages/core/src/**/*.js",
+    "packages/core/src/**/*.ts",
+    "packages/core/src/**/*.tsx",
     "tools/*.js"
   ]
 }

@@ -1,6 +1,6 @@
 import { ComponentInterface, EventEmitter } from '@stencil/core';
 import { PlayerProp, PlayerProps } from '../core/player/PlayerProp';
-import { openPlayerWormhole } from '../core/player/PlayerWormhole';
+import { withPlayerContext } from '../core/player/PlayerContext';
 
 export interface MediaProviderAdapter<InternalPlayerType = any> {
   getInternalPlayer(): Promise<InternalPlayerType>
@@ -42,9 +42,9 @@ export interface MediaProviderConstructor {
   new(...args: any[]): MediaProvider
 }
 
-export const openProviderWormhole = (
+export const withProviderContext = (
   Provider: MediaProviderConstructor,
-) => openPlayerWormhole(Provider, [
+) => withPlayerContext(Provider, [
   PlayerProp.Autoplay,
   PlayerProp.Controls,
   PlayerProp.Language,

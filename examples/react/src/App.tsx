@@ -4,6 +4,7 @@ import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/react';
 
 // Default theme.
 import '@vime/core/themes/default.css';
+import ClickSidesToSeek from './ClickSidesToSeek';
 
 // Optional light theme (extends default).
 // import '@vime/core/themes/light.css';
@@ -18,7 +19,6 @@ function App() {
   return (
     <div id="container">
       <VimePlayer 
-        muted 
         playsinline 
         ref={player}
         onVPlaybackReady={onPlaybackReady}
@@ -27,7 +27,10 @@ function App() {
           <source data-src="http://localhost:3335/720p.mp4" type="video/mp4" />
         </VimeVideo>
 
-        <VimeDefaultUi />
+        <VimeDefaultUi>
+          {/* Custom UI Component. */}
+          <ClickSidesToSeek />
+        </VimeDefaultUi>
       </VimePlayer>
     </div>
   );

@@ -1,7 +1,7 @@
 import {
   h, Host, Component, Prop, Element,
 } from '@stencil/core';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
 import { TooltipDirection } from '../../tooltip/types';
 import { isUndefined } from '../../../../utils/unit';
@@ -83,6 +83,6 @@ export class SettingsControl {
   }
 }
 
-openPlayerWormhole(SettingsControl, [
+withPlayerContext(SettingsControl, [
   PlayerProp.I18N,
 ]);

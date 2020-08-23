@@ -1,7 +1,7 @@
 import {
   h, Host, Component, Prop,
 } from '@stencil/core';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
 
 @Component({
@@ -166,7 +166,7 @@ export class DefaultControls {
   }
 }
 
-openPlayerWormhole(DefaultControls, [
+withPlayerContext(DefaultControls, [
   PlayerProp.IsMobile,
   PlayerProp.IsAudioView,
   PlayerProp.IsVideoView,

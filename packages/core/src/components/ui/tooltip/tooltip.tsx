@@ -2,7 +2,7 @@ import {
   h, Host, Component, Element, Prop,
 } from '@stencil/core';
 import { isString } from '../../../utils/unit';
-import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../core/player/PlayerProp';
 import { TooltipDirection, TooltipPosition } from './types';
 
@@ -72,6 +72,6 @@ export class Tooltip {
   }
 }
 
-openPlayerWormhole(Tooltip, [
+withPlayerContext(Tooltip, [
   PlayerProp.IsTouch,
 ]);

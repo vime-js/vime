@@ -161,8 +161,8 @@ vime-slider {
 
 At the root of Vime we always have the [`vime-player`](./packages/core/src/components/core/player/player.tsx)
 component, which maintains the current state of the player and keeps plugins, providers and UI components
-in sync. Properties are passed down from the player to update child components through Wormholes (exactly
-like `React.ContextProvider`), and updates are sent to the player via the `vStateChange` custom
+in sync. Properties are passed down from the player to update child components through a context
+provider (exactly like `React.ContextProvider`), and updates are sent to the player via the `vStateChange` custom
 event. The event simply contains the property to update and its new value `{ prop: 'paused', value: false }`.
 Any "special" properties that require calling a method on the provider are watched and called
 automatically. For example, updating the `currentTime` property would require calling the provider's
@@ -173,14 +173,14 @@ maintains its own queue for processing all state changes, so as updates comes th
 `vStateChange` event, they are processed and queued to happen in the next render cycle.
 
 There are only two simple functions that matter when creating a new Vime component and interacting
-with the player. Let's go through them one at a time.
+with the player. Let's go through them briefly one at a time.
 
-The `openPlayerWormhole` function simply behaves as `Context.Consumer` in React. It enables properties
+The `withPlayerContext` function simply behaves as `Context.Consumer` in React. It enables properties
 to be passed down from the player directly to components, bypassing any parent components in the
 tree. You can refer to existing Vime components to see its usage (scroll down to the bottom of
 any component file).
 
-The `createPlayerStateDispatcher` function creates an event dispatcher to send updates to the
+The `createPlayerDispatcher` function creates an event dispatcher to send updates to the
 player through the `vStateChange` event. The dispatcher is typed to simply take in a player property
 that can be written to, and its new value. You can refer to existing Vime components to see its usage.
 

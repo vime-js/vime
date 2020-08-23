@@ -2,7 +2,7 @@ import {
   h, Component, State, Prop, Watch, Host, Event, EventEmitter,
 } from '@stencil/core';
 import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../core/player/PlayerContext';
 
 @Component({
   tag: 'vime-spinner',
@@ -63,7 +63,7 @@ export class Spinner {
   }
 }
 
-openPlayerWormhole(Spinner, [
+withPlayerContext(Spinner, [
   PlayerProp.IsVideoView,
   PlayerProp.Buffering,
 ]);

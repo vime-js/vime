@@ -24,10 +24,10 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@angular/common": "^10.0.9",
-    "@angular/compiler": "^10.0.9",
-    "@angular/compiler-cli": "^10.0.9",
-    "@angular/core": "^10.0.9",
+    "@angular/common": "^10.0.10",
+    "@angular/compiler": "^10.0.10",
+    "@angular/compiler-cli": "^10.0.10",
+    "@angular/core": "^10.0.10",
     "ng-packagr": "^10.0.4",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.2",

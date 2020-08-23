@@ -41,13 +41,13 @@ $z-index-ui: 2;
 
 // ui
 $z-index-poster: 1;
-$z-index-scrim: 2;
-$z-index-click-to-play: 97;
-$z-index-captions: 98;
-$z-index-spinner: 98;
-$z-index-controls: 98;
-$z-index-tooltip: 99;
-$z-index-menu: 100;
+$z-index-scrim: 10;
+$z-index-click-to-play: 20;
+$z-index-captions: 30;
+$z-index-spinner: 40;
+$z-index-controls: 50;
+$z-index-tooltip: 60;
+$z-index-menu: 70;
 
 // ==========================================================================
 // Transitions

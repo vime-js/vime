@@ -1,10 +1,10 @@
 import {
   h, Host, Component, Prop, State, Watch, Element, writeTask,
 } from '@stencil/core';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
 import { formatTime } from '../../../../utils/formatters';
-import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../../core/player/PlayerState';
+import { createPlayerDispatcher, PlayerDispatcher } from '../../../core/player/PlayerDispatcher';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
 import { findRootPlayer } from '../../../core/player/utils';
@@ -18,7 +18,7 @@ export class ScrubberControl {
 
   private tooltip!: HTMLVimeTooltipElement;
 
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   private keyboardDisposal = new Disposal();
 
@@ -96,7 +96,7 @@ export class ScrubberControl {
   @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
 
   componentWillLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
     this.timestamp = formatTime(this.currentTime, this.alwaysShowHours);
     this.onNoKeyboardChange();
   }
@@ -202,7 +202,7 @@ export class ScrubberControl {
   }
 }
 
-openPlayerWormhole(ScrubberControl, [
+withPlayerContext(ScrubberControl, [
   PlayerProp.I18N,
   PlayerProp.CurrentTime,
   PlayerProp.Duration,

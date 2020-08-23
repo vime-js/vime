@@ -3,9 +3,9 @@ import {
   Prop, Element, Watch,
   State,
 } from '@stencil/core';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
-import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../../core/player/PlayerState';
+import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen, isColliding } from '../../../../utils/dom';
 import { isNull } from '../../../../utils/unit';
@@ -27,7 +27,7 @@ const hideControlsTimeout: Record<any, number | undefined> = {};
   styleUrl: 'controls.scss',
 })
 export class Controls {
-  private dispatch?: PlayerStateDispatcher;
+  private dispatch?: PlayerDispatcher;
 
   private disposal = new Disposal();
 
@@ -135,7 +135,7 @@ export class Controls {
   @Prop() playbackStarted: PlayerProps[PlayerProp.PlaybackStarted] = false;
 
   connectedCallback() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
   }
 
   componentWillLoad() {
@@ -301,7 +301,7 @@ export class Controls {
   }
 }
 
-openPlayerWormhole(Controls, [
+withPlayerContext(Controls, [
   PlayerProp.PlaybackReady,
   PlayerProp.IsAudioView,
   PlayerProp.IsControlsActive,

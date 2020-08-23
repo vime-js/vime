@@ -3,8 +3,8 @@
 import {
   h, Prop, Method, Component, Event, EventEmitter, Watch,
 } from '@stencil/core';
-import { openProviderWormhole, MediaProvider } from '../MediaProvider';
-import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/player/PlayerState';
+import { withProviderContext, MediaProvider } from '../MediaProvider';
+import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
 import { PlayerProp } from '../../core/player/PlayerProp';
 import { ViewType } from '../../core/player/ViewType';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from './MediaFileProvider';
@@ -32,7 +32,7 @@ import { findRootPlayer } from '../../core/player/utils';
   styleUrl: 'file.scss',
 })
 export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<HTMLMediaElement> {
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   private mediaEl?: HTMLMediaElement;
 
@@ -155,7 +155,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   @Event() vLoadStart!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
     this.onViewTypeChange();
     this.onPosterChange();
     this.onMediaTitleChange();
@@ -177,7 +177,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private hasCustomPoster() {
     const root = findRootPlayer(this);
-    return !isNull(root.querySelector('vime-ui > vime-poster'));
+    return !isNull(root.querySelector('vime-ui vime-poster'));
   }
 
   private cancelTimeUpdates() {
@@ -439,4 +439,4 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 }
 
-openProviderWormhole(File);
+withProviderContext(File);

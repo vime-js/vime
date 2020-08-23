@@ -1,14 +1,14 @@
 import {
   h, Method, Component, Prop, Watch, State, Event, EventEmitter,
 } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
 import { isString } from '../../../utils/unit';
-import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../core/player/PlayerState';
+import { PlayerDispatcher, createPlayerDispatcher } from '../../core/player/PlayerDispatcher';
 import { dashRegex } from '../file/utils';
 import { PlayerProp } from '../../core/player/PlayerProp';
 import { loadSDK } from '../../../utils/network';
 import { MediaType } from '../../core/player/MediaType';
+import { withPlayerContext } from '../../core/player/PlayerContext';
 
 @Component({
   tag: 'vime-dash',
@@ -16,7 +16,7 @@ import { MediaType } from '../../core/player/MediaType';
 export class Dash implements MediaFileProvider<any> {
   private dash?: any;
 
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   private videoProvider!: HTMLVimeVideoElement;
 
@@ -96,7 +96,7 @@ export class Dash implements MediaFileProvider<any> {
   @Event() vLoadStart!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
   }
 
   async componentDidLoad() {
@@ -164,6 +164,6 @@ export class Dash implements MediaFileProvider<any> {
   }
 }
 
-openWormhole(Dash, [
+withPlayerContext(Dash, [
   PlayerProp.Autoplay,
 ]);

@@ -1,9 +1,9 @@
 import {
   h, Component, Host, Prop,
 } from '@stencil/core';
-import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/player/PlayerState';
+import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
 import { PlayerProp, PlayerProps } from '../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../core/player/PlayerContext';
 import { IS_MOBILE } from '../../../utils/support';
 
 @Component({
@@ -11,7 +11,7 @@ import { IS_MOBILE } from '../../../utils/support';
   styleUrl: 'click-to-play.scss',
 })
 export class ClickToPlay {
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   /**
    * By default this is disabled on mobile to not interfere with playback, set this to `true` to
@@ -30,7 +30,7 @@ export class ClickToPlay {
   @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
 
   componentWillLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
   }
 
   private onClick() {
@@ -49,7 +49,7 @@ export class ClickToPlay {
   }
 }
 
-openPlayerWormhole(ClickToPlay, [
+withPlayerContext(ClickToPlay, [
   PlayerProp.Paused,
   PlayerProp.IsVideoView,
 ]);

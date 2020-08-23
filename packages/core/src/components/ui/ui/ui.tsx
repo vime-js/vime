@@ -1,10 +1,13 @@
 import {
   h, Host, Component, Prop,
 } from '@stencil/core';
-import { openPlayerWormhole } from '../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../core/player/PlayerProp';
 import { IS_IOS } from '../../../utils/support';
 
+/**
+ * @slot - Used to pass in UI components for the player.
+ */
 @Component({
   tag: 'vime-ui',
   styleUrl: 'ui.scss',
@@ -37,13 +40,15 @@ export class UI {
           video: this.isVideoView,
         }}
       >
-        {canShowCustomUI && <slot />}
+        <div>
+          {canShowCustomUI && <slot />}
+        </div>
       </Host>
     );
   }
 }
 
-openPlayerWormhole(UI, [
+withPlayerContext(UI, [
   PlayerProp.IsVideoView,
   PlayerProp.Playsinline,
   PlayerProp.IsFullscreenActive,

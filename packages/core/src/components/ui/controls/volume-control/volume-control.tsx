@@ -1,9 +1,9 @@
 import {
   h, Host, Component, Prop, State, Watch,
 } from '@stencil/core';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
-import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../../core/player/PlayerState';
+import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
 import { TooltipDirection } from '../../tooltip/types';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
@@ -14,7 +14,7 @@ import { findRootPlayer } from '../../../core/player/utils';
   styleUrl: 'volume-control.scss',
 })
 export class VolumeControl {
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   private keyboardDisposal = new Disposal();
 
@@ -109,7 +109,7 @@ export class VolumeControl {
 
   componentWillLoad() {
     this.prevMuted = this.muted;
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
     this.onNoKeyboardChange();
   }
 
@@ -175,7 +175,7 @@ export class VolumeControl {
   }
 }
 
-openPlayerWormhole(VolumeControl, [
+withPlayerContext(VolumeControl, [
   PlayerProp.Volume,
   PlayerProp.Muted,
   PlayerProp.IsMobile,

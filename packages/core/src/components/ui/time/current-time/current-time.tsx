@@ -1,5 +1,5 @@
 import { h, Component, Prop } from '@stencil/core';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
 
 @Component({
@@ -33,7 +33,7 @@ export class CurrentTime {
   }
 }
 
-openPlayerWormhole(CurrentTime, [
+withPlayerContext(CurrentTime, [
   PlayerProp.CurrentTime,
   PlayerProp.I18N,
 ]);

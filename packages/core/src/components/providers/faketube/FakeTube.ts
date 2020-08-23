@@ -1,8 +1,8 @@
 import {
   Prop, Method, Component, Event, EventEmitter,
 } from '@stencil/core';
-import { MediaProvider, MockMediaProviderAdapter, openProviderWormhole } from '../MediaProvider';
-import { createPlayerStateDispatcher, PlayerStateDispatcher } from '../../core/player/PlayerState';
+import { MediaProvider, MockMediaProviderAdapter, withProviderContext } from '../MediaProvider';
+import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
 import { PlayerProp } from '../../core/player/PlayerProp';
 
 @Component({
@@ -10,7 +10,7 @@ import { PlayerProp } from '../../core/player/PlayerProp';
   styleUrl: 'faketube.css',
 })
 export class FakeTube implements MediaProvider {
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   /**
    * @internal
@@ -53,7 +53,7 @@ export class FakeTube implements MediaProvider {
   @Event() vLoadStart!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
   }
 
   /**
@@ -99,4 +99,4 @@ export class FakeTube implements MediaProvider {
   }
 }
 
-openProviderWormhole(FakeTube);
+withProviderContext(FakeTube);

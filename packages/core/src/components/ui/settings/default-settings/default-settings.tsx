@@ -1,12 +1,12 @@
 import {
   h, Component, Prop, Watch, forceUpdate,
 } from '@stencil/core';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
 import { isUndefined } from '../../../../utils/unit';
-import { PlayerStateDispatcher, createPlayerStateDispatcher } from '../../../core/player/PlayerState';
+import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
 import { findRootPlayer } from '../../../core/player/utils';
 
 /**
@@ -19,7 +19,7 @@ import { findRootPlayer } from '../../../core/player/utils';
 export class DefaultSettings {
   private textTracksDisposal = new Disposal();
 
-  private dispatch!: PlayerStateDispatcher;
+  private dispatch!: PlayerDispatcher;
 
   private player?: HTMLVimePlayerElement;
 
@@ -81,7 +81,7 @@ export class DefaultSettings {
   componentWillLoad() {
     this.skipFirstRender = true;
     this.player = findRootPlayer(this);
-    this.dispatch = createPlayerStateDispatcher(this);
+    this.dispatch = createPlayerDispatcher(this);
   }
 
   private skipFirstRender = true;
@@ -262,7 +262,7 @@ export class DefaultSettings {
   }
 }
 
-openPlayerWormhole(DefaultSettings, [
+withPlayerContext(DefaultSettings, [
   PlayerProp.I18N,
   PlayerProp.PlaybackRate,
   PlayerProp.PlaybackRates,

@@ -6,7 +6,7 @@ import {
 } from '@stencil/core';
 import { isUndefined, isNull } from '../../../../utils/unit';
 import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
-import { openPlayerWormhole } from '../../../core/player/PlayerWormhole';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 
 @Component({
   tag: 'vime-menu-item',
@@ -135,6 +135,6 @@ export class MenuItem {
   }
 }
 
-openPlayerWormhole(MenuItem, [
+withPlayerContext(MenuItem, [
   PlayerProp.IsTouch,
 ]);
