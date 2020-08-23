@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file.
 
 # [1.4.0](https://github.com/vime-js/vime/compare/@vime/react@1.3.0...@vime/react@1.4.0) (2020-08-23)
 
-
 ### Features
 
-* you can now build custom ui components + new react hooks ([0cde356](https://github.com/vime-js/vime/commit/0cde3563f868eeb405bbb17be8138b2044d55f3d))
+- you can now build custom ui components + new react hooks ([0cde356](https://github.com/vime-js/vime/commit/0cde3563f868eeb405bbb17be8138b2044d55f3d))
 
 # [1.3.0](https://github.com/vime-js/vime/compare/@vime/react@1.2.0...@vime/react@1.3.0) (2020-08-19)
 

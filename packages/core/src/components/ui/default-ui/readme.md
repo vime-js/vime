@@ -91,15 +91,15 @@ function Example() {
 
 ## Properties
 
-| Property        | Attribute          | Description                                         | Type      | Default |
-| --------------- | ------------------ | --------------------------------------------------- | --------- | ------- |
-| `noCaptions`    | `no-captions`      | Whether the custom captions UI is used.             | `boolean` | `false` |
-| `noClickToPlay` | `no-click-to-play` | Whether clicking the player should toggle playback. | `boolean` | `false` |
-| `noControls`    | `no-controls`      | Whether the custom default controls are used.       | `boolean` | `false` |
-| `noIcons`       | `no-icons`         | Whether the default icons should be loaded.         | `boolean` | `false` |
-| `noPoster`      | `no-poster`        | Whether the custom poster UI is used.               | `boolean` | `false` |
-| `noSettings`    | `no-settings`      | Whether the custom default settings menu is used.   | `boolean` | `false` |
-| `noSpinner`     | `no-spinner`       | Whether the custom spinner UI is used.              | `boolean` | `false` |
+| Property        | Attribute          | Description                                                    | Type      | Default |
+| --------------- | ------------------ | -------------------------------------------------------------- | --------- | ------- |
+| `noCaptions`    | `no-captions`      | Whether the custom captions UI should not be loaded.           | `boolean` | `false` |
+| `noClickToPlay` | `no-click-to-play` | Whether clicking the player should not toggle playback.        | `boolean` | `false` |
+| `noControls`    | `no-controls`      | Whether the custom default controls should not be loaded.      | `boolean` | `false` |
+| `noIcons`       | `no-icons`         | Whether the default icons should not be loaded.                | `boolean` | `false` |
+| `noPoster`      | `no-poster`        | Whether the custom poster UI should not be loaded.             | `boolean` | `false` |
+| `noSettings`    | `no-settings`      | Whether the custom default settings menu should not be loaded. | `boolean` | `false` |
+| `noSpinner`     | `no-spinner`       | Whether the custom spinner UI should not be loaded.            | `boolean` | `false` |
 
 ## Slots
 
