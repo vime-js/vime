@@ -32,8 +32,8 @@ export function usePlayerContext<P extends keyof PlayerProps>(
     return withCustomPlayerContext(
       ref.current!, 
       [prop], 
-      (_, newValue) => { setValue(newValue as any); 
-    });
+      (_, newValue) => { setValue(newValue as any); }
+    );
   }, [ref]);
 
   return value;
