@@ -32,7 +32,7 @@ vime-player {
    * Player
    *******************************/
 
-  --player-bg: var(--color-dark);
+  --player-bg: #000;
 
   --player-skeleton-base-color: #eee;
   --player-skeleton-highlight-color: #f3f3f3;
