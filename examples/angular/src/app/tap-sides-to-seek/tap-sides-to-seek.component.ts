@@ -1,5 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
-import { PlayerProp, usePlayerContext, PlayerDispatcher, createPlayerDispatcher } from '@vime/core';
+import {
+  PlayerProp, usePlayerContext, PlayerDispatcher, createPlayerDispatcher,
+} from '@vime/core';
 
 @Component({
   selector: 'tap-sides-to-seek',
@@ -13,7 +15,7 @@ export class TapSidesToSeekComponent {
   duration = -1;
 
   /**
-   * We need a reference to a DOM element so the Vime hooks work as they rely on dispatching 
+   * We need a reference to a DOM element so the Vime hooks work as they rely on dispatching
    * custom DOM events.
    */
   constructor(private ref: ElementRef) {}
@@ -23,15 +25,15 @@ export class TapSidesToSeekComponent {
      * Here we are creating a dispatcher to send updates to the player.
      */
     this.dispatch = createPlayerDispatcher(this.ref.nativeElement);
-    
+
     /**
-     * Here we are requesting to receive updates from the player, as the requested propties change 
+     * Here we are requesting to receive updates from the player, as the requested propties change
      * it will be updated here.
      */
     usePlayerContext(
       this.ref.nativeElement,
       [PlayerProp.currentTime, PlayerProp.duration],
-      (prop, value) => { this[prop] = value; }
+      (prop, value) => { this[prop] = value; },
     );
   }
 

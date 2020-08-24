@@ -6,11 +6,11 @@
 
 	<title>Svelte app</title>
 
-	<link rel='icon' type='image/png' href='/favicon.png'>
-	<link rel='stylesheet' href='/global.css'>
-	<link rel='stylesheet' href='/build/bundle.css'>
+	<link rel='icon' type='image/png' href='/public/favicon.png'>
+	<link rel='stylesheet' href='/public//global.css'>
+	<link rel='stylesheet' href='/public/build/bundle.css'>
 
-	<script defer src='/build/bundle.js'></script>
+	<script defer src='/public/build/bundle.js'></script>
 
 	<!-- Default theme. -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@latest/themes/default.css">
@@ -18,8 +18,12 @@
 	<!-- Optional light theme (extends default). -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@latest/themes/light.css"> -->
 
+	<!-- DEVELOPMENT SCRIPT. -->
+	<script type="module" src="../node_modules/@vime/core/dist/vime/vime.esm.js"></script>
+	
+	<!-- USE THIS SCRIPT IN YOUR APPLICATION. -->
 	<!-- The library is lazy loaded so you have nothing to worry about, only what you use will be loaded. -->
-  <script defer type="module" src="https://cdn.jsdelivr.net/npm/@vime/core@latest/dist/vime/vime.esm.js"></script>	
+	<!-- <script defer type="module" src="https://cdn.jsdelivr.net/npm/@vime/core@latest/dist/vime/vime.esm.js"></script> -->
 </head>
 
 <body>

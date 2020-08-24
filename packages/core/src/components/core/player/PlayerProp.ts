@@ -83,7 +83,27 @@ export type InternalReadonlyPlayerProp = keyof InternalReadonlyPlayerProps;
 export type InternalWritablePlayerProps = Omit<PlayerProps, InternalReadonlyPlayerProp>;
 export type InternalWritablePlayerProp = keyof InternalWritablePlayerProps;
 
-const externalWritable = new Set([
+export type ExternalWritablePlayerProps = Pick<PlayerProps, PlayerProp.autoplay
+| PlayerProp.autopause
+| PlayerProp.aspectRatio
+| PlayerProp.controls
+| PlayerProp.theme
+| PlayerProp.debug
+| PlayerProp.paused
+| PlayerProp.currentTime
+| PlayerProp.language
+| PlayerProp.loop
+| PlayerProp.playbackQuality
+| PlayerProp.muted
+| PlayerProp.playbackRate
+| PlayerProp.playsinline
+| PlayerProp.volume
+>;
+
+export type ExternalWritablePlayerProp = keyof ExternalWritablePlayerProps;
+export type ExternalReadonlyPlayerProps = Omit<PlayerProps, ExternalWritablePlayerProp>;
+
+const externalWritable = new Set<ExternalWritablePlayerProp>([
   PlayerProp.autoplay,
   PlayerProp.autopause,
   PlayerProp.aspectRatio,
@@ -102,9 +122,12 @@ const externalWritable = new Set([
 ]);
 
 /**
- * Determines if a player prop can be changed via the `vime-player` element from the "outside".
+ * Determines if a player prop can be changed via the `vime-player` element from the "outside". In
+ * other words, is the update coming from directly interacting with the `vime-player` component.
  */
-export const isExternalReadonlyPlayerProp = (prop: PlayerProp) => !externalWritable.has(prop);
+export const isExternalReadonlyPlayerProp = (
+  prop: PlayerProp,
+) => !externalWritable.has(prop as any);
 
 const internalReadonly = new Set<InternalReadonlyPlayerProp>([
   PlayerProp.autoplay,
@@ -130,8 +153,9 @@ const internalReadonly = new Set<InternalReadonlyPlayerProp>([
 ]);
 
 /**
- * Determines if a player prop can be changed "inside" via the `vStateChange` event fired by
- * providers.
+ * Determines if a player prop can be changed "inside" via the `vStateChange` event. In other
+ * words, does the component attempting to update the player exist within the subtree of the player
+ * in the DOM.
  */
 export const isInternalReadonlyPlayerProp = (prop: PlayerProp) => internalReadonly.has(prop as any);
 
@@ -233,11 +257,6 @@ export interface PlayerProps {
    * `@readonly` Whether the player has disconnected from the DOM and been destroyed.
    */
   [PlayerProp.destroyed]: boolean
-
-  /**
-   * `@readonly` Whether the player has loaded and is ready to be interacted with.
-   */
-  [PlayerProp.ready]: boolean
 
   /**
    * `@readonly` Whether the player has loaded and is ready to be interacted with.

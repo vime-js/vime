@@ -42,7 +42,7 @@
     "min:theme.light": "cleancss -o themes/light.css src/globals/themes/light.css",
     "serve": "concurrently \"npm run serve:public\" \"npm run serve:dev\"",
     "serve:dev": "stencil build --dev --watch --serve --port 3333",
-    "serve:public": "node scripts/link-public.js && sirv public --cors --port 3334 --quiet",
+    "serve:public": "node scripts/link-public.js && sirv public --single public/tests/index.html --cors --port 3334 --quiet",
     "serve:prod": "npm run build && npm run serve:public",
     "test:unit": "stencil test --spec --max-workers=2",
     "test:unit.debug": "pnpx --node-arg=\"--inspect-brk\" stencil test --spec",

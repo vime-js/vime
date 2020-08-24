@@ -21,9 +21,13 @@
     "jsx": "react",
   },
   "include": [
-    "packages/core/src/**/*.js",
-    "packages/core/src/**/*.ts",
-    "packages/core/src/**/*.tsx",
-    "tools/*.js"
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+  ],
+  "exclude": [
+    "node_modules/**",
+    "packages/media/**",
+    "packages/core/public/**",
   ]
 }

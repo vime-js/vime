@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { VimeModule } from '@vime/angular/dist';
 
 import { AppComponent } from './app.component';
-import { TapSidesToSeekComponent } from './tap-sides-to-seek/tap-sides-to-seek.component'
+import { TapSidesToSeekComponent } from './tap-sides-to-seek/tap-sides-to-seek.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +15,6 @@ import { TapSidesToSeekComponent } from './tap-sides-to-seek/tap-sides-to-seek.c
     VimeModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

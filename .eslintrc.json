@@ -3,8 +3,11 @@
     "project": "./tsconfig.json"
   },
   "extends": [
-    "airbnb-typescript",
-    "plugin:@stencil/recommended"
+    "airbnb-typescript"
+    // "plugin:@stencil/recommended"
+  ],
+  "ignorePatterns": [
+    "packages/media/**"
   ],
   "rules": {
     "no-console": "off",

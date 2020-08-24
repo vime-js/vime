@@ -8,7 +8,7 @@ module.exports = {
       items: [
         'welcome/introduction',
         'welcome/design-principles',
-        'welcome/contributing'
+        'welcome/contributing',
       ],
     },
     {

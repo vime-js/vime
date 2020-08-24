@@ -44,7 +44,6 @@ export class Settings {
   /**
    * Whether the settings menu is opened/closed.
    */
-  // eslint-disable-next-line @stencil/strict-mutable
   @Prop({ mutable: true, reflect: true }) active = false;
 
   @Watch('active')

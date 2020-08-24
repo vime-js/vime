@@ -1,16 +1,16 @@
 import { defineCustomElements } from '@vime/core/loader';
-import { usePlayerContext, usePlayerDispatcher } from './context';
-import { 
-  PlayerProp, 
-  PlayerEvent, 
-  PlayerProps, 
+import {
+  PlayerProp,
+  PlayerEvent,
+  PlayerProps,
   PlayerDispatcher,
   findRootPlayer,
 } from '@vime/core';
+import { usePlayerContext, usePlayerDispatcher } from './context';
 
 export * from './components';
 
-export { 
+export {
   PlayerProp,
   PlayerProps,
   PlayerEvent,

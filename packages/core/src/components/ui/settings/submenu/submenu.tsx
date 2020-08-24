@@ -34,7 +34,6 @@ export class Submenu {
   /**
    * Whether the submenu is open/closed.
    */
-  // eslint-disable-next-line @stencil/strict-mutable
   @Prop({ mutable: true, reflect: true }) active = false;
 
   componentWillLoad() {

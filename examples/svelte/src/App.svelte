@@ -1,11 +1,21 @@
 <script lang="ts">
-	import type { Components } from '@vime/core';
+	import { usePlayerStore } from '@vime/svelte';
 
-	let player: Components.VimePlayer;
+	// Custom UI component.
+	import TapSidesToSeek from './TapSidesToSeek.svelte';
+
+	let player: HTMLVimePlayerElement;
+
+	/**
+	 * All player properties are available through the store.
+	 */
+	const { paused } = usePlayerStore(() => player);
 
 	const onPlaybackReady = () => {
 		// ...
 	};
+
+	$: console.log($paused);
 </script>
 
 <div id="container">
@@ -17,7 +27,10 @@
 			<source data-src="http://localhost:3335/720p.mp4" type="video/mp4">
 		</vime-video>
 
-		<vime-default-ui></vime-default-ui>
+		<vime-default-ui>
+			<!-- Custom UI component. -->
+			<TapSidesToSeek />
+		</vime-default-ui>
 	</vime-player>
 </div>
 

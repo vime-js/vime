@@ -1,5 +1,3 @@
-/* eslint-disable @stencil/strict-mutable */
-
 import {
   Component,
   Element,

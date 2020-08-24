@@ -2,10 +2,6 @@ import React, { useRef } from "react";
 import { usePlayerContext, PlayerProp, usePlayerDispatcher } from "@vime/react";
 import './TapSidesToSeek.css';
 
-/**
- * The following are "advanced" concepts that you'd only need if you want to create custom 
- * components inside the player.  
- * */
 function TapSidesToSeek() {
   /**
    * We need a reference to a DOM element so the Vime hooks work as they rely on dispatching 

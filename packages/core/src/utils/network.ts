@@ -94,7 +94,7 @@ export const parseQueryString = <T>(qs?: string): T => {
 
   let match;
 
-  // eslint-disable-next-line no-cond-assign,@stencil/strict-boolean-conditions
+  // eslint-disable-next-line no-cond-assign
   while ((match = QUERY_STRING_REGEX.exec(qs!))) {
     const name = tryDecodeURIComponent(match[1], match[1]).replace('[]', '');
 

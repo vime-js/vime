@@ -1,6 +1,6 @@
-import { NgModule } from "@angular/core";
-import { defineCustomElements } from "@vime/core/loader";
-import { 
+import { NgModule } from '@angular/core';
+import { defineCustomElements } from '@vime/core/loader';
+import {
   VimePlayer,
   VimeAudio,
   VimeCaptionControl,
@@ -48,7 +48,7 @@ import {
   VimeVimeo,
   VimeVolumeControl,
   VimeYoutube,
-} from "./directives/proxies";
+} from './directives/proxies';
 
 defineCustomElements(window);
 
@@ -106,6 +106,6 @@ const DECLARATIONS = [
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
   imports: [],
-  providers: []
+  providers: [],
 })
 export class VimeModule {}
