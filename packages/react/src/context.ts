@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { 
-  withCustomPlayerContext, 
   PlayerProps, 
-  createPlayerDispatcher, 
   PlayerDispatcher,
+  createPlayerDispatcher, 
+  usePlayerContext as useContext, 
 } from "@vime/core";
 
 const noop = () => {};
@@ -29,10 +29,10 @@ export function usePlayerContext<P extends keyof PlayerProps>(
 
   useEffect(() => {
     if (ref.current === null) return;
-    return withCustomPlayerContext(
+    return useContext(
       ref.current!, 
       [prop], 
-      (_, newValue) => { setValue(newValue as any); }
+      (_, newValue) => { setValue(newValue); }
     );
   }, [ref]);
 

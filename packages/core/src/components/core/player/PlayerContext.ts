@@ -10,7 +10,7 @@ export const withPlayerContext = (
   props: PlayerProp[],
 ) => openWormhole(Component as any, props);
 
-export const withCustomPlayerContext = (
+export const usePlayerContext = (
   ref: HTMLElement,
   props: PlayerProp[],
   updater: (prop: keyof typeof PlayerProp, value: any) => void,
