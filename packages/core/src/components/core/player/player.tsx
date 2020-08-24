@@ -129,6 +129,16 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
+  @Prop({ mutable: true }) mounted = false;
+
+  /**
+   * @inheritDoc
+   */
+  @Prop({ mutable: true }) destroyed = false;
+
+  /**
+   * @inheritDoc
+   */
   @Prop({ mutable: true, attribute: null }) playbackReady = false;
 
   @Watch('playbackReady')
@@ -462,6 +472,16 @@ export class Player implements MediaPlayer {
    * @inheritDoc
    */
   @Event() vCurrentTimeChange!: EventEmitter<PlayerProps[PlayerProp.CurrentTime]>;
+
+  /**
+   * @inheritDoc
+   */
+  @Event() vMounted!: EventEmitter<void>;
+
+  /**
+   * @inheritDoc
+   */
+  @Event() vDestroyed!: EventEmitter<void>;
 
   /**
    * @inheritDoc
@@ -815,6 +835,8 @@ export class Player implements MediaPlayer {
 
   componentDidLoad() {
     this.disposal.add(lazyLoader(this.el));
+    this.mounted = true;
+    this.scheduler.markAsInternallyChanged(PlayerProp.Mounted);
   }
 
   componentWillRender() {
@@ -826,10 +848,9 @@ export class Player implements MediaPlayer {
     this.fullscreen.destroy();
     this.autopauseMgr.destroy();
     this.scheduler.destroy();
-    this.toggledCaption = undefined;
-    this.provider = undefined;
-    this.adapter = undefined;
     this.disposal.empty();
+    this.destroyed = true;
+    this.scheduler.markAsInternallyChanged(PlayerProp.Destroyed);
   }
 
   private getPlayerState() {

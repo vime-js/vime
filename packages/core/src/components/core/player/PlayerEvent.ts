@@ -17,6 +17,8 @@ const isToggleStateEvent = new Set([
 // Events that are emitted without the 'Change' postfix.
 const hasShortenedEventName = new Set([
   PlayerProp.Ready,
+  PlayerProp.Mounted,
+  PlayerProp.Destroyed,
   PlayerProp.PlaybackStarted,
   PlayerProp.PlaybackEnded,
   PlayerProp.PlaybackReady,
@@ -48,6 +50,8 @@ export enum PlayerEvent {
   DurationChange = 'vDurationChange',
   CurrentTimeChange = 'vCurrentTimeChange',
   Ready = 'vReady',
+  Mounted = 'vMounted',
+  Destroyed = 'vDestroyed',
   PlaybackReady = 'vPlaybackReady',
   PlaybackStarted = 'vPlaybackStarted',
   PlaybackEnded = 'vPlaybackEnded',
@@ -122,6 +126,16 @@ export interface PlayerEvents {
    * Emitted when the player has loaded and is ready to be interacted with.
    */
   [PlayerEvent.Ready]: EventEmitter<void>;
+
+  /**
+   * Emitted when the player has mounted the DOM.
+   */
+  [PlayerEvent.Mounted]: EventEmitter<void>;
+
+  /**
+   * Emitted when the player has disconnected from the DOM and been destroyed.
+   */
+  [PlayerEvent.Destroyed]: EventEmitter<void>;
 
   /**
    * Emitted when the media is ready to begin playback. The following props are guaranteed to be

@@ -9,7 +9,7 @@ import { MockMediaProviderAdapter } from '../../../providers/MediaProvider';
 import { PlayerEvent } from '../PlayerEvent';
 
 let page: SpecPage;
-let player: Player;
+let player: HTMLVimePlayerElement;
 let adapter: MockMediaProviderAdapter;
 let provider: HTMLVimeFaketubeElement;
 
@@ -20,7 +20,7 @@ const buildPage = async (opts?: Partial<NewSpecPageOptions>) => {
     ...opts,
   });
 
-  player = page.rootInstance!;
+  player = page.root! as HTMLVimePlayerElement;
   provider = page.root!.querySelector('vime-faketube')!;
   adapter = await player.getAdapter() as MockMediaProviderAdapter;
 };
@@ -474,6 +474,18 @@ describe('state changes', () => {
     await provider.dispatchStateChange(PlayerProp.Volume, 99);
     await page.waitForChanges();
     expect(player.volume).toEqual(99);
+  });
+});
+
+describe('lifecycle', () => {
+  it('should set mounted to true after mounting DOM', async () => {
+    expect(player.mounted).toBeTruthy();
+  });
+
+  it('should set destroyed to true after disconnecting from DOM', async () => {
+    player.remove();
+    await page.waitForChanges();
+    expect(player.destroyed).toBeTruthy();
   });
 });
 

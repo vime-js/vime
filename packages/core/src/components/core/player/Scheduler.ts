@@ -282,9 +282,9 @@ export class Scheduler {
   }
 
   destroy() {
-    this.cache.clear();
-    this.internalState.clear();
-    this.providerState.clear();
+    // this.cache.clear();
+    // this.internalState.clear();
+    // this.providerState.clear();
     this.adapterCalls.clear();
   }
 }

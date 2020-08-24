@@ -12,6 +12,8 @@ export enum PlayerProp {
   Seeking = 'seeking',
   Debug = 'debug',
   Ready = 'ready',
+  Mounted = 'mounted',
+  Destroyed = 'destroyed',
   PlaybackStarted = 'playbackStarted',
   PlaybackEnded = 'playbackEnded',
   PlaybackRate= 'playbackRate',
@@ -59,6 +61,8 @@ export type InternalReadonlyPlayerProps = Pick<PlayerProps, PlayerProp.Autoplay
 | PlayerProp.Debug
 | PlayerProp.Loop
 | PlayerProp.Ready
+| PlayerProp.Mounted
+| PlayerProp.Destroyed
 | PlayerProp.IsAudio
 | PlayerProp.IsVideo
 | PlayerProp.IsMobile
@@ -105,6 +109,8 @@ const internalReadonly = new Set<InternalReadonlyPlayerProp>([
   PlayerProp.Controls,
   PlayerProp.Loop,
   PlayerProp.Ready,
+  PlayerProp.Mounted,
+  PlayerProp.Destroyed,
   PlayerProp.Debug,
   PlayerProp.IsAudio,
   PlayerProp.IsVideo,
@@ -210,6 +216,21 @@ export interface PlayerProps {
    * Depending on the provider, changing this prop may cause the player to completely reset.
    */
   [PlayerProp.Autoplay]: boolean
+
+  /**
+   * `@readonly` Whether the player has mounted the DOM.
+   */
+  [PlayerProp.Mounted]: boolean
+
+  /**
+   * `@readonly` Whether the player has disconnected from the DOM and been destroyed.
+   */
+  [PlayerProp.Destroyed]: boolean
+
+  /**
+   * `@readonly` Whether the player has loaded and is ready to be interacted with.
+   */
+  [PlayerProp.Ready]: boolean
 
   /**
    * `@readonly` Whether the player has loaded and is ready to be interacted with.

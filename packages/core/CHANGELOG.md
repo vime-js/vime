@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [1.8.1](https://github.com/vime-js/vime/compare/@vime/core@1.8.0...@vime/core@1.8.1) (2020-08-23)
 
-
 ### Bug Fixes
 
-* **core:** video bg looks off in fullscreen ([95c60c6](https://github.com/vime-js/vime/commit/95c60c68d5b27ad9b1601bf65fd038f84652a7ec))
+- **core:** video bg looks off in fullscreen ([95c60c6](https://github.com/vime-js/vime/commit/95c60c68d5b27ad9b1601bf65fd038f84652a7ec))
 
 # [1.8.0](https://github.com/vime-js/vime/compare/@vime/core@1.7.0...@vime/core@1.8.0) (2020-08-23)
 
