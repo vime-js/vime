@@ -10,7 +10,10 @@
           <source data-src="http://localhost:3335/720p.mp4" type="video/mp4">
         </VimeVideo>
 
-        <VimeDefaultUi />
+        <VimeDefaultUi>
+          <!-- Custom UI component. -->
+          <TapSidesToSeek />
+        </VimeDefaultUi>
       </VimePlayer>
     </div>
   </div>
@@ -26,11 +29,15 @@ import '@vime/core/themes/default.css';
 // Optional light theme (extends default).
 // import '@vime/core/themes/light.css';
 
+// Custom UI Component.
+import TapSidesToSeek from './TapSidesToSeek.vue';
+
 @Component({
   components: {
     VimePlayer,
     VimeVideo,
     VimeDefaultUi,
+    TapSidesToSeek,
   },
 })
 export default class App extends Vue {
