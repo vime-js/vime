@@ -67,6 +67,11 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
+  @Prop() theme?: string;
+
+  /**
+   * @inheritDoc
+   */
   @Prop({ mutable: true }) paused = true;
 
   @Watch('paused')
@@ -432,6 +437,11 @@ export class Player implements MediaPlayer {
    * Events
    * ------------------------------------------------------
    */
+
+  /**
+   * @inheritDoc
+   */
+  @Event() vThemeChange!: EventEmitter<PlayerProps[PlayerProp.theme]>;
 
   /**
    * @inheritDoc

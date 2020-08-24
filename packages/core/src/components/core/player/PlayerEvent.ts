@@ -40,6 +40,7 @@ export const getEventName = (prop: PlayerProp): PlayerEvent => {
 };
 
 export enum PlayerEvent {
+  themeChange = 'vThemeChange',
   pausedChange = 'vPausedChange',
   play = 'vPlay',
   playingChange = 'vPlayingChange',
@@ -79,6 +80,11 @@ export enum PlayerEvent {
 }
 
 export interface PlayerEvents {
+  /**
+   * Emitted when the `theme` prop changes value.
+   */
+  [PlayerEvent.themeChange]: EventEmitter<PlayerProps[PlayerProp.theme]>;
+
   /**
    * Emitted when the `paused` prop changes value.
    */

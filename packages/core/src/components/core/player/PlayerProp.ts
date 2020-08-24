@@ -2,6 +2,7 @@ import { MediaType } from './MediaType';
 import { ViewType } from './ViewType';
 
 export enum PlayerProp {
+  theme= 'theme',
   paused = 'paused',
   playing = 'playing',
   duration = 'duration',
@@ -87,6 +88,7 @@ const externalWritable = new Set([
   PlayerProp.autopause,
   PlayerProp.aspectRatio,
   PlayerProp.controls,
+  PlayerProp.theme,
   PlayerProp.debug,
   PlayerProp.paused,
   PlayerProp.currentTime,
@@ -163,6 +165,11 @@ export const resetablePlayerProps = {
 };
 
 export interface PlayerProps {
+  /**
+   * This property has no role other than scoping CSS selectors.
+   */
+  [PlayerProp.theme]?: string;
+
   /**
    * Whether playback should be paused. Defaults to `true` if no media has loaded or playback has
    * not started. Setting this to `true` will begin/resume playback.
