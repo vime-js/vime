@@ -26,7 +26,7 @@ export const withCustomPlayerContext = (
     disconnect = forceDisconnect;
   });
 
-  const onReady = () => {
+  const connect = () => {
     ref.dispatchEvent(new CustomEvent('openWormhole', {
       bubbles: true,
       composed: true,
@@ -38,10 +38,14 @@ export const withCustomPlayerContext = (
       },
     }));
 
-    player.removeEventListener(PlayerEvent.Ready, onReady);
+    player.removeEventListener(PlayerEvent.Mounted, connect);
   };
 
-  player.addEventListener(PlayerEvent.Ready, onReady);
+  if (!player.mounted) {
+    player.addEventListener(PlayerEvent.Mounted, connect);
+  } else {
+    connect();
+  }
 
   return () => {
     disconnect?.();
