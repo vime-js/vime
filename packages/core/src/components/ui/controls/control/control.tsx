@@ -88,7 +88,7 @@ export class Control implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() isTouch: PlayerProps[PlayerProp.IsTouch] = false;
+  @Prop() isTouch: PlayerProps[PlayerProp.isTouch] = false;
 
   /**
    * Emitted when the user is interacting with the control by focusing, touching or hovering on it.
@@ -187,5 +187,5 @@ export class Control implements KeyboardControl {
 }
 
 withPlayerContext(Control, [
-  PlayerProp.IsTouch,
+  PlayerProp.isTouch,
 ]);

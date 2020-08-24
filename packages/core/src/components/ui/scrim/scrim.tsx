@@ -22,12 +22,12 @@ export class Scrim {
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
+  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
 
   /**
    * @internal
    */
-  @Prop() isControlsActive: PlayerProps[PlayerProp.IsControlsActive] = false;
+  @Prop() isControlsActive: PlayerProps[PlayerProp.isControlsActive] = false;
 
   render() {
     return (
@@ -47,6 +47,6 @@ export class Scrim {
 }
 
 withPlayerContext(Scrim, [
-  PlayerProp.IsVideoView,
-  PlayerProp.IsControlsActive,
+  PlayerProp.isVideoView,
+  PlayerProp.isControlsActive,
 ]);

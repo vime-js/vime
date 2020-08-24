@@ -42,12 +42,12 @@ export class ScrubberControl {
   /**
    * @internal
    */
-  @Prop() currentTime: PlayerProps[PlayerProp.CurrentTime] = 0;
+  @Prop() currentTime: PlayerProps[PlayerProp.currentTime] = 0;
 
   /**
    * @internal
    */
-  @Prop() duration: PlayerProps[PlayerProp.Duration] = -1;
+  @Prop() duration: PlayerProps[PlayerProp.duration] = -1;
 
   /**
    * Prevents seeking forward/backward by using the Left/Right arrow keys.
@@ -68,7 +68,7 @@ export class ScrubberControl {
       const seekTo = isLeftArrow
         ? Math.max(0, this.currentTime - 5)
         : Math.min(this.duration, this.currentTime + 5);
-      this.dispatch(PlayerProp.CurrentTime, seekTo);
+      this.dispatch(PlayerProp.currentTime, seekTo);
     };
 
     this.keyboardDisposal.add(listen(player, 'keydown', onKeyDown));
@@ -83,17 +83,17 @@ export class ScrubberControl {
   /**
    * @internal
    */
-  @Prop() buffering: PlayerProps[PlayerProp.Buffering] = false;
+  @Prop() buffering: PlayerProps[PlayerProp.buffering] = false;
 
   /**
    * @internal
    */
-  @Prop() buffered: PlayerProps[PlayerProp.Buffered] = 0;
+  @Prop() buffered: PlayerProps[PlayerProp.buffered] = 0;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   componentWillLoad() {
     this.dispatch = createPlayerDispatcher(this);
@@ -124,7 +124,7 @@ export class ScrubberControl {
   }
 
   private onSeek(event: CustomEvent<number>) {
-    this.dispatch(PlayerProp.CurrentTime, event.detail);
+    this.dispatch(PlayerProp.currentTime, event.detail);
   }
 
   private onSeeking(event: MouseEvent) {
@@ -203,9 +203,9 @@ export class ScrubberControl {
 }
 
 withPlayerContext(ScrubberControl, [
-  PlayerProp.I18N,
-  PlayerProp.CurrentTime,
-  PlayerProp.Duration,
-  PlayerProp.Buffering,
-  PlayerProp.Buffered,
+  PlayerProp.i18n,
+  PlayerProp.currentTime,
+  PlayerProp.duration,
+  PlayerProp.buffering,
+  PlayerProp.buffered,
 ]);

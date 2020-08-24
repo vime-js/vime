@@ -45,19 +45,19 @@ export class PlaybackControl implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() paused: PlayerProps[PlayerProp.Paused] = true;
+  @Prop() paused: PlayerProps[PlayerProp.paused] = true;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   componentWillLoad() {
     this.dispatch = createPlayerDispatcher(this);
   }
 
   private onClick() {
-    this.dispatch(PlayerProp.Paused, !this.paused);
+    this.dispatch(PlayerProp.paused, !this.paused);
   }
 
   render() {
@@ -86,6 +86,6 @@ export class PlaybackControl implements KeyboardControl {
 }
 
 withPlayerContext(PlaybackControl, [
-  PlayerProp.Paused,
-  PlayerProp.I18N,
+  PlayerProp.paused,
+  PlayerProp.i18n,
 ]);

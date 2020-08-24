@@ -27,13 +27,13 @@ export type MockMediaProviderAdapter = {
 };
 
 export interface MediaProvider<InternalPlayerType = any> extends ComponentInterface {
-  [PlayerProp.Controls]: PlayerProps[PlayerProp.Controls]
-  [PlayerProp.Language]: PlayerProps[PlayerProp.Language]
-  [PlayerProp.Debug]: PlayerProps[PlayerProp.Debug]
-  [PlayerProp.Loop]: PlayerProps[PlayerProp.Loop]
-  [PlayerProp.Autoplay]: PlayerProps[PlayerProp.Autoplay]
-  [PlayerProp.Playsinline]: PlayerProps[PlayerProp.Playsinline]
-  [PlayerProp.Muted]: PlayerProps[PlayerProp.Muted]
+  [PlayerProp.controls]: PlayerProps[PlayerProp.controls]
+  [PlayerProp.language]: PlayerProps[PlayerProp.language]
+  [PlayerProp.debug]: PlayerProps[PlayerProp.debug]
+  [PlayerProp.loop]: PlayerProps[PlayerProp.loop]
+  [PlayerProp.autoplay]: PlayerProps[PlayerProp.autoplay]
+  [PlayerProp.playsinline]: PlayerProps[PlayerProp.playsinline]
+  [PlayerProp.muted]: PlayerProps[PlayerProp.muted]
   vLoadStart: EventEmitter<void>
   getAdapter(): Promise<MediaProviderAdapter<InternalPlayerType>>
 }
@@ -45,11 +45,11 @@ export interface MediaProviderConstructor {
 export const withProviderContext = (
   Provider: MediaProviderConstructor,
 ) => withPlayerContext(Provider, [
-  PlayerProp.Autoplay,
-  PlayerProp.Controls,
-  PlayerProp.Language,
-  PlayerProp.Muted,
-  PlayerProp.Debug,
-  PlayerProp.Loop,
-  PlayerProp.Playsinline,
+  PlayerProp.autoplay,
+  PlayerProp.controls,
+  PlayerProp.language,
+  PlayerProp.muted,
+  PlayerProp.debug,
+  PlayerProp.loop,
+  PlayerProp.playsinline,
 ]);

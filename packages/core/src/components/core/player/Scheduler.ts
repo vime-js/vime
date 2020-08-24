@@ -90,7 +90,7 @@ export class Scheduler {
         await call(adapter);
       } catch (e) {
         this.player.errors = [...this.player.errors, e];
-        this.markAsInternallyChanged(PlayerProp.Errors);
+        this.markAsInternallyChanged(PlayerProp.errors);
       }
     }));
 
@@ -135,11 +135,11 @@ export class Scheduler {
       );
     }
 
-    if (this.player.debug && (prop !== PlayerProp.CurrentTime)) {
+    if (this.player.debug && (prop !== PlayerProp.currentTime)) {
       console.log(`STATECHANGE [${by.nodeName}]: ${prop} -> ${value}`);
     }
 
-    if (prop === PlayerProp.Errors) {
+    if (prop === PlayerProp.errors) {
       this.player.errors = [...this.player.errors, ...value];
       this.markAsInternallyChanged(prop);
       return;
@@ -154,9 +154,9 @@ export class Scheduler {
   }
 
   onPausedChange(paused: boolean) {
-    if (paused === this.providerState.get(PlayerProp.Paused)) return;
+    if (paused === this.providerState.get(PlayerProp.paused)) return;
     this.queueAdapterCall(
-      PlayerProp.Paused,
+      PlayerProp.paused,
       (adapter) => {
         this.player.paused = paused;
         return !paused ? adapter.play() : adapter.pause();
@@ -168,10 +168,10 @@ export class Scheduler {
     // Not really safe but only way to let initial current time pass.
     const duration = this.player.playbackReady ? this.player.duration : Infinity;
     const currentTime = Math.max(0, Math.min(time, duration));
-    const providerTime = this.providerState.get(PlayerProp.CurrentTime);
+    const providerTime = this.providerState.get(PlayerProp.currentTime);
     if (Math.floor(currentTime) === Math.floor(providerTime)) return;
     this.queueAdapterCall(
-      PlayerProp.CurrentTime,
+      PlayerProp.currentTime,
       (adapter) => {
         this.player.currentTime = currentTime;
         return adapter.setCurrentTime(currentTime);
@@ -181,9 +181,9 @@ export class Scheduler {
 
   onVolumeChange(level: number) {
     const volume = Math.max(0, Math.min(level, 100));
-    if (volume === this.providerState.get(PlayerProp.Volume)) return;
+    if (volume === this.providerState.get(PlayerProp.volume)) return;
     this.queueAdapterCall(
-      PlayerProp.Volume,
+      PlayerProp.volume,
       (adapter) => {
         this.player.volume = volume;
         return adapter.setVolume(volume);
@@ -192,15 +192,15 @@ export class Scheduler {
   }
 
   onMutedChange(muted: boolean) {
-    if (muted === this.providerState.get(PlayerProp.Muted)) return;
-    this.queueAdapterCall(PlayerProp.Muted, (adapter) => {
+    if (muted === this.providerState.get(PlayerProp.muted)) return;
+    this.queueAdapterCall(PlayerProp.muted, (adapter) => {
       this.player.muted = muted;
       return adapter.setMuted(muted);
     });
   }
 
   async onPlaybackRateChange(prevRate: number, newRate: number) {
-    if (newRate === this.providerState.get(PlayerProp.PlaybackRate)) return;
+    if (newRate === this.providerState.get(PlayerProp.playbackRate)) return;
 
     let isValid = true;
 
@@ -219,12 +219,12 @@ export class Scheduler {
 
     if (!isValid) {
       this.player.playbackRate = prevRate;
-      this.cache.set(PlayerProp.PlaybackRate, prevRate);
+      this.cache.set(PlayerProp.playbackRate, prevRate);
       return;
     }
 
     this.queueAdapterCall(
-      PlayerProp.PlaybackRate,
+      PlayerProp.playbackRate,
       async (adapter) => adapter.setPlaybackRate?.(newRate),
     );
   }
@@ -232,7 +232,7 @@ export class Scheduler {
   async onPlaybackQualityChange(prevQuality: string, newQuality: string) {
     if (
       isUndefined(newQuality)
-      || (newQuality === this.providerState.get(PlayerProp.PlaybackQuality))
+      || (newQuality === this.providerState.get(PlayerProp.playbackQuality))
     ) return;
 
     let isValid = true;
@@ -252,12 +252,12 @@ export class Scheduler {
 
     if (!isValid) {
       this.player.playbackQuality = prevQuality;
-      this.cache.set(PlayerProp.PlaybackQuality, prevQuality);
+      this.cache.set(PlayerProp.playbackQuality, prevQuality);
       return;
     }
 
     this.queueAdapterCall(
-      PlayerProp.PlaybackQuality,
+      PlayerProp.playbackQuality,
       async (adapter) => adapter.setPlaybackQuality?.(newQuality),
     );
   }
@@ -270,11 +270,11 @@ export class Scheduler {
       detail: value,
     }));
 
-    if ((prop === PlayerProp.Paused) && !value) {
+    if ((prop === PlayerProp.paused) && !value) {
       events.push(new CustomEvent('vPlay', { bubbles: false }));
     }
 
-    if ((prop === PlayerProp.Seeking) && prevVal && !value) {
+    if ((prop === PlayerProp.seeking) && prevVal && !value) {
       events.push(new CustomEvent('vSeeked', { bubbles: false }));
     }
 

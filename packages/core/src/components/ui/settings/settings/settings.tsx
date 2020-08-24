@@ -49,7 +49,7 @@ export class Settings {
 
   @Watch('active')
   onActiveChange() {
-    this.dispatch(PlayerProp.IsSettingsActive, this.active);
+    this.dispatch(PlayerProp.isSettingsActive, this.active);
     if (isUndefined(this.controller)) return;
     this.controller!.expanded = this.active;
   }
@@ -57,12 +57,12 @@ export class Settings {
   /**
    * @internal
    */
-  @Prop() isMobile: PlayerProps[PlayerProp.IsMobile] = false;
+  @Prop() isMobile: PlayerProps[PlayerProp.isMobile] = false;
 
   /**
    * @internal
    */
-  @Prop() isAudioView: PlayerProps[PlayerProp.IsAudioView] = false;
+  @Prop() isAudioView: PlayerProps[PlayerProp.isAudioView] = false;
 
   componentWillLoad() {
     this.dispatch = createPlayerDispatcher(this);
@@ -122,6 +122,6 @@ export class Settings {
 }
 
 withPlayerContext(Settings, [
-  PlayerProp.IsMobile,
-  PlayerProp.IsAudioView,
+  PlayerProp.isMobile,
+  PlayerProp.isAudioView,
 ]);

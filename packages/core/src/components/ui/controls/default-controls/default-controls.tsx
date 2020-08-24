@@ -35,22 +35,22 @@ export class DefaultControls {
   /**
    * @internal
    */
-  @Prop() isMobile: PlayerProps[PlayerProp.IsMobile] = false;
+  @Prop() isMobile: PlayerProps[PlayerProp.isMobile] = false;
 
   /**
    * @internal
    */
-  @Prop() isLive: PlayerProps[PlayerProp.IsLive] = false;
+  @Prop() isLive: PlayerProps[PlayerProp.isLive] = false;
 
   /**
    * @internal
    */
-  @Prop() isAudioView: PlayerProps[PlayerProp.IsAudioView] = false;
+  @Prop() isAudioView: PlayerProps[PlayerProp.isAudioView] = false;
 
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
+  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
 
   private buildAudioControls() {
     return (
@@ -167,8 +167,8 @@ export class DefaultControls {
 }
 
 withPlayerContext(DefaultControls, [
-  PlayerProp.IsMobile,
-  PlayerProp.IsAudioView,
-  PlayerProp.IsVideoView,
-  PlayerProp.IsLive,
+  PlayerProp.isMobile,
+  PlayerProp.isAudioView,
+  PlayerProp.isVideoView,
+  PlayerProp.isLive,
 ]);

@@ -110,18 +110,18 @@ export class Dash implements MediaFileProvider<any> {
       this.dash!.initialize(video, null, this.autoplay);
 
       this.dash!.on(Dash.MediaPlayer.events.CAN_PLAY, () => {
-        this.dispatch(PlayerProp.MediaType, MediaType.Video);
-        this.dispatch(PlayerProp.CurrentSrc, this.src);
-        this.dispatch(PlayerProp.PlaybackReady, true);
+        this.dispatch(PlayerProp.mediaType, MediaType.Video);
+        this.dispatch(PlayerProp.currentSrc, this.src);
+        this.dispatch(PlayerProp.playbackReady, true);
       });
 
       this.dash!.on(Dash.MediaPlayer.events.ERROR, (e: any) => {
-        this.dispatch(PlayerProp.Errors, [e]);
+        this.dispatch(PlayerProp.errors, [e]);
       });
 
       this.hasAttached = true;
     } catch (e) {
-      this.dispatch(PlayerProp.Errors, [e]);
+      this.dispatch(PlayerProp.errors, [e]);
     }
   }
 
@@ -165,5 +165,5 @@ export class Dash implements MediaFileProvider<any> {
 }
 
 withPlayerContext(Dash, [
-  PlayerProp.Autoplay,
+  PlayerProp.autoplay,
 ]);

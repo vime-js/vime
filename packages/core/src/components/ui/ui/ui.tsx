@@ -16,17 +16,17 @@ export class UI {
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
+  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
 
   /**
    * @internal
    */
-  @Prop() playsinline: PlayerProps[PlayerProp.Playsinline] = false;
+  @Prop() playsinline: PlayerProps[PlayerProp.playsinline] = false;
 
   /**
    * @internal
    */
-  @Prop() isFullscreenActive: PlayerProps[PlayerProp.IsFullscreenActive] = false;
+  @Prop() isFullscreenActive: PlayerProps[PlayerProp.isFullscreenActive] = false;
 
   render() {
     const canShowCustomUI = !IS_IOS
@@ -49,7 +49,7 @@ export class UI {
 }
 
 withPlayerContext(UI, [
-  PlayerProp.IsVideoView,
-  PlayerProp.Playsinline,
-  PlayerProp.IsFullscreenActive,
+  PlayerProp.isVideoView,
+  PlayerProp.playsinline,
+  PlayerProp.isFullscreenActive,
 ]);

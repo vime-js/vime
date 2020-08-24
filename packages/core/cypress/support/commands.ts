@@ -30,7 +30,7 @@ Cypress.Commands.add('mute', (muted: boolean) => cy.player()
 Cypress.Commands.add('playbackRate', (rate: number) => cy.player()
   .then(async ($player) => {
     const canSet = await $player[0].canSetPlaybackRate();
-    const rates: number[] = $player.prop(PlayerProp.PlaybackRates);
+    const rates: number[] = $player.prop(PlayerProp.playbackRates);
     if (!canSet || (rates.length === 0) || !(rates.includes(rate))) return $player;
     $player[0].callAdapter('setPlaybackRate', rate);
     return $player;
@@ -39,7 +39,7 @@ Cypress.Commands.add('playbackRate', (rate: number) => cy.player()
 Cypress.Commands.add('playbackQuality', (quality: string) => cy.player()
   .then(async ($player) => {
     const canSet = await $player[0].canSetPlaybackQuality();
-    const qualities: string[] = $player.prop(PlayerProp.PlaybackQualities);
+    const qualities: string[] = $player.prop(PlayerProp.playbackQualities);
     if (!canSet || (qualities.length === 0) || !(qualities.includes(quality))) return $player;
     $player[0].callAdapter('setPlaybackQuality', quality);
     return $player;

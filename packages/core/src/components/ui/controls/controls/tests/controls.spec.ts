@@ -32,9 +32,9 @@ it('should hide controls', async () => {
 
 it('should become active', async () => {
   expect(controls).not.toHaveClass('active');
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
-  await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
-  await provider.dispatchStateChange(PlayerProp.IsControlsActive, true);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
+  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+  await provider.dispatchStateChange(PlayerProp.isControlsActive, true);
   await page.waitForChanges();
   await page.waitForChanges();
   expect(controls).toHaveClass('active');
@@ -42,12 +42,12 @@ it('should become active', async () => {
 
 it('should only be active when audio view', async () => {
   expect(controls).not.toHaveClass('active');
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
-  await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
+  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
   await page.waitForChanges();
   await page.waitForChanges();
   expect(controls).toHaveClass('active');
-  await provider.dispatchStateChange(PlayerProp.Paused, false);
+  await provider.dispatchStateChange(PlayerProp.paused, false);
   await page.waitForChanges();
   await page.waitForChanges();
   jest.runAllTimers();
@@ -93,7 +93,7 @@ it('should justify controls', async () => {
 });
 
 it('should not pin controls if audio', async () => {
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
   controls.pin = 'topLeft';
   await page.waitForChanges();
   expect(controls.style.top).toEqual('');
@@ -101,7 +101,7 @@ it('should not pin controls if audio', async () => {
 });
 
 it('should pin controls to the center', async () => {
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
   controls.pin = 'center';
   await page.waitForChanges();
   expect(controls.style.top).toEqual('50%');
@@ -109,7 +109,7 @@ it('should pin controls to the center', async () => {
 });
 
 it('should pin controls', async () => {
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
   controls.pin = 'topLeft';
   await page.waitForChanges();
   expect(controls.style.top).toEqual('0');
@@ -124,10 +124,10 @@ it('should pin controls', async () => {
 
 it('should change active duration', async () => {
   controls.activeDuration = 3500;
-  await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
-  await provider.dispatchStateChange(PlayerProp.IsControlsActive, true);
-  await provider.dispatchStateChange(PlayerProp.Paused, false);
+  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
+  await provider.dispatchStateChange(PlayerProp.isControlsActive, true);
+  await provider.dispatchStateChange(PlayerProp.paused, false);
   await page.waitForChanges();
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
@@ -143,13 +143,13 @@ it('should change active duration', async () => {
 
 it('should wait for playback to start before showing controls', async () => {
   controls.waitForPlaybackStart = true;
-  await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
-  await provider.dispatchStateChange(PlayerProp.Paused, false);
+  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
+  await provider.dispatchStateChange(PlayerProp.paused, false);
   await page.waitForChanges();
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeFalsy();
-  await provider.dispatchStateChange(PlayerProp.PlaybackStarted, true);
+  await provider.dispatchStateChange(PlayerProp.playbackStarted, true);
   await page.waitForChanges();
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
@@ -157,13 +157,13 @@ it('should wait for playback to start before showing controls', async () => {
 
 it('should hide controls when paused', async () => {
   controls.hideWhenPaused = true;
-  await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
-  await provider.dispatchStateChange(PlayerProp.Paused, false);
+  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
+  await provider.dispatchStateChange(PlayerProp.paused, false);
   await page.waitForChanges();
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
-  await provider.dispatchStateChange(PlayerProp.Paused, true);
+  await provider.dispatchStateChange(PlayerProp.paused, true);
   await page.waitForChanges();
   await page.waitForChanges();
   requestAnimationFrame(async () => {
@@ -176,8 +176,8 @@ it('should hide controls when paused', async () => {
 
 it('should hide controls on mouse leave', async () => {
   controls.hideOnMouseLeave = true;
-  await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
   await page.waitForChanges();
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();

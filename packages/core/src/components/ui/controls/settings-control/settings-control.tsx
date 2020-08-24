@@ -41,7 +41,7 @@ export class SettingsControl {
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   componentWillLoad() {
     idCount += 1;
@@ -84,5 +84,5 @@ export class SettingsControl {
 }
 
 withPlayerContext(SettingsControl, [
-  PlayerProp.I18N,
+  PlayerProp.i18n,
 ]);

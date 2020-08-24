@@ -140,7 +140,7 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
 
   componentWillLoad() {
     this.dispatch = createPlayerDispatcher(this);
-    this.dispatch(PlayerProp.ViewType, ViewType.Video);
+    this.dispatch(PlayerProp.viewType, ViewType.Video);
     this.onVideoIdChange();
     this.initialMuted = this.muted;
     this.internalState.muted = this.muted;
@@ -190,8 +190,8 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
       .fetch(`${apiEndpoint}/video/${this.videoId}?fields=duration,thumbnail_1080_url`)
       .then((response) => response.json())
       .then((data) => {
-        this.dispatch(PlayerProp.CurrentPoster, data.thumbnail_1080_url);
-        this.dispatch(PlayerProp.Duration, parseFloat(data.duration));
+        this.dispatch(PlayerProp.currentPoster, data.thumbnail_1080_url);
+        this.dispatch(PlayerProp.duration, parseFloat(data.duration));
       });
   }
 
@@ -204,23 +204,23 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
     switch (msg.event) {
       case DailymotionEvent.PlaybackReady:
         this.onControlsChange();
-        this.dispatch(PlayerProp.CurrentSrc, this.embedSrc);
-        this.dispatch(PlayerProp.MediaType, MediaType.Video);
+        this.dispatch(PlayerProp.currentSrc, this.embedSrc);
+        this.dispatch(PlayerProp.mediaType, MediaType.Video);
         Promise.all([
           this.pendingVideoInfoFetch,
           this.pendingMediaTitleFetch?.promise,
         ]).then(() => {
-          this.dispatch(PlayerProp.PlaybackReady, true);
+          this.dispatch(PlayerProp.playbackReady, true);
         });
         break;
       case DailymotionEvent.VideoChange:
-        this.dispatch(PlayerProp.MediaTitle, msg.title!);
+        this.dispatch(PlayerProp.mediaTitle, msg.title!);
         this.pendingMediaTitleFetch?.resolve();
         break;
       case DailymotionEvent.Start:
-        this.dispatch(PlayerProp.Paused, false);
-        this.dispatch(PlayerProp.PlaybackStarted, true);
-        this.dispatch(PlayerProp.Buffering, true);
+        this.dispatch(PlayerProp.paused, false);
+        this.dispatch(PlayerProp.playbackStarted, true);
+        this.dispatch(PlayerProp.buffering, true);
         break;
       case DailymotionEvent.VideoStart:
         // Commands don't go through until ads have finished, so we store them and then replay them
@@ -232,59 +232,59 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
         }
         break;
       case DailymotionEvent.Play:
-        this.dispatch(PlayerProp.Paused, false);
+        this.dispatch(PlayerProp.paused, false);
         break;
       case DailymotionEvent.Pause:
-        this.dispatch(PlayerProp.Paused, true);
-        this.dispatch(PlayerProp.Playing, false);
-        this.dispatch(PlayerProp.Buffering, false);
+        this.dispatch(PlayerProp.paused, true);
+        this.dispatch(PlayerProp.playing, false);
+        this.dispatch(PlayerProp.buffering, false);
         break;
       case DailymotionEvent.Playing:
-        this.dispatch(PlayerProp.Playing, true);
-        this.dispatch(PlayerProp.Buffering, false);
+        this.dispatch(PlayerProp.playing, true);
+        this.dispatch(PlayerProp.buffering, false);
         break;
       case DailymotionEvent.VideoEnd:
         if (this.loop) {
           setTimeout(() => { this.remoteControl(DailymotionCommand.Play); }, 300);
         } else {
-          this.dispatch(PlayerProp.PlaybackEnded, true);
+          this.dispatch(PlayerProp.playbackEnded, true);
         }
         break;
       case DailymotionEvent.TimeUpdate:
-        this.dispatch(PlayerProp.CurrentTime, parseFloat(msg.time!));
+        this.dispatch(PlayerProp.currentTime, parseFloat(msg.time!));
         break;
       case DailymotionEvent.VolumeChange:
-        this.dispatch(PlayerProp.Muted, msg.muted === 'true');
-        this.dispatch(PlayerProp.Volume, Math.floor(parseFloat(msg.volume!) * 100));
+        this.dispatch(PlayerProp.muted, msg.muted === 'true');
+        this.dispatch(PlayerProp.volume, Math.floor(parseFloat(msg.volume!) * 100));
         break;
       case DailymotionEvent.Seeking:
-        this.dispatch(PlayerProp.CurrentTime, parseFloat(msg.time!));
-        this.dispatch(PlayerProp.Seeking, true);
+        this.dispatch(PlayerProp.currentTime, parseFloat(msg.time!));
+        this.dispatch(PlayerProp.seeking, true);
         break;
       case DailymotionEvent.Seeked:
-        this.dispatch(PlayerProp.CurrentTime, parseFloat(msg.time!));
-        this.dispatch(PlayerProp.Seeking, false);
+        this.dispatch(PlayerProp.currentTime, parseFloat(msg.time!));
+        this.dispatch(PlayerProp.seeking, false);
         break;
       case DailymotionEvent.Waiting:
-        this.dispatch(PlayerProp.Buffering, true);
+        this.dispatch(PlayerProp.buffering, true);
         break;
       case DailymotionEvent.Progress:
-        this.dispatch(PlayerProp.Buffered, parseFloat(msg.time!));
+        this.dispatch(PlayerProp.buffered, parseFloat(msg.time!));
         break;
       case DailymotionEvent.DurationChange:
-        this.dispatch(PlayerProp.Duration, parseFloat(msg.duration!));
+        this.dispatch(PlayerProp.duration, parseFloat(msg.duration!));
         break;
       case DailymotionEvent.QualitiesAvailable:
-        this.dispatch(PlayerProp.PlaybackQualities, msg.qualities!.map((q: string) => `${q}p`));
+        this.dispatch(PlayerProp.playbackQualities, msg.qualities!.map((q: string) => `${q}p`));
         break;
       case DailymotionEvent.QualityChange:
-        this.dispatch(PlayerProp.PlaybackQuality, `${msg.quality}p`);
+        this.dispatch(PlayerProp.playbackQuality, `${msg.quality}p`);
         break;
       case DailymotionEvent.FullscreenChange:
-        this.dispatch(PlayerProp.IsFullscreenActive, msg.fullscreen === 'true');
+        this.dispatch(PlayerProp.isFullscreenActive, msg.fullscreen === 'true');
         break;
       case DailymotionEvent.Error:
-        this.dispatch(PlayerProp.Errors, [new Error(msg.error!)]);
+        this.dispatch(PlayerProp.errors, [new Error(msg.error!)]);
         break;
     }
   }
@@ -311,7 +311,7 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
       },
       setVolume: async (volume: number) => {
         this.internalState.volume = (volume / 100);
-        this.dispatch(PlayerProp.Volume, volume);
+        this.dispatch(PlayerProp.volume, volume);
         this.remoteControl(DailymotionCommand.Volume, (volume / 100));
       },
       canSetPlaybackQuality: async () => true,

@@ -42,7 +42,7 @@ export class Tooltip {
   /**
    * @internal
    */
-  @Prop() isTouch: PlayerProps[PlayerProp.IsTouch] = false;
+  @Prop() isTouch: PlayerProps[PlayerProp.isTouch] = false;
 
   private getId() {
     // eslint-disable-next-line prefer-destructuring
@@ -73,5 +73,5 @@ export class Tooltip {
 }
 
 withPlayerContext(Tooltip, [
-  PlayerProp.IsTouch,
+  PlayerProp.isTouch,
 ]);

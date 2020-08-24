@@ -48,17 +48,17 @@ export class PiPControl implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() isPiPActive: PlayerProps[PlayerProp.IsPiPActive] = false;
+  @Prop() isPiPActive: PlayerProps[PlayerProp.isPiPActive] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   /**
    * @internal
    */
-  @Prop() playbackReady: PlayerProps[PlayerProp.PlaybackReady] = false;
+  @Prop() playbackReady: PlayerProps[PlayerProp.playbackReady] = false;
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
@@ -104,7 +104,7 @@ export class PiPControl implements KeyboardControl {
 }
 
 withPlayerContext(PiPControl, [
-  PlayerProp.IsPiPActive,
-  PlayerProp.PlaybackReady,
-  PlayerProp.I18N,
+  PlayerProp.isPiPActive,
+  PlayerProp.playbackReady,
+  PlayerProp.i18n,
 ]);

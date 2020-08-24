@@ -46,17 +46,17 @@ export class CaptionControl implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() currentCaption?: PlayerProps[PlayerProp.CurrentCaption];
+  @Prop() currentCaption?: PlayerProps[PlayerProp.currentCaption];
 
   /**
    * @internal
    */
-  @Prop() isCaptionsActive: PlayerProps[PlayerProp.IsCaptionsActive] = false;
+  @Prop() isCaptionsActive: PlayerProps[PlayerProp.isCaptionsActive] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   private onClick() {
     const player = findRootPlayer(this);
@@ -96,7 +96,7 @@ export class CaptionControl implements KeyboardControl {
 }
 
 withPlayerContext(CaptionControl, [
-  PlayerProp.IsCaptionsActive,
-  PlayerProp.CurrentCaption,
-  PlayerProp.I18N,
+  PlayerProp.isCaptionsActive,
+  PlayerProp.currentCaption,
+  PlayerProp.i18n,
 ]);

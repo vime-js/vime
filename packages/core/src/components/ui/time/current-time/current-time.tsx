@@ -9,12 +9,12 @@ export class CurrentTime {
   /**
    * @internal
    */
-  @Prop() currentTime: PlayerProps[PlayerProp.CurrentTime] = 0;
+  @Prop() currentTime: PlayerProps[PlayerProp.currentTime] = 0;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   /**
    * Whether the time should always show the hours unit, even if the time is less than
@@ -34,6 +34,6 @@ export class CurrentTime {
 }
 
 withPlayerContext(CurrentTime, [
-  PlayerProp.CurrentTime,
-  PlayerProp.I18N,
+  PlayerProp.currentTime,
+  PlayerProp.i18n,
 ]);

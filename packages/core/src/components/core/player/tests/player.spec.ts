@@ -34,14 +34,14 @@ it('should be structurally sound', async () => {
 describe('props', () => {
   it('should have defined all props', async () => {
     const isUndefinedProp = new Set([
-      PlayerProp.PlaybackQuality,
-      PlayerProp.MediaType,
-      PlayerProp.ViewType,
-      PlayerProp.MediaTitle,
-      PlayerProp.TextTracks,
-      PlayerProp.CurrentSrc,
-      PlayerProp.CurrentPoster,
-      PlayerProp.CurrentCaption,
+      PlayerProp.playbackQuality,
+      PlayerProp.mediaType,
+      PlayerProp.viewType,
+      PlayerProp.mediaTitle,
+      PlayerProp.textTracks,
+      PlayerProp.currentSrc,
+      PlayerProp.currentPoster,
+      PlayerProp.currentCaption,
     ]);
 
     Object.values(PlayerProp).forEach((prop) => {
@@ -65,11 +65,11 @@ describe('props', () => {
   it('should watch `mediaType` prop', async () => {
     expect(player.isAudio).toBeFalsy();
     expect(player.isVideo).toBeFalsy();
-    await provider.dispatchStateChange(PlayerProp.MediaType, MediaType.Audio);
+    await provider.dispatchStateChange(PlayerProp.mediaType, MediaType.Audio);
     await page.waitForChanges();
     expect(player.isAudio).toBeTruthy();
     expect(player.isVideo).toBeFalsy();
-    await provider.dispatchStateChange(PlayerProp.MediaType, MediaType.Video);
+    await provider.dispatchStateChange(PlayerProp.mediaType, MediaType.Video);
     await page.waitForChanges();
     expect(player.isAudio).toBeFalsy();
     expect(player.isVideo).toBeTruthy();
@@ -78,11 +78,11 @@ describe('props', () => {
   it('should watch `viewType` prop', async () => {
     expect(player.isAudioView).toBeFalsy();
     expect(player.isVideoView).toBeFalsy();
-    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
+    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
     await page.waitForChanges();
     expect(player.isAudioView).toBeTruthy();
     expect(player.isVideoView).toBeFalsy();
-    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
     await page.waitForChanges();
     expect(player.isAudioView).toBeFalsy();
     expect(player.isVideoView).toBeTruthy();
@@ -90,7 +90,7 @@ describe('props', () => {
 
   it('should set playing to false when paused changes to true', async () => {
     player.paused = false;
-    await provider.dispatchStateChange(PlayerProp.Playing, true);
+    await provider.dispatchStateChange(PlayerProp.playing, true);
     await page.waitForChanges();
     player.paused = true;
     await page.waitForChanges();
@@ -117,10 +117,10 @@ describe('props', () => {
   it('should call adapter when paused is changed', async () => {
     expect(adapter.play).not.toHaveBeenCalled();
     expect(adapter.pause).not.toHaveBeenCalled();
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     player.paused = false;
     await page.waitForChanges();
-    await provider.dispatchStateChange(PlayerProp.Paused, false);
+    await provider.dispatchStateChange(PlayerProp.paused, false);
     await page.waitForChanges();
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalled();
@@ -133,7 +133,7 @@ describe('props', () => {
 
   it('should call adapter when muted is changed', async () => {
     expect(adapter.setMuted).not.toHaveBeenCalled();
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     player.muted = true;
     await page.waitForChanges();
     expect(adapter.setMuted).toHaveBeenCalledWith(true);
@@ -144,7 +144,7 @@ describe('props', () => {
 
   it('should call adapter when volume is changed', async () => {
     expect(adapter.setVolume).not.toHaveBeenCalled();
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     player.volume = 30;
     await page.waitForChanges();
     expect(adapter.setVolume).toHaveBeenCalledWith(30);
@@ -152,8 +152,8 @@ describe('props', () => {
 
   it('should call adapter when currentTime is changed', async () => {
     expect(adapter.setCurrentTime).not.toHaveBeenCalled();
-    await provider.dispatchStateChange(PlayerProp.Duration, 100);
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.duration, 100);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     await page.waitForChanges();
     player.currentTime = 30;
     await page.waitForChanges();
@@ -163,7 +163,7 @@ describe('props', () => {
   it('should not change playbackRate if provider can\'t set it', async () => {
     const spy = jest.spyOn(console, 'warn').mockImplementation();
     adapter.canSetPlaybackRate!.mockImplementation(() => Promise.resolve(false));
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     player.playbackRate = 2;
     await page.waitForChanges();
     expect(player.playbackRate).toEqual(1);
@@ -174,8 +174,8 @@ describe('props', () => {
   it('should not change playbackRate if not in playbackRates', async () => {
     const spy = jest.spyOn(console, 'warn').mockImplementation();
     adapter.canSetPlaybackRate!.mockImplementationOnce(() => Promise.resolve(true));
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
-    await provider.dispatchStateChange(PlayerProp.PlaybackRates, [1, 2, 3]);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackRates, [1, 2, 3]);
     await page.waitForChanges();
     player.playbackRate = 4;
     await page.waitForChanges();
@@ -186,8 +186,8 @@ describe('props', () => {
 
   it('should call adapter when playbackRate is changed', async () => {
     adapter.canSetPlaybackRate!.mockImplementationOnce(() => Promise.resolve(true));
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
-    await provider.dispatchStateChange(PlayerProp.PlaybackRates, [1, 2]);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackRates, [1, 2]);
     await page.waitForChanges();
     player.playbackRate = 2;
     await page.waitForChanges();
@@ -197,7 +197,7 @@ describe('props', () => {
   it('should not change playbackQuality if provider can\'t set it', async () => {
     const spy = jest.spyOn(console, 'warn').mockImplementation();
     adapter.canSetPlaybackQuality!.mockImplementationOnce(() => Promise.resolve(false));
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     player.playbackQuality = '720p';
     await page.waitForChanges();
     expect(player.playbackQuality).toBeUndefined();
@@ -208,8 +208,8 @@ describe('props', () => {
   it('should not change playbackQuality if not in playbackQualities', async () => {
     const spy = jest.spyOn(console, 'warn').mockImplementation();
     adapter.canSetPlaybackQuality!.mockImplementationOnce(() => Promise.resolve(true));
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
-    await provider.dispatchStateChange(PlayerProp.PlaybackQualities, ['1080p', '720p']);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackQualities, ['1080p', '720p']);
     await page.waitForChanges();
     player.playbackQuality = '480p';
     await page.waitForChanges();
@@ -220,8 +220,8 @@ describe('props', () => {
 
   it('should call adapter when playbackQuality is changed', async () => {
     adapter.canSetPlaybackQuality!.mockImplementationOnce(() => Promise.resolve(true));
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
-    await provider.dispatchStateChange(PlayerProp.PlaybackQualities, ['1080p', '720p']);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackQualities, ['1080p', '720p']);
     await page.waitForChanges();
     player.playbackQuality = '720p';
     await page.waitForChanges();
@@ -230,16 +230,16 @@ describe('props', () => {
 
   // Test doesn't work for some unknown reason.
   it.skip('should throw if writing to internal readonly prop', async () => {
-    await expect(provider.dispatchStateChange(PlayerProp.IsAudio, true)).rejects.toThrow();
+    await expect(provider.dispatchStateChange(PlayerProp.isAudio, true)).rejects.toThrow();
   });
 
   it('should adjust paddingBottom according to aspectRatio', async () => {
     expect(page.root!.style.paddingBottom).toEqual('');
-    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
     await page.waitForChanges();
     await page.waitForChanges();
     expect(page.root!.style.paddingBottom).toEqual('56.25%');
-    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
+    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
     await page.waitForChanges();
     await page.waitForChanges();
     expect(page.root!.style.paddingBottom).toEqual('');
@@ -247,7 +247,7 @@ describe('props', () => {
 
   it('should render blocker', async () => {
     expect(page.root!.querySelector('.blocker')).toBeNull();
-    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
     await page.waitForChanges();
     expect(page.root!.querySelector('.blocker')).toBeDefined();
   });
@@ -263,7 +263,7 @@ describe('props', () => {
   });
 
   it('should reset props on subsequent media changes', async () => {
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     player.currentTime = 40;
     player.volume = 80;
     await provider.dispatchLoadStart();
@@ -308,8 +308,8 @@ describe('props', () => {
   });
 
   it('should bound currentTime between 0 and duration', async () => {
-    await provider.dispatchStateChange(PlayerProp.Duration, 100);
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.duration, 100);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     await page.waitForChanges();
     player.currentTime = -1;
     await page.waitForChanges();
@@ -323,7 +323,7 @@ describe('props', () => {
   });
 
   it('should bound volume between 0 and 100', async () => {
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     await page.waitForChanges();
     player.volume = -1;
     await page.waitForChanges();
@@ -368,25 +368,25 @@ describe('methods', () => {
   });
 
   it('should throw if calling enterFullscreen() in audio view', async () => {
-    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
+    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
     await page.waitForChanges();
     await expect(player.enterFullscreen()).rejects.toThrow(/audio player view/);
   });
 
   it('should throw if calling enterFullscreen() and no API is available', async () => {
-    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
     await page.waitForChanges();
     await expect(player.enterFullscreen()).rejects.toThrow(/API is not available/);
   });
 
   it('should throw if calling enterPiP() in audio view', async () => {
-    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
+    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
     await page.waitForChanges();
     await expect(player.enterPiP()).rejects.toThrow(/audio player view/);
   });
 
   it('should throw if calling enterPiP() and no API is available', async () => {
-    await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
     await page.waitForChanges();
     await expect(player.enterPiP()).rejects.toThrow(/API is not available/);
   });
@@ -401,7 +401,7 @@ describe('methods', () => {
 describe('events', () => {
   it('should fire change event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener(PlayerEvent.PausedChange, cb);
+    page.root!.addEventListener(PlayerEvent.pausedChange, cb);
     player.paused = false;
     await page.waitForChanges();
     await page.waitForChanges();
@@ -410,8 +410,8 @@ describe('events', () => {
 
   it('should fire toggle state event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener(PlayerEvent.FullscreenChange, cb);
-    await provider.dispatchStateChange(PlayerProp.IsFullscreenActive, true);
+    page.root!.addEventListener(PlayerEvent.fullscreenChange, cb);
+    await provider.dispatchStateChange(PlayerProp.isFullscreenActive, true);
     await page.waitForChanges();
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
@@ -419,8 +419,8 @@ describe('events', () => {
 
   it('should fire shortened event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener(PlayerEvent.PlaybackStarted, cb);
-    await provider.dispatchStateChange(PlayerProp.PlaybackStarted, true);
+    page.root!.addEventListener(PlayerEvent.playbackStarted, cb);
+    await provider.dispatchStateChange(PlayerProp.playbackStarted, true);
     await page.waitForChanges();
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
@@ -428,8 +428,8 @@ describe('events', () => {
 
   it('should fire play event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener(PlayerEvent.Play, cb);
-    await provider.dispatchStateChange(PlayerProp.Paused, false);
+    page.root!.addEventListener(PlayerEvent.play, cb);
+    await provider.dispatchStateChange(PlayerProp.paused, false);
     await page.waitForChanges();
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
@@ -437,11 +437,11 @@ describe('events', () => {
 
   it('should fire seeked event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener(PlayerEvent.Seeked, cb);
-    await provider.dispatchStateChange(PlayerProp.Seeking, true);
+    page.root!.addEventListener(PlayerEvent.seeked, cb);
+    await provider.dispatchStateChange(PlayerProp.seeking, true);
     await page.waitForChanges();
     await page.waitForChanges();
-    await provider.dispatchStateChange(PlayerProp.Seeking, false);
+    await provider.dispatchStateChange(PlayerProp.seeking, false);
     await page.waitForChanges();
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
@@ -451,8 +451,8 @@ describe('events', () => {
 describe('state changes', () => {
   it('should flush state changes', async () => {
     player.currentTime = 33;
-    await provider.dispatchStateChange(PlayerProp.Seeking, true);
-    await provider.dispatchStateChange(PlayerProp.Volume, 66);
+    await provider.dispatchStateChange(PlayerProp.seeking, true);
+    await provider.dispatchStateChange(PlayerProp.volume, 66);
     await page.waitForChanges();
     expect(player.currentTime).toEqual(33);
     expect(player.volume).toEqual(66);
@@ -469,9 +469,9 @@ describe('state changes', () => {
   });
 
   it('should flush state changes in correct order', async () => {
-    await provider.dispatchStateChange(PlayerProp.Volume, 33);
-    await provider.dispatchStateChange(PlayerProp.Volume, 66);
-    await provider.dispatchStateChange(PlayerProp.Volume, 99);
+    await provider.dispatchStateChange(PlayerProp.volume, 33);
+    await provider.dispatchStateChange(PlayerProp.volume, 66);
+    await provider.dispatchStateChange(PlayerProp.volume, 99);
     await page.waitForChanges();
     expect(player.volume).toEqual(99);
   });
@@ -494,7 +494,7 @@ describe('adapter calls', () => {
     player.paused = false;
     player.volume = 30;
     player.muted = true;
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalled();
     expect(adapter.setVolume).toHaveBeenCalledWith(30);
@@ -505,8 +505,8 @@ describe('adapter calls', () => {
     await buildPage({
       html: '<vime-player paused="false" muted="true" current-time="50"><vime-faketube /></vime-player>',
     });
-    await provider.dispatchStateChange(PlayerProp.Duration, 100);
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.duration, 100);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalled();
     expect(adapter.setCurrentTime).toHaveBeenCalledWith(50);
@@ -518,8 +518,8 @@ describe('adapter calls', () => {
     await buildPage({
       html: '<vime-player paused="false" muted="true" current-time="50"><vime-faketube /></vime-player>',
     });
-    await provider.dispatchStateChange(PlayerProp.Duration, Infinity);
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.duration, Infinity);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalledTimes(1);
     expect(adapter.setCurrentTime).toHaveBeenCalledTimes(1);
@@ -528,22 +528,22 @@ describe('adapter calls', () => {
   });
 
   it('should not call adapter if change comes from provider', async () => {
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     await page.waitForChanges();
-    await provider.dispatchStateChange(PlayerProp.CurrentTime, 50);
+    await provider.dispatchStateChange(PlayerProp.currentTime, 50);
     await page.waitForChanges();
     expect(adapter.setCurrentTime).not.toHaveBeenCalledWith(50);
   });
 
   it('should call adapter if change comes from user', async () => {
-    await provider.dispatchStateChange(PlayerProp.Duration, 200);
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.duration, 200);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     await page.waitForChanges();
     const changes = [];
     for (let i = 0; i < 20; i += 1) {
       // eslint-disable-next-line no-loop-func
       changes.push(async () => {
-        provider.dispatchStateChange(PlayerProp.CurrentTime, Math.floor(Math.random() * 100));
+        provider.dispatchStateChange(PlayerProp.currentTime, Math.floor(Math.random() * 100));
       });
     }
     changes[Math.floor(Math.random() * changes.length)] = async () => { player.currentTime = 33; };
@@ -562,7 +562,7 @@ describe('adapter calls', () => {
     await provider.dispatchLoadStart();
     await provider.dispatchLoadStart();
     await page.waitForChanges();
-    await provider.dispatchStateChange(PlayerProp.PlaybackReady, true);
+    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
     await page.waitForChanges();
     expect(adapter.setVolume).not.toHaveBeenCalled();
   });

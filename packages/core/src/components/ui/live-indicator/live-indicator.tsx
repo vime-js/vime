@@ -12,12 +12,12 @@ export class LiveIndicator {
   /**
    * @internal
    */
-  @Prop() isLive: PlayerProps[PlayerProp.IsLive] = false;
+  @Prop() isLive: PlayerProps[PlayerProp.isLive] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   render() {
     return (
@@ -34,6 +34,6 @@ export class LiveIndicator {
 }
 
 withPlayerContext(LiveIndicator, [
-  PlayerProp.IsLive,
-  PlayerProp.I18N,
+  PlayerProp.isLive,
+  PlayerProp.i18n,
 ]);

@@ -11,7 +11,7 @@ chai.Assertion.addMethod('readyForPlayback', function () {
   const $player: JQuery<HTMLVimePlayerElement> = this._obj;
   isPlayer($player);
   this.assert(
-    $player && $player.prop(PlayerProp.PlaybackReady),
+    $player && $player.prop(PlayerProp.playbackReady),
     'expected #{this} to be ready for playback',
     'expected #{this} to not be ready for playback',
     $player,
@@ -21,7 +21,7 @@ chai.Assertion.addMethod('readyForPlayback', function () {
 chai.Assertion.addMethod('playing', function () {
   const $player: JQuery<HTMLVimePlayerElement> = this._obj;
   isPlayer($player);
-  const isPlaying = !$player.prop(PlayerProp.Paused) && $player.prop(PlayerProp.Playing);
+  const isPlaying = !$player.prop(PlayerProp.paused) && $player.prop(PlayerProp.playing);
   this.assert(
     isPlaying,
     'expected #{this} to be `playing`',
@@ -34,7 +34,7 @@ chai.Assertion.addMethod('buffering', function () {
   const $player: JQuery<HTMLVimePlayerElement> = this._obj;
   isPlayer($player);
   this.assert(
-    $player.prop(PlayerProp.Buffering),
+    $player.prop(PlayerProp.buffering),
     'expected #{this} to be `buffering`',
     'expected #{this} to not be `buffering`',
     $player,
@@ -45,7 +45,7 @@ chai.Assertion.addMethod('pip', function () {
   const $player: JQuery<HTMLVimePlayerElement> = this._obj;
   isPlayer($player);
   this.assert(
-    $player.prop(PlayerProp.IsPiPActive),
+    $player.prop(PlayerProp.isPiPActive),
     'expected #{this} to be in `picture-in-picture`',
     'expected #{this} to not be in `picture-in-picture`',
     $player,
@@ -56,7 +56,7 @@ chai.Assertion.addMethod('fullscreen', function () {
   const $player: JQuery<HTMLVimePlayerElement> = this._obj;
   isPlayer($player);
   this.assert(
-    $player.prop(PlayerProp.IsFullscreenActive),
+    $player.prop(PlayerProp.isFullscreenActive),
     'expected #{this} to be in `fullscreen`',
     'expected #{this} to not be in `fullscreen`',
     $player,
@@ -68,9 +68,9 @@ chai.Assertion.addMethod('seekedForwards', function (seeked: { from: number, to:
 
   isPlayer($player);
 
-  const hasSeeked = !$player.prop(PlayerProp.Seeking)
-    && ($player.prop(PlayerProp.CurrentTime) > seeked.from)
-    && ($player.prop(PlayerProp.CurrentTime) >= seeked.to);
+  const hasSeeked = !$player.prop(PlayerProp.seeking)
+    && ($player.prop(PlayerProp.currentTime) > seeked.from)
+    && ($player.prop(PlayerProp.currentTime) >= seeked.to);
 
   this.assert(
     hasSeeked,
@@ -85,9 +85,9 @@ chai.Assertion.addMethod('seekedBackwards', function (seeked: { from: number, to
 
   isPlayer($player);
 
-  const hasSeeked = !$player.prop(PlayerProp.Seeking)
-    && ($player.prop(PlayerProp.CurrentTime) < seeked.from)
-    && ($player.prop(PlayerProp.CurrentTime) >= seeked.to);
+  const hasSeeked = !$player.prop(PlayerProp.seeking)
+    && ($player.prop(PlayerProp.currentTime) < seeked.from)
+    && ($player.prop(PlayerProp.currentTime) >= seeked.to);
 
   this.assert(
     hasSeeked,
@@ -100,11 +100,11 @@ chai.Assertion.addMethod('seekedBackwards', function (seeked: { from: number, to
 chai.Assertion.addMethod('firedPlayingChange', function (
   events: Record<any, ReturnType<typeof cy.spy>>,
 ) {
-  const hasFired = events[PlayerEvent.PlayingChange].callCount > 0;
+  const hasFired = events[PlayerEvent.playingChange].callCount > 0;
   this.assert(
     hasFired,
-    `expected #{this} to have fired \`${PlayerEvent.PlayingChange}\` event`,
-    `expected #{this} to not have fired \`${PlayerEvent.PlayingChange}\` event`,
+    `expected #{this} to have fired \`${PlayerEvent.playingChange}\` event`,
+    `expected #{this} to not have fired \`${PlayerEvent.playingChange}\` event`,
     events,
   );
 });
@@ -112,9 +112,9 @@ chai.Assertion.addMethod('firedPlayingChange', function (
 chai.Assertion.addMethod('firedSeekingChange', (
   events: Record<any, ReturnType<typeof cy.spy>>,
 ) => {
-  chai.expect(events[PlayerEvent.SeekingChange])
+  chai.expect(events[PlayerEvent.seekingChange])
     .to.have.been.calledWith(true)
     .and.to.have.been.calledWith(false);
-  chai.expect(events[PlayerEvent.Seeked]).to.have.been.called;
-  chai.expect(events[PlayerEvent.SeekingChange]).to.be.calledBefore(events[PlayerEvent.Seeked]);
+  chai.expect(events[PlayerEvent.seeked]).to.have.been.called;
+  chai.expect(events[PlayerEvent.seekingChange]).to.be.calledBefore(events[PlayerEvent.seeked]);
 });

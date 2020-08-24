@@ -22,16 +22,16 @@ it('should be structurally sound', () => {
 });
 
 it('should not render if not a video view', async () => {
-  await provider.dispatchStateChange(PlayerProp.PlaybackStarted, true);
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Audio);
+  await provider.dispatchStateChange(PlayerProp.playbackStarted, true);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
   await page.waitForChanges();
   await page.waitForChanges();
   expect(captions).not.toHaveClass('enabled');
 });
 
 it('should render if a video view and playback has started', async () => {
-  await provider.dispatchStateChange(PlayerProp.PlaybackStarted, true);
-  await provider.dispatchStateChange(PlayerProp.ViewType, ViewType.Video);
+  await provider.dispatchStateChange(PlayerProp.playbackStarted, true);
+  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
   await page.waitForChanges();
   await page.waitForChanges();
   expect(captions).toHaveClass('enabled');
@@ -44,12 +44,12 @@ it('should not be visible if hidden', async () => {
 });
 
 it('should adjust position based on controls height', async () => {
-  await provider.dispatchStateChange(PlayerProp.IsControlsActive, true);
+  await provider.dispatchStateChange(PlayerProp.isControlsActive, true);
   captions.controlsHeight = 140;
   await page.waitForChanges();
   await page.waitForChanges();
   expect(captions.style.transform).toEqual('translateY(-140px)');
-  await provider.dispatchStateChange(PlayerProp.IsControlsActive, false);
+  await provider.dispatchStateChange(PlayerProp.isControlsActive, false);
   await page.waitForChanges();
   await page.waitForChanges();
   expect(captions.style.transform).toEqual('translateY(-0px)');

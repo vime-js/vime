@@ -54,7 +54,7 @@ export class Name implements MediaProvider {
   componentWillLoad() {
     this.dispatch = createPlayerDispatcher(this);
     // @TODO change this if view is of type audio.
-    this.dispatch(PlayerProp.ViewType, ViewType.Video);
+    this.dispatch(PlayerProp.viewType, ViewType.Video);
   }
 
   /**

@@ -48,22 +48,22 @@ export class Captions {
   /**
    * @internal
    */
-  @Prop() isControlsActive: PlayerProps[PlayerProp.IsControlsActive] = false;
+  @Prop() isControlsActive: PlayerProps[PlayerProp.isControlsActive] = false;
 
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
+  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
 
   /**
    * @internal
    */
-  @Prop() playbackStarted: PlayerProps[PlayerProp.PlaybackStarted] = false;
+  @Prop() playbackStarted: PlayerProps[PlayerProp.playbackStarted] = false;
 
   /**
    * @internal
    */
-  @Prop() textTracks?: PlayerProps[PlayerProp.TextTracks];
+  @Prop() textTracks?: PlayerProps[PlayerProp.textTracks];
 
   /**
    * Emitted when the current track changes.
@@ -176,8 +176,8 @@ export class Captions {
 }
 
 withPlayerContext(Captions, [
-  PlayerProp.IsVideoView,
-  PlayerProp.PlaybackStarted,
-  PlayerProp.IsControlsActive,
-  PlayerProp.TextTracks,
+  PlayerProp.isVideoView,
+  PlayerProp.playbackStarted,
+  PlayerProp.isControlsActive,
+  PlayerProp.textTracks,
 ]);

@@ -92,7 +92,7 @@ export class HLS implements MediaFileProvider {
       const video = this.videoProvider.querySelector('video')!;
 
       if (!Hls.isSupported()) {
-        this.dispatch(PlayerProp.Errors, [new Error('hls.js is not supported')]);
+        this.dispatch(PlayerProp.errors, [new Error('hls.js is not supported')]);
         return;
       }
 
@@ -104,18 +104,18 @@ export class HLS implements MediaFileProvider {
       });
 
       this.hls!.on('hlsError', (e: any, data: any) => {
-        this.dispatch(PlayerProp.Errors, [{ e, data }]);
+        this.dispatch(PlayerProp.errors, [{ e, data }]);
       });
 
       this.hls!.on('hlsManifestParsed', () => {
-        this.dispatch(PlayerProp.MediaType, MediaType.Video);
-        this.dispatch(PlayerProp.CurrentSrc, this.src);
-        this.dispatch(PlayerProp.PlaybackReady, true);
+        this.dispatch(PlayerProp.mediaType, MediaType.Video);
+        this.dispatch(PlayerProp.currentSrc, this.src);
+        this.dispatch(PlayerProp.playbackReady, true);
       });
 
       this.hls!.attachMedia(video);
     } catch (e) {
-      this.dispatch(PlayerProp.Errors, [e]);
+      this.dispatch(PlayerProp.errors, [e]);
     }
   }
 

@@ -71,19 +71,19 @@ export class VolumeControl {
       if ((event.key !== 'ArrowUp') && (event.key !== 'ArrowDown')) return;
       const isUpArrow = (event.key === 'ArrowUp');
       const newVolume = isUpArrow ? Math.min(100, this.volume + 5) : Math.max(0, this.volume - 5);
-      this.dispatch(PlayerProp.Volume, parseInt(`${newVolume}`, 10));
+      this.dispatch(PlayerProp.volume, parseInt(`${newVolume}`, 10));
     }));
   }
 
   /**
    * @internal
    */
-  @Prop() muted: PlayerProps[PlayerProp.Muted] = false;
+  @Prop() muted: PlayerProps[PlayerProp.muted] = false;
 
   /**
    * @internal
    */
-  @Prop() volume: PlayerProps[PlayerProp.Volume] = 50;
+  @Prop() volume: PlayerProps[PlayerProp.volume] = 50;
 
   @Watch('muted')
   @Watch('volume')
@@ -91,7 +91,7 @@ export class VolumeControl {
     this.currentVolume = this.muted ? 0 : this.volume;
 
     if (!this.muted && this.prevMuted && this.volume === 0) {
-      this.dispatch(PlayerProp.Volume, 30);
+      this.dispatch(PlayerProp.volume, 30);
     }
 
     this.prevMuted = this.muted;
@@ -100,12 +100,12 @@ export class VolumeControl {
   /**
    * @internal
    */
-  @Prop() isMobile: PlayerProps[PlayerProp.IsMobile] = false;
+  @Prop() isMobile: PlayerProps[PlayerProp.isMobile] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   componentWillLoad() {
     this.prevMuted = this.muted;
@@ -131,8 +131,8 @@ export class VolumeControl {
   private onVolumeChange(event: CustomEvent<number>) {
     const newVolume = event.detail;
     this.currentVolume = newVolume;
-    this.dispatch(PlayerProp.Volume, newVolume);
-    this.dispatch(PlayerProp.Muted, newVolume === 0);
+    this.dispatch(PlayerProp.volume, newVolume);
+    this.dispatch(PlayerProp.muted, newVolume === 0);
   }
 
   private onKeyDown(event: KeyboardEvent) {
@@ -176,8 +176,8 @@ export class VolumeControl {
 }
 
 withPlayerContext(VolumeControl, [
-  PlayerProp.Volume,
-  PlayerProp.Muted,
-  PlayerProp.IsMobile,
-  PlayerProp.I18N,
+  PlayerProp.volume,
+  PlayerProp.muted,
+  PlayerProp.isMobile,
+  PlayerProp.i18n,
 ]);

@@ -50,17 +50,17 @@ export class MuteControl implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() volume: PlayerProps[PlayerProp.Volume] = 50;
+  @Prop() volume: PlayerProps[PlayerProp.volume] = 50;
 
   /**
    * @internal
    */
-  @Prop() muted: PlayerProps[PlayerProp.Muted] = false;
+  @Prop() muted: PlayerProps[PlayerProp.muted] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   componentWillLoad() {
     this.dispatch = createPlayerDispatcher(this);
@@ -72,7 +72,7 @@ export class MuteControl implements KeyboardControl {
   }
 
   private onClick() {
-    this.dispatch(PlayerProp.Muted, !this.muted);
+    this.dispatch(PlayerProp.muted, !this.muted);
   }
 
   render() {
@@ -101,7 +101,7 @@ export class MuteControl implements KeyboardControl {
 }
 
 withPlayerContext(MuteControl, [
-  PlayerProp.Muted,
-  PlayerProp.Volume,
-  PlayerProp.I18N,
+  PlayerProp.muted,
+  PlayerProp.volume,
+  PlayerProp.i18n,
 ]);

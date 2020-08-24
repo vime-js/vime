@@ -22,19 +22,19 @@ export class ClickToPlay {
   /**
    * @internal
    */
-  @Prop() paused: PlayerProps[PlayerProp.Paused] = true;
+  @Prop() paused: PlayerProps[PlayerProp.paused] = true;
 
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
+  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
 
   componentWillLoad() {
     this.dispatch = createPlayerDispatcher(this);
   }
 
   private onClick() {
-    this.dispatch(PlayerProp.Paused, !this.paused);
+    this.dispatch(PlayerProp.paused, !this.paused);
   }
 
   render() {
@@ -50,6 +50,6 @@ export class ClickToPlay {
 }
 
 withPlayerContext(ClickToPlay, [
-  PlayerProp.Paused,
-  PlayerProp.IsVideoView,
+  PlayerProp.paused,
+  PlayerProp.isVideoView,
 ]);

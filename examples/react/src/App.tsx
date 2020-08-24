@@ -4,10 +4,12 @@ import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/react';
 
 // Default theme.
 import '@vime/core/themes/default.css';
-import ClickSidesToSeek from './ClickSidesToSeek';
 
 // Optional light theme (extends default).
 // import '@vime/core/themes/light.css';
+
+// Custom UI component.
+import TapSidesToSeek from './TapSidesToSeek';
 
 function App() {
   const player = useRef<HTMLVimePlayerElement>(null);
@@ -29,7 +31,7 @@ function App() {
 
         <VimeDefaultUi>
           {/* Custom UI Component. */}
-          <ClickSidesToSeek />
+          <TapSidesToSeek />
         </VimeDefaultUi>
       </VimePlayer>
     </div>

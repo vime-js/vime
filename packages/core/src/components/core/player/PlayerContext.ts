@@ -1,19 +1,19 @@
 import { openWormhole } from 'stencil-wormhole';
 import { ComponentInterface } from '@stencil/core';
-import { PlayerProp, PlayerProps } from './PlayerProp';
+import { PlayerProp } from './PlayerProp';
 import { deferredPromise } from '../../../utils/promise';
 import { findRootPlayer } from './utils';
 import { PlayerEvent } from './PlayerEvent';
 
 export const withPlayerContext = (
   Component: ComponentInterface,
-  props: PlayerProp[],
+  props: (PlayerProp | keyof typeof PlayerProp)[],
 ) => openWormhole(Component as any, props);
 
 export const withCustomPlayerContext = (
   ref: HTMLElement,
-  props: PlayerProp[],
-  updater: <P extends keyof PlayerProps>(prop: P, value: PlayerProps[P]) => void,
+  props: (PlayerProp | keyof typeof PlayerProp)[],
+  updater: (prop: string, value: any) => void,
   onConnected?: () => void,
 ) => {
   const consumer = Symbol.for(ref.nodeName);
@@ -38,11 +38,11 @@ export const withCustomPlayerContext = (
       },
     }));
 
-    player.removeEventListener(PlayerEvent.Mounted, connect);
+    player.removeEventListener(PlayerEvent.mounted, connect);
   };
 
   if (!player.mounted) {
-    player.addEventListener(PlayerEvent.Mounted, connect);
+    player.addEventListener(PlayerEvent.mounted, connect);
   } else {
     connect();
   }

@@ -72,7 +72,7 @@ export class MenuItem {
   /**
    * @internal
    */
-  @Prop() isTouch: PlayerProps[PlayerProp.IsTouch] = false;
+  @Prop() isTouch: PlayerProps[PlayerProp.isTouch] = false;
 
   private onClick() {
     if (isUndefined(this.menu)) return;
@@ -136,5 +136,5 @@ export class MenuItem {
 }
 
 withPlayerContext(MenuItem, [
-  PlayerProp.IsTouch,
+  PlayerProp.isTouch,
 ]);

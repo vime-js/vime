@@ -71,12 +71,12 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   @Watch('mediaTitle')
   onMediaTitleChange() {
-    this.dispatch(PlayerProp.MediaTitle, this.mediaTitle);
+    this.dispatch(PlayerProp.mediaTitle, this.mediaTitle);
   }
 
   @Watch('poster')
   onPosterChange() {
-    this.dispatch(PlayerProp.CurrentPoster, this.poster);
+    this.dispatch(PlayerProp.currentPoster, this.poster);
   }
 
   /**
@@ -106,7 +106,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   @Watch('viewType')
   onViewTypeChange() {
-    this.dispatch(PlayerProp.ViewType, this.viewType);
+    this.dispatch(PlayerProp.viewType, this.viewType);
   }
 
   /**
@@ -186,7 +186,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private requestTimeUpdates() {
-    this.dispatch(PlayerProp.CurrentTime, this.mediaEl?.currentTime ?? 0);
+    this.dispatch(PlayerProp.currentTime, this.mediaEl?.currentTime ?? 0);
     this.timeRAF = window.requestAnimationFrame(() => { this.requestTimeUpdates(); });
   }
 
@@ -198,90 +198,90 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onLoadedMetadata() {
-    this.dispatch(PlayerProp.CurrentPoster, this.poster);
-    this.dispatch(PlayerProp.Duration, this.mediaEl!.duration);
-    this.dispatch(PlayerProp.PlaybackRates, this.playbackRates);
+    this.dispatch(PlayerProp.currentPoster, this.poster);
+    this.dispatch(PlayerProp.duration, this.mediaEl!.duration);
+    this.dispatch(PlayerProp.playbackRates, this.playbackRates);
     this.onProgress();
     this.onTracksChange();
     if (!this.willAttach) {
-      this.dispatch(PlayerProp.CurrentSrc, this.mediaEl!.currentSrc);
-      this.dispatch(PlayerProp.MediaType, this.getMediaType());
-      this.dispatch(PlayerProp.PlaybackReady, true);
+      this.dispatch(PlayerProp.currentSrc, this.mediaEl!.currentSrc);
+      this.dispatch(PlayerProp.mediaType, this.getMediaType());
+      this.dispatch(PlayerProp.playbackReady, true);
     }
   }
 
   private onProgress() {
     const { buffered, duration } = this.mediaEl!;
     const end = (buffered.length === 0) ? 0 : buffered.end(buffered.length - 1);
-    this.dispatch(PlayerProp.Buffered, (end > duration) ? duration : end);
+    this.dispatch(PlayerProp.buffered, (end > duration) ? duration : end);
   }
 
   private onPlay() {
     this.requestTimeUpdates();
-    this.dispatch(PlayerProp.Paused, false);
+    this.dispatch(PlayerProp.paused, false);
     if (!this.playbackStarted) {
       this.playbackStarted = true;
-      this.dispatch(PlayerProp.PlaybackStarted, true);
+      this.dispatch(PlayerProp.playbackStarted, true);
     }
   }
 
   private onPause() {
     this.cancelTimeUpdates();
-    this.dispatch(PlayerProp.Paused, true);
-    this.dispatch(PlayerProp.Buffering, false);
+    this.dispatch(PlayerProp.paused, true);
+    this.dispatch(PlayerProp.buffering, false);
   }
 
   private onPlaying() {
-    this.dispatch(PlayerProp.Playing, true);
-    this.dispatch(PlayerProp.Buffering, false);
+    this.dispatch(PlayerProp.playing, true);
+    this.dispatch(PlayerProp.buffering, false);
   }
 
   private onSeeking() {
     if (!this.wasPausedBeforeSeeking) this.wasPausedBeforeSeeking = this.mediaEl!.paused;
-    this.dispatch(PlayerProp.CurrentTime, this.mediaEl!.currentTime);
-    this.dispatch(PlayerProp.Seeking, true);
+    this.dispatch(PlayerProp.currentTime, this.mediaEl!.currentTime);
+    this.dispatch(PlayerProp.seeking, true);
   }
 
   private onSeeked() {
-    this.dispatch(PlayerProp.Seeking, false);
+    this.dispatch(PlayerProp.seeking, false);
     if (!this.playbackStarted || !this.wasPausedBeforeSeeking) this.attemptToPlay();
     this.wasPausedBeforeSeeking = true;
   }
 
   private onRateChange() {
-    this.dispatch(PlayerProp.PlaybackRate, this.mediaEl!.playbackRate);
+    this.dispatch(PlayerProp.playbackRate, this.mediaEl!.playbackRate);
   }
 
   private onVolumeChange() {
-    this.dispatch(PlayerProp.Muted, this.mediaEl!.muted);
-    this.dispatch(PlayerProp.Volume, this.mediaEl!.volume * 100);
+    this.dispatch(PlayerProp.muted, this.mediaEl!.muted);
+    this.dispatch(PlayerProp.volume, this.mediaEl!.volume * 100);
   }
 
   private onDurationChange() {
-    this.dispatch(PlayerProp.Duration, this.mediaEl!.duration);
+    this.dispatch(PlayerProp.duration, this.mediaEl!.duration);
   }
 
   private onWaiting() {
-    this.dispatch(PlayerProp.Buffering, true);
+    this.dispatch(PlayerProp.buffering, true);
   }
 
   private onSuspend() {
-    this.dispatch(PlayerProp.Buffering, false);
+    this.dispatch(PlayerProp.buffering, false);
   }
 
   private onEnded() {
-    if (!this.loop) this.dispatch(PlayerProp.PlaybackEnded, true);
+    if (!this.loop) this.dispatch(PlayerProp.playbackEnded, true);
   }
 
   private onError(event: Event) {
-    this.dispatch(PlayerProp.Errors, [event]);
+    this.dispatch(PlayerProp.errors, [event]);
   }
 
   private attemptToPlay() {
     try {
       this.mediaEl?.play();
     } catch (e) {
-      this.dispatch(PlayerProp.Errors, [e]);
+      this.dispatch(PlayerProp.errors, [e]);
     }
   }
 
@@ -319,20 +319,20 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private onPresentationModeChange() {
     const mode = (this.mediaEl as any)?.webkitPresentationMode;
-    this.dispatch(PlayerProp.IsPiPActive, (mode === WebkitPresentationMode.PiP));
-    this.dispatch(PlayerProp.IsFullscreenActive, (mode === WebkitPresentationMode.Fullscreen));
+    this.dispatch(PlayerProp.isPiPActive, (mode === WebkitPresentationMode.PiP));
+    this.dispatch(PlayerProp.isFullscreenActive, (mode === WebkitPresentationMode.Fullscreen));
   }
 
   private onEnterPiP() {
-    this.dispatch(PlayerProp.IsPiPActive, true);
+    this.dispatch(PlayerProp.isPiPActive, true);
   }
 
   private onLeavePiP() {
-    this.dispatch(PlayerProp.IsPiPActive, false);
+    this.dispatch(PlayerProp.isPiPActive, false);
   }
 
   private onTracksChange() {
-    this.dispatch(PlayerProp.TextTracks, this.mediaEl!.textTracks);
+    this.dispatch(PlayerProp.textTracks, this.mediaEl!.textTracks);
   }
 
   private listenToTextTracksChanges() {

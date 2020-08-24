@@ -24,12 +24,12 @@ export class Poster {
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
+  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
 
   /**
    * @internal
    */
-  @Prop() currentPoster?: PlayerProps[PlayerProp.CurrentPoster];
+  @Prop() currentPoster?: PlayerProps[PlayerProp.currentPoster];
 
   @Watch('currentPoster')
   onCurrentPosterChange() {
@@ -39,12 +39,12 @@ export class Poster {
   /**
    * @internal
    */
-  @Prop() mediaTitle?: PlayerProps[PlayerProp.MediaTitle];
+  @Prop() mediaTitle?: PlayerProps[PlayerProp.mediaTitle];
 
   /**
    * @internal
    */
-  @Prop() playbackStarted: PlayerProps[PlayerProp.PlaybackStarted] = false;
+  @Prop() playbackStarted: PlayerProps[PlayerProp.playbackStarted] = false;
 
   /**
    * Emitted when the poster has loaded.
@@ -109,8 +109,8 @@ export class Poster {
 }
 
 withPlayerContext(Poster, [
-  PlayerProp.MediaTitle,
-  PlayerProp.CurrentPoster,
-  PlayerProp.PlaybackStarted,
-  PlayerProp.IsVideoView,
+  PlayerProp.mediaTitle,
+  PlayerProp.currentPoster,
+  PlayerProp.playbackStarted,
+  PlayerProp.isVideoView,
 ]);

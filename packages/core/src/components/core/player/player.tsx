@@ -73,7 +73,7 @@ export class Player implements MediaPlayer {
   onPausedChange() {
     if (this.paused) {
       this.playing = false;
-      this.scheduler.markAsInternallyChanged(PlayerProp.Playing);
+      this.scheduler.markAsInternallyChanged(PlayerProp.playing);
     } else {
       this.autopauseMgr.willPlay();
     }
@@ -145,7 +145,7 @@ export class Player implements MediaPlayer {
   onPlaybackReady() {
     if (!this.ready) {
       this.ready = true;
-      this.scheduler.markAsInternallyChanged(PlayerProp.Ready);
+      this.scheduler.markAsInternallyChanged(PlayerProp.ready);
     }
   }
 
@@ -266,9 +266,9 @@ export class Player implements MediaPlayer {
     if (isUndefined(this.textTracks)) {
       this.textTracksChangeListener?.();
       this.currentCaption = undefined;
-      this.scheduler.markAsInternallyChanged(PlayerProp.CurrentCaption);
+      this.scheduler.markAsInternallyChanged(PlayerProp.currentCaption);
       this.isCaptionsActive = false;
-      this.scheduler.markAsInternallyChanged(PlayerProp.IsCaptionsActive);
+      this.scheduler.markAsInternallyChanged(PlayerProp.isCaptionsActive);
       return;
     }
 
@@ -313,9 +313,9 @@ export class Player implements MediaPlayer {
   @Watch('viewType')
   onViewTypeChange() {
     this.isAudioView = this.viewType === ViewType.Audio;
-    this.scheduler.markAsInternallyChanged(PlayerProp.IsAudioView);
+    this.scheduler.markAsInternallyChanged(PlayerProp.isAudioView);
     this.isVideoView = this.viewType === ViewType.Video;
-    this.scheduler.markAsInternallyChanged(PlayerProp.IsVideoView);
+    this.scheduler.markAsInternallyChanged(PlayerProp.isVideoView);
   }
 
   /**
@@ -336,9 +336,9 @@ export class Player implements MediaPlayer {
   @Watch('mediaType')
   onMediaTypeChange() {
     this.isAudio = this.mediaType === MediaType.Audio;
-    this.scheduler.markAsInternallyChanged(PlayerProp.IsAudio);
+    this.scheduler.markAsInternallyChanged(PlayerProp.isAudio);
     this.isVideo = this.mediaType === MediaType.Video;
-    this.scheduler.markAsInternallyChanged(PlayerProp.IsVideo);
+    this.scheduler.markAsInternallyChanged(PlayerProp.isVideo);
   }
 
   /**
@@ -359,7 +359,7 @@ export class Player implements MediaPlayer {
   @Watch('duration')
   onLiveChange() {
     this.isLive = this.duration === Infinity;
-    this.scheduler.markAsInternallyChanged(PlayerProp.IsLive);
+    this.scheduler.markAsInternallyChanged(PlayerProp.isLive);
   }
 
   /**
@@ -407,7 +407,7 @@ export class Player implements MediaPlayer {
   @Watch('translations')
   onLanguagesUpdate() {
     this.languages = Object.keys(this.translations);
-    this.scheduler.markAsInternallyChanged(PlayerProp.Languages);
+    this.scheduler.markAsInternallyChanged(PlayerProp.languages);
   }
 
   /**
@@ -419,7 +419,7 @@ export class Player implements MediaPlayer {
   @Watch('translations')
   onI18NUpdate() {
     this.i18n = { ...(this.translations[this.language] ?? en) };
-    this.scheduler.markAsInternallyChanged(PlayerProp.I18N);
+    this.scheduler.markAsInternallyChanged(PlayerProp.i18n);
   }
 
   /**
@@ -436,7 +436,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event() vPausedChange!: EventEmitter<PlayerProps[PlayerProp.Paused]>;
+  @Event() vPausedChange!: EventEmitter<PlayerProps[PlayerProp.paused]>;
 
   /**
    * @inheritDoc
@@ -446,12 +446,12 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event() vPlayingChange!: EventEmitter<PlayerProps[PlayerProp.Playing]>;
+  @Event() vPlayingChange!: EventEmitter<PlayerProps[PlayerProp.playing]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vSeekingChange!: EventEmitter<PlayerProps[PlayerProp.Seeking]>;
+  @Event() vSeekingChange!: EventEmitter<PlayerProps[PlayerProp.seeking]>;
 
   /**
    * @inheritDoc
@@ -461,17 +461,17 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event() vBufferingChange!: EventEmitter<PlayerProps[PlayerProp.Buffering]>;
+  @Event() vBufferingChange!: EventEmitter<PlayerProps[PlayerProp.buffering]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vDurationChange!: EventEmitter<PlayerProps[PlayerProp.Duration]>;
+  @Event() vDurationChange!: EventEmitter<PlayerProps[PlayerProp.duration]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vCurrentTimeChange!: EventEmitter<PlayerProps[PlayerProp.CurrentTime]>;
+  @Event() vCurrentTimeChange!: EventEmitter<PlayerProps[PlayerProp.currentTime]>;
 
   /**
    * @inheritDoc
@@ -506,17 +506,17 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event() vBufferedChange!: EventEmitter<PlayerProps[PlayerProp.Buffered]>;
+  @Event() vBufferedChange!: EventEmitter<PlayerProps[PlayerProp.buffered]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vTextTracksChange!: EventEmitter<PlayerProps[PlayerProp.TextTracks]>;
+  @Event() vTextTracksChange!: EventEmitter<PlayerProps[PlayerProp.textTracks]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vErrorsChange!: EventEmitter<PlayerProps[PlayerProp.Errors]>;
+  @Event() vErrorsChange!: EventEmitter<PlayerProps[PlayerProp.errors]>;
 
   /**
    * @inheritDoc
@@ -526,92 +526,92 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Event() vCurrentSrcChange!: EventEmitter<PlayerProps[PlayerProp.CurrentSrc]>;
+  @Event() vCurrentSrcChange!: EventEmitter<PlayerProps[PlayerProp.currentSrc]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vCurrentPosterChange!: EventEmitter<PlayerProps[PlayerProp.CurrentPoster]>;
+  @Event() vCurrentPosterChange!: EventEmitter<PlayerProps[PlayerProp.currentPoster]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vMediaTitleChange!: EventEmitter<PlayerProps[PlayerProp.MediaTitle]>;
+  @Event() vMediaTitleChange!: EventEmitter<PlayerProps[PlayerProp.mediaTitle]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vControlsChange!: EventEmitter<PlayerProps[PlayerProp.IsControlsActive]>;
+  @Event() vControlsChange!: EventEmitter<PlayerProps[PlayerProp.isControlsActive]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackRateChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackRate]>;
+  @Event() vPlaybackRateChange!: EventEmitter<PlayerProps[PlayerProp.playbackRate]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackRatesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackRates]>;
+  @Event() vPlaybackRatesChange!: EventEmitter<PlayerProps[PlayerProp.playbackRates]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackQualityChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQuality]>;
+  @Event() vPlaybackQualityChange!: EventEmitter<PlayerProps[PlayerProp.playbackQuality]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlaybackQualitiesChange!: EventEmitter<PlayerProps[PlayerProp.PlaybackQualities]>;
+  @Event() vPlaybackQualitiesChange!: EventEmitter<PlayerProps[PlayerProp.playbackQualities]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vMutedChange!: EventEmitter<PlayerProps[PlayerProp.Muted]>;
+  @Event() vMutedChange!: EventEmitter<PlayerProps[PlayerProp.muted]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vVolumeChange!: EventEmitter<PlayerProps[PlayerProp.Volume]>;
+  @Event() vVolumeChange!: EventEmitter<PlayerProps[PlayerProp.volume]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vViewTypeChange!: EventEmitter<PlayerProps[PlayerProp.ViewType]>;
+  @Event() vViewTypeChange!: EventEmitter<PlayerProps[PlayerProp.viewType]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vMediaTypeChange!: EventEmitter<PlayerProps[PlayerProp.MediaType]>;
+  @Event() vMediaTypeChange!: EventEmitter<PlayerProps[PlayerProp.mediaType]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vLiveChange!: EventEmitter<PlayerProps[PlayerProp.IsLive]>;
+  @Event() vLiveChange!: EventEmitter<PlayerProps[PlayerProp.isLive]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vTouchChange!: EventEmitter<PlayerProps[PlayerProp.IsTouch]>;
+  @Event() vTouchChange!: EventEmitter<PlayerProps[PlayerProp.isTouch]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vLanguageChange!: EventEmitter<PlayerProps[PlayerProp.Language]>;
+  @Event() vLanguageChange!: EventEmitter<PlayerProps[PlayerProp.language]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vLanguagesChange!: EventEmitter<PlayerProps[PlayerProp.Languages]>;
+  @Event() vLanguagesChange!: EventEmitter<PlayerProps[PlayerProp.languages]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vFullscreenChange!: EventEmitter<PlayerProps[PlayerProp.IsFullscreenActive]>;
+  @Event() vFullscreenChange!: EventEmitter<PlayerProps[PlayerProp.isFullscreenActive]>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPiPChange!: EventEmitter<PlayerProps[PlayerProp.IsPiPActive]>;
+  @Event() vPiPChange!: EventEmitter<PlayerProps[PlayerProp.isPiPActive]>;
 
   /**
    * ------------------------------------------------------
@@ -790,7 +790,7 @@ export class Player implements MediaPlayer {
       },
     };
 
-    this.scheduler.markAsInternallyChanged(PlayerProp.Translations);
+    this.scheduler.markAsInternallyChanged(PlayerProp.translations);
   }
 
   @Listen('vLoadStart')
@@ -818,13 +818,13 @@ export class Player implements MediaPlayer {
       this.el,
       (isActive) => {
         this.isFullscreenActive = isActive;
-        this.scheduler.markAsInternallyChanged(PlayerProp.IsFullscreenActive);
+        this.scheduler.markAsInternallyChanged(PlayerProp.isFullscreenActive);
       },
     );
 
     this.disposal.add(onTouchInputChange((isTouch) => {
       this.isTouch = isTouch;
-      this.scheduler.markAsInternallyChanged(PlayerProp.IsTouch);
+      this.scheduler.markAsInternallyChanged(PlayerProp.isTouch);
     }));
   }
 
@@ -836,7 +836,7 @@ export class Player implements MediaPlayer {
   componentDidLoad() {
     this.disposal.add(lazyLoader(this.el));
     this.mounted = true;
-    this.scheduler.markAsInternallyChanged(PlayerProp.Mounted);
+    this.scheduler.markAsInternallyChanged(PlayerProp.mounted);
   }
 
   componentWillRender() {
@@ -850,7 +850,7 @@ export class Player implements MediaPlayer {
     this.scheduler.destroy();
     this.disposal.empty();
     this.destroyed = true;
-    this.scheduler.markAsInternallyChanged(PlayerProp.Destroyed);
+    this.scheduler.markAsInternallyChanged(PlayerProp.destroyed);
   }
 
   private getPlayerState() {
@@ -913,9 +913,9 @@ export class Player implements MediaPlayer {
   private onActiveCaptionChange() {
     const activeCaption = this.getActiveCaption();
     this.currentCaption = activeCaption || this.toggledCaption;
-    this.scheduler.markAsInternallyChanged(PlayerProp.CurrentCaption);
+    this.scheduler.markAsInternallyChanged(PlayerProp.currentCaption);
     this.isCaptionsActive = !isUndefined(activeCaption);
-    this.scheduler.markAsInternallyChanged(PlayerProp.IsCaptionsActive);
+    this.scheduler.markAsInternallyChanged(PlayerProp.isCaptionsActive);
   }
 
   private genId() {

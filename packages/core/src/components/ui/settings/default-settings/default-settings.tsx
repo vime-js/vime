@@ -32,42 +32,42 @@ export class DefaultSettings {
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   /**
    * @internal
    */
-  @Prop() playbackRate: PlayerProps[PlayerProp.PlaybackRate] = 1;
+  @Prop() playbackRate: PlayerProps[PlayerProp.playbackRate] = 1;
 
   /**
    * @internal
    */
-  @Prop() playbackRates: PlayerProps[PlayerProp.PlaybackRates] = [1];
+  @Prop() playbackRates: PlayerProps[PlayerProp.playbackRates] = [1];
 
   /**
    * @internal
    */
-  @Prop() playbackQuality?: PlayerProps[PlayerProp.PlaybackQuality];
+  @Prop() playbackQuality?: PlayerProps[PlayerProp.playbackQuality];
 
   /**
    * @internal
    */
-  @Prop() playbackQualities: PlayerProps[PlayerProp.PlaybackQualities] = [];
+  @Prop() playbackQualities: PlayerProps[PlayerProp.playbackQualities] = [];
 
   /**
    * @internal
    */
-  @Prop() isCaptionsActive: PlayerProps[PlayerProp.IsCaptionsActive] = false;
+  @Prop() isCaptionsActive: PlayerProps[PlayerProp.isCaptionsActive] = false;
 
   /**
    * @internal
    */
-  @Prop() currentCaption?: PlayerProps[PlayerProp.CurrentCaption];
+  @Prop() currentCaption?: PlayerProps[PlayerProp.currentCaption];
 
   /**
    * @internal
    */
-  @Prop() textTracks?: PlayerProps[PlayerProp.TextTracks];
+  @Prop() textTracks?: PlayerProps[PlayerProp.textTracks];
 
   @Watch('textTracks')
   onTextTracksChange() {
@@ -106,7 +106,7 @@ export class DefaultSettings {
 
   private onPlaybackRateSelect(event: Event) {
     const radio = event.target as HTMLVimeMenuRadioElement;
-    this.dispatch(PlayerProp.PlaybackRate, parseFloat(radio.value));
+    this.dispatch(PlayerProp.playbackRate, parseFloat(radio.value));
   }
 
   private async buildPlaybackRateSubmenu() {
@@ -142,7 +142,7 @@ export class DefaultSettings {
 
   private onPlaybackQualitySelect(event: Event) {
     const radio = event.target as HTMLVimeMenuRadioElement;
-    this.dispatch(PlayerProp.PlaybackQuality, radio.value);
+    this.dispatch(PlayerProp.playbackQuality, radio.value);
   }
 
   private async buildPlaybackQualitySubmenu() {
@@ -263,12 +263,12 @@ export class DefaultSettings {
 }
 
 withPlayerContext(DefaultSettings, [
-  PlayerProp.I18N,
-  PlayerProp.PlaybackRate,
-  PlayerProp.PlaybackRates,
-  PlayerProp.PlaybackQuality,
-  PlayerProp.PlaybackQualities,
-  PlayerProp.IsCaptionsActive,
-  PlayerProp.CurrentCaption,
-  PlayerProp.TextTracks,
+  PlayerProp.i18n,
+  PlayerProp.playbackRate,
+  PlayerProp.playbackRates,
+  PlayerProp.playbackQuality,
+  PlayerProp.playbackQualities,
+  PlayerProp.isCaptionsActive,
+  PlayerProp.currentCaption,
+  PlayerProp.textTracks,
 ]);

@@ -107,32 +107,32 @@ export class Controls {
   /**
    * @internal
    */
-  @Prop() isAudioView: PlayerProps[PlayerProp.IsAudioView] = false;
+  @Prop() isAudioView: PlayerProps[PlayerProp.isAudioView] = false;
 
   /**
    * @internal
    */
-  @Prop() isSettingsActive: PlayerProps[PlayerProp.IsSettingsActive] = false;
+  @Prop() isSettingsActive: PlayerProps[PlayerProp.isSettingsActive] = false;
 
   /**
    * @internal
    */
-  @Prop() playbackReady: PlayerProps[PlayerProp.PlaybackReady] = false;
+  @Prop() playbackReady: PlayerProps[PlayerProp.playbackReady] = false;
 
   /**
    * @internal
    */
-  @Prop() isControlsActive: PlayerProps[PlayerProp.IsControlsActive] = false;
+  @Prop() isControlsActive: PlayerProps[PlayerProp.isControlsActive] = false;
 
   /**
    * @internal
    */
-  @Prop() paused: PlayerProps[PlayerProp.Paused] = true;
+  @Prop() paused: PlayerProps[PlayerProp.paused] = true;
 
   /**
    * @internal
    */
-  @Prop() playbackStarted: PlayerProps[PlayerProp.PlaybackStarted] = false;
+  @Prop() playbackStarted: PlayerProps[PlayerProp.playbackStarted] = false;
 
   connectedCallback() {
     this.dispatch = createPlayerDispatcher(this);
@@ -184,11 +184,11 @@ export class Controls {
   }
 
   private show() {
-    this.dispatch!(PlayerProp.IsControlsActive, true);
+    this.dispatch!(PlayerProp.isControlsActive, true);
   }
 
   private hide() {
-    this.dispatch!(PlayerProp.IsControlsActive, false);
+    this.dispatch!(PlayerProp.isControlsActive, false);
   }
 
   private hideWithDelay() {
@@ -302,10 +302,10 @@ export class Controls {
 }
 
 withPlayerContext(Controls, [
-  PlayerProp.PlaybackReady,
-  PlayerProp.IsAudioView,
-  PlayerProp.IsControlsActive,
-  PlayerProp.IsSettingsActive,
-  PlayerProp.Paused,
-  PlayerProp.PlaybackStarted,
+  PlayerProp.playbackReady,
+  PlayerProp.isAudioView,
+  PlayerProp.isControlsActive,
+  PlayerProp.isSettingsActive,
+  PlayerProp.paused,
+  PlayerProp.playbackStarted,
 ]);

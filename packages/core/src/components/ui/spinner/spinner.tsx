@@ -16,7 +16,7 @@ export class Spinner {
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.IsVideoView] = false;
+  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
 
   /**
    * Emitted when the spinner will be shown.
@@ -37,7 +37,7 @@ export class Spinner {
   /**
    * @internal
    */
-  @Prop() buffering: PlayerProps[PlayerProp.Buffering] = false;
+  @Prop() buffering: PlayerProps[PlayerProp.buffering] = false;
 
   @Watch('buffering')
   onActiveChange() {
@@ -64,6 +64,6 @@ export class Spinner {
 }
 
 withPlayerContext(Spinner, [
-  PlayerProp.IsVideoView,
-  PlayerProp.Buffering,
+  PlayerProp.isVideoView,
+  PlayerProp.buffering,
 ]);

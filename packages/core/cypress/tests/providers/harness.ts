@@ -53,7 +53,7 @@ export const runTestHarness = (provider: MediaProvider) => {
     const resetPlayerIfNeeded = () => {
       cy.player()
         .then(($player) => {
-          if ($player.prop(PlayerProp.PlaybackStarted)) resetPlayer();
+          if ($player.prop(PlayerProp.playbackStarted)) resetPlayer();
         });
     };
 
@@ -78,20 +78,20 @@ export const runTestHarness = (provider: MediaProvider) => {
     it('should load media', () => {
       cy.player()
         .should(($player) => {
-          expect($player.prop(PlayerProp.CurrentSrc)).to.exist.and.is.string;
-          expect($player.prop(PlayerProp.MediaType)).to.exist.and.is.string;
-          expect($player.prop(PlayerProp.ViewType)).to.exist.and.is.string;
-          expect($player.prop(PlayerProp.Duration)).is.greaterThan(0);
+          expect($player.prop(PlayerProp.currentSrc)).to.exist.and.is.string;
+          expect($player.prop(PlayerProp.mediaType)).to.exist.and.is.string;
+          expect($player.prop(PlayerProp.viewType)).to.exist.and.is.string;
+          expect($player.prop(PlayerProp.duration)).is.greaterThan(0);
 
           if (!mediaFileProvider.has(provider)) {
-            expect($player.prop(PlayerProp.MediaTitle)).to.exist.and.is.string;
+            expect($player.prop(PlayerProp.mediaTitle)).to.exist.and.is.string;
           }
 
           if (provider !== MediaProvider.Audio) {
-            expect($player.prop(PlayerProp.CurrentPoster)).to.exist.and.is.string;
+            expect($player.prop(PlayerProp.currentPoster)).to.exist.and.is.string;
           }
 
-          // expect(events[PlayerEvent.LoadStart]).to.have.been.calledOnce;
+          // expect(events[PlayerEvent.loadStart]).to.have.been.calledOnce;
         });
 
       cy.wait(500);
@@ -103,31 +103,31 @@ export const runTestHarness = (provider: MediaProvider) => {
       cy.player().should('be.playing');
       cy.player()
         .should(($player) => {
-          expect($player.prop(PlayerProp.CurrentTime)).to.be.greaterThan(0);
-          expect($player.prop(PlayerProp.Buffered)).to.be.greaterThan(0);
-          expect($player.prop(PlayerProp.PlaybackStarted)).to.be.true;
+          expect($player.prop(PlayerProp.currentTime)).to.be.greaterThan(0);
+          expect($player.prop(PlayerProp.buffered)).to.be.greaterThan(0);
+          expect($player.prop(PlayerProp.playbackStarted)).to.be.true;
         })
         .and(() => {
-          expect(events[PlayerEvent.Play]).to.have.been.calledOnce;
+          expect(events[PlayerEvent.play]).to.have.been.calledOnce;
           // Files are loaded too fast on the dev server so they don't always buffer.
           if (!mediaFileProvider.has(provider)) {
-            expect(events[PlayerEvent.BufferingChange])
+            expect(events[PlayerEvent.bufferingChange])
               .to.have.been.calledWith(true)
               .and.to.have.been.calledWith(false);
           }
         })
         .and(() => {
           // order => [paused=false] -> play -> buffering -> playing -> currentTime
-          expect(events[PlayerEvent.PausedChange])
-            .to.be.calledBefore(events[PlayerEvent.Play]);
-          expect(events[PlayerEvent.Play])
-            .to.be.calledBefore(events[PlayerEvent.BufferingChange]);
+          expect(events[PlayerEvent.pausedChange])
+            .to.be.calledBefore(events[PlayerEvent.play]);
+          expect(events[PlayerEvent.play])
+            .to.be.calledBefore(events[PlayerEvent.bufferingChange]);
           if (!mediaFileProvider.has(provider)) {
-            expect(events[PlayerEvent.BufferingChange])
-              .to.be.calledBefore(events[PlayerEvent.PlayingChange]);
+            expect(events[PlayerEvent.bufferingChange])
+              .to.be.calledBefore(events[PlayerEvent.playingChange]);
           }
-          expect(events[PlayerEvent.PlayingChange])
-            .to.be.calledBefore(events[PlayerEvent.CurrentTimeChange]);
+          expect(events[PlayerEvent.playingChange])
+            .to.be.calledBefore(events[PlayerEvent.currentTimeChange]);
         });
     });
 
@@ -138,10 +138,10 @@ export const runTestHarness = (provider: MediaProvider) => {
       cy.pause();
       cy.player().should('not.be.playing');
       cy.player()
-        .should(($player) => { currentTime = $player.prop(PlayerProp.CurrentTime); })
+        .should(($player) => { currentTime = $player.prop(PlayerProp.currentTime); })
         .wait(150)
         .and(($player) => {
-          expect($player.prop(PlayerProp.CurrentTime)).to.be.closeTo(currentTime, 1.5);
+          expect($player.prop(PlayerProp.currentTime)).to.be.closeTo(currentTime, 1.5);
         });
     });
 
@@ -168,7 +168,7 @@ export const runTestHarness = (provider: MediaProvider) => {
           .then(($player) => {
             cy.player()
               .should('have.seekedForwards', {
-                from: $player.prop(PlayerProp.CurrentTime),
+                from: $player.prop(PlayerProp.currentTime),
                 to: seekFrom,
               });
           });
@@ -191,7 +191,7 @@ export const runTestHarness = (provider: MediaProvider) => {
           .then(($player) => {
             cy.player()
               .should('have.seekedForwards', {
-                from: $player.prop(PlayerProp.CurrentTime),
+                from: $player.prop(PlayerProp.currentTime),
                 to: seekTo,
               })
               .and('not.be.buffering')
@@ -212,7 +212,7 @@ export const runTestHarness = (provider: MediaProvider) => {
           .then(($player) => {
             cy.player()
               .should('have.seekedForwards', {
-                from: $player.prop(PlayerProp.CurrentTime),
+                from: $player.prop(PlayerProp.currentTime),
                 to: seekFrom,
               });
           });
@@ -229,67 +229,67 @@ export const runTestHarness = (provider: MediaProvider) => {
       cy.volume(21);
       cy.player()
         .should(($player) => {
-          expect($player.prop(PlayerProp.Volume)).to.eq(21);
-          expect($player.prop(PlayerProp.Muted)).to.be.true;
-          expect(events[PlayerEvent.MutedChange]).to.not.have.been.called;
+          expect($player.prop(PlayerProp.volume)).to.eq(21);
+          expect($player.prop(PlayerProp.muted)).to.be.true;
+          expect(events[PlayerEvent.mutedChange]).to.not.have.been.called;
         });
     });
 
     it('should change muted', () => {
       cy.player()
         .should(($player) => {
-          const volume = $player.prop(PlayerProp.Volume);
+          const volume = $player.prop(PlayerProp.volume);
           cy.mute(false);
           cy.player().should(() => {
-            expect($player.prop(PlayerProp.Muted)).to.be.false;
-            expect($player.prop(PlayerProp.Volume)).to.eq(volume);
+            expect($player.prop(PlayerProp.muted)).to.be.false;
+            expect($player.prop(PlayerProp.volume)).to.eq(volume);
           });
         });
 
       cy.player()
         .should(($player) => {
-          const volume = $player.prop(PlayerProp.Volume);
+          const volume = $player.prop(PlayerProp.volume);
           cy.mute(true);
           cy.player().should(() => {
-            expect($player.prop(PlayerProp.Muted)).to.be.true;
-            expect($player.prop(PlayerProp.Volume)).to.eq(volume);
-            expect(events[PlayerEvent.VolumeChange]).to.not.have.been.calledWith(0);
+            expect($player.prop(PlayerProp.muted)).to.be.true;
+            expect($player.prop(PlayerProp.volume)).to.eq(volume);
+            expect(events[PlayerEvent.volumeChange]).to.not.have.been.calledWith(0);
           });
         });
     });
 
     skipOn('headless', () => {
       it('should loop', () => {
-        cy.player().then(($player) => { $player.prop(PlayerProp.Loop, true); });
+        cy.player().then(($player) => { $player.prop(PlayerProp.loop, true); });
         cy.raf();
         cy.play();
         cy.player().should('be.playing');
         cy.wait(150);
-        cy.player().then(($player) => cy.seekTo($player.prop(PlayerProp.Duration) - 2));
+        cy.player().then(($player) => cy.seekTo($player.prop(PlayerProp.duration) - 2));
         cy.player()
           .should(($player) => {
-            expect($player.prop(PlayerProp.Playing)).to.be.true;
-            expect($player.prop(PlayerProp.CurrentTime))
-              .to.be.greaterThan($player.prop(PlayerProp.Duration) - 2);
+            expect($player.prop(PlayerProp.playing)).to.be.true;
+            expect($player.prop(PlayerProp.currentTime))
+              .to.be.greaterThan($player.prop(PlayerProp.duration) - 2);
           });
         cy.player()
           .should(($player) => {
-            expect($player.prop(PlayerProp.PlaybackEnded)).to.be.false;
-            expect($player.prop(PlayerProp.CurrentTime)).to.be.lessThan(30).and.greaterThan(0);
+            expect($player.prop(PlayerProp.playbackEnded)).to.be.false;
+            expect($player.prop(PlayerProp.currentTime)).to.be.lessThan(30).and.greaterThan(0);
           });
       });
     });
 
     it('should end playback', () => {
-      cy.player().then(($player) => { $player.prop(PlayerProp.Loop, false); });
+      cy.player().then(($player) => { $player.prop(PlayerProp.loop, false); });
       cy.raf();
       cy.play();
       cy.player().should('be.playing');
       cy.wait(150);
-      cy.player().then(($player) => cy.seekTo($player.prop(PlayerProp.Duration) - 2));
+      cy.player().then(($player) => cy.seekTo($player.prop(PlayerProp.duration) - 2));
       cy.player()
         .should(($player) => {
-          expect($player.prop(PlayerProp.PlaybackEnded)).to.be.true;
+          expect($player.prop(PlayerProp.playbackEnded)).to.be.true;
         });
     });
 
@@ -298,7 +298,7 @@ export const runTestHarness = (provider: MediaProvider) => {
         cy.player()
           .then(async ($player) => {
             const canSet = await $player[0].canSetPlaybackRate();
-            const rates: number[] = $player.prop(PlayerProp.PlaybackRates);
+            const rates: number[] = $player.prop(PlayerProp.playbackRates);
             const newRate = rates
               .filter((rate) => rate !== 1)[Math.floor(Math.random() * rates.length)];
             if (!canSet || !isNumber(newRate)) return;
@@ -307,19 +307,19 @@ export const runTestHarness = (provider: MediaProvider) => {
             cy.playbackRate(newRate);
             cy.player()
               .should(() => {
-                expect(events[PlayerEvent.PlaybackRateChange]).to.have.been.calledWith(newRate);
+                expect(events[PlayerEvent.playbackRateChange]).to.have.been.calledWith(newRate);
               });
             let startTime = 0;
-            cy.player().then(() => { startTime = $player.prop(PlayerProp.CurrentTime); });
+            cy.player().then(() => { startTime = $player.prop(PlayerProp.currentTime); });
             cy.wait(1000);
             cy.pause();
             cy.player()
               .should('not.be.playing')
               .and(() => {
-                const newTime = $player.prop(PlayerProp.CurrentTime);
+                const newTime = $player.prop(PlayerProp.currentTime);
                 const expectedTime = startTime + (1 + (1 * newRate));
                 expect(newTime).to.be.closeTo(expectedTime, 1 + (3 * newRate));
-                expect($player.prop(PlayerProp.PlaybackRate)).to.eq(newRate);
+                expect($player.prop(PlayerProp.playbackRate)).to.eq(newRate);
               });
           });
       });
@@ -330,13 +330,13 @@ export const runTestHarness = (provider: MediaProvider) => {
         cy.player()
           .then(async ($player) => {
             const canSet = await $player[0].canSetPlaybackQuality();
-            const qualities: string[] = $player.prop(PlayerProp.PlaybackQualities);
+            const qualities: string[] = $player.prop(PlayerProp.playbackQualities);
             if (!canSet || qualities.length === 0) return;
             const newQuality = (qualities[Math.floor(Math.random() * qualities.length)]);
             if (isUndefined(newQuality)) return;
             cy.playbackQuality(newQuality);
             cy.player()
-              .should(() => { expect($player.prop(PlayerProp.PlaybackQuality)).to.eq(newQuality); })
+              .should(() => { expect($player.prop(PlayerProp.playbackQuality)).to.eq(newQuality); })
               .and('be.playing');
           });
       });
@@ -399,7 +399,7 @@ export const runTestHarness = (provider: MediaProvider) => {
 
       it('should autoplay', () => {
         resetPlayerIfNeeded();
-        cy.player().then(($player) => { $player.prop(PlayerProp.Autoplay, true); });
+        cy.player().then(($player) => { $player.prop(PlayerProp.autoplay, true); });
         cy.raf();
         cy.player().should('not.be.buffering').and('be.playing');
       });

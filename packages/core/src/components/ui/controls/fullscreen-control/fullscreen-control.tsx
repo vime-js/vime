@@ -48,17 +48,17 @@ export class FullscreenControl implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() isFullscreenActive: PlayerProps[PlayerProp.IsFullscreenActive] = false;
+  @Prop() isFullscreenActive: PlayerProps[PlayerProp.isFullscreenActive] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.I18N] = {};
+  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
 
   /**
    * @internal
    */
-  @Prop() playbackReady: PlayerProps[PlayerProp.PlaybackReady] = false;
+  @Prop() playbackReady: PlayerProps[PlayerProp.playbackReady] = false;
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
@@ -104,7 +104,7 @@ export class FullscreenControl implements KeyboardControl {
 }
 
 withPlayerContext(FullscreenControl, [
-  PlayerProp.IsFullscreenActive,
-  PlayerProp.PlaybackReady,
-  PlayerProp.I18N,
+  PlayerProp.isFullscreenActive,
+  PlayerProp.playbackReady,
+  PlayerProp.i18n,
 ]);
