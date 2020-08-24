@@ -23,6 +23,7 @@ function TapSidesToSeek() {
    * updated here.
    */
   const currentTime = usePlayerContext(ref, PlayerProp.currentTime, 0);
+  const duration = usePlayerContext(ref, PlayerProp.duration, -1);
 
   const onSeekBackward = () => {
     if (currentTime < 5) return;
@@ -31,6 +32,7 @@ function TapSidesToSeek() {
   };
 
   const onSeekForward = () => {
+    if (currentTime > (duration - 5)) return;
     dispatch(PlayerProp.currentTime, currentTime + 5)
   };
 

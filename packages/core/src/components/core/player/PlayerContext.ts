@@ -16,7 +16,7 @@ export const usePlayerContext = (
   updater: (prop: keyof typeof PlayerProp, value: any) => void,
   onConnected?: () => void,
 ) => {
-  const consumer = Symbol.for(ref.nodeName);
+  const consumer = Symbol(ref.nodeName);
   const player = findRootPlayer(ref);
   const onOpen = deferredPromise();
 
