@@ -7,13 +7,13 @@ import { PlayerEvent } from './PlayerEvent';
 
 export const withPlayerContext = (
   Component: ComponentInterface,
-  props: (PlayerProp | keyof typeof PlayerProp)[],
+  props: PlayerProp[],
 ) => openWormhole(Component as any, props);
 
 export const withCustomPlayerContext = (
   ref: HTMLElement,
-  props: (PlayerProp | keyof typeof PlayerProp)[],
-  updater: (prop: string, value: any) => void,
+  props: PlayerProp[],
+  updater: (prop: keyof typeof PlayerProp, value: any) => void,
   onConnected?: () => void,
 ) => {
   const consumer = Symbol.for(ref.nodeName);
