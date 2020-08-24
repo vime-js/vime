@@ -17,7 +17,7 @@ help you to easily build and customize your own media player.
 ## ✨ &nbsp;Features
 
 - 🎥 &nbsp;[Multi-provider support](#-providers) (HTML5, HLS, YouTube, Vimeo etc.).
-- 👑 &nbsp; One API to rule them all! Don't re-learn anything the next time you need a player.
+- 👑 &nbsp;One API to rule them all! Don't re-learn anything the next time you need a player.
 - ♾️ &nbsp;Avoid cross-browser differences on media related APIs, such as fullscreen and picture-in-picture.
 - 👐 &nbsp;[Accessible][accessibility] to all via ARIA roles/states/properties and keyboard support.
 - 🌎 &nbsp;I18N support.
@@ -27,7 +27,8 @@ help you to easily build and customize your own media player.
   [dark][dark-theme] themes are included.
 - 🏎️ &nbsp;Performant with [preconnections][preconnections] + [lazy loading][lazy-loading] of components
   and media out of the box.
-- 🗑️ &nbsp; Lightweight - ~25kB (gzip) without custom UI, and ~47kB with the default Vime UI.
+- 🧩 &nbsp;Easily build your own components and extend Vime.
+- 🗑️ &nbsp;Lightweight - ~25kB (gzip) standalone, and ~47kB with the default Vime UI.
 - ️🧰 &nbsp;Awesome default custom UI's for audio/video/live media.
 - 🛠 &nbsp;Comprehensive [player API][player-api] with a heap of properties, methods and events.
 - 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
