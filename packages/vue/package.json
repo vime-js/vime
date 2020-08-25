@@ -26,12 +26,12 @@
     "release": "semantic-release -e ../../scripts/semantic-release"
   },
   "dependencies": {
-    "@vime/core": "^1.0.0"
+    "@vime/core": "^1.8.1"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",
-    "vue": "^2.6.11",
-    "typescript": "^3.9.7"
+    "typescript": "^4.0.2",
+    "vue": "^2.6.12"
   },
   "peerDependencies": {
     "vue": "^2.6.11"

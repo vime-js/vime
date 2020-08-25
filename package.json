@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "engines": {
-    "node": ">=10",
+    "node": ">=12",
     "pnpm": ">=5"
   },
   "scripts": {
@@ -14,28 +14,28 @@
     "clean:node": "rimraf node_modules packages/*/node_modules examples/*/node_modules docs/node_modules"
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.1",
-    "@commitlint/config-conventional": "^9.1.1",
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.2",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@stencil/eslint-plugin": "^0.3.1",
-    "@typescript-eslint/eslint-plugin": "^3.7.0",
-    "@typescript-eslint/parser": "^3.7.0",
+    "@typescript-eslint/eslint-plugin": "^3.10.0",
+    "@typescript-eslint/parser": "^3.10.0",
     "codecov": "^3.7.2",
-    "eslint": "^7.5.0",
+    "eslint": "^7.7.0",
     "eslint-config-airbnb-typescript": "^9.0.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.20.3",
-    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^4.1.0",
     "git-log-parser": "^1.2.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.0",
     "react": "^16.13.1",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.1.1",
-    "typescript": "^3.9.7"
+    "typescript": "^4.0.2"
   },
   "husky": {
     "hooks": {

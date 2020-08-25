@@ -14,23 +14,23 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
-    "@rollup/plugin-node-resolve": "^8.0.0",
-    "rollup": "^2.3.4",
-    "rollup-plugin-livereload": "^1.0.0",
-    "rollup-plugin-svelte": "^5.0.3",
-    "rollup-plugin-terser": "^6.0.0",
-    "svelte": "^3.0.0",
-    "svelte-check": "^1.0.0",
-    "svelte-preprocess": "^4.0.0",
-    "@rollup/plugin-typescript": "^4.0.0",
-    "typescript": "^3.9.3",
-    "tslib": "^2.0.0",
-    "@tsconfig/svelte": "^1.0.0"
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "@rollup/plugin-typescript": "^4.1.2",
+    "@tsconfig/svelte": "^1.0.10",
+    "rollup": "^2.26.5",
+    "rollup-plugin-livereload": "^1.3.0",
+    "rollup-plugin-svelte": "^5.2.3",
+    "rollup-plugin-terser": "^6.1.0",
+    "svelte": "^3.24.1",
+    "svelte-check": "^1.0.22",
+    "svelte-preprocess": "^4.1.1",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.2"
   },
   "dependencies": {
-    "sirv-cli": "^1.0.0",
-    "@vime/core": "^1.0.0",
+    "@vime/core": "^1.8.1",
     "@vime/media": "^1.0.0",
-    "@vime/svelte": "^1.0.0"
+    "@vime/svelte": "^1.0.0",
+    "sirv-cli": "^1.0.6"
   }
 }

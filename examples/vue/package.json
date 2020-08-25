@@ -11,19 +11,19 @@
     "setup:build": "pnpm run build --filter @vime/core && pnpm run build --filter @vime/vue"
   },
   "dependencies": {
-    "@vime/core": "^1.0.0",
+    "@vime/core": "^1.8.1",
     "@vime/media": "^1.0.0",
-    "@vime/vue": "^1.0.0",
-    "sirv-cli": "^1.0.0",
+    "@vime/vue": "^1.3.0",
+    "sirv-cli": "^1.0.6",
     "tslib": "^2.0.1",
     "vue": "^2.6.12",
-    "vue-class-component": "^7.2.3",
-    "vue-property-decorator": "^8.4.2"
+    "vue-class-component": "^7.2.5",
+    "vue-property-decorator": "^8.5.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "typescript": "~3.9.3",
+    "@vue/cli-plugin-typescript": "~4.5.4",
+    "@vue/cli-service": "~4.5.4",
+    "typescript": "~4.0.2",
     "vue-template-compiler": "^2.6.12"
   },
   "browserslist": [

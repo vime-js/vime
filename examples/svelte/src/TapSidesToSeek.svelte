@@ -13,6 +13,10 @@
    */
   let ref: HTMLDivElement;
 
+  /**
+   * Take note of the `true` value passed in as the second parameter here to access the "internal"
+   * store for building custom UI components.
+   */ 
   const { currentTime, duration } = usePlayerStore(() => ref, true)
 
   const onSeekBackward = () => {
