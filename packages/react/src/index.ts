@@ -3,22 +3,20 @@ import {
   PlayerProp,
   PlayerEvent,
   PlayerProps,
-  PlayerDispatcher,
-  findRootPlayer,
+  ViewType,
+  MediaType,
 } from '@vime/core';
-import { usePlayerContext, usePlayerDispatcher } from './context';
-
-export * from './components';
 
 export {
   PlayerProp,
   PlayerProps,
   PlayerEvent,
-  PlayerDispatcher,
-  usePlayerContext,
-  usePlayerDispatcher,
-  findRootPlayer,
+  ViewType,
+  MediaType,
 };
+
+export * from './components';
+export * from './hooks';
 
 if (typeof window !== 'undefined') {
   defineCustomElements(window);

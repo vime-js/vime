@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { usePlayerContext, PlayerProp, usePlayerDispatcher } from "@vime/react";
+import { PlayerProp, useInternalPlayerContext } from "@vime/react";
 import './TapSidesToSeek.css';
 
 function TapSidesToSeek() {
@@ -9,27 +9,21 @@ function TapSidesToSeek() {
    */
   const ref = useRef(null);
 
-  /**
-   * Here we are creating a dispatcher to send updates to the player.
-   */
-  const dispatch = usePlayerDispatcher(ref);
-  
-  /**
-   * Here we are requesting to receive updates from the player, as the property changes it will be 
-   * updated here.
-   */
-  const currentTime = usePlayerContext(ref, PlayerProp.currentTime, 0);
-  const duration = usePlayerContext(ref, PlayerProp.duration, -1);
+  // Little utility hook to get the current player, incase you need to call a method.
+  // const player = usePlayer(ref);
+
+  const [currentTime, setCurrentTime] = useInternalPlayerContext(ref, PlayerProp.currentTime, 0);
+  const [duration] = useInternalPlayerContext(ref, PlayerProp.duration, -1);
 
   const onSeekBackward = () => {
     if (currentTime < 5) return;
     // We are dispatching an update to the player to change the `currentTime` property.
-    dispatch(PlayerProp.currentTime, currentTime - 5)
+    setCurrentTime(currentTime - 5);
   };
 
   const onSeekForward = () => {
     if (currentTime > (duration - 5)) return;
-    dispatch(PlayerProp.currentTime, currentTime + 5)
+    setCurrentTime(currentTime + 5);
   };
 
   return (

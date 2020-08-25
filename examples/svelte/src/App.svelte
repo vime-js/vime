@@ -4,6 +4,7 @@
 	// Custom UI component.
 	import TapSidesToSeek from './TapSidesToSeek.svelte';
 
+	// Obtain a ref if you need to call any methods.
 	let player: HTMLVimePlayerElement;
 
 	/**

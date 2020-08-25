@@ -3,7 +3,7 @@
 This example was bootstrapped using the [`sveltejs/template`](https://github.com/sveltejs/template),
 and demonstrates how to setup Vime with Svelte via the `@vime/core` package. The main files to
 look at are [`public/index.html`](./public/index.html) for loading, and [`src/App.svelte`](./src/App.svelte)
-for usage. In addition, if you're intrested in building custom UI components see
+for usage. In addition, if you're intrested in building custom components see
 [`TapSidesToSeek.svelte`](./src/TapSidesToSeek.svelte).
 
 For the curious, [`@vime/media`](../../packages/media) is a private package that contains a collection

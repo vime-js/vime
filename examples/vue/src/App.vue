@@ -41,8 +41,9 @@ import TapSidesToSeek from './TapSidesToSeek.vue';
   },
 })
 export default class App extends Vue {
+  // Obtain a ref if you need to call any methods.
   get player() {
-    return this.$refs.player as HTMLVimePlayerElement;
+    return this.$refs.player;
   }
 
   onPlaybackReady() {

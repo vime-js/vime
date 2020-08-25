@@ -1,50 +1,49 @@
 import { Component, ElementRef } from '@angular/core';
-import {
-  PlayerProp, usePlayerContext, PlayerDispatcher, createPlayerDispatcher,
-} from '@vime/core';
+import { PlayerProp } from '@vime/core';
+import { VimeComponent } from '@vime/angular/';
 
 @Component({
   selector: 'tap-sides-to-seek',
   templateUrl: './tap-sides-to-seek.component.html',
 })
-export class TapSidesToSeekComponent {
-  dispatch!: PlayerDispatcher;
-
+export class TapSidesToSeekComponent extends VimeComponent {
   currentTime = 0;
 
   duration = -1;
 
   /**
-   * We need a reference to a DOM element so the Vime hooks work as they rely on dispatching
-   * custom DOM events.
+   * When we extend the `VimeComponent` class a few things are happening under the hood.
+   *
+   * 1. The super constructor overwrites all player properties with fresh getters/setters. Not all
+   * properties contain setters (readonly), so it's best to refer to the documentation.
+   * 2. The component binds itself to the player context so that player properties are updated as
+   * they change.
+   * 3. The component will dispatch any updates to the player if a writable player prop is changed.
+   * 4. When the component is destroyed, it will automatically unbind itself from the player.
+   *
+   * IMPORTANT: The `ElementRef` is required as the `VimeComponent` class uses it to dispatch
+   * custom events to the player. Angular automatically injects this value.
+   *
+   * @see https://vimejs.com/components/core/player/api
    */
-  constructor(private ref: ElementRef) {}
+  constructor(protected ref: ElementRef) {
+    // Pass in the properties you'd like to bind to this component.
+    super([
+      PlayerProp.currentTime,
+      PlayerProp.duration,
+    ]);
 
-  ngAfterViewInit() {
-    /**
-     * Here we are creating a dispatcher to send updates to the player.
-     */
-    this.dispatch = createPlayerDispatcher(this.ref.nativeElement);
-
-    /**
-     * Here we are requesting to receive updates from the player, as the requested propties change
-     * it will be updated here.
-     */
-    usePlayerContext(
-      this.ref.nativeElement,
-      [PlayerProp.currentTime, PlayerProp.duration],
-      (prop, value) => { this[prop] = value; },
-    );
+    // There is a player ref if you need to call any methods.
+    // this.player
   }
 
   onSeekBackward() {
     if (this.currentTime < 5) return;
-    // We are dispatching an update to the player to change the `currentTime` property.
-    this.dispatch(PlayerProp.currentTime, this.currentTime - 5);
+    this.currentTime -= 5;
   }
 
   onSeekForward() {
     if (this.currentTime > (this.duration - 5)) return;
-    this.dispatch(PlayerProp.currentTime, this.currentTime + 5);
+    this.currentTime += 5;
   }
 }

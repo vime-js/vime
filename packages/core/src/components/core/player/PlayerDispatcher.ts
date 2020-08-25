@@ -13,6 +13,12 @@ export type PlayerDispatcher = <P extends keyof InternalWritablePlayerProps>(
   value: InternalWritablePlayerProps[P]
 ) => void;
 
+/**
+ * Creates a dispatcher on the given `ref`, to send updates to the closest ancestor player via
+ * the custom `vStateChange` event.
+ *
+ * @param ref An element to dispatch the state change events from.
+ */
 export const createPlayerDispatcher = (
   ref: any,
 ): PlayerDispatcher => (prop: any, value: any) => {

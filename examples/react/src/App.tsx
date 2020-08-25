@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './App.css';
-import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/react';
+import { VimePlayer, VimeVideo, VimeDefaultUi, usePlayerContext, PlayerProp } from '@vime/react';
 
 // Default theme.
 import '@vime/core/themes/default.css';
@@ -12,11 +12,19 @@ import '@vime/core/themes/default.css';
 import TapSidesToSeek from './TapSidesToSeek';
 
 function App() {
+	// Obtain a ref if you need to call any methods.
   const player = useRef<HTMLVimePlayerElement>(null);
 
   const onPlaybackReady = () => {
     // ...
   };
+
+  // If you prefer hooks :)
+  const currentTime = usePlayerContext(player, PlayerProp.currentTime, 0);
+
+  useEffect(() => {
+    console.log(currentTime);
+  }, [currentTime]);
 
   return (
     <div id="container">

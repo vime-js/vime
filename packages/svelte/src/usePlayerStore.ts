@@ -17,7 +17,7 @@ import {
   ExternalWritablePlayerProp,
 } from '@vime/core/dist/types/components/core/player/PlayerProp';
 
-type ExternalPropStoreType<P extends keyof PlayerProps> =
+type PropStoreType<P extends keyof PlayerProps> =
   P extends ExternalWritablePlayerProp
     ? Writable<PlayerProps[P]>
     : Readable<PlayerProps[P]>;
@@ -27,12 +27,15 @@ type InternalPropStoreType<P extends keyof PlayerProps> =
     ? Writable<PlayerProps[P]>
     : Readable<PlayerProps[P]>;
 
-type InternalStore = { [P in keyof PlayerProps]: InternalPropStoreType<P> };
-type ExternalStore = { [P in keyof PlayerProps]: ExternalPropStoreType<P> };
+type PlayerStore = {
+  [P in keyof PlayerProps]: PropStoreType<P>;
+};
 
-export function usePlayerStore(ref: () => HTMLElement, forCustomUI?: false): ExternalStore;
-export function usePlayerStore(ref: () => HTMLElement, forCustomUI?: true): InternalStore;
-export function usePlayerStore(ref: () => HTMLElement, forCustomUI = false) {
+type InternalPlayerStore = {
+  [P in keyof PlayerProps]: InternalPropStoreType<P>;
+};
+
+const buildStore = (ref: () => HTMLElement, isInternal = false) => {
   let dispatch: PlayerDispatcher = () => {};
   const internalStoreRef: Map<PlayerProp, Writable<any>> = new Map();
 
@@ -41,8 +44,8 @@ export function usePlayerStore(ref: () => HTMLElement, forCustomUI = false) {
 
   const vimeable = <P extends keyof PlayerProps>(prop: P, initialValue: PlayerProps[P]) => {
     const store = writable(initialValue);
-    const canWrite = (!forCustomUI && !isExternalReadonlyPlayerProp(prop))
-      || (!isInternalReadonlyPlayerProp(prop) && forCustomUI);
+    const canWrite = (!isInternal && !isExternalReadonlyPlayerProp(prop))
+      || (!isInternalReadonlyPlayerProp(prop) && isInternal);
 
     const set = (value: PlayerProps[P]) => {
       if (!get(internalStoreRef.get(PlayerProp.mounted))) {
@@ -148,4 +151,42 @@ export function usePlayerStore(ref: () => HTMLElement, forCustomUI = false) {
   });
 
   return store;
-}
+};
+
+/**
+ * Creates and returns a store for the given player `ref`. The store is a collection of stores
+ * for each player property. It is safe to write to properties before the player has mounted or
+ * playback is ready.
+ *
+ * @param ref The player to create a store for.
+ *
+ * @example
+ * <vime-player bind:this={player}>
+ *  <!-- ... -->
+ * </vime-player>
+ *
+ * <script lang="ts">
+ *  let player;
+ *
+ *  const { currentTime } = usePlayerStore(player);
+ *
+ *  $currentTime = 50;
+ *
+ *  $: console.log($currentTime);*
+ * </script>
+ */
+export const usePlayerStore = (
+  ref: () => HTMLVimePlayerElement,
+): PlayerStore => buildStore(ref);
+
+/**
+ * Creates and returns a store for the closest ancestor player of the given `ref`. The internal
+ * player store gives us the ability to write to properties that are considered unsafe to write to
+ * from the "outside" (when directly interacting with the player). **Remember, with great power
+ * comes great responsibility**.
+ *
+ * @param ref The root HTMLElement of the custom component.
+ */
+export const useInternalPlayerStore = (
+  ref: () => HTMLElement,
+): InternalPlayerStore => buildStore(ref, true);
