@@ -35,6 +35,7 @@ describe('props', () => {
   it('should have defined all props', async () => {
     const isUndefinedProp = new Set([
       PlayerProp.playbackQuality,
+      PlayerProp.theme,
       PlayerProp.mediaType,
       PlayerProp.viewType,
       PlayerProp.mediaTitle,
