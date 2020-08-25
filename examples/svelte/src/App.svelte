@@ -8,7 +8,8 @@
 	let player: HTMLVimePlayerElement;
 
 	/**
-	 * All player properties are available through the store.
+	 * All player properties are available through the store. If you prefer, you could also pass 
+	 * properties directly to the player and listen for events.
 	 */
 	const { paused } = usePlayerStore(() => player);
 
