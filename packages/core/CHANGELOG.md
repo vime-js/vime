@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.9.0](https://github.com/vime-js/vime/compare/@vime/core@1.8.1...@vime/core@1.9.0) (2020-08-25)
+
+
+### Bug Fixes
+
+* stricter typing on player context ([e2dc6d6](https://github.com/vime-js/vime/commit/e2dc6d665535f9f35e0128132e172587924de2bb))
+* use lower case `PlayerProp` names for consistency ([5be3890](https://github.com/vime-js/vime/commit/5be3890de1acd8988031cfa6310799dcdd2aeb82))
+* usePlayerContext not working if used on same ref ([2a9c881](https://github.com/vime-js/vime/commit/2a9c881a1646ffd2fa0ea7eb6095f41b990551f7))
+* **core:** context connection failing if player ready ([2443817](https://github.com/vime-js/vime/commit/244381748568424bd74e7390858ad588408253eb))
+
+
+### Features
+
+* add new theme prop ([cfb397f](https://github.com/vime-js/vime/commit/cfb397f5348f721d285b2f8125a6e0ee954448d8))
+* export findRootPlayer utility ([f4ccab1](https://github.com/vime-js/vime/commit/f4ccab104a5ab845b71f51a5ae5fa9b095d7cb5e))
+* improve all framework integrations ([0ef1716](https://github.com/vime-js/vime/commit/0ef171655e8f02c277e0f00e90d87fdba8f74bb4))
+* new svelte store option ([ce78e15](https://github.com/vime-js/vime/commit/ce78e1532da638fffacdf6988ec66c9390c31f5d))
+* **core:** export player event enum ([0918d3f](https://github.com/vime-js/vime/commit/0918d3f2915612584af6496a1df68ee1b554b582))
+* new mounted + destroyed props ([e315a5e](https://github.com/vime-js/vime/commit/e315a5e75ce3cfbe28ed81fc2eec05318d9c0e29))
+
 ## [1.8.1](https://github.com/vime-js/vime/compare/@vime/core@1.8.0...@vime/core@1.8.1) (2020-08-23)
 
 ### Bug Fixes
