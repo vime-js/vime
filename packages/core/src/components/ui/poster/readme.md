@@ -57,6 +57,22 @@ function Example() {
 }
 ```
 
+### Svelte
+
+```html {5,10} title="example.svelte"
+<VimePlayer>
+  <!-- ... -->
+  <VimeUi>
+    <!-- ... -->
+    <VimePoster />
+  </VimeUi>
+</VimePlayer>
+
+<script lang="ts">
+  import { VimePlayer, VimeUi, VimePoster } from '@vime/svelte';
+</script>
+```
+
 ### Vue
 
 ```html {6,12,18} title="example.vue"

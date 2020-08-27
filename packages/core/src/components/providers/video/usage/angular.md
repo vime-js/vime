@@ -1,4 +1,4 @@
-```html {2-18} title="example.html"
+```html {2-17} title="example.html"
 <vime-player controls>
   <vime-video poster="/media/poster.png">
     <source data-src="/media/video.mp4" type="video/mp4" />
@@ -15,7 +15,6 @@
       srclang="fr"
       label="French"
     />
-    <!-- ... -->
   </vime-video>
   <!-- ... -->
 </vime-player>

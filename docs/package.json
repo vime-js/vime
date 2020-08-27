@@ -21,6 +21,7 @@
     "@mdx-js/react": "^1.6.16",
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.1",
+    "prism-react-renderer": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "workbox-routing": "^5.1.3",

@@ -1,3 +1,3 @@
 ```html title="example.html"
-<vime-time label="Time" seconds="120" />
+<vime-time label="Time" [seconds]="120" />
 ```

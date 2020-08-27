@@ -21,7 +21,7 @@ you want an easier starting point see [`vime-default-settings`](../default-setti
 
 ### Angular
 
-```html {5-11} title="example.html"
+```html {5-13} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -30,6 +30,8 @@ you want an easier starting point see [`vime-default-settings`](../default-setti
       identifer="menu-id"
       controller="menu-controller-id"
       [active]="isMenuActive"
+      (vOpen)="onOpen()"
+      (vClose)="onClose()"
     >
       <!-- ... -->
     </vime-menu>
@@ -41,7 +43,13 @@ you want an easier starting point see [`vime-default-settings`](../default-setti
 class Example {
   isMenuActive = false;
 
-  // ...
+  onOpen() {
+    this.isMenuActive = true;
+  }
+
+  onClose() {
+    this.isMenuActive = false;
+  }
 }
 ```
 
@@ -61,12 +69,20 @@ class Example {
 
 ### React
 
-```tsx {2,12-18}
+```tsx {2,20-28}
 import React, { useState } from "react";
 import { VimePlayer, VimeUi, VimeMenu } from "@vime/react";
 
 function Example() {
   const [isMenuActive, setIsMenuActive] = useState(false);
+
+  const onOpen = () => {
+    setIsMenuActive(true);
+  };
+
+  const onClose = () => {
+    setIsMenuActive(false);
+  };
 
   return render(
     <VimePlayer>
@@ -77,6 +93,8 @@ function Example() {
           identifer="menu-id"
           controller="menu-controller-id"
           active={isMenuActive}
+          onVOpen={onOpen}
+          onVClose={onClose}
         >
           <!-- ... -->
         </VimeMenu>
@@ -86,9 +104,45 @@ function Example() {
 }
 ```
 
+### Svelte
+
+```tsx {5-13}
+<VimePlayer>
+  <!-- ... -->
+  <VimeUi>
+    <!-- ... -->
+    <VimeMenu
+      identifer="menu-id"
+      controller="menu-controller-id"
+      active={isMenuActive}
+      on:vOpen={onOpen}
+      on:vClose={onClose}
+    >
+      <!-- ... -->
+    </VimeMenu>
+  </VimeUi>
+</VimePlayer>
+```
+
+```html {2}
+<script lang="ts">
+  import { VimePlayer, VimeUi, VimeMenu } from '@vime/svelte';
+
+  let isMenuActive = false;
+
+  const onOpen = () => {
+    isMenuActive = true;
+  };
+
+  const onClose = () => {
+    isMenuActive = false;
+  };
+</script>
+```
+
 ### Vue
 
-```html {6-12,18,24} title="example.vue"
+```html {6-14,20,26} title="example.vue"
 <template>
   <VimePlayer>
     <!-- ... -->
@@ -98,6 +152,8 @@ function Example() {
         identifer="menu-id"
         controller="menu-controller-id"
         :active="isMenuActive"
+        @vOpen="onOpen"
+        @vClose="onClose"
       >
         <!-- ... -->
       </VimeMenu>
@@ -117,6 +173,16 @@ function Example() {
 
     data: {
       isMenuActive: false,
+    },
+
+    methods: {
+      onOpen() {
+        this.isMenuActive = true;
+      },
+
+      onClose() {
+        this.isMenuActive = false;
+      },
     },
   };
 </script>

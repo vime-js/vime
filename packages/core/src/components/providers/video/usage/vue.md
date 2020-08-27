@@ -1,4 +1,4 @@
-```html {3-19,25,30} title="example.vue"
+```html {3-18,24,29} title="example.vue"
 <template>
   <VimePlayer controls>
     <VimeVideo>
@@ -16,7 +16,6 @@
         srclang="es"
         label="Spanish"
       />
-      <!-- ... -->
     </VimeVideo>
     <!-- ... -->
   </VimePlayer>

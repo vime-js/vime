@@ -19,9 +19,9 @@ at https://github.com/sampotts/rangetouch).
 
 ```html title="example.html"
 <vime-slider
-  step="5"
-  max="100"
   label="Volume"
+  [step]="5"
+  [max]="100"
   [value]="value"
   (vValueChange)="onValueChange($event)"
 />
@@ -66,9 +66,9 @@ function Example() {
 
   return render(
     <VimeSlider
-      step="5"
-      max="100"
       label="Volume"
+      step={5}
+      max={100}
       value={value}
       onVValueChange={onValueChange}
     />
@@ -76,14 +76,38 @@ function Example() {
 }
 ```
 
+### Svelte
+
+```tsx
+<VimeSlider
+  label="Volume"
+  step={5}
+  max={100}
+  value={value}
+  on:vValueChange={onValueChange}
+/>
+```
+
+```html {2}
+<script lang="ts">
+  import { VimeSlider } from '@vime/svelte';
+
+  let value = 50;
+
+  const onValueChange = (event: CustomEvent<number>) => {
+    value = event.detail;
+  };
+</script>
+```
+
 ### Vue
 
 ```html {2-8,12,16} title="example.vue"
 <template>
   <VimeSlider
-    step="5"
-    max="100"
     label="Volume"
+    :step="5"
+    :max="100"
     :value="value"
     @vValueChange="onValueChange"
   />

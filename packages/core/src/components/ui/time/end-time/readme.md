@@ -36,6 +36,16 @@ function Example() {
 }
 ```
 
+### Svelte
+
+```html {1,4} title="example.svelte"
+<VimeEndTime />
+
+<script lang="ts">
+  import { VimeEndTime } from '@vime/svelte';
+</script>
+```
+
 ### Vue
 
 ```html {2,6,10} title="example.vue"

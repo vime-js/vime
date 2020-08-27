@@ -1,8 +1,8 @@
 ```html title="example.html"
 <vime-slider
-  step="5"
-  max="100"
   label="Volume"
+  [step]="5"
+  [max]="100"
   [value]="value"
   (vValueChange)="onValueChange($event)"
 />

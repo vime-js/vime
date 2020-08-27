@@ -1,47 +1,38 @@
-```tsx {6,32-40}
-import React, { useState } from 'react';
+```tsx {4,25-34}
+import React, { useMemo, useRef } from 'react';
 import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
+  PlayerProp,
   VimeControl,
   VimeIcon,
   VimeTooltip,
+  useInternalPlayerContext,
 } from '@vime/react';
 
-function Example() {
-  const [paused, setPaused] = useState(true);
-  const [icon, setIcon] = useState('#vime-play');
-  const [tooltip, setTooltip] = useState('Pause');
-
+function PlaybackControl() {
+  const ref = useRef(null);
+  const [paused, setPaused] = useInternalPlayerContext(
+    ref,
+    PlayerProp.Paused,
+    true
+  );
+  const [i18n] = useInternalPlayerContext(ref, PlayerProp.i18n, {});
+  const icon = useMemo(() => (paused ? '#vime-play' : '#vime-pause'), [paused]);
+  const tooltip = useMemo(() => (paused ? 'Play' : 'Pause'), [paused]);
   const onClick = () => {
-    onPausedChange({ detail: !paused });
-  };
-
-  const onPausedChange = (event: CustomEvent<boolean>) => {
-    setPaused(event.detail);
-    setIcon(paused ? '#vime-play' : '#vime-pause');
-    setTooltip(paused ? 'Play' : 'Pause');
+    setPaused(false);
   };
 
   return render(
-    <VimePlayer paused={paused} onVPausedChange={onPausedChange}>
-      {/* ... */}
-      <VimeUi>
-        {/* ... */}
-        <VimeControls fullWidth>
-          <VimeControl
-            label="Playback"
-            keys="k"
-            pressed={paused}
-            onClick={onClick}
-          >
-            <VimeIcon href={icon} />
-            <VimeTooltip>{tooltip} (k)</VimeTooltip>
-          </VimeControl>
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+    <VimeControl
+      keys="k"
+      ref={ref}
+      label={i18n.playback}
+      pressed={paused}
+      onClick={onClick}
+    >
+      <VimeIcon href={icon} />
+      <VimeTooltip>{tooltip} (k)</VimeTooltip>
+    </VimeControl>
   );
 }
 ```

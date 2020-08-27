@@ -20,7 +20,7 @@ Responsible for positioning and laying out individual/groups of controls.
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
-    <vime-controls full-width active-duration="2750">
+    <vime-controls full-width [active-duration]="2750">
       <!-- ... -->
     </vime-controls>
   </vime-ui>
@@ -53,13 +53,33 @@ function Example() {
       {/* ... */}
       <VimeUi>
         {/* ... */}
-        <VimeControls fullWidth activeDuration="3200">
+        <VimeControls fullWidth activeDuration={3200}>
           {/* ... */}
         </VimeControls>
       </VimeUi>
     </VimePlayer>
   );
 }
+```
+
+### Svelte
+
+```tsx {5-7}
+<VimePlayer>
+  <!-- ... -->
+  <VimeUi>
+    <!-- ... -->
+    <VimeControls fullWidth activeDuration={3200}>
+      <!-- ... -->
+    </VimeControls>
+  </VimeUi>
+</VimePlayer>
+```
+
+```html {2}
+<script lang="ts">
+  import { VimePlayer, VimeUi, VimeControls } from '@vime/svelte';
+</script>
 ```
 
 ### Vue
@@ -69,7 +89,7 @@ function Example() {
   <VimePlayer>
     <!-- ... -->
     <VimeUi>
-      <VimeControls fullWidth activeDuration="3200">
+      <VimeControls fullWidth :activeDuration="3200">
         <!-- ... -->
       </VimeControls>
     </VimeUi>

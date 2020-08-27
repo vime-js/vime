@@ -11,9 +11,9 @@ function Example() {
 
   return render(
     <VimeSlider
-      step="5"
-      max="100"
       label="Volume"
+      step={5}
+      max={100}
       value={value}
       onVValueChange={onValueChange}
     />

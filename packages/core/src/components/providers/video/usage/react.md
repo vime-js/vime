@@ -1,4 +1,4 @@
-```tsx {2,7-23}
+```tsx {2,7-22}
 import React from 'react';
 import { VimePlayer, VimeVideo } from '@vime/react';
 
@@ -20,7 +20,6 @@ function Example() {
           srclang="es"
           label="Spanish"
         />
-        {/* ... */}
       </VimeVideo>
       {/* ... */}
     </VimePlayer>

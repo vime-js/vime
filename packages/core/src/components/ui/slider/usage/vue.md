@@ -1,9 +1,9 @@
 ```html {2-8,12,16} title="example.vue"
 <template>
   <VimeSlider
-    step="5"
-    max="100"
     label="Volume"
+    :step="5"
+    :max="100"
     :value="value"
     @vValueChange="onValueChange"
   />

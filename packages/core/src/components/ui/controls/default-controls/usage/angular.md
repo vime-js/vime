@@ -5,7 +5,7 @@
     <!-- ... -->
     <vime-default-controls
       full-width
-      active-duration="2750"
+      [active-duration]="2750"
     ></vime-default-controls>
   </vime-ui>
 </vime-player>

@@ -6,7 +6,7 @@
       <!-- ... -->
       <VimeSettings>
         <VimeSubmenu label="Playback Rate">
-          <VimeMenuRadioGroup value="1" @vCheck="onValueChange($event)">
+          <VimeMenuRadioGroup :value="value" @vCheck="onValueChange($event)">
             <VimeMenuRadio label="0.5" value="0.5" />
             <VimeMenuRadio label="Normal" value="1" />
             <VimeMenuRadio label="2" value="2" />
@@ -44,7 +44,7 @@
     methods: {
       onValueChange(event) {
         const radio = event.target as HTMLVimeMenuRadioElement;
-        this.value = parseFloat(radio.value);
+        this.value = radio.value;
       },
     },
   };

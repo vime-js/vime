@@ -1,4 +1,4 @@
-```html {5-11} title="example.html"
+```html {5-13} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
@@ -7,6 +7,8 @@
       identifer="menu-id"
       controller="menu-controller-id"
       [active]="isMenuActive"
+      (vOpen)="onOpen()"
+      (vClose)="onClose()"
     >
       <!-- ... -->
     </vime-menu>
@@ -18,6 +20,12 @@
 class Example {
   isMenuActive = false;
 
-  // ...
+  onOpen() {
+    this.isMenuActive = true;
+  }
+
+  onClose() {
+    this.isMenuActive = false;
+  }
 }
 ```

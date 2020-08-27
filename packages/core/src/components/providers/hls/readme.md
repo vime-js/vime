@@ -10,12 +10,11 @@ Enables loading, playing and controlling [HLS](https://en.wikipedia.org/wiki/HTT
 
 ### Angular
 
-```html {2-6} title="example.html"
+```html {2-5} title="example.html"
 <vime-player controls>
   <vime-hls version="latest" [config]="hlsConfig" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
     <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
-    <!-- ... -->
   </vime-hls>
   <!-- ... -->
 </vime-player>
@@ -34,12 +33,11 @@ class Example {
 
 ### Html
 
-```html {2-6}
+```html {2-5}
 <vime-player controls>
   <vime-hls version="latest" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
     <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
-    <!-- ... -->
   </vime-hls>
   <!-- ... -->
 </vime-player>
@@ -47,7 +45,7 @@ class Example {
 
 ### React
 
-```tsx {2,14-18}
+```tsx {2,14-17}
 import React from 'react';
 import { VimePlayer, VimeHls } from '@vime/react';
 
@@ -64,7 +62,6 @@ function Example() {
       <VimeHls version="latest" config={hlsConfig} poster="/media/poster.png">
         <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
         <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
-        {/* ... */}
       </VimeHls>
       {/* ... */}
     </VimePlayer>
@@ -72,15 +69,37 @@ function Example() {
 }
 ```
 
+### Svelte
+
+```html {2-5,10} title="example.svelte"
+<VimePlayer controls>
+  <VimeHls version="latest" config="{hlsConfig}" poster="/media/poster.png">
+    <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
+    <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
+  </VimeHls>
+  <!-- ... -->
+</VimePlayer>
+
+<script lang="ts">
+  import { VimePlayer, VimeHls } from '@vime/svelte';
+
+  /**
+   * @see https://hls-js.netlify.app/api-docs/file/src/config.ts.html.
+   */
+  const hlsConfig = {
+    // ...
+  };
+</script>
+```
+
 ### Vue
 
-```html {3-7,13,18} title="example.vue"
+```html {3-6,12,17} title="example.vue"
 <template>
   <VimePlayer controls>
     <VimeHls :config="hlsConfig" version="latest" poster="/media/poster.png">
       <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
       <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
-      <!-- ... -->
     </VimeHls>
     <!-- ... -->
   </VimePlayer>

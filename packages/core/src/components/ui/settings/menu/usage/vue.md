@@ -1,4 +1,4 @@
-```html {6-12,18,24} title="example.vue"
+```html {6-14,20,26} title="example.vue"
 <template>
   <VimePlayer>
     <!-- ... -->
@@ -8,6 +8,8 @@
         identifer="menu-id"
         controller="menu-controller-id"
         :active="isMenuActive"
+        @vOpen="onOpen"
+        @vClose="onClose"
       >
         <!-- ... -->
       </VimeMenu>
@@ -27,6 +29,16 @@
 
     data: {
       isMenuActive: false,
+    },
+
+    methods: {
+      onOpen() {
+        this.isMenuActive = true;
+      },
+
+      onClose() {
+        this.isMenuActive = false;
+      },
     },
   };
 </script>

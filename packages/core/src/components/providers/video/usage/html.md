@@ -1,4 +1,4 @@
-```html {2-18}
+```html {2-17}
 <vime-player controls>
   <vime-video poster="/media/poster.png">
     <source data-src="/media/video.mp4" type="video/mp4" />
@@ -15,7 +15,6 @@
       srclang="es"
       label="Spanish"
     />
-    <!-- ... -->
   </vime-video>
   <!-- ... -->
 </vime-player>

@@ -35,6 +35,10 @@ module.exports = {
         },
       ],
     },
+    prism: {
+      // eslint-disable-next-line global-require
+      theme: require('prism-react-renderer/themes/oceanicNext'),
+    },
   },
   presets: [
     [

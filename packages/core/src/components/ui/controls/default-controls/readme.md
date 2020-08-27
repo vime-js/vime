@@ -17,7 +17,7 @@ the media is audio/video/live, and whether the device is mobile/desktop. See
     <!-- ... -->
     <vime-default-controls
       full-width
-      active-duration="2750"
+      [active-duration]="2750"
     ></vime-default-controls>
   </vime-ui>
 </vime-player>
@@ -50,11 +50,29 @@ function Example() {
       {/* ... */}
       <VimeUi>
         {/* ... */}
-        <VimeDefaultControls fullWidth activeDuration="3200" />
+        <VimeDefaultControls fullWidth activeDuration={3200} />
       </VimeUi>
     </VimePlayer>
   );
 }
+```
+
+### Svelte
+
+```tsx {5}
+<VimePlayer>
+  <!-- ... -->
+  <VimeUi>
+    <!-- ... -->
+    <VimeDefaultControls fullWidth activeDuration={3200} />
+  </VimeUi>
+</VimePlayer>
+```
+
+```html {2}
+<script lang="ts">
+  import { VimePlayer, VimeUi, VimeDefaultControls } from '@vime/svelte';
+</script>
 ```
 
 ### Vue
@@ -65,7 +83,7 @@ function Example() {
     <!-- ... -->
     <VimeUi>
       <!-- ... -->
-      <VimeDefaultControls fullWidth activeDuration="3200" />
+      <VimeDefaultControls fullWidth :activeDuration="3200" />
     </VimeUi>
   </VimePlayer>
 </template>

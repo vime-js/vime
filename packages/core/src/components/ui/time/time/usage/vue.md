@@ -1,6 +1,6 @@
 ```html {2,6,10} title="example.vue"
 <template>
-  <VimeTime label="Time" seconds="120" />
+  <VimeTime label="Time" :seconds="120" />
 </template>
 
 <script>

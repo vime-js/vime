@@ -16,42 +16,45 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 
 ### Angular
 
-```html {6-14} title="example.html"
-<vime-player [paused]="paused" (vPausedChange)="onPausedChange($event)">
-  <!-- ... -->
-  <vime-ui>
-    <!-- ... -->
-    <vime-controls full-width>
-      <vime-control
-        label="Playback"
-        keys="k"
-        [pressed]="paused"
-        (click)="onClick"
-      >
-        <vime-icon [href]="icon"></vime-icon>
-        <vime-tooltip>{{tooltip}} (k)</vime-tooltip>
-      </vime-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+```html title="playback-control.html"
+<vime-control
+  keys="k"
+  [label]="i18n.playback"
+  [pressed]="paused"
+  (click)="onClick()"
+>
+  <vime-icon [href]="icon"></vime-icon>
+  <vime-tooltip>{{tooltip}} (k)</vime-tooltip>
+</vime-control>
 ```
 
-```ts title="example.ts"
-class Example {
+```ts title="playback-control.ts"
+import { Component, ElementRef } from '@angular/core';
+import { PlayerProp, VimeComponent } from '@vime/angular';
+
+@Component({
+  selector: 'playback-control',
+  templateUrl: './playback-control.html',
+})
+class PlaybackControl extends VimeComponent {
   paused = true;
 
-  icon = '#vime-play';
+  i18n = {};
 
-  tooltip = 'Play';
-
-  onClick() {
-    this.onPausedChange({ detail: !this.paused });
+  constructor(protected ref: ElementRef) {
+    super([PlayerProp.paused, PlayerProp.i18n]);
   }
 
-  onPausedChange(event: CustomEvent<boolean>) {
-    this.paused = event.detail;
-    this.tooltip = this.paused ? 'Play' : 'Pause';
-    this.icon = this.paused ? '#vime-play' : '#vime-pause';
+  get icon() {
+    return this.paused ? '#vime-play' : '#vime-pause';
+  }
+
+  get tooltip() {
+    return this.paused ? this.i18n.play : this.i18n.pause;
+  }
+
+  onClick() {
+    this.paused = !this.paused;
   }
 }
 ```
@@ -75,91 +78,113 @@ class Example {
 
 ### React
 
-```tsx {6,32-40}
-import React, { useState } from 'react';
+```tsx {4,25-34}
+import React, { useMemo, useRef } from 'react';
 import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
+  PlayerProp,
   VimeControl,
   VimeIcon,
   VimeTooltip,
+  useInternalPlayerContext,
 } from '@vime/react';
 
-function Example() {
-  const [paused, setPaused] = useState(true);
-  const [icon, setIcon] = useState('#vime-play');
-  const [tooltip, setTooltip] = useState('Pause');
-
+function PlaybackControl() {
+  const ref = useRef(null);
+  const [paused, setPaused] = useInternalPlayerContext(
+    ref,
+    PlayerProp.Paused,
+    true
+  );
+  const [i18n] = useInternalPlayerContext(ref, PlayerProp.i18n, {});
+  const icon = useMemo(() => (paused ? '#vime-play' : '#vime-pause'), [paused]);
+  const tooltip = useMemo(() => (paused ? 'Play' : 'Pause'), [paused]);
   const onClick = () => {
-    onPausedChange({ detail: !paused });
-  };
-
-  const onPausedChange = (event: CustomEvent<boolean>) => {
-    setPaused(event.detail);
-    setIcon(paused ? '#vime-play' : '#vime-pause');
-    setTooltip(paused ? 'Play' : 'Pause');
+    setPaused(false);
   };
 
   return render(
-    <VimePlayer paused={paused} onVPausedChange={onPausedChange}>
-      {/* ... */}
-      <VimeUi>
-        {/* ... */}
-        <VimeControls fullWidth>
-          <VimeControl
-            label="Playback"
-            keys="k"
-            pressed={paused}
-            onClick={onClick}
-          >
-            <VimeIcon href={icon} />
-            <VimeTooltip>{tooltip} (k)</VimeTooltip>
-          </VimeControl>
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+    <VimeControl
+      keys="k"
+      ref={ref}
+      label={i18n.playback}
+      pressed={paused}
+      onClick={onClick}
+    >
+      <VimeIcon href={icon} />
+      <VimeTooltip>{tooltip} (k)</VimeTooltip>
+    </VimeControl>
   );
 }
 ```
 
+### Svelte
+
+```tsx
+<VimeControl
+  keys="k"
+  label={$i18n.playback}
+  pressed={paused}
+  on:click={onClick}
+  bind:this={ref}
+>
+  <VimeIcon href={icon} />
+  <VimeTooltip>{tooltip} (k)</VimeTooltip>
+</VimeControl>
+```
+
+```html {4}
+<script lang="ts">
+  import {
+    useInternalPlayerStore,
+    VimeControl,
+    VimeIcon,
+    VimeTooltip,
+  } from '@vime/svelte';
+
+  let ref: VimeControl;
+
+  const { paused, i18n } = useInternalPlayerStore(() => ref);
+
+  const onClick = () => {
+    $paused = !$paused;
+  };
+
+  $: icon = $paused ? '#vime-play' : '#vime-pause';
+  $: tooltip = $paused ? $i18n.play : $i18n.pause;
+</script>
+```
+
 ### Vue
 
-```html {6-14,25,35} title="example.vue"
+```html {2-10,17,29} title="playback-control.vue"
 <template>
-  <VimePlayer :paused="paused" @vPausedChange="onPausedChange">
-    <!-- ... -->
-    <VimeUi>
-      <VimeControls fullWidth>
-        <VimeControl
-          label="Playback"
-          keys="k"
-          :pressed="paused"
-          @click="onClick"
-        >
-          <VimeIcon :href="icon" />
-          <VimeTooltip>{{tooltip}} (k)</VimeTooltip>
-        </VimeControl>
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+  <VimeControl
+    keys="k"
+    :label="i18n.playback"
+    :pressed="paused"
+    @click="onClick"
+  >
+    <VimeIcon :href="icon" />
+    <VimeTooltip>{{tooltip}} (k)</VimeTooltip>
+  </VimeControl>
 </template>
 
 <script>
   import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
+    PlayerProp,
+    VimeMixin,
     VimeControl,
     VimeIcon,
     VimeTooltip,
   } from "@vime/vue";
 
   export default {
+    mixins: [VimeMixin([
+      PlayerProp.paused,
+      PlayerProp.i18n,
+    ])]
+
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
       VimeControl,
       VimeIcon,
       VimeTooltip,
@@ -167,6 +192,7 @@ function Example() {
 
     data: {
       paused: true,
+      i18n: {},
     },
 
     computed: {
@@ -174,7 +200,7 @@ function Example() {
         return this.paused ? '#vime-play' : '#vime-pause';
       },
       tooltip() {
-        return this.paused ? 'Play' : 'Pause';
+        return this.paused ? this.i18n.play : this.i18n.pause;
       },
     },
 
@@ -182,10 +208,6 @@ function Example() {
       onClick() {
         this.paused = !paused;
       },
-
-      onPausedChange(paused: boolean) {
-        this.paused = paused;
-      }
     },
   };,
 </script>

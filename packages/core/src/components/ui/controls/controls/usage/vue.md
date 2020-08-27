@@ -3,7 +3,7 @@
   <VimePlayer>
     <!-- ... -->
     <VimeUi>
-      <VimeControls fullWidth activeDuration="3200">
+      <VimeControls fullWidth :activeDuration="3200">
         <!-- ... -->
       </VimeControls>
     </VimeUi>

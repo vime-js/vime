@@ -1,10 +1,9 @@
-```html {3-7,13,18} title="example.vue"
+```html {3-6,12,17} title="example.vue"
 <template>
   <VimePlayer controls>
     <VimeHls :config="hlsConfig" version="latest" poster="/media/poster.png">
       <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
       <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
-      <!-- ... -->
     </VimeHls>
     <!-- ... -->
   </VimePlayer>

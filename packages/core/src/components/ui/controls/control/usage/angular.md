@@ -1,39 +1,42 @@
-```html {6-14} title="example.html"
-<vime-player [paused]="paused" (vPausedChange)="onPausedChange($event)">
-  <!-- ... -->
-  <vime-ui>
-    <!-- ... -->
-    <vime-controls full-width>
-      <vime-control
-        label="Playback"
-        keys="k"
-        [pressed]="paused"
-        (click)="onClick"
-      >
-        <vime-icon [href]="icon"></vime-icon>
-        <vime-tooltip>{{tooltip}} (k)</vime-tooltip>
-      </vime-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+```html title="playback-control.html"
+<vime-control
+  keys="k"
+  [label]="i18n.playback"
+  [pressed]="paused"
+  (click)="onClick()"
+>
+  <vime-icon [href]="icon"></vime-icon>
+  <vime-tooltip>{{tooltip}} (k)</vime-tooltip>
+</vime-control>
 ```
 
-```ts title="example.ts"
-class Example {
+```ts title="playback-control.ts"
+import { Component, ElementRef } from '@angular/core';
+import { PlayerProp, VimeComponent } from '@vime/angular';
+
+@Component({
+  selector: 'playback-control',
+  templateUrl: './playback-control.html',
+})
+class PlaybackControl extends VimeComponent {
   paused = true;
 
-  icon = '#vime-play';
+  i18n = {};
 
-  tooltip = 'Play';
-
-  onClick() {
-    this.onPausedChange({ detail: !this.paused });
+  constructor(protected ref: ElementRef) {
+    super([PlayerProp.paused, PlayerProp.i18n]);
   }
 
-  onPausedChange(event: CustomEvent<boolean>) {
-    this.paused = event.detail;
-    this.tooltip = this.paused ? 'Play' : 'Pause';
-    this.icon = this.paused ? '#vime-play' : '#vime-pause';
+  get icon() {
+    return this.paused ? '#vime-play' : '#vime-pause';
+  }
+
+  get tooltip() {
+    return this.paused ? this.i18n.play : this.i18n.pause;
+  }
+
+  onClick() {
+    this.paused = !this.paused;
   }
 }
 ```

@@ -10,7 +10,7 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
 
 ### Angular
 
-```html {2-18} title="example.html"
+```html {2-17} title="example.html"
 <vime-player controls>
   <vime-video poster="/media/poster.png">
     <source data-src="/media/video.mp4" type="video/mp4" />
@@ -27,7 +27,6 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
       srclang="fr"
       label="French"
     />
-    <!-- ... -->
   </vime-video>
   <!-- ... -->
 </vime-player>
@@ -35,7 +34,7 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
 
 ### Html
 
-```html {2-18}
+```html {2-17}
 <vime-player controls>
   <vime-video poster="/media/poster.png">
     <source data-src="/media/video.mp4" type="video/mp4" />
@@ -52,7 +51,6 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
       srclang="es"
       label="Spanish"
     />
-    <!-- ... -->
   </vime-video>
   <!-- ... -->
 </vime-player>
@@ -60,7 +58,7 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
 
 ### React
 
-```tsx {2,7-23}
+```tsx {2,7-22}
 import React from 'react';
 import { VimePlayer, VimeVideo } from '@vime/react';
 
@@ -82,7 +80,6 @@ function Example() {
           srclang="es"
           label="Spanish"
         />
-        {/* ... */}
       </VimeVideo>
       {/* ... */}
     </VimePlayer>
@@ -90,9 +87,37 @@ function Example() {
 }
 ```
 
+### Svelte
+
+```html {2-17,22} title="example.svelte"
+<VimePlayer controls>
+  <VimeVideo videoId="411652396">
+    <source data-src="/media/video.mp4" type="video/mp4" />
+    <track
+      default
+      kind="subtitles"
+      src="/media/subs/en.vtt"
+      srclang="en"
+      label="English"
+    />
+    <track
+      kind="captions"
+      src="/media/caps/es.vtt"
+      srclang="es"
+      label="Spanish"
+    />
+  </VimeVideo>
+  <!-- ... -->
+</VimePlayer>
+
+<script lang="ts">
+  import { VimePlayer, VimeVideo } from '@vime/svelte';
+</script>
+```
+
 ### Vue
 
-```html {3-19,25,30} title="example.vue"
+```html {3-18,24,29} title="example.vue"
 <template>
   <VimePlayer controls>
     <VimeVideo>
@@ -110,7 +135,6 @@ function Example() {
         srclang="es"
         label="Spanish"
       />
-      <!-- ... -->
     </VimeVideo>
     <!-- ... -->
   </VimePlayer>

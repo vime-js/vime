@@ -1,4 +1,4 @@
-```tsx {2,14-18}
+```tsx {2,14-17}
 import React from 'react';
 import { VimePlayer, VimeHls } from '@vime/react';
 
@@ -15,7 +15,6 @@ function Example() {
       <VimeHls version="latest" config={hlsConfig} poster="/media/poster.png">
         <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
         <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
-        {/* ... */}
       </VimeHls>
       {/* ... */}
     </VimePlayer>

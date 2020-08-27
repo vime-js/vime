@@ -8,7 +8,7 @@ function Example() {
       {/* ... */}
       <VimeUi>
         {/* ... */}
-        <VimeControls fullWidth activeDuration="3200">
+        <VimeControls fullWidth activeDuration={3200}>
           {/* ... */}
         </VimeControls>
       </VimeUi>

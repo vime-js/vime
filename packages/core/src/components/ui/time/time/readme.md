@@ -16,7 +16,7 @@ Formats and displays a length of time provided in seconds.
 ### Angular
 
 ```html title="example.html"
-<vime-time label="Time" seconds="120" />
+<vime-time label="Time" [seconds]="120" />
 ```
 
 ### Html
@@ -36,11 +36,23 @@ function Example() {
 }
 ```
 
+### Svelte
+
+```tsx
+<VimeTime label="Time" seconds={120} />
+```
+
+```html
+<script lang="ts">
+  import { VimeTime } from '@vime/svelte';
+</script>
+```
+
 ### Vue
 
 ```html {2,6,10} title="example.vue"
 <template>
-  <VimeTime label="Time" seconds="120" />
+  <VimeTime label="Time" :seconds="120" />
 </template>
 
 <script>

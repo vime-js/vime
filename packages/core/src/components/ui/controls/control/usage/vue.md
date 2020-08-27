@@ -1,38 +1,32 @@
-```html {6-14,25,35} title="example.vue"
+```html {2-10,17,29} title="playback-control.vue"
 <template>
-  <VimePlayer :paused="paused" @vPausedChange="onPausedChange">
-    <!-- ... -->
-    <VimeUi>
-      <VimeControls fullWidth>
-        <VimeControl
-          label="Playback"
-          keys="k"
-          :pressed="paused"
-          @click="onClick"
-        >
-          <VimeIcon :href="icon" />
-          <VimeTooltip>{{tooltip}} (k)</VimeTooltip>
-        </VimeControl>
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+  <VimeControl
+    keys="k"
+    :label="i18n.playback"
+    :pressed="paused"
+    @click="onClick"
+  >
+    <VimeIcon :href="icon" />
+    <VimeTooltip>{{tooltip}} (k)</VimeTooltip>
+  </VimeControl>
 </template>
 
 <script>
   import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
+    PlayerProp,
+    VimeMixin,
     VimeControl,
     VimeIcon,
     VimeTooltip,
   } from "@vime/vue";
 
   export default {
+    mixins: [VimeMixin([
+      PlayerProp.paused,
+      PlayerProp.i18n,
+    ])]
+
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
       VimeControl,
       VimeIcon,
       VimeTooltip,
@@ -40,6 +34,7 @@
 
     data: {
       paused: true,
+      i18n: {},
     },
 
     computed: {
@@ -47,7 +42,7 @@
         return this.paused ? '#vime-play' : '#vime-pause';
       },
       tooltip() {
-        return this.paused ? 'Play' : 'Pause';
+        return this.paused ? this.i18n.play : this.i18n.pause;
       },
     },
 
@@ -55,10 +50,6 @@
       onClick() {
         this.paused = !paused;
       },
-
-      onPausedChange(paused: boolean) {
-        this.paused = paused;
-      }
     },
   };,
 </script>
