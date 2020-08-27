@@ -16,7 +16,7 @@
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "pnpm run test:unit --filter @vime/core",
     "test:e2e": "pnpm run test:e2e --filter @vime/core",
-    "release": "npm run test && npm run build && npm run release:core && npm run release:react && npm run release:vue && npm run release:angular && npm run release:svelte",
+    "release": "npm run build && npm run release:core && npm run release:react && npm run release:vue && npm run release:angular && npm run release:svelte",
     "release:core": "pnpm run release --filter @vime/core",
     "release:react": "pnpm run release --filter @vime/react",
     "release:vue": "pnpm run release --filter @vime/vue",
