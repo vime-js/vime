@@ -1,9 +1,3 @@
-<div class="tapSidesToSeek" bind:this={ref}>
-  <div class="tapTarget backward" on:click={onSeekBackward} />
-  <div class="spacer" />
-  <div class="tapTarget forward" on:click={onSeekForward} />
-</div>
-
 <script lang="ts">
   import { useInternalPlayerStore } from "@vime/svelte";
 
@@ -30,6 +24,12 @@
     $currentTime += 5;
   };
 </script>
+
+<div class="tapSidesToSeek" bind:this={ref}>
+  <div class="tapTarget backward" on:click={onSeekBackward} />
+  <div class="spacer" />
+  <div class="tapTarget forward" on:click={onSeekForward} />
+</div>
 
 <style>
   .tapSidesToSeek {

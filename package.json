@@ -10,7 +10,7 @@
   "scripts": {
     "setup": "pnpm install --filter vime --filter @vime/core",
     "lint": "eslint ./packages --quiet --fix --ignore-path .gitignore",
-    "lint:md": "prettier \"**/*.md\" --parser markdown --write --print-width 80 --tab-width 2 --single-quote --loglevel silent",
+    "lint:md": "prettier \"**/*.md\" --ignore-path .gitignore --parser markdown --write --print-width 80 --tab-width 2 --single-quote --loglevel silent",
     "clean:node": "rimraf node_modules packages/*/node_modules examples/*/node_modules docs/node_modules"
   },
   "devDependencies": {

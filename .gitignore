@@ -15,6 +15,10 @@ packages/core/public/
 packages/angular/src/directives/
 packages/react/src/components.ts
 packages/react/src/react-component-lib/
+packages/svelte/src/components/
+packages/svelte/src/svelte/
+packages/svelte/src/components.ts
+packages/svelte/src/svelte-shims.d.ts
 packages/vue/src/components.ts
 packages/vue/src/vue-component-lib/
 

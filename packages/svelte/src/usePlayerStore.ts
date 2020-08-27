@@ -10,12 +10,13 @@ import {
 } from '@vime/core';
 import { onMount } from 'svelte';
 import {
-  writable, get, Writable, Readable,
+  writable, get as unwrap, Writable, Readable,
 } from 'svelte/store';
 import {
   InternalWritablePlayerProp,
   ExternalWritablePlayerProp,
 } from '@vime/core/dist/types/components/core/player/PlayerProp';
+import VimePlayer from './components/VimePlayer';
 
 type PropStoreType<P extends keyof PlayerProps> =
   P extends ExternalWritablePlayerProp
@@ -35,11 +36,17 @@ type InternalPlayerStore = {
   [P in keyof PlayerProps]: InternalPropStoreType<P>;
 };
 
-const buildStore = (ref: () => HTMLElement, isInternal = false) => {
+interface SvelteWebComponent<T extends HTMLElement> {
+  getWebComponent: T | undefined
+}
+
+type Ref<T extends HTMLElement> = (() => T | SvelteWebComponent<T>);
+
+const buildStore = <T extends HTMLElement>(ref: Ref<T>, isInternal = false) => {
   let dispatch: PlayerDispatcher = () => {};
   const internalStoreRef: Map<PlayerProp, Writable<any>> = new Map();
 
-  const mountedQueue = [];
+  const mountedQueue: (() => void)[] = [];
   const onPlayerMounted = () => { mountedQueue.forEach((fn) => fn()); };
 
   const vimeable = <P extends keyof PlayerProps>(prop: P, initialValue: PlayerProps[P]) => {
@@ -48,15 +55,15 @@ const buildStore = (ref: () => HTMLElement, isInternal = false) => {
       || (!isInternalReadonlyPlayerProp(prop) && isInternal);
 
     const set = (value: PlayerProps[P]) => {
-      if (!get(internalStoreRef.get(PlayerProp.mounted))) {
-        mountedQueue.push(() => dispatch(prop as any, value));
+      if (!unwrap(internalStoreRef.get(PlayerProp.mounted))) {
+        mountedQueue.push(() => { dispatch(prop as any, value); });
       } else {
         dispatch(prop as any, value);
       }
     };
 
     const update = (updater: (value: PlayerProps[P]) => PlayerProps[P]) => {
-      set(updater(get(store)));
+      set(updater(unwrap(store)));
     };
 
     internalStoreRef.set(prop, store);
@@ -106,7 +113,7 @@ const buildStore = (ref: () => HTMLElement, isInternal = false) => {
     [PlayerProp.isVideoView]: vimeable(PlayerProp.isVideoView, false),
     [PlayerProp.mediaType]: vimeable(PlayerProp.mediaType, undefined),
     [PlayerProp.isAudio]: vimeable(PlayerProp.isAudio, false),
-    [PlayerProp.isVideo]: vimeable(PlayerProp.isVideoView, false),
+    [PlayerProp.isVideo]: vimeable(PlayerProp.isVideo, false),
     [PlayerProp.isMobile]: vimeable(PlayerProp.isMobile, false),
     [PlayerProp.isTouch]: vimeable(PlayerProp.isTouch, false),
     [PlayerProp.isCaptionsActive]: vimeable(PlayerProp.isCaptionsActive, false),
@@ -123,19 +130,22 @@ const buildStore = (ref: () => HTMLElement, isInternal = false) => {
   };
 
   onMount(() => {
-    const player = findRootPlayer(ref());
-    dispatch = createPlayerDispatcher(ref());
-    internalStoreRef.get(PlayerProp.mounted).set(player.mounted);
+    let el: any = ref();
+    if (el.$$) el = el.getWebComponent();
+
+    const player = findRootPlayer(el);
+    dispatch = createPlayerDispatcher(el);
+    internalStoreRef.get(PlayerProp.mounted)!.set(player.mounted);
 
     const disconnect = usePlayerContext(
-      ref(),
+      el,
       Object.values(PlayerProp),
-      (prop, value) => { internalStoreRef.get(prop as PlayerProp)?.set(value); },
+      (prop, value) => { internalStoreRef.get(prop as PlayerProp)!.set(value); },
     );
 
     if (!player.mounted) {
       const off = usePlayerContext(
-        ref(),
+        el,
         [PlayerProp.mounted],
         () => {
           onPlayerMounted();
@@ -154,11 +164,11 @@ const buildStore = (ref: () => HTMLElement, isInternal = false) => {
 };
 
 /**
- * Creates and returns a store for the given player `ref`. The store is a collection of stores
+ * Creates and returns a store for the given player. The store is a collection of stores
  * for each player property. It is safe to write to properties before the player has mounted or
  * playback is ready.
  *
- * @param ref The player to create a store for.
+ * @param playerRef A function which returns the player to create the store for.
  *
  * @example
  * <vime-player bind:this={player}>
@@ -168,7 +178,7 @@ const buildStore = (ref: () => HTMLElement, isInternal = false) => {
  * <script lang="ts">
  *  let player;
  *
- *  const { currentTime } = usePlayerStore(player);
+ *  const { currentTime } = usePlayerStore(() => player);
  *
  *  $currentTime = 50;
  *
@@ -176,8 +186,8 @@ const buildStore = (ref: () => HTMLElement, isInternal = false) => {
  * </script>
  */
 export const usePlayerStore = (
-  ref: () => HTMLVimePlayerElement,
-): PlayerStore => buildStore(ref);
+  playerRef: () => VimePlayer,
+): PlayerStore => buildStore(playerRef) as PlayerStore;
 
 /**
  * Creates and returns a store for the closest ancestor player of the given `ref`. The internal
@@ -185,8 +195,8 @@ export const usePlayerStore = (
  * from the "outside" (when directly interacting with the player). **Remember, with great power
  * comes great responsibility**.
  *
- * @param ref The root HTMLElement of the custom component.
+ * @param ref A function which returns the root HTMLElement of the custom component.
  */
-export const useInternalPlayerStore = (
-  ref: () => HTMLElement,
-): InternalPlayerStore => buildStore(ref, true);
+export const useInternalPlayerStore = <T extends HTMLElement>(
+  ref: Ref<T>,
+): InternalPlayerStore => buildStore(ref, true) as InternalPlayerStore;

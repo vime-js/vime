@@ -1,11 +1,16 @@
 <script lang="ts">
-	import { usePlayerStore } from '@vime/svelte';
+	import {
+		VimePlayer,
+		VimeVideo, 
+		VimeDefaultUi,
+		usePlayerStore,
+	} from '@vime/svelte';
 
 	// Custom UI component.
 	import TapSidesToSeek from './TapSidesToSeek.svelte';
 
 	// Obtain a ref if you need to call any methods.
-	let player: HTMLVimePlayerElement;
+	let player: VimePlayer;
 
 	/**
 	 * All player properties are available through the store. If you prefer, you could also pass 
@@ -21,19 +26,15 @@
 </script>
 
 <div id="container">
-	<vime-player
-		on:vPlaybackReady={onPlaybackReady}
-		bind:this={player}
-	>
-		<vime-video cross-origin="true" poster="http://localhost:3335/poster.png">
+	<VimePlayer on:vPlaybackReady={onPlaybackReady} bind:this={player}>
+		<VimeVideo crossOrigin="" poster="http://localhost:3335/poster.png">
 			<source data-src="http://localhost:3335/720p.mp4" type="video/mp4">
-		</vime-video>
+		</VimeVideo>
 
-		<vime-default-ui>
-			<!-- Custom UI component. -->
+		<VimeDefaultUi>
 			<TapSidesToSeek />
-		</vime-default-ui>
-	</vime-player>
+		</VimeDefaultUi>
+	</VimePlayer>
 </div>
 
 <style>

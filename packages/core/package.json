@@ -28,7 +28,7 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "npm run clean:docs && stencil build --docs && npm run build:post && npm run lint:md && npm run build:themes",
+    "build": "npm run clean:docs && stencil build --docs && npm run build:post && npm run build:themes && npm run lint:md",
     "build:post": "node scripts/post-build.js",
     "build:themes": "rimraf themes/* && npm run min:theme.default && npm run min:theme.light",
     "build:coverage": "npm run build && npm run coverage:instrument",
@@ -70,6 +70,7 @@
     "@stencil/core": "^2.0.0-6",
     "@stencil/react-output-target": "^0.0.9",
     "@stencil/sass": "^1.3.2",
+    "@stencil/svelte-output-target": "^0.0.2",
     "@stencil/vue-output-target": "^0.0.3",
     "@types/hls.js": "^0.13.0",
     "@types/jest": "^26.0.10",
@@ -88,6 +89,7 @@
     "rimraf": "^3.0.2",
     "sirv-cli": "^1.0.6",
     "start-server-and-test": "^1.11.3",
+    "svelte": "^3.24.1",
     "ts-loader": "^8.0.3",
     "webpack": "^4.44.1"
   },

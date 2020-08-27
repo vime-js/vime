@@ -4,13 +4,12 @@ All notable changes to this project will be documented in this file.
 
 # [1.5.0](https://github.com/vime-js/vime/compare/@vime/react@1.4.0...@vime/react@1.5.0) (2020-08-25)
 
-
 ### Features
 
-* export findRootPlayer utility ([f4ccab1](https://github.com/vime-js/vime/commit/f4ccab104a5ab845b71f51a5ae5fa9b095d7cb5e))
-* improve all framework integrations ([0ef1716](https://github.com/vime-js/vime/commit/0ef171655e8f02c277e0f00e90d87fdba8f74bb4))
-* new svelte store option ([ce78e15](https://github.com/vime-js/vime/commit/ce78e1532da638fffacdf6988ec66c9390c31f5d))
-* **react:** export player event enum ([eebcda8](https://github.com/vime-js/vime/commit/eebcda8567523ba6463d27cdd393842dffa03d39))
+- export findRootPlayer utility ([f4ccab1](https://github.com/vime-js/vime/commit/f4ccab104a5ab845b71f51a5ae5fa9b095d7cb5e))
+- improve all framework integrations ([0ef1716](https://github.com/vime-js/vime/commit/0ef171655e8f02c277e0f00e90d87fdba8f74bb4))
+- new svelte store option ([ce78e15](https://github.com/vime-js/vime/commit/ce78e1532da638fffacdf6988ec66c9390c31f5d))
+- **react:** export player event enum ([eebcda8](https://github.com/vime-js/vime/commit/eebcda8567523ba6463d27cdd393842dffa03d39))
 
 # [1.4.0](https://github.com/vime-js/vime/compare/@vime/react@1.3.0...@vime/react@1.4.0) (2020-08-23)
 

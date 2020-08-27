@@ -3,6 +3,7 @@ import { sass } from '@stencil/sass';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { vueOutputTarget } from '@stencil/vue-output-target';
 import { angularOutputTarget } from '@stencil/angular-output-target';
+import { svelteOutputTarget } from '@stencil/svelte-output-target';
 
 export const config: Config = {
   namespace: 'Vime',
@@ -35,6 +36,10 @@ export const config: Config = {
     angularOutputTarget({
       componentCorePackage: '@vime/core',
       directivesProxyFile: '../angular/src/directives/proxies.ts',
+    }),
+    svelteOutputTarget({
+      componentCorePackage: '@vime/core',
+      proxiesFile: '../svelte/src/components.ts',
     }),
     {
       type: 'dist',
