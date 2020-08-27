@@ -164,6 +164,24 @@ const buildStore = <T extends HTMLElement>(ref: Ref<T>, isInternal = false) => {
 };
 
 /**
+ * This function will take the given `ref` and climb up the DOM tree until it finds the first
+ * ancestor player, which it will then return through the callback. This is useful for
+ * getting a reference to the player when you need to call a method on it.
+ *
+ * @param ref A function which returns a HTMLElement or Vime component.
+ */
+export const usePlayer = <T extends HTMLElement>(
+  ref: Ref<T>,
+  callback: (player: HTMLVimePlayerElement) => void,
+) => {
+  onMount(() => {
+    let el: any = ref();
+    if (el.$$) el = el.getWebComponent();
+    callback(findRootPlayer(el));
+  });
+};
+
+/**
  * Creates and returns a store for the given player. The store is a collection of stores
  * for each player property. It is safe to write to properties before the player has mounted or
  * playback is ready.
@@ -195,7 +213,7 @@ export const usePlayerStore = (
  * from the "outside" (when directly interacting with the player). **Remember, with great power
  * comes great responsibility**.
  *
- * @param ref A function which returns the root HTMLElement of the custom component.
+ * @param ref A function which returns the root HTMLElement or Vime component.
  */
 export const useInternalPlayerStore = <T extends HTMLElement>(
   ref: Ref<T>,
