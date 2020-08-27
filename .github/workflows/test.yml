@@ -1,0 +1,30 @@
+name: Test
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install pnpm
+        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+      - name: Install root dependencies
+        run: pnpm install --filter vime
+      - name: Install packages/* dependencies
+        run: pnpm install --filter ./packages
+      - name: Test
+        run: pnpm run test:ci --filter @vime/core
+      - name: Coverage
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: cd packages/core && pnpx codecov
+      - name: Build Packages
+        run: pnpm run build --filter ./packages

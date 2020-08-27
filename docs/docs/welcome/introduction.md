@@ -47,6 +47,8 @@ help you to easily build and customize your own media player.
 
 Here's a few little bites of what you can do with Vime ...
 
+🗒️ **The examples below are using web components but there are bindings for React, Vue, Angular and Svelte.**
+
 ```html
 <!-- Here we are requesting to use the native controls. -->
 <vime-player autoplay muted controls>
