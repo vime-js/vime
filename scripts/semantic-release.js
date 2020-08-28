@@ -28,9 +28,9 @@ const changelogTitle = `
 const pkgName = process.env.npm_package_name;
 
 const getAssets = () => {
-  const assets = [{ path: 'dist/**', label: 'Distribution' }];
-  if (pkgName === '@vime/core') assets.push({ path: 'loader/**', label: 'Loader' });
-  if (pkgName === '@vime/svelte') assets.push({ path: 'src/svelte/**', label: 'Svelte Source' });
+  const assets = [{ path: 'dist', label: 'Distribution' }];
+  if (pkgName === '@vime/core') assets.push({ path: 'loader', label: 'Loader' });
+  if (pkgName === '@vime/svelte') assets.push({ path: 'src/svelte', label: 'Svelte Source' });
   return assets;
 };
 
