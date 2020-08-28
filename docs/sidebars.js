@@ -22,7 +22,7 @@ module.exports = {
         'getting-started/controls',
         'getting-started/settings',
         'getting-started/styling',
-        'getting-started/custom-components',
+        'getting-started/extending',
       ],
       collapsed: false,
     },

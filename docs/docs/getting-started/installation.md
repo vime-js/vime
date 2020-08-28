@@ -76,23 +76,18 @@ React components so it feels natural to interact with, and it removes all the li
 with web components inside React.
 
 Let's first load the CSS for the player themes, which are small files that only contain a bunch of
-CSS variables for styling the player. Add the following to the `<head>` element of your HTML file:
+CSS variables for styling the player. Add the following to the root of your application:
 
-```html
-<!-- Default theme (if you're creating your own skip this). ~960B -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core/themes/default.css"
-/>
+```ts
+// Default theme (if you're creating your own skip this). ~960B
+import '@vime/core/themes/default.css';
 
-<!-- Optional light theme (extends default). ~400B -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core/themes/light.css"
-/>
+// Optional light theme (extends default). ~400B
+import '@vime/core/themes/light.css';
 ```
 
-Now let's install the `@vime/react` package by running the following in your terminal:
+Alternatively, you could load the themes from the [CDN](#cdn). Now let's install the `@vime/react`
+package by running the following in your terminal:
 
 ```bash
 npm i @vime/react
@@ -118,23 +113,18 @@ Some other advantages for using `@vime/vue` include typed + documented component
 helpers for extending Vime with custom components.
 
 Let's first load the CSS for the player themes, which are small files that only contain a bunch of
-CSS variables for styling the player. Add the following to the `<head>` element of your HTML file:
+CSS variables for styling the player. Add the following to the root of your application:
 
-```html
-<!-- Default theme (if you're creating your own skip this). ~960B -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core/themes/default.css"
-/>
+```ts
+// Default theme (if you're creating your own skip this). ~960B
+import '@vime/core/themes/default.css';
 
-<!-- Optional light theme (extends default). ~400B -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core/themes/light.css"
-/>
+// Optional light theme (extends default). ~400B
+import '@vime/core/themes/light.css';
 ```
 
-Now let's install the `@vime/vue` package by running the following in your terminal:
+Alternatively, you could load the themes from the [CDN](#cdn). Now let's install the `@vime/vue` package
+by running the following in your terminal:
 
 ```bash
 npm i @vime/vue
@@ -152,23 +142,18 @@ Some other advantages for using `@vime/angular` include typed + documented compo
 helpers for extending Vime with custom components.
 
 Let's first load the CSS for the player themes, which are small files that only contain a bunch of
-CSS variables for styling the player. Add the following to the `<head>` element of your HTML file:
+CSS variables for styling the player. Add the following to the root of your application styles:
 
-```html
-<!-- Default theme (if you're creating your own skip this). ~960B -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core/themes/default.css"
-/>
+```css
+/* Default theme (if you're creating your own skip this). ~960B */
+@import '~@vime/core/themes/default.css';
 
-<!-- Optional light theme (extends default). ~400B -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core/themes/light.css"
-/>
+/* Optional light theme (extends default). ~400B */
+@import '~@vime/core/themes/light.css';
 ```
 
-Now let's install the `@vime/angular` package by running the following in your terminal:
+Alternatively, you could load the themes from the [CDN](#cdn). Now let's install the `@vime/angular`
+package by running the following in your terminal:
 
 ```bash
 npm i @vime/angular
