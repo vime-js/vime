@@ -48,8 +48,8 @@ module.exports = {
   tagFormat: `${pkgName}@\${version}`,
   plugins: [
     '@semantic-release/commit-analyzer',
-    '@semantic-release/changelog',
     '@semantic-release/release-notes-generator',
+    '@semantic-release/changelog',
     '@semantic-release/npm',
     // ['@semantic-release/github', { assets: getAssets() }],
     '@semantic-release/git',
