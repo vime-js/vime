@@ -52,7 +52,7 @@ module.exports = {
     '@semantic-release/npm',
     {
       path: '@semantic-release/git',
-      message: `chore(release): 🥳 ${pkgName}@\${nextRelease.version} [skip ci]`,
+      message: `chore(release): ${pkgName}@\${nextRelease.version} [skip ci] 🥳`,
     },
   ],
   success: [],
