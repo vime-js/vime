@@ -154,7 +154,7 @@ function Example() {
 </VimePlayer>
 ```
 
-```html
+```html {2}
 <script lang="ts">
   import { VimePlayer, VimeUi, usePlayerStore } from '@vime/svelte';
 
