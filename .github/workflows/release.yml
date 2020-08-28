@@ -1,11 +1,12 @@
-name: Test
+name: Release
 on:
   push:
     branches:
       - master
+      - next
 jobs:
   release:
-    name: Test
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,15 +17,20 @@ jobs:
           node-version: 14
       - name: Install pnpm
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-      - name: Install root dependencies
+      - name: Install Root Dependencies
         run: pnpm install --filter vime
-      - name: Install packages/* dependencies
+      - name: Install Packages dependencies
         run: pnpm install --filter ./packages
-      - name: Test
+      - name: Run Tests
         run: pnpm run test:ci --filter @vime/core
-      - name: Coverage
+      - name: Build Coverage Report
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: cd packages/core && pnpx codecov
       - name: Build Packages
-        run: pnpm run build --filter ./packages
+        run: pnpm run build --filter vime
+      - name: Release Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm run release --filter vime

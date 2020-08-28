@@ -33,7 +33,7 @@ help you to easily build and customize your own media player.
 - 🛠 &nbsp;Comprehensive [player API][player-api] with a heap of properties, methods and events.
 - 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
 - 🏠 &nbsp;Feel right at home with HTML/CSS/JS thanks to web components.
-- 🏗️ &nbsp;Framework specific bindings for React, Vue and Angular.
+- 🏗️ &nbsp;Framework specific bindings for React, Vue, Svelte and Angular.
 
 [accessibility]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA
 [css-vars]: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties

@@ -7,8 +7,8 @@
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "src/",
-    "dist/"
+    "dist/",
+    "src/svelte/"
   ],
   "contributors": [
     "Rahim Alwer <rahim_alwer@outlook.com>"
