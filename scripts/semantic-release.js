@@ -51,7 +51,7 @@ module.exports = {
     '@semantic-release/changelog',
     '@semantic-release/release-notes-generator',
     '@semantic-release/npm',
-    ['@semantic-release/github', { assets: getAssets() }],
+    // ['@semantic-release/github', { assets: getAssets() }],
     '@semantic-release/git',
   ],
   prepare: [
