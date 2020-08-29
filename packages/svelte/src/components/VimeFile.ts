@@ -78,7 +78,7 @@ interface VimeFileEvents {
   /**  */
   vLoadStart: Parameters<JSX.VimeFile["onVLoadStart"]>[0]
   
-  /** Emitted when the child <source> elements are modified. */
+  /** Emitted when the child `<source />` elements are modified. */
   vSrcSetChange: Parameters<JSX.VimeFile["onVSrcSetChange"]>[0]
 }
 

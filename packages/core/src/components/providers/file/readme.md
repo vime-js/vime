@@ -25,9 +25,9 @@ loading file-based media.
 
 ## Events
 
-| Event           | Description                                            | Type                |
-| --------------- | ------------------------------------------------------ | ------------------- |
-| `vSrcSetChange` | Emitted when the child <source> elements are modified. | `CustomEvent<void>` |
+| Event           | Description                                                | Type                |
+| --------------- | ---------------------------------------------------------- | ------------------- |
+| `vSrcSetChange` | Emitted when the child `<source />` elements are modified. | `CustomEvent<void>` |
 
 ## Slots
 

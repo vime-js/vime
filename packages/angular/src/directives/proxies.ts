@@ -355,7 +355,7 @@ export declare interface VimeFile extends Components.VimeFile {}
   outputs: ['vSrcSetChange']
 })
 export class VimeFile {
-  /** Emitted when the child <source> elements are modified. */
+  /** Emitted when the child `<source />` elements are modified. */
   vSrcSetChange!: IFile['vSrcSetChange'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {

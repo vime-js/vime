@@ -161,7 +161,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   @Event() vLoadStart!: EventEmitter<void>;
 
   /**
-   * Emitted when the child <source> elements are modified.
+   * Emitted when the child `<source />` elements are modified.
    */
   @Event() vSrcSetChange!: EventEmitter<void>;
 
