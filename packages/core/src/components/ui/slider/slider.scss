@@ -77,16 +77,16 @@ vime-slider {
       margin-top: calc(0px - calc(calc(#{$slider-thumb-height} - #{$slider-track-height}) / 2));
     }
 
-    &::-moz-slider-track {
+    &::-moz-range-track {
       @include slider-track();
       background-color: $slider-track-color;
     }
 
-    &::-moz-slider-thumb {
+    &::-moz-range-thumb {
       @include slider-thumb();
     }
 
-    &::-moz-slider-progress {
+    &::-moz-range-progress {
       background: currentColor;
       border-radius: calc(#{$slider-track-height} / 2);
       height: $slider-track-height;
@@ -125,7 +125,7 @@ vime-slider {
         height: $slider-track-focused-height;
       }
 
-      &::-moz-slider-track {
+      &::-moz-range-track {
         height: $slider-track-focused-height;
       }
 
@@ -145,7 +145,7 @@ vime-slider {
         opacity: 1;
       }
 
-      &::-moz-slider-thumb {
+      &::-moz-range-thumb {
         opacity: 1;
       }
 
@@ -162,7 +162,7 @@ vime-slider {
         height: $slider-track-focused-height;
       }
 
-      &::-moz-slider-track {
+      &::-moz-range-track {
         outline: 0;
         height: $slider-track-focused-height;
       }
