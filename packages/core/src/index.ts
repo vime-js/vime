@@ -10,6 +10,7 @@ import { PlayerEvent } from './components/core/player/PlayerEvent';
 import { findRootPlayer } from './components/core/player/utils';
 import { ViewType } from './components/core/player/ViewType';
 import { MediaType } from './components/core/player/MediaType';
+import { loadSprite } from './utils/network';
 
 export * from './components';
 
@@ -19,6 +20,7 @@ export {
   PlayerEvent,
   ViewType,
   MediaType,
+  loadSprite,
   findRootPlayer,
   isInternalReadonlyPlayerProp,
   isExternalReadonlyPlayerProp,

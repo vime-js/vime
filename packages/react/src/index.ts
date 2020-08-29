@@ -5,6 +5,7 @@ import {
   PlayerProps,
   ViewType,
   MediaType,
+  loadSprite,
 } from '@vime/core';
 
 export {
@@ -13,6 +14,7 @@ export {
   PlayerEvent,
   ViewType,
   MediaType,
+  loadSprite,
 };
 
 export * from './components';
