@@ -342,7 +342,7 @@ export class VimeFaketube {
   }
 }
 
-
+import { File as IFile } from '@vime/core/dist/types/components/providers/file/file';
 export declare interface VimeFile extends Components.VimeFile {}
 @ProxyCmp({
   inputs: ['autoPiP', 'controlsList', 'crossOrigin', 'disablePiP', 'disableRemotePlayback', 'mediaTitle', 'playbackRates', 'poster', 'preload', 'viewType']
@@ -351,13 +351,17 @@ export declare interface VimeFile extends Components.VimeFile {}
   selector: 'vime-file',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['autoPiP', 'controlsList', 'crossOrigin', 'disablePiP', 'disableRemotePlayback', 'mediaTitle', 'playbackRates', 'poster', 'preload', 'viewType']
+  inputs: ['autoPiP', 'controlsList', 'crossOrigin', 'disablePiP', 'disableRemotePlayback', 'mediaTitle', 'playbackRates', 'poster', 'preload', 'viewType'],
+  outputs: ['vSrcSetChange']
 })
 export class VimeFile {
+  /** Emitted when the child <source> elements are modified. */
+  vSrcSetChange!: IFile['vSrcSetChange'];
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['vSrcSetChange']);
   }
 }
 

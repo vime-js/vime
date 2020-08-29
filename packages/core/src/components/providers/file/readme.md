@@ -23,6 +23,12 @@ loading file-based media.
 | `preload`               | `preload`                 | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" \| "auto" \| "metadata" \| "none" \| undefined`   | `'metadata'`                         |
 | `viewType`              | `view-type`               | Whether to use an `audio` or `video` element to play the media.                                                                                                                                                                                                                    | `ViewType.Audio \| ViewType.Video \| undefined`       | `undefined`                          |
 
+## Events
+
+| Event           | Description                                            | Type                |
+| --------------- | ------------------------------------------------------ | ------------------- |
+| `vSrcSetChange` | Emitted when the child <source> elements are modified. | `CustomEvent<void>` |
+
 ## Slots
 
 | Slot | Description                                                                  |

@@ -392,7 +392,7 @@ export const VimeFile = /*@__PURE__*/ Vue.extend({
   methods: {
     getAdapter: createCommonMethod('getAdapter') as Components.VimeFile['getAdapter'],
   },
-  render: createCommonRender('vime-file', ['vLoadStart']),
+  render: createCommonRender('vime-file', ['vLoadStart', 'vSrcSetChange']),
 });
 
 

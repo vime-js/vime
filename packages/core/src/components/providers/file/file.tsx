@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 
 import {
-  h, Prop, Method, Component, Event, EventEmitter, Watch, Element,
+  h, Prop, Method, Component, Event, EventEmitter, Watch, Element, State,
 } from '@stencil/core';
 import { withProviderContext, MediaProvider } from '../MediaProvider';
 import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
@@ -9,7 +9,7 @@ import { PlayerProp } from '../../core/player/PlayerProp';
 import { ViewType } from '../../core/player/ViewType';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from './MediaFileProvider';
 import {
-  isString, isNumber, isUndefined, isNull,
+  isString, isNumber, isUndefined, isNull, isNullOrUndefined,
 } from '../../../utils/unit';
 import { audioRegex, videoRegex, hlsRegex } from './utils';
 import { WebkitPresentationMode } from './WebkitPresentationMode';
@@ -34,19 +34,21 @@ import { findRootPlayer } from '../../core/player/utils';
 export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<HTMLMediaElement> {
   private dispatch!: PlayerDispatcher;
 
-  private mediaEl?: HTMLMediaElement;
-
   private timeRAF?: number;
 
   private disposal = new Disposal();
+
+  private cancelMutationObserver?: () => void;
 
   private playbackStarted = false;
 
   private wasPausedBeforeSeeking = true;
 
-  private sources: string[] = [];
+  private currentSrcSet: (string | null)[] = [];
 
   @Element() el!: HTMLVimeFileElement;
+
+  @State() mediaEl?: HTMLMediaElement;
 
   /**
    * @internal Whether an external SDK will attach itself to the media player and control it.
@@ -158,42 +160,72 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
+  /**
+   * Emitted when the child <source> elements are modified.
+   */
+  @Event() vSrcSetChange!: EventEmitter<void>;
+
   componentWillLoad() {
     this.dispatch = createPlayerDispatcher(this);
     this.onViewTypeChange();
     this.onPosterChange();
     this.onMediaTitleChange();
     this.listenToTextTracksChanges();
-    this.vLoadStart.emit();
   }
 
   componentDidLoad() {
     this.onViewTypeChange();
-    this.didSourceChange();
-  }
-
-  componentDidRender() {
-    if (this.didSourceChange()) {
-      const mediaEl = this.el.querySelector(this.viewType as string) as HTMLMediaElement;
-      mediaEl?.load();
-    }
   }
 
   disconnectedCallback() {
     this.mediaEl!.pause();
     this.cancelTimeUpdates();
     this.disposal.empty();
+    this.cancelMutationObserver?.();
     this.playbackStarted = false;
     this.wasPausedBeforeSeeking = true;
   }
 
-  private didSourceChange() {
-    const sources = Array.from(this.el.querySelectorAll('source'));
-    const newSources = sources.map((source) => source.src);
-    const didChange = (this.sources.length !== newSources.length)
-      || newSources.some((source) => !this.sources.includes(source));
-    this.sources = newSources;
-    return didChange;
+  @Watch('mediaEl')
+  setupMutationObserver() {
+    this.cancelMutationObserver?.();
+    if (isNullOrUndefined(this.mediaEl)) return;
+
+    const observer = new MutationObserver(this.didSrcSetChange.bind(this));
+
+    observer.observe(this.mediaEl!, {
+      childList: true,
+      subtree: true,
+      attributeFilter: ['src', 'data-src'],
+    });
+
+    this.cancelMutationObserver = () => { observer.disconnect(); };
+  }
+
+  private didSrcSetChange() {
+    if (isNullOrUndefined(this.mediaEl)) return;
+
+    const sources = Array.from(this.mediaEl!.querySelectorAll('source'));
+    const srcSet = sources.map((source) => source.src || source.getAttribute('data-src'));
+
+    const didChange = (this.currentSrcSet.length !== srcSet.length)
+      || (srcSet.some((src, i) => this.currentSrcSet[i] !== src));
+
+    if (didChange) {
+      if (this.mediaEl!.hasAttribute('data-loaded')) {
+        sources.forEach((source) => {
+          if (source.hasAttribute('data-src') && !source.hasAttribute('src')) {
+            source.setAttribute('src', source.getAttribute('data-src')!);
+          }
+        });
+      }
+
+      this.vLoadStart.emit();
+      this.mediaEl?.load();
+      this.vSrcSetChange.emit();
+    }
+
+    this.currentSrcSet = srcSet;
   }
 
   private hasCustomPoster() {
@@ -224,6 +256,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.dispatch(PlayerProp.playbackRates, this.playbackRates);
     this.onProgress();
     this.onTracksChange();
+    this.didSrcSetChange();
     if (!this.willAttach) {
       this.dispatch(PlayerProp.currentSrc, this.mediaEl!.currentSrc);
       this.dispatch(PlayerProp.mediaType, this.getMediaType());

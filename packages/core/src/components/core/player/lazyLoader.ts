@@ -39,6 +39,8 @@ const loadLazyElement = (element: HTMLElement) => {
   if (!isNull(element.getAttribute('data-srcset'))) {
     (element as HTMLPictureElement).setAttribute('srcset', element.getAttribute('data-srcset')!);
   }
+
+  element.setAttribute('data-loaded', 'true');
 };
 
 const loadAllLazyElements = (player: HTMLVimePlayerElement) => {

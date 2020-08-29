@@ -68,7 +68,7 @@ export const runTestHarness = (provider: MediaProvider) => {
 
     afterEach(() => {
       // Need a small delay between tests or else some player commands won't go through.
-      cy.wait(200);
+      cy.wait(300);
     });
 
     after(() => {

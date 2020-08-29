@@ -1,8 +1,8 @@
 import {
-  h, Method, Component, Prop, State, Event, EventEmitter,
+  h, Method, Component, Prop, State, Event, EventEmitter, Listen,
 } from '@stencil/core';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
-import { isString, isUndefined } from '../../../utils/unit';
+import { isNullOrUndefined, isString, isUndefined } from '../../../utils/unit';
 import { loadSDK } from '../../../utils/network';
 import { PlayerProp } from '../../core/player/PlayerProp';
 import { PlayerDispatcher, createPlayerDispatcher } from '../../core/player/PlayerDispatcher';
@@ -99,6 +99,7 @@ export class HLS implements MediaFileProvider {
       this.hls = new Hls(this.config);
 
       this.hls!.on('hlsMediaAttached', () => {
+        console.log('attach');
         this.hasAttached = true;
         this.onSrcChange();
       });
@@ -119,33 +120,26 @@ export class HLS implements MediaFileProvider {
     }
   }
 
-  componentWillRender() {
-    this.onSrcChange();
-  }
-
   disconnectedCallback() {
     this.hls?.destroy();
     this.hls = undefined;
     this.hasAttached = false;
-    this.prevSrc = undefined;
   }
 
   get src(): string | undefined {
-    if (isUndefined(this.videoProvider)) return undefined;
+    if (isNullOrUndefined(this.videoProvider)) return undefined;
     const sources = this.videoProvider.querySelectorAll('source');
     const currSource = Array.from(sources)
       .find((source) => hlsRegex.test(source.src) || hlsTypeRegex.test(source.type));
     return currSource?.src;
   }
 
-  private prevSrc?: string;
-
+  @Listen('vSrcSetChange')
   private onSrcChange() {
     if (canPlayHLSNatively()) return;
-    if ((this.src !== this.prevSrc) && this.hasAttached) {
+    if (this.hasAttached) {
       this.vLoadStart.emit();
       if (!isUndefined(this.src)) this.hls!.loadSource(this.src!);
-      this.prevSrc = this.src;
     }
   }
 

@@ -77,6 +77,9 @@ interface VimeFileEvents {
   
   /**  */
   vLoadStart: Parameters<JSX.VimeFile["onVLoadStart"]>[0]
+  
+  /** Emitted when the child <source> elements are modified. */
+  vSrcSetChange: Parameters<JSX.VimeFile["onVSrcSetChange"]>[0]
 }
 
 interface VimeFileSlots {
@@ -93,6 +96,7 @@ import {
 	init,
 	insert,
 	listen,
+	run_all,
 	safe_not_equal,
 	set_custom_element_data,
 	transition_in,
@@ -143,7 +147,11 @@ function create_fragment(ctx) {
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(vime_file, "vLoadStart", /*onEvent*/ ctx[18]);
+				dispose = [
+					listen(vime_file, "vLoadStart", /*onEvent*/ ctx[18]),
+					listen(vime_file, "vSrcSetChange", /*onEvent*/ ctx[18])
+				];
+
 				mounted = true;
 			}
 		},
@@ -236,7 +244,7 @@ function create_fragment(ctx) {
 			if (default_slot) default_slot.d(detaching);
 			/*vime_file_binding*/ ctx[24](null);
 			mounted = false;
-			dispose();
+			run_all(dispose);
 		}
 	};
 }

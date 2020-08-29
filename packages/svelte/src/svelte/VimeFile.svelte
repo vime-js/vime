@@ -61,6 +61,7 @@ const onEvent = (e) => {
   muted={muted}
   playsinline={playsinline}
   on:vLoadStart={onEvent}
+  on:vSrcSetChange={onEvent}
   bind:this={__ref}
 >
   <slot></slot>
