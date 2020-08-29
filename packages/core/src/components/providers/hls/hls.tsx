@@ -99,7 +99,6 @@ export class HLS implements MediaFileProvider {
       this.hls = new Hls(this.config);
 
       this.hls!.on('hlsMediaAttached', () => {
-        console.log('attach');
         this.hasAttached = true;
         this.onSrcChange();
       });
