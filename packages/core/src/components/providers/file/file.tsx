@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 
 import {
-  h, Prop, Method, Component, Event, EventEmitter, Watch,
+  h, Prop, Method, Component, Event, EventEmitter, Watch, Element,
 } from '@stencil/core';
 import { withProviderContext, MediaProvider } from '../MediaProvider';
 import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
@@ -43,6 +43,10 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   private playbackStarted = false;
 
   private wasPausedBeforeSeeking = true;
+
+  private sources: string[] = [];
+
+  @Element() el!: HTMLVimeFileElement;
 
   /**
    * @internal Whether an external SDK will attach itself to the media player and control it.
@@ -165,6 +169,14 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   componentDidLoad() {
     this.onViewTypeChange();
+    this.didSourceChange();
+  }
+
+  componentDidRender() {
+    if (this.didSourceChange()) {
+      const mediaEl = this.el.querySelector(this.viewType as string) as HTMLMediaElement;
+      mediaEl?.load();
+    }
   }
 
   disconnectedCallback() {
@@ -173,6 +185,15 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.disposal.empty();
     this.playbackStarted = false;
     this.wasPausedBeforeSeeking = true;
+  }
+
+  private didSourceChange() {
+    const sources = Array.from(this.el.querySelectorAll('source'));
+    const newSources = sources.map((source) => source.src);
+    const didChange = (this.sources.length !== newSources.length)
+      || newSources.some((source) => !this.sources.includes(source));
+    this.sources = newSources;
+    return didChange;
   }
 
   private hasCustomPoster() {
