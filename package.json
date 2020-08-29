@@ -54,8 +54,9 @@
     }
   },
   "lint-staged": {
+    "**/*.md": "npm run lint:md",
     "packages/**/*.{js,ts,tsx}": "npm run lint",
-    "**/*.md": "npm run lint:md"
+    "packages/core/src/**/*.{js,ts,tsx}": "pnpm run build --filter @vime/core"
   },
   "commitlint": {
     "extends": [
