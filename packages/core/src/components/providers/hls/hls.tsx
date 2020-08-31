@@ -2,13 +2,14 @@ import {
   h, Method, Component, Prop, State, Event, EventEmitter, Listen,
 } from '@stencil/core';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
-import { isNullOrUndefined, isString, isUndefined } from '../../../utils/unit';
+import {
+  isNullOrUndefined, isString, isUndefined,
+} from '../../../utils/unit';
 import { loadSDK } from '../../../utils/network';
-import { PlayerProp } from '../../core/player/PlayerProp';
-import { PlayerDispatcher, createPlayerDispatcher } from '../../core/player/PlayerDispatcher';
 import { canPlayHLSNatively } from '../../../utils/support';
 import { hlsRegex, hlsTypeRegex } from '../file/utils';
 import { MediaType } from '../../core/player/MediaType';
+import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 
 /**
  * @slot - Pass `<source>` and  `<track>` elements to the underlying HTML5 media player.
@@ -19,9 +20,11 @@ import { MediaType } from '../../core/player/MediaType';
 export class HLS implements MediaFileProvider {
   private hls?: any;
 
-  private dispatch!: PlayerDispatcher;
-
   private videoProvider!: HTMLVimeVideoElement;
+
+  private mediaEl?: HTMLVideoElement;
+
+  private dispatch!: ProviderDispatcher;
 
   @State() hasAttached = false;
 
@@ -81,48 +84,13 @@ export class HLS implements MediaFileProvider {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
-  async componentDidLoad() {
-    this.dispatch = createPlayerDispatcher(this);
-
-    if (canPlayHLSNatively()) return;
-
-    try {
-      const url = `https://cdn.jsdelivr.net/npm/hls.js@${this.version}`;
-      const Hls = await loadSDK(url, 'Hls');
-      const video = this.videoProvider.querySelector('video')!;
-
-      if (!Hls.isSupported()) {
-        this.dispatch(PlayerProp.errors, [new Error('hls.js is not supported')]);
-        return;
-      }
-
-      this.hls = new Hls(this.config);
-
-      this.hls!.on('hlsMediaAttached', () => {
-        this.hasAttached = true;
-        this.onSrcChange();
-      });
-
-      this.hls!.on('hlsError', (e: any, data: any) => {
-        this.dispatch(PlayerProp.errors, [{ e, data }]);
-      });
-
-      this.hls!.on('hlsManifestParsed', () => {
-        this.dispatch(PlayerProp.mediaType, MediaType.Video);
-        this.dispatch(PlayerProp.currentSrc, this.src);
-        this.dispatch(PlayerProp.playbackReady, true);
-      });
-
-      this.hls!.attachMedia(video);
-    } catch (e) {
-      this.dispatch(PlayerProp.errors, [e]);
-    }
+  connectedCallback() {
+    this.dispatch = createProviderDispatcher(this);
   }
 
   disconnectedCallback() {
-    this.hls?.destroy();
-    this.hls = undefined;
-    this.hasAttached = false;
+    this.destroyHls();
+    this.mediaEl = undefined;
   }
 
   get src(): string | undefined {
@@ -133,12 +101,75 @@ export class HLS implements MediaFileProvider {
     return currSource?.src;
   }
 
+  private async setupHls() {
+    if (!isUndefined(this.hls) || canPlayHLSNatively()) return;
+
+    try {
+      const url = `https://cdn.jsdelivr.net/npm/hls.js@${this.version}`;
+      const Hls = await loadSDK(url, 'Hls');
+
+      if (!Hls.isSupported()) {
+        this.dispatch('errors', [new Error('hls.js is not supported')]);
+        return;
+      }
+
+      this.hls = new Hls(this.config);
+
+      this.hls!.on(Hls.Events.MEDIA_ATTACHED, () => {
+        this.hasAttached = true;
+        this.onSrcChange();
+      });
+
+      this.hls!.on(Hls.Events.ERROR, (e: any, data: any) => {
+        if (data.fatal) {
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              this.hls.startLoad();
+              break;
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              this.hls.recoverMediaError();
+              break;
+            default:
+              this.destroyHls();
+              break;
+          }
+        }
+
+        this.dispatch('errors', [{ e, data }]);
+      });
+
+      this.hls!.on(Hls.Events.MANIFEST_PARSED, () => {
+        this.dispatch('mediaType', MediaType.Video);
+        this.dispatch('currentSrc', this.src);
+        this.dispatch('playbackReady', true);
+      });
+
+      this.hls!.attachMedia(this.mediaEl);
+    } catch (e) {
+      this.dispatch('errors', [e]);
+    }
+  }
+
+  private destroyHls() {
+    this.hls?.destroy();
+    this.hls = undefined;
+    this.hasAttached = false;
+  }
+
+  @Listen('vMediaElChange')
+  async onMediaElChange(event: CustomEvent<HTMLVideoElement | undefined>) {
+    this.destroyHls();
+    if (isUndefined(event.detail)) return;
+    this.mediaEl = event.detail;
+    // Need a small delay incase the media element changes rapidly and Hls.js can't reattach.
+    setTimeout(async () => { await this.setupHls(); }, 50);
+  }
+
   @Listen('vSrcSetChange')
-  private onSrcChange() {
-    if (canPlayHLSNatively()) return;
-    if (this.hasAttached) {
+  private async onSrcChange() {
+    if (this.hasAttached && this.hls.url !== this.src) {
       this.vLoadStart.emit();
-      if (!isUndefined(this.src)) this.hls!.loadSource(this.src!);
+      this.hls!.loadSource(this.src);
     }
   }
 

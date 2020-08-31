@@ -26,10 +26,10 @@
     "release": "semantic-release -e ../../scripts/semantic-release"
   },
   "dependencies": {
-    "@vime/core": "^1.8.1"
+    "@vime/core": "^1.11.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.46",
+    "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

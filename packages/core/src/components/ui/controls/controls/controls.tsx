@@ -1,11 +1,11 @@
 import {
   h, Host, Component,
   Prop, Element, Watch,
-  State,
+  State, forceUpdate,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
-import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
+import { PlayerProps } from '../../../core/player/PlayerProps';
+import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen, isColliding } from '../../../../utils/dom';
 import { isNull } from '../../../../utils/unit';
@@ -27,9 +27,11 @@ const hideControlsTimeout: Record<any, number | undefined> = {};
   styleUrl: 'controls.scss',
 })
 export class Controls {
-  private dispatch?: PlayerDispatcher;
+  private dispatch!: Dispatcher;
 
   private disposal = new Disposal();
+
+  private pendingChange = () => {};
 
   @Element() el!: HTMLVimeControlsElement;
 
@@ -107,42 +109,47 @@ export class Controls {
   /**
    * @internal
    */
-  @Prop() isAudioView: PlayerProps[PlayerProp.isAudioView] = false;
+  @Prop() isAudioView: PlayerProps['isAudioView'] = false;
 
   /**
    * @internal
    */
-  @Prop() isSettingsActive: PlayerProps[PlayerProp.isSettingsActive] = false;
+  @Prop() isSettingsActive: PlayerProps['isSettingsActive'] = false;
 
   /**
    * @internal
    */
-  @Prop() playbackReady: PlayerProps[PlayerProp.playbackReady] = false;
+  @Prop() playbackReady: PlayerProps['playbackReady'] = false;
 
   /**
    * @internal
    */
-  @Prop() isControlsActive: PlayerProps[PlayerProp.isControlsActive] = false;
+  @Prop() isControlsActive: PlayerProps['isControlsActive'] = false;
 
   /**
    * @internal
    */
-  @Prop() paused: PlayerProps[PlayerProp.paused] = true;
+  @Prop() paused: PlayerProps['paused'] = true;
 
   /**
    * @internal
    */
-  @Prop() playbackStarted: PlayerProps[PlayerProp.playbackStarted] = false;
+  @Prop() playbackStarted: PlayerProps['playbackStarted'] = false;
 
   connectedCallback() {
-    this.dispatch = createPlayerDispatcher(this);
-  }
-
-  componentWillLoad() {
+    this.dispatch = createDispatcher(this);
+    this.onControlsChange();
     this.setupPlayerListeners();
     this.checkForCaptionsCollision();
     this.checkForSettingsCollision();
+  }
+
+  componentWillLoad() {
     this.onControlsChange();
+  }
+
+  componentWillRender() {
+    this.pendingChange();
   }
 
   componentDidRender() {
@@ -151,6 +158,7 @@ export class Controls {
   }
 
   disconnectedCallback() {
+    this.pendingChange = () => {};
     this.disposal.empty();
     delete hideControlsTimeout[playerRef[this]];
     delete playerRef[this];
@@ -184,11 +192,13 @@ export class Controls {
   }
 
   private show() {
-    this.dispatch!(PlayerProp.isControlsActive, true);
+    this.pendingChange = () => this.dispatch('isControlsActive', true);
+    forceUpdate(this);
   }
 
   private hide() {
-    this.dispatch!(PlayerProp.isControlsActive, false);
+    this.pendingChange = () => this.dispatch('isControlsActive', false);
+    forceUpdate(this);
   }
 
   private hideWithDelay() {
@@ -302,10 +312,10 @@ export class Controls {
 }
 
 withPlayerContext(Controls, [
-  PlayerProp.playbackReady,
-  PlayerProp.isAudioView,
-  PlayerProp.isControlsActive,
-  PlayerProp.isSettingsActive,
-  PlayerProp.paused,
-  PlayerProp.playbackStarted,
+  'playbackReady',
+  'isAudioView',
+  'isControlsActive',
+  'isSettingsActive',
+  'paused',
+  'playbackStarted',
 ]);

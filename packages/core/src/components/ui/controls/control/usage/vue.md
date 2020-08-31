@@ -13,7 +13,6 @@
 
 <script>
   import {
-    PlayerProp,
     VimeMixin,
     VimeControl,
     VimeIcon,
@@ -21,10 +20,7 @@
   } from "@vime/vue";
 
   export default {
-    mixins: [VimeMixin([
-      PlayerProp.paused,
-      PlayerProp.i18n,
-    ])]
+    mixins: [VimeMixin(['paused', 'i18n'])]
 
     components: {
       VimeControl,

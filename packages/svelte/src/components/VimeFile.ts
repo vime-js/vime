@@ -61,7 +61,7 @@ attached using wired (HDMI, DVI, etc.) and wireless technologies
   controls?: Components.VimeFile["controls"]
   
   /**  */
-  debug?: Components.VimeFile["debug"]
+  logger?: Components.VimeFile["logger"]
   
   /**  */
   loop?: Components.VimeFile["loop"]
@@ -77,6 +77,9 @@ interface VimeFileEvents {
   
   /**  */
   vLoadStart: Parameters<JSX.VimeFile["onVLoadStart"]>[0]
+  
+  /** Emitted when the underlying media element changes. */
+  vMediaElChange: Parameters<JSX.VimeFile["onVMediaElChange"]>[0]
   
   /** Emitted when the child `<source />` elements are modified. */
   vSrcSetChange: Parameters<JSX.VimeFile["onVSrcSetChange"]>[0]
@@ -131,10 +134,9 @@ function create_fragment(ctx) {
 			set_custom_element_data(vime_file, "language", /*language*/ ctx[10]);
 			set_custom_element_data(vime_file, "autoplay", /*autoplay*/ ctx[11]);
 			set_custom_element_data(vime_file, "controls", /*controls*/ ctx[12]);
-			set_custom_element_data(vime_file, "debug", /*debug*/ ctx[13]);
-			set_custom_element_data(vime_file, "loop", /*loop*/ ctx[14]);
-			set_custom_element_data(vime_file, "muted", /*muted*/ ctx[15]);
-			set_custom_element_data(vime_file, "playsinline", /*playsinline*/ ctx[16]);
+			set_custom_element_data(vime_file, "loop", /*loop*/ ctx[13]);
+			set_custom_element_data(vime_file, "muted", /*muted*/ ctx[14]);
+			set_custom_element_data(vime_file, "playsinline", /*playsinline*/ ctx[15]);
 		},
 		m(target, anchor) {
 			insert(target, vime_file, anchor);
@@ -148,8 +150,9 @@ function create_fragment(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(vime_file, "vLoadStart", /*onEvent*/ ctx[18]),
-					listen(vime_file, "vSrcSetChange", /*onEvent*/ ctx[18])
+					listen(vime_file, "vLoadStart", /*onEvent*/ ctx[17]),
+					listen(vime_file, "vMediaElChange", /*onEvent*/ ctx[17]),
+					listen(vime_file, "vSrcSetChange", /*onEvent*/ ctx[17])
 				];
 
 				mounted = true;
@@ -214,20 +217,16 @@ function create_fragment(ctx) {
 				set_custom_element_data(vime_file, "controls", /*controls*/ ctx[12]);
 			}
 
-			if (!current || dirty & /*debug*/ 8192) {
-				set_custom_element_data(vime_file, "debug", /*debug*/ ctx[13]);
+			if (!current || dirty & /*loop*/ 8192) {
+				set_custom_element_data(vime_file, "loop", /*loop*/ ctx[13]);
 			}
 
-			if (!current || dirty & /*loop*/ 16384) {
-				set_custom_element_data(vime_file, "loop", /*loop*/ ctx[14]);
+			if (!current || dirty & /*muted*/ 16384) {
+				set_custom_element_data(vime_file, "muted", /*muted*/ ctx[14]);
 			}
 
-			if (!current || dirty & /*muted*/ 32768) {
-				set_custom_element_data(vime_file, "muted", /*muted*/ ctx[15]);
-			}
-
-			if (!current || dirty & /*playsinline*/ 65536) {
-				set_custom_element_data(vime_file, "playsinline", /*playsinline*/ ctx[16]);
+			if (!current || dirty & /*playsinline*/ 32768) {
+				set_custom_element_data(vime_file, "playsinline", /*playsinline*/ ctx[15]);
 			}
 		},
 		i(local) {
@@ -267,7 +266,7 @@ function instance($$self, $$props, $$invalidate) {
 	let { language = undefined } = $$props;
 	let { autoplay = undefined } = $$props;
 	let { controls = undefined } = $$props;
-	let { debug = undefined } = $$props;
+	let { logger = undefined } = $$props;
 	let { loop = undefined } = $$props;
 	let { muted = undefined } = $$props;
 	let { playsinline = undefined } = $$props;
@@ -279,7 +278,7 @@ function instance($$self, $$props, $$invalidate) {
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(17, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(16, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -292,7 +291,7 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_file_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(17, __ref);
+			$$invalidate(16, __ref);
 		});
 	}
 
@@ -307,20 +306,24 @@ function instance($$self, $$props, $$invalidate) {
 		if ("disablePiP" in $$props) $$invalidate(7, disablePiP = $$props.disablePiP);
 		if ("disableRemotePlayback" in $$props) $$invalidate(8, disableRemotePlayback = $$props.disableRemotePlayback);
 		if ("viewType" in $$props) $$invalidate(9, viewType = $$props.viewType);
-		if ("playbackRates" in $$props) $$invalidate(19, playbackRates = $$props.playbackRates);
+		if ("playbackRates" in $$props) $$invalidate(18, playbackRates = $$props.playbackRates);
 		if ("language" in $$props) $$invalidate(10, language = $$props.language);
 		if ("autoplay" in $$props) $$invalidate(11, autoplay = $$props.autoplay);
 		if ("controls" in $$props) $$invalidate(12, controls = $$props.controls);
-		if ("debug" in $$props) $$invalidate(13, debug = $$props.debug);
-		if ("loop" in $$props) $$invalidate(14, loop = $$props.loop);
-		if ("muted" in $$props) $$invalidate(15, muted = $$props.muted);
-		if ("playsinline" in $$props) $$invalidate(16, playsinline = $$props.playsinline);
+		if ("logger" in $$props) $$invalidate(19, logger = $$props.logger);
+		if ("loop" in $$props) $$invalidate(13, loop = $$props.loop);
+		if ("muted" in $$props) $$invalidate(14, muted = $$props.muted);
+		if ("playsinline" in $$props) $$invalidate(15, playsinline = $$props.playsinline);
 		if ("$$scope" in $$props) $$invalidate(22, $$scope = $$props.$$scope);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*__mounted, playbackRates*/ 34078720) {
+		if ($$self.$$.dirty & /*__mounted, playbackRates*/ 33816576) {
 			$: if (__mounted) setProp("playbackRates", playbackRates);
+		}
+
+		if ($$self.$$.dirty & /*__mounted, logger*/ 34078720) {
+			$: if (__mounted) setProp("logger", logger);
 		}
 	};
 
@@ -338,13 +341,13 @@ function instance($$self, $$props, $$invalidate) {
 		language,
 		autoplay,
 		controls,
-		debug,
 		loop,
 		muted,
 		playsinline,
 		__ref,
 		onEvent,
 		playbackRates,
+		logger,
 		getAdapter,
 		getWebComponent,
 		$$scope,
@@ -380,14 +383,14 @@ class VimeFile extends SvelteComponent {
 			disablePiP: 7,
 			disableRemotePlayback: 8,
 			viewType: 9,
-			playbackRates: 19,
+			playbackRates: 18,
 			language: 10,
 			autoplay: 11,
 			controls: 12,
-			debug: 13,
-			loop: 14,
-			muted: 15,
-			playsinline: 16,
+			logger: 19,
+			loop: 13,
+			muted: 14,
+			playsinline: 15,
 			getAdapter: 20,
 			getWebComponent: 21
 		});

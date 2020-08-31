@@ -6,6 +6,9 @@ function Example() {
   const player = useRef<HTMLVimePlayerElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
 
+  // If you prefer hooks ...
+  // const [currentTime, setCurrentTime] = usePlayerContext(player, 'currentTime', 0);
+
   // Example function to showcase updating property.
   const seekForward = () => {
     setCurrentTime(currentTime + 5);

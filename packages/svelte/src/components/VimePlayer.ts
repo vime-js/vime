@@ -6,6 +6,12 @@ import { Components, JSX } from '@vime/core';
 
 interface VimePlayerProps {
   
+  /** `@readonly` Whether the player is attached to the DOM. */
+  attached?: Components.VimePlayer["attached"]
+  
+  /**  */
+  logger?: Components.VimePlayer["logger"]
+  
   /** This property has no role other than scoping CSS selectors. */
   theme?: Components.VimePlayer["theme"]
   
@@ -50,12 +56,6 @@ Depending on the provider, changing this prop may cause the player to completely
   /** `@readonly` Whether the player has loaded and is ready to be interacted with. */
   ready?: Components.VimePlayer["ready"]
   
-  /** `@readonly` Whether the player has mounted the DOM. */
-  mounted?: Components.VimePlayer["mounted"]
-  
-  /** `@readonly` Whether the player has disconnected from the DOM and been destroyed. */
-  destroyed?: Components.VimePlayer["destroyed"]
-  
   /** `@readonly` Whether media is ready for playback to begin. */
   playbackReady?: Components.VimePlayer["playbackReady"]
   
@@ -93,7 +93,7 @@ may not allow changing the quality, you can check if it's possible via
   /** `@readonly` Whether the player is in the process of seeking to a new time position. */
   seeking?: Components.VimePlayer["seeking"]
   
-  /** `@readonly` Whether the player is in debug mode and should `console.log` information about
+  /** `@readonly` Whether the player is in debug mode and should `console.x` information about
 its internal state. */
   debug?: Components.VimePlayer["debug"]
   
@@ -246,11 +246,8 @@ Event flow: `seeking` -> `seeked`. */
   /** Emitted when the `currentTime` prop changes value. */
   vCurrentTimeChange: Parameters<JSX.VimePlayer["onVCurrentTimeChange"]>[0]
   
-  /** Emitted when the player has mounted the DOM. */
-  vMounted: Parameters<JSX.VimePlayer["onVMounted"]>[0]
-  
-  /** Emitted when the player has disconnected from the DOM and been destroyed. */
-  vDestroyed: Parameters<JSX.VimePlayer["onVDestroyed"]>[0]
+  /** Emitted when the player is attached/deattached from the DOM. */
+  vAttachedChange: Parameters<JSX.VimePlayer["onVAttachedChange"]>[0]
   
   /** Emitted when the player has loaded and is ready to be interacted with. */
   vReady: Parameters<JSX.VimePlayer["onVReady"]>[0]
@@ -268,6 +265,9 @@ defined when this fires: `mediaTitle`, `currentSrc`, `currentPoster`, `duration`
   
   /** Emitted when the `buffered` prop changes value. */
   vBufferedChange: Parameters<JSX.VimePlayer["onVBufferedChange"]>[0]
+  
+  /** Emitted when the `currentCaption` prop changes value. */
+  vCurrentCaptionChange: Parameters<JSX.VimePlayer["onVCurrentCaptionChange"]>[0]
   
   /** Emitted when the `textTracks` prop changes value. */
   vTextTracksChange: Parameters<JSX.VimePlayer["onVTextTracksChange"]>[0]
@@ -323,6 +323,12 @@ defined when this fires: `mediaTitle`, `currentSrc`, `currentPoster`, `duration`
   /** Emitted when the `language` prop changes value. */
   vLanguageChange: Parameters<JSX.VimePlayer["onVLanguageChange"]>[0]
   
+  /** Emitted when the `i18n` prop changes value. */
+  vI18nChange: Parameters<JSX.VimePlayer["onVI18nChange"]>[0]
+  
+  /** Emitted when the `translations` prop changes value. */
+  vTranslationsChange: Parameters<JSX.VimePlayer["onVTranslationsChange"]>[0]
+  
   /** Emitted when the `languages` prop changes value. */
   vLanguagesChange: Parameters<JSX.VimePlayer["onVLanguagesChange"]>[0]
   
@@ -369,50 +375,49 @@ function create_fragment(ctx) {
 		c() {
 			vime_player = element("vime-player");
 			if (default_slot) default_slot.c();
-			set_custom_element_data(vime_player, "theme", /*theme*/ ctx[0]);
-			set_custom_element_data(vime_player, "paused", /*paused*/ ctx[1]);
-			set_custom_element_data(vime_player, "playing", /*playing*/ ctx[2]);
-			set_custom_element_data(vime_player, "duration", /*duration*/ ctx[3]);
-			set_custom_element_data(vime_player, "media-title", /*mediaTitle*/ ctx[4]);
-			set_custom_element_data(vime_player, "current-src", /*currentSrc*/ ctx[5]);
-			set_custom_element_data(vime_player, "current-poster", /*currentPoster*/ ctx[6]);
-			set_custom_element_data(vime_player, "current-time", /*currentTime*/ ctx[7]);
-			set_custom_element_data(vime_player, "autoplay", /*autoplay*/ ctx[8]);
-			set_custom_element_data(vime_player, "ready", /*ready*/ ctx[9]);
-			set_custom_element_data(vime_player, "mounted", /*mounted*/ ctx[10]);
-			set_custom_element_data(vime_player, "destroyed", /*destroyed*/ ctx[11]);
-			set_custom_element_data(vime_player, "playback-ready", /*playbackReady*/ ctx[12]);
-			set_custom_element_data(vime_player, "loop", /*loop*/ ctx[13]);
-			set_custom_element_data(vime_player, "muted", /*muted*/ ctx[14]);
-			set_custom_element_data(vime_player, "buffered", /*buffered*/ ctx[15]);
-			set_custom_element_data(vime_player, "playback-rate", /*playbackRate*/ ctx[16]);
-			set_custom_element_data(vime_player, "playback-quality", /*playbackQuality*/ ctx[17]);
-			set_custom_element_data(vime_player, "seeking", /*seeking*/ ctx[18]);
-			set_custom_element_data(vime_player, "debug", /*debug*/ ctx[19]);
-			set_custom_element_data(vime_player, "playback-started", /*playbackStarted*/ ctx[20]);
-			set_custom_element_data(vime_player, "playback-ended", /*playbackEnded*/ ctx[21]);
-			set_custom_element_data(vime_player, "buffering", /*buffering*/ ctx[22]);
-			set_custom_element_data(vime_player, "controls", /*controls*/ ctx[23]);
-			set_custom_element_data(vime_player, "is-controls-active", /*isControlsActive*/ ctx[24]);
-			set_custom_element_data(vime_player, "is-captions-active", /*isCaptionsActive*/ ctx[25]);
-			set_custom_element_data(vime_player, "is-settings-active", /*isSettingsActive*/ ctx[26]);
-			set_custom_element_data(vime_player, "volume", /*volume*/ ctx[27]);
-			set_custom_element_data(vime_player, "is-fullscreen-active", /*isFullscreenActive*/ ctx[28]);
-			set_custom_element_data(vime_player, "aspect-ratio", /*aspectRatio*/ ctx[29]);
-			set_custom_element_data(vime_player, "view-type", /*viewType*/ ctx[30]);
-			set_custom_element_data(vime_player, "is-audio-view", /*isAudioView*/ ctx[31]);
-			set_custom_element_data(vime_player, "is-video-view", /*isVideoView*/ ctx[32]);
-			set_custom_element_data(vime_player, "media-type", /*mediaType*/ ctx[33]);
-			set_custom_element_data(vime_player, "is-audio", /*isAudio*/ ctx[34]);
-			set_custom_element_data(vime_player, "is-video", /*isVideo*/ ctx[35]);
-			set_custom_element_data(vime_player, "is-live", /*isLive*/ ctx[36]);
-			set_custom_element_data(vime_player, "is-mobile", /*isMobile*/ ctx[37]);
-			set_custom_element_data(vime_player, "is-touch", /*isTouch*/ ctx[38]);
-			set_custom_element_data(vime_player, "is-pi-p-active", /*isPiPActive*/ ctx[39]);
-			set_custom_element_data(vime_player, "autopause", /*autopause*/ ctx[40]);
-			set_custom_element_data(vime_player, "playsinline", /*playsinline*/ ctx[41]);
-			set_custom_element_data(vime_player, "language", /*language*/ ctx[42]);
-			set_custom_element_data(vime_player, "no-skeleton", /*noSkeleton*/ ctx[43]);
+			set_custom_element_data(vime_player, "attached", /*attached*/ ctx[0]);
+			set_custom_element_data(vime_player, "theme", /*theme*/ ctx[1]);
+			set_custom_element_data(vime_player, "paused", /*paused*/ ctx[2]);
+			set_custom_element_data(vime_player, "playing", /*playing*/ ctx[3]);
+			set_custom_element_data(vime_player, "duration", /*duration*/ ctx[4]);
+			set_custom_element_data(vime_player, "media-title", /*mediaTitle*/ ctx[5]);
+			set_custom_element_data(vime_player, "current-src", /*currentSrc*/ ctx[6]);
+			set_custom_element_data(vime_player, "current-poster", /*currentPoster*/ ctx[7]);
+			set_custom_element_data(vime_player, "current-time", /*currentTime*/ ctx[8]);
+			set_custom_element_data(vime_player, "autoplay", /*autoplay*/ ctx[9]);
+			set_custom_element_data(vime_player, "ready", /*ready*/ ctx[10]);
+			set_custom_element_data(vime_player, "playback-ready", /*playbackReady*/ ctx[11]);
+			set_custom_element_data(vime_player, "loop", /*loop*/ ctx[12]);
+			set_custom_element_data(vime_player, "muted", /*muted*/ ctx[13]);
+			set_custom_element_data(vime_player, "buffered", /*buffered*/ ctx[14]);
+			set_custom_element_data(vime_player, "playback-rate", /*playbackRate*/ ctx[15]);
+			set_custom_element_data(vime_player, "playback-quality", /*playbackQuality*/ ctx[16]);
+			set_custom_element_data(vime_player, "seeking", /*seeking*/ ctx[17]);
+			set_custom_element_data(vime_player, "debug", /*debug*/ ctx[18]);
+			set_custom_element_data(vime_player, "playback-started", /*playbackStarted*/ ctx[19]);
+			set_custom_element_data(vime_player, "playback-ended", /*playbackEnded*/ ctx[20]);
+			set_custom_element_data(vime_player, "buffering", /*buffering*/ ctx[21]);
+			set_custom_element_data(vime_player, "controls", /*controls*/ ctx[22]);
+			set_custom_element_data(vime_player, "is-controls-active", /*isControlsActive*/ ctx[23]);
+			set_custom_element_data(vime_player, "is-captions-active", /*isCaptionsActive*/ ctx[24]);
+			set_custom_element_data(vime_player, "is-settings-active", /*isSettingsActive*/ ctx[25]);
+			set_custom_element_data(vime_player, "volume", /*volume*/ ctx[26]);
+			set_custom_element_data(vime_player, "is-fullscreen-active", /*isFullscreenActive*/ ctx[27]);
+			set_custom_element_data(vime_player, "aspect-ratio", /*aspectRatio*/ ctx[28]);
+			set_custom_element_data(vime_player, "view-type", /*viewType*/ ctx[29]);
+			set_custom_element_data(vime_player, "is-audio-view", /*isAudioView*/ ctx[30]);
+			set_custom_element_data(vime_player, "is-video-view", /*isVideoView*/ ctx[31]);
+			set_custom_element_data(vime_player, "media-type", /*mediaType*/ ctx[32]);
+			set_custom_element_data(vime_player, "is-audio", /*isAudio*/ ctx[33]);
+			set_custom_element_data(vime_player, "is-video", /*isVideo*/ ctx[34]);
+			set_custom_element_data(vime_player, "is-live", /*isLive*/ ctx[35]);
+			set_custom_element_data(vime_player, "is-mobile", /*isMobile*/ ctx[36]);
+			set_custom_element_data(vime_player, "is-touch", /*isTouch*/ ctx[37]);
+			set_custom_element_data(vime_player, "is-pi-p-active", /*isPiPActive*/ ctx[38]);
+			set_custom_element_data(vime_player, "autopause", /*autopause*/ ctx[39]);
+			set_custom_element_data(vime_player, "playsinline", /*playsinline*/ ctx[40]);
+			set_custom_element_data(vime_player, "language", /*language*/ ctx[41]);
+			set_custom_element_data(vime_player, "no-skeleton", /*noSkeleton*/ ctx[42]);
 		},
 		m(target, anchor) {
 			insert(target, vime_player, anchor);
@@ -426,43 +431,45 @@ function create_fragment(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(vime_player, "vThemeChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPausedChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPlay", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPlayingChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vSeekingChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vSeeked", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vBufferingChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vDurationChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vCurrentTimeChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vMounted", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vDestroyed", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vReady", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPlaybackReady", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPlaybackStarted", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPlaybackEnded", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vBufferedChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vTextTracksChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vErrorsChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vLoadStart", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vCurrentSrcChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vCurrentPosterChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vMediaTitleChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vControlsChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPlaybackRateChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPlaybackRatesChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPlaybackQualityChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPlaybackQualitiesChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vMutedChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vVolumeChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vViewTypeChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vMediaTypeChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vLiveChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vTouchChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vLanguageChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vLanguagesChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vFullscreenChange", /*onEvent*/ ctx[45]),
-					listen(vime_player, "vPiPChange", /*onEvent*/ ctx[45])
+					listen(vime_player, "vThemeChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPausedChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPlay", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPlayingChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vSeekingChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vSeeked", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vBufferingChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vDurationChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vCurrentTimeChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vAttachedChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vReady", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPlaybackReady", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPlaybackStarted", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPlaybackEnded", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vBufferedChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vCurrentCaptionChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vTextTracksChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vErrorsChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vLoadStart", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vCurrentSrcChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vCurrentPosterChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vMediaTitleChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vControlsChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPlaybackRateChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPlaybackRatesChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPlaybackQualityChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPlaybackQualitiesChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vMutedChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vVolumeChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vViewTypeChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vMediaTypeChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vLiveChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vTouchChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vLanguageChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vI18nChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vTranslationsChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vLanguagesChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vFullscreenChange", /*onEvent*/ ctx[44]),
+					listen(vime_player, "vPiPChange", /*onEvent*/ ctx[44])
 				];
 
 				mounted = true;
@@ -475,180 +482,176 @@ function create_fragment(ctx) {
 				}
 			}
 
-			if (!current || dirty[0] & /*theme*/ 1) {
-				set_custom_element_data(vime_player, "theme", /*theme*/ ctx[0]);
+			if (!current || dirty[0] & /*attached*/ 1) {
+				set_custom_element_data(vime_player, "attached", /*attached*/ ctx[0]);
 			}
 
-			if (!current || dirty[0] & /*paused*/ 2) {
-				set_custom_element_data(vime_player, "paused", /*paused*/ ctx[1]);
+			if (!current || dirty[0] & /*theme*/ 2) {
+				set_custom_element_data(vime_player, "theme", /*theme*/ ctx[1]);
 			}
 
-			if (!current || dirty[0] & /*playing*/ 4) {
-				set_custom_element_data(vime_player, "playing", /*playing*/ ctx[2]);
+			if (!current || dirty[0] & /*paused*/ 4) {
+				set_custom_element_data(vime_player, "paused", /*paused*/ ctx[2]);
 			}
 
-			if (!current || dirty[0] & /*duration*/ 8) {
-				set_custom_element_data(vime_player, "duration", /*duration*/ ctx[3]);
+			if (!current || dirty[0] & /*playing*/ 8) {
+				set_custom_element_data(vime_player, "playing", /*playing*/ ctx[3]);
 			}
 
-			if (!current || dirty[0] & /*mediaTitle*/ 16) {
-				set_custom_element_data(vime_player, "media-title", /*mediaTitle*/ ctx[4]);
+			if (!current || dirty[0] & /*duration*/ 16) {
+				set_custom_element_data(vime_player, "duration", /*duration*/ ctx[4]);
 			}
 
-			if (!current || dirty[0] & /*currentSrc*/ 32) {
-				set_custom_element_data(vime_player, "current-src", /*currentSrc*/ ctx[5]);
+			if (!current || dirty[0] & /*mediaTitle*/ 32) {
+				set_custom_element_data(vime_player, "media-title", /*mediaTitle*/ ctx[5]);
 			}
 
-			if (!current || dirty[0] & /*currentPoster*/ 64) {
-				set_custom_element_data(vime_player, "current-poster", /*currentPoster*/ ctx[6]);
+			if (!current || dirty[0] & /*currentSrc*/ 64) {
+				set_custom_element_data(vime_player, "current-src", /*currentSrc*/ ctx[6]);
 			}
 
-			if (!current || dirty[0] & /*currentTime*/ 128) {
-				set_custom_element_data(vime_player, "current-time", /*currentTime*/ ctx[7]);
+			if (!current || dirty[0] & /*currentPoster*/ 128) {
+				set_custom_element_data(vime_player, "current-poster", /*currentPoster*/ ctx[7]);
 			}
 
-			if (!current || dirty[0] & /*autoplay*/ 256) {
-				set_custom_element_data(vime_player, "autoplay", /*autoplay*/ ctx[8]);
+			if (!current || dirty[0] & /*currentTime*/ 256) {
+				set_custom_element_data(vime_player, "current-time", /*currentTime*/ ctx[8]);
 			}
 
-			if (!current || dirty[0] & /*ready*/ 512) {
-				set_custom_element_data(vime_player, "ready", /*ready*/ ctx[9]);
+			if (!current || dirty[0] & /*autoplay*/ 512) {
+				set_custom_element_data(vime_player, "autoplay", /*autoplay*/ ctx[9]);
 			}
 
-			if (!current || dirty[0] & /*mounted*/ 1024) {
-				set_custom_element_data(vime_player, "mounted", /*mounted*/ ctx[10]);
+			if (!current || dirty[0] & /*ready*/ 1024) {
+				set_custom_element_data(vime_player, "ready", /*ready*/ ctx[10]);
 			}
 
-			if (!current || dirty[0] & /*destroyed*/ 2048) {
-				set_custom_element_data(vime_player, "destroyed", /*destroyed*/ ctx[11]);
+			if (!current || dirty[0] & /*playbackReady*/ 2048) {
+				set_custom_element_data(vime_player, "playback-ready", /*playbackReady*/ ctx[11]);
 			}
 
-			if (!current || dirty[0] & /*playbackReady*/ 4096) {
-				set_custom_element_data(vime_player, "playback-ready", /*playbackReady*/ ctx[12]);
+			if (!current || dirty[0] & /*loop*/ 4096) {
+				set_custom_element_data(vime_player, "loop", /*loop*/ ctx[12]);
 			}
 
-			if (!current || dirty[0] & /*loop*/ 8192) {
-				set_custom_element_data(vime_player, "loop", /*loop*/ ctx[13]);
+			if (!current || dirty[0] & /*muted*/ 8192) {
+				set_custom_element_data(vime_player, "muted", /*muted*/ ctx[13]);
 			}
 
-			if (!current || dirty[0] & /*muted*/ 16384) {
-				set_custom_element_data(vime_player, "muted", /*muted*/ ctx[14]);
+			if (!current || dirty[0] & /*buffered*/ 16384) {
+				set_custom_element_data(vime_player, "buffered", /*buffered*/ ctx[14]);
 			}
 
-			if (!current || dirty[0] & /*buffered*/ 32768) {
-				set_custom_element_data(vime_player, "buffered", /*buffered*/ ctx[15]);
+			if (!current || dirty[0] & /*playbackRate*/ 32768) {
+				set_custom_element_data(vime_player, "playback-rate", /*playbackRate*/ ctx[15]);
 			}
 
-			if (!current || dirty[0] & /*playbackRate*/ 65536) {
-				set_custom_element_data(vime_player, "playback-rate", /*playbackRate*/ ctx[16]);
+			if (!current || dirty[0] & /*playbackQuality*/ 65536) {
+				set_custom_element_data(vime_player, "playback-quality", /*playbackQuality*/ ctx[16]);
 			}
 
-			if (!current || dirty[0] & /*playbackQuality*/ 131072) {
-				set_custom_element_data(vime_player, "playback-quality", /*playbackQuality*/ ctx[17]);
+			if (!current || dirty[0] & /*seeking*/ 131072) {
+				set_custom_element_data(vime_player, "seeking", /*seeking*/ ctx[17]);
 			}
 
-			if (!current || dirty[0] & /*seeking*/ 262144) {
-				set_custom_element_data(vime_player, "seeking", /*seeking*/ ctx[18]);
+			if (!current || dirty[0] & /*debug*/ 262144) {
+				set_custom_element_data(vime_player, "debug", /*debug*/ ctx[18]);
 			}
 
-			if (!current || dirty[0] & /*debug*/ 524288) {
-				set_custom_element_data(vime_player, "debug", /*debug*/ ctx[19]);
+			if (!current || dirty[0] & /*playbackStarted*/ 524288) {
+				set_custom_element_data(vime_player, "playback-started", /*playbackStarted*/ ctx[19]);
 			}
 
-			if (!current || dirty[0] & /*playbackStarted*/ 1048576) {
-				set_custom_element_data(vime_player, "playback-started", /*playbackStarted*/ ctx[20]);
+			if (!current || dirty[0] & /*playbackEnded*/ 1048576) {
+				set_custom_element_data(vime_player, "playback-ended", /*playbackEnded*/ ctx[20]);
 			}
 
-			if (!current || dirty[0] & /*playbackEnded*/ 2097152) {
-				set_custom_element_data(vime_player, "playback-ended", /*playbackEnded*/ ctx[21]);
+			if (!current || dirty[0] & /*buffering*/ 2097152) {
+				set_custom_element_data(vime_player, "buffering", /*buffering*/ ctx[21]);
 			}
 
-			if (!current || dirty[0] & /*buffering*/ 4194304) {
-				set_custom_element_data(vime_player, "buffering", /*buffering*/ ctx[22]);
+			if (!current || dirty[0] & /*controls*/ 4194304) {
+				set_custom_element_data(vime_player, "controls", /*controls*/ ctx[22]);
 			}
 
-			if (!current || dirty[0] & /*controls*/ 8388608) {
-				set_custom_element_data(vime_player, "controls", /*controls*/ ctx[23]);
+			if (!current || dirty[0] & /*isControlsActive*/ 8388608) {
+				set_custom_element_data(vime_player, "is-controls-active", /*isControlsActive*/ ctx[23]);
 			}
 
-			if (!current || dirty[0] & /*isControlsActive*/ 16777216) {
-				set_custom_element_data(vime_player, "is-controls-active", /*isControlsActive*/ ctx[24]);
+			if (!current || dirty[0] & /*isCaptionsActive*/ 16777216) {
+				set_custom_element_data(vime_player, "is-captions-active", /*isCaptionsActive*/ ctx[24]);
 			}
 
-			if (!current || dirty[0] & /*isCaptionsActive*/ 33554432) {
-				set_custom_element_data(vime_player, "is-captions-active", /*isCaptionsActive*/ ctx[25]);
+			if (!current || dirty[0] & /*isSettingsActive*/ 33554432) {
+				set_custom_element_data(vime_player, "is-settings-active", /*isSettingsActive*/ ctx[25]);
 			}
 
-			if (!current || dirty[0] & /*isSettingsActive*/ 67108864) {
-				set_custom_element_data(vime_player, "is-settings-active", /*isSettingsActive*/ ctx[26]);
+			if (!current || dirty[0] & /*volume*/ 67108864) {
+				set_custom_element_data(vime_player, "volume", /*volume*/ ctx[26]);
 			}
 
-			if (!current || dirty[0] & /*volume*/ 134217728) {
-				set_custom_element_data(vime_player, "volume", /*volume*/ ctx[27]);
+			if (!current || dirty[0] & /*isFullscreenActive*/ 134217728) {
+				set_custom_element_data(vime_player, "is-fullscreen-active", /*isFullscreenActive*/ ctx[27]);
 			}
 
-			if (!current || dirty[0] & /*isFullscreenActive*/ 268435456) {
-				set_custom_element_data(vime_player, "is-fullscreen-active", /*isFullscreenActive*/ ctx[28]);
+			if (!current || dirty[0] & /*aspectRatio*/ 268435456) {
+				set_custom_element_data(vime_player, "aspect-ratio", /*aspectRatio*/ ctx[28]);
 			}
 
-			if (!current || dirty[0] & /*aspectRatio*/ 536870912) {
-				set_custom_element_data(vime_player, "aspect-ratio", /*aspectRatio*/ ctx[29]);
+			if (!current || dirty[0] & /*viewType*/ 536870912) {
+				set_custom_element_data(vime_player, "view-type", /*viewType*/ ctx[29]);
 			}
 
-			if (!current || dirty[0] & /*viewType*/ 1073741824) {
-				set_custom_element_data(vime_player, "view-type", /*viewType*/ ctx[30]);
+			if (!current || dirty[0] & /*isAudioView*/ 1073741824) {
+				set_custom_element_data(vime_player, "is-audio-view", /*isAudioView*/ ctx[30]);
 			}
 
-			if (!current || dirty[1] & /*isAudioView*/ 1) {
-				set_custom_element_data(vime_player, "is-audio-view", /*isAudioView*/ ctx[31]);
+			if (!current || dirty[1] & /*isVideoView*/ 1) {
+				set_custom_element_data(vime_player, "is-video-view", /*isVideoView*/ ctx[31]);
 			}
 
-			if (!current || dirty[1] & /*isVideoView*/ 2) {
-				set_custom_element_data(vime_player, "is-video-view", /*isVideoView*/ ctx[32]);
+			if (!current || dirty[1] & /*mediaType*/ 2) {
+				set_custom_element_data(vime_player, "media-type", /*mediaType*/ ctx[32]);
 			}
 
-			if (!current || dirty[1] & /*mediaType*/ 4) {
-				set_custom_element_data(vime_player, "media-type", /*mediaType*/ ctx[33]);
+			if (!current || dirty[1] & /*isAudio*/ 4) {
+				set_custom_element_data(vime_player, "is-audio", /*isAudio*/ ctx[33]);
 			}
 
-			if (!current || dirty[1] & /*isAudio*/ 8) {
-				set_custom_element_data(vime_player, "is-audio", /*isAudio*/ ctx[34]);
+			if (!current || dirty[1] & /*isVideo*/ 8) {
+				set_custom_element_data(vime_player, "is-video", /*isVideo*/ ctx[34]);
 			}
 
-			if (!current || dirty[1] & /*isVideo*/ 16) {
-				set_custom_element_data(vime_player, "is-video", /*isVideo*/ ctx[35]);
+			if (!current || dirty[1] & /*isLive*/ 16) {
+				set_custom_element_data(vime_player, "is-live", /*isLive*/ ctx[35]);
 			}
 
-			if (!current || dirty[1] & /*isLive*/ 32) {
-				set_custom_element_data(vime_player, "is-live", /*isLive*/ ctx[36]);
+			if (!current || dirty[1] & /*isMobile*/ 32) {
+				set_custom_element_data(vime_player, "is-mobile", /*isMobile*/ ctx[36]);
 			}
 
-			if (!current || dirty[1] & /*isMobile*/ 64) {
-				set_custom_element_data(vime_player, "is-mobile", /*isMobile*/ ctx[37]);
+			if (!current || dirty[1] & /*isTouch*/ 64) {
+				set_custom_element_data(vime_player, "is-touch", /*isTouch*/ ctx[37]);
 			}
 
-			if (!current || dirty[1] & /*isTouch*/ 128) {
-				set_custom_element_data(vime_player, "is-touch", /*isTouch*/ ctx[38]);
+			if (!current || dirty[1] & /*isPiPActive*/ 128) {
+				set_custom_element_data(vime_player, "is-pi-p-active", /*isPiPActive*/ ctx[38]);
 			}
 
-			if (!current || dirty[1] & /*isPiPActive*/ 256) {
-				set_custom_element_data(vime_player, "is-pi-p-active", /*isPiPActive*/ ctx[39]);
+			if (!current || dirty[1] & /*autopause*/ 256) {
+				set_custom_element_data(vime_player, "autopause", /*autopause*/ ctx[39]);
 			}
 
-			if (!current || dirty[1] & /*autopause*/ 512) {
-				set_custom_element_data(vime_player, "autopause", /*autopause*/ ctx[40]);
+			if (!current || dirty[1] & /*playsinline*/ 512) {
+				set_custom_element_data(vime_player, "playsinline", /*playsinline*/ ctx[40]);
 			}
 
-			if (!current || dirty[1] & /*playsinline*/ 1024) {
-				set_custom_element_data(vime_player, "playsinline", /*playsinline*/ ctx[41]);
+			if (!current || dirty[1] & /*language*/ 1024) {
+				set_custom_element_data(vime_player, "language", /*language*/ ctx[41]);
 			}
 
-			if (!current || dirty[1] & /*language*/ 2048) {
-				set_custom_element_data(vime_player, "language", /*language*/ ctx[42]);
-			}
-
-			if (!current || dirty[1] & /*noSkeleton*/ 4096) {
-				set_custom_element_data(vime_player, "no-skeleton", /*noSkeleton*/ ctx[43]);
+			if (!current || dirty[1] & /*noSkeleton*/ 2048) {
+				set_custom_element_data(vime_player, "no-skeleton", /*noSkeleton*/ ctx[42]);
 			}
 		},
 		i(local) {
@@ -674,6 +677,8 @@ function instance($$self, $$props, $$invalidate) {
 	let __ref;
 	let __mounted = false;
 	const dispatch = createEventDispatcher();
+	let { attached = undefined } = $$props;
+	let { logger = undefined } = $$props;
 	let { theme = undefined } = $$props;
 	let { paused = undefined } = $$props;
 	let { playing = undefined } = $$props;
@@ -684,8 +689,6 @@ function instance($$self, $$props, $$invalidate) {
 	let { currentTime = undefined } = $$props;
 	let { autoplay = undefined } = $$props;
 	let { ready = undefined } = $$props;
-	let { mounted = undefined } = $$props;
-	let { destroyed = undefined } = $$props;
 	let { playbackReady = undefined } = $$props;
 	let { loop = undefined } = $$props;
 	let { muted = undefined } = $$props;
@@ -743,7 +746,7 @@ function instance($$self, $$props, $$invalidate) {
 	const exitPiP = (...args) => __ref.exitPiP(...args);
 	const extendLanguage = (...args) => __ref.extendLanguage(...args);
 	const callAdapter = (...args) => __ref.callAdapter(...args);
-	const toggleCaptionsVisiblity = (...args) => __ref.toggleCaptionsVisiblity(...args);
+	const toggleCaptionsVisibility = (...args) => __ref.toggleCaptionsVisibility(...args);
 	const getWebComponent = () => __ref;
 
 	onMount(() => {
@@ -751,7 +754,7 @@ function instance($$self, $$props, $$invalidate) {
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(44, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(43, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -764,67 +767,71 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_player_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(44, __ref);
+			$$invalidate(43, __ref);
 		});
 	}
 
 	$$self.$$set = $$props => {
-		if ("theme" in $$props) $$invalidate(0, theme = $$props.theme);
-		if ("paused" in $$props) $$invalidate(1, paused = $$props.paused);
-		if ("playing" in $$props) $$invalidate(2, playing = $$props.playing);
-		if ("duration" in $$props) $$invalidate(3, duration = $$props.duration);
-		if ("mediaTitle" in $$props) $$invalidate(4, mediaTitle = $$props.mediaTitle);
-		if ("currentSrc" in $$props) $$invalidate(5, currentSrc = $$props.currentSrc);
-		if ("currentPoster" in $$props) $$invalidate(6, currentPoster = $$props.currentPoster);
-		if ("currentTime" in $$props) $$invalidate(7, currentTime = $$props.currentTime);
-		if ("autoplay" in $$props) $$invalidate(8, autoplay = $$props.autoplay);
-		if ("ready" in $$props) $$invalidate(9, ready = $$props.ready);
-		if ("mounted" in $$props) $$invalidate(10, mounted = $$props.mounted);
-		if ("destroyed" in $$props) $$invalidate(11, destroyed = $$props.destroyed);
-		if ("playbackReady" in $$props) $$invalidate(12, playbackReady = $$props.playbackReady);
-		if ("loop" in $$props) $$invalidate(13, loop = $$props.loop);
-		if ("muted" in $$props) $$invalidate(14, muted = $$props.muted);
-		if ("buffered" in $$props) $$invalidate(15, buffered = $$props.buffered);
-		if ("playbackRate" in $$props) $$invalidate(16, playbackRate = $$props.playbackRate);
+		if ("attached" in $$props) $$invalidate(0, attached = $$props.attached);
+		if ("logger" in $$props) $$invalidate(45, logger = $$props.logger);
+		if ("theme" in $$props) $$invalidate(1, theme = $$props.theme);
+		if ("paused" in $$props) $$invalidate(2, paused = $$props.paused);
+		if ("playing" in $$props) $$invalidate(3, playing = $$props.playing);
+		if ("duration" in $$props) $$invalidate(4, duration = $$props.duration);
+		if ("mediaTitle" in $$props) $$invalidate(5, mediaTitle = $$props.mediaTitle);
+		if ("currentSrc" in $$props) $$invalidate(6, currentSrc = $$props.currentSrc);
+		if ("currentPoster" in $$props) $$invalidate(7, currentPoster = $$props.currentPoster);
+		if ("currentTime" in $$props) $$invalidate(8, currentTime = $$props.currentTime);
+		if ("autoplay" in $$props) $$invalidate(9, autoplay = $$props.autoplay);
+		if ("ready" in $$props) $$invalidate(10, ready = $$props.ready);
+		if ("playbackReady" in $$props) $$invalidate(11, playbackReady = $$props.playbackReady);
+		if ("loop" in $$props) $$invalidate(12, loop = $$props.loop);
+		if ("muted" in $$props) $$invalidate(13, muted = $$props.muted);
+		if ("buffered" in $$props) $$invalidate(14, buffered = $$props.buffered);
+		if ("playbackRate" in $$props) $$invalidate(15, playbackRate = $$props.playbackRate);
 		if ("playbackRates" in $$props) $$invalidate(46, playbackRates = $$props.playbackRates);
-		if ("playbackQuality" in $$props) $$invalidate(17, playbackQuality = $$props.playbackQuality);
+		if ("playbackQuality" in $$props) $$invalidate(16, playbackQuality = $$props.playbackQuality);
 		if ("playbackQualities" in $$props) $$invalidate(47, playbackQualities = $$props.playbackQualities);
-		if ("seeking" in $$props) $$invalidate(18, seeking = $$props.seeking);
-		if ("debug" in $$props) $$invalidate(19, debug = $$props.debug);
-		if ("playbackStarted" in $$props) $$invalidate(20, playbackStarted = $$props.playbackStarted);
-		if ("playbackEnded" in $$props) $$invalidate(21, playbackEnded = $$props.playbackEnded);
-		if ("buffering" in $$props) $$invalidate(22, buffering = $$props.buffering);
-		if ("controls" in $$props) $$invalidate(23, controls = $$props.controls);
-		if ("isControlsActive" in $$props) $$invalidate(24, isControlsActive = $$props.isControlsActive);
+		if ("seeking" in $$props) $$invalidate(17, seeking = $$props.seeking);
+		if ("debug" in $$props) $$invalidate(18, debug = $$props.debug);
+		if ("playbackStarted" in $$props) $$invalidate(19, playbackStarted = $$props.playbackStarted);
+		if ("playbackEnded" in $$props) $$invalidate(20, playbackEnded = $$props.playbackEnded);
+		if ("buffering" in $$props) $$invalidate(21, buffering = $$props.buffering);
+		if ("controls" in $$props) $$invalidate(22, controls = $$props.controls);
+		if ("isControlsActive" in $$props) $$invalidate(23, isControlsActive = $$props.isControlsActive);
 		if ("errors" in $$props) $$invalidate(48, errors = $$props.errors);
 		if ("textTracks" in $$props) $$invalidate(49, textTracks = $$props.textTracks);
 		if ("currentCaption" in $$props) $$invalidate(50, currentCaption = $$props.currentCaption);
-		if ("isCaptionsActive" in $$props) $$invalidate(25, isCaptionsActive = $$props.isCaptionsActive);
-		if ("isSettingsActive" in $$props) $$invalidate(26, isSettingsActive = $$props.isSettingsActive);
-		if ("volume" in $$props) $$invalidate(27, volume = $$props.volume);
-		if ("isFullscreenActive" in $$props) $$invalidate(28, isFullscreenActive = $$props.isFullscreenActive);
-		if ("aspectRatio" in $$props) $$invalidate(29, aspectRatio = $$props.aspectRatio);
-		if ("viewType" in $$props) $$invalidate(30, viewType = $$props.viewType);
-		if ("isAudioView" in $$props) $$invalidate(31, isAudioView = $$props.isAudioView);
-		if ("isVideoView" in $$props) $$invalidate(32, isVideoView = $$props.isVideoView);
-		if ("mediaType" in $$props) $$invalidate(33, mediaType = $$props.mediaType);
-		if ("isAudio" in $$props) $$invalidate(34, isAudio = $$props.isAudio);
-		if ("isVideo" in $$props) $$invalidate(35, isVideo = $$props.isVideo);
-		if ("isLive" in $$props) $$invalidate(36, isLive = $$props.isLive);
-		if ("isMobile" in $$props) $$invalidate(37, isMobile = $$props.isMobile);
-		if ("isTouch" in $$props) $$invalidate(38, isTouch = $$props.isTouch);
-		if ("isPiPActive" in $$props) $$invalidate(39, isPiPActive = $$props.isPiPActive);
-		if ("autopause" in $$props) $$invalidate(40, autopause = $$props.autopause);
-		if ("playsinline" in $$props) $$invalidate(41, playsinline = $$props.playsinline);
-		if ("language" in $$props) $$invalidate(42, language = $$props.language);
+		if ("isCaptionsActive" in $$props) $$invalidate(24, isCaptionsActive = $$props.isCaptionsActive);
+		if ("isSettingsActive" in $$props) $$invalidate(25, isSettingsActive = $$props.isSettingsActive);
+		if ("volume" in $$props) $$invalidate(26, volume = $$props.volume);
+		if ("isFullscreenActive" in $$props) $$invalidate(27, isFullscreenActive = $$props.isFullscreenActive);
+		if ("aspectRatio" in $$props) $$invalidate(28, aspectRatio = $$props.aspectRatio);
+		if ("viewType" in $$props) $$invalidate(29, viewType = $$props.viewType);
+		if ("isAudioView" in $$props) $$invalidate(30, isAudioView = $$props.isAudioView);
+		if ("isVideoView" in $$props) $$invalidate(31, isVideoView = $$props.isVideoView);
+		if ("mediaType" in $$props) $$invalidate(32, mediaType = $$props.mediaType);
+		if ("isAudio" in $$props) $$invalidate(33, isAudio = $$props.isAudio);
+		if ("isVideo" in $$props) $$invalidate(34, isVideo = $$props.isVideo);
+		if ("isLive" in $$props) $$invalidate(35, isLive = $$props.isLive);
+		if ("isMobile" in $$props) $$invalidate(36, isMobile = $$props.isMobile);
+		if ("isTouch" in $$props) $$invalidate(37, isTouch = $$props.isTouch);
+		if ("isPiPActive" in $$props) $$invalidate(38, isPiPActive = $$props.isPiPActive);
+		if ("autopause" in $$props) $$invalidate(39, autopause = $$props.autopause);
+		if ("playsinline" in $$props) $$invalidate(40, playsinline = $$props.playsinline);
+		if ("language" in $$props) $$invalidate(41, language = $$props.language);
 		if ("translations" in $$props) $$invalidate(51, translations = $$props.translations);
 		if ("languages" in $$props) $$invalidate(52, languages = $$props.languages);
 		if ("i18n" in $$props) $$invalidate(53, i18n = $$props.i18n);
-		if ("noSkeleton" in $$props) $$invalidate(43, noSkeleton = $$props.noSkeleton);
+		if ("noSkeleton" in $$props) $$invalidate(42, noSkeleton = $$props.noSkeleton);
 		if ("$$scope" in $$props) $$invalidate(73, $$scope = $$props.$$scope);
 	};
 
 	$$self.$$.update = () => {
+		if ($$self.$$.dirty[1] & /*logger*/ 16384 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
+			$: if (__mounted) setProp("logger", logger);
+		}
+
 		if ($$self.$$.dirty[1] & /*playbackRates*/ 32768 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
 			$: if (__mounted) setProp("playbackRates", playbackRates);
 		}
@@ -859,6 +866,7 @@ function instance($$self, $$props, $$invalidate) {
 	};
 
 	return [
+		attached,
 		theme,
 		paused,
 		playing,
@@ -869,8 +877,6 @@ function instance($$self, $$props, $$invalidate) {
 		currentTime,
 		autoplay,
 		ready,
-		mounted,
-		destroyed,
 		playbackReady,
 		loop,
 		muted,
@@ -905,6 +911,7 @@ function instance($$self, $$props, $$invalidate) {
 		noSkeleton,
 		__ref,
 		onEvent,
+		logger,
 		playbackRates,
 		playbackQualities,
 		errors,
@@ -930,7 +937,7 @@ function instance($$self, $$props, $$invalidate) {
 		exitPiP,
 		extendLanguage,
 		callAdapter,
-		toggleCaptionsVisiblity,
+		toggleCaptionsVisibility,
 		getWebComponent,
 		$$scope,
 		$$slots,
@@ -961,58 +968,58 @@ class VimePlayer extends SvelteComponent {
 			create_fragment,
 			safe_not_equal,
 			{
-				theme: 0,
-				paused: 1,
-				playing: 2,
-				duration: 3,
-				mediaTitle: 4,
-				currentSrc: 5,
-				currentPoster: 6,
-				currentTime: 7,
-				autoplay: 8,
-				ready: 9,
-				mounted: 10,
-				destroyed: 11,
-				playbackReady: 12,
-				loop: 13,
-				muted: 14,
-				buffered: 15,
-				playbackRate: 16,
+				attached: 0,
+				logger: 45,
+				theme: 1,
+				paused: 2,
+				playing: 3,
+				duration: 4,
+				mediaTitle: 5,
+				currentSrc: 6,
+				currentPoster: 7,
+				currentTime: 8,
+				autoplay: 9,
+				ready: 10,
+				playbackReady: 11,
+				loop: 12,
+				muted: 13,
+				buffered: 14,
+				playbackRate: 15,
 				playbackRates: 46,
-				playbackQuality: 17,
+				playbackQuality: 16,
 				playbackQualities: 47,
-				seeking: 18,
-				debug: 19,
-				playbackStarted: 20,
-				playbackEnded: 21,
-				buffering: 22,
-				controls: 23,
-				isControlsActive: 24,
+				seeking: 17,
+				debug: 18,
+				playbackStarted: 19,
+				playbackEnded: 20,
+				buffering: 21,
+				controls: 22,
+				isControlsActive: 23,
 				errors: 48,
 				textTracks: 49,
 				currentCaption: 50,
-				isCaptionsActive: 25,
-				isSettingsActive: 26,
-				volume: 27,
-				isFullscreenActive: 28,
-				aspectRatio: 29,
-				viewType: 30,
-				isAudioView: 31,
-				isVideoView: 32,
-				mediaType: 33,
-				isAudio: 34,
-				isVideo: 35,
-				isLive: 36,
-				isMobile: 37,
-				isTouch: 38,
-				isPiPActive: 39,
-				autopause: 40,
-				playsinline: 41,
-				language: 42,
+				isCaptionsActive: 24,
+				isSettingsActive: 25,
+				volume: 26,
+				isFullscreenActive: 27,
+				aspectRatio: 28,
+				viewType: 29,
+				isAudioView: 30,
+				isVideoView: 31,
+				mediaType: 32,
+				isAudio: 33,
+				isVideo: 34,
+				isLive: 35,
+				isMobile: 36,
+				isTouch: 37,
+				isPiPActive: 38,
+				autopause: 39,
+				playsinline: 40,
+				language: 41,
 				translations: 51,
 				languages: 52,
 				i18n: 53,
-				noSkeleton: 43,
+				noSkeleton: 42,
 				getProvider: 54,
 				getAdapter: 55,
 				play: 56,
@@ -1030,7 +1037,7 @@ class VimePlayer extends SvelteComponent {
 				exitPiP: 68,
 				extendLanguage: 69,
 				callAdapter: 70,
-				toggleCaptionsVisiblity: 71,
+				toggleCaptionsVisibility: 71,
 				getWebComponent: 72
 			},
 			[-1, -1, -1]
@@ -1162,7 +1169,7 @@ information. */
 
 	
   /** Toggles the visibility of the captions. */
- get toggleCaptionsVisiblity(): Components.VimePlayer["toggleCaptionsVisiblity"] {
+ get toggleCaptionsVisibility(): Components.VimePlayer["toggleCaptionsVisibility"] {
 		return this.$$.ctx[71];
 	}
 

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should be structurally sound 1`] = `
-<vime-player aria-hidden="true" aria-label="Video Player" id="vime-player-1" tabindex="0">
+<vime-player aria-hidden="true" aria-label="Video Player" debug="" id="vime-player-1" tabindex="0">
   <!---->
   <div class="active skeleton"></div>
   <vime-faketube></vime-faketube>

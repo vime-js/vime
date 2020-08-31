@@ -1,9 +1,12 @@
 # @vime/svelte-example
 
-This example was bootstrapped using the [`sveltejs/template`](https://github.com/sveltejs/template),
-and demonstrates how to setup Vime with Svelte via the `@vime/svelte` package. The main file to
-look at is [`src/App.svelte`](./src/App.svelte), and if you're intrested in building custom components
-see [`TapSidesToSeek.svelte`](./src/TapSidesToSeek.svelte).
+This example was bootstrapped using [`sveltejs/template-webpack`](https://github.com/sveltejs/template-webpack),
+and demonstrates how to setup Vime with Svelte via the `@vime/svelte` package. The main files to
+look at are:
+
+- [`public/index.html`](./public/index.html): Shows how to load the default player themes.
+- [`src/App.svelte`](./src/App.svelte): Shows how to setup and use the player.
+- [`src/TapSidesToSeek.svelte`](./src/TapSidesToSeek.svelte): Shows how to build a custom component.
 
 For the curious, [`@vime/media`](../../packages/media) is a private package that contains a collection
 of audio and video files, and are used here to help with demonstrating the player. You're free to

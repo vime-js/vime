@@ -1,11 +1,9 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 
 import {
-  h, Prop, Method, Component, Event, EventEmitter, Watch, Element, State,
+  h, Prop, Method, Component, Event, EventEmitter, Watch, Element,
 } from '@stencil/core';
 import { withProviderContext, MediaProvider } from '../MediaProvider';
-import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
-import { PlayerProp } from '../../core/player/PlayerProp';
 import { ViewType } from '../../core/player/ViewType';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from './MediaFileProvider';
 import {
@@ -23,6 +21,8 @@ import { MediaType } from '../../core/player/MediaType';
 import { listen } from '../../../utils/dom';
 import { Disposal } from '../../core/player/Disposal';
 import { findRootPlayer } from '../../core/player/utils';
+import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
+import { Logger } from '../../core/player/PlayerLogger';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
@@ -32,7 +32,7 @@ import { findRootPlayer } from '../../core/player/utils';
   styleUrl: 'file.scss',
 })
 export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<HTMLMediaElement> {
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: ProviderDispatcher;
 
   private timeRAF?: number;
 
@@ -46,9 +46,11 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private currentSrcSet: (string | null)[] = [];
 
-  @Element() el!: HTMLVimeFileElement;
+  private prevMediaEl?: HTMLMediaElement;
 
-  @State() mediaEl?: HTMLMediaElement;
+  private mediaEl?: HTMLMediaElement;
+
+  @Element() el!: HTMLVimeFileElement;
 
   /**
    * @internal Whether an external SDK will attach itself to the media player and control it.
@@ -77,12 +79,12 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   @Watch('mediaTitle')
   onMediaTitleChange() {
-    this.dispatch(PlayerProp.mediaTitle, this.mediaTitle);
+    this.dispatch('mediaTitle', this.mediaTitle);
   }
 
   @Watch('poster')
   onPosterChange() {
-    this.dispatch(PlayerProp.currentPoster, this.poster);
+    this.dispatch('currentPoster', this.poster);
   }
 
   /**
@@ -112,7 +114,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   @Watch('viewType')
   onViewTypeChange() {
-    this.dispatch(PlayerProp.viewType, this.viewType);
+    this.dispatch('viewType', this.viewType);
   }
 
   /**
@@ -138,7 +140,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   /**
    * @internal
    */
-  @Prop() debug = false;
+  @Prop() logger?: Logger;
 
   /**
    * @internal
@@ -161,16 +163,29 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   @Event() vLoadStart!: EventEmitter<void>;
 
   /**
+   * Emitted when the underlying media element changes.
+   */
+  @Event() vMediaElChange!: EventEmitter<HTMLAudioElement | HTMLVideoElement | undefined>;
+
+  /**
    * Emitted when the child `<source />` elements are modified.
    */
   @Event() vSrcSetChange!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.dispatch = createPlayerDispatcher(this);
+  connectedCallback() {
+    this.dispatch = createProviderDispatcher(this);
     this.onViewTypeChange();
     this.onPosterChange();
     this.onMediaTitleChange();
     this.listenToTextTracksChanges();
+  }
+
+  componentDidRender() {
+    if (this.prevMediaEl !== this.mediaEl) {
+      this.prevMediaEl = this.mediaEl;
+      if (!isNullOrUndefined(this.mediaEl)) this.setupMutationObserver();
+      this.vMediaElChange.emit(this.mediaEl);
+    }
   }
 
   componentDidLoad() {
@@ -186,7 +201,6 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.wasPausedBeforeSeeking = true;
   }
 
-  @Watch('mediaEl')
   setupMutationObserver() {
     this.cancelMutationObserver?.();
     if (isNullOrUndefined(this.mediaEl)) return;
@@ -239,7 +253,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private requestTimeUpdates() {
-    this.dispatch(PlayerProp.currentTime, this.mediaEl?.currentTime ?? 0);
+    this.dispatch('currentTime', this.mediaEl?.currentTime ?? 0);
     this.timeRAF = window.requestAnimationFrame(() => { this.requestTimeUpdates(); });
   }
 
@@ -251,91 +265,91 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onLoadedMetadata() {
-    this.dispatch(PlayerProp.currentPoster, this.poster);
-    this.dispatch(PlayerProp.duration, this.mediaEl!.duration);
-    this.dispatch(PlayerProp.playbackRates, this.playbackRates);
+    this.dispatch('currentPoster', this.poster);
+    this.dispatch('duration', this.mediaEl!.duration);
+    this.dispatch('playbackRates', this.playbackRates);
     this.onProgress();
     this.onTracksChange();
     this.didSrcSetChange();
     if (!this.willAttach) {
-      this.dispatch(PlayerProp.currentSrc, this.mediaEl!.currentSrc);
-      this.dispatch(PlayerProp.mediaType, this.getMediaType());
-      this.dispatch(PlayerProp.playbackReady, true);
+      this.dispatch('currentSrc', this.mediaEl!.currentSrc);
+      this.dispatch('mediaType', this.getMediaType());
+      this.dispatch('playbackReady', true);
     }
   }
 
   private onProgress() {
     const { buffered, duration } = this.mediaEl!;
     const end = (buffered.length === 0) ? 0 : buffered.end(buffered.length - 1);
-    this.dispatch(PlayerProp.buffered, (end > duration) ? duration : end);
+    this.dispatch('buffered', (end > duration) ? duration : end);
   }
 
   private onPlay() {
     this.requestTimeUpdates();
-    this.dispatch(PlayerProp.paused, false);
+    this.dispatch('paused', false);
     if (!this.playbackStarted) {
       this.playbackStarted = true;
-      this.dispatch(PlayerProp.playbackStarted, true);
+      this.dispatch('playbackStarted', true);
     }
   }
 
   private onPause() {
     this.cancelTimeUpdates();
-    this.dispatch(PlayerProp.paused, true);
-    this.dispatch(PlayerProp.buffering, false);
+    this.dispatch('paused', true);
+    this.dispatch('buffering', false);
   }
 
   private onPlaying() {
-    this.dispatch(PlayerProp.playing, true);
-    this.dispatch(PlayerProp.buffering, false);
+    this.dispatch('playing', true);
+    this.dispatch('buffering', false);
   }
 
   private onSeeking() {
     if (!this.wasPausedBeforeSeeking) this.wasPausedBeforeSeeking = this.mediaEl!.paused;
-    this.dispatch(PlayerProp.currentTime, this.mediaEl!.currentTime);
-    this.dispatch(PlayerProp.seeking, true);
+    this.dispatch('currentTime', this.mediaEl!.currentTime);
+    this.dispatch('seeking', true);
   }
 
   private onSeeked() {
-    this.dispatch(PlayerProp.seeking, false);
+    this.dispatch('seeking', false);
     if (!this.playbackStarted || !this.wasPausedBeforeSeeking) this.attemptToPlay();
     this.wasPausedBeforeSeeking = true;
   }
 
   private onRateChange() {
-    this.dispatch(PlayerProp.playbackRate, this.mediaEl!.playbackRate);
+    this.dispatch('playbackRate', this.mediaEl!.playbackRate);
   }
 
   private onVolumeChange() {
-    this.dispatch(PlayerProp.muted, this.mediaEl!.muted);
-    this.dispatch(PlayerProp.volume, this.mediaEl!.volume * 100);
+    this.dispatch('muted', this.mediaEl!.muted);
+    this.dispatch('volume', this.mediaEl!.volume * 100);
   }
 
   private onDurationChange() {
-    this.dispatch(PlayerProp.duration, this.mediaEl!.duration);
+    this.dispatch('duration', this.mediaEl!.duration);
   }
 
   private onWaiting() {
-    this.dispatch(PlayerProp.buffering, true);
+    this.dispatch('buffering', true);
   }
 
   private onSuspend() {
-    this.dispatch(PlayerProp.buffering, false);
+    this.dispatch('buffering', false);
   }
 
   private onEnded() {
-    if (!this.loop) this.dispatch(PlayerProp.playbackEnded, true);
+    if (!this.loop) this.dispatch('playbackEnded', true);
   }
 
-  private onError(event: Event) {
-    this.dispatch(PlayerProp.errors, [event]);
+  private onError() {
+    this.dispatch('errors', [this.mediaEl!.error]);
   }
 
   private attemptToPlay() {
     try {
       this.mediaEl?.play();
     } catch (e) {
-      this.dispatch(PlayerProp.errors, [e]);
+      this.dispatch('errors', [e]);
     }
   }
 
@@ -373,20 +387,20 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private onPresentationModeChange() {
     const mode = (this.mediaEl as any)?.webkitPresentationMode;
-    this.dispatch(PlayerProp.isPiPActive, (mode === WebkitPresentationMode.PiP));
-    this.dispatch(PlayerProp.isFullscreenActive, (mode === WebkitPresentationMode.Fullscreen));
+    this.dispatch('isPiPActive', (mode === WebkitPresentationMode.PiP));
+    this.dispatch('isFullscreenActive', (mode === WebkitPresentationMode.Fullscreen));
   }
 
   private onEnterPiP() {
-    this.dispatch(PlayerProp.isPiPActive, true);
+    this.dispatch('isPiPActive', true);
   }
 
   private onLeavePiP() {
-    this.dispatch(PlayerProp.isPiPActive, false);
+    this.dispatch('isPiPActive', false);
   }
 
   private onTracksChange() {
-    this.dispatch(PlayerProp.textTracks, this.mediaEl!.textTracks);
+    this.dispatch('textTracks', this.mediaEl!.textTracks);
   }
 
   private listenToTextTracksChanges() {

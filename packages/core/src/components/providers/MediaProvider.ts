@@ -1,5 +1,5 @@
 import { ComponentInterface, EventEmitter } from '@stencil/core';
-import { PlayerProp, PlayerProps } from '../core/player/PlayerProp';
+import { PlayerProps } from '../core/player/PlayerProps';
 import { withPlayerContext } from '../core/player/PlayerContext';
 
 export interface MediaProviderAdapter<InternalPlayerType = any> {
@@ -27,13 +27,13 @@ export type MockMediaProviderAdapter = {
 };
 
 export interface MediaProvider<InternalPlayerType = any> extends ComponentInterface {
-  [PlayerProp.controls]: PlayerProps[PlayerProp.controls]
-  [PlayerProp.language]: PlayerProps[PlayerProp.language]
-  [PlayerProp.debug]: PlayerProps[PlayerProp.debug]
-  [PlayerProp.loop]: PlayerProps[PlayerProp.loop]
-  [PlayerProp.autoplay]: PlayerProps[PlayerProp.autoplay]
-  [PlayerProp.playsinline]: PlayerProps[PlayerProp.playsinline]
-  [PlayerProp.muted]: PlayerProps[PlayerProp.muted]
+  logger?: PlayerProps['logger']
+  controls: PlayerProps['controls']
+  language: PlayerProps['language']
+  loop: PlayerProps['loop']
+  autoplay: PlayerProps['autoplay']
+  playsinline: PlayerProps['playsinline']
+  muted: PlayerProps['muted']
   vLoadStart: EventEmitter<void>
   getAdapter(): Promise<MediaProviderAdapter<InternalPlayerType>>
 }
@@ -45,11 +45,11 @@ export interface MediaProviderConstructor {
 export const withProviderContext = (
   Provider: MediaProviderConstructor,
 ) => withPlayerContext(Provider, [
-  PlayerProp.autoplay,
-  PlayerProp.controls,
-  PlayerProp.language,
-  PlayerProp.muted,
-  PlayerProp.debug,
-  PlayerProp.loop,
-  PlayerProp.playsinline,
+  'autoplay',
+  'controls',
+  'language',
+  'muted',
+  'logger',
+  'loop',
+  'playsinline',
 ]);

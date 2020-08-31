@@ -107,7 +107,7 @@ export class Embed implements ComponentInterface {
       });
   }
 
-  componentWillLoad() {
+  connectedCallback() {
     this.srcChange();
     this.genIframeId();
   }

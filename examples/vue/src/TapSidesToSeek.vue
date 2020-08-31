@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import { VimeMixin, PlayerProp } from '@vime/vue';
+import { VimeMixin } from '@vime/vue';
 
 @Component({
   /**
@@ -19,8 +19,8 @@ import { VimeMixin, PlayerProp } from '@vime/vue';
    * is bound incase we need to interact with it directly (`this.player`).
    */
   mixins: [VimeMixin([
-    PlayerProp.currentTime,
-    PlayerProp.duration,
+    'currentTime',
+    'duration',
   ])]
 })
 export default class TapSidesToSeek extends Vue {

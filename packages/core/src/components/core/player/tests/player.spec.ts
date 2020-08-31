@@ -1,12 +1,12 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { NewSpecPageOptions } from '@stencil/core/internal';
 import { Player } from '../player';
-import { PlayerProp } from '../PlayerProp';
 import { FakeTube } from '../../../providers/faketube/FakeTube';
 import { MediaType } from '../MediaType';
 import { ViewType } from '../ViewType';
 import { MockMediaProviderAdapter } from '../../../providers/MediaProvider';
-import { PlayerEvent } from '../PlayerEvent';
+import { initialState, PlayerProp } from '../PlayerProps';
+import { getEventName } from '../PlayerEvents';
 
 let page: SpecPage;
 let player: HTMLVimePlayerElement;
@@ -16,7 +16,7 @@ let provider: HTMLVimeFaketubeElement;
 const buildPage = async (opts?: Partial<NewSpecPageOptions>) => {
   page = await newSpecPage({
     components: [Player, FakeTube],
-    html: '<vime-player><vime-faketube /></vime-player>',
+    html: '<vime-player debug><vime-faketube /></vime-player>',
     ...opts,
   });
 
@@ -34,19 +34,19 @@ it('should be structurally sound', async () => {
 describe('props', () => {
   it('should have defined all props', async () => {
     const isUndefinedProp = new Set([
-      PlayerProp.playbackQuality,
-      PlayerProp.theme,
-      PlayerProp.mediaType,
-      PlayerProp.viewType,
-      PlayerProp.mediaTitle,
-      PlayerProp.textTracks,
-      PlayerProp.currentSrc,
-      PlayerProp.currentPoster,
-      PlayerProp.currentCaption,
+      'playbackQuality',
+      'theme',
+      'mediaType',
+      'viewType',
+      'mediaTitle',
+      'textTracks',
+      'currentSrc',
+      'currentPoster',
+      'currentCaption',
     ]);
 
-    Object.values(PlayerProp).forEach((prop) => {
-      if (!isUndefinedProp.has(prop)) expect(player[prop]).toBeDefined();
+    Object.keys(initialState).forEach((prop) => {
+      if (!isUndefinedProp.has(prop)) expect((player as any)[prop]).toBeDefined();
     });
   });
 
@@ -55,22 +55,14 @@ describe('props', () => {
     await page.waitForChanges();
   });
 
-  it('should log an error if attempting to change a readonly property', async () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation();
-    player.mediaType = MediaType.Audio;
-    await page.waitForChanges();
-    expect(spy).toHaveBeenCalledWith(expect.stringMatching(/Player.mediaType is readonly./));
-    spy.mockRestore();
-  });
-
   it('should watch `mediaType` prop', async () => {
     expect(player.isAudio).toBeFalsy();
     expect(player.isVideo).toBeFalsy();
-    await provider.dispatchStateChange(PlayerProp.mediaType, MediaType.Audio);
+    await provider.dispatchChange('mediaType', MediaType.Audio);
     await page.waitForChanges();
     expect(player.isAudio).toBeTruthy();
     expect(player.isVideo).toBeFalsy();
-    await provider.dispatchStateChange(PlayerProp.mediaType, MediaType.Video);
+    await provider.dispatchChange('mediaType', MediaType.Video);
     await page.waitForChanges();
     expect(player.isAudio).toBeFalsy();
     expect(player.isVideo).toBeTruthy();
@@ -79,11 +71,11 @@ describe('props', () => {
   it('should watch `viewType` prop', async () => {
     expect(player.isAudioView).toBeFalsy();
     expect(player.isVideoView).toBeFalsy();
-    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
+    await provider.dispatchChange('viewType', ViewType.Audio);
     await page.waitForChanges();
     expect(player.isAudioView).toBeTruthy();
     expect(player.isVideoView).toBeFalsy();
-    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
+    await provider.dispatchChange('viewType', ViewType.Video);
     await page.waitForChanges();
     expect(player.isAudioView).toBeFalsy();
     expect(player.isVideoView).toBeTruthy();
@@ -91,7 +83,7 @@ describe('props', () => {
 
   it('should set playing to false when paused changes to true', async () => {
     player.paused = false;
-    await provider.dispatchStateChange(PlayerProp.playing, true);
+    await provider.dispatchChange('playing', true);
     await page.waitForChanges();
     player.paused = true;
     await page.waitForChanges();
@@ -108,7 +100,6 @@ describe('props', () => {
     await player.extendLanguage('tr', { Pause: 'Duraklat' });
     player.language = 'tr';
     await page.waitForChanges();
-    await page.waitForChanges();
     expect(player.i18n).toEqual({ Pause: 'Duraklat' });
     await player.extendLanguage('tr', { Play: 'Oyna', Pause: 'Duraklat' });
     await page.waitForChanges();
@@ -118,11 +109,10 @@ describe('props', () => {
   it('should call adapter when paused is changed', async () => {
     expect(adapter.play).not.toHaveBeenCalled();
     expect(adapter.pause).not.toHaveBeenCalled();
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('playbackReady', true);
     player.paused = false;
     await page.waitForChanges();
-    await provider.dispatchStateChange(PlayerProp.paused, false);
-    await page.waitForChanges();
+    await provider.dispatchChange('paused', false);
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalled();
     expect(adapter.pause).not.toHaveBeenCalled();
@@ -134,10 +124,12 @@ describe('props', () => {
 
   it('should call adapter when muted is changed', async () => {
     expect(adapter.setMuted).not.toHaveBeenCalled();
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('playbackReady', true);
     player.muted = true;
     await page.waitForChanges();
     expect(adapter.setMuted).toHaveBeenCalledWith(true);
+    await provider.dispatchChange('muted', true);
+    await page.waitForChanges();
     player.muted = false;
     await page.waitForChanges();
     expect(adapter.setMuted).toHaveBeenCalledWith(false);
@@ -145,7 +137,7 @@ describe('props', () => {
 
   it('should call adapter when volume is changed', async () => {
     expect(adapter.setVolume).not.toHaveBeenCalled();
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('playbackReady', true);
     player.volume = 30;
     await page.waitForChanges();
     expect(adapter.setVolume).toHaveBeenCalledWith(30);
@@ -153,8 +145,8 @@ describe('props', () => {
 
   it('should call adapter when currentTime is changed', async () => {
     expect(adapter.setCurrentTime).not.toHaveBeenCalled();
-    await provider.dispatchStateChange(PlayerProp.duration, 100);
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('duration', 100);
+    await provider.dispatchChange('playbackReady', true);
     await page.waitForChanges();
     player.currentTime = 30;
     await page.waitForChanges();
@@ -162,33 +154,33 @@ describe('props', () => {
   });
 
   it('should not change playbackRate if provider can\'t set it', async () => {
-    const spy = jest.spyOn(console, 'warn').mockImplementation();
+    const spy = jest.spyOn(console, 'log').mockImplementation();
     adapter.canSetPlaybackRate!.mockImplementation(() => Promise.resolve(false));
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('playbackReady', true);
     player.playbackRate = 2;
     await page.waitForChanges();
     expect(player.playbackRate).toEqual(1);
-    expect(spy).toHaveBeenCalledWith('Cannot change `playbackRate`.');
+    expect(spy).toHaveBeenCalledWith('[Vime tip]:', expect.stringContaining('change `playbackRate`'));
     spy.mockRestore();
   });
 
   it('should not change playbackRate if not in playbackRates', async () => {
-    const spy = jest.spyOn(console, 'warn').mockImplementation();
+    const spy = jest.spyOn(console, 'log').mockImplementation();
     adapter.canSetPlaybackRate!.mockImplementationOnce(() => Promise.resolve(true));
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
-    await provider.dispatchStateChange(PlayerProp.playbackRates, [1, 2, 3]);
+    await provider.dispatchChange('playbackReady', true);
+    await provider.dispatchChange('playbackRates', [1, 2, 3]);
     await page.waitForChanges();
     player.playbackRate = 4;
     await page.waitForChanges();
     expect(player.playbackRate).toEqual(1);
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Invalid `playbackRate` of 4.'));
+    expect(spy).toHaveBeenCalledWith('[Vime tip]:', expect.stringContaining('invalid `playbackRate`'));
     spy.mockRestore();
   });
 
   it('should call adapter when playbackRate is changed', async () => {
     adapter.canSetPlaybackRate!.mockImplementationOnce(() => Promise.resolve(true));
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
-    await provider.dispatchStateChange(PlayerProp.playbackRates, [1, 2]);
+    await provider.dispatchChange('playbackReady', true);
+    await provider.dispatchChange('playbackRates', [1, 2]);
     await page.waitForChanges();
     player.playbackRate = 2;
     await page.waitForChanges();
@@ -196,33 +188,33 @@ describe('props', () => {
   });
 
   it('should not change playbackQuality if provider can\'t set it', async () => {
-    const spy = jest.spyOn(console, 'warn').mockImplementation();
+    const spy = jest.spyOn(console, 'log').mockImplementation();
     adapter.canSetPlaybackQuality!.mockImplementationOnce(() => Promise.resolve(false));
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('playbackReady', true);
     player.playbackQuality = '720p';
     await page.waitForChanges();
     expect(player.playbackQuality).toBeUndefined();
-    expect(spy).toHaveBeenCalledWith('Cannot change `playbackQuality`.');
+    expect(spy).toHaveBeenCalledWith('[Vime tip]:', expect.stringContaining('change `playbackQuality`'));
     spy.mockRestore();
   });
 
   it('should not change playbackQuality if not in playbackQualities', async () => {
-    const spy = jest.spyOn(console, 'warn').mockImplementation();
+    const spy = jest.spyOn(console, 'log').mockImplementation();
     adapter.canSetPlaybackQuality!.mockImplementationOnce(() => Promise.resolve(true));
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
-    await provider.dispatchStateChange(PlayerProp.playbackQualities, ['1080p', '720p']);
+    await provider.dispatchChange('playbackReady', true);
+    await provider.dispatchChange('playbackQualities', ['1080p', '720p']);
     await page.waitForChanges();
     player.playbackQuality = '480p';
     await page.waitForChanges();
     expect(player.playbackQuality).toBeUndefined();
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Invalid `playbackQuality` of 480p.'));
+    expect(spy).toHaveBeenCalledWith('[Vime tip]:', expect.stringContaining('invalid `playbackQuality`'));
     spy.mockRestore();
   });
 
   it('should call adapter when playbackQuality is changed', async () => {
     adapter.canSetPlaybackQuality!.mockImplementationOnce(() => Promise.resolve(true));
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
-    await provider.dispatchStateChange(PlayerProp.playbackQualities, ['1080p', '720p']);
+    await provider.dispatchChange('playbackReady', true);
+    await provider.dispatchChange('playbackQualities', ['1080p', '720p']);
     await page.waitForChanges();
     player.playbackQuality = '720p';
     await page.waitForChanges();
@@ -231,24 +223,22 @@ describe('props', () => {
 
   // Test doesn't work for some unknown reason.
   it.skip('should throw if writing to internal readonly prop', async () => {
-    await expect(provider.dispatchStateChange(PlayerProp.isAudio, true)).rejects.toThrow();
+    await expect(provider.dispatchChange('isAudio', true)).rejects.toThrow();
   });
 
   it('should adjust paddingBottom according to aspectRatio', async () => {
     expect(page.root!.style.paddingBottom).toEqual('');
-    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
-    await page.waitForChanges();
+    await provider.dispatchChange('viewType', ViewType.Video);
     await page.waitForChanges();
     expect(page.root!.style.paddingBottom).toEqual('56.25%');
-    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
-    await page.waitForChanges();
+    await provider.dispatchChange('viewType', ViewType.Audio);
     await page.waitForChanges();
     expect(page.root!.style.paddingBottom).toEqual('');
   });
 
   it('should render blocker', async () => {
     expect(page.root!.querySelector('.blocker')).toBeNull();
-    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
+    await provider.dispatchChange('viewType', ViewType.Video);
     await page.waitForChanges();
     expect(page.root!.querySelector('.blocker')).toBeDefined();
   });
@@ -264,7 +254,7 @@ describe('props', () => {
   });
 
   it('should reset props on subsequent media changes', async () => {
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('playbackReady', true);
     player.currentTime = 40;
     player.volume = 80;
     await provider.dispatchLoadStart();
@@ -309,8 +299,8 @@ describe('props', () => {
   });
 
   it('should bound currentTime between 0 and duration', async () => {
-    await provider.dispatchStateChange(PlayerProp.duration, 100);
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('duration', 100);
+    await provider.dispatchChange('playbackReady', true);
     await page.waitForChanges();
     player.currentTime = -1;
     await page.waitForChanges();
@@ -324,7 +314,7 @@ describe('props', () => {
   });
 
   it('should bound volume between 0 and 100', async () => {
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('playbackReady', true);
     await page.waitForChanges();
     player.volume = -1;
     await page.waitForChanges();
@@ -332,15 +322,18 @@ describe('props', () => {
     player.volume = 101;
     await page.waitForChanges();
     expect(adapter.setVolume).toHaveBeenCalledWith(100);
-    player.volume = 50;
+    player.volume = 40;
     await page.waitForChanges();
-    expect(adapter.setVolume).toHaveBeenCalledWith(50);
+    expect(adapter.setVolume).toHaveBeenCalledWith(40);
   });
 
-  it('should default to `en` if language is unkown', async () => {
+  it('should default to `en` if language is unknown', async () => {
+    const spy = jest.spyOn(console, 'log').mockImplementation();
     player.language = 'cn';
     await page.waitForChanges();
     expect(player.i18n.play).toEqual('Play');
+    expect(spy).toHaveBeenCalledWith('[Vime tip]:', expect.stringContaining('invalid `language`'));
+    spy.mockRestore();
   });
 });
 
@@ -369,25 +362,25 @@ describe('methods', () => {
   });
 
   it('should throw if calling enterFullscreen() in audio view', async () => {
-    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
+    await provider.dispatchChange('viewType', ViewType.Audio);
     await page.waitForChanges();
     await expect(player.enterFullscreen()).rejects.toThrow(/audio player view/);
   });
 
   it('should throw if calling enterFullscreen() and no API is available', async () => {
-    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
+    await provider.dispatchChange('viewType', ViewType.Video);
     await page.waitForChanges();
     await expect(player.enterFullscreen()).rejects.toThrow(/API is not available/);
   });
 
   it('should throw if calling enterPiP() in audio view', async () => {
-    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
+    await provider.dispatchChange('viewType', ViewType.Audio);
     await page.waitForChanges();
     await expect(player.enterPiP()).rejects.toThrow(/audio player view/);
   });
 
   it('should throw if calling enterPiP() and no API is available', async () => {
-    await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
+    await provider.dispatchChange('viewType', ViewType.Video);
     await page.waitForChanges();
     await expect(player.enterPiP()).rejects.toThrow(/API is not available/);
   });
@@ -400,50 +393,50 @@ describe('methods', () => {
 });
 
 describe('events', () => {
+  it('should define all events', () => {
+    (Object.keys(initialState) as PlayerProp[])
+      .map(getEventName)
+      .forEach((event) => expect(event).toBeDefined());
+  });
+
   it('should fire change event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener(PlayerEvent.pausedChange, cb);
+    page.root!.addEventListener('vPausedChange', cb);
     player.paused = false;
-    await page.waitForChanges();
     await page.waitForChanges();
     expect(cb).toHaveBeenCalledTimes(1);
   });
 
   it('should fire toggle state event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener(PlayerEvent.fullscreenChange, cb);
-    await provider.dispatchStateChange(PlayerProp.isFullscreenActive, true);
-    await page.waitForChanges();
+    page.root!.addEventListener('vFullscreenChange', cb);
+    await provider.dispatchChange('isFullscreenActive', true);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
   });
 
   it('should fire shortened event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener(PlayerEvent.playbackStarted, cb);
-    await provider.dispatchStateChange(PlayerProp.playbackStarted, true);
-    await page.waitForChanges();
+    page.root!.addEventListener('vPlaybackStarted', cb);
+    await provider.dispatchChange('playbackStarted', true);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
   });
 
   it('should fire play event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener(PlayerEvent.play, cb);
-    await provider.dispatchStateChange(PlayerProp.paused, false);
-    await page.waitForChanges();
+    page.root!.addEventListener('vPlay', cb);
+    await provider.dispatchChange('paused', false);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
   });
 
   it('should fire seeked event', async () => {
     const cb = jest.fn();
-    page.root!.addEventListener(PlayerEvent.seeked, cb);
-    await provider.dispatchStateChange(PlayerProp.seeking, true);
+    page.root!.addEventListener('vSeeked', cb);
+    await provider.dispatchChange('seeking', true);
     await page.waitForChanges();
-    await page.waitForChanges();
-    await provider.dispatchStateChange(PlayerProp.seeking, false);
-    await page.waitForChanges();
+    await provider.dispatchChange('seeking', false);
     await page.waitForChanges();
     expect(cb).toHaveBeenCalled();
   });
@@ -452,8 +445,8 @@ describe('events', () => {
 describe('state changes', () => {
   it('should flush state changes', async () => {
     player.currentTime = 33;
-    await provider.dispatchStateChange(PlayerProp.seeking, true);
-    await provider.dispatchStateChange(PlayerProp.volume, 66);
+    await provider.dispatchChange('seeking', true);
+    await provider.dispatchChange('volume', 66);
     await page.waitForChanges();
     expect(player.currentTime).toEqual(33);
     expect(player.volume).toEqual(66);
@@ -470,23 +463,23 @@ describe('state changes', () => {
   });
 
   it('should flush state changes in correct order', async () => {
-    await provider.dispatchStateChange(PlayerProp.volume, 33);
-    await provider.dispatchStateChange(PlayerProp.volume, 66);
-    await provider.dispatchStateChange(PlayerProp.volume, 99);
+    await provider.dispatchChange('volume', 33);
+    await provider.dispatchChange('volume', 66);
+    await provider.dispatchChange('volume', 99);
     await page.waitForChanges();
     expect(player.volume).toEqual(99);
   });
 });
 
 describe('lifecycle', () => {
-  it('should set mounted to true after mounting DOM', async () => {
-    expect(player.mounted).toBeTruthy();
+  it('should set attached to true after mounting DOM', async () => {
+    expect(player.attached).toBeTruthy();
   });
 
   it('should set destroyed to true after disconnecting from DOM', async () => {
     player.remove();
     await page.waitForChanges();
-    expect(player.destroyed).toBeTruthy();
+    expect(player.attached).toBeFalsy();
   });
 });
 
@@ -495,7 +488,7 @@ describe('adapter calls', () => {
     player.paused = false;
     player.volume = 30;
     player.muted = true;
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('playbackReady', true);
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalled();
     expect(adapter.setVolume).toHaveBeenCalledWith(30);
@@ -506,12 +499,11 @@ describe('adapter calls', () => {
     await buildPage({
       html: '<vime-player paused="false" muted="true" current-time="50"><vime-faketube /></vime-player>',
     });
-    await provider.dispatchStateChange(PlayerProp.duration, 100);
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('duration', 100);
+    await provider.dispatchChange('playbackReady', true);
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalled();
     expect(adapter.setCurrentTime).toHaveBeenCalledWith(50);
-    expect(adapter.setVolume).toHaveBeenCalledWith(player.volume);
     expect(adapter.setMuted).toHaveBeenCalledWith(true);
   });
 
@@ -519,32 +511,31 @@ describe('adapter calls', () => {
     await buildPage({
       html: '<vime-player paused="false" muted="true" current-time="50"><vime-faketube /></vime-player>',
     });
-    await provider.dispatchStateChange(PlayerProp.duration, Infinity);
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('duration', Infinity);
+    await provider.dispatchChange('playbackReady', true);
     await page.waitForChanges();
     expect(adapter.play).toHaveBeenCalledTimes(1);
     expect(adapter.setCurrentTime).toHaveBeenCalledTimes(1);
-    expect(adapter.setVolume).toHaveBeenCalledTimes(1);
     expect(adapter.setMuted).toHaveBeenCalledTimes(1);
   });
 
   it('should not call adapter if change comes from provider', async () => {
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('playbackReady', true);
     await page.waitForChanges();
-    await provider.dispatchStateChange(PlayerProp.currentTime, 50);
+    await provider.dispatchChange('currentTime', 50);
     await page.waitForChanges();
     expect(adapter.setCurrentTime).not.toHaveBeenCalledWith(50);
   });
 
   it('should call adapter if change comes from user', async () => {
-    await provider.dispatchStateChange(PlayerProp.duration, 200);
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('duration', 200);
+    await provider.dispatchChange('playbackReady', true);
     await page.waitForChanges();
     const changes = [];
     for (let i = 0; i < 20; i += 1) {
       // eslint-disable-next-line no-loop-func
       changes.push(async () => {
-        provider.dispatchStateChange(PlayerProp.currentTime, Math.floor(Math.random() * 100));
+        provider.dispatchChange('currentTime', Math.floor(Math.random() * 100));
       });
     }
     changes[Math.floor(Math.random() * changes.length)] = async () => { player.currentTime = 33; };
@@ -563,7 +554,7 @@ describe('adapter calls', () => {
     await provider.dispatchLoadStart();
     await provider.dispatchLoadStart();
     await page.waitForChanges();
-    await provider.dispatchStateChange(PlayerProp.playbackReady, true);
+    await provider.dispatchChange('playbackReady', true);
     await page.waitForChanges();
     expect(adapter.setVolume).not.toHaveBeenCalled();
   });

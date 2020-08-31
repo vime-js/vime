@@ -11,9 +11,9 @@
     "setup:build": "pnpm run build --filter @vime/core && pnpm run build --filter @vime/vue"
   },
   "dependencies": {
-    "@vime/core": "^1.8.1",
+    "@vime/core": "^1.11.0",
     "@vime/media": "^1.0.0",
-    "@vime/vue": "^1.3.0",
+    "@vime/vue": "^1.6.0",
     "sirv-cli": "^1.0.6",
     "tslib": "^2.0.1",
     "vue": "^2.6.12",

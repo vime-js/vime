@@ -3,34 +3,35 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
-    "start": "sirv --single public/index.html",
+    "build": "cross-env NODE_ENV=production webpack",
     "validate": "svelte-check",
-    "serve": "npm run serve:media & rollup -c -w",
+    "serve": "npm run serve:media & webpack-dev-server --content-base public",
+    "serve:prod": "sirv --single public/index.html",
     "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet",
     "setup": "npm run setup:install && npm run setup:build",
     "setup:install": "pnpm install --filter vime --filter @vime/core --filter @vime/svelte --filter @vime/svelte-example",
     "setup:build": "pnpm run build --filter @vime/core && pnpm run build --filter @vime/svelte"
   },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^14.0.0",
-    "@rollup/plugin-node-resolve": "^8.4.0",
-    "@rollup/plugin-typescript": "^4.1.2",
-    "@tsconfig/svelte": "^1.0.10",
-    "rollup": "^2.26.5",
-    "rollup-plugin-livereload": "^1.3.0",
-    "rollup-plugin-svelte": "^5.2.3",
-    "rollup-plugin-terser": "^6.1.0",
-    "svelte": "^3.24.1",
-    "svelte-check": "^1.0.22",
-    "svelte-preprocess": "^4.1.1",
-    "tslib": "^2.0.1",
-    "typescript": "^4.0.2"
-  },
   "dependencies": {
-    "@vime/core": "^1.8.1",
+    "@vime/core": "^1.11.0",
     "@vime/media": "^1.0.0",
-    "@vime/svelte": "^1.0.0",
+    "@vime/svelte": "^1.2.0",
     "sirv-cli": "^1.0.6"
+  },
+  "devDependencies": {
+    "@tsconfig/svelte": "^1.0.10",
+    "cross-env": "^5.2.0",
+    "css-loader": "^2.1.1",
+    "mini-css-extract-plugin": "^0.6.0",
+    "serve": "^11.0.0",
+    "style-loader": "^0.23.1",
+    "svelte": "^3.0.0",
+    "svelte-loader": "2.13.3",
+    "svelte-preprocess": "^4.2.1",
+    "ts-loader": "^8.0.3",
+    "typescript": "^4.0.2",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.3.1"
   }
 }

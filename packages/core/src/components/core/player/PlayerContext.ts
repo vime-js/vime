@@ -1,8 +1,8 @@
 import { openWormhole } from 'stencil-wormhole';
 import { ComponentInterface } from '@stencil/core';
-import { PlayerProp } from './PlayerProp';
+import { PlayerProp, PlayerProps } from './PlayerProps';
 import { findRootPlayer } from './utils';
-import { getEventName } from './PlayerEvent';
+import { getEventName } from './PlayerEvents';
 import { listen } from '../../../utils/dom';
 
 /**
@@ -27,7 +27,7 @@ export const withPlayerContext = (
 export const usePlayerContext = (
   ref: HTMLElement,
   props: PlayerProp[],
-  updater: (prop: keyof typeof PlayerProp, value: any) => void,
+  updater: <P extends keyof PlayerProps>(prop: P, value: PlayerProps[P]) => void,
   playerRef?: HTMLVimePlayerElement,
 ) => {
   const player = playerRef ?? findRootPlayer(ref);

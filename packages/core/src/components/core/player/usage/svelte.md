@@ -21,7 +21,7 @@
   let player: VimePlayer;
   let currentTime = 0;
 
-  // OPTIONAL: If we prefer we could use the player store.
+  // OPTIONAL: If you prefer you can use the player store.
   const { paused } = usePlayerStore(player);
   $paused = false;
   $: console.log($paused);

@@ -36,7 +36,7 @@ export class Submenu {
    */
   @Prop({ mutable: true, reflect: true }) active = false;
 
-  componentWillLoad() {
+  connectedCallback() {
     this.genId();
   }
 

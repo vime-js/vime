@@ -7,6 +7,8 @@ let __mounted = false;
 
 const dispatch = createEventDispatcher();
 
+export let attached = undefined;
+export let logger = undefined;
 export let theme = undefined;
 export let paused = undefined;
 export let playing = undefined;
@@ -17,8 +19,6 @@ export let currentPoster = undefined;
 export let currentTime = undefined;
 export let autoplay = undefined;
 export let ready = undefined;
-export let mounted = undefined;
-export let destroyed = undefined;
 export let playbackReady = undefined;
 export let loop = undefined;
 export let muted = undefined;
@@ -77,7 +77,7 @@ export const enterPiP = (...args) => __ref.enterPiP(...args);
 export const exitPiP = (...args) => __ref.exitPiP(...args);
 export const extendLanguage = (...args) => __ref.extendLanguage(...args);
 export const callAdapter = (...args) => __ref.callAdapter(...args);
-export const toggleCaptionsVisiblity = (...args) => __ref.toggleCaptionsVisiblity(...args);
+export const toggleCaptionsVisibility = (...args) => __ref.toggleCaptionsVisibility(...args);
 
 export const getWebComponent = () => __ref;
 
@@ -85,6 +85,7 @@ onMount(() => { __mounted = true; });
 
 const setProp = (prop, value) => { if (__ref) __ref[prop] = value; };
 
+$: if (__mounted) setProp('logger', logger);
 $: if (__mounted) setProp('playbackRates', playbackRates);
 $: if (__mounted) setProp('playbackQualities', playbackQualities);
 $: if (__mounted) setProp('errors', errors);
@@ -101,6 +102,7 @@ const onEvent = (e) => {
 </script>
 
 <vime-player 
+  attached={attached}
   theme={theme}
   paused={paused}
   playing={playing}
@@ -111,8 +113,6 @@ const onEvent = (e) => {
   current-time={currentTime}
   autoplay={autoplay}
   ready={ready}
-  mounted={mounted}
-  destroyed={destroyed}
   playback-ready={playbackReady}
   loop={loop}
   muted={muted}
@@ -154,13 +154,13 @@ const onEvent = (e) => {
   on:vBufferingChange={onEvent}
   on:vDurationChange={onEvent}
   on:vCurrentTimeChange={onEvent}
-  on:vMounted={onEvent}
-  on:vDestroyed={onEvent}
+  on:vAttachedChange={onEvent}
   on:vReady={onEvent}
   on:vPlaybackReady={onEvent}
   on:vPlaybackStarted={onEvent}
   on:vPlaybackEnded={onEvent}
   on:vBufferedChange={onEvent}
+  on:vCurrentCaptionChange={onEvent}
   on:vTextTracksChange={onEvent}
   on:vErrorsChange={onEvent}
   on:vLoadStart={onEvent}
@@ -179,6 +179,8 @@ const onEvent = (e) => {
   on:vLiveChange={onEvent}
   on:vTouchChange={onEvent}
   on:vLanguageChange={onEvent}
+  on:vI18nChange={onEvent}
+  on:vTranslationsChange={onEvent}
   on:vLanguagesChange={onEvent}
   on:vFullscreenChange={onEvent}
   on:vPiPChange={onEvent}

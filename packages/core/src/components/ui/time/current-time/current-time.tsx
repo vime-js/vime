@@ -1,6 +1,6 @@
 import { h, Component, Prop } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 
 @Component({
   tag: 'vime-current-time',
@@ -9,12 +9,12 @@ export class CurrentTime {
   /**
    * @internal
    */
-  @Prop() currentTime: PlayerProps[PlayerProp.currentTime] = 0;
+  @Prop() currentTime: PlayerProps['currentTime'] = 0;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
   /**
    * Whether the time should always show the hours unit, even if the time is less than
@@ -34,6 +34,6 @@ export class CurrentTime {
 }
 
 withPlayerContext(CurrentTime, [
-  PlayerProp.currentTime,
-  PlayerProp.i18n,
+  'currentTime',
+  'i18n',
 ]);

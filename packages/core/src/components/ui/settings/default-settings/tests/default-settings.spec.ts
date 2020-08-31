@@ -7,7 +7,6 @@ import { MenuRadio } from '../../menu-radio/menu-radio';
 import { MenuItem } from '../../menu-item/menu-item';
 import { Menu } from '../../menu/menu';
 import { Submenu } from '../../submenu/submenu';
-import { PlayerProp } from '../../../../core/player/PlayerProp';
 import { MockMediaProviderAdapter } from '../../../../providers/MediaProvider';
 
 let page: SpecPage;
@@ -49,7 +48,7 @@ it('should be structurally sound', () => {
 test('playback rate submenu should be structurally sound', async () => {
   const adapter = await player.getAdapter() as MockMediaProviderAdapter;
   adapter.canSetPlaybackRate!.mockReturnValue(Promise.resolve(true));
-  provider.dispatchStateChange(PlayerProp.playbackRates, [1, 2, 3]);
+  provider.dispatchChange('playbackRates', [1, 2, 3]);
   await page.waitForChanges();
   getPlaybackRateSubmenuController().click();
   await page.waitForChanges();
@@ -59,7 +58,7 @@ test('playback rate submenu should be structurally sound', async () => {
 it('should change playback rate on radio selection', async () => {
   const adapter = await player.getAdapter() as MockMediaProviderAdapter;
   adapter.canSetPlaybackRate!.mockReturnValue(Promise.resolve(true));
-  provider.dispatchStateChange(PlayerProp.playbackRates, [1, 2, 3]);
+  provider.dispatchChange('playbackRates', [1, 2, 3]);
   await page.waitForChanges();
   getPlaybackRateSubmenuController().click();
   await page.waitForChanges();
@@ -72,7 +71,7 @@ it('should change playback rate on radio selection', async () => {
 it('should update selected radio on playback rate change', async () => {
   const adapter = await player.getAdapter() as MockMediaProviderAdapter;
   adapter.canSetPlaybackRate!.mockReturnValue(Promise.resolve(true));
-  provider.dispatchStateChange(PlayerProp.playbackRates, [1, 2, 3]);
+  provider.dispatchChange('playbackRates', [1, 2, 3]);
   await page.waitForChanges();
   getPlaybackRateSubmenuController().click();
   await page.waitForChanges();
@@ -85,8 +84,8 @@ it('should update selected radio on playback rate change', async () => {
 test('playback quality submenu should be structurally sound', async () => {
   const adapter = await player.getAdapter() as MockMediaProviderAdapter;
   adapter.canSetPlaybackQuality!.mockReturnValue(Promise.resolve(true));
-  provider.dispatchStateChange(PlayerProp.playbackQuality, '720p');
-  provider.dispatchStateChange(PlayerProp.playbackQualities, ['1080p', '720p', '480p']);
+  provider.dispatchChange('playbackQuality', '720p');
+  provider.dispatchChange('playbackQualities', ['1080p', '720p', '480p']);
   await page.waitForChanges();
   getPlaybackQualitySubmenuController().click();
   await page.waitForChanges();
@@ -96,8 +95,8 @@ test('playback quality submenu should be structurally sound', async () => {
 it('should change playback quality on radio selection', async () => {
   const adapter = await player.getAdapter() as MockMediaProviderAdapter;
   adapter.canSetPlaybackQuality!.mockReturnValue(Promise.resolve(true));
-  provider.dispatchStateChange(PlayerProp.playbackQuality, '720p');
-  provider.dispatchStateChange(PlayerProp.playbackQualities, ['1080p', '720p', '480p']);
+  provider.dispatchChange('playbackQuality', '720p');
+  provider.dispatchChange('playbackQualities', ['1080p', '720p', '480p']);
   await page.waitForChanges();
   getPlaybackQualitySubmenuController().click();
   await page.waitForChanges();
@@ -110,8 +109,8 @@ it('should change playback quality on radio selection', async () => {
 it('should update selected radio on playback quality change', async () => {
   const adapter = await player.getAdapter() as MockMediaProviderAdapter;
   adapter.canSetPlaybackQuality!.mockReturnValue(Promise.resolve(true));
-  provider.dispatchStateChange(PlayerProp.playbackQuality, '720p');
-  provider.dispatchStateChange(PlayerProp.playbackQualities, ['1080p', '720p', '480p']);
+  provider.dispatchChange('playbackQuality', '720p');
+  provider.dispatchChange('playbackQualities', ['1080p', '720p', '480p']);
   await page.waitForChanges();
   getPlaybackQualitySubmenuController().click();
   await page.waitForChanges();

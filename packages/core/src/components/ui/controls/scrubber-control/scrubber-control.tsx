@@ -2,9 +2,9 @@ import {
   h, Host, Component, Prop, State, Watch, Element, writeTask,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { formatTime } from '../../../../utils/formatters';
-import { createPlayerDispatcher, PlayerDispatcher } from '../../../core/player/PlayerDispatcher';
+import { createDispatcher, Dispatcher } from '../../../core/player/PlayerDispatcher';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
 import { findRootPlayer } from '../../../core/player/utils';
@@ -18,7 +18,7 @@ export class ScrubberControl {
 
   private tooltip!: HTMLVimeTooltipElement;
 
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: Dispatcher;
 
   private keyboardDisposal = new Disposal();
 
@@ -42,12 +42,12 @@ export class ScrubberControl {
   /**
    * @internal
    */
-  @Prop() currentTime: PlayerProps[PlayerProp.currentTime] = 0;
+  @Prop() currentTime: PlayerProps['currentTime'] = 0;
 
   /**
    * @internal
    */
-  @Prop() duration: PlayerProps[PlayerProp.duration] = -1;
+  @Prop() duration: PlayerProps['duration'] = -1;
 
   /**
    * Prevents seeking forward/backward by using the Left/Right arrow keys.
@@ -68,7 +68,7 @@ export class ScrubberControl {
       const seekTo = isLeftArrow
         ? Math.max(0, this.currentTime - 5)
         : Math.min(this.duration, this.currentTime + 5);
-      this.dispatch(PlayerProp.currentTime, seekTo);
+      this.dispatch('currentTime', seekTo);
     };
 
     this.keyboardDisposal.add(listen(player, 'keydown', onKeyDown));
@@ -83,20 +83,20 @@ export class ScrubberControl {
   /**
    * @internal
    */
-  @Prop() buffering: PlayerProps[PlayerProp.buffering] = false;
+  @Prop() buffering: PlayerProps['buffering'] = false;
 
   /**
    * @internal
    */
-  @Prop() buffered: PlayerProps[PlayerProp.buffered] = 0;
+  @Prop() buffered: PlayerProps['buffered'] = 0;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
-  componentWillLoad() {
-    this.dispatch = createPlayerDispatcher(this);
+  connectedCallback() {
+    this.dispatch = createDispatcher(this);
     this.timestamp = formatTime(this.currentTime, this.alwaysShowHours);
     this.onNoKeyboardChange();
   }
@@ -117,14 +117,12 @@ export class ScrubberControl {
       (tooltipRect.left + percent > leftLimit)
       && (tooltipRect.right - (100 - percent) < rightLimit)
     ) {
-      writeTask(() => {
-        this.tooltip.style.left = `${value}px`;
-      });
+      writeTask(() => { this.tooltip.style.left = `${value}px`; });
     }
   }
 
   private onSeek(event: CustomEvent<number>) {
-    this.dispatch(PlayerProp.currentTime, event.detail);
+    this.dispatch('currentTime', event.detail);
   }
 
   private onSeeking(event: MouseEvent) {
@@ -203,9 +201,9 @@ export class ScrubberControl {
 }
 
 withPlayerContext(ScrubberControl, [
-  PlayerProp.i18n,
-  PlayerProp.currentTime,
-  PlayerProp.duration,
-  PlayerProp.buffering,
-  PlayerProp.buffered,
+  'i18n',
+  'currentTime',
+  'duration',
+  'buffering',
+  'buffered',
 ]);

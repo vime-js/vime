@@ -50,7 +50,7 @@ import {
   VimeYoutube,
 } from './directives/proxies';
 
-defineCustomElements(window);
+defineCustomElements();
 
 const DECLARATIONS = [
   VimePlayer,

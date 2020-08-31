@@ -1,15 +1,14 @@
 import {
   PlayerProp,
-  PlayerDispatcher,
+  Dispatcher,
   findRootPlayer,
   usePlayerContext,
-  createPlayerDispatcher,
-  isInternalReadonlyPlayerProp,
+  createDispatcher,
 } from '@vime/core';
 import { ElementRef } from '@angular/core';
 
 export abstract class VimeComponent {
-  private playerDispatch: PlayerDispatcher = () => {};
+  private playerDispatch: Dispatcher = () => {};
 
   private unbindPlayerContext = () => {};
 
@@ -28,7 +27,7 @@ export abstract class VimeComponent {
         get() {
           return this.playerCache.get(prop);
         },
-        set: isInternalReadonlyPlayerProp(prop) ? undefined : (value) => {
+        set: (value) => {
           if (this.playerCache.get(prop) !== value) this.playerDispatch(prop as any, value);
           this.playerCache.set(prop, value);
         },
@@ -41,14 +40,14 @@ export abstract class VimeComponent {
   ngAfterViewInit() {
     this.player = findRootPlayer(this.ref.nativeElement);
 
-    this.playerDispatch = createPlayerDispatcher(this.ref.nativeElement);
+    this.playerDispatch = createDispatcher(this.ref.nativeElement);
 
     this.unbindPlayerContext = usePlayerContext(
       this.ref.nativeElement,
       this.playerProps,
       (prop, value) => {
         this.playerCache.set(prop as any, value);
-        this[prop] = value;
+        (this as any)[prop] = value;
       },
     );
   }

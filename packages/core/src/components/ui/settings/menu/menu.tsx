@@ -81,7 +81,7 @@ export class Menu {
    */
   @Event() vFocusMenuItemChange!: EventEmitter<HTMLVimeMenuItemElement | undefined>;
 
-  componentWillLoad() {
+  connectedCallback() {
     this.findMenuItems();
   }
 

@@ -14,10 +14,10 @@
     "lint": "npm run lint:md --prefix ../"
   },
   "dependencies": {
-    "@babel/core": "^7.11.4",
-    "@docusaurus/core": "^2.0.0-alpha.61",
+    "@babel/core": "^7.11.5",
+    "@docusaurus/core": "^2.0.0-alpha.62",
     "@docusaurus/plugin-pwa": "^2.0.0-alpha.59",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.61",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.62",
     "@mdx-js/react": "^1.6.16",
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.1",

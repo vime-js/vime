@@ -39,7 +39,7 @@ They're very easy to install, just follow the links and you should be up and run
 ### Fork + Clone
 
 Now we need to fork and clone the repository, install all the projects dependencies, and create
-a seperate branch to work on our feature/fix. We can name the branch by the
+a separate branch to work on our feature/fix. We can name the branch by the
 [issue](https://github.com/vime-js/vime/issues) number on GitHub such as `issue-64`. It's always
 best to create an issue before submitting a PR. If you haven't, then you can simply name the branch
 whatever you want, no wrong answers here.
@@ -162,27 +162,32 @@ vime-slider {
 At the root of Vime we always have the [`vime-player`](./packages/core/src/components/core/player/player.tsx)
 component, which maintains the current state of the player and keeps plugins, providers and UI components
 in sync. Properties are passed down from the player to update child components through a context
-provider (exactly like `React.ContextProvider`), and updates are sent to the player via the `vStateChange` custom
-event. The event simply contains the property to update and its new value `{ prop: 'paused', value: false }`.
+provider (exactly like `React.ContextProvider`), and updates are sent to the player by dispatching
+events. The event simply contains the property to update and its new value `{ prop: 'paused', value: false }`.
 Any "special" properties that require calling a method on the provider are watched and called
-automatically. For example, updating the `currentTime` property would require calling the provider's
+automatically. For example, updating the `currentTime` property will trigger a call to the provider's
 `setCurrentTime` method.
 
 It's important to note that changes don't happen immediately but rather asynchronously. The player
 maintains its own queue for processing all state changes, so as updates comes through the
-`vStateChange` event, they are processed and queued to happen in the next render cycle.
+events, they are processed and queued to happen in the next render cycle.
 
-There are only two simple functions that matter when creating a new Vime component and interacting
+There are only "two" simple functions that matter when creating a new Vime component and interacting
 with the player. Let's go through them briefly one at a time.
 
-The `withPlayerContext` function simply behaves as `Context.Consumer` in React. It enables properties
-to be passed down from the player directly to components, bypassing any parent components in the
-tree. You can refer to existing Vime components to see its usage (scroll down to the bottom of
-any component file).
+The `withPlayerContext` (`withProviderContext` for providers) function simply behaves as
+`Context.Consumer` in React. It wraps the component class and enables properties to be passed down
+from the player directly to components, bypassing any parent components in the tree. You can refer
+to existing Vime components to see its usage (scroll down to the bottom of any component file). A
+separate context function is used for providers simply as a shorthand, because all providers require
+the same subset of player properties.
 
-The `createPlayerDispatcher` function creates an event dispatcher to send updates to the
-player through the `vStateChange` event. The dispatcher is typed to simply take in a player property
-that can be written to, and its new value. You can refer to existing Vime components to see its usage.
+The `createDispatcher` (`createProviderDispatcher` for providers) function creates an event dispatcher
+to send updates to the player through the `vStateChange` (`vProviderChange` for providers) event. The
+dispatcher is typed to simply take in a player property that can be written to, and its new value. You
+can refer to existing Vime components to see its usage. A separate event is used for providers
+because they have additional write privileges (`buffered`, `seeking` etc.), and it helps the
+player cache the state of the provider to know when an adapter call is required.
 
 ## 🎥 Providers
 

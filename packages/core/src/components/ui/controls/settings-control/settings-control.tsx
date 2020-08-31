@@ -2,7 +2,7 @@ import {
   h, Host, Component, Prop, Element,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { TooltipDirection } from '../../tooltip/types';
 import { isUndefined } from '../../../../utils/unit';
 import { findUIRoot } from '../../ui/utils';
@@ -41,9 +41,9 @@ export class SettingsControl {
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
-  componentWillLoad() {
+  connectedCallback() {
     idCount += 1;
     this.id = `vime-settings-control-${idCount}`;
     const settings = findUIRoot(this).querySelector('vime-settings');
@@ -84,5 +84,5 @@ export class SettingsControl {
 }
 
 withPlayerContext(SettingsControl, [
-  PlayerProp.i18n,
+  'i18n',
 ]);

@@ -1,7 +1,7 @@
 import {
   h, Host, Component, Prop,
 } from '@stencil/core';
-import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
+import { PlayerProps } from '../../core/player/PlayerProps';
 import { withPlayerContext } from '../../core/player/PlayerContext';
 
 @Component({
@@ -12,12 +12,12 @@ export class LiveIndicator {
   /**
    * @internal
    */
-  @Prop() isLive: PlayerProps[PlayerProp.isLive] = false;
+  @Prop() isLive: PlayerProps['isLive'] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
   render() {
     return (
@@ -34,6 +34,6 @@ export class LiveIndicator {
 }
 
 withPlayerContext(LiveIndicator, [
-  PlayerProp.isLive,
-  PlayerProp.i18n,
+  'isLive',
+  'i18n',
 ]);

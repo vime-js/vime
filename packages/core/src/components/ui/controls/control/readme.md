@@ -30,7 +30,7 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 
 ```ts title="playback-control.ts"
 import { Component, ElementRef } from '@angular/core';
-import { PlayerProp, VimeComponent } from '@vime/angular';
+import { VimeComponent } from '@vime/angular';
 
 @Component({
   selector: 'playback-control',
@@ -42,7 +42,7 @@ class PlaybackControl extends VimeComponent {
   i18n = {};
 
   constructor(protected ref: ElementRef) {
-    super([PlayerProp.paused, PlayerProp.i18n]);
+    super(['paused', 'i18n']);
   }
 
   get icon() {
@@ -78,24 +78,19 @@ class PlaybackControl extends VimeComponent {
 
 ### React
 
-```tsx {4,25-34}
+```tsx {3,18-27}
 import React, { useMemo, useRef } from 'react';
 import {
-  PlayerProp,
   VimeControl,
   VimeIcon,
   VimeTooltip,
-  useInternalPlayerContext,
+  usePlayerContext,
 } from '@vime/react';
 
 function PlaybackControl() {
   const ref = useRef(null);
-  const [paused, setPaused] = useInternalPlayerContext(
-    ref,
-    PlayerProp.Paused,
-    true
-  );
-  const [i18n] = useInternalPlayerContext(ref, PlayerProp.i18n, {});
+  const [paused, setPaused] = usePlayerContext(ref, 'paused', true);
+  const [i18n] = usePlayerContext(ref, 'i18n', {});
   const icon = useMemo(() => (paused ? '#vime-play' : '#vime-pause'), [paused]);
   const tooltip = useMemo(() => (paused ? 'Play' : 'Pause'), [paused]);
   const onClick = () => {
@@ -135,7 +130,7 @@ function PlaybackControl() {
 ```html {4}
 <script lang="ts">
   import {
-    useInternalPlayerStore,
+    usePlayerStore,
     VimeControl,
     VimeIcon,
     VimeTooltip,
@@ -143,7 +138,7 @@ function PlaybackControl() {
 
   let ref: VimeControl;
 
-  const { paused, i18n } = useInternalPlayerStore(() => ref);
+  const { paused, i18n } = usePlayerStore(() => ref);
 
   const onClick = () => {
     $paused = !$paused;
@@ -171,7 +166,6 @@ function PlaybackControl() {
 
 <script>
   import {
-    PlayerProp,
     VimeMixin,
     VimeControl,
     VimeIcon,
@@ -179,10 +173,7 @@ function PlaybackControl() {
   } from "@vime/vue";
 
   export default {
-    mixins: [VimeMixin([
-      PlayerProp.paused,
-      PlayerProp.i18n,
-    ])]
+    mixins: [VimeMixin(['paused', 'i18n'])]
 
     components: {
       VimeControl,
@@ -220,7 +211,7 @@ function PlaybackControl() {
 | `expanded`           | `expanded`   | If the control has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.                                           | `boolean \| undefined` | `undefined` |
 | `hidden`             | `hidden`     | Whether the control should be displayed or not.                                                                                                               | `boolean`              | `false`     |
 | `identifier`         | `identifier` | The `id` attribute of the control.                                                                                                                            | `string \| undefined`  | `undefined` |
-| `keys`               | `keys`       | A slash (`/`) seperated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string \| undefined`  | `undefined` |
+| `keys`               | `keys`       | A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string \| undefined`  | `undefined` |
 | `label` _(required)_ | `label`      | The `aria-label` property of the control.                                                                                                                     | `string`               | `undefined` |
 | `menu`               | `menu`       | If the control has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                                                | `string \| undefined`  | `undefined` |
 | `pressed`            | `pressed`    | If the control is a toggle, this indicated whether the control is in a "pressed" state or not. Sets the `aria-pressed` property.                              | `boolean \| undefined` | `undefined` |

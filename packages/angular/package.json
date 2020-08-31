@@ -20,18 +20,18 @@
     "release": "semantic-release -e ../../scripts/semantic-release"
   },
   "dependencies": {
-    "@vime/core": "^1.8.1",
+    "@vime/core": "^1.11.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@angular/common": "^10.0.12",
-    "@angular/compiler": "^10.0.12",
-    "@angular/compiler-cli": "^10.0.12",
-    "@angular/core": "^10.0.12",
-    "ng-packagr": "^10.0.4",
+    "@angular/common": "^10.0.14",
+    "@angular/compiler": "^10.0.14",
+    "@angular/compiler-cli": "^10.0.14",
+    "@angular/core": "^10.0.14",
+    "ng-packagr": "^10.1.0",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.2",
-    "typescript": "^3.9.2"
+    "typescript": "^3.9.7"
   },
   "peerDependencies": {
     "@angular/common": "^10.0.9",

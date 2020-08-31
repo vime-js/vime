@@ -1,8 +1,8 @@
 import {
   h, Component, Host, Prop,
 } from '@stencil/core';
-import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
-import { PlayerProp, PlayerProps } from '../../core/player/PlayerProp';
+import { createDispatcher, Dispatcher } from '../../core/player/PlayerDispatcher';
+import { PlayerProps } from '../../core/player/PlayerProps';
 import { withPlayerContext } from '../../core/player/PlayerContext';
 import { IS_MOBILE } from '../../../utils/support';
 
@@ -11,7 +11,7 @@ import { IS_MOBILE } from '../../../utils/support';
   styleUrl: 'click-to-play.scss',
 })
 export class ClickToPlay {
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: Dispatcher;
 
   /**
    * By default this is disabled on mobile to not interfere with playback, set this to `true` to
@@ -22,19 +22,19 @@ export class ClickToPlay {
   /**
    * @internal
    */
-  @Prop() paused: PlayerProps[PlayerProp.paused] = true;
+  @Prop() paused: PlayerProps['paused'] = true;
 
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
+  @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
-  componentWillLoad() {
-    this.dispatch = createPlayerDispatcher(this);
+  connectedCallback() {
+    this.dispatch = createDispatcher(this);
   }
 
   private onClick() {
-    this.dispatch(PlayerProp.paused, !this.paused);
+    this.dispatch('paused', !this.paused);
   }
 
   render() {
@@ -50,6 +50,6 @@ export class ClickToPlay {
 }
 
 withPlayerContext(ClickToPlay, [
-  PlayerProp.paused,
-  PlayerProp.isVideoView,
+  'paused',
+  'isVideoView',
 ]);

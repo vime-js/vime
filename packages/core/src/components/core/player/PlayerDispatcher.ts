@@ -1,16 +1,16 @@
 import { getElement } from '@stencil/core';
-import { InternalWritablePlayerProp, InternalWritablePlayerProps } from './PlayerProp';
+import { WritableProps } from './PlayerProps';
 import { isInstanceOf } from '../../../utils/unit';
 
-export type PlayerStateChange = {
+export type StateChange<T = WritableProps, P extends keyof T = keyof T> = {
   by: HTMLElement,
-  prop: InternalWritablePlayerProp,
-  value: any
+  prop: P,
+  value: T[P]
 };
 
-export type PlayerDispatcher = <P extends keyof InternalWritablePlayerProps>(
+export type Dispatcher = <P extends keyof WritableProps>(
   prop: P,
-  value: InternalWritablePlayerProps[P]
+  value: WritableProps[P]
 ) => void;
 
 /**
@@ -19,12 +19,12 @@ export type PlayerDispatcher = <P extends keyof InternalWritablePlayerProps>(
  *
  * @param ref An element to dispatch the state change events from.
  */
-export const createPlayerDispatcher = (
+export const createDispatcher = (
   ref: any,
-): PlayerDispatcher => (prop: any, value: any) => {
+): Dispatcher => (prop: any, value: any) => {
   const el = isInstanceOf(ref, HTMLElement) ? ref : getElement(ref);
 
-  const event = new CustomEvent<PlayerStateChange>('vStateChange', {
+  const event = new CustomEvent<StateChange>('vStateChange', {
     bubbles: true,
     composed: true,
     detail: { by: el, prop, value },

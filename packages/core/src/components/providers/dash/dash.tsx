@@ -1,14 +1,13 @@
 import {
-  h, Method, Component, Prop, Watch, State, Event, EventEmitter,
+  h, Method, Component, Prop, Watch, State, Event, EventEmitter, Listen,
 } from '@stencil/core';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
-import { isString } from '../../../utils/unit';
-import { PlayerDispatcher, createPlayerDispatcher } from '../../core/player/PlayerDispatcher';
+import { isString, isUndefined } from '../../../utils/unit';
 import { dashRegex } from '../file/utils';
-import { PlayerProp } from '../../core/player/PlayerProp';
 import { loadSDK } from '../../../utils/network';
 import { MediaType } from '../../core/player/MediaType';
 import { withPlayerContext } from '../../core/player/PlayerContext';
+import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 
 @Component({
   tag: 'vime-dash',
@@ -16,7 +15,9 @@ import { withPlayerContext } from '../../core/player/PlayerContext';
 export class Dash implements MediaFileProvider<any> {
   private dash?: any;
 
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: ProviderDispatcher;
+
+  private mediaEl?: HTMLVideoElement;
 
   private videoProvider!: HTMLVimeVideoElement;
 
@@ -95,40 +96,52 @@ export class Dash implements MediaFileProvider<any> {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.dispatch = createPlayerDispatcher(this);
+  connectedCallback() {
+    this.dispatch = createProviderDispatcher(this);
   }
 
-  async componentDidLoad() {
+  disconnectedCallback() {
+    this.destroyDash();
+    this.mediaEl = undefined;
+  }
+
+  private async setupDash() {
     try {
       const url = `https://cdn.jsdelivr.net/npm/dashjs@${this.version}/dist/dash.all.min.js`;
       // eslint-disable-next-line no-shadow
       const Dash = await loadSDK(url, 'dashjs');
-      const video = this.videoProvider.querySelector('video')!;
 
       this.dash = Dash.MediaPlayer(this.config).create();
-      this.dash!.initialize(video, null, this.autoplay);
+      this.dash!.initialize(this.mediaEl, null, this.autoplay);
 
       this.dash!.on(Dash.MediaPlayer.events.CAN_PLAY, () => {
-        this.dispatch(PlayerProp.mediaType, MediaType.Video);
-        this.dispatch(PlayerProp.currentSrc, this.src);
-        this.dispatch(PlayerProp.playbackReady, true);
+        this.dispatch('mediaType', MediaType.Video);
+        this.dispatch('currentSrc', this.src);
+        this.dispatch('playbackReady', true);
       });
 
       this.dash!.on(Dash.MediaPlayer.events.ERROR, (e: any) => {
-        this.dispatch(PlayerProp.errors, [e]);
+        this.dispatch('errors', [e]);
       });
 
       this.hasAttached = true;
     } catch (e) {
-      this.dispatch(PlayerProp.errors, [e]);
+      this.dispatch('errors', [e]);
     }
   }
 
-  disconnectedCallback() {
+  private async destroyDash() {
     this.dash?.reset();
     this.dash = undefined;
     this.hasAttached = false;
+  }
+
+  @Listen('vMediaElChange')
+  async onMediaElChange(event: CustomEvent<HTMLVideoElement | undefined>) {
+    this.destroyDash();
+    if (isUndefined(event.detail)) return;
+    this.mediaEl = event.detail;
+    await this.setupDash();
   }
 
   /**
@@ -165,5 +178,5 @@ export class Dash implements MediaFileProvider<any> {
 }
 
 withPlayerContext(Dash, [
-  PlayerProp.autoplay,
+  'autoplay',
 ]);

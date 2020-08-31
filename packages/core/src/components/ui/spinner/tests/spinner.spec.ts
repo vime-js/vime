@@ -1,7 +1,6 @@
 import { SpecPage } from '@stencil/core/testing';
 import { Spinner } from '../spinner';
 import { newUISpecPage } from '../../ui/tests';
-import { PlayerProp } from '../../../core/player/PlayerProp';
 import { ViewType } from '../../../core/player/ViewType';
 
 let page: SpecPage;
@@ -22,29 +21,25 @@ it('should be structurally sound', () => {
 });
 
 it('should not render if not a video view', async () => {
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
-  await page.waitForChanges();
+  await provider.dispatchChange('viewType', ViewType.Audio);
   await page.waitForChanges();
   expect(spinner).toHaveClass('hidden');
 });
 
 it('should render if a video view', async () => {
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
-  await page.waitForChanges();
+  await provider.dispatchChange('viewType', ViewType.Video);
   await page.waitForChanges();
   expect(spinner).not.toHaveClass('hidden');
 });
 
 it('should be visible if buffering', async () => {
-  await provider.dispatchStateChange(PlayerProp.buffering, true);
-  await page.waitForChanges();
+  await provider.dispatchChange('buffering', true);
   await page.waitForChanges();
   expect(spinner).toHaveClass('active');
 });
 
 it('should not be visible if not buffering', async () => {
-  await provider.dispatchStateChange(PlayerProp.buffering, false);
-  await page.waitForChanges();
+  await provider.dispatchChange('buffering', false);
   await page.waitForChanges();
   expect(spinner).not.toHaveClass('active');
 });
@@ -52,9 +47,8 @@ it('should not be visible if not buffering', async () => {
 it('should emit vWillShow event when visible', async () => {
   const cb = jest.fn();
   spinner.addEventListener('vWillShow', cb);
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
-  await provider.dispatchStateChange(PlayerProp.buffering, true);
-  await page.waitForChanges();
+  await provider.dispatchChange('viewType', ViewType.Video);
+  await provider.dispatchChange('buffering', true);
   await page.waitForChanges();
   expect(cb).toHaveBeenCalled();
 });
@@ -62,12 +56,10 @@ it('should emit vWillShow event when visible', async () => {
 it('should emit vWillHide event when not visible', async () => {
   const cb = jest.fn();
   spinner.addEventListener('vWillHide', cb);
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
-  await provider.dispatchStateChange(PlayerProp.buffering, true);
+  await provider.dispatchChange('viewType', ViewType.Video);
+  await provider.dispatchChange('buffering', true);
   await page.waitForChanges();
-  await page.waitForChanges();
-  await provider.dispatchStateChange(PlayerProp.buffering, false);
-  await page.waitForChanges();
+  await provider.dispatchChange('buffering', false);
   await page.waitForChanges();
   expect(cb).toHaveBeenCalled();
 });

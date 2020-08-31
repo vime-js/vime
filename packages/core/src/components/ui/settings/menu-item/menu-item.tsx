@@ -5,7 +5,7 @@ import {
   h, Host, Component, Prop, State, Element,
 } from '@stencil/core';
 import { isUndefined, isNull } from '../../../../utils/unit';
-import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 
 @Component({
@@ -72,7 +72,7 @@ export class MenuItem {
   /**
    * @internal
    */
-  @Prop() isTouch: PlayerProps[PlayerProp.isTouch] = false;
+  @Prop() isTouch: PlayerProps['isTouch'] = false;
 
   private onClick() {
     if (isUndefined(this.menu)) return;
@@ -136,5 +136,5 @@ export class MenuItem {
 }
 
 withPlayerContext(MenuItem, [
-  PlayerProp.isTouch,
+  'isTouch',
 ]);

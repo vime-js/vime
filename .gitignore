@@ -51,6 +51,7 @@ speed-measure-plugin*.json
 .cache-loader/
 .versions/
 node_modules/
+web_modules/
 coverage/
 jest-coverage/
 cypress-coverage/

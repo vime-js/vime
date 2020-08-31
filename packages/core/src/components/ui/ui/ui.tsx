@@ -2,7 +2,7 @@ import {
   h, Host, Component, Prop,
 } from '@stencil/core';
 import { withPlayerContext } from '../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../core/player/PlayerProp';
+import { PlayerProps } from '../../core/player/PlayerProps';
 import { IS_IOS } from '../../../utils/support';
 
 /**
@@ -16,17 +16,17 @@ export class UI {
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
+  @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
   /**
    * @internal
    */
-  @Prop() playsinline: PlayerProps[PlayerProp.playsinline] = false;
+  @Prop() playsinline: PlayerProps['playsinline'] = false;
 
   /**
    * @internal
    */
-  @Prop() isFullscreenActive: PlayerProps[PlayerProp.isFullscreenActive] = false;
+  @Prop() isFullscreenActive: PlayerProps['isFullscreenActive'] = false;
 
   render() {
     const canShowCustomUI = !IS_IOS
@@ -49,7 +49,7 @@ export class UI {
 }
 
 withPlayerContext(UI, [
-  PlayerProp.isVideoView,
-  PlayerProp.playsinline,
-  PlayerProp.isFullscreenActive,
+  'isVideoView',
+  'playsinline',
+  'isFullscreenActive',
 ]);

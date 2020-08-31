@@ -1,7 +1,6 @@
 // @ts-ignore
 import { skipOn } from '@cypress/skip-test';
 import { en } from '../../../src/components/core/player/lang/en';
-import { PlayerProp } from '../../../src/components/core/player/PlayerProp';
 
 before(() => {
   cy.visit('ui.html');
@@ -87,14 +86,14 @@ it('should toggle playback when clicking playback control', () => {
 it('should toggle mute when clicking mute control', () => {
   // Mute.
   cy.control(en.mute).click();
-  cy.player().should('have.prop', PlayerProp.muted, true);
+  cy.player().should('have.prop', 'muted', true);
   cy.control(en.mute).tooltip().should('be.visible').and('contain.text', en.unmute);
   cy.control(en.mute).should('have.attr', 'aria-pressed', 'true');
   cy.control(en.mute).toMatchImageSnapshot();
 
   // Unmute.
   cy.control(en.mute).click();
-  cy.player().should('have.prop', PlayerProp.muted, false);
+  cy.player().should('have.prop', 'muted', false);
   cy.control(en.mute).tooltip().should('be.visible').and('contain.text', en.mute);
   cy.control(en.mute).should('have.attr', 'aria-pressed', 'false');
   cy.control(en.mute).toMatchImageSnapshot();
@@ -103,8 +102,8 @@ it('should toggle mute when clicking mute control', () => {
 it('should mute when sliding volume control all the way left', () => {
   cy.control(en.volume).focus();
   cy.control(en.volume).invoke('val', 0).trigger('input');
-  cy.player().should('have.prop', PlayerProp.volume, 0);
-  cy.player().should('have.prop', PlayerProp.muted, true);
+  cy.player().should('have.prop', 'volume', 0);
+  cy.player().should('have.prop', 'muted', true);
   cy.control(en.mute).should('have.attr', 'aria-pressed', 'true');
   cy.control(en.mute).toMatchImageSnapshot();
   cy.control(en.volume).toMatchImageSnapshot();
@@ -113,8 +112,8 @@ it('should mute when sliding volume control all the way left', () => {
 it('should set volume high when sliding volume control to the right', () => {
   cy.control(en.volume).focus();
   cy.control(en.volume).invoke('val', 75).trigger('input');
-  cy.player().should('have.prop', PlayerProp.volume, 75);
-  cy.player().should('have.prop', PlayerProp.muted, false);
+  cy.player().should('have.prop', 'volume', 75);
+  cy.player().should('have.prop', 'muted', false);
   cy.control(en.mute).toMatchImageSnapshot();
   cy.control(en.volume).toMatchImageSnapshot();
 });
@@ -122,8 +121,8 @@ it('should set volume high when sliding volume control to the right', () => {
 it('should set volume low when sliding volume control to the left', () => {
   cy.control(en.volume).focus();
   cy.control(en.volume).invoke('val', 25).trigger('input');
-  cy.player().should('have.prop', PlayerProp.volume, 25);
-  cy.player().should('have.prop', PlayerProp.muted, false);
+  cy.player().should('have.prop', 'volume', 25);
+  cy.player().should('have.prop', 'muted', false);
   cy.control(en.mute).toMatchImageSnapshot();
   cy.control(en.volume).toMatchImageSnapshot();
 });
@@ -139,7 +138,7 @@ it('should seek forward/backward when sliding scrubber', () => {
   // Forward.
   cy.control(en.scrubber).invoke('val', 30).trigger('input');
   cy.player().should(($player) => {
-    expect($player.prop(PlayerProp.currentTime)).be.greaterThan(29);
+    expect($player.prop('currentTime')).be.greaterThan(29);
   });
   cy.control(en.scrubber).should('have.attr', 'aria-valuenow', '30');
   cy.control(en.scrubber).should('have.attr', 'aria-valuetext', '00:30 of 03:51');
@@ -148,7 +147,7 @@ it('should seek forward/backward when sliding scrubber', () => {
   // Backward.
   cy.control(en.scrubber).invoke('val', 15).trigger('input');
   cy.player().should(($player) => {
-    expect($player.prop(PlayerProp.currentTime)).be.lessThan(29).and.greaterThan(14);
+    expect($player.prop('currentTime')).be.lessThan(29).and.greaterThan(14);
   });
   cy.control(en.scrubber).should('have.attr', 'aria-valuenow', '15');
   cy.control(en.scrubber).should('have.attr', 'aria-valuetext', '00:15 of 03:51');
@@ -191,14 +190,14 @@ it.skip('should toggle pip mode when clicking pip control', () => {
   // Enable.
   cy.control(en.pip).click();
   cy.control(en.pip).tooltip().should('be.visible').and('contain.text', en.exitPiP);
-  cy.player().should('have.prop', PlayerProp.isPiPActive, true);
+  cy.player().should('have.prop', 'isPiPActive', true);
   cy.control(en.pip).should('have.attr', 'aria-pressed', 'true');
   cy.control(en.pip).toMatchImageSnapshot();
 
   // Disable.
   cy.control(en.pip).click();
   cy.control(en.pip).tooltip().should('be.visible').and('contain.text', en.enterPiP);
-  cy.player().should('have.prop', PlayerProp.isPiPActive, false);
+  cy.player().should('have.prop', 'isPiPActive', false);
   cy.control(en.pip).should('have.attr', 'aria-pressed', 'false');
   cy.control(en.pip).toMatchImageSnapshot();
 });
@@ -212,14 +211,14 @@ it.skip('should toggle fullscreen mode when clicking fullscreen control', () => 
   // Enable.
   cy.control(en.fullscreen).click();
   cy.control(en.fullscreen).tooltip().should('be.visible').and('contain.text', en.exitFullscreen);
-  cy.player().should('have.prop', PlayerProp.isFullscreenActive, true);
+  cy.player().should('have.prop', 'isFullscreenActive', true);
   cy.control(en.fullscreen).should('have.attr', 'aria-pressed', 'true');
   cy.control(en.fullscreen).toMatchImageSnapshot();
 
   // Disable.
   cy.control(en.fullscreen).click();
   cy.control(en.fullscreen).tooltip().should('be.visible').and('contain.text', en.enterFullscreen);
-  cy.player().should('have.prop', PlayerProp.isFullscreenActive, false);
+  cy.player().should('have.prop', 'isFullscreenActive', false);
   cy.control(en.fullscreen).should('have.attr', 'aria-pressed', 'false');
   cy.control(en.fullscreen).toMatchImageSnapshot();
 });
@@ -232,7 +231,7 @@ it('should open/close settings menu when clicking settings control', () => {
   // Open.
   cy.control(en.settings).click();
   cy.control(en.settings).tooltip().should('not.be.visible');
-  cy.player().should('have.prop', PlayerProp.isSettingsActive, true);
+  cy.player().should('have.prop', 'isSettingsActive', true);
   cy.control(en.settings).should('have.attr', 'aria-expanded', 'true');
   cy.get('vime-settings').should('be.visible');
   cy.control(en.settings).toMatchImageSnapshot();
@@ -241,7 +240,7 @@ it('should open/close settings menu when clicking settings control', () => {
   // Close.
   cy.control(en.settings).click();
   cy.control(en.settings).tooltip().should('be.visible').and('contain.text', en.settings);
-  cy.player().should('have.prop', PlayerProp.isSettingsActive, false);
+  cy.player().should('have.prop', 'isSettingsActive', false);
   cy.control(en.settings).should('have.attr', 'aria-expanded', 'false');
   cy.get('vime-settings').should('not.be.visible');
   cy.control(en.settings).toMatchImageSnapshot();
@@ -283,7 +282,7 @@ it('should change playback rate when selecting from settings', () => {
 
   // Select.
   cy.get('vime-menu-item[aria-label="1.5"]').click();
-  cy.player().should('have.prop', PlayerProp.playbackRate, 1.5);
+  cy.player().should('have.prop', 'playbackRate', 1.5);
   cy.get('vime-settings').toMatchImageSnapshot();
 
   // Teardown.
@@ -304,9 +303,9 @@ it('should change captions when selecting from settings', () => {
   cy.get('vime-settings').toMatchImageSnapshot();
   cy.get('vime-menu-item[aria-label="Spanish"]').click();
   cy.player().should(($player) => {
-    expect($player.prop(PlayerProp.currentCaption)).to.exist;
-    expect($player.prop(PlayerProp.currentCaption).label).to.equal('Spanish');
-    expect($player.prop(PlayerProp.isCaptionsActive)).to.be.true;
+    expect($player.prop('currentCaption')).to.exist;
+    expect($player.prop('currentCaption').label).to.equal('Spanish');
+    expect($player.prop('isCaptionsActive')).to.be.true;
   });
   cy.get('vime-settings').toMatchImageSnapshot();
 
@@ -330,9 +329,9 @@ it('should toggle mute when pressing "m"', () => {
     .focus()
     .should('have.focus')
     .type('m')
-    .should('have.prop', PlayerProp.muted, true)
+    .should('have.prop', 'muted', true)
     .type('m')
-    .should('have.prop', PlayerProp.muted, false);
+    .should('have.prop', 'muted', false);
 });
 
 it('should toggle captions when pressing "c"', () => {
@@ -340,9 +339,9 @@ it('should toggle captions when pressing "c"', () => {
     .focus()
     .should('have.focus')
     .type('c')
-    .should('have.prop', PlayerProp.isCaptionsActive, false)
+    .should('have.prop', 'isCaptionsActive', false)
     .type('c')
-    .should('have.prop', PlayerProp.isCaptionsActive, true);
+    .should('have.prop', 'isCaptionsActive', true);
 });
 
 // @TODO wait for Cypress to support native events.
@@ -351,9 +350,9 @@ it.skip('should toggle pip mode when pressing "p"', () => {
     .focus()
     .should('have.focus')
     .type('p')
-    .should('have.prop', PlayerProp.isPiPActive, true)
+    .should('have.prop', 'isPiPActive', true)
     .type('p')
-    .should('have.prop', PlayerProp.isPiPActive, false);
+    .should('have.prop', 'isPiPActive', false);
 });
 
 // @TODO wait for Cypress to support native events.
@@ -362,9 +361,9 @@ it.skip('should toggle fullscreen mode when pressing "f"', () => {
     .focus()
     .should('have.focus')
     .type('f')
-    .should('have.prop', PlayerProp.isFullscreenActive, true)
+    .should('have.prop', 'isFullscreenActive', true)
     .type('f')
-    .should('have.prop', PlayerProp.isFullscreenActive, false);
+    .should('have.prop', 'isFullscreenActive', false);
 });
 
 it('should increase/decrease volume when pressing "{uparrow/downarrow}" ', () => {
@@ -372,9 +371,9 @@ it('should increase/decrease volume when pressing "{uparrow/downarrow}" ', () =>
     .focus()
     .should('have.focus')
     .then(($player) => {
-      const volume = $player.prop(PlayerProp.volume);
-      cy.player().type('{uparrow}').should('have.prop', PlayerProp.volume, (volume + 5));
-      cy.player().type('{downarrow}').should('have.prop', PlayerProp.volume, volume);
+      const volume = $player.prop('volume');
+      cy.player().type('{uparrow}').should('have.prop', 'volume', (volume + 5));
+      cy.player().type('{downarrow}').should('have.prop', 'volume', volume);
     });
 });
 
@@ -383,18 +382,18 @@ it('should seek forward/backward when pressing "{leftarrow/rightarrow}"', () => 
     .focus()
     .should('have.focus')
     .then(($player) => {
-      const currentTime = $player.prop(PlayerProp.currentTime);
+      const currentTime = $player.prop('currentTime');
 
       cy.player()
         .type('{rightarrow}')
         .should(() => {
-          expect($player.prop(PlayerProp.currentTime)).to.be.closeTo((currentTime + 5), 1);
+          expect($player.prop('currentTime')).to.be.closeTo((currentTime + 5), 1);
         });
 
       cy.player()
         .type('{leftarrow}')
         .should(() => {
-          expect($player.prop(PlayerProp.currentTime)).to.be.closeTo(currentTime, 1);
+          expect($player.prop('currentTime')).to.be.closeTo(currentTime, 1);
         });
     });
 });

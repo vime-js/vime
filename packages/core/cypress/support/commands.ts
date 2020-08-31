@@ -1,5 +1,4 @@
 import 'cypress-plugin-snapshots/commands';
-import { PlayerProp } from '../../src/components/core/player/PlayerProp';
 
 Cypress.Commands.add('player', () => cy.get('vime-player', { timeout: 25000 }));
 
@@ -30,7 +29,7 @@ Cypress.Commands.add('mute', (muted: boolean) => cy.player()
 Cypress.Commands.add('playbackRate', (rate: number) => cy.player()
   .then(async ($player) => {
     const canSet = await $player[0].canSetPlaybackRate();
-    const rates: number[] = $player.prop(PlayerProp.playbackRates);
+    const rates: number[] = $player.prop('playbackRates');
     if (!canSet || (rates.length === 0) || !(rates.includes(rate))) return $player;
     $player[0].callAdapter('setPlaybackRate', rate);
     return $player;
@@ -39,7 +38,7 @@ Cypress.Commands.add('playbackRate', (rate: number) => cy.player()
 Cypress.Commands.add('playbackQuality', (quality: string) => cy.player()
   .then(async ($player) => {
     const canSet = await $player[0].canSetPlaybackQuality();
-    const qualities: string[] = $player.prop(PlayerProp.playbackQualities);
+    const qualities: string[] = $player.prop('playbackQualities');
     if (!canSet || (qualities.length === 0) || !(qualities.includes(quality))) return $player;
     $player[0].callAdapter('setPlaybackQuality', quality);
     return $player;

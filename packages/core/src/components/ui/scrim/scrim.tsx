@@ -1,7 +1,7 @@
 import {
   h, Component, Host, Prop,
 } from '@stencil/core';
-import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
+import { PlayerProps } from '../../core/player/PlayerProps';
 import { withPlayerContext } from '../../core/player/PlayerContext';
 import { isUndefined } from '../../../utils/unit';
 
@@ -22,12 +22,12 @@ export class Scrim {
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
+  @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
   /**
    * @internal
    */
-  @Prop() isControlsActive: PlayerProps[PlayerProp.isControlsActive] = false;
+  @Prop() isControlsActive: PlayerProps['isControlsActive'] = false;
 
   render() {
     return (
@@ -47,6 +47,6 @@ export class Scrim {
 }
 
 withPlayerContext(Scrim, [
-  PlayerProp.isVideoView,
-  PlayerProp.isControlsActive,
+  'isVideoView',
+  'isControlsActive',
 ]);

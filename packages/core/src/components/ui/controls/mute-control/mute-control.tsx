@@ -1,7 +1,7 @@
 import { h, Component, Prop } from '@stencil/core';
-import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
+import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
 import { TooltipDirection } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
@@ -10,7 +10,7 @@ import { isUndefined } from '../../../../utils/unit';
   tag: 'vime-mute-control',
 })
 export class MuteControl implements KeyboardControl {
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: Dispatcher;
 
   /**
    * The URL to an SVG element or fragment.
@@ -50,20 +50,20 @@ export class MuteControl implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() volume: PlayerProps[PlayerProp.volume] = 50;
+  @Prop() volume: PlayerProps['volume'] = 50;
 
   /**
    * @internal
    */
-  @Prop() muted: PlayerProps[PlayerProp.muted] = false;
+  @Prop() muted: PlayerProps['muted'] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
-  componentWillLoad() {
-    this.dispatch = createPlayerDispatcher(this);
+  connectedCallback() {
+    this.dispatch = createDispatcher(this);
   }
 
   private getIcon() {
@@ -72,7 +72,7 @@ export class MuteControl implements KeyboardControl {
   }
 
   private onClick() {
-    this.dispatch(PlayerProp.muted, !this.muted);
+    this.dispatch('muted', !this.muted);
   }
 
   render() {
@@ -101,7 +101,7 @@ export class MuteControl implements KeyboardControl {
 }
 
 withPlayerContext(MuteControl, [
-  PlayerProp.muted,
-  PlayerProp.volume,
-  PlayerProp.i18n,
+  'muted',
+  'volume',
+  'i18n',
 ]);

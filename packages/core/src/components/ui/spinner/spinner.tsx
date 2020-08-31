@@ -1,7 +1,7 @@
 import {
   h, Component, State, Prop, Watch, Host, Event, EventEmitter,
 } from '@stencil/core';
-import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
+import { PlayerProps } from '../../core/player/PlayerProps';
 import { withPlayerContext } from '../../core/player/PlayerContext';
 
 @Component({
@@ -16,7 +16,7 @@ export class Spinner {
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
+  @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
   /**
    * Emitted when the spinner will be shown.
@@ -37,7 +37,7 @@ export class Spinner {
   /**
    * @internal
    */
-  @Prop() buffering: PlayerProps[PlayerProp.buffering] = false;
+  @Prop() buffering: PlayerProps['buffering'] = false;
 
   @Watch('buffering')
   onActiveChange() {
@@ -64,6 +64,6 @@ export class Spinner {
 }
 
 withPlayerContext(Spinner, [
-  PlayerProp.isVideoView,
-  PlayerProp.buffering,
+  'isVideoView',
+  'buffering',
 ]);

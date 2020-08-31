@@ -1,6 +1,6 @@
 export interface KeyboardControl {
   /**
-   * A slash (`/`) seperated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in
+   * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in
    * a `keydown` event, will trigger a `click` event on the control.
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key

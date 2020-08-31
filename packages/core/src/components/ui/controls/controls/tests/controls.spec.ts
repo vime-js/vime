@@ -1,7 +1,6 @@
 import { SpecPage } from '@stencil/core/testing';
 import { Controls } from '../controls';
 import { newUISpecPage } from '../../../ui/tests';
-import { PlayerProp } from '../../../../core/player/PlayerProp';
 import { ViewType } from '../../../../core/player/ViewType';
 
 let page: SpecPage;
@@ -32,23 +31,20 @@ it('should hide controls', async () => {
 
 it('should become active', async () => {
   expect(controls).not.toHaveClass('active');
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
-  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
-  await provider.dispatchStateChange(PlayerProp.isControlsActive, true);
-  await page.waitForChanges();
+  await provider.dispatchChange('viewType', ViewType.Video);
+  await provider.dispatchChange('playbackReady', true);
+  await provider.dispatchChange('isControlsActive', true);
   await page.waitForChanges();
   expect(controls).toHaveClass('active');
 });
 
 it('should only be active when audio view', async () => {
   expect(controls).not.toHaveClass('active');
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
-  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
-  await page.waitForChanges();
+  await provider.dispatchChange('viewType', ViewType.Audio);
+  await provider.dispatchChange('playbackReady', true);
   await page.waitForChanges();
   expect(controls).toHaveClass('active');
-  await provider.dispatchStateChange(PlayerProp.paused, false);
-  await page.waitForChanges();
+  await provider.dispatchChange('paused', false);
   await page.waitForChanges();
   jest.runAllTimers();
   expect(controls).toHaveClass('active');
@@ -93,7 +89,7 @@ it('should justify controls', async () => {
 });
 
 it('should not pin controls if audio', async () => {
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Audio);
+  await provider.dispatchChange('viewType', ViewType.Audio);
   controls.pin = 'topLeft';
   await page.waitForChanges();
   expect(controls.style.top).toEqual('');
@@ -101,7 +97,7 @@ it('should not pin controls if audio', async () => {
 });
 
 it('should pin controls to the center', async () => {
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
+  await provider.dispatchChange('viewType', ViewType.Video);
   controls.pin = 'center';
   await page.waitForChanges();
   expect(controls.style.top).toEqual('50%');
@@ -109,7 +105,7 @@ it('should pin controls to the center', async () => {
 });
 
 it('should pin controls', async () => {
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
+  await provider.dispatchChange('viewType', ViewType.Video);
   controls.pin = 'topLeft';
   await page.waitForChanges();
   expect(controls.style.top).toEqual('0');
@@ -124,11 +120,10 @@ it('should pin controls', async () => {
 
 it('should change active duration', async () => {
   controls.activeDuration = 3500;
-  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
-  await provider.dispatchStateChange(PlayerProp.isControlsActive, true);
-  await provider.dispatchStateChange(PlayerProp.paused, false);
-  await page.waitForChanges();
+  await provider.dispatchChange('playbackReady', true);
+  await provider.dispatchChange('viewType', ViewType.Video);
+  await provider.dispatchChange('isControlsActive', true);
+  await provider.dispatchChange('paused', false);
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
   requestAnimationFrame(async () => {
@@ -143,28 +138,24 @@ it('should change active duration', async () => {
 
 it('should wait for playback to start before showing controls', async () => {
   controls.waitForPlaybackStart = true;
-  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
-  await provider.dispatchStateChange(PlayerProp.paused, false);
-  await page.waitForChanges();
+  await provider.dispatchChange('playbackReady', true);
+  await provider.dispatchChange('viewType', ViewType.Video);
+  await provider.dispatchChange('paused', false);
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeFalsy();
-  await provider.dispatchStateChange(PlayerProp.playbackStarted, true);
-  await page.waitForChanges();
+  await provider.dispatchChange('playbackStarted', true);
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
 });
 
 it('should hide controls when paused', async () => {
   controls.hideWhenPaused = true;
-  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
-  await provider.dispatchStateChange(PlayerProp.paused, false);
-  await page.waitForChanges();
+  await provider.dispatchChange('playbackReady', true);
+  await provider.dispatchChange('viewType', ViewType.Video);
+  await provider.dispatchChange('paused', false);
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
-  await provider.dispatchStateChange(PlayerProp.paused, true);
-  await page.waitForChanges();
+  await provider.dispatchChange('paused', true);
   await page.waitForChanges();
   requestAnimationFrame(async () => {
     expect(controls.isControlsActive).toBeTruthy();
@@ -176,13 +167,11 @@ it('should hide controls when paused', async () => {
 
 it('should hide controls on mouse leave', async () => {
   controls.hideOnMouseLeave = true;
-  await provider.dispatchStateChange(PlayerProp.playbackReady, true);
-  await provider.dispatchStateChange(PlayerProp.viewType, ViewType.Video);
-  await page.waitForChanges();
+  await provider.dispatchChange('playbackReady', true);
+  await provider.dispatchChange('viewType', ViewType.Video);
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
   controls.dispatchEvent(new Event('mouseleave', { bubbles: true }));
-  await page.waitForChanges();
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeFalsy();
 });

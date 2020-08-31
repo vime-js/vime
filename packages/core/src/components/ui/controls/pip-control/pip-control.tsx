@@ -1,7 +1,7 @@
 import {
   h, Host, Component, Prop, Watch, State,
 } from '@stencil/core';
-import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { TooltipDirection } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
@@ -48,17 +48,17 @@ export class PiPControl implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() isPiPActive: PlayerProps[PlayerProp.isPiPActive] = false;
+  @Prop() isPiPActive: PlayerProps['isPiPActive'] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
   /**
    * @internal
    */
-  @Prop() playbackReady: PlayerProps[PlayerProp.playbackReady] = false;
+  @Prop() playbackReady: PlayerProps['playbackReady'] = false;
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
@@ -104,7 +104,7 @@ export class PiPControl implements KeyboardControl {
 }
 
 withPlayerContext(PiPControl, [
-  PlayerProp.isPiPActive,
-  PlayerProp.playbackReady,
-  PlayerProp.i18n,
+  'isPiPActive',
+  'playbackReady',
+  'i18n',
 ]);

@@ -6,7 +6,7 @@ import { Components, JSX } from '@vime/core';
 
 interface VimeControlProps {
   
-  /** A slash (`/`) seperated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in
+  /** A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in
 a `keydown` event, will trigger a `click` event on the control. */
   keys?: Components.VimeControl["keys"]
   

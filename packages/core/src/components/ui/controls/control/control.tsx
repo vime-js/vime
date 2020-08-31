@@ -4,7 +4,7 @@ import {
   Watch,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { isNull, isUndefined } from '../../../../utils/unit';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
@@ -88,16 +88,20 @@ export class Control implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() isTouch: PlayerProps[PlayerProp.isTouch] = false;
+  @Prop() isTouch: PlayerProps['isTouch'] = false;
 
   /**
    * Emitted when the user is interacting with the control by focusing, touching or hovering on it.
    */
   @Event() vInteractionChange!: EventEmitter<boolean>;
 
-  componentWillLoad() {
+  connectedCallback() {
     this.findTooltip();
     this.onKeysChange();
+  }
+
+  componentWillLoad() {
+    this.findTooltip();
   }
 
   disconnectedCallback() {
@@ -187,5 +191,5 @@ export class Control implements KeyboardControl {
 }
 
 withPlayerContext(Control, [
-  PlayerProp.isTouch,
+  'isTouch',
 ]);

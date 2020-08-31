@@ -2,8 +2,6 @@ import {
   h, Prop, Method, Component, Event, EventEmitter, State, Watch,
 } from '@stencil/core';
 import { MediaProvider, withProviderContext } from '../MediaProvider';
-import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
-import { PlayerProp } from '../../core/player/PlayerProp';
 import { decodeJSON } from '../../../utils/network';
 import { isString, isUndefined, isNumber } from '../../../utils/unit';
 import { ViewType } from '../../core/player/ViewType';
@@ -13,6 +11,8 @@ import { VimeoMessage } from './VimeoMessage';
 import { VimeoDataEvent, VimeoDataEventPayload, VimeoEvent } from './VimeoEvent';
 import { MediaType } from '../../core/player/MediaType';
 import { DeferredPromise, deferredPromise } from '../../../utils/promise';
+import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
+import { Logger } from '../../core/player/PlayerLogger';
 
 @Component({
   tag: 'vime-vimeo',
@@ -21,7 +21,7 @@ import { DeferredPromise, deferredPromise } from '../../../utils/promise';
 export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   private embed!: HTMLVimeEmbedElement;
 
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: ProviderDispatcher;
 
   private initialMuted!: boolean;
 
@@ -99,7 +99,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   /**
    * @internal
    */
-  @Prop() debug = false;
+  @Prop() logger?: Logger;
 
   /**
    * @internal
@@ -121,9 +121,9 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.dispatch = createPlayerDispatcher(this);
-    this.dispatch(PlayerProp.viewType, ViewType.Video);
+  connectedCallback() {
+    this.dispatch = createProviderDispatcher(this);
+    this.dispatch('viewType', ViewType.Video);
     this.onVideoIdChange();
     this.initialMuted = this.muted;
     this.defaultInternalState = { ...this.internalState };
@@ -177,22 +177,22 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         const thumnailRegex = /vimeocdn\.com\/video\/([0-9]+)/;
         const thumbnailId = data.thumbnail_url.match(thumnailRegex)[1];
         const poster = `https://i.vimeocdn.com/video/${thumbnailId}_1920x1080.jpg`;
-        this.dispatch(PlayerProp.currentPoster, poster);
+        this.dispatch('currentPoster', poster);
       });
   }
 
   private onTimeChange(time: number) {
     if (this.internalState.currentTime === time) return;
 
-    this.dispatch(PlayerProp.currentTime, time);
+    this.dispatch('currentTime', time);
 
     // This is how we detect `seeking` early.
     if (Math.abs(this.internalState.currentTime - time) > 1.5) {
       this.internalState.seeking = true;
-      this.dispatch(PlayerProp.seeking, true);
+      this.dispatch('seeking', true);
 
       if (this.internalState.playing && (this.internalState.buffered < time)) {
-        this.dispatch(PlayerProp.buffering, true);
+        this.dispatch('buffering', true);
       }
 
       // Player doesn't resume playback once seeked.
@@ -223,7 +223,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   private onSeeked() {
     if (!this.internalState.seeking) return;
 
-    this.dispatch(PlayerProp.seeking, false);
+    this.dispatch('seeking', false);
     this.internalState.seeking = false;
 
     if (this.internalState.playRequest) {
@@ -240,11 +240,11 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         if (!this.internalState.seeking) this.onTimeChange(arg as number);
         break;
       case VimeoCommand.GetDuration:
-        this.dispatch(PlayerProp.duration, arg as number);
+        this.dispatch('duration', arg as number);
         this.pendingDurationFetch?.resolve();
         break;
       case VimeoCommand.GetVideoTitle:
-        this.dispatch(PlayerProp.mediaTitle, arg as string);
+        this.dispatch('mediaTitle', arg as string);
         this.pendingMediaTitleFetch?.resolve();
         break;
     }
@@ -263,8 +263,8 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
       case VimeoDataEvent.Loaded:
         this.pendingPlayRequest = undefined;
         this.internalState = { ...this.defaultInternalState };
-        this.dispatch(PlayerProp.currentSrc, this.embedSrc);
-        this.dispatch(PlayerProp.mediaType, MediaType.Video);
+        this.dispatch('currentSrc', this.embedSrc);
+        this.dispatch('mediaType', MediaType.Video);
         this.remoteControl(VimeoCommand.GetDuration);
         this.remoteControl(VimeoCommand.GetVideoTitle);
         Promise.all([
@@ -273,16 +273,16 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
           this.pendingMediaTitleFetch?.promise,
         ]).then(() => {
           this.requestTimeUpdates();
-          this.dispatch(PlayerProp.playbackReady, true);
+          this.dispatch('playbackReady', true);
         });
         break;
       case VimeoDataEvent.Play:
         this.internalState.paused = false;
-        this.dispatch(PlayerProp.paused, false);
+        this.dispatch('paused', false);
         break;
       case VimeoDataEvent.PlayProgress:
         if (!this.internalState.playing) {
-          this.dispatch(PlayerProp.playing, true);
+          this.dispatch('playing', true);
           this.internalState.playing = true;
           this.internalState.playbackStarted = true;
           this.pendingPlayRequest = window.setTimeout(() => {
@@ -290,49 +290,49 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
             this.pendingPlayRequest = undefined;
           }, 1000);
         }
-        this.dispatch(PlayerProp.buffering, false);
+        this.dispatch('buffering', false);
         this.onSeeked();
         break;
       case VimeoDataEvent.Pause:
         this.internalState.paused = true;
         this.internalState.playing = false;
-        this.dispatch(PlayerProp.paused, true);
-        this.dispatch(PlayerProp.buffering, false);
+        this.dispatch('paused', true);
+        this.dispatch('buffering', false);
         break;
       case VimeoDataEvent.LoadProgress:
         this.internalState.buffered = payload.seconds;
-        this.dispatch(PlayerProp.buffered, payload.seconds);
+        this.dispatch('buffered', payload.seconds);
         break;
       case VimeoDataEvent.BufferStart:
-        this.dispatch(PlayerProp.buffering, true);
+        this.dispatch('buffering', true);
         // Attempt to detect `play` events early.
         if (this.internalState.paused) {
           this.internalState.paused = false;
-          this.dispatch(PlayerProp.paused, false);
-          this.dispatch(PlayerProp.playbackStarted, true);
+          this.dispatch('paused', false);
+          this.dispatch('playbackStarted', true);
         }
         break;
       case VimeoDataEvent.BufferEnd:
-        this.dispatch(PlayerProp.buffering, false);
+        this.dispatch('buffering', false);
         if (this.internalState.paused) this.onSeeked();
         break;
       case VimeoDataEvent.VolumeChange:
         if (payload.volume > 0) {
           this.volume = payload.volume;
-          this.dispatch(PlayerProp.muted, false);
-          this.dispatch(PlayerProp.volume, Math.floor(this.volume * 100));
+          this.dispatch('muted', false);
+          this.dispatch('volume', Math.floor(this.volume * 100));
         } else {
-          this.dispatch(PlayerProp.muted, true);
+          this.dispatch('muted', true);
         }
         break;
       case VimeoDataEvent.DurationChange:
-        this.dispatch(PlayerProp.duration, payload.duration);
+        this.dispatch('duration', payload.duration);
         break;
       case VimeoDataEvent.PlaybackRateChange:
-        this.dispatch(PlayerProp.playbackRate, payload.playbackRate);
+        this.dispatch('playbackRate', payload.playbackRate);
         break;
       case VimeoDataEvent.FullscreenChange:
-        this.dispatch(PlayerProp.isFullscreenActive, payload.fullscreen);
+        this.dispatch('isFullscreenActive', payload.fullscreen);
         break;
       case VimeoDataEvent.Finish:
         if (this.loop) {
@@ -341,11 +341,11 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
             this.remoteControl(VimeoCommand.Play);
           }, 200);
         } else {
-          this.dispatch(PlayerProp.playbackEnded, true);
+          this.dispatch('playbackEnded', true);
         }
         break;
       case VimeoDataEvent.Error:
-        this.dispatch(PlayerProp.errors, [new Error(payload)]);
+        this.dispatch('errors', [new Error(payload)]);
         break;
     }
   }
@@ -386,7 +386,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         if (!this.muted) {
           this.remoteControl(VimeoCommand.SetVolume, this.volume);
         } else {
-          this.dispatch(PlayerProp.volume, volume);
+          this.dispatch('volume', volume);
         }
       },
       // @TODO how to check if Vimeo pro?

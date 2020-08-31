@@ -7,8 +7,8 @@ import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
 import { isUndefined, isNull } from '../../../../utils/unit';
 import { SettingsController } from './SettingsController';
-import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
-import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
+import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 
 let idCount = 0;
@@ -29,7 +29,7 @@ export class Settings {
 
   private controller?: SettingsController;
 
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: Dispatcher;
 
   @Element() el!: HTMLVimeSettingsElement;
 
@@ -48,7 +48,7 @@ export class Settings {
 
   @Watch('active')
   onActiveChange() {
-    this.dispatch(PlayerProp.isSettingsActive, this.active);
+    this.dispatch('isSettingsActive', this.active);
     if (isUndefined(this.controller)) return;
     this.controller!.expanded = this.active;
   }
@@ -56,15 +56,15 @@ export class Settings {
   /**
    * @internal
    */
-  @Prop() isMobile: PlayerProps[PlayerProp.isMobile] = false;
+  @Prop() isMobile: PlayerProps['isMobile'] = false;
 
   /**
    * @internal
    */
-  @Prop() isAudioView: PlayerProps[PlayerProp.isAudioView] = false;
+  @Prop() isAudioView: PlayerProps['isAudioView'] = false;
 
-  componentWillLoad() {
-    this.dispatch = createPlayerDispatcher(this);
+  connectedCallback() {
+    this.dispatch = createDispatcher(this);
     idCount += 1;
     this.id = `vime-settings-${idCount}`;
   }
@@ -121,6 +121,6 @@ export class Settings {
 }
 
 withPlayerContext(Settings, [
-  PlayerProp.isMobile,
-  PlayerProp.isAudioView,
+  'isMobile',
+  'isAudioView',
 ]);

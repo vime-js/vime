@@ -219,7 +219,7 @@ export const VimeDailymotion = /*@__PURE__*/ Vue.extend({
     language: {} as PropOptions<Components.VimeDailymotion['language']>,
     autoplay: {} as PropOptions<Components.VimeDailymotion['autoplay']>,
     controls: {} as PropOptions<Components.VimeDailymotion['controls']>,
-    debug: {} as PropOptions<Components.VimeDailymotion['debug']>,
+    logger: {} as PropOptions<Components.VimeDailymotion['logger']>,
     loop: {} as PropOptions<Components.VimeDailymotion['loop']>,
     muted: {} as PropOptions<Components.VimeDailymotion['muted']>,
     playsinline: {} as PropOptions<Components.VimeDailymotion['playsinline']>,
@@ -349,7 +349,7 @@ export const VimeFaketube = /*@__PURE__*/ Vue.extend({
     language: {} as PropOptions<Components.VimeFaketube['language']>,
     autoplay: {} as PropOptions<Components.VimeFaketube['autoplay']>,
     controls: {} as PropOptions<Components.VimeFaketube['controls']>,
-    debug: {} as PropOptions<Components.VimeFaketube['debug']>,
+    logger: {} as PropOptions<Components.VimeFaketube['logger']>,
     loop: {} as PropOptions<Components.VimeFaketube['loop']>,
     muted: {} as PropOptions<Components.VimeFaketube['muted']>,
     playsinline: {} as PropOptions<Components.VimeFaketube['playsinline']>,
@@ -359,7 +359,7 @@ export const VimeFaketube = /*@__PURE__*/ Vue.extend({
   methods: {
     getAdapter: createCommonMethod('getAdapter') as Components.VimeFaketube['getAdapter'],
     dispatchLoadStart: createCommonMethod('dispatchLoadStart') as Components.VimeFaketube['dispatchLoadStart'],
-    dispatchStateChange: createCommonMethod('dispatchStateChange') as Components.VimeFaketube['dispatchStateChange'],
+    dispatchChange: createCommonMethod('dispatchChange') as Components.VimeFaketube['dispatchChange'],
   },
   render: createCommonRender('vime-faketube', ['vLoadStart']),
 });
@@ -382,7 +382,7 @@ export const VimeFile = /*@__PURE__*/ Vue.extend({
     language: {} as PropOptions<Components.VimeFile['language']>,
     autoplay: {} as PropOptions<Components.VimeFile['autoplay']>,
     controls: {} as PropOptions<Components.VimeFile['controls']>,
-    debug: {} as PropOptions<Components.VimeFile['debug']>,
+    logger: {} as PropOptions<Components.VimeFile['logger']>,
     loop: {} as PropOptions<Components.VimeFile['loop']>,
     muted: {} as PropOptions<Components.VimeFile['muted']>,
     playsinline: {} as PropOptions<Components.VimeFile['playsinline']>,
@@ -392,7 +392,7 @@ export const VimeFile = /*@__PURE__*/ Vue.extend({
   methods: {
     getAdapter: createCommonMethod('getAdapter') as Components.VimeFile['getAdapter'],
   },
-  render: createCommonRender('vime-file', ['vLoadStart', 'vSrcSetChange']),
+  render: createCommonRender('vime-file', ['vLoadStart', 'vMediaElChange', 'vSrcSetChange']),
 });
 
 
@@ -599,6 +599,8 @@ export const VimePlaybackControl = /*@__PURE__*/ Vue.extend({
 export const VimePlayer = /*@__PURE__*/ Vue.extend({
 
   props: {
+    attached: {} as PropOptions<Components.VimePlayer['attached']>,
+    logger: {} as PropOptions<Components.VimePlayer['logger']>,
     theme: {} as PropOptions<Components.VimePlayer['theme']>,
     paused: {} as PropOptions<Components.VimePlayer['paused']>,
     playing: {} as PropOptions<Components.VimePlayer['playing']>,
@@ -609,8 +611,6 @@ export const VimePlayer = /*@__PURE__*/ Vue.extend({
     currentTime: {} as PropOptions<Components.VimePlayer['currentTime']>,
     autoplay: {} as PropOptions<Components.VimePlayer['autoplay']>,
     ready: {} as PropOptions<Components.VimePlayer['ready']>,
-    mounted: {} as PropOptions<Components.VimePlayer['mounted']>,
-    destroyed: {} as PropOptions<Components.VimePlayer['destroyed']>,
     playbackReady: {} as PropOptions<Components.VimePlayer['playbackReady']>,
     loop: {} as PropOptions<Components.VimePlayer['loop']>,
     muted: {} as PropOptions<Components.VimePlayer['muted']>,
@@ -672,9 +672,9 @@ export const VimePlayer = /*@__PURE__*/ Vue.extend({
     exitPiP: createCommonMethod('exitPiP') as Components.VimePlayer['exitPiP'],
     extendLanguage: createCommonMethod('extendLanguage') as Components.VimePlayer['extendLanguage'],
     callAdapter: createCommonMethod('callAdapter') as Components.VimePlayer['callAdapter'],
-    toggleCaptionsVisiblity: createCommonMethod('toggleCaptionsVisiblity') as Components.VimePlayer['toggleCaptionsVisiblity'],
+    toggleCaptionsVisibility: createCommonMethod('toggleCaptionsVisibility') as Components.VimePlayer['toggleCaptionsVisibility'],
   },
-  render: createCommonRender('vime-player', ['vThemeChange', 'vPausedChange', 'vPlay', 'vPlayingChange', 'vSeekingChange', 'vSeeked', 'vBufferingChange', 'vDurationChange', 'vCurrentTimeChange', 'vMounted', 'vDestroyed', 'vReady', 'vPlaybackReady', 'vPlaybackStarted', 'vPlaybackEnded', 'vBufferedChange', 'vTextTracksChange', 'vErrorsChange', 'vLoadStart', 'vCurrentSrcChange', 'vCurrentPosterChange', 'vMediaTitleChange', 'vControlsChange', 'vPlaybackRateChange', 'vPlaybackRatesChange', 'vPlaybackQualityChange', 'vPlaybackQualitiesChange', 'vMutedChange', 'vVolumeChange', 'vViewTypeChange', 'vMediaTypeChange', 'vLiveChange', 'vTouchChange', 'vLanguageChange', 'vLanguagesChange', 'vFullscreenChange', 'vPiPChange']),
+  render: createCommonRender('vime-player', ['vThemeChange', 'vPausedChange', 'vPlay', 'vPlayingChange', 'vSeekingChange', 'vSeeked', 'vBufferingChange', 'vDurationChange', 'vCurrentTimeChange', 'vAttachedChange', 'vReady', 'vPlaybackReady', 'vPlaybackStarted', 'vPlaybackEnded', 'vBufferedChange', 'vCurrentCaptionChange', 'vTextTracksChange', 'vErrorsChange', 'vLoadStart', 'vCurrentSrcChange', 'vCurrentPosterChange', 'vMediaTitleChange', 'vControlsChange', 'vPlaybackRateChange', 'vPlaybackRatesChange', 'vPlaybackQualityChange', 'vPlaybackQualitiesChange', 'vMutedChange', 'vVolumeChange', 'vViewTypeChange', 'vMediaTypeChange', 'vLiveChange', 'vTouchChange', 'vLanguageChange', 'vI18nChange', 'vTranslationsChange', 'vLanguagesChange', 'vFullscreenChange', 'vPiPChange']),
 });
 
 
@@ -883,7 +883,7 @@ export const VimeVimeo = /*@__PURE__*/ Vue.extend({
     language: {} as PropOptions<Components.VimeVimeo['language']>,
     autoplay: {} as PropOptions<Components.VimeVimeo['autoplay']>,
     controls: {} as PropOptions<Components.VimeVimeo['controls']>,
-    debug: {} as PropOptions<Components.VimeVimeo['debug']>,
+    logger: {} as PropOptions<Components.VimeVimeo['logger']>,
     loop: {} as PropOptions<Components.VimeVimeo['loop']>,
     muted: {} as PropOptions<Components.VimeVimeo['muted']>,
     playsinline: {} as PropOptions<Components.VimeVimeo['playsinline']>,
@@ -927,7 +927,7 @@ export const VimeYoutube = /*@__PURE__*/ Vue.extend({
     language: {} as PropOptions<Components.VimeYoutube['language']>,
     autoplay: {} as PropOptions<Components.VimeYoutube['autoplay']>,
     controls: {} as PropOptions<Components.VimeYoutube['controls']>,
-    debug: {} as PropOptions<Components.VimeYoutube['debug']>,
+    logger: {} as PropOptions<Components.VimeYoutube['logger']>,
     loop: {} as PropOptions<Components.VimeYoutube['loop']>,
     muted: {} as PropOptions<Components.VimeYoutube['muted']>,
     playsinline: {} as PropOptions<Components.VimeYoutube['playsinline']>,

@@ -2,7 +2,7 @@ import {
   h, Component, Prop, State, Watch, Host, Event, EventEmitter,
 } from '@stencil/core';
 import { withPlayerContext } from '../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../core/player/PlayerProp';
+import { PlayerProps } from '../../core/player/PlayerProps';
 import { isUndefined } from '../../../utils/unit';
 
 @Component({
@@ -24,12 +24,12 @@ export class Poster {
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
+  @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
   /**
    * @internal
    */
-  @Prop() currentPoster?: PlayerProps[PlayerProp.currentPoster];
+  @Prop() currentPoster?: PlayerProps['currentPoster'];
 
   @Watch('currentPoster')
   onCurrentPosterChange() {
@@ -39,12 +39,12 @@ export class Poster {
   /**
    * @internal
    */
-  @Prop() mediaTitle?: PlayerProps[PlayerProp.mediaTitle];
+  @Prop() mediaTitle?: PlayerProps['mediaTitle'];
 
   /**
    * @internal
    */
-  @Prop() playbackStarted: PlayerProps[PlayerProp.playbackStarted] = false;
+  @Prop() playbackStarted: PlayerProps['playbackStarted'] = false;
 
   /**
    * Emitted when the poster has loaded.
@@ -61,7 +61,7 @@ export class Poster {
    */
   @Event({ bubbles: false }) vWillHide!: EventEmitter<void>;
 
-  componentWillLoad() {
+  connectedCallback() {
     this.onEnabledChange();
     this.onActiveChange();
   }
@@ -109,8 +109,8 @@ export class Poster {
 }
 
 withPlayerContext(Poster, [
-  PlayerProp.mediaTitle,
-  PlayerProp.currentPoster,
-  PlayerProp.playbackStarted,
-  PlayerProp.isVideoView,
+  'mediaTitle',
+  'currentPoster',
+  'playbackStarted',
+  'isVideoView',
 ]);

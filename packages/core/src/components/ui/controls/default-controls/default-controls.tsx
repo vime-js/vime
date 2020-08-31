@@ -2,7 +2,7 @@ import {
   h, Host, Component, Prop,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 
 @Component({
   tag: 'vime-default-controls',
@@ -35,22 +35,22 @@ export class DefaultControls {
   /**
    * @internal
    */
-  @Prop() isMobile: PlayerProps[PlayerProp.isMobile] = false;
+  @Prop() isMobile: PlayerProps['isMobile'] = false;
 
   /**
    * @internal
    */
-  @Prop() isLive: PlayerProps[PlayerProp.isLive] = false;
+  @Prop() isLive: PlayerProps['isLive'] = false;
 
   /**
    * @internal
    */
-  @Prop() isAudioView: PlayerProps[PlayerProp.isAudioView] = false;
+  @Prop() isAudioView: PlayerProps['isAudioView'] = false;
 
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
+  @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
   private buildAudioControls() {
     return (
@@ -167,8 +167,8 @@ export class DefaultControls {
 }
 
 withPlayerContext(DefaultControls, [
-  PlayerProp.isMobile,
-  PlayerProp.isAudioView,
-  PlayerProp.isVideoView,
-  PlayerProp.isLive,
+  'isMobile',
+  'isAudioView',
+  'isVideoView',
+  'isLive',
 ]);

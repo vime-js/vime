@@ -6,17 +6,17 @@ It's not what you think &nbsp;😂&nbsp; ... fake media provider that is used fo
 
 ## Methods
 
-### `dispatchLoadStart() => Promise<void>`
+### `dispatchChange(prop: PlayerProp, value: any) => Promise<void>`
 
-Dispatches the `vLoadStart` event.
+Dispatches a state change event.
 
 #### Returns
 
 Type: `Promise<void>`
 
-### `dispatchStateChange(prop: PlayerProp, value: any) => Promise<void>`
+### `dispatchLoadStart() => Promise<void>`
 
-Dispatches a state change event.
+Dispatches the `vLoadStart` event.
 
 #### Returns
 

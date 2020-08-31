@@ -3,7 +3,7 @@ import {
 } from '@stencil/core';
 import { isString } from '../../../utils/unit';
 import { withPlayerContext } from '../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../core/player/PlayerProp';
+import { PlayerProps } from '../../core/player/PlayerProps';
 import { TooltipDirection, TooltipPosition } from './types';
 
 let tooltipIdCount = 0;
@@ -16,6 +16,9 @@ let tooltipIdCount = 0;
   styleUrl: 'tooltip.scss',
 })
 export class Tooltip {
+  // Avoid tooltips flashing when player initializing.
+  private hasLoaded = false;
+
   @Element() el!: HTMLVimeTooltipElement;
 
   /**
@@ -42,7 +45,11 @@ export class Tooltip {
   /**
    * @internal
    */
-  @Prop() isTouch: PlayerProps[PlayerProp.isTouch] = false;
+  @Prop() isTouch: PlayerProps['isTouch'] = false;
+
+  componentDidLoad() {
+    this.hasLoaded = true;
+  }
 
   private getId() {
     // eslint-disable-next-line prefer-destructuring
@@ -59,7 +66,7 @@ export class Tooltip {
         role="tooltip"
         aria-hidden={(!this.active || this.isTouch) ? 'true' : 'false'}
         class={{
-          hidden: this.hidden,
+          hidden: !this.hasLoaded || this.hidden,
           onTop: (this.position === 'top'),
           onBottom: (this.position === 'bottom'),
           growLeft: (this.direction === 'left'),
@@ -73,5 +80,5 @@ export class Tooltip {
 }
 
 withPlayerContext(Tooltip, [
-  PlayerProp.isTouch,
+  'isTouch',
 ]);

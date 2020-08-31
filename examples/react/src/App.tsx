@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import './App.css';
-import { VimePlayer, VimeVideo, VimeDefaultUi, usePlayerContext, PlayerProp } from '@vime/react';
+import { VimePlayer, VimeVideo, VimeDefaultUi, usePlayerContext } from '@vime/react';
 
 // Default theme.
 import '@vime/core/themes/default.css';
@@ -20,7 +20,7 @@ function App() {
   };
 
   // If you prefer hooks :)
-  const currentTime = usePlayerContext(player, PlayerProp.currentTime, 0);
+  const [currentTime] = usePlayerContext(player, 'currentTime', 0);
 
   useEffect(() => {
     console.log(currentTime);

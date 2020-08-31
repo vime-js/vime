@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useInternalPlayerStore } from "@vime/svelte";
+  import { usePlayerStore } from "@vime/svelte";
 
   /**
    * We need a reference to a DOM element so the store works as it relies on dispatching 
@@ -7,12 +7,7 @@
    */
   let ref: HTMLDivElement;
 
-  /**
-   * The internal player store gives us the ability to write to properties that are 
-   * considered unsafe to write to from the "outside". Remember, with great power comes great 
-   * responsibility.
-   */ 
-  const { currentTime, duration } = useInternalPlayerStore(() => ref)
+  const { currentTime, duration } = usePlayerStore(() => ref)
 
   const onSeekBackward = () => {
     if ($currentTime < 5) return;

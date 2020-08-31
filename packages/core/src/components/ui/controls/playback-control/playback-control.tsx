@@ -1,7 +1,7 @@
 import { h, Component, Prop } from '@stencil/core';
-import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
+import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
 import { TooltipDirection } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
@@ -10,7 +10,7 @@ import { isUndefined } from '../../../../utils/unit';
   tag: 'vime-playback-control',
 })
 export class PlaybackControl implements KeyboardControl {
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: Dispatcher;
 
   /**
    * The URL to an SVG element or fragment to load.
@@ -45,19 +45,19 @@ export class PlaybackControl implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() paused: PlayerProps[PlayerProp.paused] = true;
+  @Prop() paused: PlayerProps['paused'] = true;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
-  componentWillLoad() {
-    this.dispatch = createPlayerDispatcher(this);
+  connectedCallback() {
+    this.dispatch = createDispatcher(this);
   }
 
   private onClick() {
-    this.dispatch(PlayerProp.paused, !this.paused);
+    this.dispatch('paused', !this.paused);
   }
 
   render() {
@@ -86,6 +86,6 @@ export class PlaybackControl implements KeyboardControl {
 }
 
 withPlayerContext(PlaybackControl, [
-  PlayerProp.paused,
-  PlayerProp.i18n,
+  'paused',
+  'i18n',
 ]);

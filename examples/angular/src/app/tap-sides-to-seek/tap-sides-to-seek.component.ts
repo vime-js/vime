@@ -1,5 +1,4 @@
 import { Component, ElementRef } from '@angular/core';
-import { PlayerProp } from '@vime/core';
 import { VimeComponent } from '@vime/angular/';
 
 @Component({
@@ -29,8 +28,8 @@ export class TapSidesToSeekComponent extends VimeComponent {
   constructor(protected ref: ElementRef) {
     // Pass in the properties you'd like to bind to this component.
     super([
-      PlayerProp.currentTime,
-      PlayerProp.duration,
+      'currentTime',
+      'duration',
     ]);
 
     // There is a player ref if you need to call any methods.

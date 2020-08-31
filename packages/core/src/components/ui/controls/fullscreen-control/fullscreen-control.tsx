@@ -1,7 +1,7 @@
 import {
   h, Host, Component, Prop, State, Watch,
 } from '@stencil/core';
-import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { TooltipDirection } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
@@ -48,17 +48,17 @@ export class FullscreenControl implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() isFullscreenActive: PlayerProps[PlayerProp.isFullscreenActive] = false;
+  @Prop() isFullscreenActive: PlayerProps['isFullscreenActive'] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
   /**
    * @internal
    */
-  @Prop() playbackReady: PlayerProps[PlayerProp.playbackReady] = false;
+  @Prop() playbackReady: PlayerProps['playbackReady'] = false;
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
@@ -104,7 +104,7 @@ export class FullscreenControl implements KeyboardControl {
 }
 
 withPlayerContext(FullscreenControl, [
-  PlayerProp.isFullscreenActive,
-  PlayerProp.playbackReady,
-  PlayerProp.i18n,
+  'isFullscreenActive',
+  'playbackReady',
+  'i18n',
 ]);

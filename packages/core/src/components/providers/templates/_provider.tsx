@@ -2,13 +2,13 @@ import {
   h, Prop, Method, Event, EventEmitter,
 } from '@stencil/core';
 import { MediaProvider, withProviderContext, MediaProviderAdapter } from '../MediaProvider';
-import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
-import { PlayerProp } from '../../core/player/PlayerProp';
 import { ViewType } from '../../core/player/ViewType';
+import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
+import { Logger } from '../../core/player/PlayerLogger';
 
 // @component
 export class Name implements MediaProvider {
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: ProviderDispatcher;
 
   /**
    * @internal
@@ -28,7 +28,7 @@ export class Name implements MediaProvider {
   /**
    * @internal
    */
-  @Prop() debug = false;
+  @Prop() logger?: Logger;
 
   /**
    * @internal
@@ -51,10 +51,10 @@ export class Name implements MediaProvider {
   // @TODO we have to call this event as soon as media starts loading.
   @Event() vLoadStart!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.dispatch = createPlayerDispatcher(this);
+  connectedCallback() {
+    this.dispatch = createProviderDispatcher(this);
     // @TODO change this if view is of type audio.
-    this.dispatch(PlayerProp.viewType, ViewType.Video);
+    this.dispatch('viewType', ViewType.Video);
   }
 
   /**
@@ -68,13 +68,13 @@ export class Name implements MediaProvider {
       play: async () => {},
       pause: async () => {},
       canPlay: async () => false,
-      setCurrentTime: async (time: number) => { console.log(time); },
-      setMuted: async (muted: boolean) => { console.log(muted); },
-      setVolume: async (volume: number) => { console.log(volume); },
+      setCurrentTime: async (time: number) => { this.logger!.log(time); },
+      setMuted: async (muted: boolean) => { this.logger!.log(muted); },
+      setVolume: async (volume: number) => { this.logger!.log(volume); },
       // canSetPlaybackRate: async () => false,
-      // setPlaybackRate: async (playbackRate: number) => { console.log(playbackRate); },
+      // setPlaybackRate: async (playbackRate: number) => {},
       // canSetPlaybackQuality: async () => false,
-      // setPlaybackQuality: async (playbackQuality: string) => { console.log(playbackQuality); },
+      // setPlaybackQuality: async (playbackQuality: string) => {},
       // canSetFullscreen: async () => false,
       // enterFullscreen: async () => {},
       // exitFullscreen: async () => {},

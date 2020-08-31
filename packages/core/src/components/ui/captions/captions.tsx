@@ -1,7 +1,7 @@
 import {
   h, Component, Prop, Watch, Host, State, Event, EventEmitter,
 } from '@stencil/core';
-import { PlayerProps, PlayerProp } from '../../core/player/PlayerProp';
+import { PlayerProps } from '../../core/player/PlayerProps';
 import { withPlayerContext } from '../../core/player/PlayerContext';
 import { Disposal } from '../../core/player/Disposal';
 import { isUndefined } from '../../../utils/unit';
@@ -48,22 +48,22 @@ export class Captions {
   /**
    * @internal
    */
-  @Prop() isControlsActive: PlayerProps[PlayerProp.isControlsActive] = false;
+  @Prop() isControlsActive: PlayerProps['isControlsActive'] = false;
 
   /**
    * @internal
    */
-  @Prop() isVideoView: PlayerProps[PlayerProp.isVideoView] = false;
+  @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
   /**
    * @internal
    */
-  @Prop() playbackStarted: PlayerProps[PlayerProp.playbackStarted] = false;
+  @Prop() playbackStarted: PlayerProps['playbackStarted'] = false;
 
   /**
    * @internal
    */
-  @Prop() textTracks?: PlayerProps[PlayerProp.textTracks];
+  @Prop() textTracks?: PlayerProps['textTracks'];
 
   /**
    * Emitted when the current track changes.
@@ -176,8 +176,8 @@ export class Captions {
 }
 
 withPlayerContext(Captions, [
-  PlayerProp.isVideoView,
-  PlayerProp.playbackStarted,
-  PlayerProp.isControlsActive,
-  PlayerProp.textTracks,
+  'isVideoView',
+  'playbackStarted',
+  'isControlsActive',
+  'textTracks',
 ]);

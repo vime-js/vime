@@ -12,7 +12,7 @@
 
 ```ts title="playback-control.ts"
 import { Component, ElementRef } from '@angular/core';
-import { PlayerProp, VimeComponent } from '@vime/angular';
+import { VimeComponent } from '@vime/angular';
 
 @Component({
   selector: 'playback-control',
@@ -24,7 +24,7 @@ class PlaybackControl extends VimeComponent {
   i18n = {};
 
   constructor(protected ref: ElementRef) {
-    super([PlayerProp.paused, PlayerProp.i18n]);
+    super(['paused', 'i18n']);
   }
 
   get icon() {

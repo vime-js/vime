@@ -14,7 +14,7 @@
 ```html {4}
 <script lang="ts">
   import {
-    useInternalPlayerStore,
+    usePlayerStore,
     VimeControl,
     VimeIcon,
     VimeTooltip,
@@ -22,7 +22,7 @@
 
   let ref: VimeControl;
 
-  const { paused, i18n } = useInternalPlayerStore(() => ref);
+  const { paused, i18n } = usePlayerStore(() => ref);
 
   const onClick = () => {
     $paused = !$paused;

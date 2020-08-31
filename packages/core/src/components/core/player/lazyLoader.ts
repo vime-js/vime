@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-
 import { isNull } from '../../../utils/unit';
 import { Disposal } from './Disposal';
+import { IS_CLIENT } from '../../../utils/support';
 
 /**
  * @inspiredby https://github.com/ApoorvSaxena/lozad.js/blob/master/src/lozad.js
@@ -67,7 +67,7 @@ export const lazyLoader = (
 ) => {
   const disposal = new Disposal();
 
-  if (typeof window !== 'undefined' && window.IntersectionObserver) {
+  if (IS_CLIENT && window.IntersectionObserver) {
     const observer = new IntersectionObserver(onIntersection, options);
     observer!.observe(player);
     disposal.add(() => { observer!.unobserve(player); });

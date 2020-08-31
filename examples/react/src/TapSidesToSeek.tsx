@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { PlayerProp, useInternalPlayerContext } from "@vime/react";
+import { usePlayerContext } from "@vime/react";
 import './TapSidesToSeek.css';
 
 function TapSidesToSeek() {
@@ -10,10 +10,10 @@ function TapSidesToSeek() {
   const ref = useRef(null);
 
   // Little utility hook to get the current player, incase you need to call a method.
-  // const player = usePlayer(ref);
+  // *** -> const player = usePlayer(ref);
 
-  const [currentTime, setCurrentTime] = useInternalPlayerContext(ref, PlayerProp.currentTime, 0);
-  const [duration] = useInternalPlayerContext(ref, PlayerProp.duration, -1);
+  const [currentTime, setCurrentTime] = usePlayerContext(ref, 'currentTime', 0);
+  const [duration] = usePlayerContext(ref, 'duration', -1);
 
   const onSeekBackward = () => {
     if (currentTime < 5) return;

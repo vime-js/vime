@@ -1,7 +1,7 @@
 import {
   h, Host, Component, Prop,
 } from '@stencil/core';
-import { PlayerProps, PlayerProp } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { TooltipDirection } from '../../tooltip/types';
 import { isUndefined } from '../../../../utils/unit';
@@ -46,21 +46,21 @@ export class CaptionControl implements KeyboardControl {
   /**
    * @internal
    */
-  @Prop() currentCaption?: PlayerProps[PlayerProp.currentCaption];
+  @Prop() currentCaption?: PlayerProps['currentCaption'];
 
   /**
    * @internal
    */
-  @Prop() isCaptionsActive: PlayerProps[PlayerProp.isCaptionsActive] = false;
+  @Prop() isCaptionsActive: PlayerProps['isCaptionsActive'] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
   private onClick() {
     const player = findRootPlayer(this);
-    player.toggleCaptionsVisiblity();
+    player.toggleCaptionsVisibility();
   }
 
   render() {
@@ -96,7 +96,7 @@ export class CaptionControl implements KeyboardControl {
 }
 
 withPlayerContext(CaptionControl, [
-  PlayerProp.isCaptionsActive,
-  PlayerProp.currentCaption,
-  PlayerProp.i18n,
+  'isCaptionsActive',
+  'currentCaption',
+  'i18n',
 ]);

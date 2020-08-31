@@ -1,8 +1,4 @@
-import {
-  createPlayerDispatcher,
-  PlayerProp,
-  usePlayerContext,
-} from '@vime/core';
+import { createDispatcher, PlayerProp, usePlayerContext } from '@vime/core';
 
 const findPlayer = (component: any): HTMLVimePlayerElement | null => {
   while (!(/^VIME-PLAYER$/.test(component.$el?.nodeName))) {
@@ -33,7 +29,7 @@ export const VimeMixin = (props: PlayerProp[]) => ({
   mounted() {
     this.player = findPlayer(this);
     if (this.player === null) return;
-    this.playerDispatch = createPlayerDispatcher(this.$el);
+    this.playerDispatch = createDispatcher(this.$el);
     this.unbindPlayerContext = usePlayerContext(
       this.$el,
       props,

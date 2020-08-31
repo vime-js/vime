@@ -16,7 +16,7 @@ interface VimeFaketubeProps {
   controls?: Components.VimeFaketube["controls"]
   
   /**  */
-  debug?: Components.VimeFaketube["debug"]
+  logger?: Components.VimeFaketube["logger"]
   
   /**  */
   loop?: Components.VimeFaketube["loop"]
@@ -72,10 +72,9 @@ function create_fragment(ctx) {
 			set_custom_element_data(vime_faketube, "language", /*language*/ ctx[0]);
 			set_custom_element_data(vime_faketube, "autoplay", /*autoplay*/ ctx[1]);
 			set_custom_element_data(vime_faketube, "controls", /*controls*/ ctx[2]);
-			set_custom_element_data(vime_faketube, "debug", /*debug*/ ctx[3]);
-			set_custom_element_data(vime_faketube, "loop", /*loop*/ ctx[4]);
-			set_custom_element_data(vime_faketube, "muted", /*muted*/ ctx[5]);
-			set_custom_element_data(vime_faketube, "playsinline", /*playsinline*/ ctx[6]);
+			set_custom_element_data(vime_faketube, "loop", /*loop*/ ctx[3]);
+			set_custom_element_data(vime_faketube, "muted", /*muted*/ ctx[4]);
+			set_custom_element_data(vime_faketube, "playsinline", /*playsinline*/ ctx[5]);
 		},
 		m(target, anchor) {
 			insert(target, vime_faketube, anchor);
@@ -88,7 +87,7 @@ function create_fragment(ctx) {
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(vime_faketube, "vLoadStart", /*onEvent*/ ctx[8]);
+				dispose = listen(vime_faketube, "vLoadStart", /*onEvent*/ ctx[7]);
 				mounted = true;
 			}
 		},
@@ -111,20 +110,16 @@ function create_fragment(ctx) {
 				set_custom_element_data(vime_faketube, "controls", /*controls*/ ctx[2]);
 			}
 
-			if (!current || dirty & /*debug*/ 8) {
-				set_custom_element_data(vime_faketube, "debug", /*debug*/ ctx[3]);
+			if (!current || dirty & /*loop*/ 8) {
+				set_custom_element_data(vime_faketube, "loop", /*loop*/ ctx[3]);
 			}
 
-			if (!current || dirty & /*loop*/ 16) {
-				set_custom_element_data(vime_faketube, "loop", /*loop*/ ctx[4]);
+			if (!current || dirty & /*muted*/ 16) {
+				set_custom_element_data(vime_faketube, "muted", /*muted*/ ctx[4]);
 			}
 
-			if (!current || dirty & /*muted*/ 32) {
-				set_custom_element_data(vime_faketube, "muted", /*muted*/ ctx[5]);
-			}
-
-			if (!current || dirty & /*playsinline*/ 64) {
-				set_custom_element_data(vime_faketube, "playsinline", /*playsinline*/ ctx[6]);
+			if (!current || dirty & /*playsinline*/ 32) {
+				set_custom_element_data(vime_faketube, "playsinline", /*playsinline*/ ctx[5]);
 			}
 		},
 		i(local) {
@@ -153,21 +148,21 @@ function instance($$self, $$props, $$invalidate) {
 	let { language = undefined } = $$props;
 	let { autoplay = undefined } = $$props;
 	let { controls = undefined } = $$props;
-	let { debug = undefined } = $$props;
+	let { logger = undefined } = $$props;
 	let { loop = undefined } = $$props;
 	let { muted = undefined } = $$props;
 	let { playsinline = undefined } = $$props;
 	const getAdapter = (...args) => __ref.getAdapter(...args);
 	const dispatchLoadStart = (...args) => __ref.dispatchLoadStart(...args);
-	const dispatchStateChange = (...args) => __ref.dispatchStateChange(...args);
+	const dispatchChange = (...args) => __ref.dispatchChange(...args);
 	const getWebComponent = () => __ref;
 
 	onMount(() => {
-		__mounted = true;
+		$$invalidate(16, __mounted = true);
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(7, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(6, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -180,7 +175,7 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_faketube_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(7, __ref);
+			$$invalidate(6, __ref);
 		});
 	}
 
@@ -188,26 +183,32 @@ function instance($$self, $$props, $$invalidate) {
 		if ("language" in $$props) $$invalidate(0, language = $$props.language);
 		if ("autoplay" in $$props) $$invalidate(1, autoplay = $$props.autoplay);
 		if ("controls" in $$props) $$invalidate(2, controls = $$props.controls);
-		if ("debug" in $$props) $$invalidate(3, debug = $$props.debug);
-		if ("loop" in $$props) $$invalidate(4, loop = $$props.loop);
-		if ("muted" in $$props) $$invalidate(5, muted = $$props.muted);
-		if ("playsinline" in $$props) $$invalidate(6, playsinline = $$props.playsinline);
+		if ("logger" in $$props) $$invalidate(8, logger = $$props.logger);
+		if ("loop" in $$props) $$invalidate(3, loop = $$props.loop);
+		if ("muted" in $$props) $$invalidate(4, muted = $$props.muted);
+		if ("playsinline" in $$props) $$invalidate(5, playsinline = $$props.playsinline);
 		if ("$$scope" in $$props) $$invalidate(13, $$scope = $$props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*__mounted, logger*/ 65792) {
+			$: if (__mounted) setProp("logger", logger);
+		}
 	};
 
 	return [
 		language,
 		autoplay,
 		controls,
-		debug,
 		loop,
 		muted,
 		playsinline,
 		__ref,
 		onEvent,
+		logger,
 		getAdapter,
 		dispatchLoadStart,
-		dispatchStateChange,
+		dispatchChange,
 		getWebComponent,
 		$$scope,
 		$$slots,
@@ -235,13 +236,13 @@ class VimeFaketube extends SvelteComponent {
 			language: 0,
 			autoplay: 1,
 			controls: 2,
-			debug: 3,
-			loop: 4,
-			muted: 5,
-			playsinline: 6,
+			logger: 8,
+			loop: 3,
+			muted: 4,
+			playsinline: 5,
 			getAdapter: 9,
 			dispatchLoadStart: 10,
-			dispatchStateChange: 11,
+			dispatchChange: 11,
 			getWebComponent: 12
 		});
 	}
@@ -260,7 +261,7 @@ class VimeFaketube extends SvelteComponent {
 
 	
   /** Dispatches a state change event. */
- get dispatchStateChange(): Components.VimeFaketube["dispatchStateChange"] {
+ get dispatchChange(): Components.VimeFaketube["dispatchChange"] {
 		return this.$$.ctx[11];
 	}
 

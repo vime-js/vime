@@ -21,7 +21,7 @@ interface VimeFullscreenControlProps {
   /** Scale the size of the control up/down by the amount given. */
   scale?: Components.VimeFullscreenControl["scale"]
   
-  /** A slash (`/`) seperated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in
+  /** A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in
 a `keydown` event, will trigger a `click` event on the control. */
   keys?: Components.VimeFullscreenControl["keys"]
   

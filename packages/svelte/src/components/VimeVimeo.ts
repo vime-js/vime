@@ -29,7 +29,7 @@ might override this value. */
   controls?: Components.VimeVimeo["controls"]
   
   /**  */
-  debug?: Components.VimeVimeo["debug"]
+  logger?: Components.VimeVimeo["logger"]
   
   /**  */
   loop?: Components.VimeVimeo["loop"]
@@ -89,10 +89,9 @@ function create_fragment(ctx) {
 			set_custom_element_data(vime_vimeo, "language", /*language*/ ctx[4]);
 			set_custom_element_data(vime_vimeo, "autoplay", /*autoplay*/ ctx[5]);
 			set_custom_element_data(vime_vimeo, "controls", /*controls*/ ctx[6]);
-			set_custom_element_data(vime_vimeo, "debug", /*debug*/ ctx[7]);
-			set_custom_element_data(vime_vimeo, "loop", /*loop*/ ctx[8]);
-			set_custom_element_data(vime_vimeo, "muted", /*muted*/ ctx[9]);
-			set_custom_element_data(vime_vimeo, "playsinline", /*playsinline*/ ctx[10]);
+			set_custom_element_data(vime_vimeo, "loop", /*loop*/ ctx[7]);
+			set_custom_element_data(vime_vimeo, "muted", /*muted*/ ctx[8]);
+			set_custom_element_data(vime_vimeo, "playsinline", /*playsinline*/ ctx[9]);
 		},
 		m(target, anchor) {
 			insert(target, vime_vimeo, anchor);
@@ -105,7 +104,7 @@ function create_fragment(ctx) {
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(vime_vimeo, "vLoadStart", /*onEvent*/ ctx[12]);
+				dispose = listen(vime_vimeo, "vLoadStart", /*onEvent*/ ctx[11]);
 				mounted = true;
 			}
 		},
@@ -144,20 +143,16 @@ function create_fragment(ctx) {
 				set_custom_element_data(vime_vimeo, "controls", /*controls*/ ctx[6]);
 			}
 
-			if (!current || dirty & /*debug*/ 128) {
-				set_custom_element_data(vime_vimeo, "debug", /*debug*/ ctx[7]);
+			if (!current || dirty & /*loop*/ 128) {
+				set_custom_element_data(vime_vimeo, "loop", /*loop*/ ctx[7]);
 			}
 
-			if (!current || dirty & /*loop*/ 256) {
-				set_custom_element_data(vime_vimeo, "loop", /*loop*/ ctx[8]);
+			if (!current || dirty & /*muted*/ 256) {
+				set_custom_element_data(vime_vimeo, "muted", /*muted*/ ctx[8]);
 			}
 
-			if (!current || dirty & /*muted*/ 512) {
-				set_custom_element_data(vime_vimeo, "muted", /*muted*/ ctx[9]);
-			}
-
-			if (!current || dirty & /*playsinline*/ 1024) {
-				set_custom_element_data(vime_vimeo, "playsinline", /*playsinline*/ ctx[10]);
+			if (!current || dirty & /*playsinline*/ 512) {
+				set_custom_element_data(vime_vimeo, "playsinline", /*playsinline*/ ctx[9]);
 			}
 		},
 		i(local) {
@@ -190,7 +185,7 @@ function instance($$self, $$props, $$invalidate) {
 	let { language = undefined } = $$props;
 	let { autoplay = undefined } = $$props;
 	let { controls = undefined } = $$props;
-	let { debug = undefined } = $$props;
+	let { logger = undefined } = $$props;
 	let { loop = undefined } = $$props;
 	let { muted = undefined } = $$props;
 	let { playsinline = undefined } = $$props;
@@ -198,11 +193,11 @@ function instance($$self, $$props, $$invalidate) {
 	const getWebComponent = () => __ref;
 
 	onMount(() => {
-		__mounted = true;
+		$$invalidate(18, __mounted = true);
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(11, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(10, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -215,7 +210,7 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_vimeo_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(11, __ref);
+			$$invalidate(10, __ref);
 		});
 	}
 
@@ -227,11 +222,17 @@ function instance($$self, $$props, $$invalidate) {
 		if ("language" in $$props) $$invalidate(4, language = $$props.language);
 		if ("autoplay" in $$props) $$invalidate(5, autoplay = $$props.autoplay);
 		if ("controls" in $$props) $$invalidate(6, controls = $$props.controls);
-		if ("debug" in $$props) $$invalidate(7, debug = $$props.debug);
-		if ("loop" in $$props) $$invalidate(8, loop = $$props.loop);
-		if ("muted" in $$props) $$invalidate(9, muted = $$props.muted);
-		if ("playsinline" in $$props) $$invalidate(10, playsinline = $$props.playsinline);
+		if ("logger" in $$props) $$invalidate(12, logger = $$props.logger);
+		if ("loop" in $$props) $$invalidate(7, loop = $$props.loop);
+		if ("muted" in $$props) $$invalidate(8, muted = $$props.muted);
+		if ("playsinline" in $$props) $$invalidate(9, playsinline = $$props.playsinline);
 		if ("$$scope" in $$props) $$invalidate(15, $$scope = $$props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*__mounted, logger*/ 266240) {
+			$: if (__mounted) setProp("logger", logger);
+		}
 	};
 
 	return [
@@ -242,12 +243,12 @@ function instance($$self, $$props, $$invalidate) {
 		language,
 		autoplay,
 		controls,
-		debug,
 		loop,
 		muted,
 		playsinline,
 		__ref,
 		onEvent,
+		logger,
 		getAdapter,
 		getWebComponent,
 		$$scope,
@@ -280,10 +281,10 @@ class VimeVimeo extends SvelteComponent {
 			language: 4,
 			autoplay: 5,
 			controls: 6,
-			debug: 7,
-			loop: 8,
-			muted: 9,
-			playsinline: 10,
+			logger: 12,
+			loop: 7,
+			muted: 8,
+			playsinline: 9,
 			getAdapter: 13,
 			getWebComponent: 14
 		});

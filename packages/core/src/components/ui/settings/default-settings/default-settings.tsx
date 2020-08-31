@@ -2,11 +2,11 @@ import {
   h, Component, Prop, Watch, forceUpdate,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
 import { isUndefined } from '../../../../utils/unit';
-import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
+import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
 import { findRootPlayer } from '../../../core/player/utils';
 
 /**
@@ -19,7 +19,7 @@ import { findRootPlayer } from '../../../core/player/utils';
 export class DefaultSettings {
   private textTracksDisposal = new Disposal();
 
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: Dispatcher;
 
   private player?: HTMLVimePlayerElement;
 
@@ -32,42 +32,42 @@ export class DefaultSettings {
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
   /**
    * @internal
    */
-  @Prop() playbackRate: PlayerProps[PlayerProp.playbackRate] = 1;
+  @Prop() playbackRate: PlayerProps['playbackRate'] = 1;
 
   /**
    * @internal
    */
-  @Prop() playbackRates: PlayerProps[PlayerProp.playbackRates] = [1];
+  @Prop() playbackRates: PlayerProps['playbackRates'] = [1];
 
   /**
    * @internal
    */
-  @Prop() playbackQuality?: PlayerProps[PlayerProp.playbackQuality];
+  @Prop() playbackQuality?: PlayerProps['playbackQuality'];
 
   /**
    * @internal
    */
-  @Prop() playbackQualities: PlayerProps[PlayerProp.playbackQualities] = [];
+  @Prop() playbackQualities: PlayerProps['playbackQualities'] = [];
 
   /**
    * @internal
    */
-  @Prop() isCaptionsActive: PlayerProps[PlayerProp.isCaptionsActive] = false;
+  @Prop() isCaptionsActive: PlayerProps['isCaptionsActive'] = false;
 
   /**
    * @internal
    */
-  @Prop() currentCaption?: PlayerProps[PlayerProp.currentCaption];
+  @Prop() currentCaption?: PlayerProps['currentCaption'];
 
   /**
    * @internal
    */
-  @Prop() textTracks?: PlayerProps[PlayerProp.textTracks];
+  @Prop() textTracks?: PlayerProps['textTracks'];
 
   @Watch('textTracks')
   onTextTracksChange() {
@@ -78,10 +78,10 @@ export class DefaultSettings {
     }));
   }
 
-  componentWillLoad() {
+  connectedCallback() {
     this.skipFirstRender = true;
     this.player = findRootPlayer(this);
-    this.dispatch = createPlayerDispatcher(this);
+    this.dispatch = createDispatcher(this);
   }
 
   private skipFirstRender = true;
@@ -106,7 +106,7 @@ export class DefaultSettings {
 
   private onPlaybackRateSelect(event: Event) {
     const radio = event.target as HTMLVimeMenuRadioElement;
-    this.dispatch(PlayerProp.playbackRate, parseFloat(radio.value));
+    this.dispatch('playbackRate', parseFloat(radio.value));
   }
 
   private async buildPlaybackRateSubmenu() {
@@ -142,7 +142,7 @@ export class DefaultSettings {
 
   private onPlaybackQualitySelect(event: Event) {
     const radio = event.target as HTMLVimeMenuRadioElement;
-    this.dispatch(PlayerProp.playbackQuality, radio.value);
+    this.dispatch('playbackQuality', radio.value);
   }
 
   private async buildPlaybackQualitySubmenu() {
@@ -192,7 +192,7 @@ export class DefaultSettings {
     const player = findRootPlayer(this);
 
     if (index === -1) {
-      await player.toggleCaptionsVisiblity(false);
+      await player.toggleCaptionsVisibility(false);
       return;
     }
 
@@ -200,7 +200,7 @@ export class DefaultSettings {
     if (!isUndefined(track)) {
       if (!isUndefined(this.currentCaption)) this.currentCaption!.mode = 'disabled';
       track.mode = 'showing';
-      await player.toggleCaptionsVisiblity(true);
+      await player.toggleCaptionsVisibility(true);
     }
   }
 
@@ -263,12 +263,12 @@ export class DefaultSettings {
 }
 
 withPlayerContext(DefaultSettings, [
-  PlayerProp.i18n,
-  PlayerProp.playbackRate,
-  PlayerProp.playbackRates,
-  PlayerProp.playbackQuality,
-  PlayerProp.playbackQualities,
-  PlayerProp.isCaptionsActive,
-  PlayerProp.currentCaption,
-  PlayerProp.textTracks,
+  'i18n',
+  'playbackRate',
+  'playbackRates',
+  'playbackQuality',
+  'playbackQualities',
+  'isCaptionsActive',
+  'currentCaption',
+  'textTracks',
 ]);

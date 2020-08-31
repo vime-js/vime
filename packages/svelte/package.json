@@ -5,10 +5,11 @@
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
+  "svelte": "src/svelte.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist/",
-    "src/svelte/"
+    "src/"
   ],
   "contributors": [
     "Rahim Alwer <rahim_alwer@outlook.com>"
@@ -27,7 +28,7 @@
     "release": "semantic-release -e ../../scripts/semantic-release"
   },
   "dependencies": {
-    "@vime/core": "^1.8.1"
+    "@vime/core": "^1.11.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",

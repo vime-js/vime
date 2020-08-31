@@ -14,7 +14,7 @@ export let portrait = undefined;
 export let language = undefined;
 export let autoplay = undefined;
 export let controls = undefined;
-export let debug = undefined;
+export let logger = undefined;
 export let loop = undefined;
 export let muted = undefined;
 export let playsinline = undefined;
@@ -27,7 +27,7 @@ onMount(() => { __mounted = true; });
 
 const setProp = (prop, value) => { if (__ref) __ref[prop] = value; };
 
-
+$: if (__mounted) setProp('logger', logger);
 
 const onEvent = (e) => {
   e.stopPropagation();
@@ -43,7 +43,6 @@ const onEvent = (e) => {
   language={language}
   autoplay={autoplay}
   controls={controls}
-  debug={debug}
   loop={loop}
   muted={muted}
   playsinline={playsinline}

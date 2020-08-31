@@ -3,18 +3,18 @@ import {
 } from '@stencil/core';
 import { MediaProvider, withProviderContext } from '../MediaProvider';
 import { decodeJSON, loadImage } from '../../../utils/network';
-import { createPlayerDispatcher, PlayerDispatcher } from '../../core/player/PlayerDispatcher';
 import { YouTubeCommand, YouTubeCommandArg } from './YouTubeCommand';
 import { YouTubeParams } from './YouTubeParams';
 import {
   isString, isNumber, isArray, isBoolean, isObject,
 } from '../../../utils/unit';
-import { PlayerProp } from '../../core/player/PlayerProp';
 import { mapYouTubePlaybackQuality } from './YouTubePlaybackQuality';
 import { MediaType } from '../../core/player/MediaType';
 import { ViewType } from '../../core/player/ViewType';
 import { YouTubePlayerState } from './YouTubePlayerState';
 import { YouTubeMessage } from './YouTubeMessage';
+import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
+import { Logger } from '../../core/player/PlayerLogger';
 
 @Component({
   tag: 'vime-youtube',
@@ -22,7 +22,7 @@ import { YouTubeMessage } from './YouTubeMessage';
 export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   private embed!: HTMLVimeEmbedElement;
 
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: ProviderDispatcher;
 
   private defaultInternalState: any = {};
 
@@ -85,7 +85,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   /**
    * @internal
    */
-  @Prop() debug = false;
+  @Prop() logger?: Logger;
 
   /**
    * @internal
@@ -107,9 +107,9 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
-  componentWillLoad() {
-    this.dispatch = createPlayerDispatcher(this);
-    this.dispatch(PlayerProp.viewType, ViewType.Video);
+  connectedCallback() {
+    this.dispatch = createProviderDispatcher(this);
+    this.dispatch('viewType', ViewType.Video);
     this.onVideoIdChange();
     this.initialMuted = this.muted;
     this.defaultInternalState = { ...this.internalState };
@@ -203,7 +203,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     return loadImage(posterURL('maxresdefault'), 121) // 1080p (no padding)
       .catch(() => loadImage(posterURL('sddefault'), 121)) // 640p (padded 4:3)
       .catch(() => loadImage(posterURL('hqdefault'), 121)) // 480p (padded 4:3)
-      .then((img) => { this.dispatch(PlayerProp.currentPoster, img.src); });
+      .then((img) => { this.dispatch('currentPoster', img.src); });
   }
 
   private onPlayerStateChange(state: YouTubePlayerState) {
@@ -212,15 +212,15 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     const isPlaying = (state === YouTubePlayerState.Playing);
     const isBuffering = (state === YouTubePlayerState.Buffering);
 
-    this.dispatch(PlayerProp.buffering, isBuffering);
+    this.dispatch('buffering', isBuffering);
 
     // Attempt to detect `play` events early.
     if (this.internalState.paused && (isBuffering || isPlaying)) {
       this.internalState.paused = false;
-      this.dispatch(PlayerProp.paused, false);
+      this.dispatch('paused', false);
 
       if (!this.internalState.playbackStarted) {
-        this.dispatch(PlayerProp.playbackStarted, true);
+        this.dispatch('playbackStarted', true);
         this.internalState.playbackStarted = true;
       }
     }
@@ -228,25 +228,25 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     switch (state) {
       case YouTubePlayerState.Cued:
         this.internalState = { ...this.defaultInternalState };
-        this.dispatch(PlayerProp.currentSrc, this.embedSrc);
-        this.dispatch(PlayerProp.mediaType, MediaType.Video);
+        this.dispatch('currentSrc', this.embedSrc);
+        this.dispatch('mediaType', MediaType.Video);
         this.pendingPosterFetch!.then(() => {
-          this.dispatch(PlayerProp.playbackReady, true);
+          this.dispatch('playbackReady', true);
           this.pendingPosterFetch = undefined;
         });
         break;
       case YouTubePlayerState.Playing:
-        this.dispatch(PlayerProp.playing, true);
+        this.dispatch('playing', true);
         break;
       case YouTubePlayerState.Paused:
         this.internalState.paused = true;
-        this.dispatch(PlayerProp.paused, true);
+        this.dispatch('paused', true);
         break;
       case YouTubePlayerState.Ended:
         if (this.loop) {
           window.setTimeout(() => { this.remoteControl(YouTubeCommand.Play); }, 150);
         } else {
-          this.dispatch(PlayerProp.playbackEnded, true);
+          this.dispatch('playbackEnded', true);
         }
         break;
     }
@@ -267,19 +267,19 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
 
   private onTimeChange(time: number) {
     const currentTime = this.calcCurrentTime(time);
-    this.dispatch(PlayerProp.currentTime, currentTime);
+    this.dispatch('currentTime', currentTime);
 
     // This is the only way to detect `seeking`.
     if (Math.abs(this.internalState.currentTime - currentTime) > 1.5) {
       this.internalState.seeking = true;
-      this.dispatch(PlayerProp.seeking, true);
+      this.dispatch('seeking', true);
     }
 
     this.internalState.currentTime = currentTime;
   }
 
   private onBufferedChange(buffered: number) {
-    this.dispatch(PlayerProp.buffered, buffered);
+    this.dispatch('buffered', buffered);
 
     /**
      * This is the only way to detect `seeked`. Unfortunately while the player is `paused` `seeking`
@@ -289,7 +289,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     if (this.internalState.seeking && (buffered > this.internalState.currentTime)) {
       window.setTimeout(() => {
         this.internalState.seeking = false;
-        this.dispatch(PlayerProp.seeking, false);
+        this.dispatch('seeking', false);
       }, this.internalState.paused ? 100 : 0);
     }
   }
@@ -300,20 +300,20 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
 
     if (!info) return;
 
-    if (isObject(info.videoData)) this.dispatch(PlayerProp.mediaTitle, info.videoData!.title);
+    if (isObject(info.videoData)) this.dispatch('mediaTitle', info.videoData!.title);
 
     if (isNumber(info.duration)) {
       this.internalState.duration = info.duration!;
-      this.dispatch(PlayerProp.duration, info.duration!);
+      this.dispatch('duration', info.duration!);
     }
 
     if (isArray(info.availablePlaybackRates)) {
-      this.dispatch(PlayerProp.playbackRates, info.availablePlaybackRates!);
+      this.dispatch('playbackRates', info.availablePlaybackRates!);
     }
 
     if (isNumber(info.playbackRate)) {
       this.internalState.playbackRate = info.playbackRate!;
-      this.dispatch(PlayerProp.playbackRate, info.playbackRate!);
+      this.dispatch('playbackRate', info.playbackRate!);
     }
 
     if (isNumber(info.currentTime)) this.onTimeChange(info.currentTime!);
@@ -326,19 +326,19 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
       this.onBufferedChange(info.videoLoadedFraction! * this.internalState.duration);
     }
 
-    if (isNumber(info.volume)) this.dispatch(PlayerProp.volume, info.volume!);
+    if (isNumber(info.volume)) this.dispatch('volume', info.volume!);
 
-    if (isBoolean(info.muted)) this.dispatch(PlayerProp.muted, info.muted!);
+    if (isBoolean(info.muted)) this.dispatch('muted', info.muted!);
 
     if (isArray(info.availableQualityLevels)) {
       this.dispatch(
-        PlayerProp.playbackQualities,
+        'playbackQualities',
         info.availableQualityLevels!.map((q) => mapYouTubePlaybackQuality(q)) as string[],
       );
     }
 
     if (isString(info.playbackQuality)) {
-      this.dispatch(PlayerProp.playbackQuality, mapYouTubePlaybackQuality(info.playbackQuality!));
+      this.dispatch('playbackQuality', mapYouTubePlaybackQuality(info.playbackQuality!));
     }
 
     if (isNumber(info.playerState)) this.onPlayerStateChange(info.playerState!);

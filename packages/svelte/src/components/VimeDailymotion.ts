@@ -41,7 +41,7 @@ Color set in the Partner HQ will override this prop. */
   controls?: Components.VimeDailymotion["controls"]
   
   /**  */
-  debug?: Components.VimeDailymotion["debug"]
+  logger?: Components.VimeDailymotion["logger"]
   
   /**  */
   loop?: Components.VimeDailymotion["loop"]
@@ -105,10 +105,9 @@ function create_fragment(ctx) {
 			set_custom_element_data(vime_dailymotion, "language", /*language*/ ctx[8]);
 			set_custom_element_data(vime_dailymotion, "autoplay", /*autoplay*/ ctx[9]);
 			set_custom_element_data(vime_dailymotion, "controls", /*controls*/ ctx[10]);
-			set_custom_element_data(vime_dailymotion, "debug", /*debug*/ ctx[11]);
-			set_custom_element_data(vime_dailymotion, "loop", /*loop*/ ctx[12]);
-			set_custom_element_data(vime_dailymotion, "muted", /*muted*/ ctx[13]);
-			set_custom_element_data(vime_dailymotion, "playsinline", /*playsinline*/ ctx[14]);
+			set_custom_element_data(vime_dailymotion, "loop", /*loop*/ ctx[11]);
+			set_custom_element_data(vime_dailymotion, "muted", /*muted*/ ctx[12]);
+			set_custom_element_data(vime_dailymotion, "playsinline", /*playsinline*/ ctx[13]);
 		},
 		m(target, anchor) {
 			insert(target, vime_dailymotion, anchor);
@@ -121,7 +120,7 @@ function create_fragment(ctx) {
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(vime_dailymotion, "vLoadStart", /*onEvent*/ ctx[16]);
+				dispose = listen(vime_dailymotion, "vLoadStart", /*onEvent*/ ctx[15]);
 				mounted = true;
 			}
 		},
@@ -176,20 +175,16 @@ function create_fragment(ctx) {
 				set_custom_element_data(vime_dailymotion, "controls", /*controls*/ ctx[10]);
 			}
 
-			if (!current || dirty & /*debug*/ 2048) {
-				set_custom_element_data(vime_dailymotion, "debug", /*debug*/ ctx[11]);
+			if (!current || dirty & /*loop*/ 2048) {
+				set_custom_element_data(vime_dailymotion, "loop", /*loop*/ ctx[11]);
 			}
 
-			if (!current || dirty & /*loop*/ 4096) {
-				set_custom_element_data(vime_dailymotion, "loop", /*loop*/ ctx[12]);
+			if (!current || dirty & /*muted*/ 4096) {
+				set_custom_element_data(vime_dailymotion, "muted", /*muted*/ ctx[12]);
 			}
 
-			if (!current || dirty & /*muted*/ 8192) {
-				set_custom_element_data(vime_dailymotion, "muted", /*muted*/ ctx[13]);
-			}
-
-			if (!current || dirty & /*playsinline*/ 16384) {
-				set_custom_element_data(vime_dailymotion, "playsinline", /*playsinline*/ ctx[14]);
+			if (!current || dirty & /*playsinline*/ 8192) {
+				set_custom_element_data(vime_dailymotion, "playsinline", /*playsinline*/ ctx[13]);
 			}
 		},
 		i(local) {
@@ -226,7 +221,7 @@ function instance($$self, $$props, $$invalidate) {
 	let { language = undefined } = $$props;
 	let { autoplay = undefined } = $$props;
 	let { controls = undefined } = $$props;
-	let { debug = undefined } = $$props;
+	let { logger = undefined } = $$props;
 	let { loop = undefined } = $$props;
 	let { muted = undefined } = $$props;
 	let { playsinline = undefined } = $$props;
@@ -234,11 +229,11 @@ function instance($$self, $$props, $$invalidate) {
 	const getWebComponent = () => __ref;
 
 	onMount(() => {
-		__mounted = true;
+		$$invalidate(22, __mounted = true);
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(15, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(14, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -251,7 +246,7 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_dailymotion_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(15, __ref);
+			$$invalidate(14, __ref);
 		});
 	}
 
@@ -267,11 +262,17 @@ function instance($$self, $$props, $$invalidate) {
 		if ("language" in $$props) $$invalidate(8, language = $$props.language);
 		if ("autoplay" in $$props) $$invalidate(9, autoplay = $$props.autoplay);
 		if ("controls" in $$props) $$invalidate(10, controls = $$props.controls);
-		if ("debug" in $$props) $$invalidate(11, debug = $$props.debug);
-		if ("loop" in $$props) $$invalidate(12, loop = $$props.loop);
-		if ("muted" in $$props) $$invalidate(13, muted = $$props.muted);
-		if ("playsinline" in $$props) $$invalidate(14, playsinline = $$props.playsinline);
+		if ("logger" in $$props) $$invalidate(16, logger = $$props.logger);
+		if ("loop" in $$props) $$invalidate(11, loop = $$props.loop);
+		if ("muted" in $$props) $$invalidate(12, muted = $$props.muted);
+		if ("playsinline" in $$props) $$invalidate(13, playsinline = $$props.playsinline);
 		if ("$$scope" in $$props) $$invalidate(19, $$scope = $$props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*__mounted, logger*/ 4259840) {
+			$: if (__mounted) setProp("logger", logger);
+		}
 	};
 
 	return [
@@ -286,12 +287,12 @@ function instance($$self, $$props, $$invalidate) {
 		language,
 		autoplay,
 		controls,
-		debug,
 		loop,
 		muted,
 		playsinline,
 		__ref,
 		onEvent,
+		logger,
 		getAdapter,
 		getWebComponent,
 		$$scope,
@@ -328,10 +329,10 @@ class VimeDailymotion extends SvelteComponent {
 			language: 8,
 			autoplay: 9,
 			controls: 10,
-			debug: 11,
-			loop: 12,
-			muted: 13,
-			playsinline: 14,
+			logger: 16,
+			loop: 11,
+			muted: 12,
+			playsinline: 13,
 			getAdapter: 17,
 			getWebComponent: 18
 		});

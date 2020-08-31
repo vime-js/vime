@@ -2,8 +2,8 @@ import {
   h, Host, Component, Prop, State, Watch,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { PlayerProp, PlayerProps } from '../../../core/player/PlayerProp';
-import { PlayerDispatcher, createPlayerDispatcher } from '../../../core/player/PlayerDispatcher';
+import { PlayerProps } from '../../../core/player/PlayerProps';
+import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
 import { TooltipDirection } from '../../tooltip/types';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
@@ -14,7 +14,7 @@ import { findRootPlayer } from '../../../core/player/utils';
   styleUrl: 'volume-control.scss',
 })
 export class VolumeControl {
-  private dispatch!: PlayerDispatcher;
+  private dispatch!: Dispatcher;
 
   private keyboardDisposal = new Disposal();
 
@@ -52,7 +52,7 @@ export class VolumeControl {
   @Prop() hideTooltip = false;
 
   /**
-   * A pipe (`/`) seperated string of JS keyboard keys, that when caught in a `keydown` event, will
+   * A pipe (`/`) separated string of JS keyboard keys, that when caught in a `keydown` event, will
    * toggle the muted state of the player.
    */
   @Prop() muteKeys?: string = 'm';
@@ -71,19 +71,19 @@ export class VolumeControl {
       if ((event.key !== 'ArrowUp') && (event.key !== 'ArrowDown')) return;
       const isUpArrow = (event.key === 'ArrowUp');
       const newVolume = isUpArrow ? Math.min(100, this.volume + 5) : Math.max(0, this.volume - 5);
-      this.dispatch(PlayerProp.volume, parseInt(`${newVolume}`, 10));
+      this.dispatch('volume', parseInt(`${newVolume}`, 10));
     }));
   }
 
   /**
    * @internal
    */
-  @Prop() muted: PlayerProps[PlayerProp.muted] = false;
+  @Prop() muted: PlayerProps['muted'] = false;
 
   /**
    * @internal
    */
-  @Prop() volume: PlayerProps[PlayerProp.volume] = 50;
+  @Prop() volume: PlayerProps['volume'] = 50;
 
   @Watch('muted')
   @Watch('volume')
@@ -91,7 +91,7 @@ export class VolumeControl {
     this.currentVolume = this.muted ? 0 : this.volume;
 
     if (!this.muted && this.prevMuted && this.volume === 0) {
-      this.dispatch(PlayerProp.volume, 30);
+      this.dispatch('volume', 30);
     }
 
     this.prevMuted = this.muted;
@@ -100,16 +100,16 @@ export class VolumeControl {
   /**
    * @internal
    */
-  @Prop() isMobile: PlayerProps[PlayerProp.isMobile] = false;
+  @Prop() isMobile: PlayerProps['isMobile'] = false;
 
   /**
    * @internal
    */
-  @Prop() i18n: PlayerProps[PlayerProp.i18n] = {};
+  @Prop() i18n: PlayerProps['i18n'] = {};
 
-  componentWillLoad() {
+  connectedCallback() {
     this.prevMuted = this.muted;
-    this.dispatch = createPlayerDispatcher(this);
+    this.dispatch = createDispatcher(this);
     this.onNoKeyboardChange();
   }
 
@@ -131,8 +131,8 @@ export class VolumeControl {
   private onVolumeChange(event: CustomEvent<number>) {
     const newVolume = event.detail;
     this.currentVolume = newVolume;
-    this.dispatch(PlayerProp.volume, newVolume);
-    this.dispatch(PlayerProp.muted, newVolume === 0);
+    this.dispatch('volume', newVolume);
+    this.dispatch('muted', newVolume === 0);
   }
 
   private onKeyDown(event: KeyboardEvent) {
@@ -176,8 +176,8 @@ export class VolumeControl {
 }
 
 withPlayerContext(VolumeControl, [
-  PlayerProp.volume,
-  PlayerProp.muted,
-  PlayerProp.isMobile,
-  PlayerProp.i18n,
+  'volume',
+  'muted',
+  'isMobile',
+  'i18n',
 ]);

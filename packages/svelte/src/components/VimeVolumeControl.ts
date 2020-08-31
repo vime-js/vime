@@ -21,7 +21,7 @@ interface VimeVolumeControlProps {
   /** Whether the tooltip should be hidden. */
   hideTooltip?: Components.VimeVolumeControl["hideTooltip"]
   
-  /** A pipe (`/`) seperated string of JS keyboard keys, that when caught in a `keydown` event, will
+  /** A pipe (`/`) separated string of JS keyboard keys, that when caught in a `keydown` event, will
 toggle the muted state of the player. */
   muteKeys?: Components.VimeVolumeControl["muteKeys"]
   

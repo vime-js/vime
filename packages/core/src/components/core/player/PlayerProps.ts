@@ -1,235 +1,264 @@
+import { en } from './lang/en';
 import { MediaType } from './MediaType';
+import { Logger } from './PlayerLogger';
 import { ViewType } from './ViewType';
 
-export enum PlayerProp {
-  theme= 'theme',
-  paused = 'paused',
-  playing = 'playing',
-  duration = 'duration',
-  mediaTitle = 'mediaTitle',
-  currentSrc = 'currentSrc',
-  currentPoster = 'currentPoster',
-  currentTime = 'currentTime',
-  seeking = 'seeking',
-  debug = 'debug',
-  ready = 'ready',
-  mounted = 'mounted',
-  destroyed = 'destroyed',
-  playbackStarted = 'playbackStarted',
-  playbackEnded = 'playbackEnded',
-  playbackRate= 'playbackRate',
-  playbackRates = 'playbackRates',
-  playbackQuality = 'playbackQuality',
-  playbackQualities= 'playbackQualities',
-  textTracks = 'textTracks',
-  errors = 'errors',
-  playbackReady = 'playbackReady',
-  buffered = 'buffered',
-  buffering = 'buffering',
-  // eslint-disable-next-line no-shadow
-  mediaType = 'mediaType',
-  isAudio = 'isAudio',
-  isVideo = 'isVideo',
-  // eslint-disable-next-line no-shadow
-  viewType = 'viewType',
-  isAudioView = 'isAudioView',
-  isVideoView = 'isVideoView',
-  isLive = 'isLive',
-  isCaptionsActive = 'isCaptionsActive',
-  isSettingsActive = 'isSettingsActive',
-  currentCaption = 'currentCaption',
-  isMobile = 'isMobile',
-  isTouch = 'isTouch',
-  isPiPActive = 'isPiPActive',
-  isFullscreenActive = 'isFullscreenActive',
-  playsinline = 'playsinline',
-  muted = 'muted',
-  volume = 'volume',
-  autopause = 'autopause',
-  controls = 'controls',
-  isControlsActive = 'isControlsActive',
-  autoplay = 'autoplay',
-  loop = 'loop',
-  aspectRatio = 'aspectRatio',
-  language = 'language',
-  languages = 'languages',
-  translations = 'translations',
-  i18n = 'i18n',
-}
-
-export type InternalReadonlyPlayerProps = Pick<PlayerProps, PlayerProp.autoplay
-| PlayerProp.controls
-| PlayerProp.debug
-| PlayerProp.loop
-| PlayerProp.ready
-| PlayerProp.mounted
-| PlayerProp.destroyed
-| PlayerProp.isAudio
-| PlayerProp.isVideo
-| PlayerProp.isMobile
-| PlayerProp.isTouch
-| PlayerProp.isAudioView
-| PlayerProp.isVideoView
-| PlayerProp.isLive
-| PlayerProp.currentCaption
-| PlayerProp.autopause
-| PlayerProp.aspectRatio
-| PlayerProp.playsinline
-| PlayerProp.languages
-| PlayerProp.i18n
->;
-
-export type InternalReadonlyPlayerProp = keyof InternalReadonlyPlayerProps;
-export type InternalWritablePlayerProps = Omit<PlayerProps, InternalReadonlyPlayerProp>;
-export type InternalWritablePlayerProp = keyof InternalWritablePlayerProps;
-
-export type ExternalWritablePlayerProps = Pick<PlayerProps, PlayerProp.autoplay
-| PlayerProp.autopause
-| PlayerProp.aspectRatio
-| PlayerProp.controls
-| PlayerProp.theme
-| PlayerProp.debug
-| PlayerProp.paused
-| PlayerProp.currentTime
-| PlayerProp.language
-| PlayerProp.loop
-| PlayerProp.playbackQuality
-| PlayerProp.muted
-| PlayerProp.playbackRate
-| PlayerProp.playsinline
-| PlayerProp.volume
->;
-
-export type ExternalWritablePlayerProp = keyof ExternalWritablePlayerProps;
-export type ExternalReadonlyPlayerProps = Omit<PlayerProps, ExternalWritablePlayerProp>;
-
-const externalWritable = new Set<ExternalWritablePlayerProp>([
-  PlayerProp.autoplay,
-  PlayerProp.autopause,
-  PlayerProp.aspectRatio,
-  PlayerProp.controls,
-  PlayerProp.theme,
-  PlayerProp.debug,
-  PlayerProp.paused,
-  PlayerProp.currentTime,
-  PlayerProp.language,
-  PlayerProp.loop,
-  PlayerProp.playbackQuality,
-  PlayerProp.muted,
-  PlayerProp.playbackRate,
-  PlayerProp.playsinline,
-  PlayerProp.volume,
-]);
-
-/**
- * Determines if a player prop can be changed via the `vime-player` element from the "outside". In
- * other words, is the update coming from directly interacting with the `vime-player` component.
- */
-export const isExternalReadonlyPlayerProp = (
-  prop: PlayerProp,
-) => !externalWritable.has(prop as any);
-
-const internalReadonly = new Set<InternalReadonlyPlayerProp>([
-  PlayerProp.autoplay,
-  PlayerProp.controls,
-  PlayerProp.loop,
-  PlayerProp.ready,
-  PlayerProp.mounted,
-  PlayerProp.destroyed,
-  PlayerProp.debug,
-  PlayerProp.isAudio,
-  PlayerProp.isVideo,
-  PlayerProp.isMobile,
-  PlayerProp.isTouch,
-  PlayerProp.isLive,
-  PlayerProp.currentCaption,
-  PlayerProp.isAudioView,
-  PlayerProp.isVideoView,
-  PlayerProp.autopause,
-  PlayerProp.aspectRatio,
-  PlayerProp.playsinline,
-  PlayerProp.languages,
-  PlayerProp.i18n,
-]);
-
-/**
- * Determines if a player prop can be changed "inside" via the `vStateChange` event. In other
- * words, does the component attempting to update the player exist within the subtree of the player
- * in the DOM.
- */
-export const isInternalReadonlyPlayerProp = (prop: PlayerProp) => internalReadonly.has(prop as any);
-
-/**
- * Used when the media changes to reset certain properties to their default value. Properties not
- * listed here are NOT reset.
- */
-export const resetablePlayerProps = {
-  [PlayerProp.paused]: true,
-  [PlayerProp.currentTime]: 0,
-  [PlayerProp.duration]: -1,
-  [PlayerProp.buffered]: 0,
-  [PlayerProp.seeking]: false,
-  [PlayerProp.playing]: false,
-  [PlayerProp.buffering]: false,
-  [PlayerProp.playbackReady]: false,
-  [PlayerProp.mediaTitle]: undefined,
-  [PlayerProp.currentSrc]: undefined,
-  [PlayerProp.currentPoster]: undefined,
-  [PlayerProp.playbackRate]: 1,
-  [PlayerProp.playbackRates]: [1],
-  [PlayerProp.playbackQuality]: undefined,
-  [PlayerProp.playbackQualities]: [],
-  [PlayerProp.playbackStarted]: false,
-  [PlayerProp.playbackEnded]: false,
-  [PlayerProp.textTracks]: undefined,
-  [PlayerProp.mediaType]: undefined,
-  [PlayerProp.isLive]: false,
-  [PlayerProp.isCaptionsActive]: false,
-  [PlayerProp.currentCaption]: undefined,
+export const initialState: { [P in keyof PlayerProps]: PlayerProps[P] } = {
+  theme: undefined,
+  paused: true,
+  playing: false,
+  duration: -1,
+  mediaTitle: undefined,
+  currentSrc: undefined,
+  currentPoster: undefined,
+  currentTime: 0,
+  autoplay: false,
+  attached: false,
+  ready: false,
+  playbackReady: false,
+  loop: false,
+  muted: false,
+  buffered: 0,
+  playbackRate: 1,
+  playbackRates: [1],
+  playbackQuality: undefined,
+  playbackQualities: [],
+  seeking: false,
+  debug: false,
+  playbackStarted: false,
+  playbackEnded: false,
+  buffering: false,
+  controls: false,
+  isControlsActive: false,
+  errors: [],
+  textTracks: undefined,
+  volume: 50,
+  isFullscreenActive: false,
+  aspectRatio: '16:9',
+  viewType: undefined,
+  isAudioView: false,
+  isVideoView: false,
+  mediaType: undefined,
+  isAudio: false,
+  isVideo: false,
+  isMobile: false,
+  isTouch: false,
+  isCaptionsActive: false,
+  isSettingsActive: false,
+  currentCaption: undefined,
+  isLive: false,
+  isPiPActive: false,
+  autopause: true,
+  playsinline: false,
+  language: 'en',
+  languages: ['en'],
+  translations: { en },
+  i18n: en,
 };
+
+/**
+ * Player properties that can be written to.
+ */
+export type WritableProps = Pick<PlayerProps,
+'autoplay'
+| 'autopause'
+| 'aspectRatio'
+| 'controls'
+| 'theme'
+| 'debug'
+| 'paused'
+| 'currentTime'
+| 'language'
+| 'loop'
+| 'translations'
+| 'playbackQuality'
+| 'muted'
+| 'playbackRate'
+| 'playsinline'
+| 'volume'
+| 'errors'
+| 'isSettingsActive'
+| 'isCaptionsActive'
+| 'isControlsActive'
+>;
+
+const writableProps = new Set<PlayerProp>([
+  'autoplay',
+  'autopause',
+  'aspectRatio',
+  'controls',
+  'theme',
+  'debug',
+  'paused',
+  'currentTime',
+  'language',
+  'loop',
+  'translations',
+  'playbackQuality',
+  'muted',
+  'errors',
+  'playbackRate',
+  'playsinline',
+  'volume',
+  'isSettingsActive',
+  'isCaptionsActive',
+  'isControlsActive',
+]);
+
+export const isReadonlyProp = (prop: PlayerProp) => !writableProps.has(prop);
+export const isWritableProp = (prop: PlayerProp) => writableProps.has(prop);
+
+/**
+ * Player properties that should be reset when the media is changed.
+ */
+const resetableProps = new Set<PlayerProp>([
+  'paused',
+  'currentTime',
+  'duration',
+  'buffered',
+  'seeking',
+  'playing',
+  'buffering',
+  'playbackReady',
+  'mediaTitle',
+  'currentSrc',
+  'currentPoster',
+  'playbackRate',
+  'playbackRates',
+  'playbackStarted',
+  'playbackEnded',
+  'playbackQuality',
+  'playbackQualities',
+  'textTracks',
+  'mediaType',
+  'isCaptionsActive',
+]);
+
+export const shouldPropResetOnMediaChange = (prop: PlayerProp) => resetableProps.has(prop);
+
+/**
+ * Properties that can only be written to by a provider.
+ */
+export type ProviderWritableProps = WritableProps & Pick<PlayerProps,
+'ready'
+| 'playing'
+| 'playbackReady'
+| 'playbackStarted'
+| 'playbackEnded'
+| 'seeking'
+| 'buffered'
+| 'buffering'
+| 'duration'
+| 'viewType'
+| 'mediaTitle'
+| 'mediaType'
+| 'textTracks'
+| 'currentSrc'
+| 'currentPoster'
+| 'playbackRates'
+| 'playbackQualities'
+| 'isPiPActive'
+| 'isFullscreenActive'
+>;
+
+const providerWritableProps = new Set<PlayerProp>([
+  'ready',
+  'playing',
+  'playbackReady',
+  'playbackStarted',
+  'playbackEnded',
+  'seeking',
+  'buffered',
+  'buffering',
+  'duration',
+  'viewType',
+  'mediaTitle',
+  'mediaType',
+  'textTracks',
+  'currentSrc',
+  'currentPoster',
+  'playbackRates',
+  'playbackQualities',
+  'isPiPActive',
+  'isFullscreenActive',
+]);
+
+export const isProviderWritableProp = (
+  prop: PlayerProp,
+) => isWritableProp(prop) || providerWritableProps.has(prop);
+
+/**
+ * Properties that can only be written to by the player directly.
+ */
+export type PlayerWritableProps = WritableProps & Pick<PlayerProps,
+| 'currentCaption'
+| 'isMobile'
+| 'isTouch'
+| 'isCaptionsActive'
+| 'isFullscreenActive'
+>;
+
+const playerWritableProps = new Set<PlayerProp>([
+  'currentCaption',
+  'isMobile',
+  'isTouch',
+  'isCaptionsActive',
+  'isFullscreenActive',
+]);
+
+export const isPlayerWritableProp = (
+  prop: PlayerProp,
+) => isWritableProp(prop) || playerWritableProps.has(prop);
+
+export type PlayerProp = keyof PlayerProps;
 
 export interface PlayerProps {
   /**
+   * `@readonly` Whether the player is attached to the DOM.
+   */
+  attached: boolean
+
+  /**
    * This property has no role other than scoping CSS selectors.
    */
-  [PlayerProp.theme]?: string;
+  theme?: string;
 
   /**
    * Whether playback should be paused. Defaults to `true` if no media has loaded or playback has
    * not started. Setting this to `true` will begin/resume playback.
    */
-  [PlayerProp.paused]: boolean
+  paused: boolean
 
   /**
    * `@readonly` Whether media is actively playing back. Defaults to `false` if no media has
    * loaded or playback has not started.
    */
-  [PlayerProp.playing]: boolean
+  playing: boolean
 
   /**
    * `@readonly` A `double` indicating the total playback length of the media in seconds. Defaults
    * to `-1` if no media has been loaded. If the media is being streamed live then the duration is
    * equal to `Infinity`.
    */
-  [PlayerProp.duration]: number
+  duration: number
 
   /**
    * `@readonly` The title of the current media. Defaults to `undefined` if no media has been
    * loaded.
    */
-  [PlayerProp.mediaTitle]?: string
+  mediaTitle?: string
 
   /**
    * `@readonly` The absolute URL of the media resource that has been chosen. Defaults to
    * `undefined` if no media has been loaded.
    */
-  [PlayerProp.currentSrc]?: string
+  currentSrc?: string
 
   /**
    * `@readonly` The absolute URL of the poster for the current media resource. Defaults to
    * `undefined` if no media/poster has been loaded.
    */
-  [PlayerProp.currentPoster]?: string
+  currentPoster?: string
 
   /**
    * A `double` indicating the current playback time in seconds. Defaults to `0` if the media has
@@ -237,7 +266,7 @@ export interface PlayerProps {
    * time. The value can be set to a minimum of `0` and maximum of the total length of the
    * media (indicated by the duration prop).
    */
-  [PlayerProp.currentTime]: number
+  currentTime: number
 
   /**
    * Whether playback should automatically begin playing once the media is ready to do so. This
@@ -246,42 +275,32 @@ export interface PlayerProps {
    * if it's possible to autoplay via the `canAutoplay()` or `canMutedAutoplay()` methods.
    * Depending on the provider, changing this prop may cause the player to completely reset.
    */
-  [PlayerProp.autoplay]: boolean
-
-  /**
-   * `@readonly` Whether the player has mounted the DOM.
-   */
-  [PlayerProp.mounted]: boolean
-
-  /**
-   * `@readonly` Whether the player has disconnected from the DOM and been destroyed.
-   */
-  [PlayerProp.destroyed]: boolean
+  autoplay: boolean
 
   /**
    * `@readonly` Whether the player has loaded and is ready to be interacted with.
    */
-  [PlayerProp.ready]: boolean
+  ready: boolean
 
   /**
    * `@readonly` Whether media is ready for playback to begin.
    */
-  [PlayerProp.playbackReady]: boolean
+  playbackReady: boolean
 
   /**
    * Whether media should automatically start playing from the beginning every time it ends.
    */
-  [PlayerProp.loop]: boolean
+  loop: boolean
 
   /**
    * Whether the audio is muted or not.
    */
-  [PlayerProp.muted]: boolean
+  muted: boolean
 
   /**
    * `@readonly` The length of the media in seconds that has been downloaded by the browser.
    */
-  [PlayerProp.buffered]: number
+  buffered: number
 
   /**
    * A `double` indicating the rate at which media is being played back. If the value is `<1` then
@@ -289,12 +308,12 @@ export interface PlayerProps {
    * can only be set to a rate found in the `playbackRates` prop. Some providers may not
    * allow changing the playback rate, you can check if it's possible via `canSetPlaybackRate()`.
    */
-  [PlayerProp.playbackRate]: number
+  playbackRate: number
 
   /**
    * `@readonly` The playback rates available for the current media.
    */
-  [PlayerProp.playbackRates]: number[]
+  playbackRates: number[]
 
   /**
    * Indicates the quality of the media. The value will differ between audio and video. For audio
@@ -306,40 +325,40 @@ export interface PlayerProps {
    * may not allow changing the quality, you can check if it's possible via
    * `canSetPlaybackQuality()`.
    */
-  [PlayerProp.playbackQuality]?: string
+  playbackQuality?: string
 
   /**
    * `@readonly` The media qualities available for the current media.
    */
-  [PlayerProp.playbackQualities]: string[]
+  playbackQualities: string[]
 
   /**
    * `@readonly` Whether the player is in the process of seeking to a new time position.
    */
-  [PlayerProp.seeking]: boolean
+  seeking: boolean
 
   /**
-   * `@readonly` Whether the player is in debug mode and should `console.log` information about
+   * `@readonly` Whether the player is in debug mode and should `console.x` information about
    * its internal state.
    */
-  [PlayerProp.debug]: boolean
+  debug: boolean
 
   /**
    * `@readonly` Whether the media has initiated playback. In other words it will be true if
    * `currentTime > 0`.
    */
-  [PlayerProp.playbackStarted]: boolean
+  playbackStarted: boolean
 
   /**
    * `@readonly` Whether media playback has reached the end. In other words it'll be true if
    * `currentTime === duration`.
    */
-  [PlayerProp.playbackEnded]: boolean
+  playbackEnded: boolean
 
   /**
    * `@readonly` Whether playback has temporarily stopped because of a lack of temporary data.
    */
-  [PlayerProp.buffering]: boolean
+  buffering: boolean
 
   /**
    * Indicates whether a user interface should be shown for controlling the resource. Set this to
@@ -347,39 +366,39 @@ export interface PlayerProps {
    * provider to supply its own default controls. Depending on the provider, changing this prop
    * may cause the player to completely reset.
    */
-  [PlayerProp.controls]: boolean
+  controls: boolean
 
   /**
    * Whether the controls are currently visible. This is currently only supported by custom
    * controls.
    */
-  [PlayerProp.isControlsActive]: boolean
+  isControlsActive: boolean
 
   /**
    * `@readonly` A collection of errors that have occurred ordered by `[oldest, ..., newest]`.
    */
-  [PlayerProp.errors]: any[]
+  errors: any[]
 
   /**
    * `@readonly` The text tracks (WebVTT) associated with the current media.
    */
-  [PlayerProp.textTracks]?: TextTrackList
+  textTracks?: TextTrackList
 
   /**
    * An `int` between `0` (silent) and `100` (loudest) indicating the audio volume.
    */
-  [PlayerProp.volume]: number
+  volume: number
 
   /**
    * `@readonly` Whether the player is currently in fullscreen mode.
    */
-  [PlayerProp.isFullscreenActive]: boolean
+  isFullscreenActive: boolean
 
   /**
    * The aspect ratio of the player expressed as `width:height` (`16:9`). This is only applied if
    * the `viewType` is `video` and the player is not in fullscreen mode.
    */
-  [PlayerProp.aspectRatio]: string
+  aspectRatio: string
 
   /**
    * `@readonly` The type of player view that is being used, whether it's an audio player view or
@@ -388,110 +407,115 @@ export interface PlayerProps {
    * audio with a poster. This is subject to the provider allowing it. Defaults to `undefined`
    * when no media has been loaded.
    */
-  [PlayerProp.viewType]?: ViewType
+  viewType?: ViewType
 
   /**
    * `@readonly` Whether the current view is of type `audio`, shorthand for
    * `viewType === ViewType.Audio`.
    */
-  [PlayerProp.isAudioView]: boolean
+  isAudioView: boolean
 
   /**
    * `@readonly` Whether the current view is of type `video`, shorthand for
    * `viewType === ViewType.Video`.
    */
-  [PlayerProp.isVideoView]: boolean
+  isVideoView: boolean
 
   /**
    * `@readonly` The type of media that is currently active, whether it's audio or video. Defaults
    * to `undefined` when no media has been loaded or the type cannot be determined.
    */
-  [PlayerProp.mediaType]?: MediaType
+  mediaType?: MediaType
 
   /**
    * `@readonly` Whether the current media is of type `audio`, shorthand for
    * `mediaType === MediaType.Audio`.
    */
-  [PlayerProp.isAudio]: boolean
+  isAudio: boolean
 
   /**
    * `@readonly` Whether the current media is of type `video`, shorthand for
    * `mediaType === MediaType.Video`.
    */
-  [PlayerProp.isVideo]: boolean
+  isVideo: boolean
 
   /**
    * `@readonly` Whether the player is in mobile mode. This is determined by parsing
    * `window.navigator.userAgent`.
    */
-  [PlayerProp.isMobile]: boolean
+  isMobile: boolean
 
   /**
    * `@readonly` Whether the player is in touch mode. This is determined by listening for
    * mouse/touch events and toggling this value.
    */
-  [PlayerProp.isTouch]: boolean
+  isTouch: boolean
 
   /**
    * `@readonly` Whether any captions or subtitles are currently showing.
    */
-  [PlayerProp.isCaptionsActive]: boolean
+  isCaptionsActive: boolean
 
   /**
    * `@readonly` Whether the settings menu has been opened and is currently visible. This is
    * currently only supported by custom settings.
    */
-  [PlayerProp.isSettingsActive]: boolean
+  isSettingsActive: boolean
 
   /**
    * `@readonly` The selected caption/subtitle text track to display. Defaults to `undefined` if
    * there is none. This does not mean this track is active, only that is the current selection. To
    * know if it is active, check the `isCaptionsActive` prop.
    */
-  [PlayerProp.currentCaption]?: TextTrack
+  currentCaption?: TextTrack
 
   /**
    * `@readonly` Whether the current media is being broadcast live (`duration === Infinity`).
    */
-  [PlayerProp.isLive]: boolean
+  isLive: boolean
 
   /**
    * `@readonly` Whether the player is currently in picture-in-picture mode.
    */
-  [PlayerProp.isPiPActive]: boolean
+  isPiPActive: boolean
 
   /**
    * Whether the player should automatically pause when another Vime player starts/resumes playback.
    */
-  [PlayerProp.autopause]: boolean
+  autopause: boolean
 
   /**
    * Whether the video is to be played "inline", that is within the element's playback area. Note
    * that setting this to false does not imply that the video will always be played in fullscreen.
    * Depending on the provider, changing this prop may cause the player to completely reset.
    */
-  [PlayerProp.playsinline]: boolean
+  playsinline: boolean
 
   /**
    * The current language of the player. This can be any code defined via the `extendLanguage`
    * method or the default `en`. It's recommended to use an ISO 639-1 code as that'll be used by
    * Vime when adding new language defaults in the future.
    */
-  [PlayerProp.language]: string
+  language: string
 
   /**
    * `@readonly` The languages that are currently available. You can add new languages via the
    * `extendLanguage` method.
    */
-  [PlayerProp.languages]: string[]
+  languages: string[]
 
   /**
    * `@readonly` Contains each language and it's respective translation map.
    */
-  [PlayerProp.translations]: Record<string, Record<string, string>>,
+  translations: Record<string, Record<string, string>>,
 
   /**
    * `@readonly` A dictionary of translations for the current language.
    */
-  [PlayerProp.i18n]: Record<string, string>
+  i18n: Record<string, string>
+
+  /**
+   * @internal
+   */
+  logger?: Logger
 }
