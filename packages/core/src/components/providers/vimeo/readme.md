@@ -12,6 +12,7 @@ Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.c
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -23,6 +24,7 @@ Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.c
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {2}
@@ -31,6 +33,7 @@ Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.c
   <!-- ... -->
 </vime-player>
 ```
+
 
 ### React
 
@@ -48,6 +51,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {2,7} title="example.svelte"
@@ -60,6 +64,7 @@ function Example() {
   import { VimePlayer, VimeVimeo } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -83,6 +88,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property               | Attribute  | Description                                                                                                      | Type                  | Default     |
@@ -92,6 +99,7 @@ function Example() {
 | `portrait`             | `portrait` | Whether to display the video owner's portrait.                                                                   | `boolean`             | `true`      |
 | `videoId` _(required)_ | `video-id` | The Vimeo resource ID of the video to load.                                                                      | `string`              | `undefined` |
 
+
 ## Dependencies
 
 ### Depends on
@@ -99,13 +107,12 @@ function Example() {
 - [vime-embed](../../core/embed)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-vimeo --> vime-embed
   style vime-vimeo fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

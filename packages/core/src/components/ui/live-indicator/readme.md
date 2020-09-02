@@ -11,6 +11,7 @@ This can be used to indicate to the user that the current media is being streame
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -28,6 +29,7 @@ This can be used to indicate to the user that the current media is being streame
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {7}
@@ -42,6 +44,7 @@ This can be used to indicate to the user that the current media is being streame
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -69,6 +72,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {6,17} title="example.svelte"
@@ -92,6 +96,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -127,26 +132,28 @@ function Example() {
 </script>
 ```
 
+
+
 ## CSS Custom Properties
 
 | Name                     | Description                          |
 | ------------------------ | ------------------------------------ |
 | `--live-indicator-color` | The color of the live indicator dot. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../controls/default-controls)
+ - [vime-default-controls](../controls/default-controls)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-controls --> vime-live-indicator
   style vime-live-indicator fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

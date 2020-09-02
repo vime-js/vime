@@ -10,7 +10,6 @@
   "scripts": {
     "setup": "pnpm install --filter vime --filter @vime/core",
     "lint": "eslint ./packages --quiet --fix --ignore-path .gitignore",
-    "lint:md": "prettier \"**/*.md\" --ignore-path .gitignore --parser markdown --write --print-width 80 --tab-width 2 --single-quote --loglevel silent",
     "clean:node": "rimraf node_modules packages/*/node_modules examples/*/node_modules docs/node_modules",
     "build": "pnpm run build --filter ./packages",
     "test": "npm run test:unit && npm run test:e2e",
@@ -41,7 +40,6 @@
     "git-log-parser": "^1.2.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.13",
-    "prettier": "^2.1.1",
     "react": "^16.13.1",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.1.1",
@@ -54,7 +52,6 @@
     }
   },
   "lint-staged": {
-    "**/*.md": "npm run lint:md",
     "packages/**/*.{js,ts,tsx}": "npm run lint"
   },
   "commitlint": {

@@ -14,6 +14,7 @@ In addition, you can extend the settings with more options via the default `slot
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -28,6 +29,7 @@ In addition, you can extend the settings with more options via the default `slot
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {5}
@@ -39,6 +41,7 @@ In addition, you can extend the settings with more options via the default `slot
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -59,6 +62,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {5,10} title="example.svelte"
@@ -74,6 +78,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimeDefaultSettings } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -101,17 +106,20 @@ function Example() {
 </script>
 ```
 
+
+
 ## Slots
 
 | Slot | Description                                                                                        |
 | ---- | -------------------------------------------------------------------------------------------------- |
 |      | Used to extend the settings with additional menu options (see `vime-submenu` or `vime-menu-item`). |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-ui](../../default-ui)
+ - [vime-default-ui](../../default-ui)
 
 ### Depends on
 
@@ -122,7 +130,6 @@ function Example() {
 - [vime-settings](../settings)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-settings --> vime-menu-item
@@ -139,6 +146,6 @@ graph TD;
   style vime-default-settings fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

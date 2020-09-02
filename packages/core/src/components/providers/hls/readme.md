@@ -6,6 +6,7 @@ Enables loading, playing and controlling [HLS](https://en.wikipedia.org/wiki/HTT
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -31,6 +32,7 @@ class Example {
 }
 ```
 
+
 ### Html
 
 ```html {2-5}
@@ -42,6 +44,7 @@ class Example {
   <!-- ... -->
 </vime-player>
 ```
+
 
 ### React
 
@@ -69,6 +72,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {2-5,10} title="example.svelte"
@@ -91,6 +95,7 @@ function Example() {
   };
 </script>
 ```
+
 
 ### Vue
 
@@ -126,6 +131,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property                | Attribute                 | Description                                                                                                                                                                                                                                                                        | Type                                                  | Default      |
@@ -141,11 +148,13 @@ function Example() {
 | `preload`               | `preload`                 | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" \| "auto" \| "metadata" \| "none" \| undefined`   | `'metadata'` |
 | `version`               | `version`                 | The NPM package version of the `hls.js` library to download and use if HLS is not natively supported.                                                                                                                                                                              | `string`                                              | `'latest'`   |
 
+
 ## Slots
 
-| Slot | Description                                                                  |
-| ---- | ---------------------------------------------------------------------------- |
-|      | Pass `<source>` and `<track>` elements to the underlying HTML5 media player. |
+| Slot | Description                                                                   |
+| ---- | ----------------------------------------------------------------------------- |
+|      | Pass `<source>` and  `<track>` elements to the underlying HTML5 media player. |
+
 
 ## Dependencies
 
@@ -154,7 +163,6 @@ function Example() {
 - [vime-video](../video)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-hls --> vime-video
@@ -162,6 +170,6 @@ graph TD;
   style vime-hls fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

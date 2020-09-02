@@ -12,6 +12,7 @@ requested (checked via the `canSetFullscreen()` player method).
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -29,6 +30,7 @@ requested (checked via the `canSetFullscreen()` player method).
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {7}
@@ -43,6 +45,7 @@ requested (checked via the `canSetFullscreen()` player method).
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -70,6 +73,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {6,16} title="example.svelte"
@@ -92,6 +96,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -127,6 +132,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property           | Attribute           | Description                                                                                                                                                   | Type                             | Default                    |
@@ -138,11 +145,12 @@ function Example() {
 | `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                                    | `number`                         | `1`                        |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" \| "right" \| undefined` | `undefined`                |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../default-controls)
+ - [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -151,7 +159,6 @@ function Example() {
 - [vime-tooltip](../../tooltip)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-fullscreen-control --> vime-control
@@ -161,6 +168,6 @@ graph TD;
   style vime-fullscreen-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

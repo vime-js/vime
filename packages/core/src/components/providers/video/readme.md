@@ -6,6 +6,7 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -32,6 +33,7 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {2-17}
@@ -55,6 +57,7 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
   <!-- ... -->
 </vime-player>
 ```
+
 
 ### React
 
@@ -87,6 +90,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {2-17,22} title="example.svelte"
@@ -114,6 +118,7 @@ function Example() {
   import { VimePlayer, VimeVideo } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -152,6 +157,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property                | Attribute                 | Description                                                                                                                                                                                                                                                                        | Type                                                  | Default      |
@@ -165,25 +172,26 @@ function Example() {
 | `poster`                | `poster`                  | A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.                                                                      | `string \| undefined`                                 | `undefined`  |
 | `preload`               | `preload`                 | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" \| "auto" \| "metadata" \| "none" \| undefined`   | `'metadata'` |
 
+
 ## Slots
 
 | Slot | Description                                                                  |
 | ---- | ---------------------------------------------------------------------------- |
 |      | Pass `<source>` and `<track>` elements to the underlying HTML5 media player. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-dash](../dash)
-- [vime-hls](../hls)
+ - [vime-dash](../dash)
+ - [vime-hls](../hls)
 
 ### Depends on
 
 - [vime-file](../file)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-video --> vime-file
@@ -192,6 +200,6 @@ graph TD;
   style vime-video fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

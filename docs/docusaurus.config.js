@@ -46,10 +46,8 @@ module.exports = {
       {
         docs: {
           routeBasePath: '/',
-          homePageId: 'welcome/introduction',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/vime-js/vime/edit/master/packages/docs/',
+          editUrl: 'https://github.com/vime-js/vime/edit/master/packages/docs/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

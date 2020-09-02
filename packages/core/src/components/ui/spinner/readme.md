@@ -11,6 +11,7 @@ Displays a loading indicator when the video is `buffering`.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -25,6 +26,7 @@ Displays a loading indicator when the video is `buffering`.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {5}
@@ -36,6 +38,7 @@ Displays a loading indicator when the video is `buffering`.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -56,6 +59,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {5,10} title="example.svelte"
@@ -71,6 +75,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimeSpinner } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -98,12 +103,15 @@ function Example() {
 </script>
 ```
 
+
+
 ## Events
 
 | Event       | Description                              | Type                |
 | ----------- | ---------------------------------------- | ------------------- |
 | `vWillHide` | Emitted when the spinner will be hidden. | `CustomEvent<void>` |
 | `vWillShow` | Emitted when the spinner will be shown.  | `CustomEvent<void>` |
+
 
 ## CSS Custom Properties
 
@@ -117,20 +125,20 @@ function Example() {
 | `--spinner-track-color`      | The color of the track the spinner is rotating in.         |
 | `--spinner-width`            | The width of the spinner.                                  |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-ui](../default-ui)
+ - [vime-default-ui](../default-ui)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-ui --> vime-spinner
   style vime-spinner fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

@@ -19,6 +19,7 @@ Enables loading, playing and controlling videos from [YouTube](https://www.youtu
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -30,6 +31,7 @@ Enables loading, playing and controlling videos from [YouTube](https://www.youtu
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {2}
@@ -38,6 +40,7 @@ Enables loading, playing and controlling videos from [YouTube](https://www.youtu
   <!-- ... -->
 </vime-player>
 ```
+
 
 ### React
 
@@ -55,6 +58,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {2,7} title="example.svelte"
@@ -67,6 +71,7 @@ function Example() {
   import { VimePlayer, VimeYoutube } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -90,6 +95,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property                | Attribute                 | Description                                     | Type      | Default     |
@@ -98,6 +105,7 @@ function Example() {
 | `showFullscreenControl` | `show-fullscreen-control` | Whether the fullscreen control should be shown. | `boolean` | `true`      |
 | `videoId` _(required)_  | `video-id`                | The YouTube resource ID of the video to load.   | `string`  | `undefined` |
 
+
 ## Dependencies
 
 ### Depends on
@@ -105,13 +113,12 @@ function Example() {
 - [vime-embed](../../core/embed)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-youtube --> vime-embed
   style vime-youtube fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

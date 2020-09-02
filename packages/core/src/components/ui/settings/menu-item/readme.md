@@ -19,6 +19,7 @@ the props set.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -35,6 +36,7 @@ the props set.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {6}
@@ -48,6 +50,7 @@ the props set.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -70,6 +73,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {6,16} title="example.svelte"
@@ -87,6 +91,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimeSettings, VimeMenuItem } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -117,6 +122,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property             | Attribute      | Description                                                                                                                                                                                               | Type                   | Default             |
@@ -130,6 +137,7 @@ function Example() {
 | `identifier`         | `identifier`   | The `id` attribute of the item.                                                                                                                                                                           | `string \| undefined`  | `undefined`         |
 | `label` _(required)_ | `label`        | The label/title of the item.                                                                                                                                                                              | `string`               | `undefined`         |
 | `menu`               | `menu`         | If the item has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                                                                                               | `string \| undefined`  | `undefined`         |
+
 
 ## CSS Custom Properties
 
@@ -150,20 +158,20 @@ function Example() {
 | `--menu-item-padding`           | The padding within each menu item.                                           |
 | `--menu-item-tap-highlight`     | The highlight color when a menu item is tapped.                              |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-settings](../default-settings)
-- [vime-menu-radio](../menu-radio)
-- [vime-submenu](../submenu)
+ - [vime-default-settings](../default-settings)
+ - [vime-menu-radio](../menu-radio)
+ - [vime-submenu](../submenu)
 
 ### Depends on
 
 - [vime-icon](../../icon)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-menu-item --> vime-icon
@@ -173,6 +181,6 @@ graph TD;
   style vime-menu-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

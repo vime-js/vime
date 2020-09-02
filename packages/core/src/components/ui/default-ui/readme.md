@@ -31,6 +31,7 @@ shown here for the sake of brevity.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -42,6 +43,7 @@ shown here for the sake of brevity.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {3}
@@ -50,6 +52,7 @@ shown here for the sake of brevity.
   <vime-default-ui></vime-default-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -67,6 +70,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {3,7} title="example.svelte"
@@ -79,6 +83,7 @@ function Example() {
   import { VimePlayer, VimeDefaultUi } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -102,6 +107,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property        | Attribute          | Description                                                    | Type      | Default |
@@ -114,11 +121,13 @@ function Example() {
 | `noSettings`    | `no-settings`      | Whether the custom default settings menu should not be loaded. | `boolean` | `false` |
 | `noSpinner`     | `no-spinner`       | Whether the custom spinner UI should not be loaded.            | `boolean` | `false` |
 
+
 ## Slots
 
 | Slot | Description                                                          |
 | ---- | -------------------------------------------------------------------- |
 |      | Used to extend the default user interface with custom UI components. |
+
 
 ## Dependencies
 
@@ -134,7 +143,6 @@ function Example() {
 - [vime-default-settings](../settings/default-settings)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-ui --> vime-ui
@@ -199,6 +207,6 @@ graph TD;
   style vime-default-ui fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

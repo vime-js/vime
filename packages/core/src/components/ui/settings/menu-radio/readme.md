@@ -12,6 +12,7 @@ of related options). Only one radio button in a group can be selected at the sam
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -34,6 +35,7 @@ of related options). Only one radio button in a group can be selected at the sam
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {8-10}
@@ -53,6 +55,7 @@ of related options). Only one radio button in a group can be selected at the sam
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -88,6 +91,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {8-10,24} title="example.svelte"
@@ -118,6 +122,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -163,6 +168,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property             | Attribute      | Description                                                                                                                                                                   | Type                  | Default             |
@@ -173,24 +180,25 @@ function Example() {
 | `label` _(required)_ | `label`        | The title of the radio item displayed to the user.                                                                                                                            | `string`              | `undefined`         |
 | `value` _(required)_ | `value`        | The value associated with this radio item.                                                                                                                                    | `string`              | `undefined`         |
 
+
 ## Events
 
 | Event    | Description                                | Type                |
 | -------- | ------------------------------------------ | ------------------- |
 | `vCheck` | Emitted when the radio button is selected. | `CustomEvent<void>` |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-settings](../default-settings)
+ - [vime-default-settings](../default-settings)
 
 ### Depends on
 
 - [vime-menu-item](../menu-item)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-menu-radio --> vime-menu-item
@@ -199,6 +207,6 @@ graph TD;
   style vime-menu-radio fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

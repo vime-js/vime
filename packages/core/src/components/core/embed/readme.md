@@ -7,6 +7,7 @@ see what params you can pass in, how to send commands to the player, and how to 
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -36,6 +37,7 @@ class Example {
 }
 ```
 
+
 ### Html
 
 ```html
@@ -56,9 +58,10 @@ class Example {
 </script>
 ```
 
+
 ### React
 
-```tsx {2,11-16}
+```tsx {2,11-17}
 import React from 'react';
 import { VimeEmbed } from '@vime/react';
 
@@ -79,6 +82,7 @@ function Example() {
   );
 }
 ```
+
 
 ### Svelte
 
@@ -108,6 +112,7 @@ function Example() {
   };
 </script>
 ```
+
 
 ### Vue
 
@@ -147,6 +152,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property         | Attribute     | Description                                                                                                                                  | Type                                                                | Default     |
@@ -158,6 +165,7 @@ function Example() {
 | `params`         | `params`      | The parameters to pass to the embedded player which are appended to the `embedSrc` prop. These can be passed in as a query string or object. | `string \| { [x: string]: any; }`                                   | `''`        |
 | `preconnections` | --            | A collection of URLs to that the browser should immediately start establishing a connection with.                                            | `string[]`                                                          | `[]`        |
 
+
 ## Events
 
 | Event             | Description                                                                                                                                        | Type                  |
@@ -165,6 +173,7 @@ function Example() {
 | `vEmbedLoaded`    | Emitted when the embedded player and any new media has loaded.                                                                                     | `CustomEvent<void>`   |
 | `vEmbedMessage`   | Emitted when a new message is received from the embedded player via `postMessage`.                                                                 | `CustomEvent<any>`    |
 | `vEmbedSrcChange` | Emitted when the `embedSrc` or `params` props change. The payload contains the `params` serialized into a query string and appended to `embedSrc`. | `CustomEvent<string>` |
+
 
 ## Methods
 
@@ -176,16 +185,18 @@ Posts a message to the embedded media player.
 
 Type: `Promise<void>`
 
+
+
+
 ## Dependencies
 
 ### Used by
 
-- [vime-dailymotion](../../providers/dailymotion)
-- [vime-vimeo](../../providers/vimeo)
-- [vime-youtube](../../providers/youtube)
+ - [vime-dailymotion](../../providers/dailymotion)
+ - [vime-vimeo](../../providers/vimeo)
+ - [vime-youtube](../../providers/youtube)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-dailymotion --> vime-embed
@@ -194,6 +205,6 @@ graph TD;
   style vime-embed fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

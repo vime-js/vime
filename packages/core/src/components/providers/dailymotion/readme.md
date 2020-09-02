@@ -13,6 +13,7 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -27,6 +28,7 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {2}
@@ -35,6 +37,7 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
   <!-- ... -->
 </vime-player>
 ```
+
 
 ### React
 
@@ -52,6 +55,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {2,7} title="example.svelte"
@@ -64,6 +68,7 @@ function Example() {
   import { VimePlayer, VimeDailymotion } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -87,6 +92,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property               | Attribute               | Description                                                                                                                                     | Type                  | Default     |
@@ -100,6 +107,7 @@ function Example() {
 | `syndication`          | `syndication`           | Forwards your syndication key to the player.                                                                                                    | `string \| undefined` | `undefined` |
 | `videoId` _(required)_ | `video-id`              | The Dailymotion resource ID of the video to load.                                                                                               | `string`              | `undefined` |
 
+
 ## Dependencies
 
 ### Depends on
@@ -107,13 +115,12 @@ function Example() {
 - [vime-embed](../../core/embed)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-dailymotion --> vime-embed
   style vime-dailymotion fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

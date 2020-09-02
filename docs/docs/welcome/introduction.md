@@ -1,6 +1,7 @@
 ---
 title: Introduction
 sidebar_label: Introduction
+slug: /
 ---
 
 [![package-badge]][package]
@@ -150,12 +151,12 @@ listed below.
 
 ## 🎥 &nbsp;Providers
 
-- [HTML5](../components/providers/file/readme.md)
-- [HLS](../components/providers/hls/readme.md)
-- [Dash](../components/providers/dash/readme.md)
-- [YouTube](../components/providers/youtube/readme.md)
-- [Vimeo](../components/providers/vimeo/readme.md)
-- [Dailymotion](../components/providers/dailymotion/readme.md)
+- [HTML5](../components/providers/file.md)
+- [HLS](../components/providers/hls.md)
+- [Dash](../components/providers/dash.md)
+- [YouTube](../components/providers/youtube.md)
+- [Vimeo](../components/providers/vimeo.md)
+- [Dailymotion](../components/providers/dailymotion.md)
 
 ## 📖 &nbsp;Documentation
 

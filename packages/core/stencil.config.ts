@@ -4,18 +4,11 @@ import { reactOutputTarget } from '@stencil/react-output-target';
 import { vueOutputTarget } from '@stencil/vue-output-target';
 import { angularOutputTarget } from '@stencil/angular-output-target';
 import { svelteOutputTarget } from '@stencil/svelte-output-target';
+import { generateSiteDocs } from './scripts/site-docs';
 
 export const config: Config = {
   namespace: 'Vime',
   taskQueue: 'async',
-  buildEs5: false,
-  extras: {
-    cssVarsShim: false,
-    dynamicImportShim: false,
-    safari10: false,
-    scriptDataOpts: false,
-    shadowDomShim: false,
-  },
   plugins: [
     sass({
       injectGlobalPaths: [
@@ -49,8 +42,8 @@ export const config: Config = {
       type: 'docs-readme',
     },
     {
-      type: 'docs-readme',
-      dir: '../../docs/docs',
+      type: 'docs-custom',
+      generator: generateSiteDocs,
     },
   ],
   testing: {

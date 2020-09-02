@@ -12,6 +12,7 @@ settings (`vime-settings`) has been provided for the current player.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -29,6 +30,7 @@ settings (`vime-settings`) has been provided for the current player.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {7}
@@ -43,6 +45,7 @@ settings (`vime-settings`) has been provided for the current player.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -70,6 +73,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {6,16} title="example.svelte"
@@ -92,6 +96,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -127,6 +132,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property           | Attribute           | Description                                     | Type                             | Default            |
@@ -134,11 +141,12 @@ function Example() {
 | `icon`             | `icon`              | The URL to an SVG element or fragment to load.  | `string`                         | `'#vime-settings'` |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow. | `"left" \| "right" \| undefined` | `undefined`        |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../default-controls)
+ - [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -147,7 +155,6 @@ function Example() {
 - [vime-tooltip](../../tooltip)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-settings-control --> vime-control
@@ -157,6 +164,6 @@ graph TD;
   style vime-settings-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

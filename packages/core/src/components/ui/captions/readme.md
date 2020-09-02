@@ -18,6 +18,7 @@ to be used in combination with the native HTML5 player controls.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -32,6 +33,7 @@ to be used in combination with the native HTML5 player controls.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {5}
@@ -43,6 +45,7 @@ to be used in combination with the native HTML5 player controls.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -63,6 +66,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {5,10} title="example.svelte"
@@ -78,6 +82,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimeCaptions } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -105,6 +110,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property         | Attribute         | Description                                                                                         | Type      | Default |
@@ -112,12 +119,14 @@ function Example() {
 | `controlsHeight` | `controls-height` | The height of any lower control bar in pixels so that the captions can reposition when it's active. | `number`  | `0`     |
 | `hidden`         | `hidden`          | Whether the captions should be visible or not.                                                      | `boolean` | `false` |
 
+
 ## Events
 
 | Event          | Description                                                                                                             | Type                                  |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
 | `vCuesChange`  | Emitted when the active cues change. A cue is active when `currentTime >= cue.startTime && currentTime <= cue.endTime`. | `CustomEvent<TextTrackCue[]>`         |
 | `vTrackChange` | Emitted when the current track changes.                                                                                 | `CustomEvent<TextTrack \| undefined>` |
+
 
 ## CSS Custom Properties
 
@@ -132,20 +141,20 @@ function Example() {
 | `--captions-font-size-xlarge`  | Font size of captions when device screen size is >1200px. |
 | `--captions-text-color`        | The color of the captions text.                           |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-ui](../default-ui)
+ - [vime-default-ui](../default-ui)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-ui --> vime-captions
   style vime-captions fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

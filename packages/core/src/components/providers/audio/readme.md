@@ -6,6 +6,7 @@ Enables loading, playing and controlling audio via the HTML5 [`<audio>`](https:/
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -20,6 +21,7 @@ Enables loading, playing and controlling audio via the HTML5 [`<audio>`](https:/
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {2-5}
@@ -31,6 +33,7 @@ Enables loading, playing and controlling audio via the HTML5 [`<audio>`](https:/
   <!-- ... -->
 </vime-player>
 ```
+
 
 ### React
 
@@ -51,6 +54,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {2-5,10} title="example.svelte"
@@ -66,6 +70,7 @@ function Example() {
   import { VimePlayer, VimeAudio } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -92,6 +97,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property                | Attribute                 | Description                                                                                                                                                                                                                                                                        | Type                                                  | Default      |
@@ -101,11 +108,13 @@ function Example() {
 | `mediaTitle`            | `media-title`             | The title of the current media.                                                                                                                                                                                                                                                    | `string \| undefined`                                 | `undefined`  |
 | `preload`               | `preload`                 | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" \| "auto" \| "metadata" \| "none" \| undefined`   | `'metadata'` |
 
+
 ## Slots
 
 | Slot | Description                                                                  |
 | ---- | ---------------------------------------------------------------------------- |
 |      | Pass `<source>` and `<track>` elements to the underlying HTML5 media player. |
+
 
 ## Dependencies
 
@@ -114,13 +123,12 @@ function Example() {
 - [vime-file](../file)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-audio --> vime-file
   style vime-audio fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

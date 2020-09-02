@@ -6,6 +6,7 @@ methods.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -57,6 +58,7 @@ class Example {
 }
 ```
 
+
 ### Html
 
 ```html
@@ -89,9 +91,10 @@ class Example {
 </script>
 ```
 
+
 ### React
 
-```tsx {2,28-40}
+```tsx {2,31-43}
 import React, { useState } from 'react';
 import { VimePlayer, VimeUi } from '@vime/react';
 
@@ -138,6 +141,7 @@ function Example() {
   );
 }
 ```
+
 
 ### Svelte
 
@@ -189,6 +193,7 @@ function Example() {
   };
 </script>
 ```
+
 
 ### Vue
 
@@ -254,6 +259,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property             | Attribute              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Type                                              | Default     |
@@ -310,6 +317,7 @@ function Example() {
 | `viewType`           | `view-type`            | `@readonly` The type of player view that is being used, whether it's an audio player view or video player view. Normally if the media type is of audio then the view is of type audio, but in some cases it might be desirable to show a different view type. For example, when playing audio with a poster. This is subject to the provider allowing it. Defaults to `undefined` when no media has been loaded.                                                                                                                                                                                                                                                                       | `ViewType.Audio \| ViewType.Video \| undefined`   | `undefined` |
 | `volume`             | `volume`               | An `int` between `0` (silent) and `100` (loudest) indicating the audio volume.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `number`                                          | `50`        |
 
+
 ## Events
 
 | Event                      | Description                                                                                                                                                                                            | Type                                                           |
@@ -354,6 +362,7 @@ function Example() {
 | `vViewTypeChange`          | Emitted when the `viewType` prop changes value.                                                                                                                                                        | `CustomEvent<ViewType.Audio \| ViewType.Video \| undefined>`   |
 | `vVolumeChange`            | Emitted when the `volume` prop changes value.                                                                                                                                                          | `CustomEvent<number>`                                          |
 
+
 ## Methods
 
 ### `canAutoplay() => Promise<boolean>`
@@ -364,6 +373,8 @@ Determines whether the player can start playback of the current media automatica
 
 Type: `Promise<boolean>`
 
+
+
 ### `canMutedAutoplay() => Promise<boolean>`
 
 Determines whether the player can start playback of the current media automatically given the
@@ -373,6 +384,8 @@ player is muted.
 
 Type: `Promise<boolean>`
 
+
+
 ### `canPlay(type: string) => Promise<boolean>`
 
 Determines whether the current provider recognizes, and can play the given type.
@@ -380,6 +393,8 @@ Determines whether the current provider recognizes, and can play the given type.
 #### Returns
 
 Type: `Promise<boolean>`
+
+
 
 ### `canSetFullscreen() => Promise<boolean>`
 
@@ -391,6 +406,8 @@ only that it can be attempted.
 
 Type: `Promise<boolean>`
 
+
+
 ### `canSetPiP() => Promise<boolean>`
 
 Returns whether the current provider exposes an API for entering and exiting
@@ -401,6 +418,8 @@ that it can be attempted.
 
 Type: `Promise<boolean>`
 
+
+
 ### `canSetPlaybackQuality() => Promise<boolean>`
 
 Returns whether the current provider allows setting the `playbackQuality` prop.
@@ -409,6 +428,8 @@ Returns whether the current provider allows setting the `playbackQuality` prop.
 
 Type: `Promise<boolean>`
 
+
+
 ### `canSetPlaybackRate() => Promise<boolean>`
 
 Returns whether the current provider allows setting the `playbackRate` prop.
@@ -416,6 +437,8 @@ Returns whether the current provider allows setting the `playbackRate` prop.
 #### Returns
 
 Type: `Promise<boolean>`
+
+
 
 ### `enterFullscreen(options?: FullscreenOptions | undefined) => Promise<any>`
 
@@ -431,6 +454,8 @@ or the user has not interacted with the page yet.
 
 Type: `Promise<any>`
 
+
+
 ### `enterPiP() => Promise<void | undefined>`
 
 Request to enter picture-in-picture (PiP) mode, returning a `Promise` that will resolve if
@@ -443,6 +468,8 @@ to the `vPiPChange` event. Some common reasons for failure are the same as the r
 
 Type: `Promise<void | undefined>`
 
+
+
 ### `exitFullscreen() => Promise<any>`
 
 Requests to exit fullscreen mode, returning a `Promise` that will resolve if the request is
@@ -452,6 +479,8 @@ information.
 #### Returns
 
 Type: `Promise<any>`
+
+
 
 ### `exitPiP() => Promise<void | undefined>`
 
@@ -463,6 +492,8 @@ information.
 
 Type: `Promise<void | undefined>`
 
+
+
 ### `extendLanguage(language: string, translations: Record<string, string>) => Promise<void>`
 
 Extends the translation map for a given language.
@@ -470,6 +501,8 @@ Extends the translation map for a given language.
 #### Returns
 
 Type: `Promise<void>`
+
+
 
 ### `getProvider<InternalPlayerType = any>() => Promise<MediaProvider<InternalPlayerType>>`
 
@@ -479,6 +512,8 @@ Returns the current media provider
 
 Type: `Promise<MediaProvider<InternalPlayerType>>`
 
+
+
 ### `pause() => Promise<void>`
 
 Pauses playback of the media.
@@ -486,6 +521,8 @@ Pauses playback of the media.
 #### Returns
 
 Type: `Promise<void>`
+
+
 
 ### `play() => Promise<void>`
 
@@ -497,6 +534,8 @@ policies.
 
 Type: `Promise<void>`
 
+
+
 ### `toggleCaptionsVisibility(isVisible?: boolean | undefined) => Promise<void>`
 
 Toggles the visibility of the captions.
@@ -505,11 +544,15 @@ Toggles the visibility of the captions.
 
 Type: `Promise<void>`
 
+
+
+
 ## Slots
 
 | Slot | Description                                           |
 | ---- | ----------------------------------------------------- |
 |      | Used to pass in providers, plugins and UI components. |
+
 
 ## CSS Custom Properties
 
@@ -524,6 +567,7 @@ Type: `Promise<void>`
 | `--player-skeleton-highlight-color` | The animated highlight color of the skeleton loading animation.                                                            |
 | `--player-theme`                    | A custom theme (color) to be used throughout the player. Any valid CSS `color` property (HEX, RGBA, HLS, ...) can be used. |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

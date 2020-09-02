@@ -11,6 +11,7 @@ Formats and displays the progression of playback as `currentTime (separator) end
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -19,11 +20,13 @@ Formats and displays the progression of playback as `currentTime (separator) end
 <vime-time-progress separator="/" />
 ```
 
+
 ### Html
 
 ```html
 <vime-time-progress separator="/" />
 ```
+
 
 ### React
 
@@ -36,6 +39,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {1,4} title="example.svelte"
@@ -45,6 +49,7 @@ function Example() {
   import { VimeTimeProgress } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -64,6 +69,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property          | Attribute           | Description                                                                                                            | Type      | Default |
@@ -71,17 +78,19 @@ function Example() {
 | `alwaysShowHours` | `always-show-hours` | Whether the times should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`). | `boolean` | `false` |
 | `separator`       | `separator`         | The string used to separate the current time and end time.                                                             | `string`  | `'/'`   |
 
+
 ## CSS Custom Properties
 
 | Name           | Description                                |
 | -------------- | ------------------------------------------ |
 | `--time-color` | The color of the text displaying the time. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../../controls/default-controls)
+ - [vime-default-controls](../../controls/default-controls)
 
 ### Depends on
 
@@ -89,7 +98,6 @@ function Example() {
 - [vime-end-time](../end-time)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-time-progress --> vime-current-time
@@ -100,6 +108,6 @@ graph TD;
   style vime-time-progress fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

@@ -12,6 +12,7 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -59,6 +60,7 @@ class PlaybackControl extends VimeComponent {
 }
 ```
 
+
 ### Html
 
 ```html {6-9}
@@ -76,9 +78,10 @@ class PlaybackControl extends VimeComponent {
 </vime-player>
 ```
 
+
 ### React
 
-```tsx {3,18-27}
+```tsx {3,20-29}
 import React, { useMemo, useRef } from 'react';
 import {
   VimeControl,
@@ -111,6 +114,7 @@ function PlaybackControl() {
   );
 }
 ```
+
 
 ### Svelte
 
@@ -148,6 +152,7 @@ function PlaybackControl() {
   $: tooltip = $paused ? $i18n.play : $i18n.pause;
 </script>
 ```
+
 
 ### Vue
 
@@ -204,6 +209,8 @@ function PlaybackControl() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property             | Attribute    | Description                                                                                                                                                   | Type                   | Default     |
@@ -217,17 +224,20 @@ function PlaybackControl() {
 | `pressed`            | `pressed`    | If the control is a toggle, this indicated whether the control is in a "pressed" state or not. Sets the `aria-pressed` property.                              | `boolean \| undefined` | `undefined` |
 | `scale`              | `scale`      | Scale the size of the control up/down by the amount given.                                                                                                    | `number`               | `1`         |
 
+
 ## Events
 
 | Event                | Description                                                                                    | Type                   |
 | -------------------- | ---------------------------------------------------------------------------------------------- | ---------------------- |
 | `vInteractionChange` | Emitted when the user is interacting with the control by focusing, touching or hovering on it. | `CustomEvent<boolean>` |
 
+
 ## Slots
 
 | Slot | Description                                                     |
 | ---- | --------------------------------------------------------------- |
 |      | Used to pass in the content of the control (text/icon/tooltip). |
+
 
 ## CSS Custom Properties
 
@@ -242,19 +252,19 @@ function PlaybackControl() {
 | `--control-padding`       | The padding inside the control.                                            |
 | `--control-tap-highlight` | The highlight color when a control is tapped.                              |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-caption-control](../caption-control)
-- [vime-fullscreen-control](../fullscreen-control)
-- [vime-mute-control](../mute-control)
-- [vime-pip-control](../pip-control)
-- [vime-playback-control](../playback-control)
-- [vime-settings-control](../settings-control)
+ - [vime-caption-control](../caption-control)
+ - [vime-fullscreen-control](../fullscreen-control)
+ - [vime-mute-control](../mute-control)
+ - [vime-pip-control](../pip-control)
+ - [vime-playback-control](../playback-control)
+ - [vime-settings-control](../settings-control)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-caption-control --> vime-control
@@ -266,6 +276,6 @@ graph TD;
   style vime-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

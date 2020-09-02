@@ -4,6 +4,7 @@ It's not what you think &nbsp;😂&nbsp; ... fake media provider that is used fo
 
 <!-- Auto Generated Below -->
 
+
 ## Methods
 
 ### `dispatchChange(prop: PlayerProp, value: any) => Promise<void>`
@@ -14,6 +15,8 @@ Dispatches a state change event.
 
 Type: `Promise<void>`
 
+
+
 ### `dispatchLoadStart() => Promise<void>`
 
 Dispatches the `vLoadStart` event.
@@ -21,6 +24,8 @@ Dispatches the `vLoadStart` event.
 #### Returns
 
 Type: `Promise<void>`
+
+
 
 ### `getAdapter() => Promise<MockMediaProviderAdapter>`
 
@@ -30,6 +35,9 @@ Returns a mock adapter.
 
 Type: `Promise<MockMediaProviderAdapter>`
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

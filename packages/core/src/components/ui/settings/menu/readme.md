@@ -17,6 +17,7 @@ you want an easier starting point see [`vime-default-settings`](../default-setti
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -53,6 +54,7 @@ class Example {
 }
 ```
 
+
 ### Html
 
 ```html {5-7}
@@ -66,6 +68,7 @@ class Example {
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -104,6 +107,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```tsx {5-13}
@@ -139,6 +143,7 @@ function Example() {
   };
 </script>
 ```
+
 
 ### Vue
 
@@ -188,6 +193,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property                  | Attribute    | Description                                                                        | Type      | Default     |
@@ -195,6 +202,7 @@ function Example() {
 | `active`                  | `active`     | Whether the menu is open/visible.                                                  | `boolean` | `false`     |
 | `controller` _(required)_ | `controller` | The `id` attribute value of the control responsible for opening/closing this menu. | `string`  | `undefined` |
 | `identifier` _(required)_ | `identifier` | The `id` attribute of the menu.                                                    | `string`  | `undefined` |
+
 
 ## Events
 
@@ -204,6 +212,7 @@ function Example() {
 | `vFocusMenuItemChange` | Emitted when the currently focused menu item changes. | `CustomEvent<HTMLVimeMenuItemElement \| undefined>`             |
 | `vMenuItemsChange`     | Emitted when the menu items present changes.          | `CustomEvent<NodeListOf<HTMLVimeMenuItemElement> \| undefined>` |
 | `vOpen`                | Emitted when the menu is open/active.                 | `CustomEvent<void>`                                             |
+
 
 ## Methods
 
@@ -216,6 +225,8 @@ is a one-time operation and needs to be called everytime prior to opening the me
 
 Type: `Promise<void>`
 
+
+
 ### `getController() => Promise<HTMLElement>`
 
 Returns the controller responsible for opening/closing this menu.
@@ -223,6 +234,8 @@ Returns the controller responsible for opening/closing this menu.
 #### Returns
 
 Type: `Promise<HTMLElement>`
+
+
 
 ### `getFocusedMenuItem() => Promise<HTMLVimeMenuItemElement>`
 
@@ -232,11 +245,15 @@ Returns the currently focused menu item.
 
 Type: `Promise<HTMLVimeMenuItemElement>`
 
+
+
+
 ## Slots
 
 | Slot | Description                                                                                           |
 | ---- | ----------------------------------------------------------------------------------------------------- |
 |      | Used to pass in the body of the menu which usually contains menu items, radio groups and/or submenus. |
+
 
 ## CSS Custom Properties
 
@@ -247,15 +264,15 @@ Type: `Promise<HTMLVimeMenuItemElement>`
 | `--menu-font-size`   | The font size of text within the menu.   |
 | `--menu-font-weight` | The font weight of text within the menu. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-settings](../settings)
-- [vime-submenu](../submenu)
+ - [vime-settings](../settings)
+ - [vime-submenu](../submenu)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-settings --> vime-menu
@@ -263,6 +280,6 @@ graph TD;
   style vime-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

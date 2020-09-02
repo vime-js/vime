@@ -8,6 +8,7 @@ loading file-based media.
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property                | Attribute                 | Description                                                                                                                                                                                                                                                                        | Type                                                  | Default                              |
@@ -23,6 +24,7 @@ loading file-based media.
 | `preload`               | `preload`                 | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" \| "auto" \| "metadata" \| "none" \| undefined`   | `'metadata'`                         |
 | `viewType`              | `view-type`               | Whether to use an `audio` or `video` element to play the media.                                                                                                                                                                                                                    | `ViewType.Audio \| ViewType.Video \| undefined`       | `undefined`                          |
 
+
 ## Events
 
 | Event            | Description                                                | Type                                                             |
@@ -30,21 +32,22 @@ loading file-based media.
 | `vMediaElChange` | Emitted when the underlying media element changes.         | `CustomEvent<HTMLAudioElement \| HTMLVideoElement \| undefined>` |
 | `vSrcSetChange`  | Emitted when the child `<source />` elements are modified. | `CustomEvent<void>`                                              |
 
+
 ## Slots
 
 | Slot | Description                                                                  |
 | ---- | ---------------------------------------------------------------------------- |
 |      | Pass `<source>` and `<track>` elements to the underlying HTML5 media player. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-audio](../audio)
-- [vime-video](../video)
+ - [vime-audio](../audio)
+ - [vime-video](../video)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-audio --> vime-file
@@ -52,6 +55,6 @@ graph TD;
   style vime-file fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

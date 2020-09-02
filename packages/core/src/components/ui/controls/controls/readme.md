@@ -11,6 +11,7 @@ Responsible for positioning and laying out individual/groups of controls.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -27,6 +28,7 @@ Responsible for positioning and laying out individual/groups of controls.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {5-7}
@@ -40,6 +42,7 @@ Responsible for positioning and laying out individual/groups of controls.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -62,6 +65,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```tsx {5-7}
@@ -81,6 +85,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimeControls } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -109,6 +114,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property               | Attribute                 | Description                                                                                                                 | Type                                                                                  | Default        |
@@ -125,11 +132,13 @@ function Example() {
 | `pin`                  | `pin`                     | Pins the controls to the defined position inside the video player. This has no effect when the view is of type `audio`.     | `"bottomLeft" \| "bottomRight" \| "center" \| "topLeft" \| "topRight"`                | `'bottomLeft'` |
 | `waitForPlaybackStart` | `wait-for-playback-start` | Whether the controls should wait for playback to start before being shown. Audio players are not effected by this prop.     | `boolean`                                                                             | `false`        |
 
+
 ## Slots
 
 | Slot | Description               |
 | ---- | ------------------------- |
 |      | Used to pass in controls. |
+
 
 ## CSS Custom Properties
 
@@ -139,20 +148,20 @@ function Example() {
 | `--controls-padding` | The padding inside the controls.      |
 | `--controls-spacing` | The space between controls.           |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../default-controls)
+ - [vime-default-controls](../default-controls)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-controls --> vime-controls
   style vime-controls fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

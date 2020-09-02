@@ -12,6 +12,7 @@ the player.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -29,6 +30,7 @@ the player.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {7}
@@ -43,6 +45,7 @@ the player.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -64,6 +67,7 @@ function Example() {
   );
 }
 ```
+
 
 ### Svelte
 
@@ -87,6 +91,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -117,6 +122,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property           | Attribute           | Description                                                                                                                                                   | Type                             | Default               |
@@ -129,11 +136,12 @@ function Example() {
 | `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                                    | `number`                         | `1`                   |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" \| "right" \| undefined` | `undefined`           |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-volume-control](../volume-control)
+ - [vime-volume-control](../volume-control)
 
 ### Depends on
 
@@ -142,7 +150,6 @@ function Example() {
 - [vime-tooltip](../../tooltip)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-mute-control --> vime-control
@@ -152,6 +159,6 @@ graph TD;
   style vime-mute-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

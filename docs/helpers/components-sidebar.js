@@ -2,7 +2,7 @@ const { readdirSync } = require('fs');
 const { resolve } = require('path');
 
 // Thanks to copy-pasta from https://stackoverflow.com/a/45130990.
-function* getComponentsDocs(dir = resolve(__dirname, '../docs/components')) {
+function* getComponents(dir = resolve(__dirname, '../docs/components')) {
   const entries = readdirSync(dir, { withFileTypes: true });
 
   // eslint-disable-next-line no-restricted-syntax
@@ -10,37 +10,42 @@ function* getComponentsDocs(dir = resolve(__dirname, '../docs/components')) {
     const path = resolve(dir, entry.name);
 
     if (entry.isDirectory()) {
-      yield* getComponentsDocs(path);
+      yield* getComponents(path);
     } else {
       yield path;
     }
   }
 }
 
-const formatSideBarLabel = (name) => name
+const formatSidebarLabel = (name) => name
   .toLowerCase()
   .replace('vime-', '')
   .replace(/(?:^|-)\w/g, (match) => match.toUpperCase())
   .replace(/-/g, '')
   .replace('Ui', 'UI');
 
-const extractComponentDocCategory = (doc) => /((?:core|providers|ui|plugins).+)/.exec(doc)[1]
-  .replace('/readme.md', '');
+const extractSubPath = (component) => /(?:components\/)(.+)/.exec(component)[1];
 
-const extractComponentDocId = (doc) => `components/${extractComponentDocCategory(doc)}/readme`;
+const extractCategory = (component) => {
+  const path = extractSubPath(component);
+  return path.substr(0, path.lastIndexOf('/'));
+};
+
+// slice .md off
+const extractId = (component) => `components/${extractSubPath(component).slice(0, -3)}`;
 
 const buildComponentsSideBarItems = () => {
   const sidebarItems = [];
 
   // eslint-disable-next-line no-restricted-syntax
-  for (const doc of getComponentsDocs()) {
+  for (const component of getComponents()) {
     let pointer = sidebarItems;
-    let hierarchy = extractComponentDocCategory(doc);
-    hierarchy = hierarchy.substr(0, hierarchy.lastIndexOf('/')).split('/').reverse();
+    let hierarchy = extractCategory(component);
+    hierarchy = hierarchy.split('/').reverse();
 
     while (hierarchy.length) {
       const subcategoryId = hierarchy.pop();
-      const label = formatSideBarLabel(subcategoryId);
+      const label = formatSidebarLabel(subcategoryId);
 
       let subcategory = pointer.find((c) => c.label === label);
       if (subcategory === undefined) {
@@ -56,16 +61,16 @@ const buildComponentsSideBarItems = () => {
       pointer = subcategory.items;
     }
 
-    pointer.push(extractComponentDocId(doc));
+    pointer.push(extractId(component));
   }
 
   return sidebarItems;
 };
 
 module.exports = {
-  formatSideBarLabel,
-  getComponentsDocs,
-  extractComponentDocId,
-  extractComponentDocCategory,
+  formatSidebarLabel,
+  getComponents,
+  extractId,
+  extractCategory,
   buildComponentsSideBarItems,
 };

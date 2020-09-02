@@ -6,6 +6,7 @@ property.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -20,6 +21,7 @@ property.
 <vime-icon href="#vime-play"></vime-icon>
 ```
 
+
 ### Html
 
 ```html
@@ -31,6 +33,7 @@ property.
 <!-- URL -->
 <vime-icon href="#vime-play"></vime-icon>
 ```
+
 
 ### React
 
@@ -53,6 +56,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {2-4,7,10} title="example.svelte"
@@ -68,6 +72,7 @@ function Example() {
   import { VimeIcon } from '@vime/svelte';
 <script>
 ```
+
 
 ### Vue
 
@@ -95,6 +100,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property  | Attribute | Description                                                                       | Type                  | Default     |
@@ -104,11 +111,13 @@ function Example() {
 | `opacity` | `opacity` | The amount of transparency to add to the icon.                                    | `number`              | `1`         |
 | `scale`   | `scale`   | The amount to scale the size of the icon (respecting aspect ratio) up or down by. | `number`              | `1`         |
 
+
 ## Slots
 
 | Slot | Description                                            |
 | ---- | ------------------------------------------------------ |
 |      | Used to pass in SVG markup to be drawn by the browser. |
+
 
 ## CSS Custom Properties
 
@@ -117,20 +126,20 @@ function Example() {
 | `--icon-height` | The height of the icon. |
 | `--icon-width`  | The width of the icon.  |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-caption-control](../controls/caption-control)
-- [vime-fullscreen-control](../controls/fullscreen-control)
-- [vime-menu-item](../settings/menu-item)
-- [vime-mute-control](../controls/mute-control)
-- [vime-pip-control](../controls/pip-control)
-- [vime-playback-control](../controls/playback-control)
-- [vime-settings-control](../controls/settings-control)
+ - [vime-caption-control](../controls/caption-control)
+ - [vime-fullscreen-control](../controls/fullscreen-control)
+ - [vime-menu-item](../settings/menu-item)
+ - [vime-mute-control](../controls/mute-control)
+ - [vime-pip-control](../controls/pip-control)
+ - [vime-playback-control](../controls/playback-control)
+ - [vime-settings-control](../controls/settings-control)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-caption-control --> vime-icon
@@ -143,6 +152,6 @@ graph TD;
   style vime-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

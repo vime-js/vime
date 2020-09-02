@@ -7,6 +7,7 @@ based media. It uses [`dashjs`](https://github.com/Dash-Industry-Forum/dash.js) 
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -34,6 +35,7 @@ class Example {
 }
 ```
 
+
 ### Html
 
 ```html {2-6}
@@ -46,6 +48,7 @@ class Example {
   <!-- ... -->
 </vime-player>
 ```
+
 
 ### React
 
@@ -75,6 +78,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {2-7,12} title="example.svelte"
@@ -99,6 +103,7 @@ function Example() {
   };
 </script>
 ```
+
 
 ### Vue
 
@@ -136,6 +141,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property                | Attribute                 | Description                                                                                                                                                                                                                                                                        | Type                                                  | Default      |
@@ -152,6 +159,7 @@ function Example() {
 | `src` _(required)_      | `src`                     | The URL of the `manifest.mpd` file to use.                                                                                                                                                                                                                                         | `string`                                              | `undefined`  |
 | `version`               | `version`                 | The NPM package version of the `dashjs` library to download and use.                                                                                                                                                                                                               | `string`                                              | `'latest'`   |
 
+
 ## Dependencies
 
 ### Depends on
@@ -159,7 +167,6 @@ function Example() {
 - [vime-video](../video)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-dash --> vime-video
@@ -167,6 +174,6 @@ graph TD;
   style vime-dash fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

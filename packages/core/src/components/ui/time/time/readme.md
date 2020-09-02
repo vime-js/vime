@@ -11,6 +11,7 @@ Formats and displays a length of time provided in seconds.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -19,11 +20,13 @@ Formats and displays a length of time provided in seconds.
 <vime-time label="Time" [seconds]="120" />
 ```
 
+
 ### Html
 
 ```html
 <vime-time label="Time" seconds="120" />
 ```
+
 
 ### React
 
@@ -36,6 +39,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```tsx
@@ -47,6 +51,7 @@ function Example() {
   import { VimeTime } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -66,6 +71,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property             | Attribute           | Description                                                                                                           | Type      | Default     |
@@ -73,6 +80,7 @@ function Example() {
 | `alwaysShowHours`    | `always-show-hours` | Whether the time should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`). | `boolean` | `false`     |
 | `label` _(required)_ | `label`             | The `aria-label` property of the time.                                                                                | `string`  | `undefined` |
 | `seconds`            | `seconds`           | The length of time in seconds.                                                                                        | `number`  | `0`         |
+
 
 ## CSS Custom Properties
 
@@ -82,15 +90,15 @@ function Example() {
 | `--time-font-size`   | The size of the font displaying the time.   |
 | `--time-font-weight` | The weight of the font displaying the time. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-current-time](../current-time)
-- [vime-end-time](../end-time)
+ - [vime-current-time](../current-time)
+ - [vime-end-time](../end-time)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-current-time --> vime-time
@@ -98,6 +106,6 @@ graph TD;
   style vime-time fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

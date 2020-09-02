@@ -14,6 +14,7 @@ the settings is displayed as a [bottom sheet](https://material.io/components/she
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -30,6 +31,7 @@ the settings is displayed as a [bottom sheet](https://material.io/components/she
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {5-7}
@@ -43,6 +45,7 @@ the settings is displayed as a [bottom sheet](https://material.io/components/she
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -63,6 +66,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {5-7,12} title="example.svelte"
@@ -80,6 +84,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimeSettings } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -109,12 +114,15 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property         | Attribute         | Description                                                                                            | Type      | Default |
 | ---------------- | ----------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------- |
 | `active`         | `active`          | Whether the settings menu is opened/closed.                                                            | `boolean` | `false` |
 | `controlsHeight` | `controls-height` | The height of any lower control bar in pixels so that the settings can re-position itself accordingly. | `number`  | `65`    |
+
 
 ## Methods
 
@@ -126,11 +134,15 @@ Sets the controller responsible for opening/closing this settings.
 
 Type: `Promise<void>`
 
+
+
+
 ## Slots
 
 | Slot | Description                                                                     |
 | ---- | ------------------------------------------------------------------------------- |
 |      | Used to pass in the body of the settings menu, which usually contains submenus. |
+
 
 ## CSS Custom Properties
 
@@ -146,18 +158,18 @@ Type: `Promise<void>`
 | `--settings-shadow`             | The shadow cast around the settings menu frame.              |
 | `--settings-width`              | The width of the settings menu.                              |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-settings](../default-settings)
+ - [vime-default-settings](../default-settings)
 
 ### Depends on
 
 - [vime-menu](../menu)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-settings --> vime-menu
@@ -165,6 +177,6 @@ graph TD;
   style vime-settings fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

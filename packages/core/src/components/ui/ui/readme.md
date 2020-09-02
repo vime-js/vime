@@ -8,6 +8,7 @@ is `true`, and the player is not in fullscreen mode.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -21,6 +22,7 @@ is `true`, and the player is not in fullscreen mode.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {3-5}
@@ -31,6 +33,7 @@ is `true`, and the player is not in fullscreen mode.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -48,6 +51,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {3-5,9} title="example.svelte"
@@ -62,6 +66,7 @@ function Example() {
   import { VimePlayer, VimeUi } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -87,26 +92,28 @@ function Example() {
 </script>
 ```
 
+
+
 ## Slots
 
 | Slot | Description                                   |
 | ---- | --------------------------------------------- |
 |      | Used to pass in UI components for the player. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-ui](../default-ui)
+ - [vime-default-ui](../default-ui)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-ui --> vime-ui
   style vime-ui fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

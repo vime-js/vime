@@ -11,6 +11,7 @@ A control for toggling the playback state (play/pause) of the current media.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -28,6 +29,7 @@ A control for toggling the playback state (play/pause) of the current media.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {7}
@@ -42,6 +44,7 @@ A control for toggling the playback state (play/pause) of the current media.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -69,6 +72,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {6,16} title="example.svelte"
@@ -91,6 +95,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -126,6 +131,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property           | Attribute           | Description                                                                                                                                                   | Type                             | Default         |
@@ -137,11 +144,12 @@ function Example() {
 | `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                                    | `number`                         | `1`             |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" \| "right" \| undefined` | `undefined`     |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../default-controls)
+ - [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -150,7 +158,6 @@ function Example() {
 - [vime-tooltip](../../tooltip)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-playback-control --> vime-control
@@ -160,6 +167,6 @@ graph TD;
   style vime-playback-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

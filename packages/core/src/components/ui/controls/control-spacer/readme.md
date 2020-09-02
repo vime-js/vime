@@ -11,6 +11,7 @@ Used to space controls out vertically/horizontally. Under the hood it's simply `
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -30,6 +31,7 @@ Used to space controls out vertically/horizontally. Under the hood it's simply `
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {8}
@@ -46,6 +48,7 @@ Used to space controls out vertically/horizontally. Under the hood it's simply `
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -78,6 +81,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {8,21} title="example.svelte"
@@ -106,6 +110,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -149,20 +154,21 @@ function Example() {
 </script>
 ```
 
+
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../default-controls)
+ - [vime-default-controls](../default-controls)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-controls --> vime-control-spacer
   style vime-control-spacer fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

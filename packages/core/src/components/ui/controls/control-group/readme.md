@@ -12,6 +12,7 @@ a new line.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -36,6 +37,7 @@ a new line.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {6-8,10-13}
@@ -56,6 +58,7 @@ a new line.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -92,6 +95,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {6-8,10-13,26} title="example.svelte"
@@ -124,6 +128,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -171,11 +176,14 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property | Attribute | Description                                                                                                                | Type                                    | Default  |
 | -------- | --------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- | -------- |
 | `space`  | `space`   | Determines where to add spacing/margin. The amount of spacing is determined by the CSS variable `--control-group-spacing`. | `"both" \| "bottom" \| "none" \| "top"` | `'none'` |
+
 
 ## CSS Custom Properties
 
@@ -183,20 +191,20 @@ function Example() {
 | ------------------------- | --------------------------------- |
 | `--control-group-spacing` | The space between control groups. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../default-controls)
+ - [vime-default-controls](../default-controls)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-controls --> vime-control-group
   style vime-control-group fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

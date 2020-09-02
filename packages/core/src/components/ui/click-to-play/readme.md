@@ -4,6 +4,7 @@ Enables toggling playback by clicking the player.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -18,6 +19,7 @@ Enables toggling playback by clicking the player.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {5}
@@ -29,6 +31,7 @@ Enables toggling playback by clicking the player.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -49,6 +52,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {5,10} title="example.svelte"
@@ -64,6 +68,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimeClickToPlay } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -91,26 +96,28 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property      | Attribute       | Description                                                                                            | Type      | Default |
 | ------------- | --------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------- |
 | `useOnMobile` | `use-on-mobile` | By default this is disabled on mobile to not interfere with playback, set this to `true` to enable it. | `boolean` | `false` |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-ui](../default-ui)
+ - [vime-default-ui](../default-ui)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-ui --> vime-click-to-play
   style vime-click-to-play fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

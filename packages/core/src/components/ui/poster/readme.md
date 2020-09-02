@@ -12,6 +12,7 @@ dissapear once playback starts.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -26,6 +27,7 @@ dissapear once playback starts.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {5}
@@ -37,6 +39,7 @@ dissapear once playback starts.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -57,6 +60,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {5,10} title="example.svelte"
@@ -72,6 +76,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimePoster } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -99,11 +104,14 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property | Attribute | Description                                                                                   | Type                                                                    | Default   |
 | -------- | --------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------- |
 | `fit`    | `fit`     | How the poster image should be resized to fit the container (sets the `object-fit` property). | `"contain" \| "cover" \| "fill" \| "none" \| "scale-down" \| undefined` | `'cover'` |
+
 
 ## Events
 
@@ -113,20 +121,20 @@ function Example() {
 | `vWillHide` | Emitted when the poster will be hidden. | `CustomEvent<void>` |
 | `vWillShow` | Emitted when the poster will be shown.  | `CustomEvent<void>` |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-ui](../default-ui)
+ - [vime-default-ui](../default-ui)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-ui --> vime-poster
   style vime-poster fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

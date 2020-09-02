@@ -12,6 +12,7 @@ is to provide a description about the function of that element.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -30,6 +31,7 @@ is to provide a description about the function of that element.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {7}
@@ -45,6 +47,7 @@ is to provide a description about the function of that element.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -75,6 +78,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {7,19} title="example.svelte"
@@ -100,6 +104,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -139,6 +144,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property    | Attribute   | Description                                                                                                                           | Type                             | Default     |
@@ -148,11 +155,13 @@ function Example() {
 | `hidden`    | `hidden`    | Whether the tooltip is displayed or not.                                                                                              | `boolean`                        | `false`     |
 | `position`  | `position`  | Determines if the tooltip appears on top/bottom of it's parent.                                                                       | `"bottom" \| "top"`              | `'top'`     |
 
+
 ## Slots
 
 | Slot | Description                                  |
 | ---- | -------------------------------------------- |
 |      | Used to pass in the contents of the tooltip. |
+
 
 ## CSS Custom Properties
 
@@ -168,20 +177,20 @@ function Example() {
 | `--tooltip-padding`          | The padding inside the tooltip.                                  |
 | `--tooltip-spacing`          | The space between the tooltip and its parent when active.        |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-caption-control](../controls/caption-control)
-- [vime-fullscreen-control](../controls/fullscreen-control)
-- [vime-mute-control](../controls/mute-control)
-- [vime-pip-control](../controls/pip-control)
-- [vime-playback-control](../controls/playback-control)
-- [vime-scrubber-control](../controls/scrubber-control)
-- [vime-settings-control](../controls/settings-control)
+ - [vime-caption-control](../controls/caption-control)
+ - [vime-fullscreen-control](../controls/fullscreen-control)
+ - [vime-mute-control](../controls/mute-control)
+ - [vime-pip-control](../controls/pip-control)
+ - [vime-playback-control](../controls/playback-control)
+ - [vime-scrubber-control](../controls/scrubber-control)
+ - [vime-settings-control](../controls/settings-control)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-caption-control --> vime-tooltip
@@ -194,6 +203,6 @@ graph TD;
   style vime-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

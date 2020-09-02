@@ -15,6 +15,7 @@ timeline that has not buffered.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -32,6 +33,7 @@ timeline that has not buffered.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {7}
@@ -46,6 +48,7 @@ timeline that has not buffered.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -73,6 +76,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {6,16} title="example.svelte"
@@ -95,6 +99,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -130,6 +135,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property          | Attribute           | Description                                                                                                                        | Type      | Default |
@@ -137,6 +144,7 @@ function Example() {
 | `alwaysShowHours` | `always-show-hours` | Whether the timestamp in the tooltip should show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`). | `boolean` | `false` |
 | `hideTooltip`     | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                       | `boolean` | `false` |
 | `noKeyboard`      | `no-keyboard`       | Prevents seeking forward/backward by using the Left/Right arrow keys.                                                              | `boolean` | `false` |
+
 
 ## CSS Custom Properties
 
@@ -146,11 +154,12 @@ function Example() {
 | `--scrubber-loading-stripe-color` | The color of each candystripe displayed when media is buffering.                            |
 | `--scrubber-loading-stripe-size`  | The size of each candystripe displayed when media is buffering.                             |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../default-controls)
+ - [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -158,7 +167,6 @@ function Example() {
 - [vime-tooltip](../../tooltip)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-scrubber-control --> vime-slider
@@ -167,6 +175,6 @@ graph TD;
   style vime-scrubber-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

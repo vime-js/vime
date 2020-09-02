@@ -12,6 +12,7 @@ can be selected at the same time.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -47,6 +48,7 @@ class Example {
 }
 ```
 
+
 ### Html
 
 ```html {7-11}
@@ -66,6 +68,7 @@ class Example {
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -108,6 +111,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```tsx {7-11}
@@ -147,6 +151,7 @@ function Example() {
   };
 </script>
 ```
+
 
 ### Vue
 
@@ -203,11 +208,14 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property | Attribute | Description                                | Type                  | Default     |
 | -------- | --------- | ------------------------------------------ | --------------------- | ----------- |
 | `value`  | `value`   | The current value selected for this group. | `string \| undefined` | `undefined` |
+
 
 ## Events
 
@@ -215,26 +223,27 @@ function Example() {
 | -------- | ----------------------------------------------------------- | ------------------- |
 | `vCheck` | Emitted when a new radio button is selected for this group. | `CustomEvent<void>` |
 
+
 ## Slots
 
 | Slot | Description                                        |
 | ---- | -------------------------------------------------- |
 |      | Used to pass in radio buttons (`vime-menu-radio`). |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-settings](../default-settings)
+ - [vime-default-settings](../default-settings)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-settings --> vime-menu-radio-group
   style vime-menu-radio-group fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

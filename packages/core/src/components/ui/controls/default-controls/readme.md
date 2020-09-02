@@ -6,6 +6,7 @@ the media is audio/video/live, and whether the device is mobile/desktop. See
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -23,6 +24,7 @@ the media is audio/video/live, and whether the device is mobile/desktop. See
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {5-8}
@@ -37,6 +39,7 @@ the media is audio/video/live, and whether the device is mobile/desktop. See
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -57,6 +60,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```tsx {5}
@@ -74,6 +78,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimeDefaultControls } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -101,6 +106,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property               | Attribute                 | Description                                                                                                                 | Type      | Default |
@@ -110,11 +117,12 @@ function Example() {
 | `hideWhenPaused`       | `hide-when-paused`        | Whether the controls should show/hide when paused. Audio players are not effected by this prop.                             | `boolean` | `false` |
 | `waitForPlaybackStart` | `wait-for-playback-start` | Whether the controls should wait for playback to start before being shown. Audio players are not effected by this prop.     | `boolean` | `false` |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-ui](../../default-ui)
+ - [vime-default-ui](../../default-ui)
 
 ### Depends on
 
@@ -135,7 +143,6 @@ function Example() {
 - [vime-pip-control](../pip-control)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-controls --> vime-controls
@@ -183,6 +190,6 @@ graph TD;
   style vime-default-controls fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

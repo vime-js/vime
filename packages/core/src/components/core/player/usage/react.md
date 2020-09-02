@@ -1,4 +1,4 @@
-```tsx {2,28-40}
+```tsx {2,31-43}
 import React, { useState } from 'react';
 import { VimePlayer, VimeUi } from '@vime/react';
 

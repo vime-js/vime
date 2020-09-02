@@ -4,6 +4,7 @@ Loads an SVG sprite and inserts it into the document.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -18,6 +19,7 @@ Loads an SVG sprite and inserts it into the document.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {5}
@@ -29,6 +31,7 @@ Loads an SVG sprite and inserts it into the document.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -49,6 +52,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {5,10} title="example.svelte"
@@ -64,6 +68,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimeIcons } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -91,26 +96,28 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property | Attribute | Description                       | Type     | Default                                                             |
 | -------- | --------- | --------------------------------- | -------- | ------------------------------------------------------------------- |
 | `href`   | `href`    | The URL to an SVG sprite to load. | `string` | `'https://cdn.jsdelivr.net/npm/@vime/core@latest/icons/sprite.svg'` |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-ui](../default-ui)
+ - [vime-default-ui](../default-ui)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-default-ui --> vime-icons
   style vime-icons fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

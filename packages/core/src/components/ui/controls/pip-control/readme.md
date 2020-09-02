@@ -12,6 +12,7 @@ be requested (checked via the `canSetPiP()` player method).
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -29,6 +30,7 @@ be requested (checked via the `canSetPiP()` player method).
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {7}
@@ -43,6 +45,7 @@ be requested (checked via the `canSetPiP()` player method).
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -64,6 +67,7 @@ function Example() {
   );
 }
 ```
+
 
 ### Svelte
 
@@ -87,6 +91,7 @@ function Example() {
   } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -117,6 +122,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property           | Attribute           | Description                                                                                                                                                   | Type                             | Default             |
@@ -128,11 +135,12 @@ function Example() {
 | `scale`            | `scale`             | Scale the size of the control up/down by the amount given.                                                                                                    | `number`                         | `1`                 |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" \| "right" \| undefined` | `undefined`         |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../default-controls)
+ - [vime-default-controls](../default-controls)
 
 ### Depends on
 
@@ -141,7 +149,6 @@ function Example() {
 - [vime-tooltip](../../tooltip)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-pip-control --> vime-control
@@ -151,6 +158,6 @@ graph TD;
   style vime-pip-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

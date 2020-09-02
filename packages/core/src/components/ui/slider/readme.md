@@ -13,6 +13,7 @@ at https://github.com/sampotts/rangetouch).
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -37,6 +38,7 @@ class Example {
 }
 ```
 
+
 ### Html
 
 ```html
@@ -50,6 +52,7 @@ class Example {
   });
 </script>
 ```
+
 
 ### React
 
@@ -76,6 +79,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```tsx
@@ -99,6 +103,7 @@ function Example() {
   };
 </script>
 ```
+
 
 ### Vue
 
@@ -134,6 +139,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property    | Attribute    | Description                                                                                | Type                  | Default     |
@@ -145,11 +152,13 @@ function Example() {
 | `value`     | `value`      | The current value.                                                                         | `number`              | `5`         |
 | `valueText` | `value-text` | Human-readable text alternative for the current value. Defaults to `value:max` percentage. | `string \| undefined` | `undefined` |
 
+
 ## Events
 
 | Event          | Description                                                     | Type                  |
 | -------------- | --------------------------------------------------------------- | --------------------- |
 | `vValueChange` | Emitted when the value of the underlying `input` field changes. | `CustomEvent<number>` |
+
 
 ## CSS Custom Properties
 
@@ -164,15 +173,15 @@ function Example() {
 | `--slider-track-height`         | The height of the track.                                          |
 | `--slider-value-color`          | The color of the part of the track filled upto the current value. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-scrubber-control](../controls/scrubber-control)
-- [vime-volume-control](../controls/volume-control)
+ - [vime-scrubber-control](../controls/scrubber-control)
+ - [vime-volume-control](../controls/volume-control)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-scrubber-control --> vime-slider
@@ -180,6 +189,6 @@ graph TD;
   style vime-slider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

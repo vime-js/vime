@@ -13,6 +13,7 @@ sections/options together that can be navigated to by the user.
 
 <!-- Auto Generated Below -->
 
+
 ## Usage
 
 ### Angular
@@ -31,6 +32,7 @@ sections/options together that can be navigated to by the user.
 </vime-player>
 ```
 
+
 ### Html
 
 ```html {6-8}
@@ -46,6 +48,7 @@ sections/options together that can be navigated to by the user.
   </vime-ui>
 </vime-player>
 ```
+
 
 ### React
 
@@ -68,6 +71,7 @@ function Example() {
 }
 ```
 
+
 ### Svelte
 
 ```html {6-8,18} title="example.svelte"
@@ -87,6 +91,7 @@ function Example() {
   import { VimePlayer, VimeUi, VimeSettings, VimeSubmenu } from '@vime/svelte';
 </script>
 ```
+
 
 ### Vue
 
@@ -119,6 +124,8 @@ function Example() {
 </script>
 ```
 
+
+
 ## Properties
 
 | Property             | Attribute | Description                                                                                                                                                                     | Type                  | Default     |
@@ -128,17 +135,19 @@ function Example() {
 | `hint`               | `hint`    | This can provide additional context about the current state of the submenu. For example, the hint could be the currently selected option if the submenu contains a radio group. | `string \| undefined` | `undefined` |
 | `label` _(required)_ | `label`   | The title of the submenu.                                                                                                                                                       | `string`              | `undefined` |
 
+
 ## Slots
 
 | Slot | Description                                                                                                                       |
 | ---- | --------------------------------------------------------------------------------------------------------------------------------- |
 |      | Used to pass in the body of the submenu which is usually a set of choices in the form of a radio group (`vime-menu-radio-group`). |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-settings](../default-settings)
+ - [vime-default-settings](../default-settings)
 
 ### Depends on
 
@@ -146,7 +155,6 @@ function Example() {
 - [vime-menu](../menu)
 
 ### Graph
-
 ```mermaid
 graph TD;
   vime-submenu --> vime-menu-item
@@ -156,6 +164,6 @@ graph TD;
   style vime-submenu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*
