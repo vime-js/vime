@@ -26,11 +26,9 @@
       VimeUi,
       VimeMenu,
     },
-
     data: {
       isMenuActive: false,
     },
-
     methods: {
       onOpen() {
         this.isMenuActive = true;

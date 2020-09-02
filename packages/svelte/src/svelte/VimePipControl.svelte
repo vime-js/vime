@@ -12,7 +12,6 @@ export let exitIcon = undefined;
 export let tooltipDirection = undefined;
 export let hideTooltip = undefined;
 export let keys = undefined;
-export let scale = undefined;
 export let isPiPActive = undefined;
 export let i18n = undefined;
 export let playbackReady = undefined;
@@ -39,7 +38,6 @@ const onEvent = (e) => {
   tooltip-direction={tooltipDirection}
   hide-tooltip={hideTooltip}
   keys={keys}
-  scale={scale}
   is-pi-p-active={isPiPActive}
   playback-ready={playbackReady}
   

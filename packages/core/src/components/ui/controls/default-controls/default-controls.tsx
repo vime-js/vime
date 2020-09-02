@@ -119,7 +119,7 @@ export class DefaultControls {
           waitForPlaybackStart={this.waitForPlaybackStart}
           hideWhenPaused={this.hideWhenPaused}
         >
-          <vime-playback-control scale={1.5} />
+          <vime-playback-control style={{ '--control-scale': '1.5' }} />
         </vime-controls>
 
         {!this.isLive && lowerControls}

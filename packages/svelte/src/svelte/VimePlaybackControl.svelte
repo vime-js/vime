@@ -11,7 +11,6 @@ export let playIcon = undefined;
 export let pauseIcon = undefined;
 export let tooltipDirection = undefined;
 export let hideTooltip = undefined;
-export let scale = undefined;
 export let keys = undefined;
 export let paused = undefined;
 export let i18n = undefined;
@@ -37,7 +36,6 @@ const onEvent = (e) => {
   pause-icon={pauseIcon}
   tooltip-direction={tooltipDirection}
   hide-tooltip={hideTooltip}
-  scale={scale}
   keys={keys}
   paused={paused}
   

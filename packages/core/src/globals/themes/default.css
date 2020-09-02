@@ -96,7 +96,7 @@ vime-player {
   --captions-cue-bg-color: var(--color-gray-600);
   --captions-cue-border-radius: 2px;
   --captions-cue-padding: 0.2em 0.5em;
-  
+
   /*******************************
    * Controls
    *******************************/
@@ -116,6 +116,7 @@ vime-player {
    *******************************/
 
   --control-border: 0;
+  --control-scale: 1;
   --control-border-radius: 3px;
   --control-color: #fff;
   --control-tap-highlight: var(--color-white-200);

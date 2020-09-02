@@ -92,7 +92,7 @@ function PlaybackControl() {
 
 <TabItem value="vue">
 
-```html {2-10,17,29} title="playback-control.vue"
+```html {2-10,16,24} title="playback-control.vue"
 <template>
   <VimeControl
     keys="k"
@@ -115,18 +115,15 @@ function PlaybackControl() {
 
   export default {
     mixins: [VimeMixin(['paused', 'i18n'])]
-
     components: {
       VimeControl,
       VimeIcon,
       VimeTooltip,
     },
-
     data: {
       paused: true,
       i18n: {},
     },
-
     computed: {
       icon() {
         return this.paused ? '#vime-play' : '#vime-pause';
@@ -135,7 +132,6 @@ function PlaybackControl() {
         return this.paused ? this.i18n.play : this.i18n.pause;
       },
     },
-
     methods: {
       onClick() {
         this.paused = !paused;
@@ -249,7 +245,6 @@ class PlaybackControl extends VimeComponent {
 | `label` _(required)_ | `label`      | The `aria-label` property of the control.                                                                                                                     | `string`              | `undefined` |
 | `menu`               | `menu`       | If the control has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                                                | `string ∣ undefined`  | `undefined` |
 | `pressed`            | `pressed`    | If the control is a toggle, this indicated whether the control is in a "pressed" state or not. Sets the `aria-pressed` property.                              | `boolean ∣ undefined` | `undefined` |
-| `scale`              | `scale`      | Scale the size of the control up/down by the amount given.                                                                                                    | `number`              | `1`         |
 
 ## Events
 
@@ -274,6 +269,7 @@ class PlaybackControl extends VimeComponent {
 | `--control-focus-bg`      | The background colour of a control when it is being hovered on or focused. |
 | `--control-focus-color`   | The text colour of a control when it is being hovered on or focused.       |
 | `--control-padding`       | The padding inside the control.                                            |
+| `--control-scale`         | The amount to scale the control up/down by.                                |
 | `--control-tap-highlight` | The highlight color when a control is tapped.                              |
 
 ## Dependencies

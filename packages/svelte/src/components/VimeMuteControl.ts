@@ -21,9 +21,6 @@ interface VimeMuteControlProps {
   /** Whether the tooltip should not be displayed. */
   hideTooltip?: Components.VimeMuteControl["hideTooltip"]
   
-  /** Scale the size of the control up/down by the amount given. */
-  scale?: Components.VimeMuteControl["scale"]
-  
   /** A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in
 a `keydown` event, will trigger a `click` event on the control. */
   keys?: Components.VimeMuteControl["keys"]
@@ -67,8 +64,8 @@ import { createEventDispatcher, onMount } from "svelte";
 function create_fragment(ctx) {
 	let vime_mute_control;
 	let current;
-	const default_slot_template = /*$$slots*/ ctx[13].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[12], null);
+	const default_slot_template = /*$$slots*/ ctx[12].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[11], null);
 
 	return {
 		c() {
@@ -79,10 +76,9 @@ function create_fragment(ctx) {
 			set_custom_element_data(vime_mute_control, "muted-icon", /*mutedIcon*/ ctx[2]);
 			set_custom_element_data(vime_mute_control, "tooltip-direction", /*tooltipDirection*/ ctx[3]);
 			set_custom_element_data(vime_mute_control, "hide-tooltip", /*hideTooltip*/ ctx[4]);
-			set_custom_element_data(vime_mute_control, "scale", /*scale*/ ctx[5]);
-			set_custom_element_data(vime_mute_control, "keys", /*keys*/ ctx[6]);
-			set_custom_element_data(vime_mute_control, "volume", /*volume*/ ctx[7]);
-			set_custom_element_data(vime_mute_control, "muted", /*muted*/ ctx[8]);
+			set_custom_element_data(vime_mute_control, "keys", /*keys*/ ctx[5]);
+			set_custom_element_data(vime_mute_control, "volume", /*volume*/ ctx[6]);
+			set_custom_element_data(vime_mute_control, "muted", /*muted*/ ctx[7]);
 		},
 		m(target, anchor) {
 			insert(target, vime_mute_control, anchor);
@@ -91,13 +87,13 @@ function create_fragment(ctx) {
 				default_slot.m(vime_mute_control, null);
 			}
 
-			/*vime_mute_control_binding*/ ctx[14](vime_mute_control);
+			/*vime_mute_control_binding*/ ctx[13](vime_mute_control);
 			current = true;
 		},
 		p(ctx, [dirty]) {
 			if (default_slot) {
-				if (default_slot.p && dirty & /*$$scope*/ 4096) {
-					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[12], dirty, null, null);
+				if (default_slot.p && dirty & /*$$scope*/ 2048) {
+					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[11], dirty, null, null);
 				}
 			}
 
@@ -121,20 +117,16 @@ function create_fragment(ctx) {
 				set_custom_element_data(vime_mute_control, "hide-tooltip", /*hideTooltip*/ ctx[4]);
 			}
 
-			if (!current || dirty & /*scale*/ 32) {
-				set_custom_element_data(vime_mute_control, "scale", /*scale*/ ctx[5]);
+			if (!current || dirty & /*keys*/ 32) {
+				set_custom_element_data(vime_mute_control, "keys", /*keys*/ ctx[5]);
 			}
 
-			if (!current || dirty & /*keys*/ 64) {
-				set_custom_element_data(vime_mute_control, "keys", /*keys*/ ctx[6]);
+			if (!current || dirty & /*volume*/ 64) {
+				set_custom_element_data(vime_mute_control, "volume", /*volume*/ ctx[6]);
 			}
 
-			if (!current || dirty & /*volume*/ 128) {
-				set_custom_element_data(vime_mute_control, "volume", /*volume*/ ctx[7]);
-			}
-
-			if (!current || dirty & /*muted*/ 256) {
-				set_custom_element_data(vime_mute_control, "muted", /*muted*/ ctx[8]);
+			if (!current || dirty & /*muted*/ 128) {
+				set_custom_element_data(vime_mute_control, "muted", /*muted*/ ctx[7]);
 			}
 		},
 		i(local) {
@@ -149,7 +141,7 @@ function create_fragment(ctx) {
 		d(detaching) {
 			if (detaching) detach(vime_mute_control);
 			if (default_slot) default_slot.d(detaching);
-			/*vime_mute_control_binding*/ ctx[14](null);
+			/*vime_mute_control_binding*/ ctx[13](null);
 		}
 	};
 }
@@ -163,7 +155,6 @@ function instance($$self, $$props, $$invalidate) {
 	let { mutedIcon = undefined } = $$props;
 	let { tooltipDirection = undefined } = $$props;
 	let { hideTooltip = undefined } = $$props;
-	let { scale = undefined } = $$props;
 	let { keys = undefined } = $$props;
 	let { volume = undefined } = $$props;
 	let { muted = undefined } = $$props;
@@ -171,11 +162,11 @@ function instance($$self, $$props, $$invalidate) {
 	const getWebComponent = () => __ref;
 
 	onMount(() => {
-		$$invalidate(15, __mounted = true);
+		$$invalidate(14, __mounted = true);
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(9, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(8, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -188,7 +179,7 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_mute_control_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(9, __ref);
+			$$invalidate(8, __ref);
 		});
 	}
 
@@ -198,16 +189,15 @@ function instance($$self, $$props, $$invalidate) {
 		if ("mutedIcon" in $$props) $$invalidate(2, mutedIcon = $$props.mutedIcon);
 		if ("tooltipDirection" in $$props) $$invalidate(3, tooltipDirection = $$props.tooltipDirection);
 		if ("hideTooltip" in $$props) $$invalidate(4, hideTooltip = $$props.hideTooltip);
-		if ("scale" in $$props) $$invalidate(5, scale = $$props.scale);
-		if ("keys" in $$props) $$invalidate(6, keys = $$props.keys);
-		if ("volume" in $$props) $$invalidate(7, volume = $$props.volume);
-		if ("muted" in $$props) $$invalidate(8, muted = $$props.muted);
-		if ("i18n" in $$props) $$invalidate(10, i18n = $$props.i18n);
-		if ("$$scope" in $$props) $$invalidate(12, $$scope = $$props.$$scope);
+		if ("keys" in $$props) $$invalidate(5, keys = $$props.keys);
+		if ("volume" in $$props) $$invalidate(6, volume = $$props.volume);
+		if ("muted" in $$props) $$invalidate(7, muted = $$props.muted);
+		if ("i18n" in $$props) $$invalidate(9, i18n = $$props.i18n);
+		if ("$$scope" in $$props) $$invalidate(11, $$scope = $$props.$$scope);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*__mounted, i18n*/ 33792) {
+		if ($$self.$$.dirty & /*__mounted, i18n*/ 16896) {
 			$: if (__mounted) setProp("i18n", i18n);
 		}
 	};
@@ -218,7 +208,6 @@ function instance($$self, $$props, $$invalidate) {
 		mutedIcon,
 		tooltipDirection,
 		hideTooltip,
-		scale,
 		keys,
 		volume,
 		muted,
@@ -253,17 +242,16 @@ class VimeMuteControl extends SvelteComponent {
 			mutedIcon: 2,
 			tooltipDirection: 3,
 			hideTooltip: 4,
-			scale: 5,
-			keys: 6,
-			volume: 7,
-			muted: 8,
-			i18n: 10,
-			getWebComponent: 11
+			keys: 5,
+			volume: 6,
+			muted: 7,
+			i18n: 9,
+			getWebComponent: 10
 		});
 	}
 
 	get getWebComponent(): HTMLVimeMuteControlElement | undefined {
-		return this.$$.ctx[11];
+		return this.$$.ctx[10];
 	}
 }
 

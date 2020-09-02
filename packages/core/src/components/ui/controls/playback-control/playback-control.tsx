@@ -33,11 +33,6 @@ export class PlaybackControl implements KeyboardControl {
   @Prop() hideTooltip = false;
 
   /**
-   * Scale the size of the control up/down by the amount given.
-   */
-  @Prop() scale = 1;
-
-  /**
    * @inheritdoc
    */
   @Prop() keys?: string = 'k';
@@ -66,7 +61,6 @@ export class PlaybackControl implements KeyboardControl {
 
     return (
       <vime-control
-        scale={this.scale}
         label={this.i18n.playback}
         keys={this.keys}
         pressed={!this.paused}

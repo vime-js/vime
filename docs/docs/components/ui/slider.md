@@ -97,11 +97,9 @@ function Example() {
     components: {
       VimeSlider,
     },
-
     data: {
       value: 50,
     },
-
     methods: {
       onValueChange(value) {
         this.value = value;

@@ -8,9 +8,6 @@ let __mounted = false;
 const dispatch = createEventDispatcher();
 
 export let href = undefined;
-export let color = undefined;
-export let scale = undefined;
-export let opacity = undefined;
 
 
 
@@ -30,9 +27,6 @@ const onEvent = (e) => {
 
 <vime-icon 
   href={href}
-  color={color}
-  scale={scale}
-  opacity={opacity}
   
   bind:this={__ref}
 >

@@ -72,7 +72,7 @@ exports[`should be structurally sound when mobile video + live stream 1`] = `
     <vime-fullscreen-control></vime-fullscreen-control>
   </vime-controls>
   <vime-controls activeduration="2750" pin="center">
-    <vime-playback-control scale="1.5"></vime-playback-control>
+    <vime-playback-control style="--control-scale: 1.5;"></vime-playback-control>
   </vime-controls>
 </vime-default-controls>
 `;
@@ -87,7 +87,7 @@ exports[`should be structurally sound when mobile video 1`] = `
     <vime-settings-control></vime-settings-control>
   </vime-controls>
   <vime-controls activeduration="2750" pin="center">
-    <vime-playback-control scale="1.5"></vime-playback-control>
+    <vime-playback-control style="--control-scale: 1.5;"></vime-playback-control>
   </vime-controls>
   <vime-controls activeduration="2750" full-width="" pin="bottomLeft">
     <vime-control-group>

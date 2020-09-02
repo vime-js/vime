@@ -18,9 +18,6 @@ interface VimePlaybackControlProps {
   /** Whether the tooltip should not be displayed. */
   hideTooltip?: Components.VimePlaybackControl["hideTooltip"]
   
-  /** Scale the size of the control up/down by the amount given. */
-  scale?: Components.VimePlaybackControl["scale"]
-  
   /** A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in
 a `keydown` event, will trigger a `click` event on the control. */
   keys?: Components.VimePlaybackControl["keys"]
@@ -61,8 +58,8 @@ import { createEventDispatcher, onMount } from "svelte";
 function create_fragment(ctx) {
 	let vime_playback_control;
 	let current;
-	const default_slot_template = /*$$slots*/ ctx[11].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[10], null);
+	const default_slot_template = /*$$slots*/ ctx[10].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[9], null);
 
 	return {
 		c() {
@@ -72,9 +69,8 @@ function create_fragment(ctx) {
 			set_custom_element_data(vime_playback_control, "pause-icon", /*pauseIcon*/ ctx[1]);
 			set_custom_element_data(vime_playback_control, "tooltip-direction", /*tooltipDirection*/ ctx[2]);
 			set_custom_element_data(vime_playback_control, "hide-tooltip", /*hideTooltip*/ ctx[3]);
-			set_custom_element_data(vime_playback_control, "scale", /*scale*/ ctx[4]);
-			set_custom_element_data(vime_playback_control, "keys", /*keys*/ ctx[5]);
-			set_custom_element_data(vime_playback_control, "paused", /*paused*/ ctx[6]);
+			set_custom_element_data(vime_playback_control, "keys", /*keys*/ ctx[4]);
+			set_custom_element_data(vime_playback_control, "paused", /*paused*/ ctx[5]);
 		},
 		m(target, anchor) {
 			insert(target, vime_playback_control, anchor);
@@ -83,13 +79,13 @@ function create_fragment(ctx) {
 				default_slot.m(vime_playback_control, null);
 			}
 
-			/*vime_playback_control_binding*/ ctx[12](vime_playback_control);
+			/*vime_playback_control_binding*/ ctx[11](vime_playback_control);
 			current = true;
 		},
 		p(ctx, [dirty]) {
 			if (default_slot) {
-				if (default_slot.p && dirty & /*$$scope*/ 1024) {
-					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[10], dirty, null, null);
+				if (default_slot.p && dirty & /*$$scope*/ 512) {
+					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[9], dirty, null, null);
 				}
 			}
 
@@ -109,16 +105,12 @@ function create_fragment(ctx) {
 				set_custom_element_data(vime_playback_control, "hide-tooltip", /*hideTooltip*/ ctx[3]);
 			}
 
-			if (!current || dirty & /*scale*/ 16) {
-				set_custom_element_data(vime_playback_control, "scale", /*scale*/ ctx[4]);
+			if (!current || dirty & /*keys*/ 16) {
+				set_custom_element_data(vime_playback_control, "keys", /*keys*/ ctx[4]);
 			}
 
-			if (!current || dirty & /*keys*/ 32) {
-				set_custom_element_data(vime_playback_control, "keys", /*keys*/ ctx[5]);
-			}
-
-			if (!current || dirty & /*paused*/ 64) {
-				set_custom_element_data(vime_playback_control, "paused", /*paused*/ ctx[6]);
+			if (!current || dirty & /*paused*/ 32) {
+				set_custom_element_data(vime_playback_control, "paused", /*paused*/ ctx[5]);
 			}
 		},
 		i(local) {
@@ -133,7 +125,7 @@ function create_fragment(ctx) {
 		d(detaching) {
 			if (detaching) detach(vime_playback_control);
 			if (default_slot) default_slot.d(detaching);
-			/*vime_playback_control_binding*/ ctx[12](null);
+			/*vime_playback_control_binding*/ ctx[11](null);
 		}
 	};
 }
@@ -146,18 +138,17 @@ function instance($$self, $$props, $$invalidate) {
 	let { pauseIcon = undefined } = $$props;
 	let { tooltipDirection = undefined } = $$props;
 	let { hideTooltip = undefined } = $$props;
-	let { scale = undefined } = $$props;
 	let { keys = undefined } = $$props;
 	let { paused = undefined } = $$props;
 	let { i18n = undefined } = $$props;
 	const getWebComponent = () => __ref;
 
 	onMount(() => {
-		$$invalidate(13, __mounted = true);
+		$$invalidate(12, __mounted = true);
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(7, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(6, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -170,7 +161,7 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_playback_control_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(7, __ref);
+			$$invalidate(6, __ref);
 		});
 	}
 
@@ -179,15 +170,14 @@ function instance($$self, $$props, $$invalidate) {
 		if ("pauseIcon" in $$props) $$invalidate(1, pauseIcon = $$props.pauseIcon);
 		if ("tooltipDirection" in $$props) $$invalidate(2, tooltipDirection = $$props.tooltipDirection);
 		if ("hideTooltip" in $$props) $$invalidate(3, hideTooltip = $$props.hideTooltip);
-		if ("scale" in $$props) $$invalidate(4, scale = $$props.scale);
-		if ("keys" in $$props) $$invalidate(5, keys = $$props.keys);
-		if ("paused" in $$props) $$invalidate(6, paused = $$props.paused);
-		if ("i18n" in $$props) $$invalidate(8, i18n = $$props.i18n);
-		if ("$$scope" in $$props) $$invalidate(10, $$scope = $$props.$$scope);
+		if ("keys" in $$props) $$invalidate(4, keys = $$props.keys);
+		if ("paused" in $$props) $$invalidate(5, paused = $$props.paused);
+		if ("i18n" in $$props) $$invalidate(7, i18n = $$props.i18n);
+		if ("$$scope" in $$props) $$invalidate(9, $$scope = $$props.$$scope);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*__mounted, i18n*/ 8448) {
+		if ($$self.$$.dirty & /*__mounted, i18n*/ 4224) {
 			$: if (__mounted) setProp("i18n", i18n);
 		}
 	};
@@ -197,7 +187,6 @@ function instance($$self, $$props, $$invalidate) {
 		pauseIcon,
 		tooltipDirection,
 		hideTooltip,
-		scale,
 		keys,
 		paused,
 		__ref,
@@ -230,16 +219,15 @@ class VimePlaybackControl extends SvelteComponent {
 			pauseIcon: 1,
 			tooltipDirection: 2,
 			hideTooltip: 3,
-			scale: 4,
-			keys: 5,
-			paused: 6,
-			i18n: 8,
-			getWebComponent: 9
+			keys: 4,
+			paused: 5,
+			i18n: 7,
+			getWebComponent: 8
 		});
 	}
 
 	get getWebComponent(): HTMLVimePlaybackControlElement | undefined {
-		return this.$$.ctx[9];
+		return this.$$.ctx[8];
 	}
 }
 

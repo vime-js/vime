@@ -12,7 +12,6 @@ export let highVolumeIcon = undefined;
 export let mutedIcon = undefined;
 export let tooltipDirection = undefined;
 export let hideTooltip = undefined;
-export let scale = undefined;
 export let keys = undefined;
 export let volume = undefined;
 export let muted = undefined;
@@ -40,7 +39,6 @@ const onEvent = (e) => {
   muted-icon={mutedIcon}
   tooltip-direction={tooltipDirection}
   hide-tooltip={hideTooltip}
-  scale={scale}
   keys={keys}
   volume={volume}
   muted={muted}

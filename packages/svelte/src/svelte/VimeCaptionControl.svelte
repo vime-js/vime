@@ -11,7 +11,6 @@ export let showIcon = undefined;
 export let hideIcon = undefined;
 export let tooltipDirection = undefined;
 export let hideTooltip = undefined;
-export let scale = undefined;
 export let keys = undefined;
 export let currentCaption = undefined;
 export let isCaptionsActive = undefined;
@@ -39,7 +38,6 @@ const onEvent = (e) => {
   hide-icon={hideIcon}
   tooltip-direction={tooltipDirection}
   hide-tooltip={hideTooltip}
-  scale={scale}
   keys={keys}
   is-captions-active={isCaptionsActive}
   

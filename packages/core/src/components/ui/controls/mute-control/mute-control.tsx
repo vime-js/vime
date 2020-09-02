@@ -38,11 +38,6 @@ export class MuteControl implements KeyboardControl {
   @Prop() hideTooltip = false;
 
   /**
-   * Scale the size of the control up/down by the amount given.
-   */
-  @Prop() scale = 1;
-
-  /**
    * @inheritdoc
    */
   @Prop() keys?: string = 'm';
@@ -81,7 +76,6 @@ export class MuteControl implements KeyboardControl {
 
     return (
       <vime-control
-        scale={this.scale}
         label={this.i18n.mute}
         pressed={this.muted}
         keys={this.keys}

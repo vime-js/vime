@@ -2,6 +2,7 @@ vime-control {
   /**
     * @prop --control-border-radius: The border radius of the control.
     * @prop --control-bg: The background of the control.
+    * @prop --control-scale: The amount to scale the control up/down by.
     * @prop --control-border: The border of the control.
     * @prop --control-padding: The padding inside the control.
     * @prop --control-color: The text color of the control.
@@ -30,6 +31,7 @@ vime-control {
     position: relative;
     pointer-events: auto;
     transition: all 0.3s ease;
+    transform: scale(var(--control-scale, 1));
     
     &:focus {
       outline: 0;

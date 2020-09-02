@@ -31,9 +31,6 @@ a `keydown` event, will trigger a `click` event on the control. */
 Sets the `aria-pressed` property. */
   pressed?: Components.VimeControl["pressed"]
   
-  /** Scale the size of the control up/down by the amount given. */
-  scale?: Components.VimeControl["scale"]
-  
   /**  */
   isTouch?: Components.VimeControl["isTouch"]
 }
@@ -72,8 +69,8 @@ function create_fragment(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	const default_slot_template = /*$$slots*/ ctx[13].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[12], null);
+	const default_slot_template = /*$$slots*/ ctx[12].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[11], null);
 
 	return {
 		c() {
@@ -86,8 +83,7 @@ function create_fragment(ctx) {
 			set_custom_element_data(vime_control, "menu", /*menu*/ ctx[4]);
 			set_custom_element_data(vime_control, "expanded", /*expanded*/ ctx[5]);
 			set_custom_element_data(vime_control, "pressed", /*pressed*/ ctx[6]);
-			set_custom_element_data(vime_control, "scale", /*scale*/ ctx[7]);
-			set_custom_element_data(vime_control, "is-touch", /*isTouch*/ ctx[8]);
+			set_custom_element_data(vime_control, "is-touch", /*isTouch*/ ctx[7]);
 		},
 		m(target, anchor) {
 			insert(target, vime_control, anchor);
@@ -96,18 +92,18 @@ function create_fragment(ctx) {
 				default_slot.m(vime_control, null);
 			}
 
-			/*vime_control_binding*/ ctx[14](vime_control);
+			/*vime_control_binding*/ ctx[13](vime_control);
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(vime_control, "vInteractionChange", /*onEvent*/ ctx[10]);
+				dispose = listen(vime_control, "vInteractionChange", /*onEvent*/ ctx[9]);
 				mounted = true;
 			}
 		},
 		p(ctx, [dirty]) {
 			if (default_slot) {
-				if (default_slot.p && dirty & /*$$scope*/ 4096) {
-					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[12], dirty, null, null);
+				if (default_slot.p && dirty & /*$$scope*/ 2048) {
+					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[11], dirty, null, null);
 				}
 			}
 
@@ -139,12 +135,8 @@ function create_fragment(ctx) {
 				set_custom_element_data(vime_control, "pressed", /*pressed*/ ctx[6]);
 			}
 
-			if (!current || dirty & /*scale*/ 128) {
-				set_custom_element_data(vime_control, "scale", /*scale*/ ctx[7]);
-			}
-
-			if (!current || dirty & /*isTouch*/ 256) {
-				set_custom_element_data(vime_control, "is-touch", /*isTouch*/ ctx[8]);
+			if (!current || dirty & /*isTouch*/ 128) {
+				set_custom_element_data(vime_control, "is-touch", /*isTouch*/ ctx[7]);
 			}
 		},
 		i(local) {
@@ -159,7 +151,7 @@ function create_fragment(ctx) {
 		d(detaching) {
 			if (detaching) detach(vime_control);
 			if (default_slot) default_slot.d(detaching);
-			/*vime_control_binding*/ ctx[14](null);
+			/*vime_control_binding*/ ctx[13](null);
 			mounted = false;
 			dispose();
 		}
@@ -177,7 +169,6 @@ function instance($$self, $$props, $$invalidate) {
 	let { menu = undefined } = $$props;
 	let { expanded = undefined } = $$props;
 	let { pressed = undefined } = $$props;
-	let { scale = undefined } = $$props;
 	let { isTouch = undefined } = $$props;
 	const getWebComponent = () => __ref;
 
@@ -186,7 +177,7 @@ function instance($$self, $$props, $$invalidate) {
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(9, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(8, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -199,7 +190,7 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_control_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(9, __ref);
+			$$invalidate(8, __ref);
 		});
 	}
 
@@ -211,9 +202,8 @@ function instance($$self, $$props, $$invalidate) {
 		if ("menu" in $$props) $$invalidate(4, menu = $$props.menu);
 		if ("expanded" in $$props) $$invalidate(5, expanded = $$props.expanded);
 		if ("pressed" in $$props) $$invalidate(6, pressed = $$props.pressed);
-		if ("scale" in $$props) $$invalidate(7, scale = $$props.scale);
-		if ("isTouch" in $$props) $$invalidate(8, isTouch = $$props.isTouch);
-		if ("$$scope" in $$props) $$invalidate(12, $$scope = $$props.$$scope);
+		if ("isTouch" in $$props) $$invalidate(7, isTouch = $$props.isTouch);
+		if ("$$scope" in $$props) $$invalidate(11, $$scope = $$props.$$scope);
 	};
 
 	return [
@@ -224,7 +214,6 @@ function instance($$self, $$props, $$invalidate) {
 		menu,
 		expanded,
 		pressed,
-		scale,
 		isTouch,
 		__ref,
 		onEvent,
@@ -259,14 +248,13 @@ class VimeControl extends SvelteComponent {
 			menu: 4,
 			expanded: 5,
 			pressed: 6,
-			scale: 7,
-			isTouch: 8,
-			getWebComponent: 11
+			isTouch: 7,
+			getWebComponent: 10
 		});
 	}
 
 	get getWebComponent(): HTMLVimeControlElement | undefined {
-		return this.$$.ctx[11];
+		return this.$$.ctx[10];
 	}
 }
 

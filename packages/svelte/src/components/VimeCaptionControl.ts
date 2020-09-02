@@ -18,9 +18,6 @@ interface VimeCaptionControlProps {
   /** Whether the tooltip should not be displayed. */
   hideTooltip?: Components.VimeCaptionControl["hideTooltip"]
   
-  /** Scale the size of the control up/down by the amount given. */
-  scale?: Components.VimeCaptionControl["scale"]
-  
   /** A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in
 a `keydown` event, will trigger a `click` event on the control. */
   keys?: Components.VimeCaptionControl["keys"]
@@ -64,8 +61,8 @@ import { createEventDispatcher, onMount } from "svelte";
 function create_fragment(ctx) {
 	let vime_caption_control;
 	let current;
-	const default_slot_template = /*$$slots*/ ctx[12].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[11], null);
+	const default_slot_template = /*$$slots*/ ctx[11].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[10], null);
 
 	return {
 		c() {
@@ -75,9 +72,8 @@ function create_fragment(ctx) {
 			set_custom_element_data(vime_caption_control, "hide-icon", /*hideIcon*/ ctx[1]);
 			set_custom_element_data(vime_caption_control, "tooltip-direction", /*tooltipDirection*/ ctx[2]);
 			set_custom_element_data(vime_caption_control, "hide-tooltip", /*hideTooltip*/ ctx[3]);
-			set_custom_element_data(vime_caption_control, "scale", /*scale*/ ctx[4]);
-			set_custom_element_data(vime_caption_control, "keys", /*keys*/ ctx[5]);
-			set_custom_element_data(vime_caption_control, "is-captions-active", /*isCaptionsActive*/ ctx[6]);
+			set_custom_element_data(vime_caption_control, "keys", /*keys*/ ctx[4]);
+			set_custom_element_data(vime_caption_control, "is-captions-active", /*isCaptionsActive*/ ctx[5]);
 		},
 		m(target, anchor) {
 			insert(target, vime_caption_control, anchor);
@@ -86,13 +82,13 @@ function create_fragment(ctx) {
 				default_slot.m(vime_caption_control, null);
 			}
 
-			/*vime_caption_control_binding*/ ctx[13](vime_caption_control);
+			/*vime_caption_control_binding*/ ctx[12](vime_caption_control);
 			current = true;
 		},
 		p(ctx, [dirty]) {
 			if (default_slot) {
-				if (default_slot.p && dirty & /*$$scope*/ 2048) {
-					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[11], dirty, null, null);
+				if (default_slot.p && dirty & /*$$scope*/ 1024) {
+					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[10], dirty, null, null);
 				}
 			}
 
@@ -112,16 +108,12 @@ function create_fragment(ctx) {
 				set_custom_element_data(vime_caption_control, "hide-tooltip", /*hideTooltip*/ ctx[3]);
 			}
 
-			if (!current || dirty & /*scale*/ 16) {
-				set_custom_element_data(vime_caption_control, "scale", /*scale*/ ctx[4]);
+			if (!current || dirty & /*keys*/ 16) {
+				set_custom_element_data(vime_caption_control, "keys", /*keys*/ ctx[4]);
 			}
 
-			if (!current || dirty & /*keys*/ 32) {
-				set_custom_element_data(vime_caption_control, "keys", /*keys*/ ctx[5]);
-			}
-
-			if (!current || dirty & /*isCaptionsActive*/ 64) {
-				set_custom_element_data(vime_caption_control, "is-captions-active", /*isCaptionsActive*/ ctx[6]);
+			if (!current || dirty & /*isCaptionsActive*/ 32) {
+				set_custom_element_data(vime_caption_control, "is-captions-active", /*isCaptionsActive*/ ctx[5]);
 			}
 		},
 		i(local) {
@@ -136,7 +128,7 @@ function create_fragment(ctx) {
 		d(detaching) {
 			if (detaching) detach(vime_caption_control);
 			if (default_slot) default_slot.d(detaching);
-			/*vime_caption_control_binding*/ ctx[13](null);
+			/*vime_caption_control_binding*/ ctx[12](null);
 		}
 	};
 }
@@ -149,7 +141,6 @@ function instance($$self, $$props, $$invalidate) {
 	let { hideIcon = undefined } = $$props;
 	let { tooltipDirection = undefined } = $$props;
 	let { hideTooltip = undefined } = $$props;
-	let { scale = undefined } = $$props;
 	let { keys = undefined } = $$props;
 	let { currentCaption = undefined } = $$props;
 	let { isCaptionsActive = undefined } = $$props;
@@ -157,11 +148,11 @@ function instance($$self, $$props, $$invalidate) {
 	const getWebComponent = () => __ref;
 
 	onMount(() => {
-		$$invalidate(14, __mounted = true);
+		$$invalidate(13, __mounted = true);
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(7, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(6, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -174,7 +165,7 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_caption_control_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(7, __ref);
+			$$invalidate(6, __ref);
 		});
 	}
 
@@ -183,20 +174,19 @@ function instance($$self, $$props, $$invalidate) {
 		if ("hideIcon" in $$props) $$invalidate(1, hideIcon = $$props.hideIcon);
 		if ("tooltipDirection" in $$props) $$invalidate(2, tooltipDirection = $$props.tooltipDirection);
 		if ("hideTooltip" in $$props) $$invalidate(3, hideTooltip = $$props.hideTooltip);
-		if ("scale" in $$props) $$invalidate(4, scale = $$props.scale);
-		if ("keys" in $$props) $$invalidate(5, keys = $$props.keys);
-		if ("currentCaption" in $$props) $$invalidate(8, currentCaption = $$props.currentCaption);
-		if ("isCaptionsActive" in $$props) $$invalidate(6, isCaptionsActive = $$props.isCaptionsActive);
-		if ("i18n" in $$props) $$invalidate(9, i18n = $$props.i18n);
-		if ("$$scope" in $$props) $$invalidate(11, $$scope = $$props.$$scope);
+		if ("keys" in $$props) $$invalidate(4, keys = $$props.keys);
+		if ("currentCaption" in $$props) $$invalidate(7, currentCaption = $$props.currentCaption);
+		if ("isCaptionsActive" in $$props) $$invalidate(5, isCaptionsActive = $$props.isCaptionsActive);
+		if ("i18n" in $$props) $$invalidate(8, i18n = $$props.i18n);
+		if ("$$scope" in $$props) $$invalidate(10, $$scope = $$props.$$scope);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*__mounted, currentCaption*/ 16640) {
+		if ($$self.$$.dirty & /*__mounted, currentCaption*/ 8320) {
 			$: if (__mounted) setProp("currentCaption", currentCaption);
 		}
 
-		if ($$self.$$.dirty & /*__mounted, i18n*/ 16896) {
+		if ($$self.$$.dirty & /*__mounted, i18n*/ 8448) {
 			$: if (__mounted) setProp("i18n", i18n);
 		}
 	};
@@ -206,7 +196,6 @@ function instance($$self, $$props, $$invalidate) {
 		hideIcon,
 		tooltipDirection,
 		hideTooltip,
-		scale,
 		keys,
 		isCaptionsActive,
 		__ref,
@@ -240,17 +229,16 @@ class VimeCaptionControl extends SvelteComponent {
 			hideIcon: 1,
 			tooltipDirection: 2,
 			hideTooltip: 3,
-			scale: 4,
-			keys: 5,
-			currentCaption: 8,
-			isCaptionsActive: 6,
-			i18n: 9,
-			getWebComponent: 10
+			keys: 4,
+			currentCaption: 7,
+			isCaptionsActive: 5,
+			i18n: 8,
+			getWebComponent: 9
 		});
 	}
 
 	get getWebComponent(): HTMLVimeCaptionControlElement | undefined {
-		return this.$$.ctx[10];
+		return this.$$.ctx[9];
 	}
 }
 

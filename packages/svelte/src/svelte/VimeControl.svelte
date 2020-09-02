@@ -14,7 +14,6 @@ export let label;
 export let menu = undefined;
 export let expanded = undefined;
 export let pressed = undefined;
-export let scale = undefined;
 export let isTouch = undefined;
 
 
@@ -41,7 +40,6 @@ const onEvent = (e) => {
   menu={menu}
   expanded={expanded}
   pressed={pressed}
-  scale={scale}
   is-touch={isTouch}
   on:vInteractionChange={onEvent}
   bind:this={__ref}

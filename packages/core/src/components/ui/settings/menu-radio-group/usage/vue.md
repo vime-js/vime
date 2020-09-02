@@ -36,11 +36,9 @@
       VimeMenuRadioGroup,
       VimeMenuRadio,
     },
-
     data: {
       value: 1,
     },
-
     methods: {
       onValueChange(event) {
         const radio = event.target as HTMLVimeMenuRadioElement;

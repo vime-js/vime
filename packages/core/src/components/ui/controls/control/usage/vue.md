@@ -1,4 +1,4 @@
-```html {2-10,17,29} title="playback-control.vue"
+```html {2-10,16,24} title="playback-control.vue"
 <template>
   <VimeControl
     keys="k"
@@ -21,18 +21,15 @@
 
   export default {
     mixins: [VimeMixin(['paused', 'i18n'])]
-
     components: {
       VimeControl,
       VimeIcon,
       VimeTooltip,
     },
-
     data: {
       paused: true,
       i18n: {},
     },
-
     computed: {
       icon() {
         return this.paused ? '#vime-play' : '#vime-pause';
@@ -41,7 +38,6 @@
         return this.paused ? this.i18n.play : this.i18n.pause;
       },
     },
-
     methods: {
       onClick() {
         this.paused = !paused;

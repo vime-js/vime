@@ -1,12 +1,16 @@
- vime-icon > svg {
-  /**
-   * @prop --icon-width: The width of the icon.
-   * @prop --icon-height: The height of the icon.
-   */
+/**
+  * @prop --icon-color: The color of the icon.
+  * @prop --icon-scale: The amount to scale the size of the icon up or down by.
+  * @prop --icon-width: The width of the icon.
+  * @prop --icon-height: The height of the icon.
+  */
 
+vime-icon > svg {
   display: block;
+  color: var(--icon-color);
   width: var(--icon-width, 18px);
   height: var(--icon-height, 18px);
+  transform: scale(var(--icon-scale, 1));
   fill: currentColor;
   pointer-events: none;
 }

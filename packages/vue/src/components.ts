@@ -86,7 +86,6 @@ export const VimeCaptionControl = /*@__PURE__*/ Vue.extend({
     hideIcon: {} as PropOptions<Components.VimeCaptionControl['hideIcon']>,
     tooltipDirection: {} as PropOptions<Components.VimeCaptionControl['tooltipDirection']>,
     hideTooltip: {} as PropOptions<Components.VimeCaptionControl['hideTooltip']>,
-    scale: {} as PropOptions<Components.VimeCaptionControl['scale']>,
     keys: {} as PropOptions<Components.VimeCaptionControl['keys']>,
     currentCaption: {} as PropOptions<Components.VimeCaptionControl['currentCaption']>,
     isCaptionsActive: {} as PropOptions<Components.VimeCaptionControl['isCaptionsActive']>,
@@ -137,7 +136,6 @@ export const VimeControl = /*@__PURE__*/ Vue.extend({
     menu: {} as PropOptions<Components.VimeControl['menu']>,
     expanded: {} as PropOptions<Components.VimeControl['expanded']>,
     pressed: {} as PropOptions<Components.VimeControl['pressed']>,
-    scale: {} as PropOptions<Components.VimeControl['scale']>,
     isTouch: {} as PropOptions<Components.VimeControl['isTouch']>,
   },
 
@@ -404,7 +402,6 @@ export const VimeFullscreenControl = /*@__PURE__*/ Vue.extend({
     exitIcon: {} as PropOptions<Components.VimeFullscreenControl['exitIcon']>,
     tooltipDirection: {} as PropOptions<Components.VimeFullscreenControl['tooltipDirection']>,
     hideTooltip: {} as PropOptions<Components.VimeFullscreenControl['hideTooltip']>,
-    scale: {} as PropOptions<Components.VimeFullscreenControl['scale']>,
     keys: {} as PropOptions<Components.VimeFullscreenControl['keys']>,
     isFullscreenActive: {} as PropOptions<Components.VimeFullscreenControl['isFullscreenActive']>,
     i18n: {} as PropOptions<Components.VimeFullscreenControl['i18n']>,
@@ -443,9 +440,6 @@ export const VimeIcon = /*@__PURE__*/ Vue.extend({
 
   props: {
     href: {} as PropOptions<Components.VimeIcon['href']>,
-    color: {} as PropOptions<Components.VimeIcon['color']>,
-    scale: {} as PropOptions<Components.VimeIcon['scale']>,
-    opacity: {} as PropOptions<Components.VimeIcon['opacity']>,
   },
 
 
@@ -548,7 +542,6 @@ export const VimeMuteControl = /*@__PURE__*/ Vue.extend({
     mutedIcon: {} as PropOptions<Components.VimeMuteControl['mutedIcon']>,
     tooltipDirection: {} as PropOptions<Components.VimeMuteControl['tooltipDirection']>,
     hideTooltip: {} as PropOptions<Components.VimeMuteControl['hideTooltip']>,
-    scale: {} as PropOptions<Components.VimeMuteControl['scale']>,
     keys: {} as PropOptions<Components.VimeMuteControl['keys']>,
     volume: {} as PropOptions<Components.VimeMuteControl['volume']>,
     muted: {} as PropOptions<Components.VimeMuteControl['muted']>,
@@ -568,7 +561,6 @@ export const VimePipControl = /*@__PURE__*/ Vue.extend({
     tooltipDirection: {} as PropOptions<Components.VimePipControl['tooltipDirection']>,
     hideTooltip: {} as PropOptions<Components.VimePipControl['hideTooltip']>,
     keys: {} as PropOptions<Components.VimePipControl['keys']>,
-    scale: {} as PropOptions<Components.VimePipControl['scale']>,
     isPiPActive: {} as PropOptions<Components.VimePipControl['isPiPActive']>,
     i18n: {} as PropOptions<Components.VimePipControl['i18n']>,
     playbackReady: {} as PropOptions<Components.VimePipControl['playbackReady']>,
@@ -586,7 +578,6 @@ export const VimePlaybackControl = /*@__PURE__*/ Vue.extend({
     pauseIcon: {} as PropOptions<Components.VimePlaybackControl['pauseIcon']>,
     tooltipDirection: {} as PropOptions<Components.VimePlaybackControl['tooltipDirection']>,
     hideTooltip: {} as PropOptions<Components.VimePlaybackControl['hideTooltip']>,
-    scale: {} as PropOptions<Components.VimePlaybackControl['scale']>,
     keys: {} as PropOptions<Components.VimePlaybackControl['keys']>,
     paused: {} as PropOptions<Components.VimePlaybackControl['paused']>,
     i18n: {} as PropOptions<Components.VimePlaybackControl['i18n']>,

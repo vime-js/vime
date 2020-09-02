@@ -131,12 +131,9 @@ function Example() {
 
 ## Properties
 
-| Property  | Attribute | Description                                                                       | Type                 | Default     |
-| --------- | --------- | --------------------------------------------------------------------------------- | -------------------- | ----------- |
-| `color`   | `color`   | The color (fill) of the icon.                                                     | `string ∣ undefined` | `undefined` |
-| `href`    | `href`    | The URL to an SVG element or fragment to load.                                    | `string ∣ undefined` | `undefined` |
-| `opacity` | `opacity` | The amount of transparency to add to the icon.                                    | `number`             | `1`         |
-| `scale`   | `scale`   | The amount to scale the size of the icon (respecting aspect ratio) up or down by. | `number`             | `1`         |
+| Property | Attribute | Description                                    | Type                 | Default     |
+| -------- | --------- | ---------------------------------------------- | -------------------- | ----------- |
+| `href`   | `href`    | The URL to an SVG element or fragment to load. | `string ∣ undefined` | `undefined` |
 
 ## Slots
 
@@ -146,10 +143,12 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name            | Description             |
-| --------------- | ----------------------- |
-| `--icon-height` | The height of the icon. |
-| `--icon-width`  | The width of the icon.  |
+| Name            | Description                                             |
+| --------------- | ------------------------------------------------------- |
+| `--icon-color`  | The color of the icon.                                  |
+| `--icon-height` | The height of the icon.                                 |
+| `--icon-scale`  | The amount to scale the size of the icon up or down by. |
+| `--icon-width`  | The width of the icon.                                  |
 
 ## Dependencies
 

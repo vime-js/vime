@@ -27,13 +27,13 @@ export class VimeAudio {
 
 export declare interface VimeCaptionControl extends Components.VimeCaptionControl {}
 @ProxyCmp({
-  inputs: ['hideIcon', 'hideTooltip', 'keys', 'scale', 'showIcon', 'tooltipDirection']
+  inputs: ['hideIcon', 'hideTooltip', 'keys', 'showIcon', 'tooltipDirection']
 })
 @Component({
   selector: 'vime-caption-control',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hideIcon', 'hideTooltip', 'keys', 'scale', 'showIcon', 'tooltipDirection']
+  inputs: ['hideIcon', 'hideTooltip', 'keys', 'showIcon', 'tooltipDirection']
 })
 export class VimeCaptionControl {
   protected el: HTMLElement;
@@ -91,13 +91,13 @@ export class VimeClickToPlay {
 import { Control as IControl } from '@vime/core/dist/types/components/ui/controls/control/control';
 export declare interface VimeControl extends Components.VimeControl {}
 @ProxyCmp({
-  inputs: ['expanded', 'hidden', 'identifier', 'keys', 'label', 'menu', 'pressed', 'scale']
+  inputs: ['expanded', 'hidden', 'identifier', 'keys', 'label', 'menu', 'pressed']
 })
 @Component({
   selector: 'vime-control',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['expanded', 'hidden', 'identifier', 'keys', 'label', 'menu', 'pressed', 'scale'],
+  inputs: ['expanded', 'hidden', 'identifier', 'keys', 'label', 'menu', 'pressed'],
   outputs: ['vInteractionChange']
 })
 export class VimeControl {
@@ -370,13 +370,13 @@ export class VimeFile {
 
 export declare interface VimeFullscreenControl extends Components.VimeFullscreenControl {}
 @ProxyCmp({
-  inputs: ['enterIcon', 'exitIcon', 'hideTooltip', 'keys', 'scale', 'tooltipDirection']
+  inputs: ['enterIcon', 'exitIcon', 'hideTooltip', 'keys', 'tooltipDirection']
 })
 @Component({
   selector: 'vime-fullscreen-control',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['enterIcon', 'exitIcon', 'hideTooltip', 'keys', 'scale', 'tooltipDirection']
+  inputs: ['enterIcon', 'exitIcon', 'hideTooltip', 'keys', 'tooltipDirection']
 })
 export class VimeFullscreenControl {
   protected el: HTMLElement;
@@ -408,13 +408,13 @@ export class VimeHls {
 
 export declare interface VimeIcon extends Components.VimeIcon {}
 @ProxyCmp({
-  inputs: ['color', 'href', 'opacity', 'scale']
+  inputs: ['href']
 })
 @Component({
   selector: 'vime-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['color', 'href', 'opacity', 'scale']
+  inputs: ['href']
 })
 export class VimeIcon {
   protected el: HTMLElement;
@@ -557,13 +557,13 @@ export class VimeMenuRadioGroup {
 
 export declare interface VimeMuteControl extends Components.VimeMuteControl {}
 @ProxyCmp({
-  inputs: ['hideTooltip', 'highVolumeIcon', 'keys', 'lowVolumeIcon', 'mutedIcon', 'scale', 'tooltipDirection']
+  inputs: ['hideTooltip', 'highVolumeIcon', 'keys', 'lowVolumeIcon', 'mutedIcon', 'tooltipDirection']
 })
 @Component({
   selector: 'vime-mute-control',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hideTooltip', 'highVolumeIcon', 'keys', 'lowVolumeIcon', 'mutedIcon', 'scale', 'tooltipDirection']
+  inputs: ['hideTooltip', 'highVolumeIcon', 'keys', 'lowVolumeIcon', 'mutedIcon', 'tooltipDirection']
 })
 export class VimeMuteControl {
   protected el: HTMLElement;
@@ -576,13 +576,13 @@ export class VimeMuteControl {
 
 export declare interface VimePipControl extends Components.VimePipControl {}
 @ProxyCmp({
-  inputs: ['enterIcon', 'exitIcon', 'hideTooltip', 'keys', 'scale', 'tooltipDirection']
+  inputs: ['enterIcon', 'exitIcon', 'hideTooltip', 'keys', 'tooltipDirection']
 })
 @Component({
   selector: 'vime-pip-control',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['enterIcon', 'exitIcon', 'hideTooltip', 'keys', 'scale', 'tooltipDirection']
+  inputs: ['enterIcon', 'exitIcon', 'hideTooltip', 'keys', 'tooltipDirection']
 })
 export class VimePipControl {
   protected el: HTMLElement;
@@ -595,13 +595,13 @@ export class VimePipControl {
 
 export declare interface VimePlaybackControl extends Components.VimePlaybackControl {}
 @ProxyCmp({
-  inputs: ['hideTooltip', 'keys', 'pauseIcon', 'playIcon', 'scale', 'tooltipDirection']
+  inputs: ['hideTooltip', 'keys', 'pauseIcon', 'playIcon', 'tooltipDirection']
 })
 @Component({
   selector: 'vime-playback-control',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['hideTooltip', 'keys', 'pauseIcon', 'playIcon', 'scale', 'tooltipDirection']
+  inputs: ['hideTooltip', 'keys', 'pauseIcon', 'playIcon', 'tooltipDirection']
 })
 export class VimePlaybackControl {
   protected el: HTMLElement;

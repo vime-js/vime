@@ -11,7 +11,6 @@ export let enterIcon = undefined;
 export let exitIcon = undefined;
 export let tooltipDirection = undefined;
 export let hideTooltip = undefined;
-export let scale = undefined;
 export let keys = undefined;
 export let isFullscreenActive = undefined;
 export let i18n = undefined;
@@ -38,7 +37,6 @@ const onEvent = (e) => {
   exit-icon={exitIcon}
   tooltip-direction={tooltipDirection}
   hide-tooltip={hideTooltip}
-  scale={scale}
   keys={keys}
   is-fullscreen-active={isFullscreenActive}
   playback-ready={playbackReady}
