@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef, import/no-unresolved */
 import { defineCustomElements } from '@vime/core/loader';
 import { usePlayer, usePlayerStore } from '../dist/esm/index';
 

@@ -14,8 +14,12 @@
   "env": {
     "cypress-plugin-snapshots": {
       "imageConfig": {
-        "threshold": 0.05
+        "threshold": 0.3
       }
     }
+  },
+  "retries": {
+    "runMode": 3,
+    "openMode": 0
   }
 }

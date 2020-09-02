@@ -21,6 +21,7 @@ afterEach(() => {
 // @TODO why wont this pass in CI??
 skipOn('headless', () => {
   it('should load video ui', () => {
+    cy.wait(2000);
     cy.player().toMatchImageSnapshot();
   });
 });
