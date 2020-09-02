@@ -22,6 +22,9 @@ effected by this prop. */
   hideOnMouseLeave?: Components.VimeDefaultControls["hideOnMouseLeave"]
   
   /**  */
+  theme?: Components.VimeDefaultControls["theme"]
+  
+  /**  */
   isMobile?: Components.VimeDefaultControls["isMobile"]
   
   /**  */
@@ -63,8 +66,8 @@ import { createEventDispatcher, onMount } from "svelte";
 function create_fragment(ctx) {
 	let vime_default_controls;
 	let current;
-	const default_slot_template = /*$$slots*/ ctx[11].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[10], null);
+	const default_slot_template = /*$$slots*/ ctx[12].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[11], null);
 
 	return {
 		c() {
@@ -74,10 +77,11 @@ function create_fragment(ctx) {
 			set_custom_element_data(vime_default_controls, "wait-for-playback-start", /*waitForPlaybackStart*/ ctx[1]);
 			set_custom_element_data(vime_default_controls, "hide-when-paused", /*hideWhenPaused*/ ctx[2]);
 			set_custom_element_data(vime_default_controls, "hide-on-mouse-leave", /*hideOnMouseLeave*/ ctx[3]);
-			set_custom_element_data(vime_default_controls, "is-mobile", /*isMobile*/ ctx[4]);
-			set_custom_element_data(vime_default_controls, "is-live", /*isLive*/ ctx[5]);
-			set_custom_element_data(vime_default_controls, "is-audio-view", /*isAudioView*/ ctx[6]);
-			set_custom_element_data(vime_default_controls, "is-video-view", /*isVideoView*/ ctx[7]);
+			set_custom_element_data(vime_default_controls, "theme", /*theme*/ ctx[4]);
+			set_custom_element_data(vime_default_controls, "is-mobile", /*isMobile*/ ctx[5]);
+			set_custom_element_data(vime_default_controls, "is-live", /*isLive*/ ctx[6]);
+			set_custom_element_data(vime_default_controls, "is-audio-view", /*isAudioView*/ ctx[7]);
+			set_custom_element_data(vime_default_controls, "is-video-view", /*isVideoView*/ ctx[8]);
 		},
 		m(target, anchor) {
 			insert(target, vime_default_controls, anchor);
@@ -86,13 +90,13 @@ function create_fragment(ctx) {
 				default_slot.m(vime_default_controls, null);
 			}
 
-			/*vime_default_controls_binding*/ ctx[12](vime_default_controls);
+			/*vime_default_controls_binding*/ ctx[13](vime_default_controls);
 			current = true;
 		},
 		p(ctx, [dirty]) {
 			if (default_slot) {
-				if (default_slot.p && dirty & /*$$scope*/ 1024) {
-					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[10], dirty, null, null);
+				if (default_slot.p && dirty & /*$$scope*/ 2048) {
+					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[11], dirty, null, null);
 				}
 			}
 
@@ -112,20 +116,24 @@ function create_fragment(ctx) {
 				set_custom_element_data(vime_default_controls, "hide-on-mouse-leave", /*hideOnMouseLeave*/ ctx[3]);
 			}
 
-			if (!current || dirty & /*isMobile*/ 16) {
-				set_custom_element_data(vime_default_controls, "is-mobile", /*isMobile*/ ctx[4]);
+			if (!current || dirty & /*theme*/ 16) {
+				set_custom_element_data(vime_default_controls, "theme", /*theme*/ ctx[4]);
 			}
 
-			if (!current || dirty & /*isLive*/ 32) {
-				set_custom_element_data(vime_default_controls, "is-live", /*isLive*/ ctx[5]);
+			if (!current || dirty & /*isMobile*/ 32) {
+				set_custom_element_data(vime_default_controls, "is-mobile", /*isMobile*/ ctx[5]);
 			}
 
-			if (!current || dirty & /*isAudioView*/ 64) {
-				set_custom_element_data(vime_default_controls, "is-audio-view", /*isAudioView*/ ctx[6]);
+			if (!current || dirty & /*isLive*/ 64) {
+				set_custom_element_data(vime_default_controls, "is-live", /*isLive*/ ctx[6]);
 			}
 
-			if (!current || dirty & /*isVideoView*/ 128) {
-				set_custom_element_data(vime_default_controls, "is-video-view", /*isVideoView*/ ctx[7]);
+			if (!current || dirty & /*isAudioView*/ 128) {
+				set_custom_element_data(vime_default_controls, "is-audio-view", /*isAudioView*/ ctx[7]);
+			}
+
+			if (!current || dirty & /*isVideoView*/ 256) {
+				set_custom_element_data(vime_default_controls, "is-video-view", /*isVideoView*/ ctx[8]);
 			}
 		},
 		i(local) {
@@ -140,7 +148,7 @@ function create_fragment(ctx) {
 		d(detaching) {
 			if (detaching) detach(vime_default_controls);
 			if (default_slot) default_slot.d(detaching);
-			/*vime_default_controls_binding*/ ctx[12](null);
+			/*vime_default_controls_binding*/ ctx[13](null);
 		}
 	};
 }
@@ -153,6 +161,7 @@ function instance($$self, $$props, $$invalidate) {
 	let { waitForPlaybackStart = undefined } = $$props;
 	let { hideWhenPaused = undefined } = $$props;
 	let { hideOnMouseLeave = undefined } = $$props;
+	let { theme = undefined } = $$props;
 	let { isMobile = undefined } = $$props;
 	let { isLive = undefined } = $$props;
 	let { isAudioView = undefined } = $$props;
@@ -164,7 +173,7 @@ function instance($$self, $$props, $$invalidate) {
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(8, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(9, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -177,7 +186,7 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_default_controls_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(8, __ref);
+			$$invalidate(9, __ref);
 		});
 	}
 
@@ -186,11 +195,12 @@ function instance($$self, $$props, $$invalidate) {
 		if ("waitForPlaybackStart" in $$props) $$invalidate(1, waitForPlaybackStart = $$props.waitForPlaybackStart);
 		if ("hideWhenPaused" in $$props) $$invalidate(2, hideWhenPaused = $$props.hideWhenPaused);
 		if ("hideOnMouseLeave" in $$props) $$invalidate(3, hideOnMouseLeave = $$props.hideOnMouseLeave);
-		if ("isMobile" in $$props) $$invalidate(4, isMobile = $$props.isMobile);
-		if ("isLive" in $$props) $$invalidate(5, isLive = $$props.isLive);
-		if ("isAudioView" in $$props) $$invalidate(6, isAudioView = $$props.isAudioView);
-		if ("isVideoView" in $$props) $$invalidate(7, isVideoView = $$props.isVideoView);
-		if ("$$scope" in $$props) $$invalidate(10, $$scope = $$props.$$scope);
+		if ("theme" in $$props) $$invalidate(4, theme = $$props.theme);
+		if ("isMobile" in $$props) $$invalidate(5, isMobile = $$props.isMobile);
+		if ("isLive" in $$props) $$invalidate(6, isLive = $$props.isLive);
+		if ("isAudioView" in $$props) $$invalidate(7, isAudioView = $$props.isAudioView);
+		if ("isVideoView" in $$props) $$invalidate(8, isVideoView = $$props.isVideoView);
+		if ("$$scope" in $$props) $$invalidate(11, $$scope = $$props.$$scope);
 	};
 
 	return [
@@ -198,6 +208,7 @@ function instance($$self, $$props, $$invalidate) {
 		waitForPlaybackStart,
 		hideWhenPaused,
 		hideOnMouseLeave,
+		theme,
 		isMobile,
 		isLive,
 		isAudioView,
@@ -231,16 +242,17 @@ class VimeDefaultControls extends SvelteComponent {
 			waitForPlaybackStart: 1,
 			hideWhenPaused: 2,
 			hideOnMouseLeave: 3,
-			isMobile: 4,
-			isLive: 5,
-			isAudioView: 6,
-			isVideoView: 7,
-			getWebComponent: 9
+			theme: 4,
+			isMobile: 5,
+			isLive: 6,
+			isAudioView: 7,
+			isVideoView: 8,
+			getWebComponent: 10
 		});
 	}
 
 	get getWebComponent(): HTMLVimeDefaultControlsElement | undefined {
-		return this.$$.ctx[9];
+		return this.$$.ctx[10];
 	}
 }
 

@@ -265,6 +265,7 @@ export const VimeDefaultControls = /*@__PURE__*/ Vue.extend({
     waitForPlaybackStart: {} as PropOptions<Components.VimeDefaultControls['waitForPlaybackStart']>,
     hideWhenPaused: {} as PropOptions<Components.VimeDefaultControls['hideWhenPaused']>,
     hideOnMouseLeave: {} as PropOptions<Components.VimeDefaultControls['hideOnMouseLeave']>,
+    theme: {} as PropOptions<Components.VimeDefaultControls['theme']>,
     isMobile: {} as PropOptions<Components.VimeDefaultControls['isMobile']>,
     isLive: {} as PropOptions<Components.VimeDefaultControls['isLive']>,
     isAudioView: {} as PropOptions<Components.VimeDefaultControls['isAudioView']>,

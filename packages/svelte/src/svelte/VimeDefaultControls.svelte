@@ -11,6 +11,7 @@ export let activeDuration = undefined;
 export let waitForPlaybackStart = undefined;
 export let hideWhenPaused = undefined;
 export let hideOnMouseLeave = undefined;
+export let theme = undefined;
 export let isMobile = undefined;
 export let isLive = undefined;
 export let isAudioView = undefined;
@@ -37,6 +38,7 @@ const onEvent = (e) => {
   wait-for-playback-start={waitForPlaybackStart}
   hide-when-paused={hideWhenPaused}
   hide-on-mouse-leave={hideOnMouseLeave}
+  theme={theme}
   is-mobile={isMobile}
   is-live={isLive}
   is-audio-view={isAudioView}

@@ -35,6 +35,11 @@ export class DefaultControls {
   /**
    * @internal
    */
+  @Prop() theme?: PlayerProps['theme'];
+
+  /**
+   * @internal
+   */
   @Prop() isMobile: PlayerProps['isMobile'] = false;
 
   /**
@@ -131,7 +136,7 @@ export class DefaultControls {
 
     return (
       <Host>
-        <vime-scrim gradient="up" />
+        {(this.theme !== 'light') && <vime-scrim gradient="up" />}
 
         <vime-controls
           activeDuration={this.activeDuration}
@@ -167,6 +172,7 @@ export class DefaultControls {
 }
 
 withPlayerContext(DefaultControls, [
+  'theme',
   'isMobile',
   'isAudioView',
   'isVideoView',
