@@ -642,6 +642,7 @@ export const VimePlayer = /*@__PURE__*/ Vue.extend({
     translations: {} as PropOptions<Components.VimePlayer['translations']>,
     languages: {} as PropOptions<Components.VimePlayer['languages']>,
     i18n: {} as PropOptions<Components.VimePlayer['i18n']>,
+    noSkeleton: {} as PropOptions<Components.VimePlayer['noSkeleton']>,
   },
 
 

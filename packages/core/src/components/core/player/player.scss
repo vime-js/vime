@@ -7,6 +7,11 @@ vime-player {
    * @prop --player-fade-transition: The default transition used throughout the player for fading 
    * elements in and out.
    * @prop --player-box-shadow: The shadow cast around the player frame.
+   * @prop --player-skeleton-base-color: The background color of the skeleton loading animation.
+   * @prop --player-skeleton-highlight-color: The animated highlight color of the skeleton loading
+   * animation.
+   * @prop --player-skeleton-duration: The length of the time it takes the skeleton animation 
+   * to complete one left-to-right transition.
    */
 
   --player-font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
@@ -24,10 +29,11 @@ vime-player {
   display: block;
   max-width: 100%;
   min-width: 275px;
+  min-height: 40px;
   position: relative;
   text-shadow: none;
   outline: 0;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, height 0.3s ease, padding 0.3s ease;
   box-shadow: var(--player-box-shadow);
 
   *,
@@ -85,5 +91,41 @@ vime-player {
     height: 100%;
     z-index: $z-index-blocker;
     display: inline-block;
+  }
+
+  & > .skeleton {
+    @keyframes load {
+      0% {
+        background-position: -200px 0;
+      }
+      100% {
+        background-position: calc(200px + 100%) 0;
+      }
+    }
+
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: $z-index-ui;
+    background-color: var(--player-skeleton-base-color);
+    background-image: linear-gradient(
+      90deg, 
+      var(--player-skeleton-base-color), 
+      var(--player-skeleton-highlight-color), 
+      var(--player-skeleton-base-color)
+    );
+    background-size: 200px 100%;
+    background-repeat: no-repeat;
+    line-height: 1;
+    pointer-events: none;
+    animation: load var(--player-skeleton-duration) ease-in-out infinite; 
+    @include invisible();
+
+    &.active {
+      @include visible();
+    }
   }
 }

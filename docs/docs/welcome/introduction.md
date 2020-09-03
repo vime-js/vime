@@ -30,6 +30,7 @@ help you to easily build and customize your own media player.
 - 🏎️ &nbsp;Performant with [preconnections][preconnections] + [lazy loading][lazy-loading] of components
   and media out of the box.
 - 🧩 &nbsp;Easily build your own components and extend Vime.
+- 🗑️ &nbsp;Lightweight - ~25kB (gzip) standalone, and ~47kB with the default Vime UI.
 - ️🧰 &nbsp;Awesome default custom UI's for audio/video/live media.
 - 🛠 &nbsp;Comprehensive [player API][player-api] with a heap of properties, methods and events.
 - 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.

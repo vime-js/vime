@@ -58,6 +58,7 @@ export let language = undefined;
 export let translations = undefined;
 export let languages = undefined;
 export let i18n = undefined;
+export let noSkeleton = undefined;
 
 export const getProvider = (...args) => __ref.getProvider(...args);
 export const getAdapter = (...args) => __ref.getAdapter(...args);
@@ -143,6 +144,7 @@ const onEvent = (e) => {
   autopause={autopause}
   playsinline={playsinline}
   language={language}
+  no-skeleton={noSkeleton}
   on:vThemeChange={onEvent}
   on:vPausedChange={onEvent}
   on:vPlay={onEvent}
