@@ -187,6 +187,15 @@ A huge thanks to our sponsors who support open-source projects like Vime.
   />
 </a>
 
+<a href="https://www.cypress.io">
+  <img
+    width="100%"
+    alt="cypress"
+    src="./static/sponsors/cypress.png"
+    src="https://github.com/vime-js/vime/blob/master/static/sponsors/cypress.png?raw=true"
+  />
+</a>
+
 [package]: https://www.npmjs.com/package/@vime/core
 [package-badge]: https://img.shields.io/npm/v/@vime/core
 [license]: https://github.com/vime-js/vime/blob/master/LICENSE
