@@ -101,11 +101,10 @@ jobs:
           key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
       - name: Run unit tests
         run: npm run test:unit.coverage --prefix packages/core
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: cov-report-unit
-          path: packages/core/jest-coverage
+      - name: Upload report to codecov
+        run: npx codecov -f packages/core/jest-coverage/coverage.json
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   test_e2e:
     name: E2E Tests
     needs: [build_id, build]
@@ -150,28 +149,8 @@ jobs:
           BUILD_ID: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: cov-report-e2e-${{ matrix.containers }}
-          path: packages/core/cypress-coverage
-  coverage:
-    name: Coverage Report
-    needs: [test_unit, test_e2e]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
-      - name: Download coverage reports
-        uses: actions/download-artifact@v2
-      - name: Combine reports
-        run: npx nyc report --reporter lcov --reporter text --report-dir coverage --cwd "packages/core"
       - name: Upload report to codecov
-        run: cd packages/core && npx codecov
+        run: npx codecov -f packages/core/cypress-coverage/coverage.json
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   release:
