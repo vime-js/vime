@@ -49,7 +49,6 @@ button in the top right corner. After the project has been forked, run the follo
 your terminal:
 
 ```bash
-# This will take some time (~480MB), but you only have to do it once.
 $: git clone https://github.com/{my-github-username}/vime
 
 $: cd vime

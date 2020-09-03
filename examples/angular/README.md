@@ -11,7 +11,6 @@ Install [pnpm](https://pnpm.js.org/en/installation) and then run the following c
 the example.
 
 ```bash
-# This will take some time (~480MB), but you only have to do it once.
 $: git clone https://github.com/vime-js/vime
 
 $: cd vime/examples/angular

@@ -6,8 +6,8 @@
         ref="player"
         @vPlaybackReady="onPlaybackReady"
       >
-        <VimeVideo poster="https://vimejs.com/media/poster.png">
-          <source data-src="https://vimejs.com/media/720p.mp4" type="video/mp4">
+        <VimeVideo poster="https://media.vimejs.com/poster.png">
+          <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4">
         </VimeVideo>
 
         <VimeDefaultUi>
