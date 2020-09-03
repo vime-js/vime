@@ -41,7 +41,7 @@
     player.setAttribute('theme', (currentTheme === 'light') ? 'dark' : 'light')
   });
 
-  const baseMediaURL = 'http://localhost:3334/media';
+  const baseMediaURL = 'https://vimejs.com/media';
 
   const audio = `
     <vime-audio cross-origin>
@@ -58,7 +58,7 @@
   `
 
   const player = (provider) => `
-    <vime-player>
+    <vime-player cross-origin="true">
       ${provider}
       <vime-default-ui></vime-default-ui>
     </vime-player>

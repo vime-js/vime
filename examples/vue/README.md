@@ -4,10 +4,6 @@ This example was bootstrapped with [Vue CLI](https://cli.vuejs.org/), and demons
 Vime with Vue via the `@vime/vue` package. See [`src/App.vue`](./src/App.vue), and if you're
 interested in building custom components see [`src/TapSidesToSeek.vue`](./src/TapSidesToSeek.vue).
 
-For the curious, [`@vime/media`](../../packages/media) is a private package that contains a collection
-of audio and video files, and are used here to help with demonstrating the player. You're free to
-ignore it and supply your own media files.
-
 ## Usage
 
 Install [pnpm](https://pnpm.js.org/en/installation) and then run the following commands to serve

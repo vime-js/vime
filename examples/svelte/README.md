@@ -8,10 +8,6 @@ look at are:
 - [`src/App.svelte`](./src/App.svelte): Shows how to setup and use the player.
 - [`src/TapSidesToSeek.svelte`](./src/TapSidesToSeek.svelte): Shows how to build a custom component.
 
-For the curious, [`@vime/media`](../../packages/media) is a private package that contains a collection
-of audio and video files, and are used here to help with demonstrating the player. You're free to
-ignore it and supply your own media files.
-
 ## Usage
 
 Install [pnpm](https://pnpm.js.org/en/installation) and then run the following commands to serve

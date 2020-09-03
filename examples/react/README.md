@@ -5,10 +5,6 @@ and demonstrates how to setup Vime with React via the `@vime/react` package. The
 file to look at is [`App.tsx`](./src/App.tsx), and if you're interested in building custom
 components see [`TapSidesToSeek.tsx`](./src/TapSidesToSeek.tsx).
 
-For the curious, [`@vime/media`](../../packages/media) is a private package that contains a collection
-of audio and video files, and are used here to help with demonstrating the player. You're free to
-ignore it and supply your own media files.
-
 ## Usage
 
 Install [pnpm](https://pnpm.js.org/en/installation) and then run the following commands to serve

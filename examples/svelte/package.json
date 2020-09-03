@@ -5,18 +5,14 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "validate": "svelte-check",
-    "serve": "npm run serve:media & webpack-dev-server --content-base public",
-    "serve:prod": "sirv --single public/index.html",
-    "serve:media": "sirv node_modules/@vime/media --cors --port 3335 --quiet",
+    "serve": "webpack-dev-server --content-base public",
     "setup": "npm run setup:install && npm run setup:build",
     "setup:install": "pnpm install --filter vime --filter @vime/core --filter @vime/svelte --filter @vime/svelte-example",
     "setup:build": "pnpm run build --filter @vime/core && pnpm run build --filter @vime/svelte"
   },
   "dependencies": {
     "@vime/core": "^1.11.0",
-    "@vime/media": "^1.0.0",
-    "@vime/svelte": "^1.2.0",
-    "sirv-cli": "^1.0.6"
+    "@vime/svelte": "^1.2.0"
   },
   "devDependencies": {
     "@tsconfig/svelte": "^1.0.10",

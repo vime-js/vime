@@ -7,7 +7,6 @@
     // "plugin:@stencil/recommended"
   ],
   "ignorePatterns": [
-    "packages/media/**",
     "packages/angular/src/directives/**",
     "packages/react/src/components.ts",
     "packages/react/src/react-component-lib/**",

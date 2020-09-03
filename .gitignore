@@ -8,7 +8,6 @@ packages/*/www/
 packages/*/loader/
 packages/*/cypress/videos/
 packages/*/cypress/screenshots/
-packages/core/public/
 
 *~
 *.sw[mnpcod]

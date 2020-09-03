@@ -26,8 +26,6 @@
     "**/*.js",
   ],
   "exclude": [
-    "node_modules/**",
-    "packages/media/**",
-    "packages/core/public/**",
+    "node_modules/**"
   ]
 }

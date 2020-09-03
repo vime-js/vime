@@ -1,6 +1,6 @@
 {
   "projectId": "ksvngs",
-  "baseUrl": "http://localhost:3334/tests",
+  "baseUrl": "http://localhost:3336/tests",
   "watchForFileChanges": false,
   "integrationFolder": "cypress/tests",
   "testFiles": "**/*.e2e.ts",

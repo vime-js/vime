@@ -27,8 +27,8 @@
 
 <div id="container">
 	<VimePlayer on:vPlaybackReady={onPlaybackReady} bind:this={player}>
-		<VimeVideo crossOrigin="" poster="http://localhost:3335/poster.png">
-			<source data-src="http://localhost:3335/720p.mp4" type="video/mp4">
+		<VimeVideo crossOrigin="" poster="https://vimejs.com/media/poster.png">
+			<source data-src="https://vimejs.com/media/720p.mp4" type="video/mp4">
 		</VimeVideo>
 
 		<VimeDefaultUi>
