@@ -1,4 +1,5 @@
 {
+  "projectId": "ksvngs",
   "baseUrl": "http://localhost:3334/tests",
   "watchForFileChanges": false,
   "integrationFolder": "cypress/tests",

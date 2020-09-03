@@ -5,32 +5,67 @@ on:
       - master
       - next
 jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Change directory to `@vime/core`
+        run: cd packages/core
+      - name: Install dependencies
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
+      - name: Run unit tests
+        run: npm run test:unit.coverage
+      - name: Prepare for e2e tests
+        run: npm run coverage:e2e.prepare
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v2
+        with:
+          install: false
+          start: npm run serve:public
+          wait-on: 'http://localhost:3334'
+          browser: chrome
+          headless: true
+          record: true
+          parallel: true
+          group: 'GitHub Actions'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: Build coverage report
+        run: npm run coverage:combine && npx codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   release:
     name: Release
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Setup Node.js
+      - name: Setup node.js
         uses: actions/setup-node@v1
         with:
           node-version: 14
       - name: Install pnpm
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-      - name: Install Root Dependencies
-        run: pnpm install --filter vime
-      - name: Install Packages Dependencies
+      - name: Install dependencies
         run: pnpm install --filter ./packages
-      - name: Run Tests
-        run: pnpm run test:ci --filter @vime/core
-      - name: Build Coverage Report
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: cd packages/core && pnpx codecov
-      - name: Build Packages
+      - name: Build packages
         run: pnpm run build --filter vime
-      - name: Release Packages
+      - name: Release packages
+        run: pnpm run release --filter vime
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm run release --filter vime
