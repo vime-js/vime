@@ -209,9 +209,6 @@ Vime when adding new language defaults in the future. */
   
   /** `@readonly` A dictionary of translations for the current language. */
   i18n?: Components.VimePlayer["i18n"]
-  
-  /** Whether the skeleton loading animation should be shown while media is loading. */
-  noSkeleton?: Components.VimePlayer["noSkeleton"]
 }
 
 interface VimePlayerEvents {
@@ -368,8 +365,8 @@ function create_fragment(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	const default_slot_template = /*$$slots*/ ctx[74].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[73], null);
+	const default_slot_template = /*$$slots*/ ctx[73].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[72], null);
 
 	return {
 		c() {
@@ -417,7 +414,6 @@ function create_fragment(ctx) {
 			set_custom_element_data(vime_player, "autopause", /*autopause*/ ctx[39]);
 			set_custom_element_data(vime_player, "playsinline", /*playsinline*/ ctx[40]);
 			set_custom_element_data(vime_player, "language", /*language*/ ctx[41]);
-			set_custom_element_data(vime_player, "no-skeleton", /*noSkeleton*/ ctx[42]);
 		},
 		m(target, anchor) {
 			insert(target, vime_player, anchor);
@@ -426,50 +422,50 @@ function create_fragment(ctx) {
 				default_slot.m(vime_player, null);
 			}
 
-			/*vime_player_binding*/ ctx[75](vime_player);
+			/*vime_player_binding*/ ctx[74](vime_player);
 			current = true;
 
 			if (!mounted) {
 				dispose = [
-					listen(vime_player, "vThemeChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPausedChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPlay", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPlayingChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vSeekingChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vSeeked", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vBufferingChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vDurationChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vCurrentTimeChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vAttachedChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vReady", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPlaybackReady", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPlaybackStarted", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPlaybackEnded", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vBufferedChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vCurrentCaptionChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vTextTracksChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vErrorsChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vLoadStart", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vCurrentSrcChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vCurrentPosterChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vMediaTitleChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vControlsChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPlaybackRateChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPlaybackRatesChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPlaybackQualityChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPlaybackQualitiesChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vMutedChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vVolumeChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vViewTypeChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vMediaTypeChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vLiveChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vTouchChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vLanguageChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vI18nChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vTranslationsChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vLanguagesChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vFullscreenChange", /*onEvent*/ ctx[44]),
-					listen(vime_player, "vPiPChange", /*onEvent*/ ctx[44])
+					listen(vime_player, "vThemeChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPausedChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPlay", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPlayingChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vSeekingChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vSeeked", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vBufferingChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vDurationChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vCurrentTimeChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vAttachedChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vReady", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPlaybackReady", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPlaybackStarted", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPlaybackEnded", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vBufferedChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vCurrentCaptionChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vTextTracksChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vErrorsChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vLoadStart", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vCurrentSrcChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vCurrentPosterChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vMediaTitleChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vControlsChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPlaybackRateChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPlaybackRatesChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPlaybackQualityChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPlaybackQualitiesChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vMutedChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vVolumeChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vViewTypeChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vMediaTypeChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vLiveChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vTouchChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vLanguageChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vI18nChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vTranslationsChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vLanguagesChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vFullscreenChange", /*onEvent*/ ctx[43]),
+					listen(vime_player, "vPiPChange", /*onEvent*/ ctx[43])
 				];
 
 				mounted = true;
@@ -477,8 +473,8 @@ function create_fragment(ctx) {
 		},
 		p(ctx, dirty) {
 			if (default_slot) {
-				if (default_slot.p && dirty[2] & /*$$scope*/ 2048) {
-					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[73], dirty, null, null);
+				if (default_slot.p && dirty[2] & /*$$scope*/ 1024) {
+					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[72], dirty, null, null);
 				}
 			}
 
@@ -649,10 +645,6 @@ function create_fragment(ctx) {
 			if (!current || dirty[1] & /*language*/ 1024) {
 				set_custom_element_data(vime_player, "language", /*language*/ ctx[41]);
 			}
-
-			if (!current || dirty[1] & /*noSkeleton*/ 2048) {
-				set_custom_element_data(vime_player, "no-skeleton", /*noSkeleton*/ ctx[42]);
-			}
 		},
 		i(local) {
 			if (current) return;
@@ -666,7 +658,7 @@ function create_fragment(ctx) {
 		d(detaching) {
 			if (detaching) detach(vime_player);
 			if (default_slot) default_slot.d(detaching);
-			/*vime_player_binding*/ ctx[75](null);
+			/*vime_player_binding*/ ctx[74](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -728,7 +720,6 @@ function instance($$self, $$props, $$invalidate) {
 	let { translations = undefined } = $$props;
 	let { languages = undefined } = $$props;
 	let { i18n = undefined } = $$props;
-	let { noSkeleton = undefined } = $$props;
 	const getProvider = (...args) => __ref.getProvider(...args);
 	const getAdapter = (...args) => __ref.getAdapter(...args);
 	const play = (...args) => __ref.play(...args);
@@ -750,11 +741,11 @@ function instance($$self, $$props, $$invalidate) {
 	const getWebComponent = () => __ref;
 
 	onMount(() => {
-		$$invalidate(76, __mounted = true);
+		$$invalidate(75, __mounted = true);
 	});
 
 	const setProp = (prop, value) => {
-		if (__ref) $$invalidate(43, __ref[prop] = value, __ref);
+		if (__ref) $$invalidate(42, __ref[prop] = value, __ref);
 	};
 
 	const onEvent = e => {
@@ -767,13 +758,13 @@ function instance($$self, $$props, $$invalidate) {
 	function vime_player_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			__ref = $$value;
-			$$invalidate(43, __ref);
+			$$invalidate(42, __ref);
 		});
 	}
 
 	$$self.$$set = $$props => {
 		if ("attached" in $$props) $$invalidate(0, attached = $$props.attached);
-		if ("logger" in $$props) $$invalidate(45, logger = $$props.logger);
+		if ("logger" in $$props) $$invalidate(44, logger = $$props.logger);
 		if ("theme" in $$props) $$invalidate(1, theme = $$props.theme);
 		if ("paused" in $$props) $$invalidate(2, paused = $$props.paused);
 		if ("playing" in $$props) $$invalidate(3, playing = $$props.playing);
@@ -789,9 +780,9 @@ function instance($$self, $$props, $$invalidate) {
 		if ("muted" in $$props) $$invalidate(13, muted = $$props.muted);
 		if ("buffered" in $$props) $$invalidate(14, buffered = $$props.buffered);
 		if ("playbackRate" in $$props) $$invalidate(15, playbackRate = $$props.playbackRate);
-		if ("playbackRates" in $$props) $$invalidate(46, playbackRates = $$props.playbackRates);
+		if ("playbackRates" in $$props) $$invalidate(45, playbackRates = $$props.playbackRates);
 		if ("playbackQuality" in $$props) $$invalidate(16, playbackQuality = $$props.playbackQuality);
-		if ("playbackQualities" in $$props) $$invalidate(47, playbackQualities = $$props.playbackQualities);
+		if ("playbackQualities" in $$props) $$invalidate(46, playbackQualities = $$props.playbackQualities);
 		if ("seeking" in $$props) $$invalidate(17, seeking = $$props.seeking);
 		if ("debug" in $$props) $$invalidate(18, debug = $$props.debug);
 		if ("playbackStarted" in $$props) $$invalidate(19, playbackStarted = $$props.playbackStarted);
@@ -799,9 +790,9 @@ function instance($$self, $$props, $$invalidate) {
 		if ("buffering" in $$props) $$invalidate(21, buffering = $$props.buffering);
 		if ("controls" in $$props) $$invalidate(22, controls = $$props.controls);
 		if ("isControlsActive" in $$props) $$invalidate(23, isControlsActive = $$props.isControlsActive);
-		if ("errors" in $$props) $$invalidate(48, errors = $$props.errors);
-		if ("textTracks" in $$props) $$invalidate(49, textTracks = $$props.textTracks);
-		if ("currentCaption" in $$props) $$invalidate(50, currentCaption = $$props.currentCaption);
+		if ("errors" in $$props) $$invalidate(47, errors = $$props.errors);
+		if ("textTracks" in $$props) $$invalidate(48, textTracks = $$props.textTracks);
+		if ("currentCaption" in $$props) $$invalidate(49, currentCaption = $$props.currentCaption);
 		if ("isCaptionsActive" in $$props) $$invalidate(24, isCaptionsActive = $$props.isCaptionsActive);
 		if ("isSettingsActive" in $$props) $$invalidate(25, isSettingsActive = $$props.isSettingsActive);
 		if ("volume" in $$props) $$invalidate(26, volume = $$props.volume);
@@ -820,47 +811,46 @@ function instance($$self, $$props, $$invalidate) {
 		if ("autopause" in $$props) $$invalidate(39, autopause = $$props.autopause);
 		if ("playsinline" in $$props) $$invalidate(40, playsinline = $$props.playsinline);
 		if ("language" in $$props) $$invalidate(41, language = $$props.language);
-		if ("translations" in $$props) $$invalidate(51, translations = $$props.translations);
-		if ("languages" in $$props) $$invalidate(52, languages = $$props.languages);
-		if ("i18n" in $$props) $$invalidate(53, i18n = $$props.i18n);
-		if ("noSkeleton" in $$props) $$invalidate(42, noSkeleton = $$props.noSkeleton);
-		if ("$$scope" in $$props) $$invalidate(73, $$scope = $$props.$$scope);
+		if ("translations" in $$props) $$invalidate(50, translations = $$props.translations);
+		if ("languages" in $$props) $$invalidate(51, languages = $$props.languages);
+		if ("i18n" in $$props) $$invalidate(52, i18n = $$props.i18n);
+		if ("$$scope" in $$props) $$invalidate(72, $$scope = $$props.$$scope);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty[1] & /*logger*/ 16384 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
+		if ($$self.$$.dirty[1] & /*logger*/ 8192 | $$self.$$.dirty[2] & /*__mounted*/ 8192) {
 			$: if (__mounted) setProp("logger", logger);
 		}
 
-		if ($$self.$$.dirty[1] & /*playbackRates*/ 32768 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
+		if ($$self.$$.dirty[1] & /*playbackRates*/ 16384 | $$self.$$.dirty[2] & /*__mounted*/ 8192) {
 			$: if (__mounted) setProp("playbackRates", playbackRates);
 		}
 
-		if ($$self.$$.dirty[1] & /*playbackQualities*/ 65536 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
+		if ($$self.$$.dirty[1] & /*playbackQualities*/ 32768 | $$self.$$.dirty[2] & /*__mounted*/ 8192) {
 			$: if (__mounted) setProp("playbackQualities", playbackQualities);
 		}
 
-		if ($$self.$$.dirty[1] & /*errors*/ 131072 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
+		if ($$self.$$.dirty[1] & /*errors*/ 65536 | $$self.$$.dirty[2] & /*__mounted*/ 8192) {
 			$: if (__mounted) setProp("errors", errors);
 		}
 
-		if ($$self.$$.dirty[1] & /*textTracks*/ 262144 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
+		if ($$self.$$.dirty[1] & /*textTracks*/ 131072 | $$self.$$.dirty[2] & /*__mounted*/ 8192) {
 			$: if (__mounted) setProp("textTracks", textTracks);
 		}
 
-		if ($$self.$$.dirty[1] & /*currentCaption*/ 524288 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
+		if ($$self.$$.dirty[1] & /*currentCaption*/ 262144 | $$self.$$.dirty[2] & /*__mounted*/ 8192) {
 			$: if (__mounted) setProp("currentCaption", currentCaption);
 		}
 
-		if ($$self.$$.dirty[1] & /*translations*/ 1048576 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
+		if ($$self.$$.dirty[1] & /*translations*/ 524288 | $$self.$$.dirty[2] & /*__mounted*/ 8192) {
 			$: if (__mounted) setProp("translations", translations);
 		}
 
-		if ($$self.$$.dirty[1] & /*languages*/ 2097152 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
+		if ($$self.$$.dirty[1] & /*languages*/ 1048576 | $$self.$$.dirty[2] & /*__mounted*/ 8192) {
 			$: if (__mounted) setProp("languages", languages);
 		}
 
-		if ($$self.$$.dirty[1] & /*i18n*/ 4194304 | $$self.$$.dirty[2] & /*__mounted*/ 16384) {
+		if ($$self.$$.dirty[1] & /*i18n*/ 2097152 | $$self.$$.dirty[2] & /*__mounted*/ 8192) {
 			$: if (__mounted) setProp("i18n", i18n);
 		}
 	};
@@ -908,7 +898,6 @@ function instance($$self, $$props, $$invalidate) {
 		autopause,
 		playsinline,
 		language,
-		noSkeleton,
 		__ref,
 		onEvent,
 		logger,
@@ -969,7 +958,7 @@ class VimePlayer extends SvelteComponent {
 			safe_not_equal,
 			{
 				attached: 0,
-				logger: 45,
+				logger: 44,
 				theme: 1,
 				paused: 2,
 				playing: 3,
@@ -985,9 +974,9 @@ class VimePlayer extends SvelteComponent {
 				muted: 13,
 				buffered: 14,
 				playbackRate: 15,
-				playbackRates: 46,
+				playbackRates: 45,
 				playbackQuality: 16,
-				playbackQualities: 47,
+				playbackQualities: 46,
 				seeking: 17,
 				debug: 18,
 				playbackStarted: 19,
@@ -995,9 +984,9 @@ class VimePlayer extends SvelteComponent {
 				buffering: 21,
 				controls: 22,
 				isControlsActive: 23,
-				errors: 48,
-				textTracks: 49,
-				currentCaption: 50,
+				errors: 47,
+				textTracks: 48,
+				currentCaption: 49,
 				isCaptionsActive: 24,
 				isSettingsActive: 25,
 				volume: 26,
@@ -1016,29 +1005,28 @@ class VimePlayer extends SvelteComponent {
 				autopause: 39,
 				playsinline: 40,
 				language: 41,
-				translations: 51,
-				languages: 52,
-				i18n: 53,
-				noSkeleton: 42,
-				getProvider: 54,
-				getAdapter: 55,
-				play: 56,
-				pause: 57,
-				canPlay: 58,
-				canAutoplay: 59,
-				canMutedAutoplay: 60,
-				canSetPlaybackRate: 61,
-				canSetPlaybackQuality: 62,
-				canSetFullscreen: 63,
-				enterFullscreen: 64,
-				exitFullscreen: 65,
-				canSetPiP: 66,
-				enterPiP: 67,
-				exitPiP: 68,
-				extendLanguage: 69,
-				callAdapter: 70,
-				toggleCaptionsVisibility: 71,
-				getWebComponent: 72
+				translations: 50,
+				languages: 51,
+				i18n: 52,
+				getProvider: 53,
+				getAdapter: 54,
+				play: 55,
+				pause: 56,
+				canPlay: 57,
+				canAutoplay: 58,
+				canMutedAutoplay: 59,
+				canSetPlaybackRate: 60,
+				canSetPlaybackQuality: 61,
+				canSetFullscreen: 62,
+				enterFullscreen: 63,
+				exitFullscreen: 64,
+				canSetPiP: 65,
+				enterPiP: 66,
+				exitPiP: 67,
+				extendLanguage: 68,
+				callAdapter: 69,
+				toggleCaptionsVisibility: 70,
+				getWebComponent: 71
 			},
 			[-1, -1, -1]
 		);
@@ -1047,13 +1035,13 @@ class VimePlayer extends SvelteComponent {
 	
   /** Returns the current media provider */
  get getProvider(): Components.VimePlayer["getProvider"] {
-		return this.$$.ctx[54];
+		return this.$$.ctx[53];
 	}
 
 	
   /** Returns the current media provider's adapter. Shorthand for `getProvider().getAdapter()`. */
  get getAdapter(): Components.VimePlayer["getAdapter"] {
-		return this.$$.ctx[55];
+		return this.$$.ctx[54];
 	}
 
 	
@@ -1061,44 +1049,44 @@ class VimePlayer extends SvelteComponent {
 has interacted with the player, the promise may be rejected subject to the browser's autoplay
 policies. */
  get play(): Components.VimePlayer["play"] {
-		return this.$$.ctx[56];
+		return this.$$.ctx[55];
 	}
 
 	
   /** Pauses playback of the media. */
  get pause(): Components.VimePlayer["pause"] {
-		return this.$$.ctx[57];
+		return this.$$.ctx[56];
 	}
 
 	
   /** Determines whether the current provider recognizes, and can play the given type. */
  get canPlay(): Components.VimePlayer["canPlay"] {
-		return this.$$.ctx[58];
+		return this.$$.ctx[57];
 	}
 
 	
   /** Determines whether the player can start playback of the current media automatically. */
  get canAutoplay(): Components.VimePlayer["canAutoplay"] {
-		return this.$$.ctx[59];
+		return this.$$.ctx[58];
 	}
 
 	
   /** Determines whether the player can start playback of the current media automatically given the
 player is muted. */
  get canMutedAutoplay(): Components.VimePlayer["canMutedAutoplay"] {
-		return this.$$.ctx[60];
+		return this.$$.ctx[59];
 	}
 
 	
   /** Returns whether the current provider allows setting the `playbackRate` prop. */
  get canSetPlaybackRate(): Components.VimePlayer["canSetPlaybackRate"] {
-		return this.$$.ctx[61];
+		return this.$$.ctx[60];
 	}
 
 	
   /** Returns whether the current provider allows setting the `playbackQuality` prop. */
  get canSetPlaybackQuality(): Components.VimePlayer["canSetPlaybackQuality"] {
-		return this.$$.ctx[62];
+		return this.$$.ctx[61];
 	}
 
 	
@@ -1106,7 +1094,7 @@ player is muted. */
 toggle fullscreen mode. This does not mean that the operation is guaranteed to be successful,
 only that it can be attempted. */
  get canSetFullscreen(): Components.VimePlayer["canSetFullscreen"] {
-		return this.$$.ctx[63];
+		return this.$$.ctx[62];
 	}
 
 	
@@ -1118,7 +1106,7 @@ way to be certain is by listening to the `vFullscreenChange` event. Some common 
 failure are: the fullscreen API is not available, the request is made when `viewType` is audio,
 or the user has not interacted with the page yet. */
  get enterFullscreen(): Components.VimePlayer["enterFullscreen"] {
-		return this.$$.ctx[64];
+		return this.$$.ctx[63];
 	}
 
 	
@@ -1126,7 +1114,7 @@ or the user has not interacted with the page yet. */
 successful, or reject with a reason for failure. Refer to `enterFullscreen()` for more
 information. */
  get exitFullscreen(): Components.VimePlayer["exitFullscreen"] {
-		return this.$$.ctx[65];
+		return this.$$.ctx[64];
 	}
 
 	
@@ -1134,7 +1122,7 @@ information. */
 picture-in-picture mode. This does not mean the operation is guaranteed to be successful, only
 that it can be attempted. */
  get canSetPiP(): Components.VimePlayer["canSetPiP"] {
-		return this.$$.ctx[66];
+		return this.$$.ctx[65];
 	}
 
 	
@@ -1144,7 +1132,7 @@ to determine if the player is in PiP mode or not. The only way to be certain is 
 to the `vPiPChange` event. Some common reasons for failure are the same as the reasons for
 `enterFullscreen()`. */
  get enterPiP(): Components.VimePlayer["enterPiP"] {
-		return this.$$.ctx[67];
+		return this.$$.ctx[66];
 	}
 
 	
@@ -1152,29 +1140,29 @@ to the `vPiPChange` event. Some common reasons for failure are the same as the r
 is successful, or reject with a reason for failure. Refer to `enterPiP()` for more
 information. */
  get exitPiP(): Components.VimePlayer["exitPiP"] {
-		return this.$$.ctx[68];
+		return this.$$.ctx[67];
 	}
 
 	
   /** Extends the translation map for a given language. */
  get extendLanguage(): Components.VimePlayer["extendLanguage"] {
-		return this.$$.ctx[69];
+		return this.$$.ctx[68];
 	}
 
 	
   /**  */
  get callAdapter(): Components.VimePlayer["callAdapter"] {
-		return this.$$.ctx[70];
+		return this.$$.ctx[69];
 	}
 
 	
   /** Toggles the visibility of the captions. */
  get toggleCaptionsVisibility(): Components.VimePlayer["toggleCaptionsVisibility"] {
-		return this.$$.ctx[71];
+		return this.$$.ctx[70];
 	}
 
 	get getWebComponent(): HTMLVimePlayerElement | undefined {
-		return this.$$.ctx[72];
+		return this.$$.ctx[71];
 	}
 }
 

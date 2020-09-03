@@ -486,11 +486,6 @@ export class Player implements MediaPlayer {
   @Prop({ mutable: true, attribute: null }) i18n: Record<string, string> = en;
 
   /**
-   * Whether the skeleton loading animation should be shown while media is loading.
-   */
-  @Prop() noSkeleton = false;
-
-  /**
    * ------------------------------------------------------
    * Events
    * ------------------------------------------------------
@@ -1129,17 +1124,6 @@ export class Player implements MediaPlayer {
           fullscreen: this.isFullscreenActive,
         }}
       >
-        {
-          !this.noSkeleton && (
-            <div
-              class={{
-                skeleton: true,
-                active: !this.ready,
-              }}
-            />
-          )
-        }
-
         {
           !this.controls
           && canShowCustomUI

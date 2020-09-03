@@ -133,7 +133,6 @@ exports[`playback rate submenu should be structurally sound 1`] = `
 exports[`should be structurally sound 1`] = `
 <vime-player aria-hidden="true" aria-label="Video Player" id="vime-player-1" tabindex="0">
   <!---->
-  <div class="active skeleton"></div>
   <vime-faketube></vime-faketube>
   <vime-ui>
     <!---->

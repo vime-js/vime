@@ -24,8 +24,8 @@ jobs:
           echo $BUILD_ID > .build-id/id
         env:
           BUILD_ID: ${{ steps.build_id.outputs.id }}
-  build:
-    name: Build
+  prepare:
+    name: Prepare
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,30 +34,23 @@ jobs:
         uses: actions/setup-node@v2-beta
         with:
           node-version: 14
-      - name: Cache pnpm store
+      - name: Cache dependencies
+        id: deps
         uses: actions/cache@v2
         with:
-          path: ~/.pnpm-store
-          key: pnpm-store
+          path: packages/core/node_modules
+          key: deps-${{ hashFiles('packages/core/package-lock.json') }}
       - name: Cache cypress binary
         uses: actions/cache@v2
         with:
           path: ~/.cache
-          key: cypress-binary
-      - name: Cache packages
-        uses: actions/cache@v2
-        with:
-          path: packages
-          key: packages-${{ github.run_id }}
-      - name: Install pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+          key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
       - name: Install dependencies
-        run: pnpm install --filter @vime/core
-      - name: Build 
-        run: pnpm run build --filter @vime/core
-  test_unit:
-    name: Unit Tests
-    needs: [build_id, build]
+        if: steps.deps.outputs.cache-hit != 'true'
+        run: npm install --prefix packages/core
+  build:
+    name: Build
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -66,11 +59,46 @@ jobs:
         uses: actions/setup-node@v2-beta
         with:
           node-version: 14
-      - name: Restore packages
+      - name: Restore dependencies
         uses: actions/cache@v2
         with:
-          path: packages
-          key: packages-${{ github.run_id }}
+          path: packages/core/node_modules
+          key: deps-${{ hashFiles('packages/core/package-lock.json') }}
+      - name: Restore cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache
+          key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
+      - name: Cache dist
+        uses: actions/cache@v2
+        with:
+          path: packages/core/dist
+          key: dist-${{ github.run_id }}
+      - name: Build 
+        run: npm run build --prefix packages/core
+      - name: Instrument
+        run: npm run instrument --prefix packages/core
+  test_unit:
+    name: Unit Tests
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+      - name: Restore dependencies
+        uses: actions/cache@v2
+        with:
+          path: packages/core/node_modules
+          key: deps-${{ hashFiles('packages/core/package-lock.json') }}
+      - name: Restore cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache
+          key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
       - name: Run unit tests
         run: npm run test:unit.coverage --prefix packages/core
       - name: Upload coverage report
@@ -89,6 +117,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
       - name: Restore build id from cache
         uses: actions/cache@v2
         with:
@@ -97,15 +129,21 @@ jobs:
       - name: Set build id
         id: build_id
         run: echo "::set-output name=id::$(cat .build-id/id)"
-      - name: Setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
-      - name: Restore packages
+      - name: Restore dependencies
         uses: actions/cache@v2
         with:
-          path: packages
-          key: packages-${{ github.run_id }}
+          path: packages/core/node_modules
+          key: deps-${{ hashFiles('packages/core/package-lock.json') }}
+      - name: Restore cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache
+          key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
+      - name: Restore dist
+        uses: actions/cache@v2
+        with:
+          path: packages/core/dist
+          key: dist-${{ github.run_id }}
       - name: Run e2e tests
         run:  npm run test:e2e.ci --prefix packages/core
         env:
@@ -128,19 +166,12 @@ jobs:
         uses: actions/setup-node@v2-beta
         with:
           node-version: 14
-      - name: Restore packages
-        uses: actions/cache@v2
-        with:
-          path: packages
-          key: packages-${{ github.run_id }}
       - name: Download coverage reports
         uses: actions/download-artifact@v2
-        with:
-          path: packages/core
       - name: Combine reports
-        run: npm run coverage:combine --prefix packages/core
+        run: npx nyc report --reporter lcov --reporter text --report-dir coverage --cwd "packages/core"
       - name: Upload report to codecov
-        run: cd packages/core && npx codecov 
+        run: cd packages/core && npx codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   release:
@@ -154,24 +185,24 @@ jobs:
         uses: actions/setup-node@v2-beta
         with:
           node-version: 14
-      - name: Restore pnpm store
+      - name: Cache pnpm store
         uses: actions/cache@v2
         with:
           path: ~/.pnpm-store
-          key: pnpm-store
+          key: deps-${{ hashFiles('packages/core/package-lock.json') }}
       - name: Restore cypress binary
         uses: actions/cache@v2
         with:
           path: ~/.cache
-          key: cypress-binary
+          key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
       - name: Install pnpm
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
       - name: Install dependencies
-        run: pnpm install --filter ./packages
+        run: pnpm install --filter vime --filter ./packages
       - name: Build packages
-        run: npm run build
+        run: pnpm run build --filter vime
       - name: Release packages
-        run: npm run release
+        run: pnpm run release --filter vime
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

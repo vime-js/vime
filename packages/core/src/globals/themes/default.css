@@ -34,10 +34,6 @@ vime-player {
 
   --player-bg: #000;
 
-  --player-skeleton-base-color: #eee;
-  --player-skeleton-highlight-color: #f3f3f3;
-  --player-skeleton-duration: 1.2s;
-
   /*******************************
    * Slider
    *******************************/
