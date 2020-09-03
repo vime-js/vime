@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@vime/core": "^1.11.0",
-    "@vime/react": "^1.8.0",
+    "@vime/core": "^2.0.0",
+    "@vime/react": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3"

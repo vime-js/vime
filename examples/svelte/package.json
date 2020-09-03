@@ -11,8 +11,8 @@
     "setup:build": "pnpm run build --filter @vime/core && pnpm run build --filter @vime/svelte"
   },
   "dependencies": {
-    "@vime/core": "^1.11.0",
-    "@vime/svelte": "^1.2.0"
+    "@vime/core": "^2.0.0",
+    "@vime/svelte": "^2.0.0"
   },
   "devDependencies": {
     "@tsconfig/svelte": "^1.0.10",
