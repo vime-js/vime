@@ -113,28 +113,28 @@ export const runTestHarness = (provider: MediaProvider) => {
       // @TODO test flaky in CI with Vimeo/Dailymotion for some unknown reason.
       if ((provider !== MediaProvider.Vimeo) && (provider !== MediaProvider.Dailymotion)) {
         cy.player()
-        .should(() => {
-          expect(events.vPlay).to.have.been.called;
-          // Files are loaded too fast on the dev server so they don't always buffer.
-          if (!mediaFileProvider.has(provider)) {
-            expect(events.vBufferingChange)
-              .to.have.been.calledWith(true)
-              .and.to.have.been.calledWith(false);
-          }
-        })
-        .and(() => {
+          .should(() => {
+            expect(events.vPlay).to.have.been.called;
+            // Files are loaded too fast on the dev server so they don't always buffer.
+            if (!mediaFileProvider.has(provider)) {
+              expect(events.vBufferingChange)
+                .to.have.been.calledWith(true)
+                .and.to.have.been.calledWith(false);
+            }
+          })
+          .and(() => {
           // order => [paused=false] -> play -> buffering -> playing -> currentTime
-          expect(events.vPausedChange)
-            .to.be.calledBefore(events.vPlay);
-          expect(events.vPlay)
-            .to.be.calledBefore(events.vBufferingChange);
-          if (!mediaFileProvider.has(provider)) {
-            expect(events.vBufferingChange)
-              .to.be.calledBefore(events.vPlayingChange);
-          }
-          expect(events.vPlayingChange)
-            .to.be.calledBefore(events.vCurrentTimeChange);
-        });
+            expect(events.vPausedChange)
+              .to.be.calledBefore(events.vPlay);
+            expect(events.vPlay)
+              .to.be.calledBefore(events.vBufferingChange);
+            if (!mediaFileProvider.has(provider)) {
+              expect(events.vBufferingChange)
+                .to.be.calledBefore(events.vPlayingChange);
+            }
+            expect(events.vPlayingChange)
+              .to.be.calledBefore(events.vCurrentTimeChange);
+          });
       }
     });
 

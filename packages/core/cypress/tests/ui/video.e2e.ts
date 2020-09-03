@@ -1,5 +1,3 @@
-// @ts-ignore
-import { skipOn } from '@cypress/skip-test';
 import { en } from '../../../src/components/core/player/lang/en';
 
 before(() => {
@@ -15,15 +13,13 @@ after(() => {
 
 afterEach(() => {
   cy.pause();
+  cy.player().type('{esc}');
   cy.wait(50);
 });
 
-// @TODO why wont this pass in CI??
-skipOn('headless', () => {
-  it('should load video ui', () => {
-    cy.wait(2000);
-    cy.player().toMatchImageSnapshot();
-  });
+it('should load video ui', () => {
+  cy.wait(500);
+  cy.player().toMatchImageSnapshot();
 });
 
 it('should toggle playback when clicking player', () => {

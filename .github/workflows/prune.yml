@@ -1,0 +1,24 @@
+name: Prune
+on:
+  schedule:
+    # At 00:00 on day-of-month 1 in every month from January through December.
+    # Generated with: https://crontab.guru/#0_0_1_1-12_*
+    - cron:  '0 0 1 1-12 *'
+jobs:
+  prune:
+    name: Prune
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+      - name: Cache pnpm store
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-store
+      - name: Install pnpm
+        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+      - name: Remove unreferenced dependencies
+        run : pnpm store prune

@@ -5,67 +5,173 @@ on:
       - master
       - next
 jobs:
-  tests:
-    name: Tests
+  # @see https://medium.com/attest-engineering/adding-a-unique-github-build-identifier-7aa2e83cadca
+  build_id:
+    name: Build Id
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create build id
+        id: build_id
+        run: echo "::set-output name=id::$(date +%s)"
+      - name: Cache build id
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/.build-id
+          key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}-${{ steps.build_id.outputs.id }}
+      - name: Store build id
+        run: |
+          mkdir -p .build-id 
+          echo $BUILD_ID > .build-id/id
+        env:
+          BUILD_ID: ${{ steps.build_id.outputs.id }}
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+      - name: Cache pnpm store
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-store
+      - name: Cache cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache
+          key: cypress-binary
+      - name: Cache packages
+        uses: actions/cache@v2
+        with:
+          path: packages
+          key: packages-${{ github.run_id }}
+      - name: Install pnpm
+        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+      - name: Install dependencies
+        run: pnpm install --filter @vime/core
+      - name: Build 
+        run: pnpm run build --filter @vime/core
+  test_unit:
+    name: Unit Tests
+    needs: [build_id, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+      - name: Restore packages
+        uses: actions/cache@v2
+        with:
+          path: packages
+          key: packages-${{ github.run_id }}
+      - name: Run unit tests
+        run: npm run test:unit.coverage --prefix packages/core
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: cov-report-unit
+          path: packages/core/jest-coverage
+  test_e2e:
+    name: E2E Tests
+    needs: [build_id, build]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        containers: [1, 2, 3]
+        containers: [1, 2, 3, 4, 5]
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+      - name: Restore build id from cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/.build-id
+          key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
+      - name: Set build id
+        id: build_id
+        run: echo "::set-output name=id::$(cat .build-id/id)"
       - name: Setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: 14
-      - name: Change directory to `@vime/core`
-        run: cd packages/core
-      - name: Install dependencies
-        uses: cypress-io/github-action@v2
+      - name: Restore packages
+        uses: actions/cache@v2
         with:
-          runTests: false
-      - name: Run unit tests
-        run: npm run test:unit.coverage
-      - name: Prepare for e2e tests
-        run: npm run coverage:e2e.prepare
+          path: packages
+          key: packages-${{ github.run_id }}
       - name: Run e2e tests
-        uses: cypress-io/github-action@v2
-        with:
-          install: false
-          start: npm run serve:public
-          wait-on: 'http://localhost:3334'
-          browser: chrome
-          headless: true
-          record: true
-          parallel: true
-          group: 'GitHub Actions'
+        run:  npm run test:e2e.ci --prefix packages/core
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUILD_ID: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      - name: Build coverage report
-        run: npm run coverage:combine && npx codecov
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: cov-report-e2e-${{ matrix.containers }}
+          path: packages/core/cypress-coverage
+  coverage:
+    name: Coverage Report
+    needs: [test_unit, test_e2e]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+      - name: Restore packages
+        uses: actions/cache@v2
+        with:
+          path: packages
+          key: packages-${{ github.run_id }}
+      - name: Download coverage reports
+        uses: actions/download-artifact@v2
+        with:
+          path: packages/core
+      - name: Combine reports
+        run: npm run coverage:combine --prefix packages/core
+      - name: Upload report to codecov
+        run: cd packages/core && npx codecov 
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   release:
     name: Release
-    needs: tests
+    needs: [test_unit, test_e2e]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: 14
+      - name: Restore pnpm store
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-store
+      - name: Restore cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache
+          key: cypress-binary
       - name: Install pnpm
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
       - name: Install dependencies
         run: pnpm install --filter ./packages
       - name: Build packages
-        run: pnpm run build --filter vime
+        run: npm run build
       - name: Release packages
-        run: pnpm run release --filter vime
+        run: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
