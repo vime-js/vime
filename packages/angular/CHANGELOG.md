@@ -2,6 +2,13 @@
 
 All notable changes will be listed here.
 
+# [2.1.0](https://github.com/vime-js/vime/compare/@vime/angular@2.0.0...@vime/angular@2.1.0) (2020-09-04)
+
+
+### Features
+
+* skeleton loading animation ([0a36998](https://github.com/vime-js/vime/commit/0a369988be1c5e45674853cf55326c15b755839e))
+
 # [2.0.0](https://github.com/vime-js/vime/compare/@vime/angular@1.6.0...@vime/angular@2.0.0) (2020-09-03)
 
 
