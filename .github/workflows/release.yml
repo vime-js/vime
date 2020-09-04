@@ -102,7 +102,7 @@ jobs:
       - name: Run unit tests
         run: npm run test:unit.coverage --prefix packages/core
       - name: Upload report to codecov
-        run: npx codecov -f packages/core/jest-coverage/coverage.json
+        run: cd packages/core && npx codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   test_e2e:
@@ -150,7 +150,7 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload report to codecov
-        run: npx codecov -f packages/core/cypress-coverage/coverage.json
+        run: cd packages/core && npx codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   release:
