@@ -45,7 +45,7 @@ import React from 'react';
 import { VimePlayer, VimeUi, VimeClickToPlay } from '@vime/react';
 
 function Example() {
-  return render(
+  return (
     <VimePlayer>
       {/* ... */}
       <VimeUi>

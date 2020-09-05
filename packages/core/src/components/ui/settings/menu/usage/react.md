@@ -13,7 +13,7 @@ function Example() {
     setIsMenuActive(false);
   };
 
-  return render(
+  return (
     <VimePlayer>
       {/* ... */}
       <VimeUi>

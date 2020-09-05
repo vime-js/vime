@@ -3,7 +3,7 @@ import React from 'react';
 import { VimeIcon } from '@vime/react';
 
 function Example() {
-  return render(
+  return (
     <div>
       {/* Markup */}
       <VimeIcon>

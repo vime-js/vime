@@ -9,6 +9,10 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'vime-js',
   projectName: 'vime',
+  stylesheets: [
+    'https://cdn.jsdelivr.net/npm/@vime/core@latest/themes/default.css',
+    'https://cdn.jsdelivr.net/npm/@vime/core@latest/themes/light.css',
+  ],
   themeConfig: {
     announcementBar: {
       content: '⭐️ &nbsp;If you like Vime, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime">GitHub</a>!&nbsp;⭐️',
@@ -47,7 +51,7 @@ module.exports = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/vime-js/vime/edit/master/packages/docs/',
+          editUrl: 'https://github.com/vime-js/vime/edit/master/docs/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

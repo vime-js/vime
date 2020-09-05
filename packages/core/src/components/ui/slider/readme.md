@@ -67,7 +67,7 @@ function Example() {
     setValue(event.detail);
   };
 
-  return render(
+  return (
     <VimeSlider
       label="Volume"
       step={5}

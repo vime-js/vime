@@ -56,7 +56,7 @@ function Example() {
     // ...
   };
 
-  return render(
+  return (
     <VimePlayer controls>
       <VimeDash
         src="/media/manifest.mpd"

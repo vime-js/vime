@@ -72,7 +72,7 @@ function PlaybackControl() {
     setPaused(false);
   };
 
-  return render(
+  return (
     <VimeControl
       keys="k"
       ref={ref}

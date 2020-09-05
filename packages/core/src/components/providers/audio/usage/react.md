@@ -3,7 +3,7 @@ import React from 'react';
 import { VimePlayer, VimeAudio } from '@vime/react';
 
 function Example() {
-  return render(
+  return (
     <VimePlayer controls>
       <VimeAudio>
         <source data-src="/media/audio.mp3" type="audio/mp3" />

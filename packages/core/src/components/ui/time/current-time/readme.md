@@ -35,7 +35,7 @@ import React from 'react';
 import { VimeCurrentTime } from '@vime/react';
 
 function Example() {
-  return render(<VimeCurrentTime />);
+  return (<VimeCurrentTime />);
 }
 ```
 

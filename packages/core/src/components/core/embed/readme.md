@@ -71,7 +71,7 @@ function Example() {
     // ...
   };
 
-  return render(
+  return (
     <VimeEmbed
       embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
       params={{ autoplay: 1, muted: 1, controls: 0 }}

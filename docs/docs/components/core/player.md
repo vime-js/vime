@@ -63,7 +63,7 @@ values={[
 <TabItem value="react">
 
 ```tsx {2,31-43}
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { VimePlayer, VimeUi } from '@vime/react';
 
 function Example() {
@@ -92,7 +92,7 @@ function Example() {
     // ...
   };
 
-  return render(
+  return (
     <VimePlayer
       controls
       autoplay

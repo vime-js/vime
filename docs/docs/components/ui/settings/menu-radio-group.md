@@ -75,7 +75,7 @@ function Example() {
     setValue(radio.value);
   };
 
-  return render(
+  return (
     <VimePlayer>
       {/* ... */}
       <VimeUi>

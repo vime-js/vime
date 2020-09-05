@@ -9,7 +9,7 @@ Enables loading, playing and controlling videos from [YouTube](https://www.youtu
 - When the player is `paused`, `seeking` and `seeked` are fired at the same time (in order), because
   there are no updates between the events from the embed.
 
-- Chaning the `controls` prop forces the player to reload.
+- Changing the `controls` prop forces the player to reload.
 
 - You cannot change `playbackQuality` programmatically, YouTube automatically determines the best
   quality to play.
@@ -49,7 +49,7 @@ import React from 'react';
 import { VimePlayer, VimeYoutube } from '@vime/react';
 
 function Example() {
-  return render(
+  return (
     <VimePlayer controls>
       <VimeYoutube videoId="DyTCOwB0DVw" />
       {/* ... */}

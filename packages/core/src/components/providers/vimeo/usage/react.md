@@ -3,7 +3,7 @@ import React from 'react';
 import { VimePlayer, VimeVimeo } from '@vime/react';
 
 function Example() {
-  return render(
+  return (
     <VimePlayer controls>
       <VimeVimeo videoId="411652396" />
       {/* ... */}
