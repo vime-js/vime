@@ -20,7 +20,7 @@
     "release": "semantic-release -e ../../scripts/semantic-release"
   },
   "dependencies": {
-    "@vime/core": "^2.0.0",
+    "@vime/core": "^2.1.0",
     "tslib": "^2.0.1"
   },
   "devDependencies": {

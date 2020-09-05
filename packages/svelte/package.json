@@ -28,7 +28,7 @@
     "release": "semantic-release -e ../../scripts/semantic-release"
   },
   "dependencies": {
-    "@vime/core": "^2.0.0"
+    "@vime/core": "^2.1.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",
