@@ -15,35 +15,13 @@ parser.parse = ((parse) => (config, options) => {
   return parse(config, options);
 })(parser.parse);
 
-const pkgName = process.env.npm_package_name;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getAssets = () => {
-  const assets = [{ path: 'dist', label: 'Distribution' }];
-  if (pkgName === '@vime/core') {
-    assets.push([
-      { path: 'loader', label: 'Loader' },
-      { path: 'icons', label: 'Icons' },
-      { path: 'themes', label: 'Themes' },
-    ]);
-  }
-
-  if (pkgName === '@vime/svelte') {
-    assets.push({ path: 'src/svelte', label: 'Svelte Source' });
-  }
-
-  return assets;
-};
-
 module.exports = {
-  tagFormat: `${pkgName}@\${version}`,
-  plugins: [
-    '@semantic-release/commit-analyzer',
+  tagFormat: `${process.env.npm_package_name}@\${version}`,
+  verifyConditions: [
     '@semantic-release/changelog',
-    '@semantic-release/release-notes-generator',
     '@semantic-release/npm',
-    // ['@semantic-release/github', { assets: getAssets() }],
     '@semantic-release/git',
+    // '@semantic-release/github',
   ],
   prepare: [
     {
@@ -53,7 +31,7 @@ module.exports = {
     '@semantic-release/npm',
     {
       path: '@semantic-release/git',
-      message: `chore(release): ${pkgName}@\${nextRelease.version} 🥳`,
+      message: `chore(release): ${process.env.npm_package_name}@\${nextRelease.version} 🥳`,
     },
   ],
   success: [],
