@@ -2,6 +2,13 @@
 
 All notable changes will be listed here.
 
+## [2.0.1](https://github.com/vime-js/vime/compare/@vime/react@2.0.0...@vime/react@2.0.1) (2020-09-05)
+
+
+### Bug Fixes
+
+* packages should use @vime/core@^2 ([ec5cebd](https://github.com/vime-js/vime/commit/ec5cebda41e67d5d10ba5cdfe8308ca7d9a660b3))
+
 # [2.0.0](https://github.com/vime-js/vime/compare/@vime/react@1.8.0...@vime/react@2.0.0) (2020-09-03)
 
 
