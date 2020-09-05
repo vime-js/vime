@@ -6,11 +6,12 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
+    "build:vime": "pnpm run build --filter @vime/core --filter @vime/react",
     "build:components": "pnpm run build --filter @vime/core",
     "swizzle": "docusaurus swizzle",
     "serve": "docusaurus serve",
-    "setup": "npm run setup:install && npm run build:components",
-    "setup:install": "pnpm install --filter vime --filter @vime/core --filter @vime/docs"
+    "setup": "npm run setup:install && npm run build:vime",
+    "setup:install": "pnpm install --filter vime --filter @vime/core --filter @vime/react --filter @vime/docs"
   },
   "dependencies": {
     "@babel/core": "^7.11.5",

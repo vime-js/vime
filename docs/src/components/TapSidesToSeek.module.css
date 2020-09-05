@@ -9,7 +9,7 @@
   pointer-events: none;
 }
 
-.tapSidesToSeek > .tapTarget {
+.tapTarget {
   width: 7.5%;
   height: 100%;
   pointer-events: auto;

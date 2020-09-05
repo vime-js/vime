@@ -6,7 +6,7 @@ import {
   VimeClickToPlay,
   VimeSpinner,
 } from '@vime/react';
-import TapSidesToSeek from './TapSidesToSeek';
+import { TapSidesToSeek } from './TapSidesToSeek';
 
 export const ClickPlayer = () => (
   <VimePlayer>
