@@ -2,6 +2,13 @@
 
 All notable changes will be listed here.
 
+## [2.1.1](https://github.com/vime-js/vime/compare/@vime/angular@2.1.0...@vime/angular@2.1.1) (2020-09-05)
+
+
+### Bug Fixes
+
+* packages should use @vime/core@^2 ([ec5cebd](https://github.com/vime-js/vime/commit/ec5cebda41e67d5d10ba5cdfe8308ca7d9a660b3))
+
 # [2.1.0](https://github.com/vime-js/vime/compare/@vime/angular@2.0.0...@vime/angular@2.1.0) (2020-09-04)
 
 
