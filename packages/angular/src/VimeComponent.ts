@@ -19,15 +19,15 @@ export abstract class VimeComponent {
   protected abstract ref: ElementRef;
 
   constructor(private readonly playerProps: PlayerProp[]) {
-    playerProps.forEach((prop) => { this.playerCache.set(prop, this[prop]); });
+    playerProps.forEach((prop) => { this.playerCache.set(prop, (this as any)[prop]); });
 
     const props = playerProps.reduce((prev, prop) => ({
       ...prev,
       [prop]: {
         get() {
-          return this.playerCache.get(prop);
+          return (this as any).playerCache.get(prop);
         },
-        set: (value) => {
+        set: (value: any) => {
           if (this.playerCache.get(prop) !== value) this.playerDispatch(prop as any, value);
           this.playerCache.set(prop, value);
         },
