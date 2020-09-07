@@ -1061,7 +1061,12 @@ export class Player implements MediaPlayer {
       try { await adapter[method]?.(value); } catch (e) { this.errors = [e]; }
     };
 
-    this.adapterCalls.push(safeCall);
+    if (this.playbackReady) {
+      const adapter = await this.getAdapter();
+      await safeCall(adapter);
+    } else {
+      this.adapterCalls.push(safeCall);
+    }
   }
 
   private async flushAdapterCalls() {
