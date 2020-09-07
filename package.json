@@ -8,9 +8,10 @@
     "pnpm": ">=5"
   },
   "scripts": {
-    "setup": "pnpm install --filter vime --filter @vime/core",
+    "setup": "npm run install && npm run build",
     "lint": "eslint ./packages --quiet --fix --ignore-path .gitignore",
     "clean:node": "rimraf node_modules packages/*/node_modules examples/*/node_modules docs/node_modules",
+    "install": "pnpm run install --filter vime --filter ./packages",
     "build": "pnpm run build --filter ./packages",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "pnpm run test:unit --filter @vime/core",
