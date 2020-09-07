@@ -1,20 +1,3 @@
-const parser = require('git-log-parser');
-
-// This hack allows us to use semantic-release for a monorepo.
-// https://github.com/semantic-release/semantic-release/issues/193#issuecomment-578436666
-parser.parse = ((parse) => (config, options) => {
-  if (Array.isArray(config._)) {
-    config._.push(options.cwd);
-  } else if (config._) {
-    // eslint-disable-next-line no-param-reassign
-    config._ = [config._, options.cwd];
-  } else {
-    // eslint-disable-next-line no-param-reassign
-    config._ = options.cwd;
-  }
-  return parse(config, options);
-})(parser.parse);
-
 module.exports = {
   tagFormat: `${process.env.npm_package_name}@\${version}`,
   verifyConditions: [

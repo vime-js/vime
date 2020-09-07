@@ -37,7 +37,6 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
-    "git-log-parser": "^1.2.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.13",
     "react": "^16.13.1",
