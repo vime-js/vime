@@ -17,6 +17,7 @@ vime-settings {
   pointer-events: auto;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: var(--menu-bg);
   max-height: var(--settings-max-height);
   border-radius: var(--settings-border-radius);
   width: var(--settings-width);
@@ -53,7 +54,7 @@ vime-settings {
 
   &.mobile {
     position: fixed;
-    top: 0 !important;
+    top: auto !important;
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
@@ -61,7 +62,7 @@ vime-settings {
     min-height: 56px;
     max-height: 50%;
     border-radius: 0;
-    z-index: 999;
+    z-index: 2147483647;
 
     vime-menu {
       padding: 8px 0;

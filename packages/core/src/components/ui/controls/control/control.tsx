@@ -1,7 +1,6 @@
 import {
   h, Host, Component, Prop, State, Element,
-  Event, EventEmitter,
-  Watch,
+  Event, EventEmitter, Watch,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
