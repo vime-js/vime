@@ -8,6 +8,7 @@ let __mounted = false;
 const dispatch = createEventDispatcher();
 
 export let controlsHeight = undefined;
+export let pin = undefined;
 export let active = undefined;
 export let isMobile = undefined;
 export let isAudioView = undefined;
@@ -30,6 +31,7 @@ const onEvent = (e) => {
 
 <vime-settings 
   controls-height={controlsHeight}
+  pin={pin}
   active={active}
   is-mobile={isMobile}
   is-audio-view={isAudioView}

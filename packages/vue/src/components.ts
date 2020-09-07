@@ -278,6 +278,7 @@ export const VimeDefaultControls = /*@__PURE__*/ Vue.extend({
 export const VimeDefaultSettings = /*@__PURE__*/ Vue.extend({
 
   props: {
+    pin: {} as PropOptions<Components.VimeDefaultSettings['pin']>,
     i18n: {} as PropOptions<Components.VimeDefaultSettings['i18n']>,
     playbackRate: {} as PropOptions<Components.VimeDefaultSettings['playbackRate']>,
     playbackRates: {} as PropOptions<Components.VimeDefaultSettings['playbackRates']>,
@@ -720,6 +721,7 @@ export const VimeSettings = /*@__PURE__*/ Vue.extend({
 
   props: {
     controlsHeight: {} as PropOptions<Components.VimeSettings['controlsHeight']>,
+    pin: {} as PropOptions<Components.VimeSettings['pin']>,
     active: {} as PropOptions<Components.VimeSettings['active']>,
     isMobile: {} as PropOptions<Components.VimeSettings['isMobile']>,
     isAudioView: {} as PropOptions<Components.VimeSettings['isAudioView']>,

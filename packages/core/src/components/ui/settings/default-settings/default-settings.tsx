@@ -30,6 +30,14 @@ export class DefaultSettings {
   private captionsSubmenu: any;
 
   /**
+   * Pins the settings to the defined position inside the video player. This has no effect when
+   * the view is of type `audio`, it will always be `bottomRight`.
+   */
+  @Prop({
+    reflect: true,
+  }) pin: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'bottomRight';
+
+  /**
    * @internal
    */
   @Prop() i18n: PlayerProps['i18n'] = {};
@@ -252,7 +260,7 @@ export class DefaultSettings {
 
   render() {
     return (
-      <vime-settings>
+      <vime-settings pin={this.pin}>
         {this.rateSubmenu}
         {this.qualitySubmenu}
         {this.captionsSubmenu}

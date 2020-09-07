@@ -11,9 +11,9 @@ vime-settings {
    * @prop --settings-audio-max-height: The max height of the settings when outside an audio player.
    */
 
-  display: none;
   position: absolute;
-  right: 8px;
+  opacity: 0;
+  visibility: hidden;
   pointer-events: auto;
   overflow-x: hidden;
   overflow-y: auto;
@@ -42,7 +42,8 @@ vime-settings {
   }
 
   &.active {
-    display: block;
+    opacity: 1;
+    visibility: visible;
   }
 
   &.audio {
@@ -52,6 +53,8 @@ vime-settings {
 
   &.mobile {
     position: fixed;
+    top: 0 !important;
+    left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
     width: 100%;

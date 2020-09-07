@@ -60,7 +60,15 @@
   const player = (provider) => `
     <vime-player cross-origin="true">
       ${provider}
-      <vime-default-ui></vime-default-ui>
+      <vime-default-ui no-controls>
+        <vime-controls pin="topLeft" full-width>
+          <vime-control-spacer></vime-control-spacer>
+          <vime-settings-control></vime-settings-control>
+        </vime-controls>
+        <vime-controls full-width>
+          <vime-playback-control></vime-playback-control>
+        </vime-controls>
+      </vime-default-ui>
     </vime-player>
   `;
 

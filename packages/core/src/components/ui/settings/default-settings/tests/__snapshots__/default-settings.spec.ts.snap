@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`playback quality submenu should be structurally sound 1`] = `
-<vime-settings style="bottom: 73px;">
+<vime-settings pin="bottomRight" style="bottom: 0px; right: 8px;">
   <!---->
   <vime-menu aria-hidden="true" aria-labelledby="" id="vime-settings-5" role="menu" tabindex="-1">
     <!---->
@@ -68,7 +68,7 @@ exports[`playback quality submenu should be structurally sound 1`] = `
 `;
 
 exports[`playback rate submenu should be structurally sound 1`] = `
-<vime-settings style="bottom: 73px;">
+<vime-settings pin="bottomRight" style="bottom: 0px; right: 8px;">
   <!---->
   <vime-menu aria-hidden="true" aria-labelledby="" id="vime-settings-2" role="menu" tabindex="-1">
     <!---->
@@ -138,9 +138,9 @@ exports[`should be structurally sound 1`] = `
   <vime-ui>
     <!---->
     <div>
-      <vime-default-settings>
+      <vime-default-settings pin="bottomRight">
         <!---->
-        <vime-settings style="bottom: 73px;">
+        <vime-settings pin="bottomRight" style="bottom: 0px; right: 8px;">
           <!---->
           <vime-menu aria-hidden="true" aria-labelledby="" id="vime-settings-1" role="menu" tabindex="-1">
             <!---->

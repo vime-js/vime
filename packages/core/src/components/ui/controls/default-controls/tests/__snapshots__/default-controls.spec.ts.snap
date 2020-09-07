@@ -7,7 +7,7 @@ exports[`should be structurally sound when audio + live stream 1`] = `
     <vime-volume-control></vime-volume-control>
     <vime-control-spacer></vime-control-spacer>
     <vime-live-indicator></vime-live-indicator>
-    <div style="padding-right: 2px;"></div>
+    <div style="margin-left: 0; padding-right: 2px;"></div>
   </vime-controls>
 </vime-default-controls>
 `;
@@ -21,7 +21,7 @@ exports[`should be structurally sound when audio 1`] = `
     <vime-scrubber-control></vime-scrubber-control>
     <vime-end-time></vime-end-time>
     <vime-settings-control tooltip-direction="left"></vime-settings-control>
-    <div style="padding-right: 2px;"></div>
+    <div style="margin-left: 0; padding-right: 2px;"></div>
   </vime-controls>
 </vime-default-controls>
 `;

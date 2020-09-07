@@ -43,7 +43,7 @@ it('should set the controller', async () => {
 it('should readjust position based on controls height', async () => {
   settings.controlsHeight = 100;
   await page.waitForChanges();
-  expect(settings.style.bottom).toEqual('108px');
+  expect(settings.style.bottom).toEqual('100px');
 });
 
 it('should change active state', async () => {

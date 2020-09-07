@@ -118,10 +118,11 @@ function Example() {
 
 ## Properties
 
-| Property         | Attribute         | Description                                                                                            | Type      | Default |
-| ---------------- | ----------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------- |
-| `active`         | `active`          | Whether the settings menu is opened/closed.                                                            | `boolean` | `false` |
-| `controlsHeight` | `controls-height` | The height of any lower control bar in pixels so that the settings can re-position itself accordingly. | `number`  | `65`    |
+| Property         | Attribute         | Description                                                                                                                                              | Type                                                       | Default         |
+| ---------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | --------------- |
+| `active`         | `active`          | Whether the settings menu is opened/closed.                                                                                                              | `boolean`                                                  | `false`         |
+| `controlsHeight` | `controls-height` | The height of any lower control bar in pixels so that the settings can re-position itself accordingly.                                                   | `number`                                                   | `0`             |
+| `pin`            | `pin`             | Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio`, it will always be `bottomRight`. | `"bottomLeft" \| "bottomRight" \| "topLeft" \| "topRight"` | `'bottomRight'` |
 
 
 ## Methods

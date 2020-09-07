@@ -243,11 +243,14 @@ export class VimeDefaultControls {
 
 
 export declare interface VimeDefaultSettings extends Components.VimeDefaultSettings {}
-
+@ProxyCmp({
+  inputs: ['pin']
+})
 @Component({
   selector: 'vime-default-settings',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
+  inputs: ['pin']
 })
 export class VimeDefaultSettings {
   protected el: HTMLElement;
@@ -784,14 +787,14 @@ export class VimeScrubberControl {
 
 export declare interface VimeSettings extends Components.VimeSettings {}
 @ProxyCmp({
-  inputs: ['active', 'controlsHeight'],
+  inputs: ['active', 'controlsHeight', 'pin'],
   methods: ['setController']
 })
 @Component({
   selector: 'vime-settings',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['active', 'controlsHeight']
+  inputs: ['active', 'controlsHeight', 'pin']
 })
 export class VimeSettings {
   protected el: HTMLElement;
@@ -804,13 +807,13 @@ export class VimeSettings {
 
 export declare interface VimeSettingsControl extends Components.VimeSettingsControl {}
 @ProxyCmp({
-  inputs: ['icon', 'tooltipDirection']
+  inputs: ['expanded', 'icon', 'menu', 'tooltipDirection']
 })
 @Component({
   selector: 'vime-settings-control',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['icon', 'tooltipDirection']
+  inputs: ['expanded', 'icon', 'menu', 'tooltipDirection']
 })
 export class VimeSettingsControl {
   protected el: HTMLElement;

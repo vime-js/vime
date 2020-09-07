@@ -39,7 +39,15 @@ export class Settings {
    * The height of any lower control bar in pixels so that the settings can re-position itself
    * accordingly.
    */
-  @Prop() controlsHeight = 65;
+  @Prop() controlsHeight = 0;
+
+  /**
+   * Pins the settings to the defined position inside the video player. This has no effect when
+   * the view is of type `audio`, it will always be `bottomRight`.
+   */
+  @Prop({
+    reflect: true,
+  }) pin: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'bottomRight';
 
   /**
    * Whether the settings menu is opened/closed.
@@ -81,12 +89,29 @@ export class Settings {
     this.controllerId = id;
     this.controller = controller;
     this.controller.menu = this.id;
+    this.disposal.empty();
     this.disposal.add(listen(this.controller, 'click', () => { this.active = !this.active; }));
     this.disposal.add(listen(this.controller, 'keydown', (event: KeyboardEvent) => {
       if (event.key !== 'Enter') return;
       // We're looking for !active because the `click` event above will toggle it to active.
       if (!this.active) this.menu.focusOnOpen();
     }));
+  }
+
+  private getPosition() {
+    if (this.isAudioView) {
+      return {
+        right: '0',
+        bottom: `${this.controlsHeight}px`,
+      };
+    }
+
+    // topLeft => { top: 0, left: 0 }
+    const pos = this.pin.split(/(?=[L|R])/).map((s) => s.toLowerCase());
+    return {
+      [pos.includes('top') ? 'top' : 'bottom']: `${this.controlsHeight}px`,
+      [pos.includes('left') ? 'left' : 'right']: '8px',
+    };
   }
 
   private onClose(event: CustomEvent<void>) {
@@ -98,7 +123,7 @@ export class Settings {
     return (
       <Host
         style={{
-          bottom: `${this.controlsHeight + 8}px`,
+          ...this.getPosition(),
         }}
         class={{
           active: this.active,

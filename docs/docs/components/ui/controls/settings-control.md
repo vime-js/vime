@@ -163,10 +163,12 @@ function Example() {
 
 ## Properties
 
-| Property           | Attribute           | Description                                     | Type                           | Default            |
-| ------------------ | ------------------- | ----------------------------------------------- | ------------------------------ | ------------------ |
-| `icon`             | `icon`              | The URL to an SVG element or fragment to load.  | `string`                       | `'#vime-settings'` |
-| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow. | `"left" ∣ "right" ∣ undefined` | `undefined`        |
+| Property           | Attribute           | Description                                                                        | Type                           | Default            |
+| ------------------ | ------------------- | ---------------------------------------------------------------------------------- | ------------------------------ | ------------------ |
+| `expanded`         | `expanded`          | Whether the settings menu this control manages is open.                            | `boolean`                      | `false`            |
+| `icon`             | `icon`              | The URL to an SVG element or fragment to load.                                     | `string`                       | `'#vime-settings'` |
+| `menu`             | `menu`              | The DOM `id` of the settings menu this control is responsible for opening/closing. | `string ∣ undefined`           | `undefined`        |
+| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                    | `"left" ∣ "right" ∣ undefined` | `undefined`        |
 
 ## Dependencies
 

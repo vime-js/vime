@@ -7,6 +7,7 @@ let __mounted = false;
 
 const dispatch = createEventDispatcher();
 
+export let pin = undefined;
 export let i18n = undefined;
 export let playbackRate = undefined;
 export let playbackRates = undefined;
@@ -37,6 +38,7 @@ const onEvent = (e) => {
 </script>
 
 <vime-default-settings 
+  pin={pin}
   playback-rate={playbackRate}
   playback-quality={playbackQuality}
   is-captions-active={isCaptionsActive}

@@ -135,6 +135,12 @@ function Example() {
 </Tabs>
 
 
+## Properties
+
+| Property | Attribute | Description                                                                                                                                              | Type                                                    | Default         |
+| -------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | --------------- |
+| `pin`    | `pin`     | Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio`, it will always be `bottomRight`. | `"bottomLeft" ∣ "bottomRight" ∣ "topLeft" ∣ "topRight"` | `'bottomRight'` |
+
 ## Slots
 
 | Slot | Description                                                                                        |

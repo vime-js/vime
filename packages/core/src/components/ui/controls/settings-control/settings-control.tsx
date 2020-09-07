@@ -29,12 +29,12 @@ export class SettingsControl {
   @Prop() tooltipDirection: TooltipDirection;
 
   /**
-   * @internal
+   * The DOM `id` of the settings menu this control is responsible for opening/closing.
    */
   @Prop() menu?: string;
 
   /**
-   * @internal
+   * Whether the settings menu this control manages is open.
    */
   @Prop() expanded = false;
 
@@ -46,26 +46,32 @@ export class SettingsControl {
   connectedCallback() {
     idCount += 1;
     this.id = `vime-settings-control-${idCount}`;
-    const settings = findUIRoot(this).querySelector('vime-settings');
+    this.findSettings();
+  }
+
+  componentDidLoad() {
+    this.findSettings();
+  }
+
+  private findSettings() {
+    const settings = findUIRoot(this)?.querySelector('vime-settings');
     settings?.setController(this.id, this.el);
   }
 
-  private hasSettings() {
-    return !isUndefined(this.menu);
-  }
-
   render() {
+    const hasSettings = !isUndefined(this.menu);
+
     return (
       <Host
         class={{
-          hidden: !this.hasSettings(),
-          active: this.hasSettings() && this.expanded,
+          hidden: !hasSettings,
+          active: hasSettings && this.expanded,
         }}
       >
         <vime-control
           identifier={this.id}
           menu={this.menu}
-          hidden={!this.hasSettings()}
+          hidden={!hasSettings}
           expanded={this.expanded}
           label={this.i18n.settings}
         >

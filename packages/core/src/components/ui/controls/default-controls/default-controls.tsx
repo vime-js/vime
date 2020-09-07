@@ -68,7 +68,7 @@ export class DefaultControls {
         {this.isLive && <vime-live-indicator />}
         {!this.isLive && <vime-end-time />}
         {!this.isLive && <vime-settings-control tooltip-direction="left" />}
-        <div style={{ paddingRight: '2px' }} />
+        <div style={{ marginLeft: '0', paddingRight: '2px' }} />
       </vime-controls>
     );
   }

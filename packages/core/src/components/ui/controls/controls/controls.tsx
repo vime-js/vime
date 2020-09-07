@@ -8,7 +8,7 @@ import { PlayerProps } from '../../../core/player/PlayerProps';
 import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen, isColliding } from '../../../../utils/dom';
-import { isNull } from '../../../../utils/unit';
+import { isNullOrUndefined } from '../../../../utils/unit';
 import { debounce } from '../../../../utils/timing';
 import { findRootPlayer } from '../../../core/player/utils';
 import { findUIRoot } from '../../ui/utils';
@@ -173,22 +173,26 @@ export class Controls {
     playerRef[this] = player;
   }
 
-  private checkForCaptionsCollision() {
-    const captions = findUIRoot(this).querySelector('vime-captions') as HTMLVimeCaptionsElement;
-    if (isNull(captions)) return;
-    captions!.controlsHeight = isColliding(this.el, captions) ? this.getHeight() : 0;
-  }
-
   private getHeight() {
     return parseFloat(window.getComputedStyle(this.el).height);
   }
 
+  private adjustHeightOnCollision(selector: 'vime-captions' | 'vime-settings', marginTop = 0) {
+    const el = findUIRoot(this)?.querySelector(selector);
+    if (isNullOrUndefined(el)) return;
+    const height = this.getHeight() + marginTop;
+    const hasCollided = isColliding(el, this.el);
+    const willCollide = isColliding(el, this.el, 0, -height);
+    el.controlsHeight = (hasCollided || willCollide) ? height : 0;
+  }
+
+  private checkForCaptionsCollision() {
+    if (this.isAudioView) return;
+    this.adjustHeightOnCollision('vime-captions');
+  }
+
   private checkForSettingsCollision() {
-    const settings = findUIRoot(this).querySelector('vime-settings') as HTMLVimeSettingsElement;
-    if (isNull(settings)) return;
-    settings!.controlsHeight = (this.isAudioView || isColliding(this.el, settings))
-      ? this.getHeight()
-      : 65;
+    this.adjustHeightOnCollision('vime-settings', (this.isAudioView ? 4 : 0));
   }
 
   private show() {

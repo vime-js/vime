@@ -12,10 +12,10 @@ interface VimeSettingsControlProps {
   /** The direction in which the tooltip should grow. */
   tooltipDirection?: Components.VimeSettingsControl["tooltipDirection"]
   
-  /**  */
+  /** The DOM `id` of the settings menu this control is responsible for opening/closing. */
   menu?: Components.VimeSettingsControl["menu"]
   
-  /**  */
+  /** Whether the settings menu this control manages is open. */
   expanded?: Components.VimeSettingsControl["expanded"]
   
   /**  */

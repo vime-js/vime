@@ -8,7 +8,7 @@ exports[`should be structurally sound 1`] = `
   <vime-ui>
     <!---->
     <div>
-      <vime-settings style="bottom: 73px;">
+      <vime-settings pin="bottomRight" style="bottom: 0px; right: 8px;">
         <!---->
         <vime-menu controller="" identifier="vime-settings-1">
           DefaultSlot
