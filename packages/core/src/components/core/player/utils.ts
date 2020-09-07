@@ -1,6 +1,6 @@
 import { getElement } from '@stencil/core';
 import { HTMLStencilElement } from '@stencil/core/internal';
-import { isInstanceOf } from '../../../utils/unit';
+import { isInstanceOf, isNull } from '../../../utils/unit';
 
 /**
  * Finds the closest ancestor player element.
@@ -8,10 +8,16 @@ import { isInstanceOf } from '../../../utils/unit';
  * @param ref A HTMLElement that is within the player's subtree.
  */
 export const findRootPlayer = (ref: any) => {
-  let player = isInstanceOf(ref, HTMLElement) ? ref : getElement(ref);
+  const root = isInstanceOf(ref, HTMLElement) ? ref : getElement(ref);
 
-  while (!(/^VIME-PLAYER$/.test(player?.nodeName))) {
+  let player = root;
+
+  while (!isNull(player) && !(/^VIME-PLAYER$/.test(player?.nodeName))) {
     player = player.parentElement as HTMLStencilElement;
+  }
+
+  if (isNull(player)) {
+    throw Error(`Can't find root player given: ${root}`);
   }
 
   return player as HTMLVimePlayerElement;
