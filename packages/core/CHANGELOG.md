@@ -2,6 +2,20 @@
 
 All notable changes will be listed here.
 
+## [2.1.1](https://github.com/vime-js/vime/compare/@vime/core@2.1.0...@vime/core@2.1.1) (2020-09-07)
+
+
+### Bug Fixes
+
+* force native controls if custom ui cannot be shown ([2dac2e1](https://github.com/vime-js/vime/commit/2dac2e1fa2715851ab9fb0af4b4dcf18da2db746))
+* make direct adapter calls when playback ready ([c45a548](https://github.com/vime-js/vime/commit/c45a548ae39254704c8feca9d1cbeb087a3e3c7c))
+* packages should use @vime/core@^2 ([ec5cebd](https://github.com/vime-js/vime/commit/ec5cebda41e67d5d10ba5cdfe8308ca7d9a660b3))
+* settings has no bg color ([fd5a35e](https://github.com/vime-js/vime/commit/fd5a35e0c36730df224df9bf60e7470d9a911a54))
+* throw error when `findRootPlayer` fails ([7a69721](https://github.com/vime-js/vime/commit/7a69721b898fbfe79878ff0abbc4a5ebeb2a1274))
+* **angular:** silence implicit any errors ([8ef955b](https://github.com/vime-js/vime/commit/8ef955b05b652f557687b0eab72327236fb187cf))
+* **svelte:** should import player store from dist ([93ebcbf](https://github.com/vime-js/vime/commit/93ebcbf6b1d4bfcfa2d906ac33a08188b73c0733))
+* type error thrown when ui root not found ([6f0a19e](https://github.com/vime-js/vime/commit/6f0a19e1701381d4052d66d34826602fad8151a5))
+
 # [2.1.0](https://github.com/vime-js/vime/compare/@vime/core@2.0.0...@vime/core@2.1.0) (2020-09-04)
 
 
