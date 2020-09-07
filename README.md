@@ -56,7 +56,7 @@ A collection of [web components][web-components] for building and customizing yo
 
 Here's a few little bites of what you can do with Vime ...
 
-🗒️ **The examples below are using web components but there are bindings for React, Vue, Angular and Svelte.**
+**The examples below are using web components but there are bindings for React, Vue, Angular and Svelte.**
 
 ```html
 <!-- Here we are requesting to use the native controls. -->
