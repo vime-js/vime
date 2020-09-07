@@ -1,6 +1,6 @@
 {
   "name": "@vime/vue",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Collection of Vue components to build and customize your own media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
