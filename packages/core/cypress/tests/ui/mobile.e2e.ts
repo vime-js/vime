@@ -9,8 +9,8 @@ before(() => {
       Object.defineProperty(win.navigator, 'userAgent', { value: 'android' });
     },
   });
-  cy.get('#video').click();
   cy.get('#ui').click();
+  cy.get('#video').click();
   cy.player().should('be.readyForPlayback');
   cy.get('vime-controls').should('be.visible');
 });

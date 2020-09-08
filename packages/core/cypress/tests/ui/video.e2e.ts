@@ -4,8 +4,8 @@ import { en } from '../../../src/components/core/player/lang/en';
 
 before(() => {
   cy.visit('/');
-  cy.get('#video').click();
   cy.get('#ui').click();
+  cy.get('#video').click();
   cy.player().should('be.readyForPlayback');
   cy.get('vime-controls').should('be.visible');
 });
