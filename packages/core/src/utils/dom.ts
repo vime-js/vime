@@ -14,20 +14,17 @@ export function listen<T extends Event | UIEvent>(
 export const isColliding = (
   a: HTMLElement,
   b: HTMLElement,
-  aX = 0,
-  aY = 0,
-  bX = 0,
-  bY = 0,
+  translateAx = 0,
+  translateAy = 0,
+  translateBx = 0,
+  translateBy = 0,
 ) => {
   const aRect = a.getBoundingClientRect();
   const bRect = b.getBoundingClientRect();
-
-  return !(
-    ((aRect.top + aRect.height) < (bRect.top + aY))
-      || ((aRect.top + bY) > (bRect.top + bRect.height))
-      || ((aRect.left + aRect.width) < (bRect.left + aX))
-      || ((aRect.left + bX) > (bRect.left + bRect.width))
-  );
+  return ((aRect.left + translateAx) < (bRect.right + translateBx))
+    && ((aRect.right + translateAx) > (bRect.left + translateBx))
+    && ((aRect.top + translateAy) < (bRect.bottom + translateBy))
+    && ((aRect.bottom + translateAy) > (bRect.top + translateBy));
 };
 
 export const buildNoAncestorSelector = (

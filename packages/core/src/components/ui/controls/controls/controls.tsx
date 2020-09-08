@@ -18,6 +18,8 @@ import { findUIRoot } from '../../ui/utils';
  */
 const playerRef: Record<any, HTMLVimePlayerElement> = {};
 const hideControlsTimeout: Record<any, number | undefined> = {};
+const captionsCollisions = new Map<any, number>();
+const settingsCollisions = new Map<any, number>();
 
 /**
  * @slot - Used to pass in controls.
@@ -162,6 +164,8 @@ export class Controls {
     this.disposal.empty();
     delete hideControlsTimeout[playerRef[this]];
     delete playerRef[this];
+    captionsCollisions.delete(this);
+    settingsCollisions.delete(this);
   }
 
   private setupPlayerListeners() {
@@ -181,9 +185,13 @@ export class Controls {
     const el = findUIRoot(this)?.querySelector(selector);
     if (isNullOrUndefined(el)) return;
     const height = this.getHeight() + marginTop;
+    const aboveControls = (selector === 'vime-settings')
+      && ((el as HTMLVimeSettingsElement).pin.startsWith('top'));
     const hasCollided = isColliding(el, this.el);
-    const willCollide = isColliding(el, this.el, 0, -height);
-    el.controlsHeight = (hasCollided || willCollide) ? height : 0;
+    const willCollide = isColliding(el, this.el, 0, aboveControls ? -height : height);
+    const collisions = (selector === 'vime-captions') ? captionsCollisions : settingsCollisions;
+    collisions.set(this, (hasCollided || willCollide) ? height : 0);
+    el.controlsHeight = Math.max(0, Math.max(...collisions.values()));
   }
 
   private checkForCaptionsCollision() {
