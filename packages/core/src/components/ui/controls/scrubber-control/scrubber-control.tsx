@@ -1,5 +1,5 @@
 import {
-  h, Host, Component, Prop, State, Watch, Element, writeTask,
+  h, Host, Component, Prop, State, Watch, Element,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
@@ -105,20 +105,17 @@ export class ScrubberControl {
     this.keyboardDisposal.empty();
   }
 
-  private setTooltipPosition(value: number, percent: number) {
+  private setTooltipPosition(value: number) {
     const tooltipRect = this.tooltip.getBoundingClientRect();
-    const scrubberRect = this.el.getBoundingClientRect();
-    const bounds = this.el.parentElement!.getBoundingClientRect();
-    const leftOffset = scrubberRect.left - bounds.left;
-    const rightOffset = bounds.right - scrubberRect.right;
-    const leftLimit = bounds.left + leftOffset;
-    const rightLimit = bounds.right - rightOffset;
-    if (
-      (tooltipRect.left + percent > leftLimit)
-      && (tooltipRect.right - (100 - percent) < rightLimit)
-    ) {
-      writeTask(() => { this.tooltip.style.left = `${value}px`; });
-    }
+    const bounds = this.slider.getBoundingClientRect();
+    const thumbWidth = parseFloat(
+      window.getComputedStyle(this.slider)
+        .getPropertyValue('--slider-thumb-width'),
+    );
+    const leftLimit = (tooltipRect.width / 2) - (thumbWidth / 2);
+    const rightLimit = bounds.width - (tooltipRect.width / 2) - (thumbWidth / 2);
+    const xPos = Math.max(leftLimit, Math.min(value, rightLimit));
+    this.tooltip.style.left = `${xPos}px`;
   }
 
   private onSeek(event: CustomEvent<number>) {
@@ -137,7 +134,7 @@ export class ScrubberControl {
     const rect = this.el.getBoundingClientRect();
     const percent = Math.max(0, Math.min(100, (100 / rect.width) * (event.pageX - rect.left)));
     this.timestamp = formatTime((this.duration / 100) * percent, this.alwaysShowHours);
-    this.setTooltipPosition((percent / 100) * rect.width, percent);
+    this.setTooltipPosition((percent / 100) * rect.width);
 
     if (!this.tooltip.active) {
       this.getSliderInput().focus();
