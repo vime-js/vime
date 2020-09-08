@@ -1112,7 +1112,7 @@ export class Player implements MediaPlayer {
       || !this.isVideoView
       || (this.playsinline && !this.isFullscreenActive);
 
-    if (!canShowCustomUI && this.hasCustomControls()) { this.controls = true; }
+    if (!canShowCustomUI) { this.controls = true; }
 
     return (
       <Host
