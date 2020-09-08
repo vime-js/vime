@@ -209,8 +209,8 @@ From here onwards it's best to refer to existing providers as a guide and slowly
 method you see. Don't forget to emit the `vLoadStart` event when new media is loading, and to
 finalize the `getAdapter` method.
 
-As we're building out our provider we'll want to see and test the player in the browser. There's
-already a file setup to do this. Go to [`tests/providers.html`](./packages/core/tests/providers.html)
+As we're building out our provider we'll want to see and test it in the browser. There's
+already a file setup to do this. Go to [`playground/index.html`](./packages/core/playground/index.html)
 and add the provider just like the others have already been done so. You can serve the dev environment
 `npm run serve`, and select the file through the explorer to begin interacting with it in the browser.
 
@@ -261,7 +261,7 @@ either in the `tests` directory next to the component or in
   and interacting with it directly in the browser. You can create a `index.html` file in the `tests`
   directory of the component, and visit it by serving the development environment `npm run serve`,
   and navigating to the file through the explorer. If it's part of the default UI then see
-  [`tests/ui.html`](./packages/core/tests/ui.html).
+  [`playground/index.html`](./packages/core/playground/index.html).
 - Unit tests enable us to test specific state changes and their outcomes, such as the changing of a
   component property. Create the `component.spec.ts` file in the `tests` directory of the component,
   and refer to existing tests to guide you here. For some additional context, review the

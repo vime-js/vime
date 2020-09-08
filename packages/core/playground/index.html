@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Playground | Vime</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="/src/globals/test.css">
+  <link rel="stylesheet" href="/src/globals/themes/default.css">
+  <link rel="stylesheet" href="/src/globals/themes/light.css">
+  <script type="module" src="/dist/vime/vime.esm.js"></script>
+</head>
+<body class="center">
+
+<div id="container"></div>
+
+<div class="buttons">
+  <button id="audio" type="button">Audio</button>
+  <button id="video" type="button">Video</button>
+  <button id="hls" type="button">HLS</button>
+  <button id="dash" type="button">Dash</button>
+  <button id="youtube" type="button">YouTube</button>
+  <button id="vimeo" type="button">Vimeo</button>
+  <button id="dailymotion" type="button">Dailymotion</button>
+  <br />
+  <br />
+  <label for="ui">Default Vime UI</label>
+  <input type="checkbox" id="ui" />
+  <label for="theme">Light Theme</label>
+  <input type="checkbox" id="theme" />
+</div>
+
+<script>
+  const addClickEvent = (id, callback) => {
+    document.getElementById(id).addEventListener('click', callback);
+  }
+
+  const container = document.getElementById('container');
+  const rebuildPlayer = () => {
+    const showDefaultUi = document.querySelector('#ui').checked;
+    const hasLightTheme = document.querySelector('#theme').checked;
+
+    container.innerHTML = `
+      <vime-player muted ${!showDefaultUi ? 'controls': ''} theme="${hasLightTheme ? 'light' : 'dark'}">
+        ${providers[currProvider]}
+        ${showDefaultUi ? '<vime-default-ui></vime-default-ui>' : ''}
+      </vime-player>
+    `;
+
+    window.player = document.querySelector('vime-player'); 
+  }
+
+  const baseMediaURL = 'https://media.vimejs.com';
+  const posterAttr = `poster="${baseMediaURL}/poster.png"`;
+  const audioSrc = `<source data-src="${baseMediaURL}/audio.mp3" type="audio/mp3" />`;
+  const videoSrc = `<source data-src="${baseMediaURL}/720p.mp4" type="video/mp4" />`;
+  const hlsSrc = `<source data-src="${baseMediaURL}/hls/index.m3u8" type="application/x-mpegURL" />`;
+  const dashSrc = `${baseMediaURL}/mpd/manifest.mpd`;
+  const youtubeVideoId = 'DyTCOwB0DVw';
+  const vimeoVideoId = '411652396';
+  const dailymotionVideoId = 'k3b11PemcuTrmWvYe0q';
+
+  const enTrack = `<track default kind="subtitles" src="${baseMediaURL}/subs/english.vtt" srclang="en" label="English" />`
+  const esTrack = `<track kind="subtitles" src="${baseMediaURL}/subs/spanish.vtt" srclang="es" label="Spanish" />`
+  const tracks = enTrack + esTrack;
+
+  const providers = {
+    audio: `<vime-audio cross-origin>${audioSrc}${tracks}</vime-audio>`,
+    video: `<vime-video cross-origin ${posterAttr}>${videoSrc}${tracks}</vime-video>`,
+    hls: `<vime-hls cross-origin ${posterAttr}>${hlsSrc}${tracks}</vime-hls>`,
+    dash: `<vime-dash cross-origin src="${dashSrc}" ${posterAttr}></vime-dash>`,
+    youtube: `<vime-youtube video-id="${youtubeVideoId}"></vime-youtube>`,
+    vimeo: `<vime-vimeo video-id="${vimeoVideoId}"></vime-vimeo>`,
+    dailymotion: `<vime-dailymotion video-id="${dailymotionVideoId}"></vime-dailymotion>`,
+  };
+
+  let currProvider;
+  const setupProvider = (id) => {
+    addClickEvent(id, () => {
+      currProvider = id;
+      rebuildPlayer();
+    });
+  }
+
+  setupProvider('audio');
+  setupProvider('video');
+  setupProvider('hls');
+  setupProvider('dash');
+  setupProvider('youtube');
+  setupProvider('vimeo');
+  setupProvider('dailymotion');
+  
+  addClickEvent('ui', (e) => {
+    if (!window.player) return;
+
+    window.player.controls = !e.target.checked;
+
+    if (e.target.checked) {
+      const uiEl = document.createElement('vime-default-ui');
+      window.player.appendChild(uiEl);
+    } else if (!e.target.checked) {
+      const ui = window.player.querySelector('vime-default-ui');
+      ui.remove();
+    }
+  });
+
+  addClickEvent('theme', (e) => { 
+    if (!window.player) return;
+    window.player.setAttribute('theme', (e.target.checked) ? 'light' : 'dark'); 
+  });
+</script>
+
+<style>
+  .buttons {
+    margin-top: 16px;
+  }
+</style>
+</body>
+</html>

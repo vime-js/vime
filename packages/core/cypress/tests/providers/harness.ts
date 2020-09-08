@@ -60,7 +60,7 @@ export const runTestHarness = (provider: MediaProvider) => {
     };
 
     before(() => {
-      cy.visit('providers.html');
+      cy.visit('/');
       resetPlayer();
     });
 

@@ -4,12 +4,13 @@ import { en } from '../../../src/components/core/player/lang/en';
 
 before(() => {
   cy.viewport('iphone-x');
-  cy.visit('ui.html', {
+  cy.visit('/', {
     onBeforeLoad: (win) => {
       Object.defineProperty(win.navigator, 'userAgent', { value: 'android' });
     },
   });
   cy.get('#video').click();
+  cy.get('#ui').click();
   cy.player().should('be.readyForPlayback');
   cy.get('vime-controls').should('be.visible');
 });

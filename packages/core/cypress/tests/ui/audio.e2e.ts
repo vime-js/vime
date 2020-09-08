@@ -1,8 +1,9 @@
 import { en } from '../../../src/components/core/player/lang/en';
 
 before(() => {
-  cy.visit('ui.html');
+  cy.visit('/');
   cy.get('#audio').click();
+  cy.get('#ui').click();
   cy.player().should('be.readyForPlayback');
   cy.get('vime-controls').should('be.visible');
 });

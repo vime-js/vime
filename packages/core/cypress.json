@@ -1,6 +1,6 @@
 {
   "projectId": "5gng35",
-  "baseUrl": "http://localhost:3336/tests",
+  "baseUrl": "http://localhost:3336/playground",
   "watchForFileChanges": false,
   "integrationFolder": "cypress/tests",
   "testFiles": "**/*.e2e.ts",
