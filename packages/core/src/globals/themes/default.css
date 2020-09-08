@@ -177,14 +177,14 @@ vime-player {
    *******************************/
 
   --settings-width: 275px;
-  --settings-padding: 0;
-  --settings-border-radius: 2px;
+  --settings-padding: 8px;
   --settings-max-height: 65%;
-  --settings-scroll-width: 10px;
+  --settings-border-radius: 2px;
   --settings-shadow: 0 0 8px 2px var(--color-gray-100);
+
+  --settings-scroll-width: 10px;
   --settings-scroll-thumb-color: var(--color-white-200);
   --settings-scroll-track-color: var(--menu-bg);
-  --settings-audio-max-height: 275px;
 }
 
 vime-player vime-scrubber-control {
@@ -201,4 +201,5 @@ vime-player.mobile {
 
 vime-player.audio {
   --controls-bg: var(--color-dark);
+  --settings-max-height: 275px;
 }

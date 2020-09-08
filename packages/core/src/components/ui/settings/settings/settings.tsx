@@ -43,7 +43,7 @@ export class Settings {
 
   /**
    * Pins the settings to the defined position inside the video player. This has no effect when
-   * the view is of type `audio`, it will always be `bottomRight`.
+   * the view is of type `audio` (always `bottomRight`) and on mobile devices (always bottom sheet).
    */
   @Prop({
     reflect: true,
@@ -128,7 +128,6 @@ export class Settings {
         class={{
           active: this.active,
           mobile: this.isMobile,
-          audio: this.isAudioView,
         }}
       >
         <vime-menu

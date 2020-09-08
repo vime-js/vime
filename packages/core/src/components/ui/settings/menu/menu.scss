@@ -13,11 +13,11 @@ vime-menu {
   width: 100%;
   height: auto;
   pointer-events: auto;
+  text-align: left;
   color: var(--menu-color);
   background: var(--menu-bg);
   font-size: var(--menu-font-size);
   font-weight: var(--menu-font-weight);
-  text-align: left;
   z-index: $z-index-menu;
 
   &[aria-hidden='true'] {

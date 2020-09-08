@@ -145,11 +145,11 @@ function Example() {
 
 ## Properties
 
-| Property         | Attribute         | Description                                                                                                                                              | Type                                                    | Default         |
-| ---------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | --------------- |
-| `active`         | `active`          | Whether the settings menu is opened/closed.                                                                                                              | `boolean`                                               | `false`         |
-| `controlsHeight` | `controls-height` | The height of any lower control bar in pixels so that the settings can re-position itself accordingly.                                                   | `number`                                                | `0`             |
-| `pin`            | `pin`             | Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio`, it will always be `bottomRight`. | `"bottomLeft" ∣ "bottomRight" ∣ "topLeft" ∣ "topRight"` | `'bottomRight'` |
+| Property         | Attribute         | Description                                                                                                                                                                                | Type                                                    | Default         |
+| ---------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- | --------------- |
+| `active`         | `active`          | Whether the settings menu is opened/closed.                                                                                                                                                | `boolean`                                               | `false`         |
+| `controlsHeight` | `controls-height` | The height of any lower control bar in pixels so that the settings can re-position itself accordingly.                                                                                     | `number`                                                | `0`             |
+| `pin`            | `pin`             | Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio` (always `bottomRight`) and on mobile devices (always bottom sheet). | `"bottomLeft" ∣ "bottomRight" ∣ "topLeft" ∣ "topRight"` | `'bottomRight'` |
 
 ## Methods
 
@@ -169,17 +169,16 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                            | Description                                                  |
-| ------------------------------- | ------------------------------------------------------------ |
-| `--settings-audio-max-height`   | The max height of the settings when outside an audio player. |
-| `--settings-border-radius`      | The border radius of the settings menu.                      |
-| `--settings-max-height`         | The max height of the settings menu.                         |
-| `--settings-padding`            | The padding inside the settings menu.                        |
-| `--settings-scroll-thumb-color` | The color of the settings scrollbar thumb.                   |
-| `--settings-scroll-track-color` | The color of the settings scrollbar track.                   |
-| `--settings-scroll-width`       | The width of the settings scrollbar.                         |
-| `--settings-shadow`             | The shadow cast around the settings menu frame.              |
-| `--settings-width`              | The width of the settings menu.                              |
+| Name                            | Description                                     |
+| ------------------------------- | ----------------------------------------------- |
+| `--settings-border-radius`      | The border radius of the settings menu.         |
+| `--settings-max-height`         | The max height of the settings menu.            |
+| `--settings-padding`            | The padding inside the settings menu.           |
+| `--settings-scroll-thumb-color` | The color of the settings scrollbar thumb.      |
+| `--settings-scroll-track-color` | The color of the settings scrollbar track.      |
+| `--settings-scroll-width`       | The width of the settings scrollbar.            |
+| `--settings-shadow`             | The shadow cast around the settings menu frame. |
+| `--settings-width`              | The width of the settings menu.                 |
 
 ## Dependencies
 
