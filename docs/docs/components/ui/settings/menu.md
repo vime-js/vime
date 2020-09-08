@@ -272,12 +272,13 @@ Type: `Promise<HTMLVimeMenuItemElement>`
 
 ## CSS Custom Properties
 
-| Name                 | Description                              |
-| -------------------- | ---------------------------------------- |
-| `--menu-bg`          | The background color the menu.           |
-| `--menu-color`       | The text color within the menu.          |
-| `--menu-font-size`   | The font size of text within the menu.   |
-| `--menu-font-weight` | The font weight of text within the menu. |
+| Name                 | Description                                            |
+| -------------------- | ------------------------------------------------------ |
+| `--menu-bg`          | The background color the menu.                         |
+| `--menu-color`       | The text color within the menu.                        |
+| `--menu-font-size`   | The font size of text within the menu.                 |
+| `--menu-font-weight` | The font weight of text within the menu.               |
+| `--menu-z-index`     | The position in the UI z-axis stack inside the player. |
 
 ## Dependencies
 

@@ -124,6 +124,7 @@ function Example() {
 | `--spinner-thickness`        | The thickness of the spinner in px.                        |
 | `--spinner-track-color`      | The color of the track the spinner is rotating in.         |
 | `--spinner-width`            | The width of the spinner.                                  |
+| `--spinner-z-index`          | The position in the UI z-axis stack inside the player.     |
 
 
 ## Dependencies

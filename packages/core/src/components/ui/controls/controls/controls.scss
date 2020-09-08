@@ -3,13 +3,14 @@ vime-controls {
    * @prop --controls-padding: The padding inside the controls.
    * @prop --controls-bg: The background color of the controls.
    * @prop --controls-spacing: The space between controls.
+   * @prop --controls-z-index: The position in the UI z-axis stack inside the player.
    */
 
   display: flex;
   position: absolute;
   flex-wrap: wrap;
   pointer-events: auto;
-  z-index: $z-index-controls;
+  z-index: var(--controls-z-index);
   background: var(--controls-bg);
   padding: var(--controls-padding);
   @include invisible();

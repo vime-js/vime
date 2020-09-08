@@ -1,64 +1,6 @@
 // ==========================================================================
-// Color
-// ==========================================================================
-
-$color-dark: #313131;
-
-$color-gray-100: rgba(#000, 0.1);
-$color-gray-200: rgba(#000, 0.27);
-$color-gray-300: rgba(#000, 0.38);
-$color-gray-400: rgba(#000, 0.54);
-$color-gray-500: rgba(#000, 0.64);
-$color-gray-600: rgba(#000, 0.7);
-$color-gray-700: rgba(#000, 0.87);
-
-$color-white-100: rgba(#fff, 0.1);
-$color-white-200: rgba(#fff, 0.27);
-$color-white-300: rgba(#fff, 0.38);
-$color-white-400: rgba(#fff, 0.54);
-$color-white-500: rgba(#fff, 0.64);
-$color-white-600: rgba(#fff, 0.7);
-$color-white-700: rgba(#fff, 0.87);
-
-// ==========================================================================
-// Breakpoints
-// ==========================================================================
-
-$bp-xs: 0;
-$bp-sm: 576px;
-$bp-md: 768px;
-$bp-lg: 992px;
-$bp-xl: 1200px;
-
-// ==========================================================================
-// Z-Index
-// ==========================================================================
-
-// root
-$z-index-media: 0;
-$z-index-blocker: 1;
-$z-index-ui: 2;
-
-// ui
-$z-index-poster: 1;
-$z-index-scrim: 10;
-$z-index-click-to-play: 20;
-$z-index-captions: 30;
-$z-index-spinner: 40;
-$z-index-controls: 50;
-$z-index-tooltip: 60;
-$z-index-menu: 70;
-
-// ==========================================================================
-// Transitions
-// ==========================================================================
-
-$fade-transition: opacity 0.3s ease-in-out;
-
-// ==========================================================================
 // Control
 // ==========================================================================
 
-$control-icon-size: 18px;
 $control-spacing: var(--control-spacing);
 $control-padding: calc(#{$control-spacing} * 0.7);

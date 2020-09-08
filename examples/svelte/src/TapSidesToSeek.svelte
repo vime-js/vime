@@ -34,6 +34,12 @@
     left: 0;
     width: 100%;
     height: 100%;
+    /* 
+      Why 21? Simply because it's one index above the `ClickToPlay` component. Click the link
+      below and scroll down to the `Z-Index` section to see existing levels.
+
+      @see https://github.com/vime-js/vime/blob/master/packages/core/src/globals/themes/default.css
+    */
     z-index: 21;
     pointer-events: none;
   }

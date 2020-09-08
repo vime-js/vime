@@ -134,9 +134,10 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name         | Description                        |
-| ------------ | ---------------------------------- |
-| `--scrim-bg` | The background color of the scrim. |
+| Name              | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `--scrim-bg`      | The background color of the scrim.                     |
+| `--scrim-z-index` | The position in the UI z-axis stack inside the player. |
 
 ## Dependencies
 

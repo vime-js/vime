@@ -9,6 +9,7 @@ vime-tooltip {
    * @prop --tooltip-spacing: The space between the tooltip and its parent when active.
    * @prop --tooltip-fade-duration: The length in seconds that the tooltip will take to fade in/out.
    * @prop --tooltip-fade-timing-func: The transition timing function for fading in and out.
+   * @prop --tooltip-z-index: The position in the UI z-axis stack inside the player.
    */
 
   left: 50%;
@@ -26,7 +27,7 @@ vime-tooltip {
   font-size: var(--tooltip-font-size);
   padding: var(--tooltip-padding);
   transition: opacity var(--tooltip-fade-duration) var(--tooltip-fade-timing-func);
-  z-index: $z-index-tooltip;
+  z-index: var(--tooltip-z-index);
 
   &[aria-hidden='false'] {
     opacity: 1;

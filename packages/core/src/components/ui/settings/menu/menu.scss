@@ -4,6 +4,7 @@ vime-menu {
    * @prop --menu-bg: The background color the menu.
    * @prop --menu-font-size: The font size of text within the menu.
    * @prop --menu-font-weight: The font weight of text within the menu.
+   * @prop --menu-z-index: The position in the UI z-axis stack inside the player.
    */
 
   display: flex;
@@ -18,7 +19,7 @@ vime-menu {
   background: var(--menu-bg);
   font-size: var(--menu-font-size);
   font-weight: var(--menu-font-weight);
-  z-index: $z-index-menu;
+  z-index: var(--menu-z-index);
 
   &[aria-hidden='true'] {
     display: none;

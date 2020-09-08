@@ -8,6 +8,7 @@
     * @prop --captions-cue-bg-color: The background color of active cues.
     * @prop --captions-cue-border-radius: The border radius of active cues.
     * @prop --captions-cue-padding: The padding around active cues.
+    * @prop --captions-z-index: The position in the UI z-axis stack inside the player.
     */
 
     position: absolute;
@@ -18,7 +19,7 @@
     color: var(--captions-text-color);
     font-size: var(--captions-font-size);
     padding: $control-spacing;
-    z-index: $z-index-captions;
+    z-index: var(--captions-z-index);
     display: none;
     pointer-events: none;
     transition: transform 0.4s ease-in-out;
@@ -31,15 +32,15 @@
       display: none !important;
     }
     
-    @media (min-width: $bp-md) {
+    @media (min-width: 768px) {
       font-size: var(--captions-font-size-medium);
     }
       
-    @media (min-width: $bp-lg) {
+    @media (min-width: 992px) {
       font-size: var(--captions-font-size-large);
     }
     
-    @media (min-width: $bp-xl) {
+    @media (min-width: 1200px) {
       font-size: var(--captions-font-size-xlarge);
     }
   

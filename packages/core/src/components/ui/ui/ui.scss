@@ -1,7 +1,11 @@
 vime-ui {
+  /**
+   * @prop --ui-z-index: The position in the root z-axis stack inside the player.
+   */
+
   pointer-events: none;
-  z-index: $z-index-ui;
   width: 100%;
+  z-index: var(--ui-z-index);
 
   &.hidden {
     display: none;

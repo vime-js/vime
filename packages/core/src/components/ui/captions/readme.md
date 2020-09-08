@@ -140,6 +140,7 @@ function Example() {
 | `--captions-font-size-medium`  | Font size of captions when device screen size is >768px.  |
 | `--captions-font-size-xlarge`  | Font size of captions when device screen size is >1200px. |
 | `--captions-text-color`        | The color of the captions text.                           |
+| `--captions-z-index`           | The position in the UI z-axis stack inside the player.    |
 
 
 ## Dependencies

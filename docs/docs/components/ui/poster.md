@@ -147,6 +147,12 @@ function Example() {
 | `vWillHide` | Emitted when the poster will be hidden. | `CustomEvent<void>` |
 | `vWillShow` | Emitted when the poster will be shown.  | `CustomEvent<void>` |
 
+## CSS Custom Properties
+
+| Name               | Description                                            |
+| ------------------ | ------------------------------------------------------ |
+| `--poster-z-index` | The position in the UI z-axis stack inside the player. |
+
 ## Dependencies
 
 ### Used by

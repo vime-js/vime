@@ -29,6 +29,25 @@ vime-player {
   --control-padding: calc(var(--control-spacing) * 0.7);
   
   /*******************************
+   * Z-Index
+   *******************************/
+
+  /* Root stack. */
+  --media-z-index: 0;
+  --blocker-z-index: 1;
+  --ui-z-index: 2;
+
+  /* UI stack. */
+  --poster-z-index: 1;
+  --scrim-z-index: 10;
+  --click-to-play-z-index: 20;
+  --captions-z-index: 30;
+  --spinner-z-index: 40;
+  --controls-z-index: 50;
+  --tooltip-z-index: 60;
+  --menu-z-index: 70;
+  
+  /*******************************
    * Player
    *******************************/
 

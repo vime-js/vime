@@ -22,7 +22,7 @@ vime-settings {
   width: var(--settings-width);
   padding: var(--settings-padding);
   box-shadow: var(--settings-shadow);
-  z-index: $z-index-menu;
+  z-index: var(--menu-z-index);
   scrollbar-width: thin;
   scroll-behavior: smooth;
   scrollbar-color: var(--settings-scroll-thumb-color) var(--settings-scroll-track-color);

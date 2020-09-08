@@ -131,6 +131,12 @@ function Example() {
 | ------------- | --------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------- |
 | `useOnMobile` | `use-on-mobile` | By default this is disabled on mobile to not interfere with playback, set this to `true` to enable it. | `boolean` | `false` |
 
+## CSS Custom Properties
+
+| Name                      | Description                                            |
+| ------------------------- | ------------------------------------------------------ |
+| `--click-to-play-z-index` | The position in the UI z-axis stack inside the player. |
+
 ## Dependencies
 
 ### Used by

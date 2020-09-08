@@ -201,6 +201,7 @@ function Example() {
 | `--tooltip-font-size`        | The font size of the tooltip text.                               |
 | `--tooltip-padding`          | The padding inside the tooltip.                                  |
 | `--tooltip-spacing`          | The space between the tooltip and its parent when active.        |
+| `--tooltip-z-index`          | The position in the UI z-axis stack inside the player.           |
 
 ## Dependencies
 

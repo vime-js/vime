@@ -7,6 +7,7 @@ vime-spinner {
    * @prop --spinner-fill-color: The color of the progress within the track.
    * @prop --spinner-spin-duration: How long it takes the spinner to complete a full rotation.
    * @prop --spinner-spin-timing-func: The animation timing function to use for the spin.
+   * @prop --spinner-z-index: The position in the UI z-axis stack inside the player.
    */
 
   position: absolute;
@@ -14,11 +15,11 @@ vime-spinner {
   left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
   pointer-events: none;
-  z-index: $z-index-spinner;
-  display: flex;
+  z-index: var(--spinner-z-index);
   @include invisible();
     
   &.hidden {

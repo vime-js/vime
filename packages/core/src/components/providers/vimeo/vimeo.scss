@@ -4,5 +4,5 @@ vime-vimeo > vime-embed.hideControls {
   position: relative;
   padding-bottom: 200%;
   transform: translateY(-35.95%);
-  z-index: $z-index-media;
+  z-index: var(--media-z-index);
 }

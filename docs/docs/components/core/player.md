@@ -549,6 +549,7 @@ Type: `Promise<void>`
 
 | Name                                | Description                                                                                                                |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `--blocker-z-index`                 | The blocker's position in the root z-axis stack inside the player.                                                         |
 | `--player-bg`                       | The background color of the player, has no effect on audio players.                                                        |
 | `--player-box-shadow`               | The shadow cast around the player frame.                                                                                   |
 | `--player-fade-transition`          | The default transition used throughout the player for fading elements in and out.                                          |
