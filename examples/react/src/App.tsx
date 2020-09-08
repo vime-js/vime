@@ -29,7 +29,6 @@ function App() {
   return (
     <div id="container">
       <VimePlayer
-        controls
         playsinline 
         ref={player}
         onVPlaybackReady={onPlaybackReady}

@@ -11,7 +11,7 @@ $: git clone https://github.com/vime-js/vime
 
 $: cd vime/examples/html
 
-$: npm install
+$: npm run setup
 
 $: npm run serve
 ```
