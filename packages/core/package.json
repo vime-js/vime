@@ -42,12 +42,12 @@
     "test:unit.watch": "stencil test --spec --watchAll --max-workers=2",
     "test:unit.coverage": "npm run test:unit --coverage",
     "test:e2e": "start-server-and-test serve http://localhost:3336 cy:run",
-    "test:e2e.ci": "start-server-and-test serve:prod http://localhost:3334 cy:run.ci",
+    "test:e2e.ci": "start-server-and-test serve:prod http://localhost:3444 cy:run.ci",
     "instrument": "nyc instrument dist --in-place",
     "release": "semantic-release -e ../../scripts/semantic-release",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "cy:run.ci": "cypress run --record --group @vime/core --headless --parallel --ci-build-id $BUILD_ID --config baseUrl=http://localhost:3334",
+    "cy:run.ci": "cypress run --record --group @vime/core --headless --parallel --ci-build-id $BUILD_ID --config baseUrl=http://localhost:3444",
     "update:lock": "npm i --package-lock-only"
   },
   "dependencies": {
