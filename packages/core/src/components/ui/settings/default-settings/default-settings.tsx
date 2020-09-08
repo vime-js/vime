@@ -45,6 +45,11 @@ export class DefaultSettings {
   /**
    * @internal
    */
+  @Prop() playbackReady: PlayerProps['playbackReady'] = false;
+
+  /**
+   * @internal
+   */
   @Prop() playbackRate: PlayerProps['playbackRate'] = 1;
 
   /**
@@ -87,18 +92,12 @@ export class DefaultSettings {
   }
 
   connectedCallback() {
-    this.skipFirstRender = true;
     this.player = findRootPlayer(this);
     this.dispatch = createDispatcher(this);
   }
 
-  private skipFirstRender = true;
-
   componentWillRender() {
-    if (this.skipFirstRender) {
-      this.skipFirstRender = false;
-      return undefined;
-    }
+    if (!this.playbackReady) return undefined;
 
     return Promise.all([
       this.buildPlaybackRateSubmenu(),
@@ -272,6 +271,7 @@ export class DefaultSettings {
 
 withPlayerContext(DefaultSettings, [
   'i18n',
+  'playbackReady',
   'playbackRate',
   'playbackRates',
   'playbackQuality',

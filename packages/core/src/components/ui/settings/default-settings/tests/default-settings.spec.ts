@@ -12,7 +12,6 @@ import { MockMediaProviderAdapter } from '../../../../providers/MediaProvider';
 let page: SpecPage;
 let player: HTMLVimePlayerElement;
 let provider: HTMLVimeFaketubeElement;
-let defaultSettings: HTMLVimeDefaultSettingsElement;
 
 const getSettingsMenu = () => page.root!.querySelector('vime-settings');
 
@@ -34,10 +33,9 @@ beforeEach(async () => {
 
   player = page.root! as HTMLVimePlayerElement;
   provider = page.root!.querySelector('vime-faketube')!;
-  defaultSettings = page.root!.querySelector('vime-default-settings')!;
 
   // Trigger another render cycle for the submenus to be built.
-  defaultSettings.playbackRates = [1];
+  provider.dispatchChange('playbackReady', true);
   await page.waitForChanges();
 });
 
