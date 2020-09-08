@@ -47,6 +47,7 @@
     "release": "semantic-release -e ../../scripts/semantic-release",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
+    "cy:run.prod": "cypress run --config baseUrl=http://localhost:3444",
     "cy:run.ci": "cypress run --record --group @vime/core --headless --parallel --ci-build-id $BUILD_ID --config baseUrl=http://localhost:3444",
     "update:lock": "npm i --package-lock-only"
   },

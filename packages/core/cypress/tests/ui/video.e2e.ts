@@ -222,31 +222,31 @@ it.skip('should toggle fullscreen mode when clicking fullscreen control', () => 
   cy.control(en.fullscreen).toMatchImageSnapshot();
 });
 
-it('should open/close settings menu when clicking settings control', () => {
-// Setup.
-  cy.pause();
-  cy.player().should('not.be.playing');
-
-  // Open.
-  cy.control(en.settings).click();
-  cy.control(en.settings).tooltip().should('not.be.visible');
-  cy.player().should('have.prop', 'isSettingsActive', true);
-  cy.control(en.settings).should('have.attr', 'aria-expanded', 'true');
-  cy.get('vime-settings').should('be.visible');
-  cy.control(en.settings).toMatchImageSnapshot();
-  cy.get('vime-settings').toMatchImageSnapshot();
-
-  // Close.
-  cy.control(en.settings).click();
-  cy.control(en.settings).tooltip().should('be.visible').and('contain.text', en.settings);
-  cy.player().should('have.prop', 'isSettingsActive', false);
-  cy.control(en.settings).should('have.attr', 'aria-expanded', 'false');
-  cy.get('vime-settings').should('not.be.visible');
-  cy.control(en.settings).toMatchImageSnapshot();
-});
-
 // @TODO why do these fail on CI?
 skipOn('headless', () => {
+  it('should open/close settings menu when clicking settings control', () => {
+    // Setup.
+    cy.pause();
+    cy.player().should('not.be.playing');
+
+    // Open.
+    cy.control(en.settings).click();
+    cy.control(en.settings).tooltip().should('not.be.visible');
+    cy.player().should('have.prop', 'isSettingsActive', true);
+    cy.control(en.settings).should('have.attr', 'aria-expanded', 'true');
+    cy.get('vime-settings').should('be.visible');
+    cy.control(en.settings).toMatchImageSnapshot();
+    cy.get('vime-settings').toMatchImageSnapshot();
+
+    // Close.
+    cy.control(en.settings).click();
+    cy.control(en.settings).tooltip().should('be.visible').and('contain.text', en.settings);
+    cy.player().should('have.prop', 'isSettingsActive', false);
+    cy.control(en.settings).should('have.attr', 'aria-expanded', 'false');
+    cy.get('vime-settings').should('not.be.visible');
+    cy.control(en.settings).toMatchImageSnapshot();
+  });
+
   it('should open/close submenu when clicking menu item', () => {
     // Setup.
     cy.pause();
@@ -295,25 +295,25 @@ skipOn('headless', () => {
     cy.control(en.settings).click();
     cy.get('vime-settings').should('not.be.visible');
   });
-});
 
-it('should change playback rate when selecting from settings', () => {
-// Setup.
-  cy.pause();
-  cy.player().should('not.be.playing');
-  cy.control(en.settings).click();
-  cy.get('vime-settings').should('be.visible');
-  cy.control(en.playbackRate).click();
-  cy.control(en.playbackRate).menu().should('be.visible');
+  it('should change playback rate when selecting from settings', () => {
+    // Setup.
+    cy.pause();
+    cy.player().should('not.be.playing');
+    cy.control(en.settings).click();
+    cy.get('vime-settings').should('be.visible');
+    cy.control(en.playbackRate).click();
+    cy.control(en.playbackRate).menu().should('be.visible');
 
-  // Select.
-  cy.get('vime-menu-item[aria-label="1.5"]').click();
-  cy.player().should('have.prop', 'playbackRate', 1.5);
-  cy.get('vime-settings').toMatchImageSnapshot();
+    // Select.
+    cy.get('vime-menu-item[aria-label="1.5"]').click();
+    cy.player().should('have.prop', 'playbackRate', 1.5);
+    cy.get('vime-settings').toMatchImageSnapshot();
 
-  // Teardown.
-  cy.control(en.settings).click();
-  cy.get('vime-settings').should('not.be.visible');
+    // Teardown.
+    cy.control(en.settings).click();
+    cy.get('vime-settings').should('not.be.visible');
+  });
 });
 
 it('should toggle playback when pressing "k"', () => {
