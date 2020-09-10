@@ -61,9 +61,13 @@ jobs:
           path: '**/dist'
           key: build-${{ github.run_id }}
 
-      - name: Install dependencies and build
+      - name: Install dependencies
         if: steps.deps.outputs.cache-hit != 'true'
         run: yarn install
+      
+      - name: Build
+        if: steps.deps.outputs.cache-hit != 'false'
+        run: yarn build
       
   test_unit:
     name: Unit Tests
