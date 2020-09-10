@@ -63,6 +63,12 @@ jobs:
         with:
           path: '**/dist'
           key: build-${{ github.run_id }}
+      
+      - name: Cache loader
+        uses: actions/cache@v2
+        with:
+          path: 'packages/core/loader'
+          key: loader-${{ github.run_id }}
 
       - name: Install dependencies
         if: steps.deps.outputs.cache-hit != 'true'
@@ -217,6 +223,12 @@ jobs:
         with:
           path: '**/dist'
           key: build-${{ github.run_id }}
+
+      - name: Restore loader
+        uses: actions/cache@v2
+        with:
+          path: 'packages/core/loader'
+          key: loader-${{ github.run_id }}
 
       - name: Release packages
         run: npx lerna publish --yes

@@ -28,7 +28,7 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "stencil build --docs && yarn build:themes",
+    "build": "stencil build --docs",
     "build:post": "node scripts/post-build.js",
     "build:themes": "rimraf themes/* && yarn min:theme.default && yarn min:theme.light",
     "min:theme.default": "cleancss -o themes/default.css src/globals/themes/default.css",
