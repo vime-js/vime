@@ -1,4 +1,4 @@
-<div align="center">
+y<div align="center">
 <img
   width="150"
   src="https://raw.githubusercontent.com/vime-js/vime/master/static/identity/vime.png"
@@ -165,12 +165,12 @@ listed below.
 - [Vimeo][provider-vimeo]
 - [Dailymotion][provider-dailymotion]
 
-[provider-hls]: https://vimejs.com/components/providers/hls/api
-[provider-dash]: https://vimejs.com/components/providers/dash/api
-[provider-file]: https://vimejs.com/components/providers/file/api
-[provider-youtube]: https://vimejs.com/components/providers/youtube/api
-[provider-vimeo]: https://vimejs.com/components/providers/vimeo/api
-[provider-dailymotion]: https://vimejs.com/components/providers/dailymotion/api
+[provider-hls]: https://vimejs.com/components/providers/hls
+[provider-dash]: https://vimejs.com/components/providers/dash
+[provider-file]: https://vimejs.com/components/providers/file
+[provider-youtube]: https://vimejs.com/components/providers/youtube
+[provider-vimeo]: https://vimejs.com/components/providers/vimeo
+[provider-dailymotion]: https://vimejs.com/components/providers/dailymotion
 
 ## 📖 Documentation
 
