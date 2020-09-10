@@ -1,4 +1,5 @@
 name: Release
+
 on:
   push:
     branches:
@@ -7,6 +8,8 @@ on:
     paths:
       - 'packages/**'
       - '!packages/**/*.md'
+      - '.github/workflows/**'
+
 jobs:
   # @see https://medium.com/attest-engineering/adding-a-unique-github-build-identifier-7aa2e83cadca
   build_id:
