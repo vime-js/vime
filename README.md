@@ -1,4 +1,4 @@
-y<div align="center">
+<div align="center">
 <img
   width="150"
   src="https://raw.githubusercontent.com/vime-js/vime/master/static/identity/vime.png"
