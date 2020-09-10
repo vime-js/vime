@@ -15,7 +15,7 @@
     "@docusaurus/plugin-pwa": "^2.0.0-alpha.62",
     "@docusaurus/preset-classic": "^2.0.0-alpha.62",
     "@mdx-js/react": "^1.6.16",
-    "@vime/react": "^2.0.0",
+    "@vime/react": "^3.0.0",
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.1",
     "prism-react-renderer": "^1.1.1",

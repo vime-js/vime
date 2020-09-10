@@ -286,19 +286,19 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@vime/core@^2.0.0", "@vime/core@^2.1.0":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-2.1.1.tgz#da1759daeb33361253eefdc94d4b1c0cdc19d645"
-  integrity sha512-t1HzRo3pCGFK0Ku7LNXeSpuNhx4APTVhQBNo7ozi7Eu4qSnwkntOmbeiEWp8PwNBHiVnV5AkiOWM/QNTzpmnKQ==
+"@vime/core@^3.0.0", "@vime/core@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-3.0.1.tgz#3a5c60efb113edaa1c67fc411234429f603f6710"
+  integrity sha512-+HvuKqaFi5qG5Mkl/1dPyCZ4Qe8cXMp7FoinHkc1P2+6LEvQiiJCkT4U8QaGJKm1U18SDyUPfyEYwqmTZ0JkFw==
   dependencies:
     stencil-wormhole "^3.2.1"
 
-"@vime/vue@^2.0.0":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@vime/vue/-/vue-2.1.2.tgz#a93c5ca48ae268d2ad0ec168d25874cc75c21d8a"
-  integrity sha512-djdyuNKK3zjskFjLsCiw36ChufOqOJWp4KG4bv3bBDIzhmwBjHNq5+3kRtuSID45zruzU4nwB9jMQzKddCMlJA==
+"@vime/vue@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@vime/vue/-/vue-3.0.1.tgz#229229f4121f2f2d6bdd7bcff2feb99519fc6d0f"
+  integrity sha512-yN3UmC792Qb8BphAMfFAD7hULAGfFu11yF5ZGGO8PpIQRSpi8XzpyO3oY9rm3wUOOKXDwTx1NZeCRg66EzTzGQ==
   dependencies:
-    "@vime/core" "^2.1.0"
+    "@vime/core" "^3.0.1"
 
 "@vue/cli-overlay@^4.5.4":
   version "4.5.4"

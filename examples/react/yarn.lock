@@ -1618,19 +1618,19 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
-"@vime/core@^2.0.0", "@vime/core@^2.1.0":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-2.1.1.tgz#da1759daeb33361253eefdc94d4b1c0cdc19d645"
-  integrity sha512-t1HzRo3pCGFK0Ku7LNXeSpuNhx4APTVhQBNo7ozi7Eu4qSnwkntOmbeiEWp8PwNBHiVnV5AkiOWM/QNTzpmnKQ==
+"@vime/core@^3.0.0", "@vime/core@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-3.0.1.tgz#3a5c60efb113edaa1c67fc411234429f603f6710"
+  integrity sha512-+HvuKqaFi5qG5Mkl/1dPyCZ4Qe8cXMp7FoinHkc1P2+6LEvQiiJCkT4U8QaGJKm1U18SDyUPfyEYwqmTZ0JkFw==
   dependencies:
     stencil-wormhole "^3.2.1"
 
-"@vime/react@^2.0.0":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@vime/react/-/react-2.0.2.tgz#b61a008bedf7de6109d4a2a9f7f1700b8feb709e"
-  integrity sha512-unruoUHN+ke7R8AUMPgGsdT6rfMeOsdIvBOp20yC8zxVdcziex/vZyJFfakZeGujI5Gq/QZg/0Ml4Rm5skxeVw==
+"@vime/react@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@vime/react/-/react-3.0.1.tgz#bb762e12dba2504658dfab05ea5390954baa0cb3"
+  integrity sha512-0nc7y/kDl4UMZ7jjUaGrnqXMAv3wBk8Jf8J7vAEwzFXJ+Y1xuriCZ7LwLD6VQCIzQeFIX9xZ3xPYDYlMAlW4eg==
   dependencies:
-    "@vime/core" "^2.1.0"
+    "@vime/core" "^3.0.1"
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
