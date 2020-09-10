@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/vime-js/vime/compare/v3.0.0...v3.0.1) (2020-09-10)
+
+
+### Bug Fixes
+
+* include loader in new releases ([0b7e0aa](https://github.com/vime-js/vime/commit/0b7e0aa7ff5f8bce3c5ffa75262a246c45979a35))
+
+
+
+
+
 # 3.0.0 (2020-09-10)
 
 
