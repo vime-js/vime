@@ -204,7 +204,7 @@ jobs:
           key: build-${{ github.run_id }}
 
       - name: Release packages
-        run: npx lerna publish --conventional-commits
+        run: npx lerna publish --yes --conventional-commits
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
