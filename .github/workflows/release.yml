@@ -191,12 +191,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
       
       - name: Setup node.js
         uses: actions/setup-node@v2-beta
         with:
           node-version: 14
-      
+
+      - name: Setup git identity
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           
+      - name: Setup npm authentication
+        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
+
       - name: Restore build
         uses: actions/cache@v2
         with:
@@ -206,5 +221,4 @@ jobs:
       - name: Release packages
         run: npx lerna publish --yes --conventional-commits
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
