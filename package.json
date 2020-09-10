@@ -5,33 +5,26 @@
   "license": "MIT",
   "engines": {
     "node": ">=12",
-    "pnpm": ">=5"
+    "yarn": ">=1"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "setup": "npm run install && npm run build",
+    "postinstall": "yarn build",
     "lint": "eslint ./packages --quiet --fix --ignore-path .gitignore",
-    "clean:node": "rimraf node_modules packages/*/node_modules examples/*/node_modules docs/node_modules",
-    "install": "pnpm install --filter vime --filter ./packages",
-    "build": "pnpm run build --filter ./packages",
-    "test": "npm run test:unit && npm run test:e2e",
-    "test:unit": "pnpm run test:unit --filter @vime/core",
-    "test:e2e": "pnpm run test:e2e --filter @vime/core",
-    "release": "npm run release:core && npm run release:react && npm run release:vue && npm run release:angular && npm run release:svelte",
-    "release:core": "pnpm run release --filter @vime/core",
-    "release:react": "pnpm run release --filter @vime/react",
-    "release:vue": "pnpm run release --filter @vime/vue",
-    "release:angular": "pnpm run release --filter @vime/angular",
-    "release:svelte": "pnpm run release --filter @vime/svelte"
+    "build": "yarn build:core && yarn build:react && yarn build:vue && yarn build:angular && yarn build:svelte",
+    "build:core": "yarn workspace @vime/core build",
+    "build:react": "yarn workspace @vime/react build",
+    "build:vue": "yarn workspace @vime/vue build",
+    "build:angular": "yarn workspace @vime/angular build",
+    "build:svelte": "yarn workspace @vime/svelte build"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.2",
     "@commitlint/config-conventional": "^9.1.2",
-    "@semantic-release/changelog": "^5.0.1",
-    "@semantic-release/git": "^9.0.0",
-    "@stencil/eslint-plugin": "^0.3.1",
     "@typescript-eslint/eslint-plugin": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",
-    "codecov": "^3.7.2",
     "eslint": "^7.8.1",
     "eslint-config-airbnb-typescript": "^9.0.0",
     "eslint-plugin-import": "^2.22.0",
@@ -41,8 +34,6 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.13",
     "react": "^16.13.1",
-    "rimraf": "^3.0.2",
-    "semantic-release": "^17.1.1",
     "typescript": "^4.0.2"
   },
   "husky": {
@@ -52,7 +43,7 @@
     }
   },
   "lint-staged": {
-    "packages/**/*.{js,ts,tsx}": "npm run lint"
+    "packages/**/*.{js,ts,tsx}": "yarn lint"
   },
   "commitlint": {
     "extends": [

@@ -32,7 +32,7 @@ Let's setup our machine. The only software you'll need to install is:
 
 - [node](https://nodejs.org/en/download/)
 - [git](https://git-scm.com/downloads)
-- [pnpm](https://pnpm.js.org/en/installation)
+- [yarn](https://classic.yarnpkg.com/en/docs/install)
 
 They're very easy to install, just follow the links and you should be up and running in no time.
 
@@ -53,8 +53,7 @@ $: git clone https://github.com/{my-github-username}/vime
 
 $: cd vime
 
-# This might take a few minutes on your first install.
-$: npm run setup
+$: yarn install
 
 $: git checkout -b {issue-64}
 ```
@@ -102,7 +101,7 @@ contains all the source code for Vime. Inside it you'll find:
 
 ```bash
 # Example of how to run a script.
-$: npm run serve
+$: yarn build
 ```
 
 - `build`: This script will build the package and generate/update any new component documentation.
@@ -197,7 +196,7 @@ provider sets up the YouTube player embed and loads a video through it. All prov
 Let's pretend we're creating a new provider for Twitch, the steps will generally go as follows:
 
 1. Make sure we're in the root of the [`core`](./packages/core) package directory.
-2. Run the following script `npm run generate:provider` and pass in the name `Twitch`.
+2. Run the following script `yarn generate:provider` and pass in the name `Twitch`.
 3. Go to `src/components/providers/twitch`.
 4. Create interfaces for the parameters, commands, events and messages that the Twitch embed
    takes and fires. Make sure everything is documented, most the time it's simply copy and pasting from
@@ -212,18 +211,18 @@ finalize the `getAdapter` method.
 As we're building out our provider we'll want to see and test it in the browser. There's
 already a file setup to do this. Go to [`playground/index.html`](./packages/core/playground/index.html)
 and add the provider just like the others have already been done so. You can serve the dev environment
-`npm run serve`, and select the file through the explorer to begin interacting with it in the browser.
+`yarn serve`, and select the file through the explorer to begin interacting with it in the browser.
 
 When it comes to running automated E2E tests on the provider we can head over to
 [`cypress/tests/providers`](./packages/core/cypress/tests/providers) and add our provider just like
-the others have already been done so. Launch the Cypress testing environment `npm run cy:open`, and
+the others have already been done so. Launch the Cypress testing environment `yarn cy:open`, and
 run the test file we just created. A few tests are a little flaky, re-run if you're sure something
 should pass. At the minimum, the test harness should give you a good idea of everything your provider
 should be able to perform.
 
 After we wrap up all our testing and we're satisfied, the final steps are:
 
-1. Run the build script `npm run build`.
+1. Run the build script `yarn build`.
 2. Add small description about the provider to the auto-generated `readme.md` file
    (above the `<-- Auto Generated Below -->` comment). See other providers as an example.
 3. Create `usage` directory and add examples for the same frameworks that are listed for all other providers.
@@ -259,7 +258,7 @@ either in the `tests` directory next to the component or in
   snapshots to get the structure of the component's DOM tree and validate it.
 - Visual tests are a manual test in which we validate the correctness of the component by seeing,
   and interacting with it directly in the browser. You can create a `index.html` file in the `tests`
-  directory of the component, and visit it by serving the development environment `npm run serve`,
+  directory of the component, and visit it by serving the development environment `yarn serve`,
   and navigating to the file through the explorer. If it's part of the default UI then see
   [`playground/index.html`](./packages/core/playground/index.html).
 - Unit tests enable us to test specific state changes and their outcomes, such as the changing of a
@@ -274,7 +273,7 @@ either in the `tests` directory next to the component or in
 
 After we wrap up all our testing and we're satisfied, the final steps are:
 
-1. Run the build script `npm run build`.
+1. Run the build script `yarn build`.
 2. Add small description about the component to the auto-generated `readme.md` file
    (above the `<-- Auto Generated Below -->` comment). See other components as an example.
 3. Create `usage` directory and add examples for the same frameworks that are listed for all other components.

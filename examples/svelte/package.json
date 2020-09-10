@@ -5,10 +5,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "validate": "svelte-check",
-    "serve": "webpack-dev-server --content-base public",
-    "setup": "npm run setup:install && npm run setup:build",
-    "setup:install": "pnpm install --filter vime --filter @vime/core --filter @vime/svelte --filter @vime/svelte-example",
-    "setup:build": "pnpm run build --filter @vime/core && pnpm run build --filter @vime/svelte"
+    "serve": "webpack-dev-server --content-base public"
   },
   "dependencies": {
     "@vime/core": "^2.0.0",

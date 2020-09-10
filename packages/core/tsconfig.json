@@ -3,7 +3,6 @@
   "compilerOptions": {
     "module": "esnext",
     "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment"
   },
   "include": [
     "src",

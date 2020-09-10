@@ -15,9 +15,8 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:ng",
-    "build:ng": "ng-packagr -p package.json",
-    "release": "semantic-release -e ../../scripts/semantic-release"
+    "build": "rimraf dist && yarn build:ng",
+    "build:ng": "ng-packagr -p package.json"
   },
   "dependencies": {
     "@vime/core": "^2.1.0",

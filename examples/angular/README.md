@@ -7,15 +7,12 @@ components see the [`src/app/tap-sides-to-seek`](./src/app/tap-sides-to-seek) di
 
 ## Usage
 
-Install [pnpm](https://pnpm.js.org/en/installation) and then run the following commands to serve
-the example.
-
 ```bash
 $: git clone https://github.com/vime-js/vime
 
 $: cd vime/examples/angular
 
-$: npm run setup
+$: yarn install
 
-$: npm run serve
+$: yarn serve
 ```

@@ -5,10 +5,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build",
-    "serve": "ng serve",
-    "setup": "npm run setup:install && npm run setup:build",
-    "setup:install": "pnpm install --filter vime --filter @vime/core --filter @vime/angular --filter @vime/angular-example",
-    "setup:build": "pnpm run build --filter @vime/core && pnpm run build --filter @vime/angular"
+    "serve": "ng serve"
   },
   "dependencies": {
     "@angular/animations": "~10.0.14",

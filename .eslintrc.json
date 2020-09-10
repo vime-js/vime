@@ -4,7 +4,6 @@
   },
   "extends": [
     "airbnb-typescript"
-    // "plugin:@stencil/recommended"
   ],
   "ignorePatterns": [
     "docs/**",

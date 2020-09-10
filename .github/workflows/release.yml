@@ -16,101 +16,113 @@ jobs:
       - name: Create build id
         id: build_id
         run: echo "::set-output name=id::$(date +%s)"
+      
       - name: Cache build id
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/.build-id
           key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}-${{ steps.build_id.outputs.id }}
+      
       - name: Store build id
         run: |
           mkdir -p .build-id 
           echo $BUILD_ID > .build-id/id
         env:
           BUILD_ID: ${{ steps.build_id.outputs.id }}
+  
   prepare:
     name: Prepare
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      
       - name: Setup node.js
         uses: actions/setup-node@v2-beta
         with:
           node-version: 14
+      
       - name: Cache dependencies
         id: deps
         uses: actions/cache@v2
         with:
-          path: packages/core/node_modules
-          key: deps-${{ hashFiles('packages/core/package-lock.json') }}
+          path: '**/node_modules'
+          key: deps-${{ hashFiles('yarn.lock') }}
+      
       - name: Cache cypress binary
         uses: actions/cache@v2
         with:
           path: ~/.cache
-          key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
-      - name: Install dependencies
+          key: cypress-${{ hashFiles('yarn.lock') }}
+      
+      - name: Cache build
+        uses: actions/cache@v2
+        with:
+          path: '**/dist'
+          key: build-${{ github.run_id }}
+
+      - name: Install dependencies and build
         if: steps.deps.outputs.cache-hit != 'true'
-        run: npm install --prefix packages/core
-  build:
-    name: Build
-    needs: prepare
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
-      - name: Restore dependencies
-        uses: actions/cache@v2
-        with:
-          path: packages/core/node_modules
-          key: deps-${{ hashFiles('packages/core/package-lock.json') }}
-      - name: Restore cypress binary
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache
-          key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
-      - name: Cache dist
-        uses: actions/cache@v2
-        with:
-          path: packages/core/dist
-          key: dist-${{ github.run_id }}
-      - name: Build 
-        run: npm run build --prefix packages/core
-      - name: Instrument
-        run: npm run instrument --prefix packages/core
+        run: yarn install
+      
   test_unit:
     name: Unit Tests
-    needs: prepare
+    needs: [prepare]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      
       - name: Setup node.js
         uses: actions/setup-node@v2-beta
         with:
           node-version: 14
+      
       - name: Restore dependencies
         uses: actions/cache@v2
         with:
-          path: packages/core/node_modules
-          key: deps-${{ hashFiles('packages/core/package-lock.json') }}
-      - name: Restore cypress binary
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache
-          key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
+          path: '**/node_modules'
+          key: deps-${{ hashFiles('yarn.lock') }}
+      
       - name: Run unit tests
-        run: npm run test:unit.coverage --prefix packages/core
+        run: yarn workspace @vime/core test:unit.coverage
+      
       - name: Upload report to codecov
         run: cd packages/core && npx codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  instrument:
+    name: Instrument
+    needs: [prepare]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+
+      - name: Restore build
+        uses: actions/cache@v2
+        with:
+          path: '**/dist'
+          key: build-${{ github.run_id }}
+      
+      - name: Cache instrumentation
+        uses: actions/cache@v2
+        with:
+          path: 'packages/core/dist'
+          key: instrument-${{ github.run_id }}
+
+      - name: Instrument
+        run: yarn workspace @vime/core instrument
+
   test_e2e:
     name: E2E Tests
-    needs: [build_id, build]
+    needs: [build_id, instrument]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -119,43 +131,52 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      
       - name: Setup node.js
         uses: actions/setup-node@v2-beta
         with:
           node-version: 14
+      
       - name: Restore build id from cache
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/.build-id
           key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
+      
       - name: Set build id
         id: build_id
         run: echo "::set-output name=id::$(cat .build-id/id)"
+      
       - name: Restore dependencies
         uses: actions/cache@v2
         with:
-          path: packages/core/node_modules
-          key: deps-${{ hashFiles('packages/core/package-lock.json') }}
+          path: '**/node_modules'
+          key: deps-${{ hashFiles('yarn.lock') }}
+      
       - name: Restore cypress binary
         uses: actions/cache@v2
         with:
           path: ~/.cache
-          key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
-      - name: Restore dist
+          key: cypress-${{ hashFiles('yarn.lock') }}
+      
+      - name: Restore instrumentation
         uses: actions/cache@v2
         with:
-          path: packages/core/dist
-          key: dist-${{ github.run_id }}
+          path: 'packages/core/dist'
+          key: instrument-${{ github.run_id }}
+      
       - name: Run e2e tests
-        run:  npm run test:e2e.ci --prefix packages/core
+        run:  yarn workspace @vime/core test:e2e.ci
         env:
           BUILD_ID: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
       - name: Upload report to codecov
         run: cd packages/core && npx codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  
   release:
     name: Release
     needs: [test_unit, test_e2e]
@@ -163,28 +184,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      
       - name: Setup node.js
         uses: actions/setup-node@v2-beta
         with:
           node-version: 14
-      - name: Cache pnpm store
+      
+      - name: Restore build
         uses: actions/cache@v2
         with:
-          path: ~/.pnpm-store
-          key: deps-${{ hashFiles('packages/core/package-lock.json') }}
-      - name: Restore cypress binary
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache
-          key: cypress-${{ hashFiles('packages/core/package-lock.json') }}
-      - name: Install pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-      - name: Install dependencies
-        run: pnpm install --filter vime --filter ./packages
-      - name: Build packages
-        run: pnpm run build --filter vime
+          path: '**/dist'
+          key: build-${{ github.run_id }}
+
       - name: Release packages
-        run: pnpm run release --filter vime
+        run: npx lerna publish --conventional-commits
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

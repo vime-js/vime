@@ -22,10 +22,9 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:cjs && npm run build:esm",
+    "build": "rimraf dist && yarn build:cjs && yarn build:esm",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
-    "build:esm": "tsc --module es6 --outDir dist/esm",
-    "release": "semantic-release -e ../../scripts/semantic-release"
+    "build:esm": "tsc --module es6 --outDir dist/esm"
   },
   "dependencies": {
     "@vime/core": "^2.1.0"

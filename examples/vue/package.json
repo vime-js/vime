@@ -4,10 +4,7 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
-    "serve": "vue-cli-service serve",
-    "setup": "npm run setup:install && npm run setup:build",
-    "setup:install": "pnpm install --filter vime --filter @vime/core --filter @vime/vue --filter @vime/vue-example",
-    "setup:build": "pnpm run build --filter @vime/core && pnpm run build --filter @vime/vue"
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
     "@vime/core": "^2.0.0",

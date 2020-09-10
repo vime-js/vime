@@ -11,7 +11,7 @@ $: git clone https://github.com/vime-js/vime
 
 $: cd vime/examples/html
 
-$: npm run setup
+$: yarn install
 
-$: npm run serve
+$: yarn serve
 ```
