@@ -1,5 +1,6 @@
 import {
-  Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, Watch,
+  Component, Element, Event, EventEmitter, h, Host,
+  Listen, Method, Prop, Watch, writeTask,
 } from '@stencil/core';
 import { Universe } from 'stencil-wormhole';
 import { MediaType } from './MediaType';
@@ -886,7 +887,9 @@ export class Player implements MediaPlayer {
 
     (Object.keys(initialState) as PlayerProp[])
       .filter(shouldPropResetOnMediaChange)
-      .forEach((prop) => { (this as any)[prop] = initialState[prop]; });
+      .forEach((prop) => {
+        writeTask(() => { (this as any)[prop] = initialState[prop]; });
+      });
   }
 
   @Listen('vStateChange')
@@ -899,7 +902,7 @@ export class Player implements MediaPlayer {
       return;
     }
 
-    (this as any)[prop] = value;
+    writeTask(() => { (this as any)[prop] = value; });
   }
 
   @Listen('vProviderChange')
@@ -912,8 +915,10 @@ export class Player implements MediaPlayer {
       return;
     }
 
-    this.providerCache.set(prop, value);
-    (this as any)[prop] = value;
+    writeTask(() => {
+      this.providerCache.set(prop, value);
+      (this as any)[prop] = value;
+    });
   }
 
   connectedCallback() {

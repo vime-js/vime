@@ -1,7 +1,7 @@
 import {
   h, Host, Component,
   Prop, Element, Watch,
-  State, forceUpdate,
+  State,
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
@@ -32,8 +32,6 @@ export class Controls {
   private dispatch!: Dispatcher;
 
   private disposal = new Disposal();
-
-  private pendingChange = () => {};
 
   @Element() el!: HTMLVimeControlsElement;
 
@@ -150,17 +148,12 @@ export class Controls {
     this.onControlsChange();
   }
 
-  componentWillRender() {
-    this.pendingChange();
-  }
-
   componentDidRender() {
     this.checkForCaptionsCollision();
     this.checkForSettingsCollision();
   }
 
   disconnectedCallback() {
-    this.pendingChange = () => {};
     this.disposal.empty();
     delete hideControlsTimeout[playerRef[this]];
     delete playerRef[this];
@@ -208,16 +201,16 @@ export class Controls {
   }
 
   private show() {
-    this.pendingChange = () => this.dispatch('isControlsActive', true);
-    forceUpdate(this);
+    this.dispatch('isControlsActive', true);
   }
 
   private hide() {
-    this.pendingChange = () => this.dispatch('isControlsActive', false);
-    forceUpdate(this);
+    this.dispatch('isControlsActive', false);
   }
 
   private hideWithDelay() {
+    // @ts-ignore
+    clearTimeout(hideControlsTimeout[playerRef[this]]);
     hideControlsTimeout[playerRef[this]] = setTimeout(() => {
       this.hide();
     }, this.activeDuration) as any;
