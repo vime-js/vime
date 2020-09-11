@@ -197,7 +197,7 @@ function Player() {
 
 Glorious! Here's the result so far 🥁 ...
 
-import { BasicPlayer } from '../../src/components/BasicPlayer';
+import { BasicPlayer } from './components/BasicPlayer';
 
 <BasicPlayer 
   showDefaultUi 
@@ -466,7 +466,12 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 
 Glorious! Here's the result 🥁 ...
 
-import { ClickPlayer } from '../../src/components/ClickPlayer';
+import { ClickPlayer } from './components/ClickPlayer';
+
+:::tip
+Click the player anywhere in the center region to toggle playback, and click to the sides to 
+seek forwards and backwards.
+:::
 
 <ClickPlayer />
 <br />

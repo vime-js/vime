@@ -201,7 +201,7 @@ function Player() {
 
 Glorious! Here's the result so far 🥁 ...
 
-import { BasicPlayer } from '../../src/components/BasicPlayer';
+import { BasicPlayer } from './components/BasicPlayer';
 
 <BasicPlayer />
 <br />

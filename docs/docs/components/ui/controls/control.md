@@ -53,7 +53,7 @@ values={[
 
 <TabItem value="react">
 
-```tsx {3,20-29}
+```tsx {3,21-30}
 import React, { useMemo, useRef } from 'react';
 import {
   VimeControl,
@@ -68,6 +68,7 @@ function PlaybackControl() {
   const [i18n] = usePlayerContext(ref, 'i18n', {});
   const icon = useMemo(() => (paused ? '#vime-play' : '#vime-pause'), [paused]);
   const tooltip = useMemo(() => (paused ? 'Play' : 'Pause'), [paused]);
+
   const onClick = () => {
     setPaused(false);
   };

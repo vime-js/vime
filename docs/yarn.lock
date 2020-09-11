@@ -1817,9 +1817,9 @@
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*":
-  version "14.6.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.6.4.tgz#a145cc0bb14ef9c4777361b7bbafa5cf8e3acb5a"
-  integrity sha512-Wk7nG1JSaMfMpoMJDKUsWYugliB2Vy55pdjLpmLixeyMi7HizW2I/9QoxsPCkXl3dO+ZOVqPumKaDUv5zJu2uQ==
+  version "14.10.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.10.0.tgz#15815dff82c8dc30827f6b1286f865902945095a"
+  integrity sha512-SOIyrdADB4cq6eY1F+9iU48iIomFAPltu11LCvA9PKcyEwHadjCFzNVPotAR+oEJA0bCP4Xvvgy+vwu1ZjVh8g==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -1906,19 +1906,19 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@vime/core@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-3.0.1.tgz#3a5c60efb113edaa1c67fc411234429f603f6710"
-  integrity sha512-+HvuKqaFi5qG5Mkl/1dPyCZ4Qe8cXMp7FoinHkc1P2+6LEvQiiJCkT4U8QaGJKm1U18SDyUPfyEYwqmTZ0JkFw==
+"@vime/core@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-3.0.2.tgz#72f871f8b1479fe303835f9a29bf1f81b267312d"
+  integrity sha512-lMkE95h8AZZdIxlpvot0qr63FVzlZJUbU7F65SwNo+D8zwGeJkvKdE28AGWp0GhGEwBLTij9Geswgrb0XzFCoA==
   dependencies:
     stencil-wormhole "^3.2.1"
 
 "@vime/react@^3.0.0":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@vime/react/-/react-3.0.1.tgz#bb762e12dba2504658dfab05ea5390954baa0cb3"
-  integrity sha512-0nc7y/kDl4UMZ7jjUaGrnqXMAv3wBk8Jf8J7vAEwzFXJ+Y1xuriCZ7LwLD6VQCIzQeFIX9xZ3xPYDYlMAlW4eg==
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@vime/react/-/react-3.0.2.tgz#d4487db08f64bc73b1f8e18fdf6adf16997ed912"
+  integrity sha512-8CHFZuD6dT+XzWbpX1JvhNt3sSBvZJLypiH3Tx8PV8CN6vLKv1yoN8SaKs8uHTIkNYxDaxFxPduvLwTRHAz3Zg==
   dependencies:
-    "@vime/core" "^3.0.1"
+    "@vime/core" "^3.0.2"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
