@@ -3,6 +3,7 @@ import {
   VimePlayer,
   VimeVideo, 
   VimeDefaultUi, 
+  VimeScrim,
   VimeControls,
   VimeControlSpacer,
   VimeMuteControl,
@@ -27,13 +28,15 @@ export const CustomControlsPlayer = () => (
     </VimeVideo> 
 
     <VimeDefaultUi noControls>
+      <VimeScrim />
+
       <VimeControls fullWidth pin="topLeft">
         <VimeControlSpacer />
         <VimeMuteControl />
       </VimeControls>
 
       <VimeControls pin="center">
-        <VimePlaybackControl hideTooltip style={{ '--control-scale': 2 }} />
+        <VimePlaybackControl hideTooltip style={{ '--control-scale': 1.7 }} />
       </VimeControls>
       
       <VimeControls fullWidth pin="bottomLeft">

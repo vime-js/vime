@@ -250,7 +250,7 @@ component documentation for an example of how to create a custom control.
 
 <TabItem value="html">
 
-```html {18-30} title="player.html"
+```html {18-32} title="player.html"
 <vime-player>
   <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
     <source 
@@ -268,13 +268,15 @@ component documentation for an example of how to create a custom control.
   
   <!-- We turn off the controls that come with the default UI. -->
   <vime-default-ui no-controls>
+    <vime-scrim></vime-scrim>
+
     <vime-controls full-width pin="topLeft">
       <vime-control-spacer></vime-control-spacer>
       <vime-mute-control><vime-mute-control>
     </vime-controls>
 
     <vime-controls pin="center">
-      <vime-playback-control hide-tooltip style="--control-scale: 2;"></vime-playback-control>
+      <vime-playback-control hide-tooltip style="--control-scale: 1.7;"></vime-playback-control>
     </vime-controls>
     
     <vime-controls full-width pin="bottomLeft">
@@ -289,12 +291,13 @@ component documentation for an example of how to create a custom control.
 
 <TabItem value="react">
 
-```tsx {32-44} title="Player.tsx"
+```tsx {33-47} title="Player.tsx"
 import React from 'react';
 import { 
   VimePlayer,
   VimeVideo, 
   VimeDefaultUi, 
+  VimeScrim,
   VimeControls,
   VimeControlSpacer,
   VimeMuteControl,
@@ -321,13 +324,15 @@ function Player() {
 
       {/* We turn off the controls that come with the default UI. */}
       <VimeDefaultUi noControls>
+        <VimeScrim />
+
         <VimeControls fullWidth pin="topLeft">
           <VimeControlSpacer />
           <VimeMuteControl />
         </VimeControls>
 
         <VimeControls pin="center">
-          <VimePlaybackControl hideTooltip style={{ '--control-scale': 2 }} />
+          <VimePlaybackControl hideTooltip style={{ '--control-scale': 1.7 }} />
         </VimeControls>
         
         <VimeControls fullWidth pin="bottomLeft">
@@ -344,7 +349,7 @@ function Player() {
 
 <TabItem value="vue">
 
-```html {19-31} title="Player.vue"
+```html {19-33} title="Player.vue"
 <template>
   <VimePlayer>
     <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
@@ -363,6 +368,8 @@ function Player() {
 
     <!-- We turn off the controls that come with the default UI. -->
     <VimeDefaultUi noControls>
+      <VimeScrim />
+
       <VimeControls fullWidth pin="topLeft">
         <VimeControlSpacer />
         <VimeMuteControl />
@@ -384,7 +391,8 @@ function Player() {
   import { 
     VimePlayer,
     VimeVideo, 
-    VimeDefaultUi, 
+    VimeDefaultUi,
+    VimeScrim,
     VimeControls,
     VimeControlSpacer,
     VimeMuteControl,
@@ -396,7 +404,8 @@ function Player() {
     components: {
       VimePlayer,
       VimeVideo, 
-      VimeDefaultUi, 
+      VimeDefaultUi,
+      VimeScrim,
       VimeControls,
       VimeControlSpacer,
       VimeMuteControl,
@@ -408,7 +417,7 @@ function Player() {
 
 <style>
   vime-playback-control {
-    --control-scale: 2;
+    --control-scale: 1.7;
   }
 </style>
 ```
@@ -417,7 +426,7 @@ function Player() {
 
 <TabItem value="svelte">
 
-```html {18-30} title="Player.svelte"
+```html {18-32} title="Player.svelte"
 <VimePlayer>
   <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
     <source 
@@ -435,6 +444,8 @@ function Player() {
 
   <!-- We turn off the controls that come with the default UI. -->
   <VimeDefaultUi noControls>
+    <VimeScrim />
+
     <VimeControls fullWidth pin="topLeft">
       <VimeControlSpacer />
       <VimeMuteControl />
@@ -455,7 +466,8 @@ function Player() {
   import { 
     VimePlayer,
     VimeVideo, 
-    VimeDefaultUi, 
+    VimeDefaultUi,
+    VimeScrim,
     VimeControls,
     VimeControlSpacer,
     VimeMuteControl,
@@ -466,7 +478,7 @@ function Player() {
 
 <style>
   :global(vime-playback-control) {
-    --control-scale: 2;
+    --control-scale: 1.7;
   }
 </style>
 ```
@@ -475,7 +487,7 @@ function Player() {
 
 <TabItem value="angular">
 
-```html {18-30} title="player.html"
+```html {18-32} title="player.html"
 <vime-player>
   <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
     <source 
@@ -493,13 +505,15 @@ function Player() {
 
   <!-- We turn off the controls that come with the default UI. -->
   <vime-default-ui no-controls>
+    <vime-scrim></vime-scrim>
+
     <vime-controls full-width pin="topLeft">
       <vime-control-spacer></vime-control-spacer>
       <vime-mute-control><vime-mute-control>
     </vime-controls>
 
     <vime-controls pin="center">
-      <vime-playback-control hide-tooltip style="--control-scale: 2;"></vime-playback-control>
+      <vime-playback-control hide-tooltip style="--control-scale: 1.7;"></vime-playback-control>
     </vime-controls>
     
     <vime-controls full-width pin="bottomLeft">
@@ -525,8 +539,10 @@ Of course the example hasn't been styled and needs more work but we'll leave tha
 learn more about it in the [Styling](./styling) guide. To summarize we've seen how to customize 
 the default controls via properties, and how to extend the default UI with our own sets of 
 controls. If we wanted to build our own UI from scratch, we could take the last example and place 
-it inside `VimeUi` instead of `VimeDefaultUi`. From here you should be able to easily put together 
-your own controls, also if you missed it there is an example of creating a completely custom control 
-in the [Control](../components/ui/controls/control) component documentation.
+it inside `VimeUi` instead of `VimeDefaultUi`, and we'd also need to add the 
+[`VimeIcons`](../components/ui/icons) component to load the default icons. From here you should be 
+able to easily put together your own controls. Also if you missed it, the [Control](../components/ui/controls/control)
+component documentation re-creates the playback control, to demonstrate how you could create a 
+completely custom control in your library/framework.
 
 🚂 &nbsp;Let's move onto [settings!](./settings)

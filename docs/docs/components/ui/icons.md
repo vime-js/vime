@@ -6,7 +6,8 @@ sidebar_label: Icons
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-Loads an SVG sprite and inserts it into the document.
+Loads an SVG sprite and inserts it into the document. By default it loads the Vime icons sprite
+from the JSDELIVR CDN.
 
 <!-- Auto Generated Below -->
 

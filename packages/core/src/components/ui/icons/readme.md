@@ -1,6 +1,7 @@
 # vime-icons
 
-Loads an SVG sprite and inserts it into the document.
+Loads an SVG sprite and inserts it into the document. By default it loads the Vime icons sprite 
+from the JSDELIVR CDN.
 
 <!-- Auto Generated Below -->
 
