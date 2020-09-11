@@ -262,7 +262,7 @@ export class Controls {
       return;
     }
 
-    if (this.hideOnMouseLeave && (event?.type === 'mouseleave')) {
+    if (this.hideOnMouseLeave && !this.paused && (event?.type === 'mouseleave')) {
       this.hide();
       return;
     }
