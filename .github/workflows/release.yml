@@ -75,7 +75,7 @@ jobs:
         run: yarn install
       
       - name: Build
-        if: steps.deps.outputs.cache-hit != 'false'
+        if: steps.deps.outputs.cache-hit == 'true'
         run: yarn build
       
   test_unit:
@@ -100,10 +100,11 @@ jobs:
       - name: Run unit tests
         run: yarn workspace @vime/core test:unit.coverage
       
-      - name: Upload report to codecov
-        run: cd packages/core && npx codecov
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload codecov report artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: codecov-unit
+          path: packages/core/jest-coverage
 
   instrument:
     name: Instrument
@@ -185,6 +186,30 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
+      - name: Upload codecov report artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: codecov-e2e-${{ matrix.containers }}
+          path: packages/core/cypress-coverage
+
+  codecov:
+    name: Code Coverage
+    needs: [test_unit, test_e2e]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Setup node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+
+      - name: Download codecov report artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: packages/core
+
       - name: Upload report to codecov
         run: cd packages/core && npx codecov
         env:
@@ -217,6 +242,12 @@ jobs:
         run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
+      
+      - name: Restore dependencies
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: deps-${{ hashFiles('yarn.lock') }}
 
       - name: Restore build
         uses: actions/cache@v2
