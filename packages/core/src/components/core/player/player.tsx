@@ -198,8 +198,8 @@ export class Player implements MediaPlayer {
 
     if (!(await adapter.canSetPlaybackRate?.())) {
       this.logger.log('provider cannot change `playbackRate`.');
-      this.playbackRate = prevRate;
       this.lastRateCheck = prevRate;
+      this.playbackRate = prevRate;
       return;
     }
 
@@ -208,11 +208,12 @@ export class Player implements MediaPlayer {
         `invalid \`playbackRate\` of ${newRate}, `
         + `valid values are [${this.playbackRates.join(', ')}]`,
       );
-      this.playbackRate = prevRate;
       this.lastRateCheck = prevRate;
+      this.playbackRate = prevRate;
       return;
     }
 
+    this.lastRateCheck = newRate;
     this.safeAdapterCall('playbackRate', 'setPlaybackRate');
   }
 
@@ -236,8 +237,8 @@ export class Player implements MediaPlayer {
 
     if (!(await adapter.canSetPlaybackQuality?.())) {
       this.logger.log('provider cannot change `playbackQuality`.');
-      this.playbackQuality = prevQuality;
       this.lastQualityCheck = prevQuality;
+      this.playbackQuality = prevQuality;
       return;
     }
 
@@ -246,11 +247,12 @@ export class Player implements MediaPlayer {
         `invalid \`playbackQuality\` of ${newQuality}, `
         + `valid values are [${this.playbackQualities.join(', ')}]`,
       );
-      this.playbackQuality = prevQuality;
       this.lastQualityCheck = prevQuality;
+      this.playbackQuality = prevQuality;
       return;
     }
 
+    this.lastQualityCheck = newQuality;
     this.safeAdapterCall('playbackQuality', 'setPlaybackQuality');
   }
 
