@@ -144,6 +144,7 @@ function Example() {
 | `mutedIcon`        | `muted-icon`        | The URL to an SVG element or fragment.                                                                                               | `string`                         | `'#vime-volume-mute'` |
 | `noKeyboard`       | `no-keyboard`       | Prevents the volume being changed using the Up/Down arrow keys.                                                                      | `boolean`                        | `false`               |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                      | `"left" \| "right" \| undefined` | `undefined`           |
+| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                                                                           | `"bottom" \| "top"`              | `'top'`               |
 
 
 ## Dependencies

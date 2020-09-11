@@ -3,7 +3,7 @@ import {
 } from '@stencil/core';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
-import { TooltipDirection } from '../../tooltip/types';
+import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { isUndefined } from '../../../../utils/unit';
 import { findUIRoot } from '../../ui/utils';
 
@@ -22,6 +22,11 @@ export class SettingsControl {
    * The URL to an SVG element or fragment to load.
    */
   @Prop() icon = '#vime-settings';
+
+  /**
+   * Whether the tooltip is positioned above/below the control.
+   */
+  @Prop() tooltipPosition: TooltipPosition = 'top';
 
   /**
    * The direction in which the tooltip should grow.
@@ -79,6 +84,7 @@ export class SettingsControl {
 
           <vime-tooltip
             hidden={this.expanded}
+            position={this.tooltipPosition}
             direction={this.tooltipDirection}
           >
             {this.i18n.settings}

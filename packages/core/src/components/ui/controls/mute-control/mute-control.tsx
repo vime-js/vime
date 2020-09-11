@@ -2,7 +2,7 @@ import { h, Component, Prop } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
-import { TooltipDirection } from '../../tooltip/types';
+import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
 
@@ -26,6 +26,11 @@ export class MuteControl implements KeyboardControl {
    * The URL to an SVG element or fragment.
    */
   @Prop() mutedIcon = '#vime-volume-mute';
+
+  /**
+   * Whether the tooltip is positioned above/below the control.
+   */
+  @Prop() tooltipPosition: TooltipPosition = 'top';
 
   /**
    * The direction in which the tooltip should grow.
@@ -85,6 +90,7 @@ export class MuteControl implements KeyboardControl {
 
         <vime-tooltip
           hidden={this.hideTooltip}
+          position={this.tooltipPosition}
           direction={this.tooltipDirection}
         >
           {tooltipWithHint}

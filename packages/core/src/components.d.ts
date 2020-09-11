@@ -63,6 +63,10 @@ export namespace Components {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection": TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition": TooltipPosition;
     }
     interface VimeCaptions {
         /**
@@ -498,6 +502,10 @@ export namespace Components {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection": TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition": TooltipPosition;
     }
     interface VimeHls {
         /**
@@ -686,6 +694,10 @@ export namespace Components {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection": TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition": TooltipPosition;
         "volume": PlayerProps['volume'];
     }
     interface VimePipControl {
@@ -713,6 +725,10 @@ export namespace Components {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection": TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition": TooltipPosition;
     }
     interface VimePlaybackControl {
         /**
@@ -738,6 +754,10 @@ export namespace Components {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection": TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition": TooltipPosition;
     }
     interface VimePlayer {
         /**
@@ -1156,6 +1176,10 @@ export namespace Components {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection": TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition": TooltipPosition;
     }
     interface VimeSlider {
         /**
@@ -1354,6 +1378,10 @@ export namespace Components {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection": TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition": TooltipPosition;
         "volume": PlayerProps['volume'];
     }
     interface VimeYoutube {
@@ -1760,6 +1788,10 @@ declare namespace LocalJSX {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection"?: TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition"?: TooltipPosition;
     }
     interface VimeCaptions {
         /**
@@ -2212,6 +2244,10 @@ declare namespace LocalJSX {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection"?: TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition"?: TooltipPosition;
     }
     interface VimeHls {
         /**
@@ -2412,6 +2448,10 @@ declare namespace LocalJSX {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection"?: TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition"?: TooltipPosition;
         "volume"?: PlayerProps['volume'];
     }
     interface VimePipControl {
@@ -2439,6 +2479,10 @@ declare namespace LocalJSX {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection"?: TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition"?: TooltipPosition;
     }
     interface VimePlaybackControl {
         /**
@@ -2464,6 +2508,10 @@ declare namespace LocalJSX {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection"?: TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition"?: TooltipPosition;
     }
     interface VimePlayer {
         /**
@@ -3000,6 +3048,10 @@ declare namespace LocalJSX {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection"?: TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition"?: TooltipPosition;
     }
     interface VimeSlider {
         /**
@@ -3209,6 +3261,10 @@ declare namespace LocalJSX {
           * The direction in which the tooltip should grow.
          */
         "tooltipDirection"?: TooltipDirection;
+        /**
+          * Whether the tooltip is positioned above/below the control.
+         */
+        "tooltipPosition"?: TooltipPosition;
         "volume"?: PlayerProps['volume'];
     }
     interface VimeYoutube {

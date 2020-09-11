@@ -169,6 +169,7 @@ function Example() {
 | `icon`             | `icon`              | The URL to an SVG element or fragment to load.                                     | `string`                       | `'#vime-settings'` |
 | `menu`             | `menu`              | The DOM `id` of the settings menu this control is responsible for opening/closing. | `string ∣ undefined`           | `undefined`        |
 | `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                    | `"left" ∣ "right" ∣ undefined` | `undefined`        |
+| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                         | `"bottom" ∣ "top"`             | `'top'`            |
 
 ## Dependencies
 

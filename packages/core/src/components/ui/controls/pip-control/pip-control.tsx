@@ -3,7 +3,7 @@ import {
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withPlayerContext } from '../../../core/player/PlayerContext';
-import { TooltipDirection } from '../../tooltip/types';
+import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
 import { findRootPlayer } from '../../../core/player/utils';
@@ -24,6 +24,11 @@ export class PiPControl implements KeyboardControl {
    * The URL to an SVG element or fragment to display for exiting PiP.
    */
   @Prop() exitIcon = '#vime-exit-pip';
+
+  /**
+   * Whether the tooltip is positioned above/below the control.
+   */
+  @Prop() tooltipPosition: TooltipPosition = 'top';
 
   /**
    * The direction in which the tooltip should grow.
@@ -87,6 +92,7 @@ export class PiPControl implements KeyboardControl {
 
           <vime-tooltip
             hidden={this.hideTooltip}
+            position={this.tooltipPosition}
             direction={this.tooltipDirection}
           >
             {tooltipWithHint}

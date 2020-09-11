@@ -171,7 +171,9 @@ it('should hide controls on mouse leave', async () => {
   await provider.dispatchChange('viewType', ViewType.Video);
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeTruthy();
-  controls.dispatchEvent(new Event('mouseleave', { bubbles: true }));
+  await provider.dispatchChange('paused', false);
+  await page.waitForChanges();
+  await controls.dispatchEvent(new Event('mouseleave', { bubbles: true }));
   await page.waitForChanges();
   expect(controls.isControlsActive).toBeFalsy();
 });

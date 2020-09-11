@@ -4,7 +4,7 @@ import {
 import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
-import { TooltipDirection } from '../../tooltip/types';
+import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
 import { findRootPlayer } from '../../../core/player/utils';
@@ -40,6 +40,11 @@ export class VolumeControl {
    * The URL to an SVG element or fragment.
    */
   @Prop() mutedIcon = '#vime-volume-mute';
+
+  /**
+   * Whether the tooltip is positioned above/below the control.
+   */
+  @Prop() tooltipPosition: TooltipPosition = 'top';
 
   /**
    * The direction in which the tooltip should grow.
@@ -151,6 +156,7 @@ export class VolumeControl {
           lowVolumeIcon={this.lowVolumeIcon}
           highVolumeIcon={this.highVolumeIcon}
           mutedIcon={this.mutedIcon}
+          tooltipPosition={this.tooltipPosition}
           tooltipDirection={this.tooltipDirection}
           hideTooltip={this.hideTooltip}
           onFocus={this.onShowSlider.bind(this)}
