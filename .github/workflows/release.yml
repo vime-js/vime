@@ -231,6 +231,6 @@ jobs:
           key: loader-${{ github.run_id }}
 
       - name: Release packages
-        run: npx lerna publish --yes
+        run: yarn release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

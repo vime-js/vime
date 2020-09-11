@@ -18,7 +18,8 @@
     "build:react": "yarn workspace @vime/react build",
     "build:vue": "yarn workspace @vime/vue build",
     "build:angular": "yarn workspace @vime/angular build",
-    "build:svelte": "yarn workspace @vime/svelte build"
+    "build:svelte": "yarn workspace @vime/svelte build",
+    "release": "lerna publish --yes"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.2",
@@ -32,6 +33,7 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "husky": "^4.2.5",
+    "lerna": "^3.22.1",
     "lint-staged": "^10.2.13",
     "react": "^16.13.1",
     "typescript": "^4.0.2"
