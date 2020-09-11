@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/vime-js/vime/compare/v3.0.1...v3.0.2) (2020-09-11)
+
+
+### Bug Fixes
+
+* **ui/default-controls:** hide on mouse leave option not working ([93b467c](https://github.com/vime-js/vime/commit/93b467c79bd531cdd3316a240f9916cda4c408ec))
+
+
+
+
+
 ## [3.0.1](https://github.com/vime-js/vime/compare/v3.0.0...v3.0.1) (2020-09-10)
 
 
