@@ -170,9 +170,13 @@ export class Controls {
 
   private setupPlayerListeners() {
     const player = findRootPlayer(this);
-    const events = ['focus', 'keydown', 'click', 'mousemove', 'touchstart', 'mouseleave'];
-    const callback = debounce(this.onControlsChange, 50, true).bind(this);
-    events.forEach((event) => { this.disposal.add(listen(player, event, callback)); });
+    const events = ['focus', 'keydown', 'click', 'touchstart', 'mouseleave'];
+    events.forEach((event) => {
+      this.disposal.add(listen(player, event, this.onControlsChange.bind(this)));
+    });
+    this.disposal.add(
+      listen(player, 'mousemove', debounce(this.onControlsChange, 50, true).bind(this)),
+    );
     // @ts-ignore
     playerRef[this] = player;
   }

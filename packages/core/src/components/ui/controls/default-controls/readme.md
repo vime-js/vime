@@ -11,15 +11,12 @@ the media is audio/video/live, and whether the device is mobile/desktop. See
 
 ### Angular
 
-```html {5-8} title="example.html"
+```html {5} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
-    <vime-default-controls
-      full-width
-      [active-duration]="2750"
-    ></vime-default-controls>
+    <vime-default-controls [active-duration]="2750"></vime-default-controls>
   </vime-ui>
 </vime-player>
 ```
@@ -27,15 +24,12 @@ the media is audio/video/live, and whether the device is mobile/desktop. See
 
 ### Html
 
-```html {5-8}
+```html {5}
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
-    <vime-default-controls
-      full-width
-      active-duration="2750"
-    ></vime-default-controls>
+    <vime-default-controls active-duration="2750"></vime-default-controls>
   </vime-ui>
 </vime-player>
 ```
@@ -53,7 +47,7 @@ function Example() {
       {/* ... */}
       <VimeUi>
         {/* ... */}
-        <VimeDefaultControls fullWidth activeDuration={3200} />
+        <VimeDefaultControls activeDuration={3200} />
       </VimeUi>
     </VimePlayer>
   );
@@ -68,7 +62,7 @@ function Example() {
   <!-- ... -->
   <VimeUi>
     <!-- ... -->
-    <VimeDefaultControls fullWidth activeDuration={3200} />
+    <VimeDefaultControls activeDuration={3200} />
   </VimeUi>
 </VimePlayer>
 ```
@@ -88,7 +82,7 @@ function Example() {
     <!-- ... -->
     <VimeUi>
       <!-- ... -->
-      <VimeDefaultControls fullWidth :activeDuration="3200" />
+      <VimeDefaultControls :activeDuration="3200" />
     </VimeUi>
   </VimePlayer>
 </template>

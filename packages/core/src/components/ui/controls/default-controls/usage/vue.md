@@ -4,7 +4,7 @@
     <!-- ... -->
     <VimeUi>
       <!-- ... -->
-      <VimeDefaultControls fullWidth :activeDuration="3200" />
+      <VimeDefaultControls :activeDuration="3200" />
     </VimeUi>
   </VimePlayer>
 </template>

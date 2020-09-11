@@ -27,15 +27,12 @@ values={[
 
 <TabItem value="html">
 
-```html {5-8}
+```html {5}
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
-    <vime-default-controls
-      full-width
-      active-duration="2750"
-    ></vime-default-controls>
+    <vime-default-controls active-duration="2750"></vime-default-controls>
   </vime-ui>
 </vime-player>
 ```
@@ -55,7 +52,7 @@ function Example() {
       {/* ... */}
       <VimeUi>
         {/* ... */}
-        <VimeDefaultControls fullWidth activeDuration={3200} />
+        <VimeDefaultControls activeDuration={3200} />
       </VimeUi>
     </VimePlayer>
   );
@@ -73,7 +70,7 @@ function Example() {
     <!-- ... -->
     <VimeUi>
       <!-- ... -->
-      <VimeDefaultControls fullWidth :activeDuration="3200" />
+      <VimeDefaultControls :activeDuration="3200" />
     </VimeUi>
   </VimePlayer>
 </template>
@@ -101,7 +98,7 @@ function Example() {
   <!-- ... -->
   <VimeUi>
     <!-- ... -->
-    <VimeDefaultControls fullWidth activeDuration={3200} />
+    <VimeDefaultControls activeDuration={3200} />
   </VimeUi>
 </VimePlayer>
 ```
@@ -117,15 +114,12 @@ function Example() {
 
 <TabItem value="angular">
 
-```html {5-8} title="example.html"
+```html {5} title="example.html"
 <vime-player>
   <!-- ... -->
   <vime-ui>
     <!-- ... -->
-    <vime-default-controls
-      full-width
-      [active-duration]="2750"
-    ></vime-default-controls>
+    <vime-default-controls [active-duration]="2750"></vime-default-controls>
   </vime-ui>
 </vime-player>
 ```
