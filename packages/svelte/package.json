@@ -1,6 +1,6 @@
 {
   "name": "@vime/svelte",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "Collection of Svelte components to build and customize your own media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -27,7 +27,7 @@
     "build:esm": "tsc --module es6 --outDir dist/esm"
   },
   "dependencies": {
-    "@vime/core": "^3.0.2"
+    "@vime/core": "^3.1.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",

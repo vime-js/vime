@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/vime-js/vime/compare/v3.0.2...v3.1.0) (2020-09-11)
+
+
+### Bug Fixes
+
+* apply all dispatched changes in raf callback ([4aa617c](https://github.com/vime-js/vime/commit/4aa617cd100a1a98a6d2a69e0174cf8607fcc3b7))
+* playback rate/quality change not calling adapter ([3e73a4f](https://github.com/vime-js/vime/commit/3e73a4ff9c4a3245f685a7040106c77f82317f08))
+* **ui/controls:** only hide on mouse leave when not paused ([84af138](https://github.com/vime-js/vime/commit/84af1387ef273f23c4b9f7f9bc20745f19d1be36))
+
+
+### Features
+
+* allow tooltips to be positioned above/below on predefined controls ([dad2424](https://github.com/vime-js/vime/commit/dad24245a8dd576c67eadc005f7fe6749222b94e))
+
+
+
+
+
 ## [3.0.2](https://github.com/vime-js/vime/compare/v3.0.1...v3.0.2) (2020-09-11)
 
 
