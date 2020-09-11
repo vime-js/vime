@@ -1906,19 +1906,19 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@vime/core@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-3.0.2.tgz#72f871f8b1479fe303835f9a29bf1f81b267312d"
-  integrity sha512-lMkE95h8AZZdIxlpvot0qr63FVzlZJUbU7F65SwNo+D8zwGeJkvKdE28AGWp0GhGEwBLTij9Geswgrb0XzFCoA==
+"@vime/core@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-3.1.0.tgz#0248c3c40f08ad15bf652f0bd4c01156d0a6b539"
+  integrity sha512-yAhwKKMTPhz/9wPiWSQsRf0W5dtpQ7DbsAXCnhlb7XMTppezJO9yuqYKQxhEt+O7gq1XJzyc1GMS40lIc/2ZRA==
   dependencies:
     stencil-wormhole "^3.2.1"
 
 "@vime/react@^3.0.0":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@vime/react/-/react-3.0.2.tgz#d4487db08f64bc73b1f8e18fdf6adf16997ed912"
-  integrity sha512-8CHFZuD6dT+XzWbpX1JvhNt3sSBvZJLypiH3Tx8PV8CN6vLKv1yoN8SaKs8uHTIkNYxDaxFxPduvLwTRHAz3Zg==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@vime/react/-/react-3.1.0.tgz#3f21c5d0f42047a4bdb20a807816b0fdb9c24ff3"
+  integrity sha512-FAieYxnA4+MlBr/W8FBpb9gVLNmJwXXn9PV+82xS7RLn9c4s4gWJhnBUN2ccBV3i2L/+bds1oZsMfSSCqXBT1g==
   dependencies:
-    "@vime/core" "^3.0.2"
+    "@vime/core" "^3.1.0"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -4069,9 +4069,9 @@ ejs@^2.6.1:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.378, electron-to-chromium@^1.3.564:
-  version "1.3.564"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.564.tgz#e9c319ae437b3eb8bbf3e3bae4bead5a21945961"
-  integrity sha512-fNaYN3EtKQWLQsrKXui8mzcryJXuA0LbCLoizeX6oayG2emBaS5MauKjCPAvc29NEY4FpLHIUWiP+Y0Bfrs5dg==
+  version "1.3.565"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.565.tgz#8511797ab2b66b767e1aef4eb17d636bf01a2c72"
+  integrity sha512-me5dGlHFd8Q7mKhqbWRLIYnKjw4i0fO6hmW0JBxa7tM87fBfNEjWokRnDF7V+Qme/9IYpwhfMn+soWs40tXWqg==
 
 elliptic@^6.5.3:
   version "6.5.3"
