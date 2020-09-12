@@ -41,7 +41,7 @@ And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move 
 
 ## Svelte
 
-> You have chosen Svelte... you are like the arms of a 🦖 &nbsp;small... but part of something powerful.
+> Svelte... you are like the arms of a 🦖 &nbsp;small... but part of something powerful.
 
 You have two options with Svelte due to it having perfect [web components support](https://custom-elements-everywhere.com/#svelte).
 You can either follow the instructions for loading it from the [CDN](#cdn) and use the
@@ -77,7 +77,7 @@ And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move 
 
 ## React
 
-> You have chosen React... you are like pineapple on 🍕 &nbsp;some love it and some hate it.
+> React... you are like pineapple on 🍕 &nbsp;some love it and some hate it.
 
 Unfortunately React has poor [web components support](https://custom-elements-everywhere.com/#react) ... but
 we have you covered with our `@vime/react` package, which wraps all the Vime web components inside
@@ -106,7 +106,7 @@ And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move 
 
 ## Preact
 
-> You have chosen Preact... you are like 🍕 &nbsp;without pineapple, how it was always meant to be.
+> Preact... you are like 🍕 &nbsp;without pineapple, how it was always meant to be.
 
 You have two options with Preact due to it having perfect [web components support](https://custom-elements-everywhere.com/#preact).
 You can either follow the instructions for loading it from the [CDN](#cdn) and use the
@@ -116,8 +116,7 @@ installation instructions.
 
 ## Vue
 
-> You have chosen Vue... you are an 🧑‍🎨 &nbsp;and hold your self in high regards 
-with some of the greats, like Vincent van Gogh and the late great Bob Ross.
+> Vue... you are like [Bob Ross](https://www.google.com/search?q=bob+ross), you enjoy painting pretty 🌳 ⛰️ ☁️ &nbsp;all-in-one place.
 
 You have two options with Vue due to it having perfect [web components support](https://custom-elements-everywhere.com/#vue).
 You can either follow the instructions [here](https://stenciljs.com/docs/vue) for loading the
@@ -148,7 +147,7 @@ And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move 
 
 ## &nbsp;Angular
 
-> You have chosen Angular... you are a 🥕 &nbsp;farmer.
+> Angular... you are a [🥕 &nbsp;farmer](https://twitter.com/search?q=angular%20(from%3Abenawad)).
 
 You have two options with Angular due to it having perfect [web components support](https://custom-elements-everywhere.com/#angular). You can either follow the instructions [here](https://stenciljs.com/docs/angular) for 
 loading the web components in their natural form which can be slightly tedious, or you can use 
