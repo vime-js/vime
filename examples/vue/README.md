@@ -7,7 +7,7 @@ interested in building custom components see [`src/TapSidesToSeek.vue`](./src/Ta
 ## Usage
 
 ```bash
-$: git clone https://github.com/vime-js/vime
+$: git clone https://github.com/vime-js/vime --depth=1
 
 $: cd vime/examples/vue
 

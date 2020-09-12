@@ -7,7 +7,7 @@ This example demonstrates how to setup Vime with HTML via the `@vime/core` packa
 Run the following commands to serve the example.
 
 ```bash
-$: git clone https://github.com/vime-js/vime
+$: git clone https://github.com/vime-js/vime --depth=1
 
 $: cd vime/examples/html
 

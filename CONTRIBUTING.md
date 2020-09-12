@@ -49,7 +49,7 @@ button in the top right corner. After the project has been forked, run the follo
 your terminal:
 
 ```bash
-$: git clone https://github.com/{my-github-username}/vime
+$: git clone https://github.com/{my-github-username}/vime --depth=1
 
 $: cd vime
 

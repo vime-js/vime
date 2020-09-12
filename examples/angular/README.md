@@ -8,7 +8,7 @@ components see the [`src/app/tap-sides-to-seek`](./src/app/tap-sides-to-seek) di
 ## Usage
 
 ```bash
-$: git clone https://github.com/vime-js/vime
+$: git clone https://github.com/vime-js/vime --depth=1
 
 $: cd vime/examples/angular
 
