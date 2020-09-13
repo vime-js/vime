@@ -237,7 +237,7 @@ open and close it.
 Now you might be wondering at this point how we go about opening/closing the menu? The 
 [Settings](../components/ui/settings/settings) component has a method called `setController` for setting 
 the element who'll be responsible for opening/closing it. The 
-[SettingsControl](../components/controls/settings-control) component that comes with Vime automatically 
+[SettingsControl](../components/ui/controls/settings-control) component that comes with Vime automatically 
 finds and sets itself as the controller on the Settings component. This means if you're using the 
 third option above of your own menu, then you'll be responsible for connecting together the controller 
 (whether it's the SettingsControl or your own), and the component responsible for presenting the menu.
