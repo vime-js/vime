@@ -1,6 +1,6 @@
 {
   "name": "@vime/core",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Collection of web components to build and customize your own media player.",
   "license": "MIT",
   "main": "dist/index.cjs.js",

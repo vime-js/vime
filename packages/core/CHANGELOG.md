@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.1](https://github.com/vime-js/vime/compare/v3.2.0...v3.2.1) (2020-09-14)
+
+
+### Bug Fixes
+
+* incorrect typing on `extendLanguage` method ([7a5bdc6](https://github.com/vime-js/vime/commit/7a5bdc673fb5ed247792319bd2bf414ae261bcd8))
+
+
+
+
+
 # [3.2.0](https://github.com/vime-js/vime/compare/v3.1.0...v3.2.0) (2020-09-14)
 
 
