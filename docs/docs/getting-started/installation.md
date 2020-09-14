@@ -18,7 +18,7 @@ using [JSDELIVR](https://www.jsdelivr.com) for the best performance. Simply inse
 inside the `<head>` element of your HTML file.
 
 ```html
-<!-- Default theme (if you're creating your own skip this). ~960B -->
+<!-- Default theme. ~960B -->
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/@vime/core/themes/default.css"
@@ -54,7 +54,7 @@ Let's first load the CSS for the player themes, which are small files that only 
 CSS variables for styling the player. Add the following to the `<head>` element of your HTML file...
 
 ```html
-<!-- Default theme (if you're creating your own skip this). ~960B -->
+<!-- Default theme. ~960B -->
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/@vime/core/themes/default.css"
@@ -88,7 +88,7 @@ Let's first load the CSS for the player themes, which are small files that only 
 CSS variables for styling the player. Add the following to the root of your application...
 
 ```ts
-// Default theme (if you're creating your own skip this). ~960B
+// Default theme. ~960B
 import '@vime/core/themes/default.css';
 
 // Optional light theme (extends default). ~400B
@@ -129,7 +129,7 @@ Let's first load the CSS for the player themes, which are small files that only 
 CSS variables for styling the player. Add the following to the root of your application...
 
 ```ts
-// Default theme (if you're creating your own skip this). ~960B
+// Default theme. ~960B
 import '@vime/core/themes/default.css';
 
 // Optional light theme (extends default). ~400B
@@ -157,7 +157,7 @@ Let's first load the CSS for the player themes, which are small files that only 
 CSS variables for styling the player. Add the following to the root of your application styles...
 
 ```css
-/* Default theme (if you're creating your own skip this). ~960B */
+/* Default theme. ~960B */
 @import '~@vime/core/themes/default.css';
 
 /* Optional light theme (extends default). ~400B */

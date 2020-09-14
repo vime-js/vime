@@ -3,4 +3,139 @@ title: Styling
 sidebar_label: Styling
 ---
 
-Coming soon.
+Vime uses [CSS custom properties][mdn-css-props] to style the player. If you're unfamiliar with 
+them then no worries, it's really easy to understand and there are awesome articles online to get 
+you up to speed:
+
+- [MDN - Using CSS Custom Properties][mdn-css-props]
+- [Smashing Magazine - It's Time to Start Using CSS Custom Properties][smashing-css-props]
+- [W3C - CSS Custom Properties][w3c-css-props]
+
+[mdn-css-props]: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+[smashing-css-props]: https://www.smashingmagazine.com/2017/04/start-using-css-custom-properties
+[w3c-css-props]: https://www.w3.org/TR/css-variables-1
+
+## Theming
+
+Vime comes with a light and dark theme out of the box (see the [installation](./installation) 
+page for how to load them). We can use it as a starting point when styling the player. You can switch 
+between light/dark by using the `theme` player property...
+
+```html title="player.html"
+<!-- Default is 'dark'. -->
+<vime-player theme="light">
+  <!-- ... -->
+</vime-player>
+```
+
+One of the easiest ways to personalize the player to our brand or preference is by 
+setting the `theme` CSS property, which will add a splash of color throughout the player...
+
+```css title="player-theme.css"
+vime-player {
+  --theme: #de4269;
+}
+```
+
+What if we want to do more? We can see the [default theme][default-theme] file which has documented all 
+CSS properties used throughout Vime, and start replacing all the properties we want to change. Remember 
+if you apply it at the player level like we did with `--theme` above, it'll apply to all components 
+that accept that property.
+
+**Global**
+
+The following will apply to all controls in the player...
+
+```css
+vime-player {
+  --control-scale: 1.75;
+}
+```
+
+**Instance**
+
+The following will only apply to this specific control...
+
+```html
+<vime-control style="--control-scale: 1.75;">
+  <!-- ... -->
+</vime-control>
+```
+
+Another way you can find out what CSS properties can be used to style a specific component is 
+by finding that component in the `Components` section in the sidebar (on your left), and scrolling
+down to `CSS Properties`. In addition, sometimes a component is composed of other components, so if 
+you scroll down to `Dependencies > Depends On`, the CSS properties of those listed components 
+will be available as well.
+
+Here are some additional selectors you can add to your styling toolkit:
+
+```css title="player-theme.css"
+vime-player.mobile {
+  /* Add styles here for when the player is loaded on a mobile device. */
+}
+
+vime-player.live {
+  /* Add styles here for when the media is a live stream. */
+}
+
+vime-player.audio {
+  /* Add styles here for when the media is of type `audio`. */
+}
+
+vime-player.video {
+  /* Add styles here for when the media is of type `video`. */
+}
+
+/* You can replace 'light' with 'dark' or any custom theme name you'd like. */
+vime-player[theme="light"] {
+  /* Add styles here for when the theme is set to `light`.  */
+}
+```
+
+
+[default-theme]: https://github.com/vime-js/vime/blob/master/packages/core/src/globals/themes/default.css
+
+## Icons
+
+Vime icons are stored and loaded as an SVG sprite. The [Icons](../components/ui/icons) component 
+is responsible for loading them from the [JSDELIVR CDN][vime-icons-cdn], and it's included by default 
+when using the [default UI](../components/ui/default-ui). 
+
+To customize the icons you can create and load an SVG sprite that uses the same symbol identifiers 
+as Vime, which can be found [here][vime-icons] (the file name is the identifier). The sprite would 
+look something like this...
+
+:::tip
+If you are using the default UI then pass in the `noIcons` property when creating your own.
+:::
+
+```html
+<svg>
+  <defs>
+    <symbol id="vime-play">
+      <!-- SVG markup for the play icon here. -->
+    <symbol>
+
+    <symbol id="vime-pause">
+      <!-- SVG markup for the pause icon here. -->
+    <symbol>
+
+    <!-- ... -->
+  </defs>
+</svg>
+```
+
+You can insert it into the `<head>` of your document manually, or you can load it using the 
+[Icons](../components/ui/icons) component by setting the `href` property to the URL of the 
+where the SVG sprite lives. 
+
+On the other hand, if you already have icons loaded and can't use the Vime identifiers, then most 
+predefined components have a property which you can set to change the icon. For example, 
+the [PlaybackControl](../components/ui/controls/playback-control) has a `playIcon` and `pauseIcon` 
+property which you can use to point to your custom icon identifier. See the component 
+documentation for any given component (sidebar on your left under the `Components` section) 
+to see what properties are available for changing icons.
+
+[vime-icons]: https://github.com/vime-js/vime/tree/master/packages/core/icons
+[vime-icons-cdn]: https://cdn.jsdelivr.net/npm/@vime/core@latest/icons/sprite.svg
