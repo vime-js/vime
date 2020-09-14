@@ -891,7 +891,7 @@ export namespace Components {
           * Extends the translation map for a given language.
           * @inheritDoc
          */
-        "extendLanguage": (language: string, translations: Record<string, Partial<Translation>>) => Promise<void>;
+        "extendLanguage": (language: string, translation: Partial<Translation>) => Promise<void>;
         /**
           * Returns the current media provider's adapter. Shorthand for `getProvider().getAdapter()`.
          */

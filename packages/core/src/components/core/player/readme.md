@@ -494,7 +494,7 @@ Type: `Promise<void | undefined>`
 
 
 
-### `extendLanguage(language: string, translations: Record<string, Partial<Translation>>) => Promise<void>`
+### `extendLanguage(language: string, translation: Partial<Translation>) => Promise<void>`
 
 Extends the translation map for a given language.
 

@@ -91,19 +91,19 @@ describe('props', () => {
   });
 
   it('should update languages prop when a new language is added', async () => {
-    await player.extendLanguage('tr', { Pause: 'Duraklat' });
+    await player.extendLanguage('tr', { pause: 'Duraklat' });
     await page.waitForChanges();
     expect(player.languages).toEqual(['en', 'tr']);
   });
 
   it('should update i18n when the language or translations are changed', async () => {
-    await player.extendLanguage('tr', { Pause: 'Duraklat' });
+    await player.extendLanguage('tr', { pause: 'Duraklat' });
     player.language = 'tr';
     await page.waitForChanges();
-    expect(player.i18n).toEqual({ Pause: 'Duraklat' });
-    await player.extendLanguage('tr', { Play: 'Oyna', Pause: 'Duraklat' });
+    expect(player.i18n).toEqual({ pause: 'Duraklat' });
+    await player.extendLanguage('tr', { play: 'Oyna', pause: 'Duraklat' });
     await page.waitForChanges();
-    expect(player.i18n).toEqual({ Play: 'Oyna', Pause: 'Duraklat' });
+    expect(player.i18n).toEqual({ play: 'Oyna', pause: 'Duraklat' });
   });
 
   it('should call adapter when paused is changed', async () => {

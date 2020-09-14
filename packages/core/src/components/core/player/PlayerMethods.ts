@@ -107,8 +107,5 @@ export interface PlayerMethods {
   /**
    * Extends the translation map for a given language.
    */
-  extendLanguage(
-    language: string,
-    translations: Record<string, Partial<Translation>>
-  ): Promise<void>
+  extendLanguage(language: string, translation: Partial<Translation>): Promise<void>
 }

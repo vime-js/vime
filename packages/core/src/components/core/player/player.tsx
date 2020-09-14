@@ -862,16 +862,16 @@ export class Player implements MediaPlayer {
    * @inheritDoc
    */
   @Method()
-  async extendLanguage(language: string, translations: Record<string, Partial<Translation>>) {
-    const newTranslations = {
+  async extendLanguage(language: string, translation: Partial<Translation>) {
+    const translations = {
       ...this.translations,
       [language]: {
         ...(this.translations[language] ?? {}),
-        ...translations,
+        ...translation,
       },
     };
 
-    this.translations = newTranslations as Record<string, Translation>;
+    this.translations = translations as Record<string, Translation>;
   }
 
   private hasMediaChanged = false;
