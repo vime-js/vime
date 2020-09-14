@@ -29,17 +29,17 @@ between light/dark by using the `theme` player property...
 ```
 
 One of the easiest ways to personalize the player to our brand or preference is by 
-setting the `theme` CSS property, which will add a splash of color throughout the player...
+setting the `player-theme` CSS property, which will add a splash of color throughout the player...
 
 ```css title="player-theme.css"
 vime-player {
-  --theme: #de4269;
+  --player-theme: #de4269;
 }
 ```
 
 What if we want to do more? We can see the [default theme][default-theme] file which has documented all 
 CSS properties used throughout Vime, and start replacing all the properties we want to change. Remember 
-if you apply it at the player level like we did with `--theme` above, it'll apply to all components 
+if you apply it at the player level like we did with `--player-theme` above, it'll apply to all components 
 that accept that property.
 
 **Global**
