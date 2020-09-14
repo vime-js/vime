@@ -1,4 +1,5 @@
 import { en } from './lang/en';
+import { Translation } from './lang/Translation';
 import { MediaType } from './MediaType';
 import { Logger } from './PlayerLogger';
 import { ViewType } from './ViewType';
@@ -505,14 +506,14 @@ export interface PlayerProps {
   languages: string[]
 
   /**
-   * `@readonly` Contains each language and it's respective translation map.
+   * `@readonly` Contains each language and its respective translation map.
    */
-  translations: Record<string, Record<string, string>>,
+  translations: Record<string, Translation>,
 
   /**
    * `@readonly` A dictionary of translations for the current language.
    */
-  i18n: Record<string, string>
+  i18n: Translation | Record<string, string>
 
   /**
    * @internal

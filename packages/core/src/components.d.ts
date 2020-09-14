@@ -13,6 +13,7 @@ import { Params } from "./utils/network";
 import { MediaProvider, MediaProviderAdapter, MockMediaProviderAdapter } from "./components/providers/MediaProvider";
 import { ViewType } from "./components/core/player/ViewType";
 import { MediaType } from "./components/core/player/MediaType";
+import { Translation } from "./components/core/player/lang/Translation";
 import { SettingsController } from "./components/ui/settings/settings/SettingsController";
 export namespace Components {
     interface VimeAudio {
@@ -890,7 +891,7 @@ export namespace Components {
           * Extends the translation map for a given language.
           * @inheritDoc
          */
-        "extendLanguage": (language: string, translations: Record<string, string>) => Promise<void>;
+        "extendLanguage": (language: string, translations: Record<string, Partial<Translation>>) => Promise<void>;
         /**
           * Returns the current media provider's adapter. Shorthand for `getProvider().getAdapter()`.
          */
@@ -904,7 +905,7 @@ export namespace Components {
           * `@readonly` A dictionary of translations for the current language.
           * @inheritDoc
          */
-        "i18n": Record<string, string>;
+        "i18n": Translation;
         /**
           * `@readonly` Whether the current media is of type `audio`, shorthand for `mediaType === MediaType.Audio`.
           * @inheritDoc
@@ -1086,10 +1087,10 @@ export namespace Components {
          */
         "toggleCaptionsVisibility": (isVisible?: boolean | undefined) => Promise<void>;
         /**
-          * `@readonly` Contains each language and it's respective translation map.
+          * `@readonly` Contains each language and its respective translation map.
           * @inheritDoc
          */
-        "translations": Record<string, Record<string, string>>;
+        "translations": Record<string, Translation>;
         /**
           * `@readonly` The type of player view that is being used, whether it's an audio player view or video player view. Normally if the media type is of audio then the view is of type audio, but in some cases it might be desirable to show a different view type. For example, when playing audio with a poster. This is subject to the provider allowing it. Defaults to `undefined` when no media has been loaded.
           * @inheritDoc
@@ -2588,7 +2589,7 @@ declare namespace LocalJSX {
           * `@readonly` A dictionary of translations for the current language.
           * @inheritDoc
          */
-        "i18n"?: Record<string, string>;
+        "i18n"?: Translation;
         /**
           * `@readonly` Whether the current media is of type `audio`, shorthand for `mediaType === MediaType.Audio`.
           * @inheritDoc
@@ -2950,10 +2951,10 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
         /**
-          * `@readonly` Contains each language and it's respective translation map.
+          * `@readonly` Contains each language and its respective translation map.
           * @inheritDoc
          */
-        "translations"?: Record<string, Record<string, string>>;
+        "translations"?: Record<string, Translation>;
         /**
           * `@readonly` The type of player view that is being used, whether it's an audio player view or video player view. Normally if the media type is of audio then the view is of type audio, but in some cases it might be desirable to show a different view type. For example, when playing audio with a poster. This is subject to the provider allowing it. Defaults to `undefined` when no media has been loaded.
           * @inheritDoc

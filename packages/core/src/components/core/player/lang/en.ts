@@ -1,4 +1,6 @@
-export const en = {
+import { Translation } from './Translation';
+
+export const en: Translation = {
   play: 'Play',
   pause: 'Pause',
   playback: 'Playback',

@@ -29,6 +29,7 @@ import { lazyLoader } from './lazyLoader';
 import { Autopause } from './Autopause';
 import { Logger } from './PlayerLogger';
 import { getEventName } from './PlayerEvents';
+import { Translation } from './lang/Translation';
 
 let idCount = 0;
 
@@ -470,7 +471,7 @@ export class Player implements MediaPlayer {
    */
   @Prop({
     mutable: true, attribute: null,
-  }) translations: Record<string, Record<string, string>> = { en };
+  }) translations: Record<string, Translation> = { en };
 
   @Watch('translations')
   onTranslationsChange() {
@@ -486,7 +487,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop({ mutable: true, attribute: null }) i18n: Record<string, string> = en;
+  @Prop({ mutable: true, attribute: null }) i18n: Translation = en;
 
   /**
    * Whether the skeleton loading animation should be shown while media is loading.
@@ -861,7 +862,7 @@ export class Player implements MediaPlayer {
    * @inheritDoc
    */
   @Method()
-  async extendLanguage(language: string, translations: Record<string, string>) {
+  async extendLanguage(language: string, translations: Record<string, Partial<Translation>>) {
     const newTranslations = {
       ...this.translations,
       [language]: {
@@ -870,7 +871,7 @@ export class Player implements MediaPlayer {
       },
     };
 
-    this.translations = newTranslations;
+    this.translations = newTranslations as Record<string, Translation>;
   }
 
   private hasMediaChanged = false;

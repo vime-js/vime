@@ -8,6 +8,7 @@ import {
   ViewType,
   MediaType,
   loadSprite,
+  Translation,
 } from '@vime/core';
 
 export {
@@ -19,6 +20,7 @@ export {
   ViewType,
   MediaType,
   loadSprite,
+  Translation,
 };
 
 export * from './components';

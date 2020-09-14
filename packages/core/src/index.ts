@@ -9,6 +9,7 @@ import { findRootPlayer } from './components/core/player/utils';
 import { ViewType } from './components/core/player/ViewType';
 import { MediaType } from './components/core/player/MediaType';
 import { loadSprite } from './utils/network';
+import { Translation } from './components/core/player/lang/Translation';
 
 export * from './components';
 
@@ -29,4 +30,5 @@ export {
   usePlayerContext,
   Dispatcher,
   createDispatcher,
+  Translation,
 };

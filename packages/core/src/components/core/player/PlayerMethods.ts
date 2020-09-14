@@ -1,4 +1,5 @@
 import { MediaProvider, MediaProviderAdapter } from '../../providers/MediaProvider';
+import { Translation } from './lang/Translation';
 
 export interface PlayerMethods {
   /**
@@ -108,6 +109,6 @@ export interface PlayerMethods {
    */
   extendLanguage(
     language: string,
-    translations: Record<string, string>
+    translations: Record<string, Partial<Translation>>
   ): Promise<void>
 }
