@@ -16,9 +16,17 @@ Vime is a collection of <a href="https://developer.mozilla.org/en-US/docs/Web/We
 help you to easily build and customize your own media player.
 </p>
 
-:::info
-See our [Demo](/demo) for a little introduction into what Vime feels and looks like.
-:::
+import { BasicPlayer } from '../getting-started/components/BasicPlayer'
+
+<BasicPlayer showDefaultUi />
+<br />
+
+<div style={{
+  width: '100%',
+  textAlign: 'center',
+}}>
+  <a href="/demo" class="button button--primary" style={{ transform: 'scale(1.1)' }}>View Demo</a>
+</div>
 
 ## ✨ &nbsp;Features
 
