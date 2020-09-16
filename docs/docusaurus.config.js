@@ -26,6 +26,12 @@ module.exports = {
       },
       items: [
         {
+          to: 'demo/',
+          activeBasePath: 'demo',
+          label: 'Demo',
+          position: 'right',
+        },
+        {
           href: 'https://github.com/vime-js/vime',
           position: 'right',
           className: 'header-github-link',

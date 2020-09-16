@@ -59,6 +59,11 @@ html[data-theme='dark'] .header-github-link:before {
   font-size: 20px;
 }
 
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 div[role="banner"] {
   display: flex;
   align-items: center;
@@ -77,4 +82,50 @@ html[data-theme='dark'] div[role="banner"] {
 code {
   color: var(--ifm-code-color) !important;
   background-color: var(--ifm-code-background) !important;
+}
+
+:root[data-theme="light"] div[class*="editorPanel"] {
+  --tp-fg-color: rgba(0, 0, 0, 0.87);
+  --tp-bg-color: hsl(0, 0%, 95%);
+  --tp-active-color: hsl(0, 0%, 90%);
+  --tp-base-background-color: white;
+  --tp-folder-background-color: var(--tp-bg-color);
+  --tp-folder-background-color-active: var(--tp-active-color);
+  --tp-folder-background-color-focus: var(--tp-active-color);
+  --tp-folder-background-color-hover: var(--tp-active-color);
+  --tp-folder-foreground-color: var(--tp-fg-color);
+  --tp-input-background-color: var(--tp-bg-color);
+  --tp-input-background-color-active: var(--tp-active-color);
+  --tp-input-background-color-focus: var(--tp-active-color);
+  --tp-input-background-color-hover: var(--tp-active-color);
+  --tp-input-foreground-color: var(--tp-fg-color);
+  --tp-label-foreground-color: var(--tp-fg-color);
+  --tp-button-background-color: var(--tp-bg-color);
+  --tp-button-background-color-active: var(--tp-active-color);
+  --tp-button-background-color-focus: var(--tp-active-color);
+  --tp-button-background-color-hover: var(--tp-active-color);
+  --tp-button-foreground-color: var(--tp-fg-color);
+}
+
+:root[data-theme="dark"] div[class*="editorPanel"] {
+  --tp-fg-color: rgba(255, 255, 255, 0.9);
+  --tp-bg-color: hsl(0, 0%, 24%);
+  --tp-active-color: hsl(0, 0%, 29%);
+  --tp-base-background-color: #232323;
+  --tp-folder-background-color: var(--tp-bg-color);
+  --tp-folder-background-color-active: var(--tp-active-color);
+  --tp-folder-background-color-focus: var(--tp-active-color);
+  --tp-folder-background-color-hover: var(--tp-active-color);
+  --tp-folder-foreground-color: var(--tp-fg-color);
+  --tp-input-background-color: var(--tp-bg-color);
+  --tp-input-background-color-active: var(--tp-active-color);
+  --tp-input-background-color-focus: var(--tp-active-color);
+  --tp-input-background-color-hover: var(--tp-active-color);
+  --tp-input-foreground-color: var(--tp-fg-color);
+  --tp-label-foreground-color: var(--tp-fg-color);
+  --tp-button-background-color: var(--tp-bg-color);
+  --tp-button-background-color-active: var(--tp-active-color);
+  --tp-button-background-color-focus: var(--tp-active-color);
+  --tp-button-background-color-hover: var(--tp-active-color);
+  --tp-button-foreground-color: var(--tp-fg-color);
 }

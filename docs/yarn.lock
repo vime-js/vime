@@ -8340,6 +8340,14 @@ react-dom@^16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
+react-draggable@^4.4.3:
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-4.4.3.tgz#0727f2cae5813e36b0e4962bf11b2f9ef2b406f3"
+  integrity sha512-jV4TE59MBuWm7gb6Ns3Q1mxX8Azffb7oTtDtBgFkxRvhDp38YAARmRplrj0+XGkhOJB5XziArX+4HUUABtyZ0w==
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
+
 react-error-overlay@^6.0.7:
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.7.tgz#1dcfb459ab671d53f660a991513cb2f0a0553108"
@@ -9828,6 +9836,11 @@ tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+
+tweakpane@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/tweakpane/-/tweakpane-1.5.4.tgz#359bf4d7c28a1d871f4401cdf6b79224694c7367"
+  integrity sha512-o7b+9YdmDUEC7J7S0+jov+0T4Sbmw5kDW1EV2rl7qXu8Ln1Hh8dP3ExKvt3Oujka4aK5CORYaAnmI5IKQ/JQBw==
 
 type-fest@^0.11.0:
   version "0.11.0"

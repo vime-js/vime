@@ -1,0 +1,72 @@
+.container {
+  flex: 1;
+  display: flex;
+  align-self: stretch;
+  overflow: hidden;
+  background-color: #282c34;
+}
+
+.codePreview {
+  flex-shrink: 1;
+}
+
+.codePreview > pre {
+  padding: 24px;
+  border-radius: 0 !important;
+  overflow-y: scroll;
+  max-width: 670px;
+  max-height: calc(93vh - var(--ifm-navbar-height));
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  scrollbar-color: #31363f #282c34;
+}
+
+@media (max-width: 1440px) {
+  .codePreview > pre {
+    font-size: 14px !important;
+  }
+}
+
+.codePreview > pre::-webkit-scrollbar {
+  width: 10px;
+}
+
+.codePreview > pre::-webkit-scrollbar-track {
+  background: #282c34;
+}
+
+.codePreview > pre::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background-color: #31363f;
+}
+
+.playerContainer {
+  flex: 1;
+  flex-shrink: 0;
+  display: flex;
+  padding: 0 24px;
+  align-items: center;
+  justify-content: center;
+  background-color: #1e2127;
+  z-index: 1;
+  position: relative;
+}
+
+.player {
+  width: 100%;
+  max-width: 980px;
+}
+
+.player > vime-player {
+  z-index: 1;
+}
+
+.editorPanel {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 250px;
+  z-index: 2;
+  cursor: move;
+  user-select: none;
+}
