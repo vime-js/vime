@@ -58,10 +58,9 @@ import { BasicPlayer } from '../getting-started/components/BasicPlayer'
 
 ## 🍭 &nbsp;Examples
 
-Here's a few little bites of what you can do with Vime ...
-
 :::note
-The examples below are using web components but there are bindings for React, Vue, Angular and Svelte.
+The examples below are using web components but there are bindings for React, Vue, Angular and 
+Svelte. If you want to see how they look check out our [Demo](/demo).
 :::
 
 ```html

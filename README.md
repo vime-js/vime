@@ -54,9 +54,8 @@ A customizable media player built with [web components][web-components].
 
 ## 🍭 Examples
 
-Here's a few little bites of what you can do with Vime ...
-
-**The examples below are using web components but there are bindings for React, Vue, Angular and Svelte.**
+**The examples below are using web components but there are bindings for React, Vue, Angular and 
+Svelte. If you want to see how they look check out our [Demo](https://vimejs.com/demo).**
 
 ```html
 <vime-player autoplay muted>
