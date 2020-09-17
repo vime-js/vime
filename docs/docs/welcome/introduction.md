@@ -12,8 +12,7 @@ slug: /
 [![discord-badge]][discord]
 
 <p style={{ fontSize: '18px' }}>
-Vime is a collection of <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">web components</a> that 
-help you to easily build and customize your own media player.
+Vime is a customizable media player built with <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">web components</a>.
 </p>
 
 import { BasicPlayer } from '../getting-started/components/BasicPlayer'

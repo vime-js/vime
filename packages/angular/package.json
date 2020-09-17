@@ -1,7 +1,7 @@
 {
   "name": "@vime/angular",
   "version": "3.2.1",
-  "description": "Collection of Angular components to build and customize your own media player.",
+  "description": "Angular bindings for Vime media player.",
   "license": "MIT",
   "types": "dist/index.d.ts",
   "contributors": [

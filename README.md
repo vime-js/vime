@@ -5,7 +5,7 @@
   alt="Vime Logo"
 />
 
-A collection of [web components][web-components] for building and customizing your own media player.
+A customizable media player built with [web components][web-components].
 
 [![package-badge]][package]
 [![license-badge]][license]
