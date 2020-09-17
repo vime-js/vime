@@ -59,8 +59,7 @@ Here's a few little bites of what you can do with Vime ...
 **The examples below are using web components but there are bindings for React, Vue, Angular and Svelte.**
 
 ```html
-<!-- Here we are requesting to use the native controls. -->
-<vime-player autoplay muted controls>
+<vime-player autoplay muted>
   <vime-video poster="/media/poster.png" cross-origin>
     <!-- Why `data-src`? Lazy loading. You can always use `src` if you don't need it. -->
     <source data-src="/media/video.mp4" type="video/mp4" />
@@ -72,6 +71,20 @@ Here's a few little bites of what you can do with Vime ...
       label="English"
     />
   </vime-video>
+
+  <!-- Loads the default Vime UI. -->
+  <vime-default-ui />
+</vime-player>
+```
+
+_Native UI?_
+
+```html
+<!-- Here we are requesting to use the native controls. -->
+<vime-player autoplay muted controls>
+  <vime-audio cross-origin>
+    <source data-src="/media/audio.mp3" type="audio/mp3" />
+  </vime-audio>
 </vime-player>
 ```
 
@@ -79,7 +92,7 @@ _Custom UI?_
 
 ```html
 <!-- Lets add a little splash of color throughout the player. -->
-<vime-player style="--player-theme: #1873d3" autoplay muted>
+<vime-player autoplay muted style="--player-theme: #1873d3">
   <!-- Loading a YouTube video. -->
   <vime-youtube video-id="DyTCOwB0DVw" />
 
@@ -104,20 +117,6 @@ _Custom UI?_
       <vime-fullscreen-control keys="f" tooltip-direction="left" />
     </vime-controls>
   </vime-ui>
-</vime-player>
-```
-
-_In a hurry?_
-
-```html
-<!-- Light themed audio player. -->
-<vime-player theme="light" autoplay muted>
-  <vime-audio cross-origin>
-    <source data-src="/media/audio.mp3" type="audio/mp3" />
-  </vime-audio>
-
-  <!-- Loads the default Vime UI. -->
-  <vime-default-ui />
 </vime-player>
 ```
 
