@@ -29,7 +29,7 @@ A customizable media player built with [web components][web-components].
 - ♾️ &nbsp;Avoid cross-browser differences on media related APIs, such as fullscreen and picture-in-picture.
 - 👐 &nbsp;[Accessible][accessibility] to all via ARIA roles/states/properties and keyboard support.
 - 🌎 &nbsp;I18N support.
-- 🖥 &nbsp;Designed witn both mobile and desktop in mind.
+- 🖥 &nbsp;Designed with both mobile and desktop in mind.
 - 👌 &nbsp;Touch input friendly.
 - 🎨 &nbsp;Style anything you want with [CSS variables][css-vars]. Default [light][light-theme] and
   [dark][dark-theme] themes are included.
