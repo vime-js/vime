@@ -11,14 +11,14 @@
     "packages/*"
   ],
   "scripts": {
+    "core": "yarn workspace @vime/core",
+    "react": "yarn workspace @vime/react",
+    "vue": "yarn workspace @vime/vue",
+    "svelte": "yarn workspace @vime/svelte",
+    "angular": "yarn workspace @vime/angular",
     "postinstall": "yarn build",
     "lint": "eslint ./packages --quiet --fix --ignore-path .gitignore",
-    "build": "yarn build:core && yarn build:react && yarn build:vue && yarn build:angular && yarn build:svelte",
-    "build:core": "yarn workspace @vime/core build",
-    "build:react": "yarn workspace @vime/react build",
-    "build:vue": "yarn workspace @vime/vue build",
-    "build:angular": "yarn workspace @vime/angular build",
-    "build:svelte": "yarn workspace @vime/svelte build",
+    "build": "yarn core build && yarn react build && yarn vue build && yarn svelte build && yarn angular build",
     "release": "lerna publish --yes"
   },
   "devDependencies": {
