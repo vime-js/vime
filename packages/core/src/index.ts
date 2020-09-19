@@ -10,4 +10,4 @@ export { ViewType } from './components/core/player/ViewType';
 export { MediaType } from './components/core/player/MediaType';
 export { loadSprite } from './utils/network';
 export { Translation } from './components/core/player/lang/Translation';
-export * from './components';
+export { Components, JSX } from './components.d';
