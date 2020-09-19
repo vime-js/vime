@@ -1,15 +1,4 @@
 import { defineCustomElements } from '@vime/core/loader';
-import {
-  PlayerProp,
-  PlayerProps,
-  PlayerMethods,
-  PlayerEvent,
-  PlayerEvents,
-  ViewType,
-  MediaType,
-  loadSprite,
-  Translation,
-} from '@vime/core';
 
 export {
   PlayerProp,
@@ -21,7 +10,7 @@ export {
   MediaType,
   loadSprite,
   Translation,
-};
+} from '@vime/core';
 
 export * from './components';
 export * from './mixins';
