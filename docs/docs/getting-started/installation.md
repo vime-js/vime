@@ -21,19 +21,19 @@ inside the `<head>` element of your HTML file.
 <!-- Default theme. ~960B -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core/themes/default.css"
+  href="https://cdn.jsdelivr.net/npm/@vime/core@4/themes/default.css"
 />
 
 <!-- Optional light theme (extends default). ~400B -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core/themes/light.css"
+  href="https://cdn.jsdelivr.net/npm/@vime/core@4/themes/light.css"
 />
 
 <!-- Library and all of its components are lazy loaded, so nothing to sweat about here. ~3kB -->
 <script
   type="module"
-  src="https://cdn.jsdelivr.net/npm/@vime/core/dist/vime/vime.esm.js"
+  src="https://cdn.jsdelivr.net/npm/@vime/core@4/dist/vime/vime.esm.js"
 ></script>
 ```
 
@@ -57,13 +57,13 @@ CSS variables for styling the player. Add the following to the `<head>` element 
 <!-- Default theme. ~960B -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core/themes/default.css"
+  href="https://cdn.jsdelivr.net/npm/@vime/core@4/themes/default.css"
 />
 
 <!-- Optional light theme (extends default). ~400B -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core/themes/light.css"
+  href="https://cdn.jsdelivr.net/npm/@vime/core@4/themes/light.css"
 />
 ```
 

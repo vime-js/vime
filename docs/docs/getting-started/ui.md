@@ -209,7 +209,7 @@ import { BasicPlayer } from './components/BasicPlayer';
 Remember to load the default player theme or you might see something you regret 😱
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core/themes/default.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@4/themes/default.css" />
 ```
 :::
 
