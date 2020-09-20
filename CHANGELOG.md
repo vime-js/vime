@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/vime-js/vime/compare/v3.2.2...v4.0.0) (2020-09-20)
+
+
+### Bug Fixes
+
+* **angular:** add new ui components to vime module ([b1712de](https://github.com/vime-js/vime/commit/b1712ded131b3f96a8c964884b4887ccb26b33a2))
+* **core:** update themes distribution ([bf3aaca](https://github.com/vime-js/vime/commit/bf3aaca3bf7a0fec4f2104632b79c42ed48e8c51))
+* export only types from components ([4ec48a1](https://github.com/vime-js/vime/commit/4ec48a16db110cfa3876b72565a1a3572ff4c563))
+* prefix all css variables with `vm` ([c00da36](https://github.com/vime-js/vime/commit/c00da3600f02c24cb0daee9e256474e0f69dddc0))
+
+
+### Features
+
+* **ui:** new double click fullscreen component ([0ede81b](https://github.com/vime-js/vime/commit/0ede81b7d02f4495144453a24d3276235c8b7d12))
+* **ui:** new skeleton component ([9a0e0eb](https://github.com/vime-js/vime/commit/9a0e0ebcafc7b730f1c43cbc8a599193d19082a6))
+
+
+### BREAKING CHANGES
+
+* **ui:** `noSkeleton` player prop was moved to `DefaultUi`.
+* Styling will break as all the CSS variables used
+throughout the player now require the `vm` prefix.
+
+
+
+
+
 ## [3.2.2](https://github.com/vime-js/vime/compare/v3.2.1...v3.2.2) (2020-09-17)
 
 

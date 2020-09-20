@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/vime-js/vime/compare/v3.2.2...v4.0.0) (2020-09-20)
+
+
+### Bug Fixes
+
+* **angular:** add new ui components to vime module ([b1712de](https://github.com/vime-js/vime/commit/b1712ded131b3f96a8c964884b4887ccb26b33a2))
+
+
+
+
+
 ## [3.2.2](https://github.com/vime-js/vime/compare/v3.2.1...v3.2.2) (2020-09-17)
 
 
