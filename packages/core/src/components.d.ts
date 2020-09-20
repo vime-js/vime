@@ -293,6 +293,15 @@ export namespace Components {
          */
         "version": string;
     }
+    interface VimeDblClickFullscreen {
+        "isFullscreenActive": PlayerProps['isFullscreenActive'];
+        "isVideoView": PlayerProps['isVideoView'];
+        "playbackReady": PlayerProps['playbackReady'];
+        /**
+          * By default this is disabled on mobile to not interfere with playback, set this to `true` to enable it.
+         */
+        "useOnMobile": boolean;
+    }
     interface VimeDefaultControls {
         /**
           * The length in milliseconds that the controls are active for before fading out. Audio players are not effected by this prop.
@@ -344,6 +353,10 @@ export namespace Components {
           * Whether the custom default controls should not be loaded.
          */
         "noControls": boolean;
+        /**
+          * Whether double clicking the player should not toggle fullscreen mode.
+         */
+        "noDblClickFullscreen": boolean;
         /**
           * Whether the default icons should not be loaded.
          */
@@ -1482,6 +1495,12 @@ declare global {
         prototype: HTMLVimeDashElement;
         new (): HTMLVimeDashElement;
     };
+    interface HTMLVimeDblClickFullscreenElement extends Components.VimeDblClickFullscreen, HTMLStencilElement {
+    }
+    var HTMLVimeDblClickFullscreenElement: {
+        prototype: HTMLVimeDblClickFullscreenElement;
+        new (): HTMLVimeDblClickFullscreenElement;
+    };
     interface HTMLVimeDefaultControlsElement extends Components.VimeDefaultControls, HTMLStencilElement {
     }
     var HTMLVimeDefaultControlsElement: {
@@ -1716,6 +1735,7 @@ declare global {
         "vime-current-time": HTMLVimeCurrentTimeElement;
         "vime-dailymotion": HTMLVimeDailymotionElement;
         "vime-dash": HTMLVimeDashElement;
+        "vime-dbl-click-fullscreen": HTMLVimeDblClickFullscreenElement;
         "vime-default-controls": HTMLVimeDefaultControlsElement;
         "vime-default-settings": HTMLVimeDefaultSettingsElement;
         "vime-default-ui": HTMLVimeDefaultUiElement;
@@ -2044,6 +2064,15 @@ declare namespace LocalJSX {
          */
         "version"?: string;
     }
+    interface VimeDblClickFullscreen {
+        "isFullscreenActive"?: PlayerProps['isFullscreenActive'];
+        "isVideoView"?: PlayerProps['isVideoView'];
+        "playbackReady"?: PlayerProps['playbackReady'];
+        /**
+          * By default this is disabled on mobile to not interfere with playback, set this to `true` to enable it.
+         */
+        "useOnMobile"?: boolean;
+    }
     interface VimeDefaultControls {
         /**
           * The length in milliseconds that the controls are active for before fading out. Audio players are not effected by this prop.
@@ -2095,6 +2124,10 @@ declare namespace LocalJSX {
           * Whether the custom default controls should not be loaded.
          */
         "noControls"?: boolean;
+        /**
+          * Whether double clicking the player should not toggle fullscreen mode.
+         */
+        "noDblClickFullscreen"?: boolean;
         /**
           * Whether the default icons should not be loaded.
          */
@@ -3323,6 +3356,7 @@ declare namespace LocalJSX {
         "vime-current-time": VimeCurrentTime;
         "vime-dailymotion": VimeDailymotion;
         "vime-dash": VimeDash;
+        "vime-dbl-click-fullscreen": VimeDblClickFullscreen;
         "vime-default-controls": VimeDefaultControls;
         "vime-default-settings": VimeDefaultSettings;
         "vime-default-ui": VimeDefaultUi;
@@ -3377,6 +3411,7 @@ declare module "@stencil/core" {
             "vime-current-time": LocalJSX.VimeCurrentTime & JSXBase.HTMLAttributes<HTMLVimeCurrentTimeElement>;
             "vime-dailymotion": LocalJSX.VimeDailymotion & JSXBase.HTMLAttributes<HTMLVimeDailymotionElement>;
             "vime-dash": LocalJSX.VimeDash & JSXBase.HTMLAttributes<HTMLVimeDashElement>;
+            "vime-dbl-click-fullscreen": LocalJSX.VimeDblClickFullscreen & JSXBase.HTMLAttributes<HTMLVimeDblClickFullscreenElement>;
             "vime-default-controls": LocalJSX.VimeDefaultControls & JSXBase.HTMLAttributes<HTMLVimeDefaultControlsElement>;
             "vime-default-settings": LocalJSX.VimeDefaultSettings & JSXBase.HTMLAttributes<HTMLVimeDefaultSettingsElement>;
             "vime-default-ui": LocalJSX.VimeDefaultUi & JSXBase.HTMLAttributes<HTMLVimeDefaultUiElement>;

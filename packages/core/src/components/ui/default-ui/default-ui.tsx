@@ -18,6 +18,11 @@ export class DefaultUI {
   @Prop() noClickToPlay = false;
 
   /**
+   * Whether double clicking the player should not toggle fullscreen mode.
+   */
+  @Prop() noDblClickFullscreen = false;
+
+  /**
    * Whether the custom captions UI should not be loaded.
    */
   @Prop() noCaptions = false;
@@ -53,6 +58,7 @@ export class DefaultUI {
         {!this.noIcons && <vime-icons />}
         {!this.noSkeleton && <vime-skeleton />}
         {!this.noClickToPlay && <vime-click-to-play />}
+        {!this.noDblClickFullscreen && <vime-dbl-click-fullscreen />}
         {!this.noCaptions && <vime-captions />}
         {!this.noPoster && <vime-poster />}
         {!this.noSpinner && <vime-spinner />}

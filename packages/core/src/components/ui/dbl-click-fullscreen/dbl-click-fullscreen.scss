@@ -1,7 +1,7 @@
 /**
-  * @prop --vm-click-to-play-z-index: The position in the UI z-axis stack inside the player.
+  * @prop --vm-dbl-click-fullscreen-z-index: The position in the UI z-axis stack inside the player.
   */
-vime-click-to-play {
+vime-dbl-click-fullscreen {
   position: absolute;
   top: 0;
   left: 0;
@@ -9,7 +9,7 @@ vime-click-to-play {
   height: 100%;
   pointer-events: none;
   display: none;
-  z-index: var(--vm-click-to-play-z-index);
+  z-index: var(--vm-dbl-click-fullscreen-z-index);
 
   &.enabled {
     display: inline-block;

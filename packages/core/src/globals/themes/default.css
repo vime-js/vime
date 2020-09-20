@@ -40,6 +40,7 @@ vime-player {
   --vm-poster-z-index: 1;
   --vm-scrim-z-index: 10;
   --vm-click-to-play-z-index: 20;
+  --vm-dbl-click-fullscreen-z-index: 20;
   --vm-captions-z-index: 30;
   --vm-spinner-z-index: 40;
   --vm-controls-z-index: 50;
