@@ -13,6 +13,7 @@ A customizable media player built with [web components][web-components].
 [![semantic-release-badge]][semantic-release]
 ![Release][release-badge]
 [![docs-badge]][docs]
+[![jsdelivr-badge]][jsdelivr]
 [![discord-badge]][discord]
 
 <img
@@ -214,6 +215,8 @@ A huge thanks to our sponsors who support open-source projects like Vime.
 [docs-badge]: https://img.shields.io/badge/docs-https://vimejs.com-green
 [semantic-release]: https://github.com/semantic-release/semantic-release
 [semantic-release-badge]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
+[jsdelivr]: https://www.jsdelivr.com/package/npm/@vime/core
+[jsdelivr-badge]: https://data.jsdelivr.com/v1/package/npm/@vime/core/badge
 [release-badge]: https://github.com/vime-js/vime/workflows/Release/badge.svg?branch=master
 [coverage-badge]: https://img.shields.io/codecov/c/github/mihar-22/vime.svg
 [coverage]: https://codecov.io/github/mihar-22/vime
