@@ -42,10 +42,16 @@ export class DefaultUI {
    */
   @Prop() noSettings = false;
 
+  /**
+   * Whether the skeleton loading animation should be shown while the player is loading.
+   */
+  @Prop() noSkeleton = false;
+
   render() {
     return (
       <vime-ui>
         {!this.noIcons && <vime-icons />}
+        {!this.noSkeleton && <vime-skeleton />}
         {!this.noClickToPlay && <vime-click-to-play />}
         {!this.noCaptions && <vime-captions />}
         {!this.noPoster && <vime-poster />}

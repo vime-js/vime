@@ -357,6 +357,10 @@ export namespace Components {
          */
         "noSettings": boolean;
         /**
+          * Whether the skeleton loading animation should be shown while the player is loading.
+         */
+        "noSkeleton": boolean;
+        /**
           * Whether the custom spinner UI should not be loaded.
          */
         "noSpinner": boolean;
@@ -998,10 +1002,6 @@ export namespace Components {
          */
         "muted": boolean;
         /**
-          * Whether the skeleton loading animation should be shown while media is loading.
-         */
-        "noSkeleton": boolean;
-        /**
           * Pauses playback of the media.
           * @inheritDoc
          */
@@ -1181,6 +1181,13 @@ export namespace Components {
           * Whether the tooltip is positioned above/below the control.
          */
         "tooltipPosition": TooltipPosition;
+    }
+    interface VimeSkeleton {
+        /**
+          * Determines which effect the skeleton will use.
+         */
+        "effect": 'sheen' | 'none';
+        "ready": PlayerProps['ready'];
     }
     interface VimeSlider {
         /**
@@ -1625,6 +1632,12 @@ declare global {
         prototype: HTMLVimeSettingsControlElement;
         new (): HTMLVimeSettingsControlElement;
     };
+    interface HTMLVimeSkeletonElement extends Components.VimeSkeleton, HTMLStencilElement {
+    }
+    var HTMLVimeSkeletonElement: {
+        prototype: HTMLVimeSkeletonElement;
+        new (): HTMLVimeSkeletonElement;
+    };
     interface HTMLVimeSliderElement extends Components.VimeSlider, HTMLStencilElement {
     }
     var HTMLVimeSliderElement: {
@@ -1728,6 +1741,7 @@ declare global {
         "vime-scrubber-control": HTMLVimeScrubberControlElement;
         "vime-settings": HTMLVimeSettingsElement;
         "vime-settings-control": HTMLVimeSettingsControlElement;
+        "vime-skeleton": HTMLVimeSkeletonElement;
         "vime-slider": HTMLVimeSliderElement;
         "vime-spinner": HTMLVimeSpinnerElement;
         "vime-submenu": HTMLVimeSubmenuElement;
@@ -2093,6 +2107,10 @@ declare namespace LocalJSX {
           * Whether the custom default settings menu should not be loaded.
          */
         "noSettings"?: boolean;
+        /**
+          * Whether the skeleton loading animation should be shown while the player is loading.
+         */
+        "noSkeleton"?: boolean;
         /**
           * Whether the custom spinner UI should not be loaded.
          */
@@ -2682,10 +2700,6 @@ declare namespace LocalJSX {
          */
         "muted"?: boolean;
         /**
-          * Whether the skeleton loading animation should be shown while media is loading.
-         */
-        "noSkeleton"?: boolean;
-        /**
           * Emitted when the player is attached/deattached from the DOM.
           * @inheritDoc
          */
@@ -3054,6 +3068,13 @@ declare namespace LocalJSX {
          */
         "tooltipPosition"?: TooltipPosition;
     }
+    interface VimeSkeleton {
+        /**
+          * Determines which effect the skeleton will use.
+         */
+        "effect"?: 'sheen' | 'none';
+        "ready"?: PlayerProps['ready'];
+    }
     interface VimeSlider {
         /**
           * A human-readable label for the purpose of the slider.
@@ -3327,6 +3348,7 @@ declare namespace LocalJSX {
         "vime-scrubber-control": VimeScrubberControl;
         "vime-settings": VimeSettings;
         "vime-settings-control": VimeSettingsControl;
+        "vime-skeleton": VimeSkeleton;
         "vime-slider": VimeSlider;
         "vime-spinner": VimeSpinner;
         "vime-submenu": VimeSubmenu;
@@ -3380,6 +3402,7 @@ declare module "@stencil/core" {
             "vime-scrubber-control": LocalJSX.VimeScrubberControl & JSXBase.HTMLAttributes<HTMLVimeScrubberControlElement>;
             "vime-settings": LocalJSX.VimeSettings & JSXBase.HTMLAttributes<HTMLVimeSettingsElement>;
             "vime-settings-control": LocalJSX.VimeSettingsControl & JSXBase.HTMLAttributes<HTMLVimeSettingsControlElement>;
+            "vime-skeleton": LocalJSX.VimeSkeleton & JSXBase.HTMLAttributes<HTMLVimeSkeletonElement>;
             "vime-slider": LocalJSX.VimeSlider & JSXBase.HTMLAttributes<HTMLVimeSliderElement>;
             "vime-spinner": LocalJSX.VimeSpinner & JSXBase.HTMLAttributes<HTMLVimeSpinnerElement>;
             "vime-submenu": LocalJSX.VimeSubmenu & JSXBase.HTMLAttributes<HTMLVimeSubmenuElement>;

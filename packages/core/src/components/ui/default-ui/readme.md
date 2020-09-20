@@ -111,15 +111,16 @@ function Example() {
 
 ## Properties
 
-| Property        | Attribute          | Description                                                    | Type      | Default |
-| --------------- | ------------------ | -------------------------------------------------------------- | --------- | ------- |
-| `noCaptions`    | `no-captions`      | Whether the custom captions UI should not be loaded.           | `boolean` | `false` |
-| `noClickToPlay` | `no-click-to-play` | Whether clicking the player should not toggle playback.        | `boolean` | `false` |
-| `noControls`    | `no-controls`      | Whether the custom default controls should not be loaded.      | `boolean` | `false` |
-| `noIcons`       | `no-icons`         | Whether the default icons should not be loaded.                | `boolean` | `false` |
-| `noPoster`      | `no-poster`        | Whether the custom poster UI should not be loaded.             | `boolean` | `false` |
-| `noSettings`    | `no-settings`      | Whether the custom default settings menu should not be loaded. | `boolean` | `false` |
-| `noSpinner`     | `no-spinner`       | Whether the custom spinner UI should not be loaded.            | `boolean` | `false` |
+| Property        | Attribute          | Description                                                                         | Type      | Default |
+| --------------- | ------------------ | ----------------------------------------------------------------------------------- | --------- | ------- |
+| `noCaptions`    | `no-captions`      | Whether the custom captions UI should not be loaded.                                | `boolean` | `false` |
+| `noClickToPlay` | `no-click-to-play` | Whether clicking the player should not toggle playback.                             | `boolean` | `false` |
+| `noControls`    | `no-controls`      | Whether the custom default controls should not be loaded.                           | `boolean` | `false` |
+| `noIcons`       | `no-icons`         | Whether the default icons should not be loaded.                                     | `boolean` | `false` |
+| `noPoster`      | `no-poster`        | Whether the custom poster UI should not be loaded.                                  | `boolean` | `false` |
+| `noSettings`    | `no-settings`      | Whether the custom default settings menu should not be loaded.                      | `boolean` | `false` |
+| `noSkeleton`    | `no-skeleton`      | Whether the skeleton loading animation should be shown while the player is loading. | `boolean` | `false` |
+| `noSpinner`     | `no-spinner`       | Whether the custom spinner UI should not be loaded.                                 | `boolean` | `false` |
 
 
 ## Slots
@@ -135,6 +136,7 @@ function Example() {
 
 - [vime-ui](../ui)
 - [vime-icons](../icons)
+- [vime-skeleton](../skeleton)
 - [vime-click-to-play](../click-to-play)
 - [vime-captions](../captions)
 - [vime-poster](../poster)
@@ -147,6 +149,7 @@ function Example() {
 graph TD;
   vime-default-ui --> vime-ui
   vime-default-ui --> vime-icons
+  vime-default-ui --> vime-skeleton
   vime-default-ui --> vime-click-to-play
   vime-default-ui --> vime-captions
   vime-default-ui --> vime-poster

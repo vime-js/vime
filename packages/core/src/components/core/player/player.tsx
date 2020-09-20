@@ -490,11 +490,6 @@ export class Player implements MediaPlayer {
   @Prop({ mutable: true, attribute: null }) i18n: Translation = en;
 
   /**
-   * Whether the skeleton loading animation should be shown while media is loading.
-   */
-  @Prop() noSkeleton = false;
-
-  /**
    * ------------------------------------------------------
    * Events
    * ------------------------------------------------------
@@ -1128,6 +1123,7 @@ export class Player implements MediaPlayer {
         tabindex="0"
         aria-label={label}
         aria-hidden={!this.ready ? 'true' : 'false'}
+        aria-busy={!this.playbackReady ? 'true' : 'false'}
         style={{
           paddingBottom: this.isVideoView ? `${this.calcAspectRatio()}%` : undefined,
         }}
@@ -1144,17 +1140,6 @@ export class Player implements MediaPlayer {
           fullscreen: this.isFullscreenActive,
         }}
       >
-        {
-          !this.noSkeleton && (
-            <div
-              class={{
-                skeleton: true,
-                active: !this.ready,
-              }}
-            />
-          )
-        }
-
         {
           !this.controls
           && canShowCustomUI

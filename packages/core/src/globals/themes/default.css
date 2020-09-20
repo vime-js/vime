@@ -45,6 +45,7 @@ vime-player {
   --vm-controls-z-index: 50;
   --vm-tooltip-z-index: 60;
   --vm-menu-z-index: 70;
+  --vm-skeleton-z-index: 100;
   
   /*******************************
    * Player
@@ -58,9 +59,8 @@ vime-player {
    * Skeleton
    *******************************/
 
-  --vm-player-skeleton-base-color: #eee;
-  --vm-player-skeleton-highlight-color: #f3f3f3;
-  --vm-player-skeleton-duration: 1.2s;
+  --vm-skeleton-color: hsl(0, 10%, 90%);
+  --vm-skeleton-sheen-color: hsl(0, 10%, 95%);
   
   /*******************************
    * Control Base
