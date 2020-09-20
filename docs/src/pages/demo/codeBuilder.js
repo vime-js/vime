@@ -23,7 +23,7 @@ const audio = (jsx = false) => `
 
 const video = (jsx = false) => `
     <${jsx ? 'VimeVideo' : 'vime-video'}
-      crossOrigin 
+      ${jsx ? 'crossOrigin' : 'cross-origin'}
       poster="${poster}"
     >
       <source 
@@ -35,20 +35,20 @@ const video = (jsx = false) => `
 `.trim();
 
 const youtube = (jsx = false) => `
-    <${jsx ? 'VimeYoutube' : 'vime-youtube'} videoId="DyTCOwB0DVw"${jsx ? ' />' : '></vime-youtube>'}
+    <${jsx ? 'VimeYoutube' : 'vime-youtube'} ${jsx ? 'videoId' : 'video-id'}="DyTCOwB0DVw"${jsx ? ' />' : '></vime-youtube>'}
 `.trim();
 
 const vimeo = (jsx = false) => `
-    <${jsx ? 'VimeVimeo' : 'vime-vimeo'} videoId="411652396"${jsx ? ' />' : '></vime-vimeo>'}
+    <${jsx ? 'VimeVimeo' : 'vime-vimeo'} ${jsx ? 'videoId' : 'video-id'}="411652396"${jsx ? ' />' : '></vime-vimeo>'}
 `.trim();
 
 const dailymotion = (jsx = false) => `
-    <${jsx ? 'VimeDailymotion' : 'vime-dailymotion'} videoId="k3b11PemcuTrmWvYe0q"${jsx ? ' />' : '></vime-dailymotion>'}
+    <${jsx ? 'VimeDailymotion' : 'vime-dailymotion'} ${jsx ? 'videoId' : 'video-id'}="k3b11PemcuTrmWvYe0q"${jsx ? ' />' : '></vime-dailymotion>'}
 `.trim();
 
 const hls = (jsx = false) => `
     <${jsx ? 'VimeHls' : 'vime-hls'}
-      crossOrigin 
+      ${jsx ? 'crossOrigin' : 'cross-origin'}
       poster="${poster}"
     >
       <source 
