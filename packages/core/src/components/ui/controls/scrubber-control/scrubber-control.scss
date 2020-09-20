@@ -1,21 +1,20 @@
+/**
+  * @prop --vm-scrubber-loading-stripe-size: The size of each candystripe displayed when media is 
+  * buffering.
+  * @prop --vm-scrubber-loading-stripe-color: The color of each candystripe displayed when media is 
+  * buffering.
+  * @prop --vm-scrubber-buffered-bg: The background color of the section that indicates how much 
+  * of the media has been buffered.
+  */
 vime-scrubber-control {
-  /**
-   * @prop --scrubber-loading-stripe-size: The size of each candystripe displayed when media is 
-   * buffering.
-   * @prop --scrubber-loading-stripe-color: The color of each candystripe displayed when media is 
-   * buffering.
-   * @prop --scrubber-buffered-bg: The background color of the section that indicates how much 
-   * of the media has been buffered.
-   */
+  $scrubber-loading-size: var(--vm-scrubber-loading-stripe-size);
+  $scrubber-loading-color: var(--vm-scrubber-loading-stripe-color);
+  $scrubber-buffered-bg: var(--vm-scrubber-buffered-bg);
 
-  $scrubber-loading-size: var(--scrubber-loading-stripe-size);
-  $scrubber-loading-color: var(--scrubber-loading-stripe-color);
-  $scrubber-buffered-bg: var(--scrubber-buffered-bg);
+  $slider-track-height: var(--vm-slider-track-height);
 
-  $slider-track-height: var(--slider-track-height);
-  
   // Offset the range thumb in order to be able to calculate the relative progress.
-  $scrubber-offset: var(--slider-thumb-width);
+  $scrubber-offset: var(--vm-slider-thumb-width);
 
   @keyframes progress {
     to {
@@ -30,19 +29,19 @@ vime-scrubber-control {
   left: calc(#{$scrubber-offset} / 2);
   margin-right: $scrubber-offset;
   margin-bottom: $slider-track-height;
- 
+
   vime-slider,
   progress {
     margin-left: calc(0px - calc(#{$scrubber-offset} / 2));
     margin-right: calc(0px - calc(#{$scrubber-offset} / 2));
     width: calc(100% + #{$scrubber-offset});
     height: $slider-track-height;
-
+  
     &:hover {
       cursor: pointer;
     }
   }
-
+  
   vime-slider {
     position: absolute;
     top: 0;
@@ -61,30 +60,30 @@ vime-scrubber-control {
     padding: 0;
     color: $scrubber-buffered-bg;
     height: $slider-track-height;
-
+  
     &::-webkit-progress-bar {
       background: transparent;
     }
-
+  
     &::-webkit-progress-value {
       background: currentColor;
       border-radius: 100px;
       min-width: $slider-track-height;
       transition: width 0.2s ease;
     }
-
+  
     &::-moz-progress-bar {
       background: currentColor;
       border-radius: 100px;
       min-width: $slider-track-height;
       transition: width 0.2s ease;
     }
-
+  
     &::-ms-fill {
       border-radius: 100px;
       transition: width 0.2s ease;
     }
-
+  
     &.loading {
       animation: progress 1s linear infinite;
       background-image: linear-gradient(-45deg,
@@ -102,3 +101,4 @@ vime-scrubber-control {
     }
   }
 }
+  

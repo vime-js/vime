@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should be structurally sound 1`] = `
-<vime-slider style="--value: 50%;">
+<vime-slider style="--vm-value: 50%;">
   <input aria-orientation="horizontal" aria-valuemax="10" aria-valuemin="0" aria-valuenow="5" aria-valuetext="50%" autocomplete="off" max="10" min="0" step="1" type="range" value="5">
 </vime-slider>
 `;

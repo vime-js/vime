@@ -1,13 +1,12 @@
+/**
+  * @prop --vm-time-color: The color of the text displaying the time.
+  * @prop --vm-time-font-size: The size of the font displaying the time.
+  * @prop --vm-time-font-weight: The weight of the font displaying the time.
+  */
 vime-time {
-  /**
-   * @prop --time-color: The color of the text displaying the time.
-   * @prop --time-font-size: The size of the font displaying the time.
-   * @prop --time-font-weight: The weight of the font displaying the time.
-   */
-
   display: flex;
   align-items: center;
-  color: var(--time-color);
-  font-size: var(--time-font-size);
-  font-weight: var(--time-font-weight);
+  color: var(--vm-time-color);
+  font-size: var(--vm-time-font-size);
+  font-weight: var(--vm-time-font-weight);
 }

@@ -141,22 +141,22 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name                            | Description                                                                  |
-| ------------------------------- | ---------------------------------------------------------------------------- |
-| `--menu-item-arrow-color`       | The color of the left/right arrow on a navigational menu item.               |
-| `--menu-item-badge-bg`          | The background color of the badge.                                           |
-| `--menu-item-badge-color`       | The color of the badge text.                                                 |
-| `--menu-item-badge-font-size`   | The font size of the the badge text.                                         |
-| `--menu-item-check-icon-height` | The height of the checked icon.                                              |
-| `--menu-item-check-icon-width`  | The width of the checked icon.                                               |
-| `--menu-item-divider-color`     | The color of the divider between a navigational menu item and the menu body. |
-| `--menu-item-focus-bg`          | The background color of a menu item when it is being focused or hovered on.  |
-| `--menu-item-focus-color`       | The color of a menu item's text when it is being focused or hovered on.      |
-| `--menu-item-hint-color`        | The color of the hint text.                                                  |
-| `--menu-item-hint-font-size`    | The font size of the hint text.                                              |
-| `--menu-item-hint-opacity`      | The opacity of the hint text.                                                |
-| `--menu-item-padding`           | The padding within each menu item.                                           |
-| `--menu-item-tap-highlight`     | The highlight color when a menu item is tapped.                              |
+| Name                               | Description                                                                  |
+| ---------------------------------- | ---------------------------------------------------------------------------- |
+| `--vm-menu-item-arrow-color`       | The color of the left/right arrow on a navigational menu item.               |
+| `--vm-menu-item-badge-bg`          | The background color of the badge.                                           |
+| `--vm-menu-item-badge-color`       | The color of the badge text.                                                 |
+| `--vm-menu-item-badge-font-size`   | The font size of the the badge text.                                         |
+| `--vm-menu-item-check-icon-height` | The height of the checked icon.                                              |
+| `--vm-menu-item-check-icon-width`  | The width of the checked icon.                                               |
+| `--vm-menu-item-divider-color`     | The color of the divider between a navigational menu item and the menu body. |
+| `--vm-menu-item-focus-bg`          | The background color of a menu item when it is being focused or hovered on.  |
+| `--vm-menu-item-focus-color`       | The color of a menu item's text when it is being focused or hovered on.      |
+| `--vm-menu-item-hint-color`        | The color of the hint text.                                                  |
+| `--vm-menu-item-hint-font-size`    | The font size of the hint text.                                              |
+| `--vm-menu-item-hint-opacity`      | The opacity of the hint text.                                                |
+| `--vm-menu-item-padding`           | The padding within each menu item.                                           |
+| `--vm-menu-item-tap-highlight`     | The highlight color when a menu item is tapped.                              |
 
 
 ## Dependencies

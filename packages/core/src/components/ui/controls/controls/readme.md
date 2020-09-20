@@ -142,12 +142,12 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name                 | Description                                            |
-| -------------------- | ------------------------------------------------------ |
-| `--controls-bg`      | The background color of the controls.                  |
-| `--controls-padding` | The padding inside the controls.                       |
-| `--controls-spacing` | The space between controls.                            |
-| `--controls-z-index` | The position in the UI z-axis stack inside the player. |
+| Name                    | Description                                            |
+| ----------------------- | ------------------------------------------------------ |
+| `--vm-controls-bg`      | The background color of the controls.                  |
+| `--vm-controls-padding` | The padding inside the controls.                       |
+| `--vm-controls-spacing` | The space between controls.                            |
+| `--vm-controls-z-index` | The position in the UI z-axis stack inside the player. |
 
 
 ## Dependencies

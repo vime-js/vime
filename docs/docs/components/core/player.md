@@ -547,17 +547,16 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                                | Description                                                                                                                |
-| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `--blocker-z-index`                 | The blocker's position in the root z-axis stack inside the player.                                                         |
-| `--player-bg`                       | The background color of the player, has no effect on audio players.                                                        |
-| `--player-box-shadow`               | The shadow cast around the player frame.                                                                                   |
-| `--player-fade-transition`          | The default transition used throughout the player for fading elements in and out.                                          |
-| `--player-font-family`              | A custom font family to be used throughout the player.                                                                     |
-| `--player-skeleton-base-color`      | The background color of the skeleton loading animation.                                                                    |
-| `--player-skeleton-duration`        | The length of the time it takes the skeleton animation to complete one left-to-right transition.                           |
-| `--player-skeleton-highlight-color` | The animated highlight color of the skeleton loading animation.                                                            |
-| `--player-theme`                    | A custom theme (color) to be used throughout the player. Any valid CSS `color` property (HEX, RGBA, HLS, ...) can be used. |
+| Name                                   | Description                                                                                                                |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `--vm-blocker-z-index`                 | The blocker's position in the root z-axis stack inside the player.                                                         |
+| `--vm-player-bg`                       | The background color of the player, has no effect on audio players.                                                        |
+| `--vm-player-box-shadow`               | The shadow cast around the player frame.                                                                                   |
+| `--vm-player-font-family`              | A custom font family to be used throughout the player.                                                                     |
+| `--vm-player-skeleton-base-color`      | The background color of the skeleton loading animation.                                                                    |
+| `--vm-player-skeleton-duration`        | The length of the time it takes the skeleton animation to complete one left-to-right transition.                           |
+| `--vm-player-skeleton-highlight-color` | The animated highlight color of the skeleton loading animation.                                                            |
+| `--vm-player-theme`                    | A custom theme (color) to be used throughout the player. Any valid CSS `color` property (HEX, RGBA, HLS, ...) can be used. |
 
 ---
 

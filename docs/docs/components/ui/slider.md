@@ -185,16 +185,16 @@ class Example {
 
 ## CSS Custom Properties
 
-| Name                            | Description                                                       |
-| ------------------------------- | ----------------------------------------------------------------- |
-| `--slider-thumb-bg`             | The background color of the slider thumb.                         |
-| `--slider-thumb-height`         | The height of the slider thumb.                                   |
-| `--slider-thumb-shadow`         | The shadow cast around the slider thumb.                          |
-| `--slider-thumb-width`          | The width of the slider thumb.                                    |
-| `--slider-track-color`          | The color of the track.                                           |
-| `--slider-track-focused-height` | The height of the track when it is focused.                       |
-| `--slider-track-height`         | The height of the track.                                          |
-| `--slider-value-color`          | The color of the part of the track filled upto the current value. |
+| Name                               | Description                                                       |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| `--vm-slider-thumb-bg`             | The background color of the slider thumb.                         |
+| `--vm-slider-thumb-height`         | The height of the slider thumb.                                   |
+| `--vm-slider-thumb-shadow`         | The shadow cast around the slider thumb.                          |
+| `--vm-slider-thumb-width`          | The width of the slider thumb.                                    |
+| `--vm-slider-track-color`          | The color of the track.                                           |
+| `--vm-slider-track-focused-height` | The height of the track when it is focused.                       |
+| `--vm-slider-track-height`         | The height of the track.                                          |
+| `--vm-slider-value-color`          | The color of the part of the track filled upto the current value. |
 
 ## Dependencies
 

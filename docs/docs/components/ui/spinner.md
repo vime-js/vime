@@ -141,16 +141,16 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name                         | Description                                                |
-| ---------------------------- | ---------------------------------------------------------- |
-| `--spinner-fill-color`       | The color of the progress within the track.                |
-| `--spinner-height`           | The height of the spinner.                                 |
-| `--spinner-spin-duration`    | How long it takes the spinner to complete a full rotation. |
-| `--spinner-spin-timing-func` | The animation timing function to use for the spin.         |
-| `--spinner-thickness`        | The thickness of the spinner in px.                        |
-| `--spinner-track-color`      | The color of the track the spinner is rotating in.         |
-| `--spinner-width`            | The width of the spinner.                                  |
-| `--spinner-z-index`          | The position in the UI z-axis stack inside the player.     |
+| Name                            | Description                                                |
+| ------------------------------- | ---------------------------------------------------------- |
+| `--vm-spinner-fill-color`       | The color of the progress within the track.                |
+| `--vm-spinner-height`           | The height of the spinner.                                 |
+| `--vm-spinner-spin-duration`    | How long it takes the spinner to complete a full rotation. |
+| `--vm-spinner-spin-timing-func` | The animation timing function to use for the spin.         |
+| `--vm-spinner-thickness`        | The thickness of the spinner in px.                        |
+| `--vm-spinner-track-color`      | The color of the track the spinner is rotating in.         |
+| `--vm-spinner-width`            | The width of the spinner.                                  |
+| `--vm-spinner-z-index`          | The position in the UI z-axis stack inside the player.     |
 
 ## Dependencies
 

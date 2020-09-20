@@ -1,25 +1,24 @@
+/**
+  * @prop --vm-live-indicator-color: The color of the live indicator dot.
+  */
 vime-live-indicator {
-  /**
-   * @prop --live-indicator-color: The color of the live indicator dot.
-   */
-
   display: flex;
   align-items: center;
   font-size: 13px;
   font-weight: bold;
   letter-spacing: 0.6px;
-  color: var(--control-color);
+  color: var(--vm-control-color);
 
   &.hidden {
     display: none;
   }
 
-  & > div.indicator {
+  & > .indicator {
     display: inline-block;
     width: 8px;
     height: 8px;
     border-radius: 50%;
     margin-right: 4px;
-    background-color: var(--live-indicator-color, red);
+    background-color: var(--vm-live-indicator-color, red);
   }
 }

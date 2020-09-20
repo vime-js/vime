@@ -1,15 +1,14 @@
+/**
+  * @prop --vm-poster-z-index: The position in the UI z-axis stack inside the player.
+  */
 vime-poster {
-  /**
-   * @prop --poster-z-index: The position in the UI z-axis stack inside the player.
-   */
-
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: #000;
-  z-index: var(--poster-z-index);
+  z-index: var(--vm-poster-z-index);
   display: inline-block;
   pointer-events: none;
   @include invisible();
@@ -22,7 +21,7 @@ vime-poster {
     @include visible();
   }
 
-  & > img {
+  img {
     width: 100%;
     height: 100%;
     pointer-events: none;

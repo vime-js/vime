@@ -1,12 +1,11 @@
+/**
+  * @prop --vm-menu-color: The text color within the menu.
+  * @prop --vm-menu-bg: The background color the menu.
+  * @prop --vm-menu-font-size: The font size of text within the menu.
+  * @prop --vm-menu-font-weight: The font weight of text within the menu.
+  * @prop --vm-menu-z-index: The position in the UI z-axis stack inside the player.
+  */
 vime-menu {
-  /**
-   * @prop --menu-color: The text color within the menu.
-   * @prop --menu-bg: The background color the menu.
-   * @prop --menu-font-size: The font size of text within the menu.
-   * @prop --menu-font-weight: The font weight of text within the menu.
-   * @prop --menu-z-index: The position in the UI z-axis stack inside the player.
-   */
-
   display: flex;
   flex-direction: column;
   position: relative;
@@ -15,11 +14,11 @@ vime-menu {
   height: auto;
   pointer-events: auto;
   text-align: left;
-  color: var(--menu-color);
-  background: var(--menu-bg);
-  font-size: var(--menu-font-size);
-  font-weight: var(--menu-font-weight);
-  z-index: var(--menu-z-index);
+  color: var(--vm-menu-color);
+  background: var(--vm-menu-bg);
+  font-size: var(--vm-menu-font-size);
+  font-weight: var(--vm-menu-font-weight);
+  z-index: var(--vm-menu-z-index);
 
   &[aria-hidden='true'] {
     display: none;

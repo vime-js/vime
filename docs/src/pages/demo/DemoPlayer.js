@@ -87,7 +87,7 @@ const DemoPlayer = ({
   <VimePlayer 
     key={genKey(provider, showDefaultUi)}
     theme={theme} 
-    style={{ '--player-theme': color }} 
+    style={{ '--vm-player-theme': color }} 
     controls={!showDefaultUi}
     noSkeleton
   >

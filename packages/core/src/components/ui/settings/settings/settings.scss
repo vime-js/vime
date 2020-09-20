@@ -1,44 +1,43 @@
+/**
+  * @prop --vm-settings-width: The width of the settings menu.
+  * @prop --vm-settings-padding: The padding inside the settings menu.
+  * @prop --vm-settings-shadow: The shadow cast around the settings menu frame.
+  * @prop --vm-settings-border-radius: The border radius of the settings menu.
+  * @prop --vm-settings-max-height: The max height of the settings menu.
+  * @prop --vm-settings-scroll-width: The width of the settings scrollbar.
+  * @prop --vm-settings-scroll-thumb-color: The color of the settings scrollbar thumb.
+  * @prop --vm-settings-scroll-track-color: The color of the settings scrollbar track.
+  */
 vime-settings {
-  /**
-   * @prop --settings-width: The width of the settings menu.
-   * @prop --settings-padding: The padding inside the settings menu.
-   * @prop --settings-shadow: The shadow cast around the settings menu frame.
-   * @prop --settings-border-radius: The border radius of the settings menu.
-   * @prop --settings-max-height: The max height of the settings menu.
-   * @prop --settings-scroll-width: The width of the settings scrollbar.
-   * @prop --settings-scroll-thumb-color: The color of the settings scrollbar thumb.
-   * @prop --settings-scroll-track-color: The color of the settings scrollbar track.
-   */
-
   position: absolute;
   opacity: 0;
   visibility: hidden;
   pointer-events: auto;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: var(--menu-bg);
-  max-height: var(--settings-max-height);
-  border-radius: var(--settings-border-radius);
-  width: var(--settings-width);
-  padding: var(--settings-padding);
-  box-shadow: var(--settings-shadow);
-  z-index: var(--menu-z-index);
+  background-color: var(--vm-menu-bg);
+  max-height: var(--vm-settings-max-height);
+  border-radius: var(--vm-settings-border-radius);
+  width: var(--vm-settings-width);
+  padding: var(--vm-settings-padding);
+  box-shadow: var(--vm-settings-shadow);
+  z-index: var(--vm-menu-z-index);
   scrollbar-width: thin;
   scroll-behavior: smooth;
-  scrollbar-color: var(--settings-scroll-thumb-color) var(--settings-scroll-track-color);
+  scrollbar-color: var(--vm-settings-scroll-thumb-color) var(--vm-settings-scroll-track-color);
 
   &::-webkit-scrollbar {
-    width: var(--settings-scroll-width);
+    width: var(--vm-settings-scroll-width);
   }
 
   &::-webkit-scrollbar-track {
-    background: var(--settings-scroll-track-color);
+    background: var(--vm-settings-scroll-track-color);
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: var(--settings-scroll-width);
-    background-color: var(--settings-scroll-thumb-color);
-    border: 2px solid var(--menu-bg);
+    border-radius: var(--vm-settings-scroll-width);
+    background-color: var(--vm-settings-scroll-thumb-color);
+    border: 2px solid var(--vm-menu-bg);
   }
 
   &.active {

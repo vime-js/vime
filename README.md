@@ -91,7 +91,7 @@ _Custom UI?_
 
 ```html
 <!-- Lets add a little splash of color throughout the player. -->
-<vime-player autoplay muted style="--player-theme: #1873d3">
+<vime-player autoplay muted style="--vm-player-theme: #1873d3">
   <!-- Loading a YouTube video. -->
   <vime-youtube video-id="DyTCOwB0DVw" />
 

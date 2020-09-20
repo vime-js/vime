@@ -1,7 +1,7 @@
 @mixin invisible() {
   opacity: 0;
   visibility: hidden;
-  transition: var(--player-fade-transition, opacity 0.3s ease-in-out);
+  transition: var(--vm-fade-transition);
 }
 
 @mixin visible() {

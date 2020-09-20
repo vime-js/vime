@@ -118,12 +118,12 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name            | Description                                             |
-| --------------- | ------------------------------------------------------- |
-| `--icon-color`  | The color of the icon.                                  |
-| `--icon-height` | The height of the icon.                                 |
-| `--icon-scale`  | The amount to scale the size of the icon up or down by. |
-| `--icon-width`  | The width of the icon.                                  |
+| Name               | Description                                             |
+| ------------------ | ------------------------------------------------------- |
+| `--vm-icon-color`  | The color of the icon.                                  |
+| `--vm-icon-height` | The height of the icon.                                 |
+| `--vm-icon-scale`  | The amount to scale the size of the icon up or down by. |
+| `--vm-icon-width`  | The width of the icon.                                  |
 
 
 ## Dependencies

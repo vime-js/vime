@@ -174,11 +174,11 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name                              | Description                                                                                 |
-| --------------------------------- | ------------------------------------------------------------------------------------------- |
-| `--scrubber-buffered-bg`          | The background color of the section that indicates how much of the media has been buffered. |
-| `--scrubber-loading-stripe-color` | The color of each candystripe displayed when media is buffering.                            |
-| `--scrubber-loading-stripe-size`  | The size of each candystripe displayed when media is buffering.                             |
+| Name                                 | Description                                                                                 |
+| ------------------------------------ | ------------------------------------------------------------------------------------------- |
+| `--vm-scrubber-buffered-bg`          | The background color of the section that indicates how much of the media has been buffered. |
+| `--vm-scrubber-loading-stripe-color` | The color of each candystripe displayed when media is buffering.                            |
+| `--vm-scrubber-loading-stripe-size`  | The size of each candystripe displayed when media is buffering.                             |
 
 ## Dependencies
 

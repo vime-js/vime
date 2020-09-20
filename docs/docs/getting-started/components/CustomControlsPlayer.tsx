@@ -36,7 +36,7 @@ export const CustomControlsPlayer = () => (
       </VimeControls>
 
       <VimeControls pin="center">
-        <VimePlaybackControl hideTooltip style={{ '--control-scale': 1.7 }} />
+        <VimePlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />
       </VimeControls>
       
       <VimeControls fullWidth pin="bottomLeft">

@@ -80,8 +80,8 @@ const player = (opts, lib, jsx) => {
   const propIf = (condition, prop) => condition ? `\n    ${prop}` : '';
 
   const style = (lib === 'react') 
-    ? `style={{ '--player-theme': '${opts.color}' }}` 
-    : `style="--player-theme: ${opts.color};"`;
+    ? `style={{ '--vm-player-theme': '${opts.color}' }}` 
+    : `style="--vm-player-theme: ${opts.color};"`;
 
   const controlsProp = propIf(!opts.showDefaultUi, 'controls');
   const themeProp = propIf(opts.showDefaultUi, `theme="${opts.theme}"`);

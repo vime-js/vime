@@ -1,52 +1,51 @@
+/**
+  * @prop --vm-control-border-radius: The border radius of the control.
+  * @prop --vm-control-bg: The background of the control.
+  * @prop --vm-control-scale: The amount to scale the control up/down by.
+  * @prop --vm-control-border: The border of the control.
+  * @prop --vm-control-padding: The padding inside the control.
+  * @prop --vm-control-color: The text color of the control.
+  * @prop --vm-control-focus-bg: The background colour of a control when it is being hovered on or 
+  * focused.
+  * @prop --vm-control-focus-color: The text colour of a control when it is being hovered on or 
+  * focused.
+  * @prop --vm-control-tap-highlight: The highlight color when a control is tapped.
+  */
 vime-control {
-  /**
-    * @prop --control-border-radius: The border radius of the control.
-    * @prop --control-bg: The background of the control.
-    * @prop --control-scale: The amount to scale the control up/down by.
-    * @prop --control-border: The border of the control.
-    * @prop --control-padding: The padding inside the control.
-    * @prop --control-color: The text color of the control.
-    * @prop --control-focus-bg: The background colour of a control when it is being hovered on or 
-    * focused.
-    * @prop --control-focus-color: The text colour of a control when it is being hovered on or 
-    * focused.
-    * @prop --control-tap-highlight: The highlight color when a control is tapped.
-    */
-
   &.hidden {
     display: none;
   }
 
-  & > button {
+  button {
     display: flex;
     align-items: center;
     flex-direction: row;
-    border: var(--control-border);
+    border: var(--vm-control-border);
     cursor: pointer;
     flex-shrink: 0;
-    color: var(--control-color);
-    background: var(--control-bg, transparent);
-    border-radius: var(--control-border-radius);
-    padding: var(--control-padding);
+    color: var(--vm-control-color);
+    background: var(--vm-control-bg, transparent);
+    border-radius: var(--vm-control-border-radius);
+    padding: var(--vm-control-padding);
     position: relative;
     pointer-events: auto;
     transition: all 0.3s ease;
-    transform: scale(var(--control-scale, 1));
+    transform: scale(var(--vm-control-scale, 1));
     
     &:focus {
       outline: 0;
     }
     
     &.tapHighlight {
-      background: var(--control-tap-highlight);
+      background: var(--vm-control-tap-highlight);
     }
 
     &.notTouch {
       &:focus,
       &:hover,
       &[aria-expanded='true'] {
-        background: var(--control-focus-bg);
-        color: var(--control-focus-color);
+        background: var(--vm-control-focus-bg);
+        color: var(--vm-control-focus-color);
       }
     }
   }

@@ -190,18 +190,18 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name                         | Description                                                      |
-| ---------------------------- | ---------------------------------------------------------------- |
-| `--tooltip-bg`               | The background color of the tooltip.                             |
-| `--tooltip-border-radius`    | The border radius of the tooltip.                                |
-| `--tooltip-box-shadow`       | The box shadow cast around the tooltip.                          |
-| `--tooltip-color`            | The text color of the tooltip.                                   |
-| `--tooltip-fade-duration`    | The length in seconds that the tooltip will take to fade in/out. |
-| `--tooltip-fade-timing-func` | The transition timing function for fading in and out.            |
-| `--tooltip-font-size`        | The font size of the tooltip text.                               |
-| `--tooltip-padding`          | The padding inside the tooltip.                                  |
-| `--tooltip-spacing`          | The space between the tooltip and its parent when active.        |
-| `--tooltip-z-index`          | The position in the UI z-axis stack inside the player.           |
+| Name                            | Description                                                      |
+| ------------------------------- | ---------------------------------------------------------------- |
+| `--vm-tooltip-bg`               | The background color of the tooltip.                             |
+| `--vm-tooltip-border-radius`    | The border radius of the tooltip.                                |
+| `--vm-tooltip-box-shadow`       | The box shadow cast around the tooltip.                          |
+| `--vm-tooltip-color`            | The text color of the tooltip.                                   |
+| `--vm-tooltip-fade-duration`    | The length in seconds that the tooltip will take to fade in/out. |
+| `--vm-tooltip-fade-timing-func` | The transition timing function for fading in and out.            |
+| `--vm-tooltip-font-size`        | The font size of the tooltip text.                               |
+| `--vm-tooltip-padding`          | The padding inside the tooltip.                                  |
+| `--vm-tooltip-spacing`          | The space between the tooltip and its parent when active.        |
+| `--vm-tooltip-z-index`          | The position in the UI z-axis stack inside the player.           |
 
 ## Dependencies
 

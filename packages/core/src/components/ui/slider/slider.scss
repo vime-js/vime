@@ -1,27 +1,26 @@
-vime-slider {
-  /**
-  * @prop --slider-thumb-bg: The background color of the slider thumb.
-  * @prop --slider-thumb-width: The width of the slider thumb.
-  * @prop --slider-thumb-height: The height of the slider thumb.
-  * @prop --slider-thumb-shadow: The shadow cast around the slider thumb.
-  * @prop --slider-track-height: The height of the track.
-  * @prop --slider-track-focused-height: The height of the track when it is focused.
-  * @prop --slider-track-color: The color of the track.
-  * @prop --slider-value-color: The color of the part of the track filled upto the current value.
+/**
+  * @prop --vm-slider-thumb-bg: The background color of the slider thumb.
+  * @prop --vm-slider-thumb-width: The width of the slider thumb.
+  * @prop --vm-slider-thumb-height: The height of the slider thumb.
+  * @prop --vm-slider-thumb-shadow: The shadow cast around the slider thumb.
+  * @prop --vm-slider-track-height: The height of the track.
+  * @prop --vm-slider-track-focused-height: The height of the track when it is focused.
+  * @prop --vm-slider-track-color: The color of the track.
+  * @prop --vm-slider-value-color: The color of the part of the track filled upto the current value.
   */
-
-  $slider-thumb-width: var(--slider-thumb-width);
-  $slider-thumb-height: var(--slider-thumb-height);
-  $slider-thumb-bg: var(--slider-thumb-bg);
+vime-slider {
+  $slider-thumb-width: var(--vm-slider-thumb-width);
+  $slider-thumb-height: var(--vm-slider-thumb-height);
+  $slider-thumb-bg: var(--vm-slider-thumb-bg);
   $slider-thumb-border: 2px solid transparent;
-  $slider-thumb-shadow: var(--slider-thumb-shadow);
+  $slider-thumb-shadow: var(--vm-slider-thumb-shadow);
   
-  $slider-track-height: var(--slider-track-height);
-  $slider-track-focused-height: var(--slider-track-focused-height);
-
-  $slider-track-color: var(--slider-track-color);
-  $slider-value-color: var(--slider-value-color);
-
+  $slider-track-height: var(--vm-slider-track-height);
+  $slider-track-focused-height: var(--vm-slider-track-focused-height);
+  
+  $slider-track-color: var(--vm-slider-track-color);
+  $slider-value-color: var(--vm-slider-value-color);
+  
   @mixin slider-track() {
     background: transparent;
     border: 0;
@@ -30,7 +29,7 @@ vime-slider {
     transition: box-shadow 0.3s ease;
     user-select: none;
   }
-
+  
   @mixin slider-thumb() {
     opacity: 0;
     background: $slider-thumb-bg;
@@ -66,7 +65,7 @@ vime-slider {
     &::-webkit-slider-runnable-track {
       @include slider-track();
 
-      background-image: linear-gradient(to right, currentColor var(--value, 0%), transparent var(--value, 0%));
+      background-image: linear-gradient(to right, currentColor var(--vm-value, 0%), transparent var(--vm-value, 0%));
       background-color: $slider-track-color;
     }
 

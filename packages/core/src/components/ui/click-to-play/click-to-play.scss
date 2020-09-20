@@ -1,8 +1,7 @@
-vime-click-to-play {
-  /**
-  * @prop --click-to-play-z-index: The position in the UI z-axis stack inside the player.
+/**
+  * @prop --vm-click-to-play-z-index: The position in the UI z-axis stack inside the player.
   */
-
+vime-click-to-play {
   position: absolute;
   top: 0;
   left: 0;
@@ -10,7 +9,7 @@ vime-click-to-play {
   height: 100%;
   pointer-events: auto;
   display: none;
-  z-index: var(--click-to-play-z-index);
+  z-index: var(--vm-click-to-play-z-index);
 
   &.enabled {
     display: inline-block;

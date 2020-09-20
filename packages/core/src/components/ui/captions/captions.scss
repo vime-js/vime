@@ -1,67 +1,67 @@
-  vime-captions {
-    /**
-    * @prop --captions-text-color: The color of the captions text.
-    * @prop --captions-font-size: Font size of captions when device screen size is <768px.
-    * @prop --captions-font-size-medium: Font size of captions when device screen size is >768px.
-    * @prop --captions-font-size-large: Font size of captions when device screen size is >992px.
-    * @prop --captions-font-size-xlarge: Font size of captions when device screen size is >1200px.
-    * @prop --captions-cue-bg-color: The background color of active cues.
-    * @prop --captions-cue-border-radius: The border radius of active cues.
-    * @prop --captions-cue-padding: The padding around active cues.
-    * @prop --captions-z-index: The position in the UI z-axis stack inside the player.
-    */
+/**
+  * @prop --vm-captions-text-color: The color of the captions text.
+  * @prop --vm-captions-font-size: Font size of captions when device screen size is <768px.
+  * @prop --vm-captions-font-size-medium: Font size of captions when device screen size is >768px.
+  * @prop --vm-captions-font-size-large: Font size of captions when device screen size is >992px.
+  * @prop --vm-captions-font-size-xlarge: Font size of captions when device screen size is >1200px.
+  * @prop --vm-captions-cue-bg-color: The background color of active cues.
+  * @prop --vm-captions-cue-border-radius: The border radius of active cues.
+  * @prop --vm-captions-cue-padding: The padding around active cues.
+  * @prop --vm-captions-z-index: The position in the UI z-axis stack inside the player.
+  */
+vime-captions {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: var(--vm-captions-text-color);
+  font-size: var(--vm-captions-font-size);
+  padding: $control-spacing;
+  z-index: var(--vm-captions-z-index);
+  display: none;
+  pointer-events: none;
+  transition: transform 0.4s ease-in-out;
 
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    color: var(--captions-text-color);
-    font-size: var(--captions-font-size);
-    padding: $control-spacing;
-    z-index: var(--captions-z-index);
-    display: none;
-    pointer-events: none;
-    transition: transform 0.4s ease-in-out;
+  &.enabled {
+    display: inline-block;
+  }
 
-    &.enabled {
-      display: inline-block;
-    }
-
-    &.hidden {
-      display: none !important;
-    }
-    
-    @media (min-width: 768px) {
-      font-size: var(--captions-font-size-medium);
-    }
-      
-    @media (min-width: 992px) {
-      font-size: var(--captions-font-size-large);
-    }
-    
-    @media (min-width: 1200px) {
-      font-size: var(--captions-font-size-xlarge);
-    }
-  
-    & > span {
-      display: inline-block;
-      background: var(--captions-cue-bg-color);
-      border-radius: var(--captions-cue-border-radius);
-      box-decoration-break: clone;
-      line-height: 185%;
-      padding: var(--captions-cue-padding);
-      white-space: pre-wrap;
-      pointer-events: none;
-      
-      // Firefox adds a <div> when using getCueAsHTML().
-      :global(div) {
-        display: inline;
-      }
-      
-      &:empty {
-        display: none;
-      }
-    }
+  &.hidden {
+    display: none !important;
   }
   
+  @media (min-width: 768px) {
+    font-size: var(--vm-captions-font-size-medium);
+  }
+    
+  @media (min-width: 992px) {
+    font-size: var(--vm-captions-font-size-large);
+  }
+  
+  @media (min-width: 1200px) {
+    font-size: var(--vm-captions-font-size-xlarge);
+  }
+
+  // Cue.
+  span {
+    display: inline-block;
+    background: var(--vm-captions-cue-bg-color);
+    border-radius: var(--vm-captions-cue-border-radius);
+    box-decoration-break: clone;
+    line-height: 185%;
+    padding: var(--vm-captions-cue-padding);
+    white-space: pre-wrap;
+    pointer-events: none;
+    
+    // Firefox adds a <div> when using getCueAsHTML().
+    :global(div) {
+      display: inline;
+    }
+    
+    &:empty {
+      display: none;
+    }
+  }
+}
+ 

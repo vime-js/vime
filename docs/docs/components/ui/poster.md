@@ -149,9 +149,9 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name               | Description                                            |
-| ------------------ | ------------------------------------------------------ |
-| `--poster-z-index` | The position in the UI z-axis stack inside the player. |
+| Name                  | Description                                            |
+| --------------------- | ------------------------------------------------------ |
+| `--vm-poster-z-index` | The position in the UI z-axis stack inside the player. |
 
 ## Dependencies
 

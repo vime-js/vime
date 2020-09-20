@@ -1,13 +1,13 @@
 vime-volume-control {
-  @function slider-transition($prop) {
-    @return $prop 0.2s cubic-bezier(0.4, 0, 1, 1);
-  }
-
   align-items: center;
   display: flex;
   position: relative;
   pointer-events: auto;
   margin-left: calc(#{$control-spacing} / 2) !important;
+
+  @function slider-transition($prop) {
+    @return $prop 0.2s cubic-bezier(0.4, 0, 1, 1);
+  }
 
   vime-slider {
     width: 75px;
@@ -19,15 +19,15 @@ vime-volume-control {
     transition: slider-transition(margin), slider-transition(max-width);
     margin-left: calc(#{$control-spacing} / 2) !important;
     visibility: hidden;
-
+  
     &:hover {
       cursor: pointer;
     }
-
+  
     &.hidden {
       display: none;
     }
-
+  
     &.active {
       max-width: 75px;
       margin: 0 ($control-spacing / 2);

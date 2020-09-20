@@ -155,17 +155,17 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name                           | Description                                               |
-| ------------------------------ | --------------------------------------------------------- |
-| `--captions-cue-bg-color`      | The background color of active cues.                      |
-| `--captions-cue-border-radius` | The border radius of active cues.                         |
-| `--captions-cue-padding`       | The padding around active cues.                           |
-| `--captions-font-size`         | Font size of captions when device screen size is <768px.  |
-| `--captions-font-size-large`   | Font size of captions when device screen size is >992px.  |
-| `--captions-font-size-medium`  | Font size of captions when device screen size is >768px.  |
-| `--captions-font-size-xlarge`  | Font size of captions when device screen size is >1200px. |
-| `--captions-text-color`        | The color of the captions text.                           |
-| `--captions-z-index`           | The position in the UI z-axis stack inside the player.    |
+| Name                              | Description                                               |
+| --------------------------------- | --------------------------------------------------------- |
+| `--vm-captions-cue-bg-color`      | The background color of active cues.                      |
+| `--vm-captions-cue-border-radius` | The border radius of active cues.                         |
+| `--vm-captions-cue-padding`       | The padding around active cues.                           |
+| `--vm-captions-font-size`         | Font size of captions when device screen size is <768px.  |
+| `--vm-captions-font-size-large`   | Font size of captions when device screen size is >992px.  |
+| `--vm-captions-font-size-medium`  | Font size of captions when device screen size is >768px.  |
+| `--vm-captions-font-size-xlarge`  | Font size of captions when device screen size is >1200px. |
+| `--vm-captions-text-color`        | The color of the captions text.                           |
+| `--vm-captions-z-index`           | The position in the UI z-axis stack inside the player.    |
 
 ## Dependencies
 

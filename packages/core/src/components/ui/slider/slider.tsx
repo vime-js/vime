@@ -66,7 +66,7 @@ export class Slider {
     const clientRect = input.getBoundingClientRect();
 
     const sliderThumbWidth = parseFloat(
-      window.getComputedStyle(this.el).getPropertyValue('--slider-thumb-width'),
+      window.getComputedStyle(this.el).getPropertyValue('--vm-slider-thumb-width'),
     );
 
     const thumbWidth = ((100 / clientRect.width) * (sliderThumbWidth / 2)) / 100;
@@ -117,7 +117,7 @@ export class Slider {
     return (
       <Host
         style={{
-          '--value': this.getPercentage(),
+          '--vm-value': this.getPercentage(),
         }}
       >
         <input

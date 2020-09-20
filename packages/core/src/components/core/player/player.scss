@@ -1,25 +1,20 @@
+/**
+  * @prop --vm-player-bg: The background color of the player, has no effect on audio players.
+  * @prop --vm-player-font-family: A custom font family to be used throughout the player.
+  * @prop --vm-player-theme: A custom theme (color) to be used throughout the player. Any valid CSS 
+  * `color` property (HEX, RGBA, HLS, ...) can be used.
+  * @prop --vm-player-box-shadow: The shadow cast around the player frame.
+  * @prop --vm-player-skeleton-base-color: The background color of the skeleton loading animation.
+  * @prop --vm-player-skeleton-highlight-color: The animated highlight color of the skeleton loading
+  * animation.
+  * @prop --vm-player-skeleton-duration: The length of the time it takes the skeleton animation 
+  * to complete one left-to-right transition.
+  * @prop --vm-blocker-z-index: The blocker's position in the root z-axis stack inside the player.
+  */
 vime-player {
-  /**
-   * @prop --player-bg: The background color of the player, has no effect on audio players.
-   * @prop --player-font-family: A custom font family to be used throughout the player.
-   * @prop --player-theme: A custom theme (color) to be used throughout the player. Any valid CSS 
-   * `color` property (HEX, RGBA, HLS, ...) can be used.
-   * @prop --player-fade-transition: The default transition used throughout the player for fading 
-   * elements in and out.
-   * @prop --player-box-shadow: The shadow cast around the player frame.
-   * @prop --player-skeleton-base-color: The background color of the skeleton loading animation.
-   * @prop --player-skeleton-highlight-color: The animated highlight color of the skeleton loading
-   * animation.
-   * @prop --player-skeleton-duration: The length of the time it takes the skeleton animation 
-   * to complete one left-to-right transition.
-   * @prop --blocker-z-index: The blocker's position in the root z-axis stack inside the player.
-   */
-
-  --player-font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
-
   box-sizing: border-box;
   direction: ltr;
-  font-family: var(--player-font-family);
+  font-family: var(--vm-player-font-family);
   -moz-osx-font-smoothing: auto;
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-tap-highlight-color: transparent;
@@ -35,7 +30,29 @@ vime-player {
   text-shadow: none;
   outline: 0;
   transition: box-shadow 0.3s ease;
-  box-shadow: var(--player-box-shadow);
+  box-shadow: var(--vm-player-box-shadow);
+
+  &.idle {
+    cursor: none;
+  }
+
+  &.audio {
+    background-color: transparent !important;
+  }
+
+  &.video {
+    height: 0;
+    overflow: hidden;
+    background-color: var(--vm-player-bg, #000);
+  }
+
+  &.fullscreen {
+    margin: 0;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 0 !important;
+  }
 
   *,
   *::after,
@@ -62,39 +79,17 @@ vime-player {
     touch-action: manipulation;
   }
 
-  &.idle {
-    cursor: none;
-  }
-
-  &.audio {
-    background-color: transparent !important;
-  }
-
-  &.video {
-    height: 0;
-    overflow: hidden;
-    background-color: var(--player-bg, #000);
-  }
-
-  &.fullscreen {
-    margin: 0;
-    border-radius: 0;
-    width: 100%;
-    height: 100%;
-    padding-bottom: 0 !important;
-  }
-
-  & > .blocker {
+  .blocker {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: var(--blocker-z-index);
+    z-index: var(--vm-blocker-z-index);
     display: inline-block;
   }
 
-  & > .skeleton {
+  .skeleton {
     @keyframes load {
       0% {
         background-position: -200px 0;
@@ -110,19 +105,19 @@ vime-player {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: var(--ui-z-index);
-    background-color: var(--player-skeleton-base-color);
+    z-index: var(--vm-ui-z-index);
+    background-color: var(--vm-player-skeleton-base-color);
     background-image: linear-gradient(
       90deg, 
-      var(--player-skeleton-base-color), 
-      var(--player-skeleton-highlight-color), 
-      var(--player-skeleton-base-color)
+      var(--vm-player-skeleton-base-color), 
+      var(--vm-player-skeleton-highlight-color), 
+      var(--vm-player-skeleton-base-color)
     );
     background-size: 200px 100%;
     background-repeat: no-repeat;
     line-height: 1;
     pointer-events: none;
-    animation: load var(--player-skeleton-duration) ease-in-out infinite; 
+    animation: load var(--vm-player-skeleton-duration) ease-in-out infinite; 
     @include invisible();
 
     &.active {

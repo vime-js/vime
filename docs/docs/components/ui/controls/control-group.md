@@ -213,9 +213,9 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name                      | Description                       |
-| ------------------------- | --------------------------------- |
-| `--control-group-spacing` | The space between control groups. |
+| Name                         | Description                       |
+| ---------------------------- | --------------------------------- |
+| `--vm-control-group-spacing` | The space between control groups. |
 
 ## Dependencies
 

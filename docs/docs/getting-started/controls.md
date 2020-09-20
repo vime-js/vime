@@ -276,7 +276,7 @@ component documentation for an example of how to create a custom control.
     </vime-controls>
 
     <vime-controls pin="center">
-      <vime-playback-control hide-tooltip style="--control-scale: 1.7;"></vime-playback-control>
+      <vime-playback-control hide-tooltip style="--vm-control-scale: 1.7;"></vime-playback-control>
     </vime-controls>
     
     <vime-controls full-width pin="bottomLeft">
@@ -332,7 +332,7 @@ function Player() {
         </VimeControls>
 
         <VimeControls pin="center">
-          <VimePlaybackControl hideTooltip style={{ '--control-scale': 1.7 }} />
+          <VimePlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />
         </VimeControls>
         
         <VimeControls fullWidth pin="bottomLeft">
@@ -513,7 +513,7 @@ function Player() {
     </vime-controls>
 
     <vime-controls pin="center">
-      <vime-playback-control hide-tooltip style="--control-scale: 1.7;"></vime-playback-control>
+      <vime-playback-control hide-tooltip style="--vm-control-scale: 1.7;"></vime-playback-control>
     </vime-controls>
     
     <vime-controls full-width pin="bottomLeft">

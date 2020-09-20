@@ -81,9 +81,9 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name           | Description                                |
-| -------------- | ------------------------------------------ |
-| `--time-color` | The color of the text displaying the time. |
+| Name              | Description                                |
+| ----------------- | ------------------------------------------ |
+| `--vm-time-color` | The color of the text displaying the time. |
 
 
 ## Dependencies

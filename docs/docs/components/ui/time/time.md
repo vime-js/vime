@@ -110,11 +110,11 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name                 | Description                                 |
-| -------------------- | ------------------------------------------- |
-| `--time-color`       | The color of the text displaying the time.  |
-| `--time-font-size`   | The size of the font displaying the time.   |
-| `--time-font-weight` | The weight of the font displaying the time. |
+| Name                    | Description                                 |
+| ----------------------- | ------------------------------------------- |
+| `--vm-time-color`       | The color of the text displaying the time.  |
+| `--vm-time-font-size`   | The size of the font displaying the time.   |
+| `--vm-time-font-weight` | The weight of the font displaying the time. |
 
 ## Dependencies
 

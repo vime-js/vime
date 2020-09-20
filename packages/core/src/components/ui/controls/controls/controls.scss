@@ -1,18 +1,17 @@
+/**
+  * @prop --vm-controls-padding: The padding inside the controls.
+  * @prop --vm-controls-bg: The background color of the controls.
+  * @prop --vm-controls-spacing: The space between controls.
+  * @prop --vm-controls-z-index: The position in the UI z-axis stack inside the player.
+  */
 vime-controls {
-  /**
-   * @prop --controls-padding: The padding inside the controls.
-   * @prop --controls-bg: The background color of the controls.
-   * @prop --controls-spacing: The space between controls.
-   * @prop --controls-z-index: The position in the UI z-axis stack inside the player.
-   */
-
   display: flex;
   position: absolute;
   flex-wrap: wrap;
   pointer-events: auto;
-  z-index: var(--controls-z-index);
-  background: var(--controls-bg);
-  padding: var(--controls-padding);
+  z-index: var(--vm-controls-z-index);
+  background: var(--vm-controls-bg);
+  padding: var(--vm-controls-padding);
   @include invisible();
 
   &.audio {
@@ -36,7 +35,7 @@ vime-controls {
   }
 
   & > *:not(vime-control-group) {
-    margin-left: var(--controls-spacing);
+    margin-left: var(--vm-controls-spacing);
 
     &:first-child {
       margin-left: 0;

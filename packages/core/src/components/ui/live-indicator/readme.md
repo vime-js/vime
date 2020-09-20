@@ -136,9 +136,9 @@ function Example() {
 
 ## CSS Custom Properties
 
-| Name                     | Description                          |
-| ------------------------ | ------------------------------------ |
-| `--live-indicator-color` | The color of the live indicator dot. |
+| Name                        | Description                          |
+| --------------------------- | ------------------------------------ |
+| `--vm-live-indicator-color` | The color of the live indicator dot. |
 
 
 ## Dependencies

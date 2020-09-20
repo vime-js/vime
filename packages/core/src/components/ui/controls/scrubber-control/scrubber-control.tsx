@@ -110,7 +110,7 @@ export class ScrubberControl {
     const bounds = this.slider.getBoundingClientRect();
     const thumbWidth = parseFloat(
       window.getComputedStyle(this.slider)
-        .getPropertyValue('--slider-thumb-width'),
+        .getPropertyValue('--vm-slider-thumb-width'),
     );
     const leftLimit = (tooltipRect.width / 2) - (thumbWidth / 2);
     const rightLimit = bounds.width - (tooltipRect.width / 2) - (thumbWidth / 2);

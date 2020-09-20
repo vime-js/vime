@@ -1,8 +1,7 @@
+/**
+  * @prop --vm-control-group-spacing: The space between control groups.
+  */
 vime-control-group {
-  /**
-   * @prop --control-group-spacing: The space between control groups.
-   */
-
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -11,15 +10,15 @@ vime-control-group {
   justify-content: inherit;
 
   &.spaceTop {
-    margin-top: var(--control-group-spacing);
+    margin-top: var(--vm-control-group-spacing);
   }
   
   &.spaceBottom {
-    margin-bottom: var(--control-group-spacing);
+    margin-bottom: var(--vm-control-group-spacing);
   }
   
   & > * {
-    margin-left: var(--controls-spacing);
+    margin-left: var(--vm-controls-spacing);
 
     &:first-child {
       margin-left: 0;

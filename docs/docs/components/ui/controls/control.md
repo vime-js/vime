@@ -261,17 +261,17 @@ class PlaybackControl extends VimeComponent {
 
 ## CSS Custom Properties
 
-| Name                      | Description                                                                |
-| ------------------------- | -------------------------------------------------------------------------- |
-| `--control-bg`            | The background of the control.                                             |
-| `--control-border`        | The border of the control.                                                 |
-| `--control-border-radius` | The border radius of the control.                                          |
-| `--control-color`         | The text color of the control.                                             |
-| `--control-focus-bg`      | The background colour of a control when it is being hovered on or focused. |
-| `--control-focus-color`   | The text colour of a control when it is being hovered on or focused.       |
-| `--control-padding`       | The padding inside the control.                                            |
-| `--control-scale`         | The amount to scale the control up/down by.                                |
-| `--control-tap-highlight` | The highlight color when a control is tapped.                              |
+| Name                         | Description                                                                |
+| ---------------------------- | -------------------------------------------------------------------------- |
+| `--vm-control-bg`            | The background of the control.                                             |
+| `--vm-control-border`        | The border of the control.                                                 |
+| `--vm-control-border-radius` | The border radius of the control.                                          |
+| `--vm-control-color`         | The text color of the control.                                             |
+| `--vm-control-focus-bg`      | The background colour of a control when it is being hovered on or focused. |
+| `--vm-control-focus-color`   | The text colour of a control when it is being hovered on or focused.       |
+| `--vm-control-padding`       | The padding inside the control.                                            |
+| `--vm-control-scale`         | The amount to scale the control up/down by.                                |
+| `--vm-control-tap-highlight` | The highlight color when a control is tapped.                              |
 
 ## Dependencies
 
