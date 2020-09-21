@@ -21,6 +21,7 @@ values={[
 { label: 'React', value: 'react' },
 { label: 'Vue', value: 'vue' },
 { label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
 { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -42,8 +43,8 @@ values={[
 <TabItem value="react">
 
 ```tsx {2,10}
-import React from "react";
-import { VimePlayer, VimeUi, VimeIcons } from "@vime/react";
+import React from 'react';
+import { VimePlayer, VimeUi, VimeIcons } from '@vime/react';
 
 function Example() {
   return (
@@ -51,7 +52,7 @@ function Example() {
       {/* ... */}
       <VimeUi>
         {/* ... */}
-        <VimeIcons href="/icons/sprite.svg">
+        <VimeIcons href="/icons/sprite.svg" />
       </VimeUi>
     </VimePlayer>
   );
@@ -69,13 +70,13 @@ function Example() {
     <!-- ... -->
     <VimeUi>
       <!-- ... -->
-      <VimeIcons href="/icons/sprite.svg">
+      <VimeIcons href="/icons/sprite.svg" />
     </VimeUi>
   </VimePlayer>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeIcons } from "@vime/vue";
+  import { VimePlayer, VimeUi, VimeIcons } from '@vime/vue';
 
   export default {
     components: {
@@ -97,13 +98,34 @@ function Example() {
   <!-- ... -->
   <VimeUi>
     <!-- ... -->
-    <VimeIcons href="/icons/sprite.svg">
+    <VimeIcons href="/icons/sprite.svg" />
   </VimeUi>
 </VimePlayer>
 
 <script lang="ts">
   import { VimePlayer, VimeUi, VimeIcons } from '@vime/svelte';
 </script>
+```
+
+</TabItem>
+
+
+<TabItem value="stencil">
+
+```tsx {8}
+class Example {
+  render() {
+    return (
+      <vime-player>
+        {/* ... */}
+        <vime-ui>
+          {/* ... */}
+          <vime-icons href="/icons/sprite.svg" />
+        </vime-ui>
+      </vime-player>
+    );
+  }
+}
 ```
 
 </TabItem>

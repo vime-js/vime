@@ -59,15 +59,15 @@ export class DefaultControls {
 
   private buildAudioControls() {
     return (
-      <vime-controls full-width>
-        <vime-playback-control tooltip-direction="right" />
+      <vime-controls fullWidth>
+        <vime-playback-control tooltipDirection="right" />
         <vime-volume-control />
         {!this.isLive && <vime-current-time />}
         {this.isLive && <vime-control-spacer />}
         {!this.isLive && <vime-scrubber-control /> }
         {this.isLive && <vime-live-indicator />}
         {!this.isLive && <vime-end-time />}
-        {!this.isLive && <vime-settings-control tooltip-direction="left" />}
+        {!this.isLive && <vime-settings-control tooltipDirection="left" />}
         <div style={{ marginLeft: '0', paddingRight: '2px' }} />
       </vime-controls>
     );
@@ -77,7 +77,7 @@ export class DefaultControls {
     const lowerControls = (
       <vime-controls
         pin="bottomLeft"
-        full-width
+        fullWidth
         activeDuration={this.activeDuration}
         waitForPlaybackStart={this.waitForPlaybackStart}
         hideWhenPaused={this.hideWhenPaused}
@@ -101,7 +101,7 @@ export class DefaultControls {
 
         <vime-controls
           pin="topLeft"
-          full-width
+          fullWidth
           activeDuration={this.activeDuration}
           waitForPlaybackStart={this.waitForPlaybackStart}
           hideWhenPaused={this.hideWhenPaused}
@@ -143,12 +143,12 @@ export class DefaultControls {
           waitForPlaybackStart={this.waitForPlaybackStart}
           hideWhenPaused={this.hideWhenPaused}
           hideOnMouseLeave={this.hideOnMouseLeave}
-          full-width
+          fullWidth
         >
           {!this.isLive && scrubberControlGroup}
 
           <vime-control-group space={this.isLive ? 'none' : 'top'}>
-            <vime-playback-control tooltip-direction="right" />
+            <vime-playback-control tooltipDirection="right" />
             <vime-volume-control />
             {!this.isLive && <vime-time-progress />}
             <vime-control-spacer />
@@ -156,7 +156,7 @@ export class DefaultControls {
             {this.isLive && <vime-live-indicator />}
             <vime-pip-control />
             {!this.isLive && <vime-settings-control />}
-            <vime-fullscreen-control tooltip-direction="left" />
+            <vime-fullscreen-control tooltipDirection="left" />
           </vime-control-group>
         </vime-controls>
       </Host>

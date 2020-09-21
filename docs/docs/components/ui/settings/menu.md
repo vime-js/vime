@@ -33,6 +33,7 @@ values={[
 { label: 'React', value: 'react' },
 { label: 'Vue', value: 'vue' },
 { label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
 { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -176,6 +177,45 @@ function Example() {
     isMenuActive = false;
   };
 </script>
+```
+
+</TabItem>
+
+
+<TabItem value="stencil">
+
+```tsx {18-26}
+class Example {
+  @State() isMenuActive = false;
+
+  private onOpen() {
+    this.isMenuActive = true;
+  }
+
+  private onClose() {
+    this.isMenuActive = false;
+  }
+
+  render() {
+    return (
+      <vime-player>
+        {/* ... */}
+        <vime-ui>
+          {/* ... */}
+          <vime-menu
+            identifer="menu-id"
+            controller="menu-controller-id"
+            active={this.isMenuActive}
+            onVOpen={this.onOpen.bind(this)}
+            onVClose={this.onClose.bind(this)}
+          >
+            {/* ... */}
+          </vime-menu>
+        </vime-ui>
+      </vime-player>
+    );
+  }
+}
 ```
 
 </TabItem>

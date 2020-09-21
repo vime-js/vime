@@ -23,6 +23,7 @@ values={[
 { label: 'React', value: 'react' },
 { label: 'Vue', value: 'vue' },
 { label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
 { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -135,6 +136,28 @@ function Example() {
     // ...
   };
 </script>
+```
+
+</TabItem>
+
+
+<TabItem value="stencil">
+
+```tsx {5-9}
+class Example {
+  render() {
+    return (
+      <vime-player controls>
+        <vime-dash
+          src="/media/manifest.mpd"
+          version="latest"
+          poster="/media/poster.png"
+        />
+        {/* ... */}
+      </vime-player>
+    );
+  }
+}
 ```
 
 </TabItem>

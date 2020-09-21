@@ -28,6 +28,7 @@ values={[
 { label: 'React', value: 'react' },
 { label: 'Vue', value: 'vue' },
 { label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
 { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -67,7 +68,10 @@ function PlaybackControl() {
   const [paused, setPaused] = usePlayerContext(ref, 'paused', true);
   const [i18n] = usePlayerContext(ref, 'i18n', {});
   const icon = useMemo(() => (paused ? '#vime-play' : '#vime-pause'), [paused]);
-  const tooltip = useMemo(() => (paused ? 'Play' : 'Pause'), [paused]);
+  const tooltip = useMemo(() => (paused ? i18n.play : i18n.pause), [
+    paused,
+    i18n,
+  ]);
 
   const onClick = () => {
     setPaused(false);
@@ -180,6 +184,64 @@ function PlaybackControl() {
   $: icon = $paused ? '#vime-play' : '#vime-pause';
   $: tooltip = $paused ? $i18n.play : $i18n.pause;
 </script>
+```
+
+</TabItem>
+
+
+<TabItem value="stencil">
+
+```tsx {35-43}
+import { h, Component, Prop } from '@stencil/core';
+import {
+  Dispatcher,
+  createDispatcher,
+  PlayerProps,
+  withPlayerContext,
+} from '@vime/core';
+
+@Component({
+  tag: 'playback-control',
+})
+export class PlaybackControl {
+  private dispatch!: Dispatcher;
+
+  /**
+   * @internal
+   */
+  @Prop() paused: PlayerProps['paused'] = true;
+
+  /**
+   * @internal
+   */
+  @Prop() i18n: PlayerProps['i18n'] = {};
+
+  connectedCallback() {
+    this.dispatch = createDispatcher(this);
+  }
+
+  private onClick() {
+    this.dispatch('paused', !this.paused);
+  }
+
+  render() {
+    return (
+      <vime-control
+        keys="k"
+        label={this.i18n.playback}
+        pressed={this.paused}
+        onClick={this.onClick.bind(this)}
+      >
+        <vime-icon href={this.paused ? '#vime-play' : '#vime-pause'} />
+        <vime-tooltip>
+          {this.paused ? this.i18n.play : this.i18n.pause} (k)
+        </vime-tooltip>
+      </vime-control>
+    );
+  }
+}
+
+withPlayerContext(PlaybackControl, ['paused', 'i18n']);
 ```
 
 </TabItem>

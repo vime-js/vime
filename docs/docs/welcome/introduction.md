@@ -47,7 +47,7 @@ import { BasicPlayer } from '../getting-started/components/BasicPlayer'
 - 🛠 &nbsp;Comprehensive [player API][player-api] with a heap of properties, methods and events.
 - 💪 &nbsp;Built with TypeScript so you can enjoy completely typed components.
 - 🏠 &nbsp;Feel right at home with HTML/CSS/JS thanks to web components.
-- 🏗️ &nbsp;Framework specific bindings for React, Vue, Svelte and Angular.
+- 🏗️ &nbsp;Framework specific bindings for React, Vue, Svelte, Stencil and Angular.
 
 [accessibility]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA
 [css-vars]: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
@@ -60,8 +60,8 @@ import { BasicPlayer } from '../getting-started/components/BasicPlayer'
 ## 🍭 &nbsp;Examples
 
 :::note
-The examples below are using web components but there are bindings for React, Vue, Angular and 
-Svelte. If you want to see how they look check out our [Demo](/demo).
+The examples below are using web components but there are bindings for React, Vue, Svelte, Stencil 
+and Angular. If you want to see how they look check out our [Demo](/demo).
 :::
 
 ```html
@@ -132,8 +132,9 @@ There are framework specific bindings for:
 
 - [React](https://vimejs.com/getting-started/installation#react)
 - [Vue](https://vimejs.com/getting-started/installation#vue)
-- [Angular](https://vimejs.com/getting-started/installation#angular)
 - [Svelte](https://vimejs.com/getting-started/installation#svelte)
+- [Stencil](https://vimejs.com/getting-started/installation#stencil)
+- [Angular](https://vimejs.com/getting-started/installation#angular)
 
 Keep in mind, that at its core Vime is still simply web components. Even if your framework is
 not mentioned in the list above, it most likely still supports Vime natively. You can check
@@ -146,8 +147,9 @@ using Vime with:
 - [HTML](https://github.com/vime-js/vime/tree/master/examples/html)
 - [React](https://github.com/vime-js/vime/tree/master/examples/react)
 - [Vue](https://github.com/vime-js/vime/tree/master/examples/vue)
-- [Angular](https://github.com/vime-js/vime/tree/master/examples/angular)
 - [Svelte](https://github.com/vime-js/vime/tree/master/examples/svelte)
+- [Stencil](https://github.com/vime-js/vime/tree/master/examples/stencil)
+- [Angular](https://github.com/vime-js/vime/tree/master/examples/angular)
 
 ## 🖥️ &nbsp;Browsers
 

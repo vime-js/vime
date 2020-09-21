@@ -35,6 +35,7 @@ in the `Components > Providers` section in the sidebar (on your left), we see th
   { label: 'React', value: 'react' },
   { label: 'Vue', value: 'vue' },
   { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
   { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -166,6 +167,39 @@ function Player() {
 <script lang="ts">
   import { VimePlayer, VimeVideo } from '@vime/svelte';
 </script>
+```
+
+</TabItem>
+
+<TabItem value="stencil">
+
+```tsx {8-22} title="player.tsx"
+class Player {
+  // ...
+
+  render() {
+    return (
+      {/* By default there are no controls so let's turn them on. */}
+      <vime-player controls>
+        <vime-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+          {/* These are passed directly to the underlying HTML5 `<video>` element. */}
+          {/* Why `data-src`? Lazy loading, you can always use `src` if you prefer.  */}
+          <source 
+            data-src="https://media.vimejs.com/720p.mp4" 
+            type="video/mp4" 
+          />
+          <track 
+            default 
+            kind="subtitles" 
+            src="https://media.vimejs.com/subs/english.vtt" 
+            srclang="en" 
+            label="English" 
+          />
+        </vime-video> 
+      </vime-player>
+    );
+  }
+}
 ```
 
 </TabItem>

@@ -29,6 +29,7 @@ values={[
 { label: 'React', value: 'react' },
 { label: 'Vue', value: 'vue' },
 { label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
 { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -127,6 +128,29 @@ function Example() {
 <script lang="ts">
   import { VimePlayer, VimeUi, VimeSettings, VimeSubmenu } from '@vime/svelte';
 </script>
+```
+
+</TabItem>
+
+
+<TabItem value="stencil">
+
+```tsx {8-10}
+class Example {
+  render() {
+    return (
+      <vime-player>
+        {/* ... */}
+        <vime-ui>
+          {/* ... */}
+          <vime-settings>
+            <vime-submenu label="Title">{/* ... */}</vime-submenu>
+          </vime-settings>
+        </vime-ui>
+      </vime-player>
+    );
+  }
+}
 ```
 
 </TabItem>

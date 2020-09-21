@@ -40,6 +40,17 @@ function Example() {
 ```
 
 
+### Stencil
+
+```tsx {3}
+class Example {
+  render() {
+    return <vime-end-time />;
+  }
+}
+```
+
+
 ### Svelte
 
 ```html {1,4} title="example.svelte"

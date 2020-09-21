@@ -29,6 +29,7 @@ values={[
 { label: 'React', value: 'react' },
 { label: 'Vue', value: 'vue' },
 { label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
 { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -134,6 +135,33 @@ function Example() {
     value = event.detail;
   };
 </script>
+```
+
+</TabItem>
+
+
+<TabItem value="stencil">
+
+```tsx {10-16}
+class Example {
+  @State() value = 50;
+
+  private onValueChange(event: CustomEvent<number>) {
+    this.value = event.detail;
+  }
+
+  render() {
+    return (
+      <VimeSlider
+        label="Volume"
+        step={5}
+        max={100}
+        value={this.value}
+        onVValueChange={this.onValueChange.bind(this)}
+      />
+    );
+  }
+}
 ```
 
 </TabItem>

@@ -27,6 +27,7 @@ values={[
 { label: 'React', value: 'react' },
 { label: 'Vue', value: 'vue' },
 { label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
 { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -84,6 +85,19 @@ function Example() {
 <script lang="ts">
   import { VimeTime } from '@vime/svelte';
 </script>
+```
+
+</TabItem>
+
+
+<TabItem value="stencil">
+
+```tsx {3}
+class Example {
+  render() {
+    return <vime-time label="Time" seconds={120} />;
+  }
+}
 ```
 
 </TabItem>

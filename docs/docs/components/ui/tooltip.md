@@ -28,6 +28,7 @@ values={[
 { label: 'React', value: 'react' },
 { label: 'Vue', value: 'vue' },
 { label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
 { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -147,6 +148,31 @@ function Example() {
     VimeTooltip,
   } from '@vime/svelte';
 </script>
+```
+
+</TabItem>
+
+
+<TabItem value="stencil">
+
+```tsx {10}
+class Example {
+  render() {
+    return (
+      <vime-player>
+        {/* ... */}
+        <vime-ui>
+          {/* ... */}
+          <vime-controls>
+            <vime-control>
+              <vime-tooltip>Title</vime-tooltip>
+            </vime-control>
+          </vime-controls>
+        </vime-ui>
+      </vime-player>
+    );
+  }
+}
 ```
 
 </TabItem>

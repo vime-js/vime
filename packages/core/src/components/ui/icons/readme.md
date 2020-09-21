@@ -46,10 +46,29 @@ function Example() {
       {/* ... */}
       <VimeUi>
         {/* ... */}
-        <VimeIcons href="/icons/sprite.svg">
+        <VimeIcons href="/icons/sprite.svg" />
       </VimeUi>
     </VimePlayer>
   );
+}
+```
+
+
+### Stencil
+
+```tsx {8}
+class Example {
+  render() {
+    return (
+      <vime-player>
+        {/* ... */}
+        <vime-ui>
+          {/* ... */}
+          <vime-icons href="/icons/sprite.svg" />
+        </vime-ui>
+      </vime-player>
+    );
+  }
 }
 ```
 
@@ -61,7 +80,7 @@ function Example() {
   <!-- ... -->
   <VimeUi>
     <!-- ... -->
-    <VimeIcons href="/icons/sprite.svg">
+    <VimeIcons href="/icons/sprite.svg" />
   </VimeUi>
 </VimePlayer>
 
@@ -79,7 +98,7 @@ function Example() {
     <!-- ... -->
     <VimeUi>
       <!-- ... -->
-      <VimeIcons href="/icons/sprite.svg">
+      <VimeIcons href="/icons/sprite.svg" />
     </VimeUi>
   </VimePlayer>
 </template>

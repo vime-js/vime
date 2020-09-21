@@ -23,6 +23,7 @@ Let's setup the "shell" of the player so we can start laying out the rest of it:
   { label: 'React', value: 'react' },
   { label: 'Vue', value: 'vue' },
   { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
   { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -106,6 +107,28 @@ function Player() {
 
 </TabItem>
 
+<TabItem value="stencil">
+
+```tsx title="player.tsx"
+class Player {
+  // ...
+
+  render() {
+    return (
+      <vime-player>
+        {/* Provider component is placed here. */}
+
+        <vime-ui>
+          {/* UI components are placed here. */}
+        </vime-ui>
+      </vime-player>
+    );
+  }
+}
+```
+
+</TabItem>
+
 <TabItem value="angular">
 
 ```html title="player.html"
@@ -116,14 +139,6 @@ function Player() {
     <!-- UI components are placed here. -->
   </vime-ui>
 </vime-player>
-```
-
-```ts title="player.ts"
-import { VimePlayer } from '@vime/angular';
-
-class Player {
-  // ...
-}
 ```
 
 </TabItem>
@@ -140,5 +155,6 @@ quickly:
 - [Vue](https://github.com/vime-js/vime/tree/master/examples/vue)
 - [Angular](https://github.com/vime-js/vime/tree/master/examples/angular)
 - [Svelte](https://github.com/vime-js/vime/tree/master/examples/svelte)
+- [Stencil](https://github.com/vime-js/vime/tree/master/examples/stencil)
 
 🚂 &nbsp;Let's move onto [setting up our provider!](./providers)

@@ -3,7 +3,7 @@
   <!-- ... -->
   <VimeUi>
     <!-- ... -->
-    <VimeIcons href="/icons/sprite.svg">
+    <VimeIcons href="/icons/sprite.svg" />
   </VimeUi>
 </VimePlayer>
 

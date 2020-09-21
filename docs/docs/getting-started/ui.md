@@ -20,6 +20,7 @@ of the box...
   { label: 'React', value: 'react' },
   { label: 'Vue', value: 'vue' },
   { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
   { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -164,6 +165,43 @@ function Player() {
 
 </TabItem>
 
+<TabItem value="stencil">
+
+```tsx {24-26} title="player.tsx"
+class Player {
+  // ...
+
+  render() {
+    return (
+      {/* Notice we turned off controls? We're supplying our own, so we hide the native ones. */}
+      <vime-player>
+        <vime-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+          <source 
+            data-src="https://media.vimejs.com/720p.mp4" 
+            type="video/mp4" 
+          />
+          <track 
+            default 
+            kind="subtitles" 
+            src="https://media.vimejs.com/subs/english.vtt" 
+            srclang="en" 
+            label="English" 
+          />
+        </vime-video>
+
+        {/* We've replaced the `<vime-ui>` component. */}
+        {/* We can turn off any features we don't want via properties. */}
+        <vime-default-ui noClickToPlay>
+          {/* We can place our own UI components here to extend the default UI. */}
+        </vime-default-ui>
+      </vime-player>
+    );
+  }
+}
+```
+
+</TabItem>
+
 <TabItem value="angular">
 
 ```html {19-21} title="player.html"
@@ -232,6 +270,7 @@ how we can go about putting this together...
   { label: 'React', value: 'react' },
   { label: 'Vue', value: 'vue' },
   { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
   { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -428,10 +467,52 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 
 </TabItem>
 
+<TabItem value="stencil">
+
+:::info
+You can view the custom `<tap-sides-to-seek>` component [here](https://github.com/vime-js/vime/tree/master/examples/stencil/src/components/tap-sides-to-seek).
+:::
+
+```tsx {21-27} title="player.tsx"
+class Player {
+  // ...
+
+  render() {
+    return (
+      <vime-player>
+        <vime-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+          <source 
+            data-src="https://media.vimejs.com/720p.mp4" 
+            type="video/mp4" 
+          />
+          <track 
+            default 
+            kind="subtitles" 
+            src="https://media.vimejs.com/subs/english.vtt" 
+            srclang="en" 
+            label="English" 
+          />
+        </vime-video>
+
+        <vime-ui>
+          {/* Vime components. */}
+          <vime-click-to-play />
+          <vime-spinner />
+          {/* Custom component. */}
+          <tap-sides-to-seek />
+        </vime-ui>
+      </vime-player>
+    );
+  }
+}
+```
+
+</TabItem>
+
 <TabItem value="angular">
 
 :::info
-You can view the custom `TapSidesToSeek` component [here](https://github.com/vime-js/vime/tree/master/examples/angular/src/app/tap-sides-to-seek).
+You can view the custom `<tap-sides-to-seek>` component [here](https://github.com/vime-js/vime/tree/master/examples/angular/src/app/tap-sides-to-seek).
 :::
 
 ```html {16-22} title="player.html"

@@ -53,6 +53,25 @@ function Example() {
 ```
 
 
+### Stencil
+
+```tsx {8}
+class Example {
+  render() {
+    return (
+      <vime-player>
+        {/* ... */}
+        <vime-ui>
+          {/* ... */}
+          <vime-click-to-play />
+        </vime-ui>
+      </vime-player>
+    );
+  }
+}
+```
+
+
 ### Svelte
 
 ```html {5,10} title="example.svelte"

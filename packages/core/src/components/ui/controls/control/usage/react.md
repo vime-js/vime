@@ -12,7 +12,7 @@ function PlaybackControl() {
   const [paused, setPaused] = usePlayerContext(ref, 'paused', true);
   const [i18n] = usePlayerContext(ref, 'i18n', {});
   const icon = useMemo(() => (paused ? '#vime-play' : '#vime-pause'), [paused]);
-  const tooltip = useMemo(() => (paused ? 'Play' : 'Pause'), [paused]);
+  const tooltip = useMemo(() => (paused ? i18n.play : i18n.pause), [paused, i18n]);
   
   const onClick = () => { 
     setPaused(false); 

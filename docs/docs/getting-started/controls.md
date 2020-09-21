@@ -26,27 +26,16 @@ more information on what properties you can pass in.
   { label: 'React', value: 'react' },
   { label: 'Vue', value: 'vue' },
   { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
   { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
-```html {19-22} title="player.html"
+```html {7-10} title="player.html"
 <vime-player>
-  <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
-    />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </vime-video> 
-  
+  <!-- ... -->
+ 
   <!-- We turn off the controls that come with the default UI. -->
   <vime-default-ui no-controls>
     <!-- We setup the default controls and pass in any options.  -->
@@ -62,26 +51,14 @@ more information on what properties you can pass in.
 
 <TabItem value="react">
 
-```tsx {24-27} title="Player.tsx"
+```tsx {12-15} title="Player.tsx"
 import React from 'react';
-import { VimePlayer, VimeVideo, VimeDefaultUi, VimeDefaultControls } from '@vime/react';
+import { VimePlayer, VimeDefaultUi, VimeDefaultControls } from '@vime/react';
 
 function Player() {
   return (
     <VimePlayer>
-      <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
-        <source 
-          data-src="https://media.vimejs.com/720p.mp4" 
-          type="video/mp4" 
-        />
-        <track 
-          default 
-          kind="subtitles" 
-          src="https://media.vimejs.com/subs/english.vtt" 
-          srcLang="en" 
-          label="English" 
-        />
-      </VimeVideo> 
+      {/* ... */}
 
       {/* We turn off the controls that come with the default UI. */}
       <VimeDefaultUi noControls>
@@ -100,22 +77,10 @@ function Player() {
 
 <TabItem value="vue">
 
-```html {20-23} title="Player.vue"
+```html {8-11} title="Player.vue"
 <template>
   <VimePlayer>
-    <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
-      <source 
-        data-src="https://media.vimejs.com/720p.mp4" 
-        type="video/mp4" 
-      />
-      <track 
-        default 
-        kind="subtitles" 
-        src="https://media.vimejs.com/subs/english.vtt" 
-        srclang="en" 
-        label="English" 
-      />
-    </VimeVideo> 
+    <!-- ... -->
 
     <!-- We turn off the controls that come with the default UI. -->
     <VimeDefaultUi noControls>
@@ -129,12 +94,11 @@ function Player() {
 </template>
 
 <script>
-  import { VimePlayer, VimeVideo, VimeDefaultUi, VimeDefaultControls } from '@vime/vue';
+  import { VimePlayer, VimeDefaultUi, VimeDefaultControls } from '@vime/vue';
 
   export default {
     components: {
       VimePlayer,
-      VimeVideo,
       VimeDefaultUi,
       VimeDefaultControls,
     },
@@ -146,21 +110,9 @@ function Player() {
 
 <TabItem value="svelte">
 
-```html {19-22} title="Player.svelte"
+```html {7-10} title="Player.svelte"
 <VimePlayer>
-  <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
-    />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </VimeVideo> 
+  <!-- ... -->
 
   <!-- We turn off the controls that come with the default UI. -->
   <VimeDefaultUi noControls>
@@ -173,29 +125,44 @@ function Player() {
 </VimePlayer>
 
 <script lang="ts">
-  import { VimePlayer, VimeVideo, VimeDefaultUi, VimeDefaultControls } from '@vime/svelte';
+  import { VimePlayer, VimeDefaultUi, VimeDefaultControls } from '@vime/svelte';
 </script>
+```
+
+</TabItem>
+
+<TabItem value="stencil">
+
+```tsx {12-15} title="player.tsx"
+class Player {
+  // ...
+
+  render() {
+    return (
+      <vime-player>
+        {/* ... */}
+
+        {/* We turn off the controls that come with the default UI. */}
+        <vime-default-ui noControls>
+          {/* We setup the default controls and pass in any options.  */}
+          <vime-default-controls 
+            hideOnMouseLeave
+            activeDuration={2000}
+          />
+        </vime-default-ui>
+      </vime-player>
+    );
+  }
+}
 ```
 
 </TabItem>
 
 <TabItem value="angular">
 
-```html {19-22} title="player.html"
+```html {7-10} title="player.html"
 <vime-player>
-  <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
-    />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </vime-video> 
+  <!-- ... -->
 
   <!-- We turn off the controls that come with the default UI. -->
   <vime-default-ui no-controls>
@@ -245,26 +212,15 @@ component documentation for an example of how to create a custom control.
   { label: 'React', value: 'react' },
   { label: 'Vue', value: 'vue' },
   { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
   { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
-```html {18-32} title="player.html"
+```html {6-23} title="player.html"
 <vime-player>
-  <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
-    />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </vime-video> 
+  <!-- ... -->
   
   <!-- We turn off the controls that come with the default UI. -->
   <vime-default-ui no-controls>
@@ -276,7 +232,10 @@ component documentation for an example of how to create a custom control.
     </vime-controls>
 
     <vime-controls pin="center">
-      <vime-playback-control hide-tooltip style="--vm-control-scale: 1.7;"></vime-playback-control>
+      <vime-playback-control 
+        hide-tooltip 
+        style="--vm-control-scale: 1.7;"
+      ></vime-playback-control>
     </vime-controls>
     
     <vime-controls full-width pin="bottomLeft">
@@ -291,11 +250,10 @@ component documentation for an example of how to create a custom control.
 
 <TabItem value="react">
 
-```tsx {33-47} title="Player.tsx"
+```tsx {20-34} title="Player.tsx"
 import React from 'react';
 import { 
   VimePlayer,
-  VimeVideo, 
   VimeDefaultUi, 
   VimeScrim,
   VimeControls,
@@ -308,19 +266,7 @@ import {
 function Player() {
   return (
     <VimePlayer>
-      <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
-        <source 
-          data-src="https://media.vimejs.com/720p.mp4" 
-          type="video/mp4" 
-        />
-        <track 
-          default 
-          kind="subtitles" 
-          src="https://media.vimejs.com/subs/english.vtt" 
-          srcLang="en" 
-          label="English" 
-        />
-      </VimeVideo> 
+      {/* ... */}
 
       {/* We turn off the controls that come with the default UI. */}
       <VimeDefaultUi noControls>
@@ -349,22 +295,10 @@ function Player() {
 
 <TabItem value="vue">
 
-```html {19-33} title="Player.vue"
+```html {7-21} title="Player.vue"
 <template>
   <VimePlayer>
-    <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
-      <source 
-        data-src="https://media.vimejs.com/720p.mp4" 
-        type="video/mp4" 
-      />
-      <track 
-        default 
-        kind="subtitles" 
-        src="https://media.vimejs.com/subs/english.vtt" 
-        srclang="en" 
-        label="English" 
-      />
-    </VimeVideo> 
+    <!-- ... -->
 
     <!-- We turn off the controls that come with the default UI. -->
     <VimeDefaultUi noControls>
@@ -390,7 +324,6 @@ function Player() {
 <script>
   import { 
     VimePlayer,
-    VimeVideo, 
     VimeDefaultUi,
     VimeScrim,
     VimeControls,
@@ -403,7 +336,6 @@ function Player() {
   export default {
     components: {
       VimePlayer,
-      VimeVideo, 
       VimeDefaultUi,
       VimeScrim,
       VimeControls,
@@ -417,7 +349,7 @@ function Player() {
 
 <style>
   vime-playback-control {
-    --control-scale: 1.7;
+    --vm-control-scale: 1.7;
   }
 </style>
 ```
@@ -426,21 +358,9 @@ function Player() {
 
 <TabItem value="svelte">
 
-```html {18-32} title="Player.svelte"
+```html {6-20} title="Player.svelte"
 <VimePlayer>
-  <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
-    />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </VimeVideo> 
+  <!-- ... -->
 
   <!-- We turn off the controls that come with the default UI. -->
   <VimeDefaultUi noControls>
@@ -465,7 +385,6 @@ function Player() {
 <script lang="ts">
   import { 
     VimePlayer,
-    VimeVideo, 
     VimeDefaultUi,
     VimeScrim,
     VimeControls,
@@ -478,30 +397,58 @@ function Player() {
 
 <style>
   :global(vime-playback-control) {
-    --control-scale: 1.7;
+    --vm-control-scale: 1.7;
   }
 </style>
 ```
 
 </TabItem>
 
+<TabItem value="stencil">
+
+```tsx {11-28} title="player.tsx"
+class Player {
+  // ...
+
+  render() {
+    return (
+      <vime-player>
+        {/* ... */}
+
+        {/* We turn off the controls that come with the default UI. */}
+        <vime-default-ui noControls>
+          <vime-scrim />
+
+          <vime-controls fullWidth pin="topLeft">
+            <vime-control-spacer />
+            <vime-mute-control />
+          </vime-controls>
+
+          <vime-controls pin="center">
+            <vime-playback-control 
+              hideTooltip 
+              style={{ '--vm-control-scale': '1.7' }}
+            />
+          </vime-controls>
+          
+          <vime-controls fullWidth pin="bottomLeft">
+            <vime-control-spacer />
+            <vime-time-progress />
+          </vime-controls>
+        </vime-default-ui>
+      </vime-player>
+    );
+  }
+}
+```
+
+</TabItem>
+
 <TabItem value="angular">
 
-```html {18-32} title="player.html"
+```html {6-23} title="player.html"
 <vime-player>
-  <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
-    />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </vime-video> 
+  <!-- ... -->
 
   <!-- We turn off the controls that come with the default UI. -->
   <vime-default-ui no-controls>
@@ -513,7 +460,10 @@ function Player() {
     </vime-controls>
 
     <vime-controls pin="center">
-      <vime-playback-control hide-tooltip style="--vm-control-scale: 1.7;"></vime-playback-control>
+      <vime-playback-control 
+        hide-tooltip 
+        style="--vm-control-scale: 1.7;"
+      ></vime-playback-control>
     </vime-controls>
     
     <vime-controls full-width pin="bottomLeft">

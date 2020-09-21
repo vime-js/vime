@@ -41,7 +41,7 @@ const putCodeUsageInTabs = (content: string) => {
 
   const values: string[] = [];
   const tabs: string[] = [];
-  const order: string[] = ['html', 'react', 'vue', 'svelte', 'angular'];
+  const order: string[] = ['html', 'react', 'vue', 'svelte', 'stencil', 'angular'];
   const getValue = (header: string) => header.replace('### ', '').toLowerCase();
 
   const langHeaders = usageBlock

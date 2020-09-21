@@ -59,6 +59,22 @@ function Example() {
 ```
 
 
+### Stencil
+
+```tsx {5}
+class Example {
+  render() {
+    return (
+      <vime-player controls>
+        <vime-youtube videoId="DyTCOwB0DVw" />
+        {/* ... */}
+      </vime-player>
+    );
+  }
+}
+```
+
+
 ### Svelte
 
 ```html {2,7} title="example.svelte"

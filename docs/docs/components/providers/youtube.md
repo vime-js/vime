@@ -35,6 +35,7 @@ values={[
 { label: 'React', value: 'react' },
 { label: 'Vue', value: 'vue' },
 { label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
 { label: 'Angular', value: 'angular' }
 ]}>
 
@@ -105,6 +106,24 @@ function Example() {
 <script lang="ts">
   import { VimePlayer, VimeYoutube } from '@vime/svelte';
 </script>
+```
+
+</TabItem>
+
+
+<TabItem value="stencil">
+
+```tsx {5}
+class Example {
+  render() {
+    return (
+      <vime-player controls>
+        <vime-youtube videoId="DyTCOwB0DVw" />
+        {/* ... */}
+      </vime-player>
+    );
+  }
+}
 ```
 
 </TabItem>

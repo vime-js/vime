@@ -39,16 +39,47 @@ inside the `<head>` element of your HTML file.
 
 And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move onto [setting up our player](./player).
 
+## Stencil
+
+Luckily for you Vime is built with [Stencil](https://stenciljs.com) so it works out of the box 
+very easily.
+
+Let's first load the CSS for the player themes, which are small files that only contain a bunch of
+CSS variables for styling the player. You can either load them from the [CDN](#cdn), or if 
+you're using the Shadow DOM throughout your application, add the following (after adjusting paths) to 
+the component that is wrapping the player...
+
+```css title="[component].css"
+/* Default theme. ~960B */
+@import "../../../node_modules/@vime/core/themes/default.css";
+
+/* Optional light theme (extends default). ~400B */
+@import "../../../node_modules/@vime/core/themes/light.css";
+```
+
+Now let's install the `@vime/core` package by running the following in our terminal...
+
+```bash
+npm i @vime/core
+```
+
+Finally, we import it into the root of our application...
+
+```ts title="index.ts"
+import '@vime/core';
+```
+
+And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move onto [setting up our player](./player).
+
 ## Svelte
 
-> Svelte... you are like the arms of a 🦖 &nbsp;small... but part of something powerful.
-
-You have two options with Svelte due to it having perfect [web components support](https://custom-elements-everywhere.com/#svelte).
-You can either follow the instructions for loading it from the [CDN](#cdn) and use the
-Vime web components in their natural form, or you can use the Svelte bindings from the `@vime/svelte`
-package, which wraps all the web components inside Svelte components so you can feel right at home.
-Some other advantages for using `@vime/svelte` include typed + documented components, and additional
-helpers for extending Vime with custom components.
+You have two options with Svelte due to it having perfect 
+[web components support](https://custom-elements-everywhere.com/#svelte). You can either follow the 
+instructions for loading it from the [CDN](#cdn) and use the Vime web components in their natural 
+form, or you can use the Svelte bindings from the `@vime/svelte` package, which wraps all the web 
+components inside Svelte components so you can feel right at home. Some other advantages for using 
+`@vime/svelte` include typed + documented components, and additional helpers for extending Vime with 
+custom components.
 
 Let's first load the CSS for the player themes, which are small files that only contain a bunch of
 CSS variables for styling the player. Add the following to the `<head>` element of your HTML file...
@@ -67,7 +98,7 @@ CSS variables for styling the player. Add the following to the `<head>` element 
 />
 ```
 
-Now let's install the `@vime/svelte` package by running the following in your terminal...
+Now let's install the `@vime/svelte` package by running the following in our terminal...
 
 ```bash
 npm i @vime/svelte
@@ -76,8 +107,6 @@ npm i @vime/svelte
 And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move onto [setting up our player](./player).
 
 ## React
-
-> React... you are like pineapple on 🍕 &nbsp;some love it and some hate it.
 
 Unfortunately React has poor [web components support](https://custom-elements-everywhere.com/#react) ... but
 we have you covered with our `@vime/react` package, which wraps all the Vime web components inside
@@ -96,7 +125,7 @@ import '@vime/core/themes/light.css';
 ```
 
 Alternatively, you can load the themes from the [CDN](#cdn). Now let's install the `@vime/react`
-package by running the following in your terminal...
+package by running the following in our terminal...
 
 ```bash
 npm i @vime/react
@@ -106,8 +135,6 @@ And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move 
 
 ## Preact
 
-> Preact... you are like 🍕 &nbsp;without pineapple, how it was always meant to be.
-
 You have two options with Preact due to it having perfect [web components support](https://custom-elements-everywhere.com/#preact).
 You can either follow the instructions for loading it from the [CDN](#cdn) and use the
 Vime web components in their natural form, or you can use the Vime React components by setting
@@ -116,14 +143,12 @@ installation instructions.
 
 ## Vue
 
-> Vue... you are like [Bob Ross](https://www.google.com/search?q=bob+ross), you enjoy painting pretty 🌳 ⛰️ ☁️ &nbsp;all-in-one place.
-
-You have two options with Vue due to it having perfect [web components support](https://custom-elements-everywhere.com/#vue).
-You can either follow the instructions [here](https://stenciljs.com/docs/vue) for loading the
-web components in their natural form, or you can use the Vue bindings from the `@vime/vue`
-package, which wraps all the web components inside Vue components so you can feel right at home.
-Some other advantages for using `@vime/vue` include typed + documented components, and additional
-helpers for extending Vime with custom components.
+You have two options with Vue due to it having perfect 
+[web components support](https://custom-elements-everywhere.com/#vue). You can either follow the 
+instructions [here](https://stenciljs.com/docs/vue) for loading the web components in their natural 
+form, or you can use the Vue bindings from the `@vime/vue` package, which wraps all the web components 
+inside Vue components so you can feel right at home. Some other advantages for using `@vime/vue` 
+include typed + documented components, and additional helpers for extending Vime with custom components.
 
 Let's first load the CSS for the player themes, which are small files that only contain a bunch of
 CSS variables for styling the player. Add the following to the root of your application...
@@ -137,7 +162,7 @@ import '@vime/core/themes/light.css';
 ```
 
 Alternatively, you can load the themes from the [CDN](#cdn). Now let's install the `@vime/vue` package
-by running the following in your terminal...
+by running the following in our terminal...
 
 ```bash
 npm i @vime/vue
@@ -147,7 +172,7 @@ And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move 
 
 ## &nbsp;Angular
 
-> Angular... you are a [🥕 &nbsp;farmer](https://twitter.com/search?q=angular%20(from%3Abenawad)).
+> Are you a [🥕 &nbsp;farmer](https://twitter.com/search?q=angular%20(from%3Abenawad))?
 
 You have two options with Angular due to it having perfect [web components support](https://custom-elements-everywhere.com/#angular). You can either follow the instructions [here](https://stenciljs.com/docs/angular) for 
 loading the web components in their natural form which can be slightly tedious, or you can use 
@@ -165,7 +190,7 @@ CSS variables for styling the player. Add the following to the root of your appl
 ```
 
 Alternatively, you can load the themes from the [CDN](#cdn). Now let's install the `@vime/angular`
-package by running the following in your terminal...
+package by running the following in our terminal...
 
 ```bash
 npm i @vime/angular
