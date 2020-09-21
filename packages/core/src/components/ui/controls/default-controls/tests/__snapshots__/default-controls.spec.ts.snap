@@ -2,8 +2,8 @@
 
 exports[`should be structurally sound when audio + live stream 1`] = `
 <vime-default-controls>
-  <vime-controls full-width="">
-    <vime-playback-control tooltip-direction="right"></vime-playback-control>
+  <vime-controls fullwidth="">
+    <vime-playback-control tooltipdirection="right"></vime-playback-control>
     <vime-volume-control></vime-volume-control>
     <vime-control-spacer></vime-control-spacer>
     <vime-live-indicator></vime-live-indicator>
@@ -14,13 +14,13 @@ exports[`should be structurally sound when audio + live stream 1`] = `
 
 exports[`should be structurally sound when audio 1`] = `
 <vime-default-controls>
-  <vime-controls full-width="">
-    <vime-playback-control tooltip-direction="right"></vime-playback-control>
+  <vime-controls fullwidth="">
+    <vime-playback-control tooltipdirection="right"></vime-playback-control>
     <vime-volume-control></vime-volume-control>
     <vime-current-time></vime-current-time>
     <vime-scrubber-control></vime-scrubber-control>
     <vime-end-time></vime-end-time>
-    <vime-settings-control tooltip-direction="left"></vime-settings-control>
+    <vime-settings-control tooltipdirection="left"></vime-settings-control>
     <div style="margin-left: 0; padding-right: 2px;"></div>
   </vime-controls>
 </vime-default-controls>
@@ -29,14 +29,14 @@ exports[`should be structurally sound when audio 1`] = `
 exports[`should be structurally sound when desktop video + live stream 1`] = `
 <vime-default-controls>
   <vime-scrim gradient="up"></vime-scrim>
-  <vime-controls activeduration="2750" full-width="">
+  <vime-controls activeduration="2750" fullwidth="">
     <vime-control-group space="none">
-      <vime-playback-control tooltip-direction="right"></vime-playback-control>
+      <vime-playback-control tooltipdirection="right"></vime-playback-control>
       <vime-volume-control></vime-volume-control>
       <vime-control-spacer></vime-control-spacer>
       <vime-live-indicator></vime-live-indicator>
       <vime-pip-control></vime-pip-control>
-      <vime-fullscreen-control tooltip-direction="left"></vime-fullscreen-control>
+      <vime-fullscreen-control tooltipdirection="left"></vime-fullscreen-control>
     </vime-control-group>
   </vime-controls>
 </vime-default-controls>
@@ -45,19 +45,19 @@ exports[`should be structurally sound when desktop video + live stream 1`] = `
 exports[`should be structurally sound when desktop video 1`] = `
 <vime-default-controls>
   <vime-scrim gradient="up"></vime-scrim>
-  <vime-controls activeduration="2750" full-width="">
+  <vime-controls activeduration="2750" fullwidth="">
     <vime-control-group>
       <vime-scrubber-control></vime-scrubber-control>
     </vime-control-group>
     <vime-control-group space="top">
-      <vime-playback-control tooltip-direction="right"></vime-playback-control>
+      <vime-playback-control tooltipdirection="right"></vime-playback-control>
       <vime-volume-control></vime-volume-control>
       <vime-time-progress></vime-time-progress>
       <vime-control-spacer></vime-control-spacer>
       <vime-caption-control></vime-caption-control>
       <vime-pip-control></vime-pip-control>
       <vime-settings-control></vime-settings-control>
-      <vime-fullscreen-control tooltip-direction="left"></vime-fullscreen-control>
+      <vime-fullscreen-control tooltipdirection="left"></vime-fullscreen-control>
     </vime-control-group>
   </vime-controls>
 </vime-default-controls>
@@ -66,7 +66,7 @@ exports[`should be structurally sound when desktop video 1`] = `
 exports[`should be structurally sound when mobile video + live stream 1`] = `
 <vime-default-controls>
   <vime-scrim></vime-scrim>
-  <vime-controls activeduration="2750" full-width="" pin="topLeft">
+  <vime-controls activeduration="2750" fullwidth="" pin="topLeft">
     <vime-control-spacer></vime-control-spacer>
     <vime-volume-control></vime-volume-control>
     <vime-fullscreen-control></vime-fullscreen-control>
@@ -80,7 +80,7 @@ exports[`should be structurally sound when mobile video + live stream 1`] = `
 exports[`should be structurally sound when mobile video 1`] = `
 <vime-default-controls>
   <vime-scrim></vime-scrim>
-  <vime-controls activeduration="2750" full-width="" pin="topLeft">
+  <vime-controls activeduration="2750" fullwidth="" pin="topLeft">
     <vime-control-spacer></vime-control-spacer>
     <vime-volume-control></vime-volume-control>
     <vime-caption-control></vime-caption-control>
@@ -89,7 +89,7 @@ exports[`should be structurally sound when mobile video 1`] = `
   <vime-controls activeduration="2750" pin="center">
     <vime-playback-control style="--vm-control-scale: 1.5;"></vime-playback-control>
   </vime-controls>
-  <vime-controls activeduration="2750" full-width="" pin="bottomLeft">
+  <vime-controls activeduration="2750" fullwidth="" pin="bottomLeft">
     <vime-control-group>
       <vime-current-time></vime-current-time>
       <vime-control-spacer></vime-control-spacer>
