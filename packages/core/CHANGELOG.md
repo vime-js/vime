@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/vime-js/vime/compare/v4.0.0...v4.0.1) (2020-09-21)
+
+
+### Bug Fixes
+
+* **theme:** make skeleton sheen more noticable ([b2cd250](https://github.com/vime-js/vime/commit/b2cd25092daaad6f30a22f18c804dd52333391ae))
+* **ui/icons:** handle loading icons inside shadow dom ([e91416e](https://github.com/vime-js/vime/commit/e91416e998045a0b6f5f0d15dca513c33a1be74b))
+
+
+
+
+
 # [4.0.0](https://github.com/vime-js/vime/compare/v3.2.2...v4.0.0) (2020-09-20)
 
 
