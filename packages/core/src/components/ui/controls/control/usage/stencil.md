@@ -1,4 +1,4 @@
-```tsx {35-43}
+```tsx {35-45}
 import { h, Component, Prop } from '@stencil/core';
 import { 
   Dispatcher, 
@@ -40,7 +40,9 @@ export class PlaybackControl {
         onClick={this.onClick.bind(this)}
       >
         <vime-icon href={this.paused ? '#vime-play' : '#vime-pause'} />
-        <vime-tooltip>{this.paused ? this.i18n.play : this.i18n.pause} (k)</vime-tooltip>
+        <vime-tooltip>
+          {this.paused ? this.i18n.play : this.i18n.pause} (k)
+        </vime-tooltip>
       </vime-control>
     );
   }

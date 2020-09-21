@@ -54,7 +54,7 @@ values={[
 
 <TabItem value="react">
 
-```tsx {3,21-30}
+```tsx {3,24-33}
 import React, { useMemo, useRef } from 'react';
 import {
   VimeControl,
@@ -191,7 +191,7 @@ function PlaybackControl() {
 
 <TabItem value="stencil">
 
-```tsx {35-43}
+```tsx {35-45}
 import { h, Component, Prop } from '@stencil/core';
 import {
   Dispatcher,

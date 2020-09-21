@@ -1,4 +1,4 @@
-```tsx {3,21-30}
+```tsx {3,24-33}
 import React, { useMemo, useRef } from 'react';
 import {
   VimeControl,
@@ -12,7 +12,10 @@ function PlaybackControl() {
   const [paused, setPaused] = usePlayerContext(ref, 'paused', true);
   const [i18n] = usePlayerContext(ref, 'i18n', {});
   const icon = useMemo(() => (paused ? '#vime-play' : '#vime-pause'), [paused]);
-  const tooltip = useMemo(() => (paused ? i18n.play : i18n.pause), [paused, i18n]);
+  const tooltip = useMemo(() => (paused ? i18n.play : i18n.pause), [
+    paused, 
+    i18n,
+  ]);
   
   const onClick = () => { 
     setPaused(false); 
