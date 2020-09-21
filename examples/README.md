@@ -8,4 +8,5 @@ and [Components API](https://vimejs.com/components/core/player) for more informa
 - [React](./react)
 - [Vue](./vue)
 - [Svelte](./svelte)
+- [Stencil](./stencil)
 - [Angular](./angular)
