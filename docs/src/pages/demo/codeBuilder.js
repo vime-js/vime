@@ -12,6 +12,9 @@ const track = `
       />
 `.trim();
 
+const isReact = (lib) => lib === 'react';
+const isStencil = (lib) => lib === 'stencil';
+
 const audio = (jsx = false) => `
     <${jsx ? 'VimeAudio' : 'vime-audio'}>
       <source 
@@ -21,9 +24,9 @@ const audio = (jsx = false) => `
     </${jsx ? 'VimeAudio' : 'vime-audio'}>
 `.trim();
 
-const video = (jsx = false) => `
+const video = (jsx = false, lib) => `
     <${jsx ? 'VimeVideo' : 'vime-video'}
-      ${jsx ? 'crossOrigin' : 'cross-origin'}
+      ${(jsx || isStencil(lib)) ? 'crossOrigin' : 'cross-origin'}
       poster="${poster}"
     >
       <source 
@@ -34,21 +37,21 @@ const video = (jsx = false) => `
     </${jsx ? 'VimeVideo' : 'vime-video'}>
 `.trim();
 
-const youtube = (jsx = false) => `
-    <${jsx ? 'VimeYoutube' : 'vime-youtube'} ${jsx ? 'videoId' : 'video-id'}="DyTCOwB0DVw"${jsx ? ' />' : '></vime-youtube>'}
+const youtube = (jsx = false, lib) => `
+    <${jsx ? 'VimeYoutube' : 'vime-youtube'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="DyTCOwB0DVw"${(jsx || isStencil(lib)) ? ' />' : '></vime-youtube>'}
 `.trim();
 
-const vimeo = (jsx = false) => `
-    <${jsx ? 'VimeVimeo' : 'vime-vimeo'} ${jsx ? 'videoId' : 'video-id'}="411652396"${jsx ? ' />' : '></vime-vimeo>'}
+const vimeo = (jsx = false, lib) => `
+    <${jsx ? 'VimeVimeo' : 'vime-vimeo'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="411652396"${(jsx || isStencil(lib)) ? ' />' : '></vime-vimeo>'}
 `.trim();
 
-const dailymotion = (jsx = false) => `
-    <${jsx ? 'VimeDailymotion' : 'vime-dailymotion'} ${jsx ? 'videoId' : 'video-id'}="k3b11PemcuTrmWvYe0q"${jsx ? ' />' : '></vime-dailymotion>'}
+const dailymotion = (jsx = false, lib) => `
+    <${jsx ? 'VimeDailymotion' : 'vime-dailymotion'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="k3b11PemcuTrmWvYe0q"${(jsx || isStencil(lib)) ? ' />' : '></vime-dailymotion>'}
 `.trim();
 
-const hls = (jsx = false) => `
+const hls = (jsx = false, lib) => `
     <${jsx ? 'VimeHls' : 'vime-hls'}
-      ${jsx ? 'crossOrigin' : 'cross-origin'}
+      ${(jsx || isStencil(lib)) ? 'crossOrigin' : 'cross-origin'}
       poster="${poster}"
     >
       <source 
@@ -59,11 +62,11 @@ const hls = (jsx = false) => `
     </${jsx ? 'VimeHls' : 'vime-hls'}>  
 `.trim();
 
-const dash = (jsx = false) => `
+const dash = (jsx = false, lib) => `
     <${jsx ? 'VimeDash' : 'vime-dash'} 
       src="https://media.vimejs.com/mpd/manifest.mpd" 
       poster="${poster}"
-    ${jsx ? '/>' : '></vime-dash>'}
+    ${(jsx || isStencil(lib)) ? '/>' : '></vime-dash>'}
 `.trim();
 
 const providers = {
@@ -79,7 +82,7 @@ const providers = {
 const player = (opts, lib, jsx) => {
   const propIf = (condition, prop) => condition ? `\n    ${prop}` : '';
 
-  const style = (lib === 'react') 
+  const style = (isReact(lib) || isStencil(lib)) 
     ? `style={{ '--vm-player-theme': '${opts.color}' }}` 
     : `style="--vm-player-theme: ${opts.color};"`;
 
@@ -90,7 +93,7 @@ const player = (opts, lib, jsx) => {
   return `
   <${jsx ? 'VimePlayer' : 'vime-player'}${controlsProp}${themeProp}${styleProp}
   >
-    ${providers[opts.provider || 'video'](jsx)}${opts.showDefaultUi ? `\n\n    ${jsx ? '<VimeDefaultUi />' : '<vime-default-ui></vime-default-ui>'}` : ''}
+    ${providers[opts.provider || 'video'](jsx, lib)}${opts.showDefaultUi ? `\n\n    ${jsx ? '<VimeDefaultUi />' : `<vime-default-ui${isStencil(lib) ? ' />' : '></vime-default-ui>'}`}` : ''}
   </${jsx ? 'VimePlayer' : 'vime-player'}>
 `.trim();
 }
@@ -137,12 +140,28 @@ const indentBack = (code) => code.replace(/\n\s\s/gm, '\n')
   .replace(/\s<VimeDefaultUi/gm, '\n  <VimeDefaultUi')
   .replace(/\s<vime-default/gm, '\n  <vime-default');
 
+const indentStencil = (code) => code.replace(/\n\s\s/gm, '\n      ')
+  .replace(/\s<VimeDefaultUi/gm, '\n        <VimeDefaultUi')
+  .replace(/\s<vime-default/gm, '\n        <vime-default');
+
 const svelteCode = (opts) => `
 ${indentBack(player(opts, 'svelte', true))}
 
 <script>
 ${importStmt(opts, 'svelte')}
 </script>
+`.trim();
+
+const stencilCode = (opts) => `
+import { h } from '@stencil/core';
+
+class Player() {
+  render() {
+    return (
+      ${indentStencil(player(opts, 'stencil', false))}
+    );
+  }
+}
 `.trim();
 
 const codeBuilder = (opts) => {
@@ -158,6 +177,9 @@ const codeBuilder = (opts) => {
       break; 
     case 'svelte':
       return svelteCode(opts);
+      break; 
+    case 'stencil':
+      return stencilCode(opts);
       break; 
     case 'angular':
       return indentBack(player(opts, 'angular', false));

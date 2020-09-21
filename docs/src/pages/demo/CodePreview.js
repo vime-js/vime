@@ -16,6 +16,7 @@ const languageTitle = {
   react: 'React',
   vue: 'Vue',
   svelte: 'Svelte',
+  stencil: 'Stencil',
   angular: 'Angular',
 };
 
@@ -24,6 +25,7 @@ const languageFileType = {
   react: 'tsx',
   vue: 'html',
   svelte: 'html',
+  stencil: 'tsx',
   angular: 'html'
 };
 
