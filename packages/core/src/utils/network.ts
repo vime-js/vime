@@ -248,15 +248,16 @@ export const loadSDK = <SDKType = any>(
   });
 };
 
-export const loadSprite = (src: string) => {
+export const loadSprite = (src: string, into?: HTMLElement | ShadowRoot) => {
   if (!IS_CLIENT) return;
 
   window.fetch(src)
     .then((res) => res.text())
     .then((sprite) => {
       const div = document.createElement('div');
+      div.setAttribute('data-sprite', src);
       div.style.display = 'none';
       div.innerHTML = sprite;
-      document.head.append(div);
+      (into ?? document.head).append(div);
     });
 };

@@ -11,6 +11,12 @@ export function listen<T extends Event | UIEvent>(
   return () => node.removeEventListener(event, handler as EventListener, options);
 }
 
+export const findShadowRoot = (el: Node): ShadowRoot | null => {
+  if (el instanceof ShadowRoot) return el;
+  if (!el.parentNode) return null;
+  return findShadowRoot(el.parentNode);
+};
+
 export const isColliding = (
   a: HTMLElement,
   b: HTMLElement,
