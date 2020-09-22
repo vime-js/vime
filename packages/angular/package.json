@@ -1,7 +1,7 @@
 {
   "name": "@vime/angular",
   "version": "4.0.1",
-  "description": "Angular bindings for Vime media player.",
+  "description": "Angular bindings for the Vime media player.",
   "license": "MIT",
   "types": "dist/index.d.ts",
   "contributors": [

@@ -5,7 +5,7 @@
   alt="Vime Logo"
 />
 
-A customizable media player built with [web components][web-components].
+Vime is a customizable, extensible, accessible and framework agnostic media player.
 
 [![package-badge]][package]
 [![license-badge]][license]

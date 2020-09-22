@@ -1,7 +1,7 @@
 {
   "name": "@vime/svelte",
   "version": "4.0.1",
-  "description": "Svelte bindings for Vime media player.",
+  "description": "Svelte bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

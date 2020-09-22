@@ -1,7 +1,7 @@
 {
   "name": "@vime/react",
   "version": "4.0.1",
-  "description": "React bindings for Vime media player.",
+  "description": "React bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

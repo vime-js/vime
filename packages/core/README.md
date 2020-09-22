@@ -1,7 +1,8 @@
 # @vime/core
 
-Vime is a customizable media player built with [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). The `@vime/core` package contains the web components for the player, plugins, 
-providers and UI elements that makeup the building blocks of Vime.
+Vime is a customizable, extensible, accessible and framework agnostic media player. The `@vime/core` 
+package contains the web components for the player, plugins, providers and UI elements that makeup 
+the building blocks of Vime.
 
 ## Example
 

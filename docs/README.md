@@ -1,6 +1,6 @@
 # @vime/docs
 
-Vime is a customizable media player built with web components. This package 
+Vime is a customizable, extensible, accessible and framework agnostic media player. This package 
 contains the source code for the Vime documentation site hosted at https://vimejs.com. The website 
 is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
 
