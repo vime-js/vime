@@ -222,4 +222,4 @@ A huge thanks to our sponsors who support open-source projects like Vime.
 [coverage-badge]: https://img.shields.io/codecov/c/github/mihar-22/vime.svg
 [coverage]: https://codecov.io/github/mihar-22/vime
 [discord]: https://discord.gg/feZ6cAE
-[discord-badge]: https://img.shields.io/discord/742612686679965696.svg?color=7389D8&labelColor=6A7EC2&logo=discord&logoColor=ffffff
+[discord-badge]: https://img.shields.io/badge/chat-on%20discord-7389D8
