@@ -21,6 +21,15 @@
   scrollbar-color: #31363f #282c34;
 }
 
+:root[data-theme="light"] .codePreview {
+  --ifm-tabs-color-active: #e86c8b;
+  --ifm-tabs-color: #606770;
+}
+
+:root[data-theme="dark"] .codePreview {
+  --ifm-tabs-color: #606770;
+}
+
 @media (max-width: 1440px) {
   .codePreview > pre {
     font-size: 14px !important;

@@ -12,7 +12,7 @@ import DemoPlayer from './DemoPlayer';
 function Demo() {
   let editorPanel = useRef(null);
 
-  const [color, setColor] = useState('#eb7290');
+  const [color, setColor] = useState('#e86c8b');
   const [theme, setTheme] = useState('dark');
   const [showDefaultUi, setShowDefaultUi] = useState(true);
   const [provider, setProvider] = useState('video');
