@@ -46,6 +46,7 @@ vime-control {
       &[aria-expanded='true'] {
         background: var(--vm-control-focus-bg);
         color: var(--vm-control-focus-color);
+        transform: scale(calc(var(--vm-control-scale, 1) + 0.1));
       }
     }
   }
