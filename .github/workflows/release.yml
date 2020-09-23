@@ -59,6 +59,7 @@ jobs:
           key: cypress-${{ hashFiles('yarn.lock') }}
       
       - name: Cache build
+        id: build
         uses: actions/cache@v2
         with:
           path: '**/dist'
@@ -75,7 +76,7 @@ jobs:
         run: yarn install
       
       - name: Build
-        if: steps.deps.outputs.cache-hit == 'true'
+        if: steps.build.outputs.cache-hit != 'true'
         run: yarn build
       
   test_unit:
@@ -126,12 +127,14 @@ jobs:
           key: build-${{ github.run_id }}
       
       - name: Cache instrumentation
+        id: instrument
         uses: actions/cache@v2
         with:
           path: 'packages/core/dist'
           key: instrument-${{ github.run_id }}
 
       - name: Instrument
+        if: steps.instrument.outputs.cache-hit != 'true'
         run: yarn workspace @vime/core instrument
 
   test_e2e:
