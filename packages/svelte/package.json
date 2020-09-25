@@ -53,6 +53,7 @@
     "vimeo",
     "hls",
     "dash",
-    "custom"
+    "custom",
+    "extensible"
   ]
 }

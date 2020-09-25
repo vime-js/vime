@@ -65,6 +65,12 @@ jobs:
           path: '**/dist'
           key: build-${{ github.run_id }}
       
+      - name: Cache svelte source
+        uses: actions/cache@v2
+        with:
+          path: 'packages/svelte/src'
+          key: build-${{ github.run_id }}
+      
       - name: Cache loader
         uses: actions/cache@v2
         with:
@@ -256,6 +262,12 @@ jobs:
         uses: actions/cache@v2
         with:
           path: '**/dist'
+          key: build-${{ github.run_id }}
+      
+      - name: Restore svelte source
+        uses: actions/cache@v2
+        with:
+          path: 'packages/svelte/src'
           key: build-${{ github.run_id }}
 
       - name: Restore loader
