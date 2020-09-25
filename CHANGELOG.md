@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/vime-js/vime/compare/v4.1.0...v4.1.1) (2020-09-25)
+
+
+### Bug Fixes
+
+* **svelte:** raw svelte files missing in package ([62f67b0](https://github.com/vime-js/vime/commit/62f67b0de182806774ae9157c6240b16c170a67a))
+
+
+
+
+
 # [4.1.0](https://github.com/vime-js/vime/compare/v4.0.2...v4.1.0) (2020-09-23)
 
 
