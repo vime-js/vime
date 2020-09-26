@@ -2845,10 +2845,10 @@
   resolved "https://registry.yarnpkg.com/@stencil/angular-output-target/-/angular-output-target-0.0.5.tgz#63e6981211291f80804361283386074bb9412749"
   integrity sha512-00iVf0pMH5NrVc/dUDy6AOEYEwTZ816bXggzNf4gxbhLpX1RAsC+MjC0gs/sJS2gal4gpE4cTVlPCGNy+mtFXg==
 
-"@stencil/core@2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.0.3.tgz#8719d3131362076a35b7a7c865de4720766f3f47"
-  integrity sha512-d4qLDN7HKwJEK+ljhknD8azpM4bF49Dv7h5yG3RF+SPo8uozDq3p5ZNj1MgZoRgzh04kXNyG/MKnD8H2QN5YVw==
+"@stencil/core@2.1.0-1":
+  version "2.1.0-1"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.1.0-1.tgz#25eca12d0b6a5b4883cdda5c4c0809e59f0d7a8e"
+  integrity sha512-ZsYGCr1zeq9o/0/Vus9nLQrgKnT79bIqVprgBcEYPhVKnUcyiy8beeEQd7bDeuNhY3V87Kcwr1w9j95QEY6oeg==
 
 "@stencil/react-output-target@^0.0.9":
   version "0.0.9"
