@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.2](https://github.com/vime-js/vime/compare/v4.1.1...v4.1.2) (2020-09-26)
+
+
+### Bug Fixes
+
+* cjs exports are broken due to missing `esModuleInterop` typescript flag ([5aea798](https://github.com/vime-js/vime/commit/5aea798a363e4509f203ba231f75b3937afe2d0d)), closes [#68](https://github.com/vime-js/vime/issues/68)
+
+
+
+
+
 ## [4.1.1](https://github.com/vime-js/vime/compare/v4.1.0...v4.1.1) (2020-09-25)
 
 
