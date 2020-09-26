@@ -31,6 +31,9 @@ function Demo() {
       onProviderChange: setProvider,
     });
 
+    const inputs = editorPanel.current.querySelectorAll('input,canvas,button,select');
+    inputs.forEach((input) => { input.classList.add('editor-input') });
+
     return () => pane.dispose()
   }, []);
 
@@ -57,7 +60,7 @@ function Demo() {
             />
           </div>
           
-          <Draggable>
+          <Draggable enableUserSelectHack={false} cancel=".editor-input">
             <div className={styles.editorPanel} ref={editorPanel} />
           </Draggable>
         </div>
