@@ -4,6 +4,7 @@
     "allowUnreachableCode": false,
     "declaration": false,
     "strict": true,
+    "esModuleInterop": true,
     "alwaysStrict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
