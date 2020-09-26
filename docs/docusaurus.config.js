@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   title: 'Vime',
-  tagline: 'Build and customize your own media player with web components.',
+  tagline: 'A customizable, extensible, accessible and framework agnostic media player.',
   url: 'https://vimejs.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',

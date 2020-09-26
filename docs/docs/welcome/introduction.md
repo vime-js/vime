@@ -12,6 +12,10 @@ slug: /
 [![jsdelivr-badge]][jsdelivr]
 [![discord-badge]][discord]
 
+import { Seo } from '../../src/seo';
+
+<Seo />
+
 <p style={{ fontSize: '18px' }}>
 Vime is a customizable, extensible, accessible and framework agnostic media player.
 </p>
