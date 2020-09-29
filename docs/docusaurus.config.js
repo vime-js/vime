@@ -17,6 +17,10 @@ module.exports = {
     announcementBar: {
       content: '⭐️ &nbsp;If you like Vime, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime">GitHub</a>!&nbsp;⭐️',
     },
+    algolia: {
+      apiKey: '94e7d7e6c8d755cc7c07513981e18e66',
+      indexName: 'vime',
+    },
     navbar: {
       title: 'Vime',
       hideOnScroll: true,
