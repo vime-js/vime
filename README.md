@@ -49,7 +49,7 @@ Vime is a customizable, extensible, accessible and framework agnostic media play
 [css-vars]: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 [light-theme]: ./packages/core/src/globals/themes/light.css
 [dark-theme]: ./packages/core/src/globals/themes/default.css
-[player-api]: https://vimejs.com/components/core/player/api
+[player-api]: https://vimejs.com/components/core/player
 [preconnections]: https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance
 [lazy-loading]: https://www.imperva.com/learn/performance/lazy-loading
 
