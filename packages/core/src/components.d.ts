@@ -1231,6 +1231,7 @@ export namespace Components {
     interface VimeSpinner {
         "buffering": PlayerProps['buffering'];
         "isVideoView": PlayerProps['isVideoView'];
+        "ready": PlayerProps['ready'];
     }
     interface VimeSubmenu {
         /**
@@ -3150,6 +3151,7 @@ declare namespace LocalJSX {
           * Emitted when the spinner will be shown.
          */
         "onVWillShow"?: (event: CustomEvent<void>) => void;
+        "ready"?: PlayerProps['ready'];
     }
     interface VimeSubmenu {
         /**
