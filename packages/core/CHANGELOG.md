@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.3](https://github.com/vime-js/vime/compare/v4.1.2...v4.1.3) (2020-10-01)
+
+
+### Bug Fixes
+
+* **providers/vimeo:** not centered when aspect ratio is changed ([18769a5](https://github.com/vime-js/vime/commit/18769a56d0fce96bc87e142f0b2c46247ec0f8af)), closes [#77](https://github.com/vime-js/vime/issues/77)
+* **providers/vimeo:** toggling muted state not working ([ad38e38](https://github.com/vime-js/vime/commit/ad38e38a5f6a4cf08a21798b0d3f6d6226bd045f))
+* **providers/youtube:** hide custom spinner to not overlap with native one ([78d4c5f](https://github.com/vime-js/vime/commit/78d4c5f01169a18ae112a347ceed173d3063cb56))
+
+
+
+
+
 ## [4.1.2](https://github.com/vime-js/vime/compare/v4.1.1...v4.1.2) (2020-09-26)
 
 **Note:** Version bump only for package @vime/core
