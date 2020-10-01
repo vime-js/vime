@@ -323,9 +323,12 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         break;
       case VimeoDataEvent.VolumeChange:
         if (payload.volume > 0) {
-          this.volume = payload.volume;
+          const newVolume = Math.floor(payload.volume * 100);
           this.dispatch('muted', false);
-          this.dispatch('volume', Math.floor(this.volume * 100));
+          if (this.volume !== newVolume) {
+            this.volume = newVolume;
+            this.dispatch('volume', this.volume);
+          }
         } else {
           this.dispatch('muted', true);
         }
@@ -396,13 +399,14 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         this.remoteControl(VimeoCommand.SetCurrentTime, time);
       },
       setMuted: async (muted: boolean) => {
-        this.remoteControl(VimeoCommand.SetVolume, muted ? 0 : this.volume);
+        if (!muted) this.volume = (this.volume > 0) ? this.volume : 30;
+        this.remoteControl(VimeoCommand.SetVolume, muted ? 0 : (this.volume / 100));
       },
       setVolume: async (volume: number) => {
-        this.volume = (volume / 100);
         if (!this.muted) {
-          this.remoteControl(VimeoCommand.SetVolume, this.volume);
+          this.remoteControl(VimeoCommand.SetVolume, (this.volume / 100));
         } else {
+          // Confirm volume was set.
           this.dispatch('volume', volume);
         }
       },
