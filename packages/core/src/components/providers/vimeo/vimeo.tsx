@@ -89,6 +89,11 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   /**
    * @internal
    */
+  @Prop() aspectRatio = '16:9';
+
+  /**
+   * @internal
+   */
   @Prop() autoplay = false;
 
   /**
@@ -360,6 +365,18 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
     if (!isUndefined(message.method)) this.onVimeoMethod(message.method!, message.value);
   }
 
+  private adjustPosition() {
+    // eslint-disable-next-line no-shadow
+    const [w, h] = this.aspectRatio.split(':').map((r) => parseInt(r, 10));
+    const height = 240;
+    const padding = (100 / w) * h;
+    const offset = (height - padding) / (height / 50);
+    return {
+      paddingBottom: `${height}%`,
+      transform: `translateY(-${offset + 0.02}%)`,
+    };
+  }
+
   /**
    * @internal
    */
@@ -401,6 +418,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
     return (
       <vime-embed
         class={{ hideControls: !this.controls }}
+        style={this.adjustPosition()}
         embedSrc={this.embedSrc}
         mediaTitle={this.mediaTitle}
         origin={this.getOrigin()}

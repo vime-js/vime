@@ -1342,6 +1342,7 @@ export namespace Components {
         "willAttach": boolean;
     }
     interface VimeVimeo {
+        "aspectRatio": string;
         "autoplay": boolean;
         /**
           * Whether to display the video owner's name.
@@ -3259,6 +3260,7 @@ declare namespace LocalJSX {
         "willAttach"?: boolean;
     }
     interface VimeVimeo {
+        "aspectRatio"?: string;
         "autoplay"?: boolean;
         /**
           * Whether to display the video owner's name.

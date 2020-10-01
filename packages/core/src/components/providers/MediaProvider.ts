@@ -51,5 +51,6 @@ export const withProviderContext = (
   'muted',
   'logger',
   'loop',
+  'aspectRatio',
   'playsinline',
 ]);
