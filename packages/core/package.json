@@ -1,6 +1,6 @@
 {
   "name": "@vime/core",
-  "version": "4.1.3",
+  "version": "4.2.0",
   "description": "Customizable, extensible, accessible and framework agnostic media player.",
   "license": "MIT",
   "main": "dist/index.cjs.js",

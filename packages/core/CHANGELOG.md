@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/vime-js/vime/compare/v4.1.3...v4.2.0) (2020-10-02)
+
+
+### Bug Fixes
+
+* **providers/file:** poster is not loaded on iOS when custom ui is hidden ([eb294cd](https://github.com/vime-js/vime/commit/eb294cd6b96634ddbf30c9166f99245236fbbff2))
+* **ui/captions:** add some spacing below captions when controls are hidden ([93193fe](https://github.com/vime-js/vime/commit/93193fe12529c544bdb306666f1df0a832117620))
+* **ui/controls:** lower controls not interactable on mobile ([703c07f](https://github.com/vime-js/vime/commit/703c07fbb72507e4f6c73e087c2edebcb077d76d))
+
+
+### Features
+
+* **ui:** enter landscape mode when entering fullscreen on mobile ([c636d80](https://github.com/vime-js/vime/commit/c636d80ceb412ce5b88c5e34af18282bdd86a195))
+
+
+
+
+
 ## [4.1.3](https://github.com/vime-js/vime/compare/v4.1.2...v4.1.3) (2020-10-01)
 
 
