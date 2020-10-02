@@ -17,7 +17,8 @@ body {
 }
 
 #container {
-  width: 70%;
+  width: 100%;
+  max-width: 960px
 }
 
 .media-container-16-9 {

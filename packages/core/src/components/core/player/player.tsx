@@ -18,7 +18,7 @@ import {
 } from './PlayerProps';
 import { ViewType } from './ViewType';
 import {
-  canAutoplay, IS_MOBILE, onTouchInputChange, IS_IOS,
+  canAutoplay, IS_MOBILE, onTouchInputChange, IS_IOS, canRotateScreen,
 } from '../../../utils/support';
 import { Fullscreen } from './fullscreen/Fullscreen';
 import { en } from './lang/en';
@@ -939,7 +939,10 @@ export class Player implements MediaPlayer {
 
     this.fullscreen = new Fullscreen(
       this.el,
-      (isActive) => { this.isFullscreenActive = isActive; },
+      (isActive) => {
+        this.isFullscreenActive = isActive;
+        this.rotateDevice();
+      },
     );
 
     this.disposal.add(onTouchInputChange((isTouch) => { this.isTouch = isTouch; }));
@@ -981,6 +984,18 @@ export class Player implements MediaPlayer {
     this.autopauseMgr.destroy();
     this.disposal.empty();
     this.attached = false;
+  }
+
+  private async rotateDevice() {
+    if (!IS_MOBILE || !canRotateScreen()) return;
+
+    try {
+      if (this.isFullscreenActive) {
+        await window.screen.orientation.lock('landscape');
+      } else {
+        await window.screen.orientation.unlock();
+      }
+    } catch (err) { this.errors = [err]; }
   }
 
   private getPlayerState(): PlayerProps {

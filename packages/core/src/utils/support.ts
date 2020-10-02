@@ -52,6 +52,15 @@ export const canFullscreenVideo = (): boolean => {
 };
 
 /**
+ * Checks if the screen orientation can be changed.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
+ */
+export const canRotateScreen = () => IS_CLIENT
+  && window.screen.orientation
+  && window.screen.orientation.lock;
+
+/**
  * Reduced motion iOS & MacOS setting.
  *
  * @see https://webkit.org/blog/7551/responsive-design-for-motion/
