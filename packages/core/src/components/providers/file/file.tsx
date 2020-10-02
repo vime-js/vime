@@ -12,10 +12,7 @@ import {
 import { audioRegex, videoRegex, hlsRegex } from './utils';
 import { WebkitPresentationMode } from './WebkitPresentationMode';
 import {
-  canUsePiP,
-  canUsePiPInChrome,
-  canUsePiPInSafari,
-  canFullscreenVideo,
+  canUsePiP, canUsePiPInChrome, canUsePiPInSafari, canFullscreenVideo, IS_IOS,
 } from '../../../utils/support';
 import { MediaType } from '../../core/player/MediaType';
 import { listen } from '../../../utils/dom';
@@ -244,7 +241,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private hasCustomPoster() {
     const root = findRootPlayer(this);
-    return !isNull(root.querySelector('vime-ui vime-poster'));
+    return !IS_IOS && !isNull(root.querySelector('vime-ui vime-poster'));
   }
 
   private cancelTimeUpdates() {
