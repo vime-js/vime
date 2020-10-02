@@ -1,13 +1,19 @@
 .container {
-  flex: 1;
   display: flex;
-  align-self: stretch;
   overflow: hidden;
   background-color: #282c34;
+  min-height: calc(100vh - var(--ifm-navbar-height)) !important;
 }
 
 .codePreview {
   flex-shrink: 1;
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .codePreview {
+    display: block;
+  }
 }
 
 .codePreview > pre {

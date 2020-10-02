@@ -63,6 +63,11 @@ html[data-theme='dark'] .header-github-link:before {
     no-repeat;
 }
 
+.main-wrapper {
+  display: block !important;
+  min-height: calc(100vh - var(--ifm-navbar-height)) !important;
+}
+
 .navbar__title {
   font-size: 20px;
 }
