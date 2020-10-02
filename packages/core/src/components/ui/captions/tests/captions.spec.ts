@@ -47,5 +47,5 @@ it('should adjust position based on controls height', async () => {
   expect(captions.style.transform).toEqual('translateY(-140px)');
   await provider.dispatchChange('isControlsActive', false);
   await page.waitForChanges();
-  expect(captions.style.transform).toEqual('translateY(-0px)');
+  expect(captions.style.transform).toEqual('translateY(-24px)');
 });
