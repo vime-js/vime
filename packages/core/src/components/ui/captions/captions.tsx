@@ -162,7 +162,7 @@ export class Captions {
     return (
       <Host
         style={{
-          transform: `translateY(-${this.isControlsActive ? this.controlsHeight : 0}px)`,
+          transform: `translateY(-${this.isControlsActive ? this.controlsHeight : 24}px)`,
         }}
         class={{
           enabled: this.isEnabled,
