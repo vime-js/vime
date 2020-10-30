@@ -2,11 +2,11 @@ import {
   h, Host, Component, Prop,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { isUndefined } from '../../../../utils/unit';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { findRootPlayer } from '../../../core/player/utils';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 
 @Component({
   tag: 'vime-caption-control',
@@ -58,6 +58,14 @@ export class CaptionControl implements KeyboardControl {
    */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
+  constructor() {
+    withPlayerContext(this, [
+      'isCaptionsActive',
+      'currentCaption',
+      'i18n',
+    ]);
+  }
+
   private onClick() {
     const player = findRootPlayer(this);
     player.toggleCaptionsVisibility();
@@ -94,9 +102,3 @@ export class CaptionControl implements KeyboardControl {
     );
   }
 }
-
-withPlayerContext(CaptionControl, [
-  'isCaptionsActive',
-  'currentCaption',
-  'i18n',
-]);

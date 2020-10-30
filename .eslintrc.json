@@ -2,6 +2,9 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
+  "env": {
+    "browser": true
+  },
   "extends": [
     "airbnb-typescript"
   ],

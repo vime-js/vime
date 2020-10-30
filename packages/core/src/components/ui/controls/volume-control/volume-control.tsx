@@ -112,6 +112,15 @@ export class VolumeControl {
    */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
+  constructor() {
+    withPlayerContext(this, [
+      'volume',
+      'muted',
+      'isMobile',
+      'i18n',
+    ]);
+  }
+
   connectedCallback() {
     this.prevMuted = this.muted;
     this.dispatch = createDispatcher(this);
@@ -180,10 +189,3 @@ export class VolumeControl {
     );
   }
 }
-
-withPlayerContext(VolumeControl, [
-  'volume',
-  'muted',
-  'isMobile',
-  'i18n',
-]);

@@ -52,7 +52,7 @@ export const usePlayerContext = <P extends keyof PlayerProps>(
   );
 
   const setter = useCallback(
-    // eslint-disable-next-line no-shadow
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     (value: PlayerProps[P]) => { dispatch(prop as any, value); },
     [dispatch, prop],
   );

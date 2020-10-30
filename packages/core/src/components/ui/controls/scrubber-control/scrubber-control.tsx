@@ -95,6 +95,16 @@ export class ScrubberControl {
    */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
+  constructor() {
+    withPlayerContext(this, [
+      'i18n',
+      'currentTime',
+      'duration',
+      'buffering',
+      'buffered',
+    ]);
+  }
+
   connectedCallback() {
     this.dispatch = createDispatcher(this);
     this.timestamp = formatTime(this.currentTime, this.alwaysShowHours);
@@ -196,11 +206,3 @@ export class ScrubberControl {
     );
   }
 }
-
-withPlayerContext(ScrubberControl, [
-  'i18n',
-  'currentTime',
-  'duration',
-  'buffering',
-  'buffered',
-]);

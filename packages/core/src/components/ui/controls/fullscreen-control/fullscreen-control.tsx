@@ -2,11 +2,11 @@ import {
   h, Host, Component, Prop, State, Watch,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
 import { findRootPlayer } from '../../../core/player/utils';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 
 @Component({
   tag: 'vime-fullscreen-control',
@@ -66,6 +66,14 @@ export class FullscreenControl implements KeyboardControl {
     this.canSetFullscreen = await player.canSetFullscreen();
   }
 
+  constructor() {
+    withPlayerContext(this, [
+      'isFullscreenActive',
+      'playbackReady',
+      'i18n',
+    ]);
+  }
+
   private onClick() {
     const player = findRootPlayer(this);
     !this.isFullscreenActive ? player.enterFullscreen() : player.exitFullscreen();
@@ -102,9 +110,3 @@ export class FullscreenControl implements KeyboardControl {
     );
   }
 }
-
-withPlayerContext(FullscreenControl, [
-  'isFullscreenActive',
-  'playbackReady',
-  'i18n',
-]);

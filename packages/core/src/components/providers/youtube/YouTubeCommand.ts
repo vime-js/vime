@@ -1,14 +1,14 @@
 /**
  * @see https://developers.google.com/youtube/iframe_api_reference#Playback_controls
  */
-export enum YouTubeCommand {
+export const enum YouTubeCommand {
   Play = 'playVideo',
   Pause = 'pauseVideo',
   Seek = 'seekTo',
   Mute = 'mute',
   Unmute = 'unMute',
   SetVolume = 'setVolume',
-  SetPlaybackRate = 'setPlaybackRate'
+  SetPlaybackRate = 'setPlaybackRate',
 }
 
 export interface YouTubeCommandArg {

@@ -3,9 +3,9 @@
 
 
 "@stencil/core@^2.0.0":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.0.3.tgz#8719d3131362076a35b7a7c865de4720766f3f47"
-  integrity sha512-d4qLDN7HKwJEK+ljhknD8azpM4bF49Dv7h5yG3RF+SPo8uozDq3p5ZNj1MgZoRgzh04kXNyG/MKnD8H2QN5YVw==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.2.0.tgz#f92b480a387bce688a368b2fb23207f1acd45bc2"
+  integrity sha512-2V+DEUs9wvkcgnIIs0huye/M1v7x6qEzeOjp056RQlB08U1I4ex3vnBoE0/CrR35wK3ZZv2JYPOfBUuqR+6AAg==
 
 "@stencil/router@^1.0.1":
   version "1.0.1"
@@ -20,13 +20,13 @@
   integrity sha512-DYG8uROgL9hkjVTCtCfRBb0d3FwpiFB0muRrNZQ2X1Qo5hxMuNNji76/ILddqeq0AfgkKCW82xrMPDpy+rNIhQ==
 
 "@vime/core@^4.0.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.1.0.tgz#45dc46ad503506e95d2ffe7b4751e58dddd6b45e"
-  integrity sha512-fnOqeD92j1IEMQhKSayBY+9hMi9KiUIzeD0FsOtOuQNk9DDLKuM7G/q49TJM5ncJvmBMOjEVO8QuVO92Y3vauQ==
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.2.0.tgz#30c491a201fd041f83643eb8b62499835bc65252"
+  integrity sha512-kL1w0nynovkX5YuGim8wKlr/cBmzWVLvF/viXriL01iQ+HswBAFDxSbONRUyn/R8txb/vm3L4KHvKtYEH+zNkg==
   dependencies:
     stencil-wormhole "^3.2.1"
 
 stencil-wormhole@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/stencil-wormhole/-/stencil-wormhole-3.2.1.tgz#1f2766c176fe0f8ebded424502a3ae2f239fa06e"
-  integrity sha512-z4vvuR+Pn/KODHbks7u92tUvdfcIzwzPEYwZJ16N9M0TYNFXWQUz0rQCwatZ/VQ8aarQqdFACCw+Q0lEeUk+VQ==
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/stencil-wormhole/-/stencil-wormhole-3.3.2.tgz#e990654240d05cfaa607ee86fa0657d984924895"
+  integrity sha512-1AamOUFu05ul6XZ3qiUIJfKPcvFHyIKmgczFujQ/VQ8UZYhCcRSN02WwaJL7OKB3lXwQKFppVZ2q8R3A/IZKWA==

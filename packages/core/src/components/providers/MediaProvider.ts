@@ -43,8 +43,8 @@ export interface MediaProviderConstructor {
 }
 
 export const withProviderContext = (
-  Provider: MediaProviderConstructor,
-) => withPlayerContext(Provider, [
+  provider: MediaProvider,
+) => withPlayerContext(provider, [
   'autoplay',
   'controls',
   'language',

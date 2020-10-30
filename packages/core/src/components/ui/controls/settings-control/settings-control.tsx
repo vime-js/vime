@@ -48,6 +48,10 @@ export class SettingsControl {
    */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
+  constructor() {
+    withPlayerContext(this, ['i18n']);
+  }
+
   connectedCallback() {
     idCount += 1;
     this.id = `vime-settings-control-${idCount}`;
@@ -94,7 +98,3 @@ export class SettingsControl {
     );
   }
 }
-
-withPlayerContext(SettingsControl, [
-  'i18n',
-]);

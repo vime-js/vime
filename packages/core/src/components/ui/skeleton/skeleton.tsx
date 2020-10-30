@@ -32,6 +32,10 @@ export class Skeleton {
     }
   }
 
+  constructor() {
+    withPlayerContext(this, ['ready']);
+  }
+
   render() {
     return (
       <Host
@@ -45,7 +49,3 @@ export class Skeleton {
     );
   }
 }
-
-withPlayerContext(Skeleton, [
-  'ready',
-]);

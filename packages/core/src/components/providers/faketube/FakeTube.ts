@@ -53,6 +53,10 @@ export class FakeTube implements MediaProvider {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
+  constructor() {
+    withProviderContext(this);
+  }
+
   connectedCallback() {
     this.dispatch = createProviderDispatcher(this);
   }
@@ -99,5 +103,3 @@ export class FakeTube implements MediaProvider {
     this.dispatch(prop as any, value);
   }
 }
-
-withProviderContext(FakeTube);

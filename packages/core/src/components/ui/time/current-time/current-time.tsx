@@ -22,6 +22,10 @@ export class CurrentTime {
    */
   @Prop() alwaysShowHours = false;
 
+  constructor() {
+    withPlayerContext(this, ['currentTime', 'i18n']);
+  }
+
   render() {
     return (
       <vime-time
@@ -32,8 +36,3 @@ export class CurrentTime {
     );
   }
 }
-
-withPlayerContext(CurrentTime, [
-  'currentTime',
-  'i18n',
-]);

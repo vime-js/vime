@@ -25,7 +25,6 @@ import { en } from './lang/en';
 import { StateChange } from './PlayerDispatcher';
 import { Disposal } from './Disposal';
 import { listen } from '../../../utils/dom';
-import { lazyLoader } from './lazyLoader';
 import { Autopause } from './Autopause';
 import { Logger } from './PlayerLogger';
 import { getEventName } from './PlayerEvents';
@@ -946,7 +945,6 @@ export class Player implements MediaPlayer {
     );
 
     this.disposal.add(onTouchInputChange((isTouch) => { this.isTouch = isTouch; }));
-    this.disposal.add(lazyLoader(this.el));
     this.attached = true;
   }
 
@@ -970,10 +968,6 @@ export class Player implements MediaPlayer {
         this.cache.set(prop, newValue);
       }
     }
-  }
-
-  componentDidLoad() {
-    this.disposal.add(lazyLoader(this.el));
   }
 
   disconnectedCallback() {

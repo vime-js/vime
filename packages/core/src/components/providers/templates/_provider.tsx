@@ -51,6 +51,10 @@ export class Name implements MediaProvider {
   // @TODO we have to call this event as soon as media starts loading.
   @Event() vLoadStart!: EventEmitter<void>;
 
+  constructor() {
+    withProviderContext(this);
+  }
+
   connectedCallback() {
     this.dispatch = createProviderDispatcher(this);
     // @TODO change this if view is of type audio.
@@ -89,5 +93,3 @@ export class Name implements MediaProvider {
     return <div />;
   }
 }
-
-withProviderContext(Name);

@@ -126,6 +126,10 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
+  constructor() {
+    withProviderContext(this);
+  }
+
   connectedCallback() {
     this.dispatch = createProviderDispatcher(this);
     this.dispatch('viewType', ViewType.Video);
@@ -369,10 +373,9 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   }
 
   private adjustPosition() {
-    // eslint-disable-next-line no-shadow
-    const [w, h] = this.aspectRatio.split(':').map((r) => parseInt(r, 10));
+    const [aw, ah] = this.aspectRatio.split(':').map((r) => parseInt(r, 10));
     const height = 240;
-    const padding = (100 / w) * h;
+    const padding = (100 / aw) * ah;
     const offset = (height - padding) / (height / 50);
     return {
       paddingBottom: `${height}%`,
@@ -436,5 +439,3 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
     );
   }
 }
-
-withProviderContext(Vimeo);

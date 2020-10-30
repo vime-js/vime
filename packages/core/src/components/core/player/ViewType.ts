@@ -1,4 +1,4 @@
 export enum ViewType {
   Audio = 'audio',
-  Video = 'video'
+  Video = 'video',
 }

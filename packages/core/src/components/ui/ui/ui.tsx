@@ -28,6 +28,14 @@ export class UI {
    */
   @Prop() isFullscreenActive: PlayerProps['isFullscreenActive'] = false;
 
+  constructor() {
+    withPlayerContext(this, [
+      'isVideoView',
+      'playsinline',
+      'isFullscreenActive',
+    ]);
+  }
+
   render() {
     const canShowCustomUI = !IS_IOS
       || !this.isVideoView
@@ -47,9 +55,3 @@ export class UI {
     );
   }
 }
-
-withPlayerContext(UI, [
-  'isVideoView',
-  'playsinline',
-  'isFullscreenActive',
-]);

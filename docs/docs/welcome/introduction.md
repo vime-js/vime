@@ -149,6 +149,8 @@ There are also [examples](https://github.com/vime-js/vime/tree/master/examples) 
 using Vime with:
 
 - [HTML](https://github.com/vime-js/vime/tree/master/examples/html)
+- [Rollup](https://github.com/vime-js/vime/tree/master/examples/rollup)
+- [Webpack](https://github.com/vime-js/vime/tree/master/examples/webpack)
 - [React](https://github.com/vime-js/vime/tree/master/examples/react)
 - [Vue](https://github.com/vime-js/vime/tree/master/examples/vue)
 - [Svelte](https://github.com/vime-js/vime/tree/master/examples/svelte)

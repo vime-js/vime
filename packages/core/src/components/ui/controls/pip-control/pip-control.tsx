@@ -2,11 +2,11 @@ import {
   h, Host, Component, Prop, Watch, State,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
 import { findRootPlayer } from '../../../core/player/utils';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 
 @Component({
   tag: 'vime-pip-control',
@@ -66,6 +66,10 @@ export class PiPControl implements KeyboardControl {
     this.canSetPiP = await player.canSetPiP();
   }
 
+  constructor() {
+    withPlayerContext(this, ['isPiPActive', 'playbackReady', 'i18n']);
+  }
+
   private onClick() {
     const player = findRootPlayer(this);
     !this.isPiPActive ? player.enterPiP() : player.exitPiP();
@@ -102,9 +106,3 @@ export class PiPControl implements KeyboardControl {
     );
   }
 }
-
-withPlayerContext(PiPControl, [
-  'isPiPActive',
-  'playbackReady',
-  'i18n',
-]);

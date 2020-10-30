@@ -107,6 +107,10 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
+  constructor() {
+    withProviderContext(this);
+  }
+
   connectedCallback() {
     this.dispatch = createProviderDispatcher(this);
     this.dispatch('viewType', ViewType.Video);
@@ -361,5 +365,3 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     );
   }
 }
-
-withProviderContext(YouTube);

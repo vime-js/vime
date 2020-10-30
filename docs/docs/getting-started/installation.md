@@ -39,6 +39,50 @@ inside the `<head>` element of your HTML file.
 
 And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move onto [setting up our player](./player).
 
+## Rollup / Webpack
+
+A [custom elements bundle](https://stenciljs.com/docs/custom-elements) is available so you can 
+import components and register them individually. This is a more flexible alternative to the 
+lazy loading approach used by the [CDN](#CDN).
+
+Let's install the `@vime/core` package by running the following in our terminal...
+
+```bash
+npm i @vime/core
+```
+
+Now let's first load the CSS for the player themes, which are small files that only contain a bunch of
+CSS variables for styling the player. You can either load them from the [CDN](#cdn), or bundle them 
+into your project directly (this will require a plugin). See our example configurations for 
+[Rollup](https://github.com/vime-js/vime/tree/master/examples/rollup/rollup.config.js) and 
+[Webpack](https://github.com/vime-js/vime/tree/master/examples/webpack/webpack.config.js).
+
+```js
+// Default theme. ~960B
+import '@vime/core/themes/default.css';
+
+// Optional light theme (extends default). ~400B
+import '@vime/core/themes/light.css';
+```
+
+Now you can can start bundling Vime by importing the components you require **and their dependencies** 
+into your project, and registering them in the custom elements registry like so...
+
+:::info
+All components list their dependencies inside their API documentation under the `##Dependencies` 
+section. See the [Video](../components/providers/video#dependencies) component as an example.
+:::
+
+```js
+import { VimePlayer, VimeVideo, VimeFile } from '@vime/core';
+
+customElements.define('vime-player', VimePlayer);
+customElements.define('vime-video', VimeVideo);
+customElements.define('vime-file', VimeFile);
+```
+
+And ... we're all done 🎉 &nbsp; Let's move onto [setting up our player](./player).
+
 ## Stencil
 
 Luckily for you Vime is built with [Stencil](https://stenciljs.com) so it works out of the box 

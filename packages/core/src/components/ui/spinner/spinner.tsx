@@ -10,6 +10,8 @@ import { findRootPlayer } from '../../core/player/utils';
   styleUrl: 'spinner.scss',
 })
 export class Spinner {
+  private blacklist = ['VIME-YOUTUBE'];
+
   @State() isHidden = true;
 
   @State() isActive = false;
@@ -60,6 +62,14 @@ export class Spinner {
     this.onVisiblityChange();
   }
 
+  constructor() {
+    withPlayerContext(this, [
+      'isVideoView',
+      'buffering',
+      'ready',
+    ]);
+  }
+
   private onVisiblityChange() {
     (!this.isHidden && this.isActive) ? this.vWillShow.emit() : this.vWillHide.emit();
   }
@@ -68,7 +78,7 @@ export class Spinner {
     return (
       <Host
         class={{
-          hidden: this.isHidden || (this.currentProvider === 'VIME-YOUTUBE'),
+          hidden: this.isHidden || this.blacklist.includes(this.currentProvider!),
           active: this.isActive,
         }}
       >
@@ -77,9 +87,3 @@ export class Spinner {
     );
   }
 }
-
-withPlayerContext(Spinner, [
-  'isVideoView',
-  'buffering',
-  'ready',
-]);

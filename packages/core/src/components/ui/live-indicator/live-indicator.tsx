@@ -19,6 +19,10 @@ export class LiveIndicator {
    */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
+  constructor() {
+    withPlayerContext(this, ['isLive', 'i18n']);
+  }
+
   render() {
     return (
       <Host
@@ -32,8 +36,3 @@ export class LiveIndicator {
     );
   }
 }
-
-withPlayerContext(LiveIndicator, [
-  'isLive',
-  'i18n',
-]);

@@ -1,15 +1,20 @@
 import {
-  h, Component, Prop, State, Watch, Host, Event, EventEmitter,
+  h, Component, Prop, State, Watch, Host, Event, EventEmitter, Element,
 } from '@stencil/core';
 import { withPlayerContext } from '../../core/player/PlayerContext';
 import { PlayerProps } from '../../core/player/PlayerProps';
 import { isUndefined } from '../../../utils/unit';
+import { LazyLoader } from '../../core/player/LazyLoader';
 
 @Component({
   tag: 'vime-poster',
   styleUrl: 'poster.scss',
 })
 export class Poster {
+  private lazyLoader!: LazyLoader;
+
+  @Element() el!: HTMLVimePosterElement;
+
   @State() isHidden = true;
 
   @State() isActive = false;
@@ -61,9 +66,23 @@ export class Poster {
    */
   @Event({ bubbles: false }) vWillHide!: EventEmitter<void>;
 
+  constructor() {
+    withPlayerContext(this, [
+      'mediaTitle',
+      'currentPoster',
+      'playbackStarted',
+      'isVideoView',
+    ]);
+  }
+
   connectedCallback() {
+    this.lazyLoader = new LazyLoader(this.el);
     this.onEnabledChange();
     this.onActiveChange();
+  }
+
+  disconnectedCallback() {
+    this.lazyLoader.destroy();
   }
 
   private onVisibilityChange() {
@@ -107,10 +126,3 @@ export class Poster {
     );
   }
 }
-
-withPlayerContext(Poster, [
-  'mediaTitle',
-  'currentPoster',
-  'playbackStarted',
-  'isVideoView',
-]);

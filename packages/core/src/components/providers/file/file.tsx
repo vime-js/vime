@@ -20,6 +20,7 @@ import { Disposal } from '../../core/player/Disposal';
 import { findRootPlayer } from '../../core/player/utils';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
+import { LazyLoader } from '../../core/player/LazyLoader';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
@@ -35,7 +36,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private disposal = new Disposal();
 
-  private cancelMutationObserver?: () => void;
+  private lazyLoader?: LazyLoader;
 
   private playbackStarted = false;
 
@@ -169,7 +170,12 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
    */
   @Event() vSrcSetChange!: EventEmitter<void>;
 
+  constructor() {
+    withProviderContext(this);
+  }
+
   connectedCallback() {
+    this.initLazyLoader();
     this.dispatch = createProviderDispatcher(this);
     this.onViewTypeChange();
     this.onPosterChange();
@@ -180,7 +186,6 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   componentDidRender() {
     if (this.prevMediaEl !== this.mediaEl) {
       this.prevMediaEl = this.mediaEl;
-      if (!isNullOrUndefined(this.mediaEl)) this.setupMutationObserver();
       this.vMediaElChange.emit(this.mediaEl);
     }
   }
@@ -190,53 +195,36 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   disconnectedCallback() {
-    this.mediaEl!.pause();
     this.cancelTimeUpdates();
     this.disposal.empty();
-    this.cancelMutationObserver?.();
+    this.lazyLoader?.destroy();
     this.playbackStarted = false;
     this.wasPausedBeforeSeeking = true;
   }
 
-  setupMutationObserver() {
-    this.cancelMutationObserver?.();
-    if (isNullOrUndefined(this.mediaEl)) return;
-
-    const observer = new MutationObserver(this.didSrcSetChange.bind(this));
-
-    observer.observe(this.mediaEl!, {
-      childList: true,
-      subtree: true,
-      attributeFilter: ['src', 'data-src'],
-    });
-
-    this.cancelMutationObserver = () => { observer.disconnect(); };
+  private initLazyLoader() {
+    this.lazyLoader = new LazyLoader(this.el, this.didSrcSetChange.bind(this));
   }
 
   private didSrcSetChange() {
     if (isNullOrUndefined(this.mediaEl)) return;
 
     const sources = Array.from(this.mediaEl!.querySelectorAll('source'));
-    const srcSet = sources.map((source) => source.src || source.getAttribute('data-src'));
+    const srcSet = sources.map((source) => source.src);
 
     const didChange = (this.currentSrcSet.length !== srcSet.length)
       || (srcSet.some((src, i) => this.currentSrcSet[i] !== src));
 
     if (didChange) {
-      if (this.mediaEl!.hasAttribute('data-loaded')) {
-        sources.forEach((source) => {
-          if (source.hasAttribute('data-src') && !source.hasAttribute('src')) {
-            source.setAttribute('src', source.getAttribute('data-src')!);
-          }
-        });
-      }
-
-      this.vLoadStart.emit();
-      this.mediaEl?.load();
-      this.vSrcSetChange.emit();
+      this.onSrcChange();
+      this.currentSrcSet = srcSet;
     }
+  }
 
-    this.currentSrcSet = srcSet;
+  private onSrcChange() {
+    this.vLoadStart.emit();
+    this.vSrcSetChange.emit();
+    this.mediaEl?.load();
   }
 
   private hasCustomPoster() {
@@ -476,7 +464,10 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     };
 
     const audio = (
-      <audio class="lazy" {...mediaProps}>
+      <audio
+        class="lazy"
+        {...mediaProps}
+      >
         <slot />
         Your browser does not support the
         <code>audio</code>
@@ -503,5 +494,3 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     return (this.viewType === ViewType.Audio) ? audio : video;
   }
 }
-
-withProviderContext(File);

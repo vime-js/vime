@@ -3,7 +3,6 @@ import {
   Prop, Element, Watch,
   State,
 } from '@stencil/core';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
 import { Disposal } from '../../../core/player/Disposal';
@@ -12,6 +11,7 @@ import { isNullOrUndefined } from '../../../../utils/unit';
 import { debounce } from '../../../../utils/timing';
 import { findRootPlayer } from '../../../core/player/utils';
 import { findUIRoot } from '../../ui/utils';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 
 /**
  * We want to keep the controls active state in-sync per player.
@@ -135,6 +135,17 @@ export class Controls {
    * @internal
    */
   @Prop() playbackStarted: PlayerProps['playbackStarted'] = false;
+
+  constructor() {
+    withPlayerContext(this, [
+      'playbackReady',
+      'isAudioView',
+      'isControlsActive',
+      'isSettingsActive',
+      'paused',
+      'playbackStarted',
+    ]);
+  }
 
   connectedCallback() {
     this.dispatch = createDispatcher(this);
@@ -319,12 +330,3 @@ export class Controls {
     );
   }
 }
-
-withPlayerContext(Controls, [
-  'playbackReady',
-  'isAudioView',
-  'isControlsActive',
-  'isSettingsActive',
-  'paused',
-  'playbackStarted',
-]);

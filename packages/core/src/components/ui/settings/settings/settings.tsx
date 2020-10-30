@@ -71,6 +71,10 @@ export class Settings {
    */
   @Prop() isAudioView: PlayerProps['isAudioView'] = false;
 
+  constructor() {
+    withPlayerContext(this, ['isMobile', 'isAudioView']);
+  }
+
   connectedCallback() {
     this.dispatch = createDispatcher(this);
     idCount += 1;
@@ -143,8 +147,3 @@ export class Settings {
     );
   }
 }
-
-withPlayerContext(Settings, [
-  'isMobile',
-  'isAudioView',
-]);

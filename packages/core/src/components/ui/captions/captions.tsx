@@ -2,10 +2,10 @@ import {
   h, Component, Prop, Watch, Host, State, Event, EventEmitter,
 } from '@stencil/core';
 import { PlayerProps } from '../../core/player/PlayerProps';
-import { withPlayerContext } from '../../core/player/PlayerContext';
 import { Disposal } from '../../core/player/Disposal';
 import { isUndefined } from '../../../utils/unit';
 import { listen } from '../../../utils/dom';
+import { withPlayerContext } from '../../core/player/PlayerContext';
 
 @Component({
   tag: 'vime-captions',
@@ -75,6 +75,15 @@ export class Captions {
    * `currentTime >= cue.startTime && currentTime <= cue.endTime`.
    */
   @Event({ bubbles: false }) vCuesChange!: EventEmitter<TextTrackCue[]>;
+
+  constructor() {
+    withPlayerContext(this, [
+      'isVideoView',
+      'playbackStarted',
+      'isControlsActive',
+      'textTracks',
+    ]);
+  }
 
   disconnectedCallback() {
     this.cleanup();
@@ -174,10 +183,3 @@ export class Captions {
     );
   }
 }
-
-withPlayerContext(Captions, [
-  'isVideoView',
-  'playbackStarted',
-  'isControlsActive',
-  'textTracks',
-]);

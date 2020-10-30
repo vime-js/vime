@@ -47,6 +47,10 @@ export class Tooltip {
    */
   @Prop() isTouch: PlayerProps['isTouch'] = false;
 
+  constructor() {
+    withPlayerContext(this, ['isTouch']);
+  }
+
   componentDidLoad() {
     this.hasLoaded = true;
   }
@@ -78,7 +82,3 @@ export class Tooltip {
     );
   }
 }
-
-withPlayerContext(Tooltip, [
-  'isTouch',
-]);

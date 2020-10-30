@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 
+// eslint-disable-next-line import/no-unresolved
 const webpack = require('@cypress/webpack-preprocessor');
 const initCoverage = require('@cypress/code-coverage/task');
 const { initPlugin: initSnapshots } = require('cypress-plugin-snapshots/plugin');

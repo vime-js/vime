@@ -1,4 +1,4 @@
-export enum YouTubeEvent {
+export const enum YouTubeEvent {
   InitialDelivery = 'initialDelivery',
   Ready = 'onReady',
   InfoDelivery = 'infoDelivery',

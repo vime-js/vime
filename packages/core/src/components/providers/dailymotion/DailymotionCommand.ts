@@ -1,7 +1,7 @@
 /**
  * @see https://developer.dailymotion.com/player/#player-api-methods
  */
-export enum DailymotionCommand {
+export const enum DailymotionCommand {
   Play = 'play',
   Pause = 'pause',
   Seek = 'seek',

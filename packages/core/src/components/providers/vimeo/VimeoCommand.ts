@@ -3,7 +3,7 @@ import { VimeoEvent } from './VimeoEvent';
 /**
  * @see https://developer.vimeo.com/player/sdk/reference#methods-for-playback-controls
  */
-export enum VimeoCommand {
+export const enum VimeoCommand {
   Play = 'play',
   Pause = 'pause',
   SetMuted = 'setMuted',

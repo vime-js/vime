@@ -57,6 +57,16 @@ export class DefaultControls {
    */
   @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
+  constructor() {
+    withPlayerContext(this, [
+      'theme',
+      'isMobile',
+      'isAudioView',
+      'isVideoView',
+      'isLive',
+    ]);
+  }
+
   private buildAudioControls() {
     return (
       <vime-controls fullWidth>
@@ -170,11 +180,3 @@ export class DefaultControls {
     return undefined;
   }
 }
-
-withPlayerContext(DefaultControls, [
-  'theme',
-  'isMobile',
-  'isAudioView',
-  'isVideoView',
-  'isLive',
-]);

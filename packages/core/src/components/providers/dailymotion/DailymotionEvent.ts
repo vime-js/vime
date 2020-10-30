@@ -1,7 +1,7 @@
 /**
  * @see https://developer.dailymotion.com/player/#player-api-events
  */
-export enum DailymotionEvent {
+export const enum DailymotionEvent {
   ApiReady = 'apiready',
   VideoChange = 'videochange',
   VolumeChange = 'volumechange',

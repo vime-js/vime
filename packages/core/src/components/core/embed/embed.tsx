@@ -13,6 +13,7 @@ import {
 } from '@stencil/core';
 import { isString } from '../../../utils/unit';
 import { appendParamsToURL, Params, preconnect } from '../../../utils/network';
+import { LazyLoader } from '../player/LazyLoader';
 
 let idCount = 0;
 const connected = new Set();
@@ -25,6 +26,8 @@ export class Embed implements ComponentInterface {
   private id!: string;
 
   private iframe?: HTMLIFrameElement;
+
+  private lazyLoader!: LazyLoader;
 
   @Element() el!: HTMLVimeEmbedElement;
 
@@ -108,8 +111,13 @@ export class Embed implements ComponentInterface {
   }
 
   connectedCallback() {
+    this.lazyLoader = new LazyLoader(this.el);
     this.srcChange();
     this.genIframeId();
+  }
+
+  disconnectedCallback() {
+    this.lazyLoader.destroy();
   }
 
   @Listen('message', { target: 'window' })
@@ -143,8 +151,8 @@ export class Embed implements ComponentInterface {
   render() {
     return (
       <iframe
-        class="lazy"
         id={this.id}
+        class="lazy"
         title={this.mediaTitle}
         data-src={this.srcWithParams}
         // @ts-ignore

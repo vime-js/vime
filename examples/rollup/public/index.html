@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset='utf8'>
+	<meta name='viewport' content='width=device-width'>
+
+	<title>@vime/rollup-example</title>
+
+	<link rel='icon' type='image/png' href='favicon.png'>
+  <link rel='stylesheet' href='/global.css'>
+  <link rel='stylesheet' href='/build/app.css'>
+  
+  <script defer src='/build/app.js'></script>
+</head>
+
+<body>
+	<div id="container">
+		<vime-player controls>
+			<vime-video cross-origin poster="https://media.vimejs.com/poster.png">
+				<source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+				<track default kind="subtitles" src="https://media.vimejs.com/subs/english.vtt" srclang="en" label="English" />
+				<track kind="subtitles" src="https://media.vimejs.com/subs/spanish.vtt" srclang="es" label="Spanish" />
+			</vime-video>
+		</vime-player>
+	</div>
+</body>
+</html>

@@ -339,7 +339,7 @@ describe('props', () => {
 
 describe('methods', () => {
   it('should return provider when calling getProvider()', async () => {
-    // eslint-disable-next-line no-shadow
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const provider = await player.getProvider();
     expect(provider).toEqual(provider);
   });
@@ -533,7 +533,7 @@ describe('adapter calls', () => {
     await page.waitForChanges();
     const changes = [];
     for (let i = 0; i < 20; i += 1) {
-      // eslint-disable-next-line no-loop-func
+      // eslint-disable-next-line @typescript-eslint/no-loop-func
       changes.push(async () => {
         provider.dispatchChange('currentTime', Math.floor(Math.random() * 100));
       });

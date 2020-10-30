@@ -74,6 +74,10 @@ export class MenuItem {
    */
   @Prop() isTouch: PlayerProps['isTouch'] = false;
 
+  constructor() {
+    withPlayerContext(this, ['isTouch']);
+  }
+
   private onClick() {
     if (isUndefined(this.menu)) return;
     const submenu = document.querySelector(`#${this.menu}`) as HTMLVimeMenuElement;
@@ -134,7 +138,3 @@ export class MenuItem {
     );
   }
 }
-
-withPlayerContext(MenuItem, [
-  'isTouch',
-]);

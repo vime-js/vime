@@ -1,5 +1,4 @@
 import { openWormhole } from 'stencil-wormhole';
-import { ComponentInterface } from '@stencil/core';
 import { PlayerProp, PlayerProps } from './PlayerProps';
 import { findRootPlayer } from './utils';
 import { getEventName } from './PlayerEvents';
@@ -8,13 +7,13 @@ import { listen } from '../../../utils/dom';
 /**
  * Binds props between an instance of a given component class and it's closest ancestor player.
  *
- * @param Component A Stencil component class.
+ * @param Component A Stencil component class or instance.
  * @param props A set of props to watch and update on the given component instance.
  */
 export const withPlayerContext = (
-  Component: ComponentInterface,
+  Component: any,
   props: PlayerProp[],
-) => openWormhole(Component as any, props);
+) => openWormhole(Component, props);
 
 /**
  * Finds the closest ancestor player to the given `ref` and watches the given props for changes. On

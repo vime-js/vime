@@ -29,6 +29,10 @@ export class Scrim {
    */
   @Prop() isControlsActive: PlayerProps['isControlsActive'] = false;
 
+  constructor() {
+    withPlayerContext(this, ['isVideoView', 'isControlsActive']);
+  }
+
   render() {
     return (
       <Host
@@ -45,8 +49,3 @@ export class Scrim {
     );
   }
 }
-
-withPlayerContext(Scrim, [
-  'isVideoView',
-  'isControlsActive',
-]);

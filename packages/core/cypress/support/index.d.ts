@@ -2,7 +2,7 @@
 /// <reference types="@cypress/skip-test" />
 
 declare namespace Cypress {
-  interface Chainable<Subject> {
+  interface Chainable {
     toMatchSnapshot(options?: Partial<{
       ignoreExtralFields: boolean,
       ignoreExtraArrayItems: boolean,

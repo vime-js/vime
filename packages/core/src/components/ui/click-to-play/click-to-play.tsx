@@ -29,6 +29,10 @@ export class ClickToPlay {
    */
   @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
+  constructor() {
+    withPlayerContext(this, ['paused', 'isVideoView']);
+  }
+
   connectedCallback() {
     this.dispatch = createDispatcher(this);
   }
@@ -48,8 +52,3 @@ export class ClickToPlay {
     );
   }
 }
-
-withPlayerContext(ClickToPlay, [
-  'paused',
-  'isVideoView',
-]);

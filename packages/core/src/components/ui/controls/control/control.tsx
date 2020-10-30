@@ -2,13 +2,13 @@ import {
   h, Host, Component, Prop, State, Element,
   Event, EventEmitter, Watch,
 } from '@stencil/core';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { isNull, isUndefined } from '../../../../utils/unit';
 import { Disposal } from '../../../core/player/Disposal';
 import { listen } from '../../../../utils/dom';
 import { KeyboardControl } from './KeyboardControl';
 import { findRootPlayer } from '../../../core/player/utils';
+import { withPlayerContext } from '../../../core/player/PlayerContext';
 
 /**
  * @slot - Used to pass in the content of the control (text/icon/tooltip).
@@ -88,6 +88,10 @@ export class Control implements KeyboardControl {
    * Emitted when the user is interacting with the control by focusing, touching or hovering on it.
    */
   @Event() vInteractionChange!: EventEmitter<boolean>;
+
+  constructor() {
+    withPlayerContext(this, ['isTouch']);
+  }
 
   connectedCallback() {
     this.findTooltip();
@@ -180,7 +184,3 @@ export class Control implements KeyboardControl {
     );
   }
 }
-
-withPlayerContext(Control, [
-  'isTouch',
-]);

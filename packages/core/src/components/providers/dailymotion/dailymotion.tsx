@@ -138,6 +138,10 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
+  constructor() {
+    withProviderContext(this);
+  }
+
   connectedCallback() {
     this.dispatch = createProviderDispatcher(this);
     this.dispatch('viewType', ViewType.Video);
@@ -340,5 +344,3 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
     );
   }
 }
-
-withProviderContext(Dailymotion);

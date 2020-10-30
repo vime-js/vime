@@ -91,6 +91,20 @@ export class DefaultSettings {
     }));
   }
 
+  constructor() {
+    withPlayerContext(this, [
+      'i18n',
+      'playbackReady',
+      'playbackRate',
+      'playbackRates',
+      'playbackQuality',
+      'playbackQualities',
+      'isCaptionsActive',
+      'currentCaption',
+      'textTracks',
+    ]);
+  }
+
   connectedCallback() {
     this.player = findRootPlayer(this);
     this.dispatch = createDispatcher(this);
@@ -268,15 +282,3 @@ export class DefaultSettings {
     );
   }
 }
-
-withPlayerContext(DefaultSettings, [
-  'i18n',
-  'playbackReady',
-  'playbackRate',
-  'playbackRates',
-  'playbackQuality',
-  'playbackQualities',
-  'isCaptionsActive',
-  'currentCaption',
-  'textTracks',
-]);

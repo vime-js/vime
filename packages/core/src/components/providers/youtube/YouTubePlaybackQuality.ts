@@ -1,4 +1,4 @@
-export enum YouTubePlaybackQuality {
+export const enum YouTubePlaybackQuality {
   Unknown = 'unknown',
   Tiny = 'tiny',
   Small = 'small',

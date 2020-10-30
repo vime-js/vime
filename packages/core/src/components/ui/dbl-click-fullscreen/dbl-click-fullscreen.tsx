@@ -41,6 +41,14 @@ export class DblClickFullscreen {
     this.canSetFullscreen = await player.canSetFullscreen();
   }
 
+  constructor() {
+    withPlayerContext(this, [
+      'playbackReady',
+      'isFullscreenActive',
+      'isVideoView',
+    ]);
+  }
+
   private onTriggerClickToPlay() {
     const ui = findUIRoot(this);
     const clickToPlay = ui?.querySelector('vime-click-to-play');
@@ -84,9 +92,3 @@ export class DblClickFullscreen {
     );
   }
 }
-
-withPlayerContext(DblClickFullscreen, [
-  'playbackReady',
-  'isFullscreenActive',
-  'isVideoView',
-]);

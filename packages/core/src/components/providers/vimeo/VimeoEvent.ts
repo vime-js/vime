@@ -19,10 +19,10 @@ export enum VimeoEvent {
   BufferEnd = 'bufferend',
   TextTrackChange = 'texttrackchange',
   Waiting = 'waiting',
-  Ended = 'ended'
+  Ended = 'ended',
 }
 
-export enum VimeoDataEvent {
+export const enum VimeoDataEvent {
   Play = 'play',
   Pause = 'pause',
   Ready = 'ready',

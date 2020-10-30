@@ -96,6 +96,10 @@ export class Dash implements MediaFileProvider<any> {
    */
   @Event() vLoadStart!: EventEmitter<void>;
 
+  constructor() {
+    withPlayerContext(this, ['autoplay']);
+  }
+
   connectedCallback() {
     this.dispatch = createProviderDispatcher(this);
   }
@@ -109,18 +113,18 @@ export class Dash implements MediaFileProvider<any> {
     try {
       const url = `https://cdn.jsdelivr.net/npm/dashjs@${this.version}/dist/dash.all.min.js`;
       // eslint-disable-next-line no-shadow
-      const Dash = await loadSDK(url, 'dashjs');
+      const DashSDK = await loadSDK(url, 'dashjs');
 
-      this.dash = Dash.MediaPlayer(this.config).create();
+      this.dash = DashSDK.MediaPlayer(this.config).create();
       this.dash!.initialize(this.mediaEl, null, this.autoplay);
 
-      this.dash!.on(Dash.MediaPlayer.events.CAN_PLAY, () => {
+      this.dash!.on(DashSDK.MediaPlayer.events.CAN_PLAY, () => {
         this.dispatch('mediaType', MediaType.Video);
         this.dispatch('currentSrc', this.src);
         this.dispatch('playbackReady', true);
       });
 
-      this.dash!.on(Dash.MediaPlayer.events.ERROR, (e: any) => {
+      this.dash!.on(DashSDK.MediaPlayer.events.ERROR, (e: any) => {
         this.dispatch('errors', [e]);
       });
 
@@ -176,7 +180,3 @@ export class Dash implements MediaFileProvider<any> {
     );
   }
 }
-
-withPlayerContext(Dash, [
-  'autoplay',
-]);

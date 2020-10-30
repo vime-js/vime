@@ -22,6 +22,10 @@ export class EndTime {
    */
   @Prop() alwaysShowHours = false;
 
+  constructor() {
+    withPlayerContext(this, ['duration', 'i18n']);
+  }
+
   render() {
     return (
       <vime-time
@@ -32,8 +36,3 @@ export class EndTime {
     );
   }
 }
-
-withPlayerContext(EndTime, [
-  'duration',
-  'i18n',
-]);

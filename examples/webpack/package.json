@@ -1,0 +1,21 @@
+{
+  "name": "@vime/webpack-example",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack",
+    "serve": "webpack serve --open true"
+  },
+  "dependencies": {
+    "@vime/core": "^4.2.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "css-loader": "^5.0.0",
+    "mini-css-extract-plugin": "^1.2.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.3.2",
+    "webpack-cli": "^4.1.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

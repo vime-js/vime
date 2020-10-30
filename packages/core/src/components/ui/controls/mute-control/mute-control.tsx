@@ -62,6 +62,10 @@ export class MuteControl implements KeyboardControl {
    */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
+  constructor() {
+    withPlayerContext(this, ['muted', 'volume', 'i18n']);
+  }
+
   connectedCallback() {
     this.dispatch = createDispatcher(this);
   }
@@ -99,9 +103,3 @@ export class MuteControl implements KeyboardControl {
     );
   }
 }
-
-withPlayerContext(MuteControl, [
-  'muted',
-  'volume',
-  'i18n',
-]);

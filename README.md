@@ -138,6 +138,8 @@ web components.
 There are also [examples](./examples) for loading and using Vime with:
 
 - [HTML](./examples/html)
+- [Rollup](./examples/rollup)
+- [Webpack](./examples/webpack)
 - [React](./examples/react)
 - [Vue](./examples/vue)
 - [Svelte](./examples/svelte)

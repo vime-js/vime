@@ -19,33 +19,29 @@
     "postinstall": "yarn build",
     "lint": "eslint ./packages --quiet --fix --ignore-path .gitignore",
     "build": "yarn core build && yarn react build && yarn vue build && yarn svelte build && yarn angular build",
-    "release": "lerna publish --yes"
+    "release": "lerna publish --yes",
+    "upgrade:all": "yarn upgrade && yarn upgrade --cwd \"examples/angular\" && yarn upgrade --cwd \"examples/react\" && yarn upgrade --cwd \"examples/html\" && yarn upgrade --cwd \"examples/rollup\" && yarn upgrade --cwd \"examples/stencil\" && yarn upgrade --cwd \"examples/svelte\" && yarn upgrade --cwd \"examples/vue\" && yarn upgrade --cwd \"examples/webpack\" && yarn upgrade --cwd \"docs\""
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^9.1.2",
-    "@typescript-eslint/eslint-plugin": "^3.10.1",
-    "@typescript-eslint/parser": "^3.10.1",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
     "eslint": "^7.8.1",
-    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "husky": "^4.2.5",
     "lerna": "^3.22.1",
-    "lint-staged": "^10.2.13",
-    "react": "^16.13.1",
+    "react": "^17.0.0",
     "typescript": "^4.0.2"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  },
-  "lint-staged": {
-    "packages/**/*.{js,ts,tsx}": "yarn lint"
   },
   "commitlint": {
     "extends": [
