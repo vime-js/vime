@@ -1,7 +1,7 @@
 {
   "name": "@vime/vue",
   "version": "4.2.0",
-  "description": "Vue bindings for the Vime media player.",
+  "description": "Vue 2 bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "rimraf": "^3.0.2",
     "typescript": "^4.0.2",
-    "vue": "^2.6.12"
+    "vue": "^2.6.11"
   },
   "peerDependencies": {
     "vue": "^2.6.11"
@@ -43,6 +43,7 @@
     "player",
     "media",
     "vue",
+    "vue 2",
     "audio",
     "video",
     "html5",

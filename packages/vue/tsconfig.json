@@ -1,17 +1,18 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "strict": false,
+    "strict": true,
     "noImplicitAny": false,
     "declaration": true,
     "removeComments": false,
     "sourceMap": true,
     "declarationDir": "dist/types",
+    "skipLibCheck": true,
     "inlineSources": true,
   },
   "include": [
     "src/**/*.ts",
   ],
   "compileOnSave": false,
-  "buildOnSave": false,
+  "buildOnSave": false
 }

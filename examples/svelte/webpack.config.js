@@ -7,7 +7,7 @@ const prod = mode === 'production';
 
 module.exports = {
   entry: {
-    bundle: ['./src/main.ts'],
+    app: ['./src/main.ts'],
   },
   resolve: {
     alias: {
@@ -17,9 +17,15 @@ module.exports = {
     mainFields: ['svelte', 'browser', 'module', 'main'],
   },
   output: {
-    path: `${__dirname}/public`,
+    path: `${__dirname}/public/build`,
     filename: '[name].js',
     chunkFilename: '[name].[id].js',
+  },
+  mode,
+  devtool: prod ? false : 'source-map',
+  devServer: {
+    contentBase: './public',
+    publicPath: '/build',
   },
   module: {
     rules: [
@@ -42,17 +48,15 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          prod ? MiniCssExtractPlugin.loader : 'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
         ],
       },
     ],
   },
-  mode,
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
   ],
-  devtool: prod ? false : 'source-map',
 };

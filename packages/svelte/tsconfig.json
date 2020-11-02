@@ -8,10 +8,11 @@
     "sourceMap": true,
     "declarationDir": "dist/types",
     "inlineSources": true,
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts",
   ],
   "compileOnSave": false,
-  "buildOnSave": false,
+  "buildOnSave": false
 }

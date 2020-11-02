@@ -1,12 +1,10 @@
+import Vue from 'vue';
 import { createDispatcher, PlayerProp, usePlayerContext } from '@vime/core';
 
-const findPlayer = (component: any): HTMLVimePlayerElement | null => {
-  while (!(/^VIME-PLAYER$/.test(component.$el?.nodeName))) {
-    // eslint-disable-next-line no-param-reassign
-    component = component.$parent;
-  }
-
-  return component.$el;
+const findPlayer = (component?: Vue): HTMLVimePlayerElement | null => {
+  if (!component) return null;
+  const players = Array.from(document.querySelectorAll('vime-player'));
+  return players.find((player) => player.contains(component.$el)) ?? null;
 };
 
 export const VimeMixin = (props: PlayerProp[]) => ({
@@ -22,11 +20,11 @@ export const VimeMixin = (props: PlayerProp[]) => ({
   watch: props.reduce((prev, prop) => ({
     ...prev,
     [prop](value) {
-      this.playerDispatch(prop, value);
+      (this as any).playerDispatch(prop, value);
     },
   }), {}),
 
-  mounted() {
+  mounted(this: any) {
     this.player = findPlayer(this);
     if (this.player === null) return;
     this.playerDispatch = createDispatcher(this.$el);
@@ -39,6 +37,6 @@ export const VimeMixin = (props: PlayerProp[]) => ({
   },
 
   beforeDestroy() {
-    this.unbindPlayerContext();
+    (this as any).unbindPlayerContext();
   },
 });

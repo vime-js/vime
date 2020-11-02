@@ -75,7 +75,7 @@ export const usePlayerStore = <T extends HTMLElement>(ref: Ref<T>): PlayerStore 
     const canWrite = isWritableProp(prop);
 
     const set = (value: PlayerProps[P]) => {
-      if (!unwrap(internalStoreRef.get('attached'))) {
+      if (!unwrap(internalStoreRef.get('attached')!)) {
         mountedQueue.push(() => { dispatch(prop as any, value); });
       } else {
         dispatch(prop as any, value);

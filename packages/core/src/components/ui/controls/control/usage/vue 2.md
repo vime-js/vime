@@ -17,7 +17,7 @@
     VimeControl,
     VimeIcon,
     VimeTooltip,
-  } from "@vime/vue";
+  } from '@vime/vue';
 
   export default {
     mixins: [VimeMixin(['paused', 'i18n'])]
@@ -40,7 +40,7 @@
     },
     methods: {
       onClick() {
-        this.paused = !paused;
+        this.paused = !this.paused;
       },
     },
   };,

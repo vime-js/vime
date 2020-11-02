@@ -10,14 +10,7 @@
   ],
   "ignorePatterns": [
     "docs/**",
-    "packages/angular/src/directives/**",
-    "packages/react/src/components.ts",
-    "packages/react/src/react-component-lib/**",
-    "packages/svelte/src/components/**",
-    "packages/svelte/src/svelte/**",
-    "packages/svelte/src/components.ts",
-    "packages/vue/src/components.ts",
-    "packages/vue/src/vue-component-lib/**"
+    "packages/angular/src/directives/**"
   ],
   "rules": {
     "no-console": "off",

@@ -6,10 +6,12 @@
     "sourceMap": true,
     "declarationDir": "dist/types",
     "inlineSources": true,
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.tsx",
   ],
   "compileOnSave": false,
-  "buildOnSave": false,
+  "buildOnSave": false
 }

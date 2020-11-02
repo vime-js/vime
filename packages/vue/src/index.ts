@@ -1,5 +1,3 @@
-import { defineCustomElements } from '@vime/core/loader';
-
 export {
   PlayerProp,
   PlayerProps,
@@ -14,5 +12,3 @@ export {
 
 export * from './components';
 export * from './mixins';
-
-defineCustomElements();

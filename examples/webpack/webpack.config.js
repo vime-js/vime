@@ -15,13 +15,14 @@ module.exports = {
   devtool: prod ? false : 'source-map',
   devServer: {
     contentBase: './public',
+    publicPath: '/build',
   },
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [
-          prod ? MiniCssExtractPlugin.loader : 'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
         ],
       },

@@ -3,9 +3,9 @@
 import { resolve } from 'path';
 import fs from 'fs';
 import { JsonDocs, JsonDocsComponent } from '@stencil/core/internal';
-import { isUndefined } from '../src/utils/unit';
+import { isUndefined } from '../../src/utils/unit';
 // @ts-ignore
-import { formatSidebarLabel } from '../../../docs/helpers/components-sidebar';
+import { formatSidebarLabel } from '../../../../docs/helpers/components-sidebar';
 
 const prettier = require('prettier');
 
@@ -41,7 +41,7 @@ const putCodeUsageInTabs = (content: string) => {
 
   const values: string[] = [];
   const tabs: string[] = [];
-  const order: string[] = ['html', 'react', 'vue', 'svelte', 'stencil', 'angular'];
+  const order: string[] = ['html', 'react', 'vue', 'vue 2', 'vue 3', 'svelte', 'stencil', 'angular'];
   const getValue = (header: string) => header.replace('### ', '').toLowerCase();
 
   const langHeaders = usageBlock
@@ -82,7 +82,7 @@ ${tabs.join('\n')}
   `);
 };
 
-const outputRoot = resolve(__dirname, '../../../docs/docs');
+const outputRoot = resolve(__dirname, '../../../../docs/docs');
 
 const generateComponentDoc = async (component: JsonDocsComponent) => {
   const hasReadme = !isUndefined(component.readmePath);
@@ -114,7 +114,7 @@ const generateComponentDoc = async (component: JsonDocsComponent) => {
   }
 };
 
-export const generateSiteDocs = async (docs: JsonDocs) => {
+export const siteDocsGenerator = async (docs: JsonDocs) => {
   if (!fs.existsSync(outputRoot)) { fs.mkdirSync(outputRoot); }
   await Promise.all(docs.components.map(generateComponentDoc));
 };

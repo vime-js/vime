@@ -187,12 +187,15 @@ installation instructions.
 
 ## Vue
 
+:::info
+Vime now supports both Vue 2 (`@vime/vue`) and Vue 3 (`@vime/vue-next`) 🚀
+:::
+
 You have two options with Vue due to it having perfect 
 [web components support](https://custom-elements-everywhere.com/#vue). You can either follow the 
 instructions [here](https://stenciljs.com/docs/vue) for loading the web components in their natural 
-form, or you can use the Vue bindings from the `@vime/vue` package, which wraps all the web components 
-inside Vue components so you can feel right at home. Some other advantages for using `@vime/vue` 
-include typed + documented components, and additional helpers for extending Vime with custom components.
+form, or you can use the Vue bindings from Vime, which wrap all the web components 
+inside Vue components so you can feel right at home.
 
 Let's first load the CSS for the player themes, which are small files that only contain a bunch of
 CSS variables for styling the player. Add the following to the root of your application...
@@ -205,11 +208,15 @@ import '@vime/core/themes/default.css';
 import '@vime/core/themes/light.css';
 ```
 
-Alternatively, you can load the themes from the [CDN](#cdn). Now let's install the `@vime/vue` package
+Alternatively, you can load the themes from the [CDN](#cdn). Now let's install the package
 by running the following in our terminal...
 
 ```bash
+# Vue 2
 npm i @vime/vue
+
+# Vue 3
+npm i @vime/vue-next
 ```
 
 And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move onto [setting up our player](./player).

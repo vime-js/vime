@@ -474,6 +474,7 @@ export class Player implements MediaPlayer {
 
   @Watch('translations')
   onTranslationsChange() {
+    Object.assign(this.translations, { en });
     this.languages = Object.keys(this.translations);
     this.i18n = this.translations[this.language];
   }

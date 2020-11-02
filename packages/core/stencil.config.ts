@@ -1,10 +1,11 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
-import { reactOutputTarget } from '@stencil/react-output-target';
-import { vueOutputTarget } from '@stencil/vue-output-target';
-import { angularOutputTarget } from '@stencil/angular-output-target';
-import { svelteOutputTarget } from '@stencil/svelte-output-target';
-import { generateSiteDocs } from './scripts/site-docs';
+import { siteDocsGenerator } from './targets/site-docs';
+import { svelteOutputTarget } from './targets/svelte';
+import { reactOutputTarget } from './targets/react';
+import { angularOutputTarget } from './targets/angular';
+import { vueOutputTarget } from './targets/vue';
+import { vueNextOutputTarget } from './targets/vue-next';
 
 export const config: Config = {
   namespace: 'Vime',
@@ -18,22 +19,11 @@ export const config: Config = {
     }),
   ],
   outputTargets: [
-    reactOutputTarget({
-      componentCorePackage: '@vime/core',
-      proxiesFile: '../react/src/components.ts',
-    }),
-    vueOutputTarget({
-      componentCorePackage: '@vime/core',
-      proxiesFile: '../vue/src/components.ts',
-    }),
-    angularOutputTarget({
-      componentCorePackage: '@vime/core',
-      directivesProxyFile: '../angular/src/directives/proxies.ts',
-    }),
-    svelteOutputTarget({
-      componentCorePackage: '@vime/core',
-      proxiesFile: '../svelte/src/components.ts',
-    }),
+    reactOutputTarget(),
+    angularOutputTarget(),
+    vueOutputTarget(),
+    vueNextOutputTarget(),
+    svelteOutputTarget(),
     {
       type: 'dist',
       esmLoaderPath: '../loader',
@@ -46,7 +36,7 @@ export const config: Config = {
     },
     {
       type: 'docs-custom',
-      generator: generateSiteDocs,
+      generator: siteDocsGenerator,
     },
   ],
   testing: {
