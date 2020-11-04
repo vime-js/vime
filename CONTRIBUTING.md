@@ -226,10 +226,8 @@ After we wrap up all our testing and we're satisfied, the final steps are:
 2. Add small description about the provider to the auto-generated `readme.md` file
    (above the `<-- Auto Generated Below -->` comment). See other providers as an example.
 3. Create `usage` directory and add examples for the same frameworks that are listed for all other providers.
-4. Add the new provider component to [`VimeModule`](./packages/angular/src/vime-module.ts) in the
-   `@vime/angular` package.
-5. Commit your changes `git commit -m 'feat(core/providers): add twitch provider'`
-6. Create a PR!
+4. Commit your changes `git commit -m 'feat(core/providers): add twitch provider'`
+5. Create a PR!
 
 ## 🖥️ UI Components
 
@@ -277,10 +275,8 @@ After we wrap up all our testing and we're satisfied, the final steps are:
 2. Add small description about the component to the auto-generated `readme.md` file
    (above the `<-- Auto Generated Below -->` comment). See other components as an example.
 3. Create `usage` directory and add examples for the same frameworks that are listed for all other components.
-4. When creating a new component, add it to [`VimeModule`](./packages/angular/src/vime-module.ts)
-   in the `@vime/angular` package.
-5. Commit your changes `git commit -m '{feat/fix}(core/ui): add {component name}'`
-6. Create a PR!
+4. Commit your changes `git commit -m '{feat/fix}(core/ui): add {component name}'`
+5. Create a PR!
 
 ## 📖 Documentation
 
