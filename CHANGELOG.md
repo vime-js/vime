@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.1](https://github.com/vime-js/vime/compare/v4.3.0...v4.3.1) (2020-11-04)
+
+
+### Bug Fixes
+
+* **core:** remove @stencil/core dependency from custom-elements-bundle ([52620af](https://github.com/vime-js/vime/commit/52620af7db567eee0e3cf0b88ecc6361b2dde22f))
+* **core:** remove jest types from dist ([833ad05](https://github.com/vime-js/vime/commit/833ad05cf77e7b61c951e74478db140bc2e31044))
+
+
+
+
+
 # [4.3.0](https://github.com/vime-js/vime/compare/v4.2.0...v4.3.0) (2020-11-04)
 
 
