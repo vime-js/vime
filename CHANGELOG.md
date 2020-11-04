@@ -9,7 +9,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 * bundling (rollup/webpack) support and major improvements to treeshaking ([4af48c4](https://github.com/vime-js/vime/commit/4af48c474e61f3355caf23e89d891e10eaeb4f45))
-* fresh output targets for all frameworks with treeshaking support + ([a4f21dc](https://github.com/vime-js/vime/commit/a4f21dcf889a6d156238e2e937e25a37fe005fb3)), closes [#82](https://github.com/vime-js/vime/issues/82) [#88](https://github.com/vime-js/vime/issues/88) [#71](https://github.com/vime-js/vime/issues/71) [#92](https://github.com/vime-js/vime/issues/92)
+* fresh output targets for all frameworks with treeshaking support + vue 3 bindings, closes [#82](https://github.com/vime-js/vime/issues/82) [#88](https://github.com/vime-js/vime/issues/88) [#71](https://github.com/vime-js/vime/issues/71) [#92](https://github.com/vime-js/vime/issues/92)
 
 
 
