@@ -17,7 +17,6 @@
     "vue:next": "yarn workspace @vime/vue-next",
     "svelte": "yarn workspace @vime/svelte",
     "angular": "yarn workspace @vime/angular",
-    "postinstall": "yarn build",
     "lint": "eslint ./packages --quiet --fix --ignore-path .gitignore",
     "build": "yarn core build && yarn react build && yarn vue build && yarn vue:next build && yarn svelte build && yarn angular build",
     "release": "lerna publish --yes",
