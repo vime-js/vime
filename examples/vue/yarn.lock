@@ -274,19 +274,19 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@vime/core@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.2.0.tgz#30c491a201fd041f83643eb8b62499835bc65252"
-  integrity sha512-kL1w0nynovkX5YuGim8wKlr/cBmzWVLvF/viXriL01iQ+HswBAFDxSbONRUyn/R8txb/vm3L4KHvKtYEH+zNkg==
+"@vime/core@^4.2.0", "@vime/core@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.0.tgz#8294d9a1566c10f7fa711b776a81a1e2b1d378e7"
+  integrity sha512-/icKb6MxadN+vhPJW9ELOawLjah6NoXlLCkgHvB806tYhgALowWvAHNlR2ZdJRNauyaqAI0QVeXHYgAA4GkIsw==
   dependencies:
-    stencil-wormhole "^3.2.1"
+    stencil-wormhole "^3.2.2"
 
 "@vime/vue@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@vime/vue/-/vue-4.2.0.tgz#a159f7ab087cac023aebea0e600450b425aa044f"
-  integrity sha512-PTxHnFbJtrRE5lG3iaSA2gHHd3FyhKiUFfwr1n49m9Jw2G1YtN8shEBuSG12H7iIqlGRMus+2n6fbdlZ+AP5Bw==
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@vime/vue/-/vue-4.3.0.tgz#63c8c1adb4547efe73c4740ea5520cc76aec04e9"
+  integrity sha512-hG93xfe3heOBzYjWocSXwDj8s47Z7y5OXxG4Z1O1gcOii/KD81bjb7F5UHJwYG652pyj9EJMEr3qof2iUZxKcw==
   dependencies:
-    "@vime/core" "^4.2.0"
+    "@vime/core" "^4.3.0"
 
 "@vue/cli-overlay@^4.5.8":
   version "4.5.8"
@@ -2261,9 +2261,9 @@ ejs@^2.6.1:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.585:
-  version "1.3.586"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.586.tgz#1484f59b2f820f5f3278f0c6ead71d05b19a1311"
-  integrity sha512-or8FCbQCRlPZHkOoqBULOI9hzTiStVIQqDLgAPt8pzY+swTrW+89vsqd24Zn+Iv4guAJLxRBD6OR5AmbpabGDA==
+  version "1.3.587"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.587.tgz#de570df7320eb259c0511f284c2d6008094edbf7"
+  integrity sha512-8XFNxzNj0R8HpTQslWAw6UWpGSuOKSP3srhyFHVbGUGb8vTHckZGCyWi+iQlaXJx5DNeTQTQLd6xN11WSckkmA==
 
 elliptic@^6.5.3:
   version "6.5.3"
@@ -6122,7 +6122,7 @@ static-extend@^0.1.1:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
 
-stencil-wormhole@^3.2.1:
+stencil-wormhole@^3.2.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/stencil-wormhole/-/stencil-wormhole-3.3.2.tgz#e990654240d05cfaa607ee86fa0657d984924895"
   integrity sha512-1AamOUFu05ul6XZ3qiUIJfKPcvFHyIKmgczFujQ/VQ8UZYhCcRSN02WwaJL7OKB3lXwQKFppVZ2q8R3A/IZKWA==
@@ -6783,9 +6783,9 @@ vue-hot-reload-api@^2.3.0:
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
 
 "vue-loader-v16@npm:vue-loader@^16.0.0-beta.7":
-  version "16.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-16.0.0-beta.9.tgz#52512cb61c296827c99c0d54398bef84be4448fc"
-  integrity sha512-mu9pg6554GbXDSO8LlxkQM6qUJzUkb/A0FJc9LgRqnU9MCnhzEXwCt1Zx5NObvFpzs2mH2dH/uUCDwL8Qaz9sA==
+  version "16.0.0-beta.10"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-16.0.0-beta.10.tgz#86569e63bc02e8f0852913004460d3dd58c088e6"
+  integrity sha512-PflGsj4RHW3tuYFmSPhcozAkds8ELXf8d19twWorQTjcuWxl/Xqb9W1NgfsY7AAkCkkRRYy2FwIX4tSnskfKig==
   dependencies:
     chalk "^4.1.0"
     hash-sum "^2.0.0"

@@ -1273,19 +1273,19 @@
     "@types/yargs-parser" "*"
 
 "@vime/angular@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@vime/angular/-/angular-4.2.0.tgz#d4e2ec514df2b76001d0983f34e925f563aa614e"
-  integrity sha512-jJvKGV2hRk/gE9myaxaKyuwsG+eLxmqhEIYzMR/7GZh8mMgbEN+c8pUcICCb3R7DdZLT+HPuM/nJODTeP0givw==
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@vime/angular/-/angular-4.3.0.tgz#1c9ecbb213c4435fc3f8c8ae376df35318d06f4c"
+  integrity sha512-5UMDUIY1CTQKDrInnnjuLBmjdX1LxPQvnDr/Rc2BPTO2+BugcWKNAnltEpMkldQzqh2ieloywqGoqe4HWBu/Cg==
   dependencies:
-    "@vime/core" "^4.2.0"
+    "@vime/core" "^4.3.0"
     tslib "^2.0.1"
 
-"@vime/core@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.2.0.tgz#30c491a201fd041f83643eb8b62499835bc65252"
-  integrity sha512-kL1w0nynovkX5YuGim8wKlr/cBmzWVLvF/viXriL01iQ+HswBAFDxSbONRUyn/R8txb/vm3L4KHvKtYEH+zNkg==
+"@vime/core@^4.2.0", "@vime/core@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.0.tgz#8294d9a1566c10f7fa711b776a81a1e2b1d378e7"
+  integrity sha512-/icKb6MxadN+vhPJW9ELOawLjah6NoXlLCkgHvB806tYhgALowWvAHNlR2ZdJRNauyaqAI0QVeXHYgAA4GkIsw==
   dependencies:
-    stencil-wormhole "^3.2.1"
+    stencil-wormhole "^3.2.2"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -7369,7 +7369,7 @@ static-extend@^0.1.1:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
 
-stencil-wormhole@^3.2.1:
+stencil-wormhole@^3.2.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/stencil-wormhole/-/stencil-wormhole-3.3.2.tgz#e990654240d05cfaa607ee86fa0657d984924895"
   integrity sha512-1AamOUFu05ul6XZ3qiUIJfKPcvFHyIKmgczFujQ/VQ8UZYhCcRSN02WwaJL7OKB3lXwQKFppVZ2q8R3A/IZKWA==

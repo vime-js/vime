@@ -10,7 +10,7 @@
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "@vime/core": "^4.2.0",
-    "@vime/vue-next": "file:../../packages/vue-next"
+    "@vime/vue-next": "^4.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

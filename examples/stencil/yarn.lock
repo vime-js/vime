@@ -20,13 +20,13 @@
   integrity sha512-DYG8uROgL9hkjVTCtCfRBb0d3FwpiFB0muRrNZQ2X1Qo5hxMuNNji76/ILddqeq0AfgkKCW82xrMPDpy+rNIhQ==
 
 "@vime/core@^4.0.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.2.0.tgz#30c491a201fd041f83643eb8b62499835bc65252"
-  integrity sha512-kL1w0nynovkX5YuGim8wKlr/cBmzWVLvF/viXriL01iQ+HswBAFDxSbONRUyn/R8txb/vm3L4KHvKtYEH+zNkg==
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.0.tgz#8294d9a1566c10f7fa711b776a81a1e2b1d378e7"
+  integrity sha512-/icKb6MxadN+vhPJW9ELOawLjah6NoXlLCkgHvB806tYhgALowWvAHNlR2ZdJRNauyaqAI0QVeXHYgAA4GkIsw==
   dependencies:
-    stencil-wormhole "^3.2.1"
+    stencil-wormhole "^3.2.2"
 
-stencil-wormhole@^3.2.1:
+stencil-wormhole@^3.2.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/stencil-wormhole/-/stencil-wormhole-3.3.2.tgz#e990654240d05cfaa607ee86fa0657d984924895"
   integrity sha512-1AamOUFu05ul6XZ3qiUIJfKPcvFHyIKmgczFujQ/VQ8UZYhCcRSN02WwaJL7OKB3lXwQKFppVZ2q8R3A/IZKWA==
