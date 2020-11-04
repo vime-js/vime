@@ -23,7 +23,7 @@ export interface MediaProviderAdapter<InternalPlayerType = any> {
 }
 
 export type MockMediaProviderAdapter = {
-  [P in keyof MediaProviderAdapter]: jest.Mock
+  [P in keyof MediaProviderAdapter]: any
 };
 
 export interface MediaProvider<InternalPlayerType = any> extends ComponentInterface {
