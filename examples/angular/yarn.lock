@@ -1273,17 +1273,17 @@
     "@types/yargs-parser" "*"
 
 "@vime/angular@^4.2.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@vime/angular/-/angular-4.3.0.tgz#1c9ecbb213c4435fc3f8c8ae376df35318d06f4c"
-  integrity sha512-5UMDUIY1CTQKDrInnnjuLBmjdX1LxPQvnDr/Rc2BPTO2+BugcWKNAnltEpMkldQzqh2ieloywqGoqe4HWBu/Cg==
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@vime/angular/-/angular-4.3.1.tgz#6248027a5aaf67d7f6fb8104b2c5c156e5d0568e"
+  integrity sha512-uVmkLgLbXmqLpCiaRhJY47Eh7UVQXHSmnLT9XUPCOBLA8eDA4n4X07TiChEIz+1Xdak5ugmJOLXAuNClomgLjA==
   dependencies:
-    "@vime/core" "^4.3.0"
+    "@vime/core" "^4.3.1"
     tslib "^2.0.1"
 
-"@vime/core@^4.2.0", "@vime/core@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.0.tgz#8294d9a1566c10f7fa711b776a81a1e2b1d378e7"
-  integrity sha512-/icKb6MxadN+vhPJW9ELOawLjah6NoXlLCkgHvB806tYhgALowWvAHNlR2ZdJRNauyaqAI0QVeXHYgAA4GkIsw==
+"@vime/core@^4.2.0", "@vime/core@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.1.tgz#0c384f336e56ca8596472209c3b0f88396aea0b2"
+  integrity sha512-9Z8c2u5dtJQDbnCwhxQeqBarCiyp9u5inQYwF+7MaW1QzM3/wE1exGIRWoZuThM8iInwUNMLVvBRySIUmeIanw==
   dependencies:
     stencil-wormhole "^3.2.2"
 
