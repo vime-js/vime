@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@stencil/core@^2.1.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.2.0.tgz#f92b480a387bce688a368b2fb23207f1acd45bc2"
+  integrity sha512-2V+DEUs9wvkcgnIIs0huye/M1v7x6qEzeOjp056RQlB08U1I4ex3vnBoE0/CrR35wK3ZZv2JYPOfBUuqR+6AAg==
+
 "@tsconfig/svelte@^1.0.10":
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/@tsconfig/svelte/-/svelte-1.0.10.tgz#30ec7feeee0bdf38b12a50f0686f8a2e7b6b9dc0"
@@ -37,19 +42,20 @@
   dependencies:
     "@types/node" "*"
 
-"@vime/core@^4.2.0", "@vime/core@^4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.1.tgz#0c384f336e56ca8596472209c3b0f88396aea0b2"
-  integrity sha512-9Z8c2u5dtJQDbnCwhxQeqBarCiyp9u5inQYwF+7MaW1QzM3/wE1exGIRWoZuThM8iInwUNMLVvBRySIUmeIanw==
+"@vime/core@^4.2.0", "@vime/core@^4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.2.tgz#ba0a0e347c6e99af45229022daca7f71b6ee45f3"
+  integrity sha512-ntD7HfsuaCqDyMxFYbPf+E4ve3TgWgqt7xHVwtB00jFWB5PG/RvY7aiibuE74B9Xg0BD+Cf/2yRWbCkm9UiBXA==
   dependencies:
+    "@stencil/core" "^2.1.0"
     stencil-wormhole "^3.2.2"
 
 "@vime/svelte@^4.2.0":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@vime/svelte/-/svelte-4.3.1.tgz#751f35427a030e6387d4b8c91e6ca9fce31fc8e2"
-  integrity sha512-wLvlzHNsRY2CTifSmjDnF0EoXqKYXLSvwQ3d22u2sXVcwPbkdrG8XSBpS9mRNXdaz249odGXilai3xo3vp1rXA==
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@vime/svelte/-/svelte-4.3.2.tgz#1d77e292354b44a41c316d48d16051e3fd2931ce"
+  integrity sha512-bU4ZSBw6NWPx0AC4ziqE46o4ykcr6Plv7bRc0qy5nUQk2+AVlTRkcQwAmYNJ0rs/IOnd/ZBFYdqjfg7aHEKrQQ==
   dependencies:
-    "@vime/core" "^4.3.1"
+    "@vime/core" "^4.3.2"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -3997,9 +4003,9 @@ toidentifier@1.0.0:
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
 ts-loader@^8.0.3:
-  version "8.0.8"
-  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-8.0.8.tgz#5c514c895d3b2462bf0148f63da0c22b227f7867"
-  integrity sha512-wihija1i2Ub9FxKFoEgx/phToJiDZKLIbTFURgf4Efxla2QuVucDO6ZpHf2jNJsRtDQfBId0g+1HF0biIjoT6Q==
+  version "8.0.9"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-8.0.9.tgz#890fc25f49a99124268f4e738ed22d00f666dc37"
+  integrity sha512-rQd+iIfz5z4HSVzhhRFP4M2OQ0QmihilWWauYvvowBfnRvr4DW+gqA2om70xp/07EQj1qBkLMWobnXsgmWMbmg==
   dependencies:
     chalk "^2.3.0"
     enhanced-resolve "^4.0.0"

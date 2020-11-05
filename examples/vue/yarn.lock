@@ -91,6 +91,11 @@
   resolved "https://registry.yarnpkg.com/@soda/get-current-script/-/get-current-script-1.0.2.tgz#a53515db25d8038374381b73af20bb4f2e508d87"
   integrity sha512-T7VNNlYVM1SgQ+VsMYhnDkcGmWhQdL0bDyGm5TlQ3GBXnJscEClUUOKduWTmm2zCnvNLC1hc3JpuXjs/nFOc5w==
 
+"@stencil/core@^2.1.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.2.0.tgz#f92b480a387bce688a368b2fb23207f1acd45bc2"
+  integrity sha512-2V+DEUs9wvkcgnIIs0huye/M1v7x6qEzeOjp056RQlB08U1I4ex3vnBoE0/CrR35wK3ZZv2JYPOfBUuqR+6AAg==
+
 "@types/anymatch@*":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
@@ -274,19 +279,20 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@vime/core@^4.2.0", "@vime/core@^4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.1.tgz#0c384f336e56ca8596472209c3b0f88396aea0b2"
-  integrity sha512-9Z8c2u5dtJQDbnCwhxQeqBarCiyp9u5inQYwF+7MaW1QzM3/wE1exGIRWoZuThM8iInwUNMLVvBRySIUmeIanw==
+"@vime/core@^4.2.0", "@vime/core@^4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.2.tgz#ba0a0e347c6e99af45229022daca7f71b6ee45f3"
+  integrity sha512-ntD7HfsuaCqDyMxFYbPf+E4ve3TgWgqt7xHVwtB00jFWB5PG/RvY7aiibuE74B9Xg0BD+Cf/2yRWbCkm9UiBXA==
   dependencies:
+    "@stencil/core" "^2.1.0"
     stencil-wormhole "^3.2.2"
 
 "@vime/vue@^4.2.0":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@vime/vue/-/vue-4.3.1.tgz#fcae468dbe41cefec55edb7c0784a935ecb650f4"
-  integrity sha512-5bfEZCrV3LA0yW2xwROmldZCpU2FjRYLqxzVT5i5WVYKSkFtg7CMhN2BsoZwbC/Otkl4yBGJkuo7FjYH6p/QXQ==
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@vime/vue/-/vue-4.3.2.tgz#fb0a9ea2b0ae9426f0189df4e780f351742950c7"
+  integrity sha512-r0Al314u1lPr3NmQqceKALqqnmkJY3wVQWxEKDqa1N6t4HvRCCRp7Vs6CgL3eXetfNypsqkIn2igM81OayGF3Q==
   dependencies:
-    "@vime/core" "^4.3.1"
+    "@vime/core" "^4.3.2"
 
 "@vue/cli-overlay@^4.5.8":
   version "4.5.8"
@@ -2261,9 +2267,9 @@ ejs@^2.6.1:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.585:
-  version "1.3.587"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.587.tgz#de570df7320eb259c0511f284c2d6008094edbf7"
-  integrity sha512-8XFNxzNj0R8HpTQslWAw6UWpGSuOKSP3srhyFHVbGUGb8vTHckZGCyWi+iQlaXJx5DNeTQTQLd6xN11WSckkmA==
+  version "1.3.588"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.588.tgz#c6515571737bfb42678115a5eaa818384593a9a5"
+  integrity sha512-0zr+ZfytnLeJZxGgmEpPTcItu5Mm4A5zHPZXLfHcGp0mdsk95rmD7ePNewYtK1yIdLbk8Z1U2oTRRfOtR4gbYg==
 
 elliptic@^6.5.3:
   version "6.5.3"
@@ -3523,9 +3529,9 @@ is-color-stop@^1.0.0:
     rgba-regex "^1.0.0"
 
 is-core-module@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.0.0.tgz#58531b70aed1db7c0e8d4eb1a0a2d1ddd64bd12d"
-  integrity sha512-jq1AH6C8MuteOoBPwkxHafmByhL9j5q4OaPGdbuD+ZtQJVzH+i6E3BJDQcBA09k57i2Hh2yQbEG8yObZ0jdlWw==
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.1.0.tgz#a4cc031d9b1aca63eecbd18a650e13cb4eeab946"
+  integrity sha512-YcV7BgVMRFRua2FqQzKtTDMz8iCuLEyGKjr70q8Zm1yy2qKcurbFEd79PAdHV77oL3NrAaOVQIbMmiHQCHB7ZA==
   dependencies:
     has "^1.0.3"
 

@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@stencil/core@^2.0.0":
+"@stencil/core@^2.0.0", "@stencil/core@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.2.0.tgz#f92b480a387bce688a368b2fb23207f1acd45bc2"
   integrity sha512-2V+DEUs9wvkcgnIIs0huye/M1v7x6qEzeOjp056RQlB08U1I4ex3vnBoE0/CrR35wK3ZZv2JYPOfBUuqR+6AAg==
@@ -20,10 +20,11 @@
   integrity sha512-DYG8uROgL9hkjVTCtCfRBb0d3FwpiFB0muRrNZQ2X1Qo5hxMuNNji76/ILddqeq0AfgkKCW82xrMPDpy+rNIhQ==
 
 "@vime/core@^4.0.0":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.1.tgz#0c384f336e56ca8596472209c3b0f88396aea0b2"
-  integrity sha512-9Z8c2u5dtJQDbnCwhxQeqBarCiyp9u5inQYwF+7MaW1QzM3/wE1exGIRWoZuThM8iInwUNMLVvBRySIUmeIanw==
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.2.tgz#ba0a0e347c6e99af45229022daca7f71b6ee45f3"
+  integrity sha512-ntD7HfsuaCqDyMxFYbPf+E4ve3TgWgqt7xHVwtB00jFWB5PG/RvY7aiibuE74B9Xg0BD+Cf/2yRWbCkm9UiBXA==
   dependencies:
+    "@stencil/core" "^2.1.0"
     stencil-wormhole "^3.2.2"
 
 stencil-wormhole@^3.2.2:
