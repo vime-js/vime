@@ -146,12 +146,6 @@ class Example {
 | ---- | --------------------------------------------- |
 |      | Used to pass in UI components for the player. |
 
-## CSS Custom Properties
-
-| Name              | Description                                              |
-| ----------------- | -------------------------------------------------------- |
-| `--vm-ui-z-index` | The position in the root z-axis stack inside the player. |
-
 ## Dependencies
 
 ### Used by

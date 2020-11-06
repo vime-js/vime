@@ -86,11 +86,11 @@ export class HLS implements MediaFileProvider {
 
   connectedCallback() {
     this.dispatch = createProviderDispatcher(this);
+    if (this.mediaEl) this.setupHls();
   }
 
   disconnectedCallback() {
     this.destroyHls();
-    this.mediaEl = undefined;
   }
 
   get src(): string | undefined {
@@ -152,7 +152,6 @@ export class HLS implements MediaFileProvider {
 
   private destroyHls() {
     this.hls?.destroy();
-    this.hls = undefined;
     this.hasAttached = false;
   }
 

@@ -102,11 +102,11 @@ export class Dash implements MediaFileProvider<any> {
 
   connectedCallback() {
     this.dispatch = createProviderDispatcher(this);
+    if (this.mediaEl) this.setupDash();
   }
 
   disconnectedCallback() {
     this.destroyDash();
-    this.mediaEl = undefined;
   }
 
   private async setupDash() {
@@ -136,7 +136,6 @@ export class Dash implements MediaFileProvider<any> {
 
   private async destroyDash() {
     this.dash?.reset();
-    this.dash = undefined;
     this.hasAttached = false;
   }
 
