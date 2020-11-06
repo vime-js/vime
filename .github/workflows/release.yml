@@ -142,67 +142,68 @@ jobs:
         if: steps.instrument.outputs.cache-hit != 'true'
         run: yarn workspace @vime/core instrument
 
-  test_e2e:
-    name: E2E Tests
-    needs: [build_id, instrument]
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [1, 2, 3, 4, 5, 6, 7, 8]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  # test_e2e:
+  #   name: E2E Tests
+  #   needs: [build_id, instrument]
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       containers: [1, 2, 3, 4, 5, 6, 7, 8]
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
       
-      - name: Setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
+  #     - name: Setup node.js
+  #       uses: actions/setup-node@v2-beta
+  #       with:
+  #         node-version: 14
       
-      - name: Restore build id from cache
-        uses: actions/cache@v2
-        with:
-          path: ${{ github.workspace }}/.build-id
-          key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
+  #     - name: Restore build id from cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ${{ github.workspace }}/.build-id
+  #         key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
       
-      - name: Set build id
-        id: build_id
-        run: echo "::set-output name=id::$(cat .build-id/id)"
+  #     - name: Set build id
+  #       id: build_id
+  #       run: echo "::set-output name=id::$(cat .build-id/id)"
       
-      - name: Restore dependencies
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: deps-${{ hashFiles('yarn.lock') }}
+  #     - name: Restore dependencies
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: '**/node_modules'
+  #         key: deps-${{ hashFiles('yarn.lock') }}
       
-      - name: Restore cypress binary
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache
-          key: cypress-${{ hashFiles('yarn.lock') }}
+  #     - name: Restore cypress binary
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.cache
+  #         key: cypress-${{ hashFiles('yarn.lock') }}
       
-      - name: Restore instrumentation
-        uses: actions/cache@v2
-        with:
-          path: 'packages/core/dist'
-          key: instrument-${{ github.run_id }}
+  #     - name: Restore instrumentation
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: 'packages/core/dist'
+  #         key: instrument-${{ github.run_id }}
       
-      - name: Run e2e tests
-        run:  yarn workspace @vime/core test:e2e.ci
-        env:
-          BUILD_ID: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Run e2e tests
+  #       run:  yarn workspace @vime/core test:e2e.ci
+  #       env:
+  #         BUILD_ID: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
+  #         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Upload codecov report artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: codecov-e2e-${{ matrix.containers }}
-          path: packages/core/cypress-coverage
+  #     - name: Upload codecov report artifact
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: codecov-e2e-${{ matrix.containers }}
+  #         path: packages/core/cypress-coverage
 
   codecov:
     name: Code Coverage
-    needs: [test_unit, test_e2e]
+    needs: [test_unit]
+    # needs: [test_unit, test_e2e]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -225,7 +226,8 @@ jobs:
   
   release:
     name: Release
-    needs: [test_unit, test_e2e]
+    needs: [test_unit]
+    # needs: [test_unit, test_e2e]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
