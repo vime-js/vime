@@ -9,28 +9,28 @@ on:
       - '!packages/**/*.md'
       - '.github/workflows/**'
 
-jobs:
-  # @see https://medium.com/attest-engineering/adding-a-unique-github-build-identifier-7aa2e83cadca
-  build_id:
-    name: Build Id
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create build id
-        id: build_id
-        run: echo "::set-output name=id::$(date +%s)"
+# jobs:
+#   # @see https://medium.com/attest-engineering/adding-a-unique-github-build-identifier-7aa2e83cadca
+#   build_id:
+#     name: Build Id
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Create build id
+#         id: build_id
+#         run: echo "::set-output name=id::$(date +%s)"
       
-      - name: Cache build id
-        uses: actions/cache@v2
-        with:
-          path: ${{ github.workspace }}/.build-id
-          key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}-${{ steps.build_id.outputs.id }}
+#       - name: Cache build id
+#         uses: actions/cache@v2
+#         with:
+#           path: ${{ github.workspace }}/.build-id
+#           key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}-${{ steps.build_id.outputs.id }}
       
-      - name: Store build id
-        run: |
-          mkdir -p .build-id 
-          echo $BUILD_ID > .build-id/id
-        env:
-          BUILD_ID: ${{ steps.build_id.outputs.id }}
+#       - name: Store build id
+#         run: |
+#           mkdir -p .build-id 
+#           echo $BUILD_ID > .build-id/id
+#         env:
+#           BUILD_ID: ${{ steps.build_id.outputs.id }}
   
   prepare:
     name: Prepare
@@ -112,35 +112,35 @@ jobs:
           name: codecov-unit
           path: packages/core/jest-coverage
 
-  instrument:
-    name: Instrument
-    needs: [prepare]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  # instrument:
+  #   name: Instrument
+  #   needs: [prepare]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
       
-      - name: Setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
+  #     - name: Setup node.js
+  #       uses: actions/setup-node@v2-beta
+  #       with:
+  #         node-version: 14
 
-      - name: Restore build
-        uses: actions/cache@v2
-        with:
-          path: '**/dist'
-          key: build-${{ github.run_id }}
+  #     - name: Restore build
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: '**/dist'
+  #         key: build-${{ github.run_id }}
       
-      - name: Cache instrumentation
-        id: instrument
-        uses: actions/cache@v2
-        with:
-          path: 'packages/core/dist'
-          key: instrument-${{ github.run_id }}
+  #     - name: Cache instrumentation
+  #       id: instrument
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: 'packages/core/dist'
+  #         key: instrument-${{ github.run_id }}
 
-      - name: Instrument
-        if: steps.instrument.outputs.cache-hit != 'true'
-        run: yarn workspace @vime/core instrument
+  #     - name: Instrument
+  #       if: steps.instrument.outputs.cache-hit != 'true'
+  #       run: yarn workspace @vime/core instrument
 
   # test_e2e:
   #   name: E2E Tests
