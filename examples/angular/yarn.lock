@@ -1278,17 +1278,17 @@
     "@types/yargs-parser" "*"
 
 "@vime/angular@^4.2.0":
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/@vime/angular/-/angular-4.3.2.tgz#a9193edc249930dbefb62b4316e2020129bf4b4b"
-  integrity sha512-6M7hbpc81+kZYqOI/PWVqmsCRDdQMaZSfU/pWL2yP+HNiiSjnkLVNaar8oz/nGnPOr4w2XYZOIMIl6jfd9Mx6A==
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/@vime/angular/-/angular-4.3.3.tgz#105e7f3a13631a74db35e3057de04cdda625c7da"
+  integrity sha512-tcm0dmiIS/SlnUQEzggjrdcMP+l3Qf1kBtIDLz2V2a6ALXCSuI32VOt467cAWo35zU+IY3iE0kJswZ08hfrG1A==
   dependencies:
-    "@vime/core" "^4.3.2"
+    "@vime/core" "^4.3.3"
     tslib "^2.0.1"
 
-"@vime/core@^4.2.0", "@vime/core@^4.3.2":
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.2.tgz#ba0a0e347c6e99af45229022daca7f71b6ee45f3"
-  integrity sha512-ntD7HfsuaCqDyMxFYbPf+E4ve3TgWgqt7xHVwtB00jFWB5PG/RvY7aiibuE74B9Xg0BD+Cf/2yRWbCkm9UiBXA==
+"@vime/core@^4.2.0", "@vime/core@^4.3.3":
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.3.tgz#51e55b84fd8464412a05809a29d81be5c2ad91f3"
+  integrity sha512-UDyOqbFofJXLdXMDtNXY5PqPgpgsM2epOI+VSaz+SaNYDRXYrxJJbOZwxUtpqR7zs+z4fNP+BsszZZ8YBE4ssg==
   dependencies:
     "@stencil/core" "^2.1.0"
     stencil-wormhole "^3.2.2"
@@ -2183,9 +2183,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001032, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001154:
-  version "1.0.30001154"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001154.tgz#f3bbc245ce55e4c1cd20fa731b097880181a7f17"
-  integrity sha512-y9DvdSti8NnYB9Be92ddMZQrcOe04kcQtcxtBx4NkB04+qZ+JUWotnXBJTmxlKudhxNTQ3RRknMwNU2YQl/Org==
+  version "1.0.30001156"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001156.tgz#75c20937b6012fe2b02ab58b30d475bf0718de97"
+  integrity sha512-z7qztybA2eFZTB6Z3yvaQBIoJpQtsewRD74adw2UbRWwsRq3jIPvgrQGawBMbfafekQaD21FWuXNcywtTDGGCw==
 
 canonical-path@1.0.0:
   version "1.0.0"
@@ -3140,9 +3140,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.585:
-  version "1.3.588"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.588.tgz#c6515571737bfb42678115a5eaa818384593a9a5"
-  integrity sha512-0zr+ZfytnLeJZxGgmEpPTcItu5Mm4A5zHPZXLfHcGp0mdsk95rmD7ePNewYtK1yIdLbk8Z1U2oTRRfOtR4gbYg==
+  version "1.3.589"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.589.tgz#bd26183ed8697dde6ac19acbc16a3bf33b1f8220"
+  integrity sha512-rQItBTFnol20HaaLm26UgSUduX7iGerwW7pEYX17MB1tI6LzFajiLV7iZ7LVcUcsN/7HrZUoCLrBauChy/IqEg==
 
 elliptic@^6.5.3:
   version "6.5.3"

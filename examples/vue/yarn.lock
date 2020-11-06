@@ -279,20 +279,20 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@vime/core@^4.2.0", "@vime/core@^4.3.2":
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.2.tgz#ba0a0e347c6e99af45229022daca7f71b6ee45f3"
-  integrity sha512-ntD7HfsuaCqDyMxFYbPf+E4ve3TgWgqt7xHVwtB00jFWB5PG/RvY7aiibuE74B9Xg0BD+Cf/2yRWbCkm9UiBXA==
+"@vime/core@^4.2.0", "@vime/core@^4.3.3":
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.3.3.tgz#51e55b84fd8464412a05809a29d81be5c2ad91f3"
+  integrity sha512-UDyOqbFofJXLdXMDtNXY5PqPgpgsM2epOI+VSaz+SaNYDRXYrxJJbOZwxUtpqR7zs+z4fNP+BsszZZ8YBE4ssg==
   dependencies:
     "@stencil/core" "^2.1.0"
     stencil-wormhole "^3.2.2"
 
 "@vime/vue@^4.2.0":
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/@vime/vue/-/vue-4.3.2.tgz#fb0a9ea2b0ae9426f0189df4e780f351742950c7"
-  integrity sha512-r0Al314u1lPr3NmQqceKALqqnmkJY3wVQWxEKDqa1N6t4HvRCCRp7Vs6CgL3eXetfNypsqkIn2igM81OayGF3Q==
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/@vime/vue/-/vue-4.3.3.tgz#16763d41d0fda6884c3a26907331164b5378fb5e"
+  integrity sha512-05t85Zue81S2r+MUaVePotMiZ2HCF38GsWZEYl9si8cEeUF3DGwZ3jTXsfjtFWzblMP/EUNdd8uXBabF0X73+Q==
   dependencies:
-    "@vime/core" "^4.3.2"
+    "@vime/core" "^4.3.3"
 
 "@vue/cli-overlay@^4.5.8":
   version "4.5.8"
@@ -1289,9 +1289,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001154:
-  version "1.0.30001154"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001154.tgz#f3bbc245ce55e4c1cd20fa731b097880181a7f17"
-  integrity sha512-y9DvdSti8NnYB9Be92ddMZQrcOe04kcQtcxtBx4NkB04+qZ+JUWotnXBJTmxlKudhxNTQ3RRknMwNU2YQl/Org==
+  version "1.0.30001156"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001156.tgz#75c20937b6012fe2b02ab58b30d475bf0718de97"
+  integrity sha512-z7qztybA2eFZTB6Z3yvaQBIoJpQtsewRD74adw2UbRWwsRq3jIPvgrQGawBMbfafekQaD21FWuXNcywtTDGGCw==
 
 case-sensitive-paths-webpack-plugin@^2.3.0:
   version "2.3.0"
@@ -2267,9 +2267,9 @@ ejs@^2.6.1:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.585:
-  version "1.3.588"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.588.tgz#c6515571737bfb42678115a5eaa818384593a9a5"
-  integrity sha512-0zr+ZfytnLeJZxGgmEpPTcItu5Mm4A5zHPZXLfHcGp0mdsk95rmD7ePNewYtK1yIdLbk8Z1U2oTRRfOtR4gbYg==
+  version "1.3.589"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.589.tgz#bd26183ed8697dde6ac19acbc16a3bf33b1f8220"
+  integrity sha512-rQItBTFnol20HaaLm26UgSUduX7iGerwW7pEYX17MB1tI6LzFajiLV7iZ7LVcUcsN/7HrZUoCLrBauChy/IqEg==
 
 elliptic@^6.5.3:
   version "6.5.3"
