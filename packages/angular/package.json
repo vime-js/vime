@@ -1,6 +1,6 @@
 {
   "name": "@vime/angular",
-  "version": "4.3.2",
+  "version": "4.3.3",
   "description": "Angular bindings for the Vime media player.",
   "license": "MIT",
   "types": "dist/index.d.ts",
@@ -19,7 +19,7 @@
     "build:ng": "ng-packagr -p package.json"
   },
   "dependencies": {
-    "@vime/core": "^4.3.2",
+    "@vime/core": "^4.3.3",
     "tslib": "^2.0.1"
   },
   "devDependencies": {
