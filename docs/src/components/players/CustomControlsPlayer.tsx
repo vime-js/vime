@@ -11,7 +11,7 @@ import {
   VimeTimeProgress,
 } from '@vime/react';
 
-export const CustomControlsPlayer = () => (
+const CustomControlsPlayer = () => (
   <VimePlayer>
     <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
       <source 
@@ -46,3 +46,5 @@ export const CustomControlsPlayer = () => (
     </VimeDefaultUi>
   </VimePlayer>
 );
+
+export default CustomControlsPlayer;

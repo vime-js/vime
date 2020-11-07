@@ -1,15 +1,11 @@
 import React from 'react';
-import { 
-  VimePlayer, 
-  VimeVideo, 
-  VimeUi, 
-  VimeClickToPlay,
-  VimeSpinner,
-} from '@vime/react';
-import { TapSidesToSeek } from './TapSidesToSeek';
+import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/react';
 
-export const ClickPlayer = () => (
-  <VimePlayer>
+const BasicPlayer = ({ 
+  showDefaultUi = false,
+  defaultUiProps = {}
+}) => (
+  <VimePlayer controls={!showDefaultUi}>
     <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
       <source 
         data-src="https://media.vimejs.com/720p.mp4" 
@@ -24,10 +20,8 @@ export const ClickPlayer = () => (
       />
     </VimeVideo> 
 
-    <VimeUi>
-      <VimeClickToPlay />
-      <VimeSpinner />
-      <TapSidesToSeek />
-    </VimeUi>
+    {showDefaultUi && <VimeDefaultUi {...defaultUiProps} />}
   </VimePlayer>
 );
+
+export default BasicPlayer;

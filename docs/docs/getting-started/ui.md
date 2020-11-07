@@ -235,7 +235,7 @@ class Player {
 
 Glorious! Here's the result so far 🥁 ...
 
-import { BasicPlayer } from './components/BasicPlayer';
+import BasicPlayer from '../../src/components/players/LoadableBasicPlayer'
 
 <BasicPlayer 
   showDefaultUi 
@@ -547,7 +547,7 @@ You can view the custom `<tap-sides-to-seek>` component [here](https://github.co
 
 Glorious! Here's the result 🥁 ...
 
-import { ClickPlayer } from './components/ClickPlayer';
+import ClickPlayer from '../../src/components/players/LoadableClickPlayer';
 
 :::tip
 Click the player anywhere in the center region to toggle playback, and click to the sides to 

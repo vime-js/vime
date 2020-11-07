@@ -10,7 +10,7 @@ import {
   VimeMenuRadioGroup,
 } from '@vime/react';
 
-export const CustomSettingsPlayer = () => {
+const CustomSettingsPlayer = () => {
   const [value, setValue] = useState('1');
 
   const onMenuItem1Click = () => {
@@ -61,3 +61,5 @@ export const CustomSettingsPlayer = () => {
     </VimePlayer>
   );
 };
+
+export default CustomSettingsPlayer;

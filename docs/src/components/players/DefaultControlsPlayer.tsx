@@ -6,7 +6,7 @@ import {
   VimeDefaultControls, 
 } from '@vime/react';
 
-export const DefaultControlsPlayer = () => (
+const DefaultControlsPlayer = () => (
   <VimePlayer>
     <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
       <source 
@@ -30,3 +30,5 @@ export const DefaultControlsPlayer = () => (
     </VimeDefaultUi>
   </VimePlayer>
 );
+
+export default DefaultControlsPlayer;

@@ -20,7 +20,7 @@ import { Seo } from '../../src/seo';
 Vime is a customizable, extensible, accessible and framework agnostic media player.
 </p>
 
-import { BasicPlayer } from '../getting-started/components/BasicPlayer'
+import BasicPlayer from '../../src/components/players/LoadableBasicPlayer'
 
 <BasicPlayer showDefaultUi />
 <br />
@@ -29,7 +29,7 @@ import { BasicPlayer } from '../getting-started/components/BasicPlayer'
   width: '100%',
   textAlign: 'center',
 }}>
-  <a href="/demo" class="button button--primary" style={{ transform: 'scale(1.1)' }}>View Demo</a>
+  <a href="/demo" className="button button--primary" style={{ transform: 'scale(1.1)' }}>View Demo</a>
 </div>
 
 ## ✨ &nbsp;Features

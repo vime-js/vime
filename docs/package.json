@@ -14,6 +14,7 @@
     "@docusaurus/core": "^2.0.0-alpha.62",
     "@docusaurus/plugin-pwa": "^2.0.0-alpha.62",
     "@docusaurus/preset-classic": "^2.0.0-alpha.62",
+    "@loadable/component": "^5.14.1",
     "@mdx-js/react": "^1.6.16",
     "@vime/react": "^4.0.0",
     "babel-loader": "^8.1.0",

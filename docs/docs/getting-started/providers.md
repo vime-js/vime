@@ -235,7 +235,7 @@ class Player {
 
 Glorious! Here's the result so far 🥁 ...
 
-import { BasicPlayer } from './components/BasicPlayer';
+import BasicPlayer from '../../src/components/players/LoadableBasicPlayer'
 
 <BasicPlayer />
 <br />

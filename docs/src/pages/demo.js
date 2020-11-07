@@ -3,11 +3,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Layout from '@theme/Layout';
-import styles from './index.module.css';
+import styles from './demo.module.css';
 import Draggable from 'react-draggable';
-import buildEditorPanel from './editorPanel';
-import CodePreview from './CodePreview';
-import DemoPlayer from './DemoPlayer';
+import buildEditorPanel from '../components/demo/editorPanel';
+import CodePreview from '../components/demo/CodePreview';
+import DemoPlayer from '../components/demo/LoadableDemoPlayer';
 
 function Demo() {
   let editorPanel = useRef(null);

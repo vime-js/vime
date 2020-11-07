@@ -574,7 +574,7 @@ Glorious! Here's the result 🥁 ...
 Click the cogwheel in the lower control bar to open the settings.
 :::
 
-import { CustomSettingsPlayer } from './components/CustomSettingsPlayer'
+import CustomSettingsPlayer from '../../src/components/players/LoadableCustomSettingsPlayer';
 
 <CustomSettingsPlayer />
 <br />

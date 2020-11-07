@@ -186,7 +186,7 @@ Start playing the video and move your mouse outside of the player, the controls 
 straight away.
 :::
 
-import { DefaultControlsPlayer } from './components/DefaultControlsPlayer';
+import DefaultControlsPlayer from '../../src/components/players/LoadableDefaultControlsPlayer';
 
 <DefaultControlsPlayer />
 <br />
@@ -480,7 +480,7 @@ class Player {
 
 Glorious! Here's the result 🥁 ...
 
-import { CustomControlsPlayer } from './components/CustomControlsPlayer';
+import CustomControlsPlayer from '../../src/components/players/LoadableCustomControlsPlayer';
 
 <CustomControlsPlayer />
 <br />
