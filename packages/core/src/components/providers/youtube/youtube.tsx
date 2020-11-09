@@ -16,6 +16,8 @@ import { YouTubeMessage } from './YouTubeMessage';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
 
+const posterCache = new Map();
+
 @Component({
   tag: 'vime-youtube',
 })
@@ -39,7 +41,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
 
   private initialMuted!: boolean;
 
-  private pendingPosterFetch?: Promise<void>;
+  private fetchPoster?: Promise<string | undefined>;
 
   @State() embedSrc = '';
 
@@ -59,7 +61,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   @Watch('videoId')
   onVideoIdChange() {
     this.embedSrc = `${this.getOrigin()}/embed/${this.videoId}`;
-    this.pendingPosterFetch = this.findPosterURL();
+    this.fetchPoster = this.findPosterURL();
   }
 
   /**
@@ -118,10 +120,6 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     this.onVideoIdChange();
     this.initialMuted = this.muted;
     this.defaultInternalState = { ...this.internalState };
-  }
-
-  disconnectedCallback() {
-    this.pendingPosterFetch = undefined;
   }
 
   /**
@@ -198,7 +196,9 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     window.setTimeout(() => this.embed.postMessage({ event: 'listening' }), 100);
   }
 
-  private findPosterURL() {
+  private async findPosterURL() {
+    if (posterCache.has(this.videoId)) return posterCache.get(this.videoId);
+
     const posterURL = (quality: string) => `https://i.ytimg.com/vi/${this.videoId}/${quality}.jpg`;
 
     /**
@@ -208,7 +208,11 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     return loadImage(posterURL('maxresdefault'), 121) // 1080p (no padding)
       .catch(() => loadImage(posterURL('sddefault'), 121)) // 640p (padded 4:3)
       .catch(() => loadImage(posterURL('hqdefault'), 121)) // 480p (padded 4:3)
-      .then((img) => { this.dispatch('currentPoster', img.src); });
+      .then((img) => {
+        const poster = img.src;
+        posterCache.set(this.videoId, poster);
+        return poster;
+      });
   }
 
   private onPlayerStateChange(state: YouTubePlayerState) {
@@ -235,9 +239,9 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
         this.internalState = { ...this.defaultInternalState };
         this.dispatch('currentSrc', this.embedSrc);
         this.dispatch('mediaType', MediaType.Video);
-        this.pendingPosterFetch!.then(() => {
+        this.fetchPoster!.then((poster) => {
+          this.dispatch('currentPoster', poster);
           this.dispatch('playbackReady', true);
-          this.pendingPosterFetch = undefined;
         });
         break;
       case YouTubePlayerState.Playing:
@@ -252,6 +256,8 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
           window.setTimeout(() => { this.remoteControl(YouTubeCommand.Play); }, 150);
         } else {
           this.dispatch('playbackEnded', true);
+          this.internalState.paused = true;
+          this.dispatch('paused', true);
         }
         break;
     }
@@ -261,12 +267,18 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
 
   private calcCurrentTime(time: number) {
     let currentTime = time;
+
+    if (this.internalState.state === YouTubePlayerState.Ended) {
+      return this.internalState.duration;
+    }
+
     if (this.internalState.state === YouTubePlayerState.Playing) {
       const elapsedTime = (
         Date.now() / 1E3 - this.defaultInternalState.lastTimeUpdate
       ) * this.internalState.playbackRate;
       if (elapsedTime > 0) currentTime += Math.min(elapsedTime, 1);
     }
+
     return currentTime;
   }
 

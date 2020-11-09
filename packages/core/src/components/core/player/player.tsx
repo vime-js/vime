@@ -203,9 +203,7 @@ export class Player implements MediaPlayer {
   async onPlaybackRateChange(newRate: number, prevRate: number) {
     if (newRate === this.lastRateCheck) return;
 
-    const adapter = await this.getAdapter();
-
-    if (!(await adapter?.canSetPlaybackRate?.())) {
+    if (!(await this.adapter?.canSetPlaybackRate?.())) {
       this.logger.log('provider cannot change `playbackRate`.');
       this.lastRateCheck = prevRate;
       this.playbackRate = prevRate;
@@ -242,9 +240,7 @@ export class Player implements MediaPlayer {
   async onPlaybackQualityChange(newQuality: string, prevQuality: string) {
     if (isUndefined(newQuality) || (newQuality === this.lastQualityCheck)) return;
 
-    const adapter = await this.getAdapter();
-
-    if (!(await adapter?.canSetPlaybackQuality?.())) {
+    if (!(await this.adapter?.canSetPlaybackQuality?.())) {
       this.logger.log('provider cannot change `playbackQuality`.');
       this.lastQualityCheck = prevQuality;
       this.playbackQuality = prevQuality;
@@ -744,8 +740,7 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async play() {
-    const adapter = await this.getAdapter();
-    return adapter?.play();
+    return this.adapter?.play();
   }
 
   /**
@@ -753,8 +748,7 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async pause() {
-    const adapter = await this.getAdapter();
-    return adapter?.pause();
+    return this.adapter?.pause();
   }
 
   /**
@@ -762,8 +756,7 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async canPlay(type: string) {
-    const adapter = await this.getAdapter();
-    return adapter?.canPlay(type) ?? false;
+    return this.adapter?.canPlay(type) ?? false;
   }
 
   /**
@@ -787,8 +780,7 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async canSetPlaybackRate() {
-    const adapter = await this.getAdapter();
-    return adapter?.canSetPlaybackRate?.() ?? false;
+    return this.adapter?.canSetPlaybackRate?.() ?? false;
   }
 
   /**
@@ -796,8 +788,7 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async canSetPlaybackQuality() {
-    const adapter = await this.getAdapter();
-    return adapter?.canSetPlaybackQuality?.() ?? false;
+    return this.adapter?.canSetPlaybackQuality?.() ?? false;
   }
 
   /**
@@ -805,8 +796,7 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async canSetFullscreen() {
-    const adapter = await this.getAdapter();
-    return this.fullscreen!.isSupported || (adapter?.canSetFullscreen?.() ?? false);
+    return this.fullscreen!.isSupported || (this.adapter?.canSetFullscreen?.() ?? false);
   }
 
   /**
@@ -816,8 +806,7 @@ export class Player implements MediaPlayer {
   async enterFullscreen(options?: FullscreenOptions) {
     if (!this.isVideoView) throw Error('Cannot enter fullscreen on an audio player view.');
     if (this.fullscreen!.isSupported) return this.fullscreen!.enterFullscreen(options);
-    const adapter = await this.getAdapter();
-    if (await adapter?.canSetFullscreen?.()) return adapter?.enterFullscreen?.(options);
+    if (await this.adapter?.canSetFullscreen?.()) return this.adapter?.enterFullscreen?.(options);
     throw Error('Fullscreen API is not available.');
   }
 
@@ -827,8 +816,7 @@ export class Player implements MediaPlayer {
   @Method()
   async exitFullscreen() {
     if (this.fullscreen!.isSupported) return this.fullscreen!.exitFullscreen();
-    const adapter = await this.getAdapter();
-    return adapter?.exitFullscreen?.();
+    return this.adapter?.exitFullscreen?.();
   }
 
   /**
@@ -836,8 +824,7 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async canSetPiP() {
-    const adapter = await this.getAdapter();
-    return adapter?.canSetPiP?.() ?? false;
+    return this.adapter?.canSetPiP?.() ?? false;
   }
 
   /**
@@ -847,8 +834,7 @@ export class Player implements MediaPlayer {
   async enterPiP() {
     if (!this.isVideoView) throw Error('Cannot enter PiP mode on an audio player view.');
     if (!(await this.canSetPiP())) throw Error('Picture-in-Picture API is not available.');
-    const adapter = await this.getAdapter();
-    return adapter?.enterPiP?.();
+    return this.adapter?.enterPiP?.();
   }
 
   /**
@@ -856,8 +842,7 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async exitPiP() {
-    const adapter = await this.getAdapter();
-    return adapter?.exitPiP?.();
+    return this.adapter?.exitPiP?.();
   }
 
   /**
@@ -942,15 +927,13 @@ export class Player implements MediaPlayer {
     }
 
     if (!this.playbackStarted && immediateAdapterCall.has(prop)) {
-      const adapter = await this.getAdapter();
-
       if (prop === 'paused' && !value) {
-        adapter?.play();
+        this.adapter?.play();
       }
 
       if (prop === 'currentTime') {
-        adapter?.play();
-        adapter?.setCurrentTime(value as number);
+        this.adapter?.play();
+        this.adapter?.setCurrentTime(value as number);
       }
     }
 
@@ -1064,8 +1047,7 @@ export class Player implements MediaPlayer {
    */
   @Method()
   async callAdapter(method: keyof MediaProviderAdapter, value?: any) {
-    const adapter = await this.getAdapter();
-    return (adapter as any)[method](value);
+    return (this.adapter as any)[method](value);
   }
 
   /**
@@ -1129,19 +1111,17 @@ export class Player implements MediaPlayer {
     };
 
     if (this.playbackReady) {
-      const adapter = await this.getAdapter();
-      await safeCall(adapter);
+      await safeCall(this.adapter);
     } else {
       this.adapterCalls.push(safeCall);
     }
   }
 
   private async flushAdapterCalls() {
-    const adapter = await this.getAdapter();
-    if (isUndefined(adapter)) return;
+    if (isUndefined(this.adapter)) return;
     for (let i = 0; i < this.adapterCalls.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      await this.adapterCalls[i](adapter);
+      await this.adapterCalls[i](this.adapter);
     }
     this.adapterCalls = [];
   }

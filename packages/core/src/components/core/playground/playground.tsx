@@ -101,11 +101,13 @@ export class Playground {
   }
 
   render() {
-    const buttons = Object.values(Provider).map((provider) => (
-      <button id="audio" type="button" onClick={() => this.changeProvider(provider)}>
-        {provider}
-      </button>
-    ));
+    const buttons = Object.values(Provider)
+      .filter((provider) => provider !== 'faketube')
+      .map((provider) => (
+        <button id="audio" type="button" onClick={() => this.changeProvider(provider)}>
+          {provider}
+        </button>
+      ));
 
     return (
       <Host>
