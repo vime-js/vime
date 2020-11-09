@@ -9,7 +9,7 @@ on:
       - '!packages/**/*.md'
       - '.github/workflows/**'
 
-# jobs:
+jobs:
 #   # @see https://medium.com/attest-engineering/adding-a-unique-github-build-identifier-7aa2e83cadca
 #   build_id:
 #     name: Build Id
