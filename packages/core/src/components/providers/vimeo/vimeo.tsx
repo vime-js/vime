@@ -408,7 +408,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
       },
       setVolume: async (volume: number) => {
         if (!this.muted) {
-          this.remoteControl(VimeoCommand.SetVolume, (this.volume / 100));
+          this.remoteControl(VimeoCommand.SetVolume, (volume / 100));
         } else {
           // Confirm volume was set.
           this.dispatch('volume', volume);
