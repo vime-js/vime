@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0](https://github.com/vime-js/vime/compare/v4.3.3...v4.4.0) (2020-11-09)
+
+
+### Features
+
+* allow dynamically changing the current provider ([4a7a43d](https://github.com/vime-js/vime/commit/4a7a43d284e989f468800093662581221419d324))
+* new `vime-playground` component for testing and playing with vime ([6ab4ec2](https://github.com/vime-js/vime/commit/6ab4ec2741e0af10eccaffaad8596a9df2e66b05))
+
+
+
+
+
 ## [4.3.3](https://github.com/vime-js/vime/compare/v4.3.2...v4.3.3) (2020-11-06)
 
 **Note:** Version bump only for package @vime/vue-next

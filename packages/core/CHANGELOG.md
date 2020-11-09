@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0](https://github.com/vime-js/vime/compare/v4.3.3...v4.4.0) (2020-11-09)
+
+
+### Bug Fixes
+
+* **core/playground:** bind values to checkboxes ([a2f472e](https://github.com/vime-js/vime/commit/a2f472ebf9114cc4120fd7382ce21d14f2792c5d))
+* **providers/vimeo:** volume not updating ([9f168c7](https://github.com/vime-js/vime/commit/9f168c786174b0f85e026de170c974df3d820f6e)), closes [#91](https://github.com/vime-js/vime/issues/91)
+* **providers/youtube:** player not paused when video ends and incorrect end time ([b774b39](https://github.com/vime-js/vime/commit/b774b3929521c617d76a5205a688eeb29a8b1e86)), closes [#96](https://github.com/vime-js/vime/issues/96)
+* paused/currentTime change before user interaction requires immediate adapter call ([2afb2be](https://github.com/vime-js/vime/commit/2afb2beb8acef7ddf854da0e8b183c62c2673a33)), closes [#100](https://github.com/vime-js/vime/issues/100) [#95](https://github.com/vime-js/vime/issues/95)
+
+
+### Features
+
+* **providers:** cache any fetched video metadata ([b757f75](https://github.com/vime-js/vime/commit/b757f7584dfc6faf066a5df101c7e36a7d05cfd1))
+* allow dynamically changing the current provider ([4a7a43d](https://github.com/vime-js/vime/commit/4a7a43d284e989f468800093662581221419d324))
+* new `vime-playground` component for testing and playing with vime ([6ab4ec2](https://github.com/vime-js/vime/commit/6ab4ec2741e0af10eccaffaad8596a9df2e66b05))
+
+
+
+
+
 ## [4.3.3](https://github.com/vime-js/vime/compare/v4.3.2...v4.3.3) (2020-11-06)
 
 
