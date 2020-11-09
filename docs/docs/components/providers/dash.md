@@ -211,6 +211,10 @@ class Example {
 
 ## Dependencies
 
+### Used by
+
+- [vime-playground](../core/playground.md)
+
 ### Depends on
 
 - [vime-video](video.md)
@@ -221,6 +225,7 @@ class Example {
 graph TD;
   vime-dash --> vime-video
   vime-video --> vime-file
+  vime-playground --> vime-dash
   style vime-dash fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

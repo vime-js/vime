@@ -609,6 +609,20 @@ Type: `Promise<void>`
 | `--vm-player-font-family` | A custom font family to be used throughout the player.                                                                     |
 | `--vm-player-theme`       | A custom theme (color) to be used throughout the player. Any valid CSS `color` property (HEX, RGBA, HLS, ...) can be used. |
 
+## Dependencies
+
+### Used by
+
+- [vime-playground](playground.md)
+
+### Graph
+
+```mermaid
+graph TD;
+  vime-playground --> vime-player
+  style vime-player fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ---
 
 _Built with [StencilJS](https://stenciljs.com/)_

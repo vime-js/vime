@@ -883,11 +883,11 @@ export class Player implements MediaPlayer {
 
     this.adapterCalls = [];
 
-    (Object.keys(initialState) as PlayerProp[])
-      .filter(shouldPropResetOnMediaChange)
-      .forEach((prop) => {
-        writeTask(() => { (this as any)[prop] = initialState[prop]; });
-      });
+    writeTask(() => {
+      (Object.keys(initialState) as PlayerProp[])
+        .filter(shouldPropResetOnMediaChange)
+        .forEach((prop) => { (this as any)[prop] = initialState[prop]; });
+    });
   }
 
   @Listen('vStateChange')

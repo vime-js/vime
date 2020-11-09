@@ -118,6 +118,10 @@ class Example {
 
 ## Dependencies
 
+### Used by
+
+ - [vime-playground](../../core/playground)
+
 ### Depends on
 
 - [vime-embed](../../core/embed)
@@ -126,6 +130,7 @@ class Example {
 ```mermaid
 graph TD;
   vime-vimeo --> vime-embed
+  vime-playground --> vime-vimeo
   style vime-vimeo fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

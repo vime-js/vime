@@ -2,6 +2,16 @@ import { ComponentInterface, EventEmitter } from '@stencil/core';
 import { PlayerProps } from '../core/player/PlayerProps';
 import { withPlayerContext } from '../core/player/PlayerContext';
 
+export enum Provider {
+  Audio = 'audio',
+  Video = 'video',
+  HLS = 'hls',
+  Dash = 'dash',
+  YouTube = 'youtube',
+  Vimeo = 'vimeo',
+  Dailymotion = 'dailymotion',
+}
+
 export interface MediaProviderAdapter<InternalPlayerType = any> {
   getInternalPlayer(): Promise<InternalPlayerType>
   play(): Promise<void>

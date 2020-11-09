@@ -217,6 +217,7 @@ class Example {
 
  - [vime-dash](../dash)
  - [vime-hls](../hls)
+ - [vime-playground](../../core/playground)
 
 ### Depends on
 
@@ -228,6 +229,7 @@ graph TD;
   vime-video --> vime-file
   vime-dash --> vime-video
   vime-hls --> vime-video
+  vime-playground --> vime-video
   style vime-video fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

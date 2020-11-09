@@ -137,6 +137,10 @@ class Example {
 
 ## Dependencies
 
+### Used by
+
+ - [vime-playground](../../core/playground)
+
 ### Depends on
 
 - [vime-file](../file)
@@ -145,6 +149,7 @@ class Example {
 ```mermaid
 graph TD;
   vime-audio --> vime-file
+  vime-playground --> vime-audio
   style vime-audio fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

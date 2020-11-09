@@ -49,7 +49,7 @@ export class Dash implements MediaFileProvider<any> {
   /**
    * @internal
    */
-  @Prop() autoplay!: boolean;
+  @Prop() autoplay = false;
 
   /**
    * @inheritdoc

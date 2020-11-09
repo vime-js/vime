@@ -8,6 +8,10 @@ export {
   MediaType,
   loadSprite,
   Translation,
+  Provider,
+  MediaProvider,
+  MediaProviderAdapter,
+  MediaProviderConstructor,
 } from '@vime/core';
 
 export * from './components';

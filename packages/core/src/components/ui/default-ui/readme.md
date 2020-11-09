@@ -149,6 +149,10 @@ class Example {
 
 ## Dependencies
 
+### Used by
+
+ - [vime-playground](../../core/playground)
+
 ### Depends on
 
 - [vime-ui](../ui)
@@ -226,6 +230,7 @@ graph TD;
   vime-submenu --> vime-menu-item
   vime-submenu --> vime-menu
   vime-settings --> vime-menu
+  vime-playground --> vime-default-ui
   style vime-default-ui fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

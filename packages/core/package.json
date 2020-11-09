@@ -51,7 +51,7 @@
     "cy:run.ci": "cypress run --record --group @vime/core --headless --parallel --ci-build-id $BUILD_ID --config baseUrl=http://localhost:3444"
   },
   "dependencies": {
-    "@stencil/core": "^2.1.0",
+    "@stencil/core": "2.2.0",
     "stencil-wormhole": "^3.2.2"
   },
   "devDependencies": {

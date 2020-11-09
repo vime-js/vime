@@ -210,6 +210,10 @@ class Example {
 
 ## Dependencies
 
+### Used by
+
+- [vime-playground](../core/playground.md)
+
 ### Depends on
 
 - [vime-video](video.md)
@@ -220,6 +224,7 @@ class Example {
 graph TD;
   vime-hls --> vime-video
   vime-video --> vime-file
+  vime-playground --> vime-hls
   style vime-hls fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -10,7 +10,7 @@ import { TooltipDirection, TooltipPosition } from "./components/ui/tooltip/types
 import { PlayerProp, PlayerProps } from "./components/core/player/PlayerProps";
 import { Logger } from "./components/core/player/PlayerLogger";
 import { Params } from "./utils/network";
-import { MediaProvider, MediaProviderAdapter, MockMediaProviderAdapter } from "./components/providers/MediaProvider";
+import { MediaProvider, MediaProviderAdapter, MockMediaProviderAdapter, Provider } from "./components/providers/MediaProvider";
 import { ViewType } from "./components/core/player/ViewType";
 import { MediaType } from "./components/core/player/MediaType";
 import { Translation } from "./components/core/player/lang/Translation";
@@ -1115,6 +1115,28 @@ export namespace Components {
          */
         "volume": number;
     }
+    interface VimePlayground {
+        /**
+          * The current poster to load.
+         */
+        "poster": string;
+        /**
+          * The current media provider.
+         */
+        "provider": Provider;
+        /**
+          * Whether to show the custom Vime UI or not.
+         */
+        "showCustomUI": boolean;
+        /**
+          * The current `src` to load into the provider.
+         */
+        "src"?: string;
+        /**
+          * The current custom UI theme, won't work if custom UI is turned off.
+         */
+        "theme": 'light' | 'dark';
+    }
     interface VimePoster {
         "currentPoster"?: PlayerProps['currentPoster'];
         /**
@@ -1623,6 +1645,12 @@ declare global {
         prototype: HTMLVimePlayerElement;
         new (): HTMLVimePlayerElement;
     };
+    interface HTMLVimePlaygroundElement extends Components.VimePlayground, HTMLStencilElement {
+    }
+    var HTMLVimePlaygroundElement: {
+        prototype: HTMLVimePlaygroundElement;
+        new (): HTMLVimePlaygroundElement;
+    };
     interface HTMLVimePosterElement extends Components.VimePoster, HTMLStencilElement {
     }
     var HTMLVimePosterElement: {
@@ -1758,6 +1786,7 @@ declare global {
         "vime-pip-control": HTMLVimePipControlElement;
         "vime-playback-control": HTMLVimePlaybackControlElement;
         "vime-player": HTMLVimePlayerElement;
+        "vime-playground": HTMLVimePlaygroundElement;
         "vime-poster": HTMLVimePosterElement;
         "vime-scrim": HTMLVimeScrimElement;
         "vime-scrubber-control": HTMLVimeScrubberControlElement;
@@ -2017,7 +2046,7 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "autoPiP"?: boolean;
-        "autoplay": boolean;
+        "autoplay"?: boolean;
         /**
           * The `dashjs` configuration.
          */
@@ -3015,6 +3044,28 @@ declare namespace LocalJSX {
          */
         "volume"?: number;
     }
+    interface VimePlayground {
+        /**
+          * The current poster to load.
+         */
+        "poster"?: string;
+        /**
+          * The current media provider.
+         */
+        "provider"?: Provider;
+        /**
+          * Whether to show the custom Vime UI or not.
+         */
+        "showCustomUI"?: boolean;
+        /**
+          * The current `src` to load into the provider.
+         */
+        "src"?: string;
+        /**
+          * The current custom UI theme, won't work if custom UI is turned off.
+         */
+        "theme"?: 'light' | 'dark';
+    }
     interface VimePoster {
         "currentPoster"?: PlayerProps['currentPoster'];
         /**
@@ -3381,6 +3432,7 @@ declare namespace LocalJSX {
         "vime-pip-control": VimePipControl;
         "vime-playback-control": VimePlaybackControl;
         "vime-player": VimePlayer;
+        "vime-playground": VimePlayground;
         "vime-poster": VimePoster;
         "vime-scrim": VimeScrim;
         "vime-scrubber-control": VimeScrubberControl;
@@ -3436,6 +3488,7 @@ declare module "@stencil/core" {
             "vime-pip-control": LocalJSX.VimePipControl & JSXBase.HTMLAttributes<HTMLVimePipControlElement>;
             "vime-playback-control": LocalJSX.VimePlaybackControl & JSXBase.HTMLAttributes<HTMLVimePlaybackControlElement>;
             "vime-player": LocalJSX.VimePlayer & JSXBase.HTMLAttributes<HTMLVimePlayerElement>;
+            "vime-playground": LocalJSX.VimePlayground & JSXBase.HTMLAttributes<HTMLVimePlaygroundElement>;
             "vime-poster": LocalJSX.VimePoster & JSXBase.HTMLAttributes<HTMLVimePosterElement>;
             "vime-scrim": LocalJSX.VimeScrim & JSXBase.HTMLAttributes<HTMLVimeScrimElement>;
             "vime-scrubber-control": LocalJSX.VimeScrubberControl & JSXBase.HTMLAttributes<HTMLVimeScrubberControlElement>;
