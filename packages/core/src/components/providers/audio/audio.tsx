@@ -5,6 +5,7 @@ import { ViewType } from '../../core/player/ViewType';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
 import { isString } from '../../../utils/unit';
 import { audioRegex } from '../file/utils';
+import { withProviderConnect } from '../MediaProvider';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
@@ -40,6 +41,10 @@ export class Audio implements MediaFileProvider<HTMLMediaElement> {
    */
   @Prop() mediaTitle?: string;
 
+  constructor() {
+    if (!this.willAttach) withProviderConnect(this);
+  }
+
   /**
    * @internal
    */
@@ -54,6 +59,7 @@ export class Audio implements MediaFileProvider<HTMLMediaElement> {
     return (
       // @ts-ignore
       <vime-file
+        noConnect
         willAttach={this.willAttach}
         crossOrigin={this.crossOrigin}
         preload={this.preload}

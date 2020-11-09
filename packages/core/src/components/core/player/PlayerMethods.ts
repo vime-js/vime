@@ -1,16 +1,16 @@
-import { MediaProvider, MediaProviderAdapter } from '../../providers/MediaProvider';
+import { AdapterHost, MediaProviderAdapter } from '../../providers/MediaProvider';
 import { Translation } from './lang/Translation';
 
 export interface PlayerMethods {
   /**
-   * Returns the current media provider
+   * Returns the current media provider.
    */
-  getProvider<InternalPlayerType>(): Promise<MediaProvider<InternalPlayerType>>
+  getProvider<InternalPlayerType>(): Promise<AdapterHost<InternalPlayerType> | undefined>
 
   /**
    * Returns the current media provider's adapter. Shorthand for `getProvider().getAdapter()`.
    */
-  getAdapter<InternalPlayerType>(): Promise<MediaProviderAdapter<InternalPlayerType>>
+  getAdapter<InternalPlayerType>(): Promise<MediaProviderAdapter<InternalPlayerType> | undefined>
 
   /**
    * Begins/resumes playback of the media. If this method is called programmatically before the user

@@ -10,6 +10,7 @@ import { canPlayHLSNatively } from '../../../utils/support';
 import { hlsRegex, hlsTypeRegex } from '../file/utils';
 import { MediaType } from '../../core/player/MediaType';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
+import { withProviderConnect } from '../MediaProvider';
 
 /**
  * @slot - Pass `<source>` and  `<track>` elements to the underlying HTML5 media player.
@@ -83,6 +84,10 @@ export class HLS implements MediaFileProvider {
    * @internal
    */
   @Event() vLoadStart!: EventEmitter<void>;
+
+  constructor() {
+    withProviderConnect(this);
+  }
 
   connectedCallback() {
     this.dispatch = createProviderDispatcher(this);

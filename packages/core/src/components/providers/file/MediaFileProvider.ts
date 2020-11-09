@@ -1,9 +1,11 @@
-import { MediaProviderAdapter } from '../MediaProvider';
+import { AdapterHost, MediaProviderAdapter } from '../MediaProvider';
 
 export type MediaCrossOriginOption = '' | 'anonymous' | 'use-credentials';
 export type MediaPreloadOption = '' | 'none' | 'metadata' | 'auto';
 
-export interface MediaFileProvider<InternalPlayerType = any> {
+export interface MediaFileProvider<
+  InternalPlayerType = any,
+> extends AdapterHost<InternalPlayerType> {
   /**
    * Whether to use CORS to fetch the related image. See
    * [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more

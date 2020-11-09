@@ -11,4 +11,5 @@ export { MediaType } from './components/core/player/MediaType';
 export { loadSprite } from './utils/network';
 export { Translation } from './components/core/player/lang/Translation';
 export { Components, JSX } from './components.d';
-export * from './components/providers/MediaProvider';
+export { Provider } from './components/providers/Provider';
+export { AdapterHost, MediaProviderAdapter } from './components/providers/MediaProvider';

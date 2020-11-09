@@ -3,12 +3,14 @@ import { Translation } from './lang/Translation';
 import { MediaType } from './MediaType';
 import { Logger } from './PlayerLogger';
 import { ViewType } from './ViewType';
+import { Provider } from '../../providers/Provider';
 
 export const initialState: { [P in keyof PlayerProps]: PlayerProps[P] } = {
   theme: undefined,
   paused: true,
   playing: false,
   duration: -1,
+  currentProvider: undefined,
   mediaTitle: undefined,
   currentSrc: undefined,
   currentPoster: undefined,
@@ -462,6 +464,12 @@ export interface PlayerProps {
    * currently only supported by custom settings.
    */
   isSettingsActive: boolean
+
+  /**
+   * `@readonly` The current provider name whose responsible for loading and playing media.
+   * Defaults to `undefined` when no provider has been loaded.
+   */
+  currentProvider?: Provider;
 
   /**
    * `@readonly` The selected caption/subtitle text track to display. Defaults to `undefined` if

@@ -1,10 +1,11 @@
 import {
-  Component, Element, Event, EventEmitter, h, Host,
-  Listen, Method, Prop, Watch, writeTask,
+  Component, Element, Event, EventEmitter, getElement, h, Host,
+  Listen, Method, Prop, State, Watch, writeTask,
 } from '@stencil/core';
 import { Universe } from 'stencil-wormhole';
 import { MediaType } from './MediaType';
-import { MediaProvider, MediaProviderAdapter } from '../../providers/MediaProvider';
+import { AdapterHost, MediaProviderAdapter } from '../../providers/MediaProvider';
+import { Provider } from '../../providers/Provider';
 import { isUndefined, isString, isNull } from '../../../utils/unit';
 import { MediaPlayer } from './MediaPlayer';
 import {
@@ -41,7 +42,7 @@ const immediateAdapterCall = new Set<PlayerProp>(['currentTime', 'paused']);
   styleUrl: 'player.scss',
 })
 export class Player implements MediaPlayer {
-  private provider?: MediaProvider;
+  private provider?: AdapterHost;
 
   private adapter?: MediaProviderAdapter;
 
@@ -64,6 +65,8 @@ export class Player implements MediaPlayer {
   private adapterCalls: ((adapter: MediaProviderAdapter) => Promise<void>)[] = [];
 
   @Element() el!: HTMLVimePlayerElement;
+
+  @State() shouldCheckForProviderChange = false;
 
   /**
    * ------------------------------------------------------
@@ -121,6 +124,11 @@ export class Player implements MediaPlayer {
    * @inheritDoc
    */
   @Prop({ mutable: true, attribute: null }) mediaTitle?: string;
+
+  /**
+   * @inheritDoc
+   */
+  @Prop({ mutable: true, attribute: null }) currentProvider?: Provider;
 
   /**
    * @inheritDoc
@@ -197,7 +205,7 @@ export class Player implements MediaPlayer {
 
     const adapter = await this.getAdapter();
 
-    if (!(await adapter.canSetPlaybackRate?.())) {
+    if (!(await adapter?.canSetPlaybackRate?.())) {
       this.logger.log('provider cannot change `playbackRate`.');
       this.lastRateCheck = prevRate;
       this.playbackRate = prevRate;
@@ -236,7 +244,7 @@ export class Player implements MediaPlayer {
 
     const adapter = await this.getAdapter();
 
-    if (!(await adapter.canSetPlaybackQuality?.())) {
+    if (!(await adapter?.canSetPlaybackQuality?.())) {
       this.logger.log('provider cannot change `playbackQuality`.');
       this.lastQualityCheck = prevQuality;
       this.playbackQuality = prevQuality;
@@ -594,6 +602,11 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
+  @Event() vCurrentProviderChange!: EventEmitter<PlayerProps['currentProvider']>;
+
+  /**
+   * @inheritDoc
+   */
   @Event() vCurrentSrcChange!: EventEmitter<PlayerProps['currentSrc']>;
 
   /**
@@ -701,36 +714,29 @@ export class Player implements MediaPlayer {
    * @inheritDoc
    */
   @Method()
-  async getProvider<InternalPlayerType = any>(): Promise<MediaProvider<InternalPlayerType>> {
-    if (!this.provider) {
-      const { children } = this.el;
+  async getProvider<InternalPlayerType = any>(): Promise<
+  AdapterHost<InternalPlayerType> | undefined
+  > {
+    return this.provider;
+  }
 
-      let i = 0;
-      while (!this.provider && i < children.length) {
-        const child = children[i] as any;
-        if (!isUndefined(child?.getAdapter)) this.provider = child;
-        i += 1;
-      }
-
-      if (!this.provider) {
-        throw Error('No media provider was found.');
-      }
-    }
-
-    return this.provider!;
+  /**
+   * @internal testing only.
+   */
+  @Method()
+  async setProvider(provider: AdapterHost) {
+    this.provider = provider;
+    this.adapter = await this.provider.getAdapter();
   }
 
   /**
    * @internal
    */
   @Method()
-  async getAdapter<InternalPlayerType = any>(): Promise<MediaProviderAdapter<InternalPlayerType>> {
-    if (!this.adapter) {
-      const provider = await this.getProvider();
-      this.adapter = await provider.getAdapter();
-    }
-
-    return this.adapter!;
+  async getAdapter<InternalPlayerType = any>(): Promise<
+  MediaProviderAdapter<InternalPlayerType> | undefined
+  > {
+    return this.adapter;
   }
 
   /**
@@ -739,7 +745,7 @@ export class Player implements MediaPlayer {
   @Method()
   async play() {
     const adapter = await this.getAdapter();
-    return adapter.play();
+    return adapter?.play();
   }
 
   /**
@@ -748,7 +754,7 @@ export class Player implements MediaPlayer {
   @Method()
   async pause() {
     const adapter = await this.getAdapter();
-    return adapter.pause();
+    return adapter?.pause();
   }
 
   /**
@@ -757,7 +763,7 @@ export class Player implements MediaPlayer {
   @Method()
   async canPlay(type: string) {
     const adapter = await this.getAdapter();
-    return adapter.canPlay(type);
+    return adapter?.canPlay(type) ?? false;
   }
 
   /**
@@ -782,7 +788,7 @@ export class Player implements MediaPlayer {
   @Method()
   async canSetPlaybackRate() {
     const adapter = await this.getAdapter();
-    return adapter.canSetPlaybackRate?.() ?? false;
+    return adapter?.canSetPlaybackRate?.() ?? false;
   }
 
   /**
@@ -791,7 +797,7 @@ export class Player implements MediaPlayer {
   @Method()
   async canSetPlaybackQuality() {
     const adapter = await this.getAdapter();
-    return adapter.canSetPlaybackQuality?.() ?? false;
+    return adapter?.canSetPlaybackQuality?.() ?? false;
   }
 
   /**
@@ -800,7 +806,7 @@ export class Player implements MediaPlayer {
   @Method()
   async canSetFullscreen() {
     const adapter = await this.getAdapter();
-    return this.fullscreen!.isSupported || (adapter.canSetFullscreen?.() ?? false);
+    return this.fullscreen!.isSupported || (adapter?.canSetFullscreen?.() ?? false);
   }
 
   /**
@@ -811,7 +817,7 @@ export class Player implements MediaPlayer {
     if (!this.isVideoView) throw Error('Cannot enter fullscreen on an audio player view.');
     if (this.fullscreen!.isSupported) return this.fullscreen!.enterFullscreen(options);
     const adapter = await this.getAdapter();
-    if (await adapter.canSetFullscreen?.()) return adapter.enterFullscreen?.(options);
+    if (await adapter?.canSetFullscreen?.()) return adapter?.enterFullscreen?.(options);
     throw Error('Fullscreen API is not available.');
   }
 
@@ -822,7 +828,7 @@ export class Player implements MediaPlayer {
   async exitFullscreen() {
     if (this.fullscreen!.isSupported) return this.fullscreen!.exitFullscreen();
     const adapter = await this.getAdapter();
-    return adapter.exitFullscreen?.();
+    return adapter?.exitFullscreen?.();
   }
 
   /**
@@ -831,7 +837,7 @@ export class Player implements MediaPlayer {
   @Method()
   async canSetPiP() {
     const adapter = await this.getAdapter();
-    return adapter.canSetPiP?.() ?? false;
+    return adapter?.canSetPiP?.() ?? false;
   }
 
   /**
@@ -842,7 +848,7 @@ export class Player implements MediaPlayer {
     if (!this.isVideoView) throw Error('Cannot enter PiP mode on an audio player view.');
     if (!(await this.canSetPiP())) throw Error('Picture-in-Picture API is not available.');
     const adapter = await this.getAdapter();
-    return adapter.enterPiP?.();
+    return adapter?.enterPiP?.();
   }
 
   /**
@@ -851,7 +857,7 @@ export class Player implements MediaPlayer {
   @Method()
   async exitPiP() {
     const adapter = await this.getAdapter();
-    return adapter.exitPiP?.();
+    return adapter?.exitPiP?.();
   }
 
   /**
@@ -870,11 +876,44 @@ export class Player implements MediaPlayer {
     this.translations = translations as Record<string, Translation>;
   }
 
+  @Listen('vMediaProviderConnect')
+  onMediaProviderConnect(event: CustomEvent<AdapterHost>) {
+    event.stopImmediatePropagation();
+
+    const newProvider = getElement(event.detail) as any;
+    if (this.provider === newProvider) return;
+
+    const newProviderName = (newProvider as any)
+      ?.nodeName
+      .toLowerCase()
+      .replace('vime-', '');
+
+    writeTask(async () => {
+      await this.onMediaProviderDisconnect();
+      this.provider = newProvider;
+      this.adapter = await this.provider?.getAdapter();
+      this.currentProvider = Object.values(Provider)
+        .find((provider) => newProviderName === provider);
+    });
+  }
+
+  @Listen('vMediaProviderDisconnect')
+  onMediaProviderDisconnect(event?: Event) {
+    event?.stopImmediatePropagation();
+
+    writeTask(async () => {
+      this.ready = false;
+      this.provider = undefined;
+      this.adapter = undefined;
+      await this.onMediaChange();
+    });
+  }
+
   private hasMediaChanged = false;
 
   @Listen('vLoadStart')
-  async onMediaChange(event: Event) {
-    event.stopPropagation();
+  async onMediaChange(event?: Event) {
+    event?.stopPropagation();
 
     // Don't reset first time otherwise props intialized by the user will be reset.
     if (!this.hasMediaChanged) {
@@ -883,6 +922,7 @@ export class Player implements MediaPlayer {
     }
 
     this.adapterCalls = [];
+    this.providerCache.clear();
 
     writeTask(() => {
       (Object.keys(initialState) as PlayerProp[])
@@ -905,12 +945,12 @@ export class Player implements MediaPlayer {
       const adapter = await this.getAdapter();
 
       if (prop === 'paused' && !value) {
-        adapter.play();
+        adapter?.play();
       }
 
       if (prop === 'currentTime') {
-        adapter.play();
-        adapter.setCurrentTime(value as number);
+        adapter?.play();
+        adapter?.setCurrentTime(value as number);
       }
     }
 
@@ -963,16 +1003,15 @@ export class Player implements MediaPlayer {
     this.attached = true;
   }
 
-  async componentWillLoad() {
+  componentWillLoad() {
     Universe.create(this, this.getPlayerState());
-    return this.getProvider() as Promise<any>;
   }
 
   componentWillRender() {
     return this.playbackReady ? this.flushAdapterCalls() : undefined;
   }
 
-  componentDidRender() {
+  async componentDidRender() {
     const props = Array.from(this.cache.keys());
     for (let i = 0; i < props.length; i += 1) {
       const prop = props[i];
@@ -993,6 +1032,7 @@ export class Player implements MediaPlayer {
     this.autopauseMgr.destroy();
     this.disposal.empty();
     this.attached = false;
+    this.shouldCheckForProviderChange = true;
   }
 
   private async rotateDevice() {
@@ -1083,9 +1123,9 @@ export class Player implements MediaPlayer {
     if (!this.isAdapterCallRequired(prop, this[prop])) return;
 
     const value = this[prop];
-    const safeCall = async (adapter: MediaProviderAdapter) => {
+    const safeCall = async (adapter?: MediaProviderAdapter) => {
       // @ts-ignore
-      try { await adapter[method]?.(value); } catch (e) { this.errors = [e]; }
+      try { await adapter?.[method]?.(value); } catch (e) { this.errors = [e]; }
     };
 
     if (this.playbackReady) {
@@ -1098,6 +1138,7 @@ export class Player implements MediaPlayer {
 
   private async flushAdapterCalls() {
     const adapter = await this.getAdapter();
+    if (isUndefined(adapter)) return;
     for (let i = 0; i < this.adapterCalls.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       await this.adapterCalls[i](adapter);

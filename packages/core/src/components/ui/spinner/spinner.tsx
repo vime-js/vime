@@ -3,20 +3,18 @@ import {
 } from '@stencil/core';
 import { PlayerProps } from '../../core/player/PlayerProps';
 import { withPlayerContext } from '../../core/player/PlayerContext';
-import { findRootPlayer } from '../../core/player/utils';
+import { Provider } from '../../providers/Provider';
 
 @Component({
   tag: 'vime-spinner',
   styleUrl: 'spinner.scss',
 })
 export class Spinner {
-  private blacklist = ['VIME-YOUTUBE'];
+  private blacklist = [Provider.YouTube];
 
   @State() isHidden = true;
 
   @State() isActive = false;
-
-  @State() currentProvider?: string;
 
   /**
    * @internal
@@ -26,14 +24,7 @@ export class Spinner {
   /**
    * @internal
    */
-  @Prop() ready: PlayerProps['ready'] = false;
-
-  @Watch('ready')
-  async onReadyChange() {
-    const player = findRootPlayer(this);
-    const provider = await player.getProvider();
-    this.currentProvider = provider.nodeName;
-  }
+  @Prop() currentProvider?: PlayerProps['currentProvider'];
 
   /**
    * Emitted when the spinner will be shown.
@@ -66,7 +57,7 @@ export class Spinner {
     withPlayerContext(this, [
       'isVideoView',
       'buffering',
-      'ready',
+      'currentProvider',
     ]);
   }
 

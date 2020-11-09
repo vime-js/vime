@@ -9,13 +9,13 @@ A simple playground for testing and playing with Vime and its various providers.
 
 ## Properties
 
-| Property       | Attribute         | Description                                                         | Type                                                                                                                        | Default                        |
-| -------------- | ----------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| `poster`       | `poster`          | `@readonly` The current poster to load.                             | `string`                                                                                                                    | `${BASE_MEDIA_URL}/poster.png` |
-| `provider`     | `provider`        | The current media provider.                                         | `Provider.Audio ∣ Provider.Dailymotion ∣ Provider.Dash ∣ Provider.HLS ∣ Provider.Video ∣ Provider.Vimeo ∣ Provider.YouTube` | `Provider.Audio`               |
-| `showCustomUI` | `show-custom-u-i` | Whether to show the custom Vime UI or not.                          | `boolean`                                                                                                                   | `false`                        |
-| `src`          | `src`             | The current `src` to load into the provider.                        | `string ∣ undefined`                                                                                                        | `undefined`                    |
-| `theme`        | `theme`           | The current custom UI theme, won't work if custom UI is turned off. | `"dark" ∣ "light"`                                                                                                          | `'dark'`                       |
+| Property       | Attribute         | Description                                                         | Type                                                                                                                                            | Default                        |
+| -------------- | ----------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `poster`       | `poster`          | The current poster to load.                                         | `string`                                                                                                                                        | `${BASE_MEDIA_URL}/poster.png` |
+| `provider`     | `provider`        | The current media provider.                                         | `Provider.Audio ∣ Provider.Dailymotion ∣ Provider.Dash ∣ Provider.FakeTube ∣ Provider.HLS ∣ Provider.Video ∣ Provider.Vimeo ∣ Provider.YouTube` | `Provider.Audio`               |
+| `showCustomUI` | `show-custom-u-i` | Whether to show the custom Vime UI or not.                          | `boolean`                                                                                                                                       | `false`                        |
+| `src`          | `src`             | The current `src` to load into the provider.                        | `string ∣ undefined`                                                                                                                            | `undefined`                    |
+| `theme`        | `theme`           | The current custom UI theme, won't work if custom UI is turned off. | `"dark" ∣ "light"`                                                                                                                              | `'dark'`                       |
 
 ## Dependencies
 

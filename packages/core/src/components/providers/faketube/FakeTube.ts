@@ -1,10 +1,13 @@
 import {
   Prop, Method, Component, Event, EventEmitter,
 } from '@stencil/core';
-import { MediaProvider, MockMediaProviderAdapter, withProviderContext } from '../MediaProvider';
+import {
+  MediaProvider, MockMediaProviderAdapter, withProviderContext,
+} from '../MediaProvider';
 import { PlayerProp } from '../../core/player/PlayerProps';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
+import { findRootPlayer } from '../../core/player/utils';
 
 @Component({
   tag: 'vime-faketube',
@@ -59,6 +62,11 @@ export class FakeTube implements MediaProvider {
 
   connectedCallback() {
     this.dispatch = createProviderDispatcher(this);
+  }
+
+  componentWillLoad() {
+    const player = findRootPlayer(this);
+    player.setProvider(this);
   }
 
   /**

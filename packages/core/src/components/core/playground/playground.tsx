@@ -3,7 +3,7 @@
 import {
   h, Fragment, Host, Component, Prop,
 } from '@stencil/core';
-import { Provider } from '../../providers/MediaProvider';
+import { Provider } from '../../providers/Provider';
 
 const BASE_MEDIA_URL = 'https://media.vimejs.com';
 

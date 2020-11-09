@@ -1,7 +1,7 @@
 import {
   h, Component, Method, Prop, State, Watch, EventEmitter, Event,
 } from '@stencil/core';
-import { MediaProvider, withProviderContext } from '../MediaProvider';
+import { MediaProvider, withProviderConnect, withProviderContext } from '../MediaProvider';
 import { decodeJSON, loadImage } from '../../../utils/network';
 import { YouTubeCommand, YouTubeCommandArg } from './YouTubeCommand';
 import { YouTubeParams } from './YouTubeParams';
@@ -108,6 +108,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   @Event() vLoadStart!: EventEmitter<void>;
 
   constructor() {
+    withProviderConnect(this);
     withProviderContext(this);
   }
 

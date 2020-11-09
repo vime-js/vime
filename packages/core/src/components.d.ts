@@ -10,8 +10,9 @@ import { TooltipDirection, TooltipPosition } from "./components/ui/tooltip/types
 import { PlayerProp, PlayerProps } from "./components/core/player/PlayerProps";
 import { Logger } from "./components/core/player/PlayerLogger";
 import { Params } from "./utils/network";
-import { MediaProvider, MediaProviderAdapter, MockMediaProviderAdapter, Provider } from "./components/providers/MediaProvider";
+import { AdapterHost, MediaProviderAdapter, MockMediaProviderAdapter } from "./components/providers/MediaProvider";
 import { ViewType } from "./components/core/player/ViewType";
+import { Provider } from "./components/providers/Provider";
 import { MediaType } from "./components/core/player/MediaType";
 import { Translation } from "./components/core/player/lang/Translation";
 import { SettingsController } from "./components/ui/settings/settings/SettingsController";
@@ -474,6 +475,7 @@ export namespace Components {
          */
         "mediaTitle"?: string;
         "muted": boolean;
+        "noConnect": boolean;
         /**
           * The playback rates that are available for this media.
          */
@@ -860,6 +862,11 @@ export namespace Components {
          */
         "currentPoster"?: string;
         /**
+          * `@readonly` The current provider name whose responsible for loading and playing media. Defaults to `undefined` when no provider has been loaded.
+          * @inheritDoc
+         */
+        "currentProvider"?: Provider;
+        /**
           * `@readonly` The absolute URL of the media resource that has been chosen. Defaults to `undefined` if no media has been loaded.
           * @inheritDoc
          */
@@ -912,12 +919,12 @@ export namespace Components {
         /**
           * Returns the current media provider's adapter. Shorthand for `getProvider().getAdapter()`.
          */
-        "getAdapter": <InternalPlayerType = any>() => Promise<MediaProviderAdapter<InternalPlayerType>>;
+        "getAdapter": <InternalPlayerType = any>() => Promise<MediaProviderAdapter<InternalPlayerType> | undefined>;
         /**
-          * Returns the current media provider
+          * Returns the current media provider.
           * @inheritDoc
          */
-        "getProvider": <InternalPlayerType = any>() => Promise<MediaProvider<InternalPlayerType>>;
+        "getProvider": <InternalPlayerType = any>() => Promise<AdapterHost<InternalPlayerType> | undefined>;
         /**
           * `@readonly` A dictionary of translations for the current language.
           * @inheritDoc
@@ -1018,7 +1025,7 @@ export namespace Components {
           * Pauses playback of the media.
           * @inheritDoc
          */
-        "pause": () => Promise<void>;
+        "pause": () => Promise<void | undefined>;
         /**
           * Whether playback should be paused. Defaults to `true` if no media has loaded or playback has not started. Setting this to `true` will begin/resume playback.
           * @inheritDoc
@@ -1028,7 +1035,7 @@ export namespace Components {
           * Begins/resumes playback of the media. If this method is called programmatically before the user has interacted with the player, the promise may be rejected subject to the browser's autoplay policies.
           * @inheritDoc
          */
-        "play": () => Promise<void>;
+        "play": () => Promise<void | undefined>;
         /**
           * `@readonly` Whether media playback has reached the end. In other words it'll be true if `currentTime === duration`.
           * @inheritDoc
@@ -1084,6 +1091,7 @@ export namespace Components {
           * @inheritDoc
          */
         "seeking": boolean;
+        "setProvider": (provider: AdapterHost) => Promise<void>;
         /**
           * `@readonly` The text tracks (WebVTT) associated with the current media.
           * @inheritDoc
@@ -1252,8 +1260,8 @@ export namespace Components {
     }
     interface VimeSpinner {
         "buffering": PlayerProps['buffering'];
+        "currentProvider"?: PlayerProps['currentProvider'];
         "isVideoView": PlayerProps['isVideoView'];
-        "ready": PlayerProps['ready'];
     }
     interface VimeSubmenu {
         /**
@@ -2272,6 +2280,7 @@ declare namespace LocalJSX {
          */
         "mediaTitle"?: string;
         "muted"?: boolean;
+        "noConnect"?: boolean;
         "onVLoadStart"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the underlying media element changes.
@@ -2643,6 +2652,11 @@ declare namespace LocalJSX {
          */
         "currentPoster"?: string;
         /**
+          * `@readonly` The current provider name whose responsible for loading and playing media. Defaults to `undefined` when no provider has been loaded.
+          * @inheritDoc
+         */
+        "currentProvider"?: Provider;
+        /**
           * `@readonly` The absolute URL of the media resource that has been chosen. Defaults to `undefined` if no media has been loaded.
           * @inheritDoc
          */
@@ -2793,6 +2807,11 @@ declare namespace LocalJSX {
           * @inheritDoc
          */
         "onVCurrentPosterChange"?: (event: CustomEvent<PlayerProps['currentPoster']>) => void;
+        /**
+          * Emitted when the `currentProvider` prop changes value.
+          * @inheritDoc
+         */
+        "onVCurrentProviderChange"?: (event: CustomEvent<PlayerProps['currentProvider']>) => void;
         /**
           * Emitted when the `currentSrc` prop changes value.
           * @inheritDoc
@@ -3193,6 +3212,7 @@ declare namespace LocalJSX {
     }
     interface VimeSpinner {
         "buffering"?: PlayerProps['buffering'];
+        "currentProvider"?: PlayerProps['currentProvider'];
         "isVideoView"?: PlayerProps['isVideoView'];
         /**
           * Emitted when the spinner will be hidden.
@@ -3202,7 +3222,6 @@ declare namespace LocalJSX {
           * Emitted when the spinner will be shown.
          */
         "onVWillShow"?: (event: CustomEvent<void>) => void;
-        "ready"?: PlayerProps['ready'];
     }
     interface VimeSubmenu {
         /**

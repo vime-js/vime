@@ -8,6 +8,7 @@ import { loadSDK } from '../../../utils/network';
 import { MediaType } from '../../core/player/MediaType';
 import { withPlayerContext } from '../../core/player/PlayerContext';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
+import { withProviderConnect } from '../MediaProvider';
 
 @Component({
   tag: 'vime-dash',
@@ -97,6 +98,7 @@ export class Dash implements MediaFileProvider<any> {
   @Event() vLoadStart!: EventEmitter<void>;
 
   constructor() {
+    withProviderConnect(this);
     withPlayerContext(this, ['autoplay']);
   }
 

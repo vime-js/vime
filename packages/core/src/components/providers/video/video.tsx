@@ -3,6 +3,7 @@ import {
 } from '@stencil/core';
 import { ViewType } from '../../core/player/ViewType';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
+import { withProviderConnect } from '../MediaProvider';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
@@ -58,6 +59,10 @@ export class Video implements MediaFileProvider<HTMLMediaElement> {
    */
   @Prop() mediaTitle?: string;
 
+  constructor() {
+    if (!this.willAttach) withProviderConnect(this);
+  }
+
   /**
    * @internal
    */
@@ -70,6 +75,7 @@ export class Video implements MediaFileProvider<HTMLMediaElement> {
     return (
       // @ts-ignore
       <vime-file
+        noConnect
         willAttach={this.willAttach}
         crossOrigin={this.crossOrigin}
         poster={this.poster}

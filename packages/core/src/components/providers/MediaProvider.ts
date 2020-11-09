@@ -1,16 +1,7 @@
-import { ComponentInterface, EventEmitter } from '@stencil/core';
+/* eslint-disable func-names, no-param-reassign */
+import { ComponentInterface, EventEmitter, getElement } from '@stencil/core';
 import { PlayerProps } from '../core/player/PlayerProps';
 import { withPlayerContext } from '../core/player/PlayerContext';
-
-export enum Provider {
-  Audio = 'audio',
-  Video = 'video',
-  HLS = 'hls',
-  Dash = 'dash',
-  YouTube = 'youtube',
-  Vimeo = 'vimeo',
-  Dailymotion = 'dailymotion',
-}
 
 export interface MediaProviderAdapter<InternalPlayerType = any> {
   getInternalPlayer(): Promise<InternalPlayerType>
@@ -36,7 +27,11 @@ export type MockMediaProviderAdapter = {
   [P in keyof MediaProviderAdapter]: any
 };
 
-export interface MediaProvider<InternalPlayerType = any> extends ComponentInterface {
+export interface AdapterHost<InternalPlayerType = any> extends ComponentInterface {
+  getAdapter(): Promise<MediaProviderAdapter<InternalPlayerType>>
+}
+
+export interface MediaProvider<InternalPlayerType = any> extends AdapterHost<InternalPlayerType> {
   logger?: PlayerProps['logger']
   controls: PlayerProps['controls']
   language: PlayerProps['language']
@@ -45,16 +40,39 @@ export interface MediaProvider<InternalPlayerType = any> extends ComponentInterf
   playsinline: PlayerProps['playsinline']
   muted: PlayerProps['muted']
   vLoadStart: EventEmitter<void>
-  getAdapter(): Promise<MediaProviderAdapter<InternalPlayerType>>
 }
 
-export interface MediaProviderConstructor {
-  new(...args: any[]): MediaProvider
+export function withProviderConnect(host: AdapterHost) {
+  const el = getElement(host);
+
+  const buildConnectEvent = (name: string) => new CustomEvent(name, {
+    bubbles: true,
+    composed: true,
+    detail: host,
+  });
+
+  const connectEvent = buildConnectEvent('vMediaProviderConnect');
+  const disconnectEvent = buildConnectEvent('vMediaProviderDisconnect');
+  const { componentWillLoad, connectedCallback, disconnectedCallback } = host;
+
+  host.componentWillLoad = function () {
+    el.dispatchEvent(connectEvent);
+    if (componentWillLoad) return componentWillLoad.call(host);
+    return undefined;
+  };
+
+  host.connectedCallback = function () {
+    el.dispatchEvent(connectEvent);
+    if (connectedCallback) connectedCallback.call(host);
+  };
+
+  host.disconnectedCallback = function () {
+    el.dispatchEvent(disconnectEvent);
+    if (disconnectedCallback) disconnectedCallback.call(host);
+  };
 }
 
-export const withProviderContext = (
-  provider: MediaProvider,
-) => withPlayerContext(provider, [
+export const withProviderContext = (provider: MediaProvider) => withPlayerContext(provider, [
   'autoplay',
   'controls',
   'language',

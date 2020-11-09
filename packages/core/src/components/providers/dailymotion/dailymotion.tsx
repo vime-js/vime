@@ -1,7 +1,7 @@
 import {
   h, Prop, Method, Component, Event, EventEmitter, State, Watch,
 } from '@stencil/core';
-import { MediaProvider, withProviderContext } from '../MediaProvider';
+import { MediaProvider, withProviderConnect, withProviderContext } from '../MediaProvider';
 import { decodeQueryString } from '../../../utils/network';
 import { isString } from '../../../utils/unit';
 import { ViewType } from '../../core/player/ViewType';
@@ -139,6 +139,7 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
   @Event() vLoadStart!: EventEmitter<void>;
 
   constructor() {
+    withProviderConnect(this);
     withProviderContext(this);
   }
 

@@ -1,7 +1,9 @@
 import {
   h, Prop, Method, Event, EventEmitter,
 } from '@stencil/core';
-import { MediaProvider, withProviderContext, MediaProviderAdapter } from '../MediaProvider';
+import {
+  MediaProvider, withProviderContext, MediaProviderAdapter, withProviderConnect,
+} from '../MediaProvider';
 import { ViewType } from '../../core/player/ViewType';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
@@ -52,6 +54,7 @@ export class Name implements MediaProvider {
   @Event() vLoadStart!: EventEmitter<void>;
 
   constructor() {
+    withProviderConnect(this);
     withProviderContext(this);
   }
 

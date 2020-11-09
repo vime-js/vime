@@ -3,7 +3,7 @@
 import {
   h, Prop, Method, Component, Event, EventEmitter, Watch, Element,
 } from '@stencil/core';
-import { withProviderContext, MediaProvider } from '../MediaProvider';
+import { withProviderContext, MediaProvider, withProviderConnect } from '../MediaProvider';
 import { ViewType } from '../../core/player/ViewType';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from './MediaFileProvider';
 import {
@@ -158,6 +158,11 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   /**
    * @internal
    */
+  @Prop() noConnect = false;
+
+  /**
+   * @internal
+   */
   @Event() vLoadStart!: EventEmitter<void>;
 
   /**
@@ -171,6 +176,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   @Event() vSrcSetChange!: EventEmitter<void>;
 
   constructor() {
+    if (!this.noConnect) withProviderConnect(this);
     withProviderContext(this);
   }
 

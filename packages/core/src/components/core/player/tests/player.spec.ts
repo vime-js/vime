@@ -41,6 +41,7 @@ describe('props', () => {
       'mediaTitle',
       'textTracks',
       'currentSrc',
+      'currentProvider',
       'currentPoster',
       'currentCaption',
     ]);

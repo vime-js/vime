@@ -121,6 +121,11 @@ export interface PlayerEvents {
   vBufferedChange: EventEmitter<PlayerProps['buffered']>
 
   /**
+   * Emitted when the `currentProvider` prop changes value.
+   */
+  vCurrentProviderChange: EventEmitter<PlayerProps['currentProvider']>
+
+  /**
    * Emitted when the `currentSrc` prop changes value.
    */
   vCurrentSrcChange: EventEmitter<PlayerProps['currentSrc']>
