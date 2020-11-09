@@ -16,7 +16,7 @@ import { YouTubeMessage } from './YouTubeMessage';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
 
-const posterCache = new Map();
+const posterCache = new Map<string, string>();
 
 @Component({
   tag: 'vime-youtube',
@@ -41,7 +41,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
 
   private initialMuted!: boolean;
 
-  private fetchPoster?: Promise<string | undefined>;
+  private fetchPosterURL?: Promise<string | undefined>;
 
   @State() embedSrc = '';
 
@@ -61,7 +61,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   @Watch('videoId')
   onVideoIdChange() {
     this.embedSrc = `${this.getOrigin()}/embed/${this.videoId}`;
-    this.fetchPoster = this.findPosterURL();
+    this.fetchPosterURL = this.findPosterURL();
   }
 
   /**
@@ -239,7 +239,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
         this.internalState = { ...this.defaultInternalState };
         this.dispatch('currentSrc', this.embedSrc);
         this.dispatch('mediaType', MediaType.Video);
-        this.fetchPoster!.then((poster) => {
+        this.fetchPosterURL!.then((poster) => {
           this.dispatch('currentPoster', poster);
           this.dispatch('playbackReady', true);
         });

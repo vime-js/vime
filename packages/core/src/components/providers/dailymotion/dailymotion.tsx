@@ -14,6 +14,13 @@ import { MediaType } from '../../core/player/MediaType';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
 
+interface VideoInfo {
+  poster?: string
+  duration?: number
+}
+
+const videoInfoCache = new Map<string, VideoInfo>();
+
 @Component({
   tag: 'vime-dailymotion',
 })
@@ -26,9 +33,9 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
 
   private defaultInternalState: any = {};
 
-  private pendingVideoInfoFetch?: Promise<void>;
+  private fetchVideoInfo?: Promise<VideoInfo>;
 
-  private pendingMediaTitleFetch?: DeferredPromise<void>;
+  private pendingMediaTitleCall?: DeferredPromise<string>;
 
   private internalState = {
     currentTime: 0,
@@ -51,8 +58,8 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
   onVideoIdChange() {
     this.embedSrc = `${this.getOrigin()}/embed/video/${this.videoId}?api=1`;
     this.internalState = { ...this.defaultInternalState };
-    this.pendingVideoInfoFetch = this.fetchVideoInfo();
-    this.pendingMediaTitleFetch = deferredPromise();
+    this.fetchVideoInfo = this.getVideoInfo();
+    this.pendingMediaTitleCall = deferredPromise();
   }
 
   /**
@@ -152,11 +159,6 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
     this.defaultInternalState = { ...this.internalState };
   }
 
-  disconnectedCallback() {
-    this.pendingVideoInfoFetch = undefined;
-    this.pendingMediaTitleFetch = undefined;
-  }
-
   private getOrigin() {
     return 'https://www.dailymotion.com';
   }
@@ -189,14 +191,18 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
     };
   }
 
-  private fetchVideoInfo() {
+  private async getVideoInfo(): Promise<VideoInfo> {
+    if (videoInfoCache.has(this.videoId)) return videoInfoCache.get(this.videoId)!;
+
     const apiEndpoint = 'https://api.dailymotion.com';
     return window
       .fetch(`${apiEndpoint}/video/${this.videoId}?fields=duration,thumbnail_1080_url`)
       .then((response) => response.json())
       .then((data) => {
-        this.dispatch('currentPoster', data.thumbnail_1080_url);
-        this.dispatch('duration', parseFloat(data.duration));
+        const poster = data.thumbnail_1080_url;
+        const duration = parseFloat(data.duration);
+        videoInfoCache.set(this.videoId, { poster, duration });
+        return { poster, duration };
       });
   }
 
@@ -212,15 +218,17 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
         this.dispatch('currentSrc', this.embedSrc);
         this.dispatch('mediaType', MediaType.Video);
         Promise.all([
-          this.pendingVideoInfoFetch,
-          this.pendingMediaTitleFetch?.promise,
-        ]).then(() => {
+          this.fetchVideoInfo,
+          this.pendingMediaTitleCall?.promise,
+        ]).then(([info, mediaTitle]) => {
+          this.dispatch('duration', info?.duration ?? -1);
+          this.dispatch('currentPoster', info?.poster);
+          this.dispatch('mediaTitle', mediaTitle);
           this.dispatch('playbackReady', true);
         });
         break;
       case DailymotionEvent.VideoChange:
-        this.dispatch('mediaTitle', msg.title!);
-        this.pendingMediaTitleFetch?.resolve();
+        this.pendingMediaTitleCall?.resolve(msg.title!);
         break;
       case DailymotionEvent.Start:
         this.dispatch('paused', false);

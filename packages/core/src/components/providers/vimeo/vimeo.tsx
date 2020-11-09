@@ -14,6 +14,8 @@ import { DeferredPromise, deferredPromise } from '../../../utils/promise';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
 
+const posterCache = new Map<string, string>();
+
 @Component({
   tag: 'vime-vimeo',
   styleUrl: 'vimeo.scss',
@@ -25,11 +27,11 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
 
   private initialMuted!: boolean;
 
-  private pendingPosterFetch?: Promise<void>;
+  private fetchPosterURL?: Promise<string | undefined>;
 
-  private pendingDurationFetch?: DeferredPromise<void>;
+  private pendingDurationCall?: DeferredPromise<number>;
 
-  private pendingMediaTitleFetch?: DeferredPromise<void>;
+  private pendingMediaTitleCall?: DeferredPromise<string>;
 
   private defaultInternalState: any = {};
 
@@ -60,9 +62,9 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   onVideoIdChange() {
     this.embedSrc = `${this.getOrigin()}/video/${this.videoId}`;
     this.cancelTimeUpdates();
-    this.pendingDurationFetch = deferredPromise();
-    this.pendingMediaTitleFetch = deferredPromise();
-    this.pendingPosterFetch = this.findPosterURL();
+    this.pendingDurationCall = deferredPromise();
+    this.pendingMediaTitleCall = deferredPromise();
+    this.fetchPosterURL = this.findPosterURL();
   }
 
   /**
@@ -142,9 +144,6 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   disconnectedCallback() {
     this.cancelTimeUpdates();
     this.pendingPlayRequest = undefined;
-    this.pendingPosterFetch = undefined;
-    this.pendingDurationFetch = undefined;
-    this.pendingMediaTitleFetch = undefined;
   }
 
   private getOrigin() {
@@ -180,14 +179,17 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
     };
   }
 
-  private findPosterURL() {
+  private async findPosterURL() {
+    if (posterCache.has(this.videoId)) return posterCache.get(this.videoId);
+
     return window.fetch(`https://vimeo.com/api/oembed.json?url=${this.embedSrc}`)
       .then((response) => response.json())
       .then((data) => {
         const thumnailRegex = /vimeocdn\.com\/video\/([0-9]+)/;
         const thumbnailId = data.thumbnail_url.match(thumnailRegex)[1];
         const poster = `https://i.vimeocdn.com/video/${thumbnailId}_1920x1080.jpg`;
-        this.dispatch('currentPoster', poster);
+        posterCache.set(this.videoId, poster);
+        return poster;
       });
   }
 
@@ -250,12 +252,10 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         if (!this.internalState.seeking) this.onTimeChange(arg as number);
         break;
       case VimeoCommand.GetDuration:
-        this.dispatch('duration', arg as number);
-        this.pendingDurationFetch?.resolve();
+        this.pendingDurationCall?.resolve(arg as number);
         break;
       case VimeoCommand.GetVideoTitle:
-        this.dispatch('mediaTitle', arg as string);
-        this.pendingMediaTitleFetch?.resolve();
+        this.pendingMediaTitleCall?.resolve(arg as string);
         break;
     }
   }
@@ -278,11 +278,14 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         this.remoteControl(VimeoCommand.GetDuration);
         this.remoteControl(VimeoCommand.GetVideoTitle);
         Promise.all([
-          this.pendingPosterFetch,
-          this.pendingDurationFetch?.promise,
-          this.pendingMediaTitleFetch?.promise,
-        ]).then(() => {
+          this.fetchPosterURL,
+          this.pendingDurationCall?.promise,
+          this.pendingMediaTitleCall?.promise,
+        ]).then(([poster, duration, mediaTitle]) => {
           this.requestTimeUpdates();
+          this.dispatch('currentPoster', poster);
+          this.dispatch('duration', duration ?? -1);
+          this.dispatch('mediaTitle', mediaTitle);
           this.dispatch('playbackReady', true);
         });
         break;
