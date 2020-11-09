@@ -130,9 +130,9 @@ export class Playground {
           <input type="text" id="poster" value={this.poster} readonly />
           <div class="checkboxes">
             <label htmlFor="ui">Custom UI</label>
-            <input type="checkbox" id="ui" onChange={this.onCustomUiChange.bind(this)} />
+            <input type="checkbox" id="ui" checked={this.showCustomUI} onChange={this.onCustomUiChange.bind(this)} />
             <label htmlFor="theme">Light Theme</label>
-            <input type="checkbox" id="theme" onChange={this.onThemeChange.bind(this)} />
+            <input type="checkbox" id="theme" checked={this.theme === 'light'} onChange={this.onThemeChange.bind(this)} />
           </div>
         </div>
       </Host>
