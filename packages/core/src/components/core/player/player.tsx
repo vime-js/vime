@@ -31,6 +31,7 @@ import { getEventName } from './PlayerEvents';
 import { Translation } from './lang/Translation';
 
 let idCount = 0;
+const immediateAdapterCall = new Set<PlayerProp>(['currentTime', 'paused']);
 
 /**
  * @slot - Used to pass in providers, plugins and UI components.
@@ -898,6 +899,19 @@ export class Player implements MediaPlayer {
     if (!isWritableProp(prop)) {
       this.logger.warn(`${by.nodeName} tried to change \`${prop}\` but it is readonly.`);
       return;
+    }
+
+    if (!this.playbackStarted && immediateAdapterCall.has(prop)) {
+      const adapter = await this.getAdapter();
+
+      if (prop === 'paused' && !value) {
+        adapter.play();
+      }
+
+      if (prop === 'currentTime') {
+        adapter.play();
+        adapter.setCurrentTime(value as number);
+      }
     }
 
     writeTask(() => { (this as any)[prop] = value; });

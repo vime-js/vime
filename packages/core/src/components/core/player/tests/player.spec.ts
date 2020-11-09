@@ -530,6 +530,7 @@ describe('adapter calls', () => {
   it('should call adapter if change comes from user', async () => {
     await provider.dispatchChange('duration', 200);
     await provider.dispatchChange('playbackReady', true);
+    await provider.dispatchChange('playbackStarted', true);
     await page.waitForChanges();
     const changes = [];
     for (let i = 0; i < 20; i += 1) {
