@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.5.0](https://github.com/vime-js/vime/compare/v4.4.0...v4.5.0) (2020-11-10)
+
+
+### Features
+
+* allow custom posters for youtube, vimeo and dailymotion ([9a89dfa](https://github.com/vime-js/vime/commit/9a89dfaaf388ddd774be98ee0627970cce2d4cb4)), closes [#94](https://github.com/vime-js/vime/issues/94)
+* delay poster hiding until playback begins ([61aaa0a](https://github.com/vime-js/vime/commit/61aaa0aa4e7a64eb7b90d6f0e7fff8a9738acf0c))
+* smoother opening transition for the settings menu ([298987f](https://github.com/vime-js/vime/commit/298987fffe949ae2b2dca18312796004a717ba74))
+* **providers/vimeo:** automatically determine aspect ratio of vimeo videos ([a2d5446](https://github.com/vime-js/vime/commit/a2d5446c3dc5264746c9f243d1a76a4df681cb02)), closes [#99](https://github.com/vime-js/vime/issues/99)
+
+
+
+
+
 # [4.4.0](https://github.com/vime-js/vime/compare/v4.3.3...v4.4.0) (2020-11-09)
 
 
