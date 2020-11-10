@@ -25,9 +25,9 @@
   integrity sha512-DYG8uROgL9hkjVTCtCfRBb0d3FwpiFB0muRrNZQ2X1Qo5hxMuNNji76/ILddqeq0AfgkKCW82xrMPDpy+rNIhQ==
 
 "@vime/core@^4.0.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.4.0.tgz#0e5c999e1870cf202f76168acb2634da3bc16202"
-  integrity sha512-PP0xY/HMb92YGhRURqeIv0oQo/9oFmiu2Lo8znVCK5im+Au2BwxRVk5bOjHIFrRjRuLzTWFeJtQ0HXBUSNAQyA==
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.5.0.tgz#44a3e2b9e84fe12fe064351fd4de17b391e1b05b"
+  integrity sha512-ujdMDv4tyZdKrBRORaybDMpIME2XTlOnS/6ZH5s8S262cPlv1fEt56W6TWvHzefraDt3Lt6WTB0THO60oAjCZw==
   dependencies:
     "@stencil/core" "2.2.0"
     stencil-wormhole "^3.2.2"

@@ -52,9 +52,9 @@
   integrity sha512-Zw1vhUSQZYw+7u5dAwNbIA9TuTotpzY/OF7sJM9FqPOF3SPjKnxrjoTktXDZgUjybf4cWVBP7O8wvKdSaGHweg==
 
 "@vime/core@^4.2.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.4.0.tgz#0e5c999e1870cf202f76168acb2634da3bc16202"
-  integrity sha512-PP0xY/HMb92YGhRURqeIv0oQo/9oFmiu2Lo8znVCK5im+Au2BwxRVk5bOjHIFrRjRuLzTWFeJtQ0HXBUSNAQyA==
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.5.0.tgz#44a3e2b9e84fe12fe064351fd4de17b391e1b05b"
+  integrity sha512-ujdMDv4tyZdKrBRORaybDMpIME2XTlOnS/6ZH5s8S262cPlv1fEt56W6TWvHzefraDt3Lt6WTB0THO60oAjCZw==
   dependencies:
     "@stencil/core" "2.2.0"
     stencil-wormhole "^3.2.2"
@@ -889,9 +889,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.591:
-  version "1.3.591"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.591.tgz#a18892bf1acb93f7b6e4da402705d564bc235017"
-  integrity sha512-ol/0WzjL4NS4Kqy9VD6xXQON91xIihDT36sYCew/G/bnd1v0/4D+kahp26JauQhgFUjrdva3kRSo7URcUmQ+qw==
+  version "1.3.592"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.592.tgz#4621521b223bf6e5469373528321e185d3c24670"
+  integrity sha512-kGNowksvqQiPb1pUSQKpd8JFoGPLxYOwduNRCqCxGh/2Q1qE2JdmwouCW41lUzDxOb/2RIV4lR0tVIfboWlO9A==
 
 emoji-regex@^7.0.1:
   version "7.0.3"

@@ -42,20 +42,20 @@
   dependencies:
     "@types/node" "*"
 
-"@vime/core@^4.2.0", "@vime/core@^4.4.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.4.0.tgz#0e5c999e1870cf202f76168acb2634da3bc16202"
-  integrity sha512-PP0xY/HMb92YGhRURqeIv0oQo/9oFmiu2Lo8znVCK5im+Au2BwxRVk5bOjHIFrRjRuLzTWFeJtQ0HXBUSNAQyA==
+"@vime/core@^4.2.0", "@vime/core@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.5.0.tgz#44a3e2b9e84fe12fe064351fd4de17b391e1b05b"
+  integrity sha512-ujdMDv4tyZdKrBRORaybDMpIME2XTlOnS/6ZH5s8S262cPlv1fEt56W6TWvHzefraDt3Lt6WTB0THO60oAjCZw==
   dependencies:
     "@stencil/core" "2.2.0"
     stencil-wormhole "^3.2.2"
 
 "@vime/svelte@^4.2.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@vime/svelte/-/svelte-4.4.0.tgz#c2efa1293bfb02c9791bb47f709fa6a1ac5fe23a"
-  integrity sha512-dLoghRHr6p8eJ1OU3J+MLG79lS6rT8KJ9RGlesw2ftFwBg4LybUOnA9scfdopUT/QUl5OQjWxvaFucIiPxPO3Q==
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@vime/svelte/-/svelte-4.5.0.tgz#611f78769a36161b0ad7c4bd6c57a08d2194be1c"
+  integrity sha512-QXuo8bRcDHf0w7DYNkRip0Z2I8r9doQTRF9rj5Ffnsogtw9NQ21sHp4OM6R8/hd1bDFkTiCUZ3dv0aAyc4VUcg==
   dependencies:
-    "@vime/core" "^4.4.0"
+    "@vime/core" "^4.5.0"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"

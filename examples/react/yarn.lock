@@ -1816,21 +1816,21 @@
     "@typescript-eslint/types" "4.7.0"
     eslint-visitor-keys "^2.0.0"
 
-"@vime/core@^4.2.0", "@vime/core@^4.4.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.4.0.tgz#0e5c999e1870cf202f76168acb2634da3bc16202"
-  integrity sha512-PP0xY/HMb92YGhRURqeIv0oQo/9oFmiu2Lo8znVCK5im+Au2BwxRVk5bOjHIFrRjRuLzTWFeJtQ0HXBUSNAQyA==
+"@vime/core@^4.2.0", "@vime/core@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.5.0.tgz#44a3e2b9e84fe12fe064351fd4de17b391e1b05b"
+  integrity sha512-ujdMDv4tyZdKrBRORaybDMpIME2XTlOnS/6ZH5s8S262cPlv1fEt56W6TWvHzefraDt3Lt6WTB0THO60oAjCZw==
   dependencies:
     "@stencil/core" "2.2.0"
     stencil-wormhole "^3.2.2"
 
 "@vime/react@^4.2.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@vime/react/-/react-4.4.0.tgz#2d049d08a54a492f4067ec027ee09e720ecc0b6e"
-  integrity sha512-HPClpM6wBOCUk0KtcjygShrqXrwhLEbnFz71qmm+OQvDfVRULbh2WfwRYTBIeUC1n1zp8CMM8aNwQeJL6H5l3w==
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@vime/react/-/react-4.5.0.tgz#9c0f7578f76da57539d29041d510b322cfdc6633"
+  integrity sha512-hCwEbuaUihOIDsWbrK7Lfw9jpT/Ab8uO0ySGvZtDrjmTDL8mcjq/BsFGQrYkI9rayaQ2k+UKCzba6ZYOfuvIeQ==
   dependencies:
     "@seznam/compose-react-refs" "^1.0.4"
-    "@vime/core" "^4.4.0"
+    "@vime/core" "^4.5.0"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -4066,9 +4066,9 @@ ejs@^2.6.1:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.564, electron-to-chromium@^1.3.591:
-  version "1.3.591"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.591.tgz#a18892bf1acb93f7b6e4da402705d564bc235017"
-  integrity sha512-ol/0WzjL4NS4Kqy9VD6xXQON91xIihDT36sYCew/G/bnd1v0/4D+kahp26JauQhgFUjrdva3kRSo7URcUmQ+qw==
+  version "1.3.592"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.592.tgz#4621521b223bf6e5469373528321e185d3c24670"
+  integrity sha512-kGNowksvqQiPb1pUSQKpd8JFoGPLxYOwduNRCqCxGh/2Q1qE2JdmwouCW41lUzDxOb/2RIV4lR0tVIfboWlO9A==
 
 elliptic@^6.5.3:
   version "6.5.3"
