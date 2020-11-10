@@ -217,6 +217,8 @@ vime-player {
   --vm-settings-scroll-width: 10px;
   --vm-settings-scroll-thumb-color: var(--vm-color-white-200);
   --vm-settings-scroll-track-color: var(--vm-menu-bg);
+
+  --vm-settings-transition: transform .20s cubic-bezier(0,0,.4,1) .16s, opacity .20s cubic-bezier(0,0,.4,1) .16s;
 }
 
 vime-player vime-scrubber-control {

@@ -200,6 +200,7 @@ Type: `Promise<void>`
 | `--vm-settings-scroll-track-color` | The color of the settings scrollbar track.      |
 | `--vm-settings-scroll-width`       | The width of the settings scrollbar.            |
 | `--vm-settings-shadow`             | The shadow cast around the settings menu frame. |
+| `--vm-settings-transition`         | The CSS transitions for the settings menu.      |
 | `--vm-settings-width`              | The width of the settings menu.                 |
 
 ## Dependencies

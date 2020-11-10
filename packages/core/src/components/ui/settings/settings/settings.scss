@@ -7,6 +7,7 @@
   * @prop --vm-settings-scroll-width: The width of the settings scrollbar.
   * @prop --vm-settings-scroll-thumb-color: The color of the settings scrollbar thumb.
   * @prop --vm-settings-scroll-track-color: The color of the settings scrollbar track.
+  * @prop --vm-settings-transition: The CSS transitions for the settings menu.
   */
 vime-settings {
   position: absolute;
@@ -24,6 +25,8 @@ vime-settings {
   scrollbar-width: thin;
   scroll-behavior: smooth;
   scrollbar-color: var(--vm-settings-scroll-thumb-color) var(--vm-settings-scroll-track-color);
+  transform: translateY(8px); 
+  transition: var(--vm-settings-transition);
 
   &.hydrated {
     visibility: hidden !important;
@@ -44,6 +47,7 @@ vime-settings {
   }
 
   &.active {
+    transform: translateY(0); 
     opacity: 1;
     visibility: visible !important;
   }
@@ -59,6 +63,11 @@ vime-settings {
     max-height: 50%;
     border-radius: 0;
     z-index: 2147483647;
+    transform: translateY(100%); 
+
+    &.active {
+      transform: translateY(0); 
+    }
 
     vime-menu {
       height: 100% !important;
