@@ -11,7 +11,7 @@ import {
   State,
   Watch,
 } from '@stencil/core';
-import { isString } from '../../../utils/unit';
+import { isNull, isString } from '../../../utils/unit';
 import { appendParamsToURL, Params, preconnect } from '../../../utils/network';
 import { LazyLoader } from '../player/LazyLoader';
 
@@ -111,7 +111,12 @@ export class Embed implements ComponentInterface {
   }
 
   connectedCallback() {
-    this.lazyLoader = new LazyLoader(this.el);
+    this.lazyLoader = new LazyLoader(this.el, ['data-src'], (el) => {
+      const src = el.getAttribute('data-src');
+      el.removeAttribute('src');
+      if (!isNull(src)) el.setAttribute('src', src);
+    });
+
     this.srcChange();
     this.genIframeId();
   }

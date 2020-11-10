@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/media-has-caption */
+/* eslint-disable no-continue, jsx-a11y/media-has-caption */
 
 import {
   h, Prop, Method, Component, Event, EventEmitter, Watch, Element,
@@ -21,6 +21,8 @@ import { findRootPlayer } from '../../core/player/utils';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
 import { LazyLoader } from '../../core/player/LazyLoader';
+import { MediaResource } from './MediaResource';
+import { createDispatcher } from '../../core/player/PlayerDispatcher';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
@@ -38,15 +40,17 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private lazyLoader?: LazyLoader;
 
-  private playbackStarted = false;
-
   private wasPausedBeforeSeeking = true;
 
-  private currentSrcSet: (string | null)[] = [];
+  private playbackQuality?: string;
+
+  private currentSrcSet: MediaResource[] = [];
 
   private prevMediaEl?: HTMLMediaElement;
 
   private mediaEl?: HTMLMediaElement;
+
+  private mediaQueryDisposal = new Disposal();
 
   @Element() el!: HTMLVimeFileElement;
 
@@ -163,6 +167,21 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   /**
    * @internal
    */
+  @Prop() paused = true;
+
+  /**
+   * @internal
+   */
+  @Prop() currentTime = 0;
+
+  /**
+   * @internal
+   */
+  @Prop() playbackStarted = false;
+
+  /**
+   * @internal
+   */
   @Event() vLoadStart!: EventEmitter<void>;
 
   /**
@@ -173,11 +192,11 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   /**
    * Emitted when the child `<source />` elements are modified.
    */
-  @Event() vSrcSetChange!: EventEmitter<void>;
+  @Event() vSrcSetChange!: EventEmitter<MediaResource[]>;
 
   constructor() {
     if (!this.noConnect) withProviderConnect(this);
-    withProviderContext(this);
+    withProviderContext(this, ['playbackStarted', 'currentTime', 'paused']);
   }
 
   connectedCallback() {
@@ -201,36 +220,134 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   disconnectedCallback() {
+    this.mediaQueryDisposal.empty();
     this.cancelTimeUpdates();
     this.disposal.empty();
     this.lazyLoader?.destroy();
-    this.playbackStarted = false;
     this.wasPausedBeforeSeeking = true;
   }
 
   private initLazyLoader() {
-    this.lazyLoader = new LazyLoader(this.el, this.didSrcSetChange.bind(this));
+    this.lazyLoader = new LazyLoader(this.el, ['data-src', 'data-poster'], () => {
+      if (isNullOrUndefined(this.mediaEl)) return;
+
+      const poster = this.mediaEl.getAttribute('data-poster');
+      if (!isNull(poster)) this.mediaEl.setAttribute('poster', poster);
+
+      this.refresh();
+      this.didSrcSetChange();
+    });
+  }
+
+  private refresh() {
+    if (isNullOrUndefined(this.mediaEl)) return;
+    const { children } = this.mediaEl;
+
+    for (let i = 0; i <= children.length - 1; i += 1) {
+      const child = children[i];
+      const src = child.getAttribute('data-src') || child.getAttribute('src') || child.getAttribute('data-vs');
+      child.removeAttribute('src');
+      if (isNull(src)) continue;
+      child.setAttribute('data-vs', src);
+
+      if (!isNull(child.getAttribute('data-quality'))) {
+        const quality = child.getAttribute('data-quality');
+        if (quality !== this.playbackQuality) {
+          child.removeAttribute('src');
+          continue;
+        }
+      }
+
+      child.setAttribute('src', src);
+    }
   }
 
   private didSrcSetChange() {
     if (isNullOrUndefined(this.mediaEl)) return;
 
     const sources = Array.from(this.mediaEl!.querySelectorAll('source'));
-    const srcSet = sources.map((source) => source.src);
+
+    const srcSet = sources.map((source) => ({
+      src: source.getAttribute('data-vs')!,
+      quality: source.getAttribute('data-quality') ?? undefined,
+      media: source.getAttribute('data-media') ?? undefined,
+      ref: source,
+    }));
 
     const didChange = (this.currentSrcSet.length !== srcSet.length)
-      || (srcSet.some((src, i) => this.currentSrcSet[i] !== src));
+      || (srcSet.some((resource, i) => (
+        (this.currentSrcSet[i].src !== resource.src)
+        || (this.currentSrcSet[i].quality !== resource.quality)
+      )));
 
     if (didChange) {
-      this.onSrcChange();
       this.currentSrcSet = srcSet;
+      this.onSrcSetChange();
     }
   }
 
-  private onSrcChange() {
+  private onSrcSetChange() {
+    this.mediaQueryDisposal.empty();
     this.vLoadStart.emit();
-    this.vSrcSetChange.emit();
+    this.vSrcSetChange.emit(this.currentSrcSet);
+    if (this.hasPlaybackQualities()) {
+      this.dispatch('playbackQualities', this.getPlaybackQualities());
+      this.pickInitialPlaybackQuality();
+      this.refresh();
+    }
     this.mediaEl?.load();
+  }
+
+  private hasPlaybackQualities() {
+    return this.currentSrcSet.every((resource) => !!resource.quality);
+  }
+
+  private getPlaybackQualities() {
+    if (!this.hasPlaybackQualities()) return [];
+    return this.currentSrcSet.map((resource) => resource.quality!);
+  }
+
+  private pickInitialPlaybackQuality() {
+    if (!isUndefined(this.playbackQuality)) return;
+
+    const getQualityValue = (
+      resource: MediaResource,
+    ) => Number(resource.quality?.slice(0, -1) ?? 0);
+
+    const sortMediaResource = (
+      a: MediaResource,
+      b: MediaResource,
+    ) => getQualityValue(a) - getQualityValue(b);
+
+    // Try to find best quality based on media queries.
+    let mediaResource = this.currentSrcSet
+      .filter((resource) => {
+        if (!isString(resource.media)) return false;
+        const query = window.matchMedia(resource.media);
+        const dispatch = createDispatcher(this);
+
+        this.mediaQueryDisposal.add(listen(query, 'change', (e) => {
+          if ((e as any).matches) dispatch('playbackQuality', resource.quality);
+        }));
+
+        return query.matches;
+      })
+      .sort(sortMediaResource)
+      .pop();
+
+    // Otherwise pick best quality based on window width.
+    if (isUndefined(mediaResource)) {
+      mediaResource = this.currentSrcSet
+        .find((resource) => getQualityValue(resource) > window.innerWidth);
+    }
+
+    // Otehrwise pick best quality.
+    if (isUndefined(mediaResource)) {
+      mediaResource = this.currentSrcSet.sort(sortMediaResource).pop();
+    }
+
+    this.playbackQuality = mediaResource?.quality;
+    this.dispatch('playbackQuality', mediaResource?.quality);
   }
 
   private hasCustomPoster() {
@@ -256,12 +373,20 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onLoadedMetadata() {
-    this.dispatch('currentPoster', this.poster);
-    this.dispatch('duration', this.mediaEl!.duration);
-    this.dispatch('playbackRates', this.playbackRates);
-    this.onProgress();
     this.onTracksChange();
-    this.didSrcSetChange();
+
+    // Reset player state on quality change.
+    if (this.playbackStarted) {
+      this.mediaEl!.muted = this.muted;
+      if (this.currentTime > 0) this.mediaEl!.currentTime = this.currentTime;
+      if (!this.paused) this.mediaEl!.play();
+    } else {
+      this.onProgress();
+      this.dispatch('currentPoster', this.poster);
+      this.dispatch('duration', this.mediaEl!.duration);
+      this.dispatch('playbackRates', this.playbackRates);
+    }
+
     if (!this.willAttach) {
       this.dispatch('currentSrc', this.mediaEl!.currentSrc);
       this.dispatch('mediaType', this.getMediaType());
@@ -278,10 +403,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   private onPlay() {
     this.requestTimeUpdates();
     this.dispatch('paused', false);
-    if (!this.playbackStarted) {
-      this.playbackStarted = true;
-      this.dispatch('playbackStarted', true);
-    }
+    if (!this.playbackStarted) this.dispatch('playbackStarted', true);
   }
 
   private onPause() {
@@ -424,6 +546,14 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       canSetPlaybackRate: async () => true,
       setPlaybackRate: async (rate: number) => {
         if (this.mediaEl) this.mediaEl.playbackRate = rate;
+      },
+      canSetPlaybackQuality: async () => this.hasPlaybackQualities(),
+      setPlaybackQuality: async (quality: string) => {
+        this.cancelTimeUpdates();
+        this.playbackQuality = quality;
+        this.refresh();
+        this.mediaEl?.load();
+        this.dispatch('playbackQuality', this.playbackQuality);
       },
       canSetPiP: async () => canUsePiP(),
       enterPiP: () => this.togglePiP(true),

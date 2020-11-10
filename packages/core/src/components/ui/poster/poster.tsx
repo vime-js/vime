@@ -3,7 +3,7 @@ import {
 } from '@stencil/core';
 import { withPlayerContext } from '../../core/player/PlayerContext';
 import { PlayerProps } from '../../core/player/PlayerProps';
-import { isUndefined } from '../../../utils/unit';
+import { isNull, isUndefined } from '../../../utils/unit';
 import { LazyLoader } from '../../core/player/LazyLoader';
 
 @Component({
@@ -82,7 +82,12 @@ export class Poster {
   }
 
   connectedCallback() {
-    this.lazyLoader = new LazyLoader(this.el);
+    this.lazyLoader = new LazyLoader(this.el, ['data-src'], (el) => {
+      const src = el.getAttribute('data-src');
+      el.removeAttribute('src');
+      if (!isNull(src)) el.setAttribute('src', src);
+    });
+
     this.onEnabledChange();
     this.onActiveChange();
   }

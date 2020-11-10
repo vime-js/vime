@@ -1,6 +1,6 @@
 /* eslint-disable func-names, no-param-reassign */
 import { ComponentInterface, EventEmitter, getElement } from '@stencil/core';
-import { PlayerProps } from '../core/player/PlayerProps';
+import { PlayerProp, PlayerProps } from '../core/player/PlayerProps';
 import { withPlayerContext } from '../core/player/PlayerContext';
 
 export interface MediaProviderAdapter<InternalPlayerType = any> {
@@ -72,7 +72,10 @@ export function withProviderConnect(host: AdapterHost) {
   };
 }
 
-export const withProviderContext = (provider: MediaProvider) => withPlayerContext(provider, [
+export const withProviderContext = (
+  provider: MediaProvider,
+  additionalProps: PlayerProp[] = [],
+) => withPlayerContext(provider, [
   'autoplay',
   'controls',
   'language',
@@ -81,4 +84,5 @@ export const withProviderContext = (provider: MediaProvider) => withPlayerContex
   'loop',
   'aspectRatio',
   'playsinline',
+  ...additionalProps,
 ]);

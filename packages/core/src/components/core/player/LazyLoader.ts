@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { IS_CLIENT } from '../../../utils/support';
-import { isNull, isNullOrUndefined } from '../../../utils/unit';
+import { isNullOrUndefined } from '../../../utils/unit';
 
 export class LazyLoader {
   private intersectionObs?: IntersectionObserver;
@@ -9,7 +9,11 @@ export class LazyLoader {
 
   private hasLoaded = false;
 
-  constructor(private el: HTMLElement, private onLoad?: () => void) {
+  constructor(
+    private el: HTMLElement,
+    private attributes: string[],
+    private onLoad?: <T extends HTMLElement>(el: T) => void,
+  ) {
     if (isNullOrUndefined(this.el)) return;
 
     this.intersectionObs = this.canObserveIntersection()
@@ -23,14 +27,14 @@ export class LazyLoader {
     this.mutationObs?.observe(this.el, {
       childList: true,
       subtree: true,
-      attributeFilter: [
-        'data-src',
-        'data-alt',
-        'data-poster',
-      ],
+      attributeFilter: this.attributes,
     });
 
     this.lazyLoad();
+  }
+
+  didLoad() {
+    return this.hasLoaded;
   }
 
   destroy() {
@@ -65,7 +69,7 @@ export class LazyLoader {
   }
 
   private getLazyElements() {
-    return this.el.querySelectorAll('.lazy');
+    return this.el.querySelectorAll<HTMLElement>('.lazy');
   }
 
   private load() {
@@ -74,32 +78,9 @@ export class LazyLoader {
     });
   }
 
-  private loadEl(el: Element) {
-    const name = el.nodeName.toLowerCase();
-
-    if ((name === 'video' || name === 'audio') && !isNull(el.children)) {
-      const sources = el.children;
-      for (let i = 0; i <= sources.length - 1; i += 1) {
-        const src = sources[i].getAttribute('data-src');
-        if (!isNull(src)) {
-          (sources[i] as HTMLSourceElement).src = src!;
-          sources[i].removeAttribute('data-src');
-        }
-      }
-    }
-
-    if (!isNull(el.getAttribute('data-poster'))) {
-      (el as HTMLVideoElement).poster = el.getAttribute('data-poster')!;
-      el.removeAttribute('data-poster');
-    }
-
-    if (!isNull(el.getAttribute('data-src'))) {
-      (el as HTMLMediaElement).src = el.getAttribute('data-src')!;
-      el.removeAttribute('data-src');
-    }
-
+  private loadEl(el: HTMLElement) {
     this.intersectionObs?.unobserve(el);
     this.hasLoaded = true;
-    this.onLoad?.();
+    this.onLoad?.(el);
   }
 }

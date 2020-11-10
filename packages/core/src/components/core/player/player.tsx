@@ -87,7 +87,7 @@ export class Player implements MediaPlayer {
   /**
    * @inheritDoc
    */
-  @Prop() theme?: string;
+  @Prop({ reflect: true }) theme?: string;
 
   /**
    * @inheritDoc
