@@ -1389,6 +1389,10 @@ export namespace Components {
         "logger"?: Logger;
         "loop": boolean;
         "muted": boolean;
+        /**
+          * Turns off automatically determining the aspect ratio of the current video.
+         */
+        "noAutoAspectRatio": boolean;
         "playsinline": boolean;
         /**
           * Whether to display the video owner's portrait.
@@ -3347,6 +3351,10 @@ declare namespace LocalJSX {
         "logger"?: Logger;
         "loop"?: boolean;
         "muted"?: boolean;
+        /**
+          * Turns off automatically determining the aspect ratio of the current video.
+         */
+        "noAutoAspectRatio"?: boolean;
         "onVLoadStart"?: (event: CustomEvent<void>) => void;
         "playsinline"?: boolean;
         /**

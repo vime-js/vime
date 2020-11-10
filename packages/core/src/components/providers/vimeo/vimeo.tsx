@@ -14,7 +14,13 @@ import { DeferredPromise, deferredPromise } from '../../../utils/promise';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
 
-const posterCache = new Map<string, string>();
+interface VideoInfo {
+  width: number
+  height: number
+  poster: string
+}
+
+const videoInfoCache = new Map<string, VideoInfo>();
 
 @Component({
   tag: 'vime-vimeo',
@@ -27,7 +33,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
 
   private initialMuted!: boolean;
 
-  private fetchPosterURL?: Promise<string | undefined>;
+  private fetchVideoInfo?: Promise<VideoInfo | undefined>;
 
   private pendingDurationCall?: DeferredPromise<number>;
 
@@ -64,7 +70,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
     this.cancelTimeUpdates();
     this.pendingDurationCall = deferredPromise();
     this.pendingMediaTitleCall = deferredPromise();
-    this.fetchPosterURL = this.findPosterURL();
+    this.fetchVideoInfo = this.getVideoInfo();
   }
 
   /**
@@ -82,6 +88,11 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
    * Whether to display the video owner's portrait.
    */
   @Prop() portrait = true;
+
+  /**
+   * Turns off automatically determining the aspect ratio of the current video.
+   */
+  @Prop() noAutoAspectRatio = false;
 
   /**
    * @internal
@@ -179,17 +190,18 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
     };
   }
 
-  private async findPosterURL() {
-    if (posterCache.has(this.videoId)) return posterCache.get(this.videoId);
+  private async getVideoInfo() {
+    if (videoInfoCache.has(this.videoId)) return videoInfoCache.get(this.videoId);
 
     return window.fetch(`https://vimeo.com/api/oembed.json?url=${this.embedSrc}`)
       .then((response) => response.json())
       .then((data) => {
         const thumnailRegex = /vimeocdn\.com\/video\/([0-9]+)/;
-        const thumbnailId = data.thumbnail_url.match(thumnailRegex)[1];
+        const thumbnailId = data?.thumbnail_url.match(thumnailRegex)[1];
         const poster = `https://i.vimeocdn.com/video/${thumbnailId}_1920x1080.jpg`;
-        posterCache.set(this.videoId, poster);
-        return poster;
+        const info = { poster, width: data?.width, height: data?.height };
+        videoInfoCache.set(this.videoId, info);
+        return info;
       });
   }
 
@@ -278,12 +290,13 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         this.remoteControl(VimeoCommand.GetDuration);
         this.remoteControl(VimeoCommand.GetVideoTitle);
         Promise.all([
-          this.fetchPosterURL,
+          this.fetchVideoInfo,
           this.pendingDurationCall?.promise,
           this.pendingMediaTitleCall?.promise,
-        ]).then(([poster, duration, mediaTitle]) => {
+        ]).then(([info, duration, mediaTitle]) => {
           this.requestTimeUpdates();
-          this.dispatch('currentPoster', poster);
+          this.dispatch('aspectRatio', `${info?.width ?? 16}:${info?.height ?? 9}`);
+          this.dispatch('currentPoster', info?.poster);
           this.dispatch('duration', duration ?? -1);
           this.dispatch('mediaTitle', mediaTitle);
           this.dispatch('playbackReady', true);
