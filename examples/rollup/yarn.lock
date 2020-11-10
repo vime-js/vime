@@ -72,9 +72,9 @@
     "@types/node" "*"
 
 "@vime/core@^4.2.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.5.0.tgz#44a3e2b9e84fe12fe064351fd4de17b391e1b05b"
-  integrity sha512-ujdMDv4tyZdKrBRORaybDMpIME2XTlOnS/6ZH5s8S262cPlv1fEt56W6TWvHzefraDt3Lt6WTB0THO60oAjCZw==
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-4.6.0.tgz#23538c1d721a1950280cfe8bdd47e444bd147c08"
+  integrity sha512-lsbEi7sxnGuhs4bKVQnLQ3LFrsC1O58KgCWqfwcr2+N7drWykCgc2uwP8Xo+U2y+1ju8IqNutcrFFlQBm/J6yg==
   dependencies:
     "@stencil/core" "2.2.0"
     stencil-wormhole "^3.2.2"

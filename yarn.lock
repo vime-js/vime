@@ -1287,9 +1287,9 @@
   integrity sha512-OqyToxRLUG/EAfZa0w8sAooOW6tr8pYCBpo3SLsKycrV2RTj9Sy7rB+5U0MvES87kWCHtO10qMIESuw8RiEYyQ==
 
 "@cypress/webpack-preprocessor@^5.4.5":
-  version "5.4.10"
-  resolved "https://registry.yarnpkg.com/@cypress/webpack-preprocessor/-/webpack-preprocessor-5.4.10.tgz#ed0a3ed495f5455899f7c567830b37477c3f26f5"
-  integrity sha512-6j809mAQcZsAbpIaQFlKwFQPKv1Y+ZyLr9bpW7d2utMGVll0W8Up4RPhIuAf4q9Tx+DOBQoiCpy/n0cRPxporw==
+  version "5.4.11"
+  resolved "https://registry.yarnpkg.com/@cypress/webpack-preprocessor/-/webpack-preprocessor-5.4.11.tgz#77f86e399f04969d5d8692ada96c794c52d38f87"
+  integrity sha512-6kj0HsaWf1s0UT4qkABuwl676sW8S8lSTai3NUcF3BWj9BqhN4JPd2DdGcHNkNmYRkjpklPeGUHqAOyqMDj5+A==
   dependencies:
     bluebird "^3.7.1"
     debug "^4.1.1"
@@ -13500,23 +13500,23 @@ watchify@3.11.1:
     through2 "^2.0.0"
     xtend "^4.0.0"
 
-watchpack-chokidar2@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/watchpack-chokidar2/-/watchpack-chokidar2-2.0.0.tgz#9948a1866cbbd6cb824dea13a7ed691f6c8ddff0"
-  integrity sha512-9TyfOyN/zLUbA288wZ8IsMZ+6cbzvsNyEzSBp6e/zkifi6xxbl8SmQ/CxQq32k8NNqrdVEVUVSEf56L4rQ/ZxA==
+watchpack-chokidar2@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/watchpack-chokidar2/-/watchpack-chokidar2-2.0.1.tgz#38500072ee6ece66f3769936950ea1771be1c957"
+  integrity sha512-nCFfBIPKr5Sh61s4LPpy1Wtfi0HE8isJ3d2Yb5/Ppw2P2B/3eVSEBjKfN0fmHJSK14+31KwMKmcrzs2GM4P0Ww==
   dependencies:
     chokidar "^2.1.8"
 
 watchpack@^1.7.4:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.4.tgz#6e9da53b3c80bb2d6508188f5b200410866cd30b"
-  integrity sha512-aWAgTW4MoSJzZPAicljkO1hsi1oKj/RRq/OJQh2PKI2UKL04c2Bs+MBOB+BBABHTXJpf9mCwHN7ANCvYsvY2sg==
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
+  integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
   optionalDependencies:
     chokidar "^3.4.1"
-    watchpack-chokidar2 "^2.0.0"
+    watchpack-chokidar2 "^2.0.1"
 
 wcwidth@^1.0.0:
   version "1.0.1"
