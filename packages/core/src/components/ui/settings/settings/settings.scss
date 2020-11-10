@@ -46,6 +46,10 @@ vime-settings {
     border: 2px solid var(--vm-menu-bg);
   }
 
+  & > vime-menu[aria-hidden='true'] {
+    display: flex !important;
+  }
+
   &.active {
     transform: translateY(0); 
     opacity: 1;
