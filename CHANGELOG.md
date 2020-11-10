@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.6.0](https://github.com/vime-js/vime/compare/v4.5.0...v4.6.0) (2020-11-10)
+
+
+### Bug Fixes
+
+* **ui/settings:** root settings menu dissapears during exit transition ([97dc4f9](https://github.com/vime-js/vime/commit/97dc4f9691232df822402062363115c07600f463))
+
+
+### Features
+
+* **providers/file:** allow multiple static file qualities to be used ([589f05b](https://github.com/vime-js/vime/commit/589f05be1cffedda82c775a7cb784223556a4000)), closes [#86](https://github.com/vime-js/vime/issues/86)
+
+
+
+
+
 # [4.5.0](https://github.com/vime-js/vime/compare/v4.4.0...v4.5.0) (2020-11-10)
 
 
