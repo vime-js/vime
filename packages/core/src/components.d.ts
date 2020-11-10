@@ -1151,6 +1151,7 @@ export namespace Components {
     }
     interface VimePoster {
         "currentPoster"?: PlayerProps['currentPoster'];
+        "currentTime": PlayerProps['currentTime'];
         /**
           * How the poster image should be resized to fit the container (sets the `object-fit` property).
          */
@@ -3107,6 +3108,7 @@ declare namespace LocalJSX {
     }
     interface VimePoster {
         "currentPoster"?: PlayerProps['currentPoster'];
+        "currentTime"?: PlayerProps['currentTime'];
         /**
           * How the poster image should be resized to fit the container (sets the `object-fit` property).
          */

@@ -52,6 +52,11 @@ export class Poster {
   @Prop() playbackStarted: PlayerProps['playbackStarted'] = false;
 
   /**
+   * @internal
+   */
+  @Prop() currentTime: PlayerProps['currentTime'] = 0;
+
+  /**
    * Emitted when the poster has loaded.
    */
   @Event({ bubbles: false }) vLoaded!: EventEmitter<void>;
@@ -71,6 +76,7 @@ export class Poster {
       'mediaTitle',
       'currentPoster',
       'playbackStarted',
+      'currentTime',
       'isVideoView',
     ]);
   }
@@ -96,9 +102,10 @@ export class Poster {
     this.onVisibilityChange();
   }
 
+  @Watch('currentTime')
   @Watch('playbackStarted')
   onActiveChange() {
-    this.isActive = !this.playbackStarted;
+    this.isActive = !this.playbackStarted || this.currentTime <= 0.1;
     this.onVisibilityChange();
   }
 
