@@ -145,11 +145,12 @@ class Example {
 
 ## Properties
 
-| Property                | Attribute                 | Description                                     | Type      | Default     |
-| ----------------------- | ------------------------- | ----------------------------------------------- | --------- | ----------- |
-| `cookies`               | `cookies`                 | Whether cookies should be enabled on the embed. | `boolean` | `false`     |
-| `showFullscreenControl` | `show-fullscreen-control` | Whether the fullscreen control should be shown. | `boolean` | `true`      |
-| `videoId` _(required)_  | `video-id`                | The YouTube resource ID of the video to load.   | `string`  | `undefined` |
+| Property                | Attribute                 | Description                                                           | Type                 | Default     |
+| ----------------------- | ------------------------- | --------------------------------------------------------------------- | -------------------- | ----------- |
+| `cookies`               | `cookies`                 | Whether cookies should be enabled on the embed.                       | `boolean`            | `false`     |
+| `poster`                | `poster`                  | The absolute URL of a custom poster to be used for the current video. | `string ∣ undefined` | `undefined` |
+| `showFullscreenControl` | `show-fullscreen-control` | Whether the fullscreen control should be shown.                       | `boolean`            | `true`      |
+| `videoId` _(required)_  | `video-id`                | The YouTube resource ID of the video to load.                         | `string`             | `undefined` |
 
 ## Dependencies
 

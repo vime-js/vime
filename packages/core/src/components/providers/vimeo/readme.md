@@ -114,6 +114,7 @@ class Example {
 | `color`                | `color`                | The hexadecimal color value of the playback controls. The embed settings of the video might override this value. | `string \| undefined` | `undefined` |
 | `noAutoAspectRatio`    | `no-auto-aspect-ratio` | Turns off automatically determining the aspect ratio of the current video.                                       | `boolean`             | `false`     |
 | `portrait`             | `portrait`             | Whether to display the video owner's portrait.                                                                   | `boolean`             | `true`      |
+| `poster`               | `poster`               | The absolute URL of a custom poster to be used for the current video.                                            | `string \| undefined` | `undefined` |
 | `videoId` _(required)_ | `video-id`             | The Vimeo resource ID of the video to load.                                                                      | `string`              | `undefined` |
 
 

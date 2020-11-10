@@ -95,6 +95,16 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   @Prop() noAutoAspectRatio = false;
 
   /**
+   * The absolute URL of a custom poster to be used for the current video.
+   */
+  @Prop() poster?: string;
+
+  @Watch('poster')
+  onCustomPosterChange() {
+    this.dispatch('currentPoster', this.poster);
+  }
+
+  /**
    * @internal
    */
   @Prop() language = 'en';
@@ -296,7 +306,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         ]).then(([info, duration, mediaTitle]) => {
           this.requestTimeUpdates();
           this.dispatch('aspectRatio', `${info?.width ?? 16}:${info?.height ?? 9}`);
-          this.dispatch('currentPoster', info?.poster);
+          this.dispatch('currentPoster', this.poster ?? info?.poster);
           this.dispatch('duration', duration ?? -1);
           this.dispatch('mediaTitle', mediaTitle);
           this.dispatch('playbackReady', true);

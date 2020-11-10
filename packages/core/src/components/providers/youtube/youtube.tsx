@@ -70,6 +70,16 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   @Prop() showFullscreenControl = true;
 
   /**
+   * The absolute URL of a custom poster to be used for the current video.
+   */
+  @Prop() poster?: string;
+
+  @Watch('poster')
+  onCustomPosterChange() {
+    this.dispatch('currentPoster', this.poster);
+  }
+
+  /**
    * @internal
    */
   @Prop() language = 'en';
@@ -240,7 +250,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
         this.dispatch('currentSrc', this.embedSrc);
         this.dispatch('mediaType', MediaType.Video);
         this.fetchPosterURL!.then((poster) => {
-          this.dispatch('currentPoster', poster);
+          this.dispatch('currentPoster', this.poster ?? poster);
           this.dispatch('playbackReady', true);
         });
         break;

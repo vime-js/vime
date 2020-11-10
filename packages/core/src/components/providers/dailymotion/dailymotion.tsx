@@ -121,6 +121,16 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
   }
 
   /**
+   * The absolute URL of a custom poster to be used for the current video.
+   */
+  @Prop() poster?: string;
+
+  @Watch('poster')
+  onCustomPosterChange() {
+    this.dispatch('currentPoster', this.poster);
+  }
+
+  /**
    * @internal
    */
   @Prop() logger?: Logger;
@@ -222,7 +232,7 @@ export class Dailymotion implements MediaProvider<HTMLVimeEmbedElement> {
           this.pendingMediaTitleCall?.promise,
         ]).then(([info, mediaTitle]) => {
           this.dispatch('duration', info?.duration ?? -1);
-          this.dispatch('currentPoster', info?.poster);
+          this.dispatch('currentPoster', this.poster ?? info?.poster);
           this.dispatch('mediaTitle', mediaTitle);
           this.dispatch('playbackReady', true);
         });

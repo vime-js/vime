@@ -211,6 +211,10 @@ export namespace Components {
         "muted": boolean;
         "playsinline": boolean;
         /**
+          * The absolute URL of a custom poster to be used for the current video.
+         */
+        "poster"?: string;
+        /**
           * Whether to automatically play the next video in the queue.
          */
         "shouldAutoplayQueue": boolean;
@@ -1399,6 +1403,10 @@ export namespace Components {
          */
         "portrait": boolean;
         /**
+          * The absolute URL of a custom poster to be used for the current video.
+         */
+        "poster"?: string;
+        /**
           * The Vimeo resource ID of the video to load.
          */
         "videoId": string;
@@ -1454,6 +1462,10 @@ export namespace Components {
         "loop": boolean;
         "muted": boolean;
         "playsinline": boolean;
+        /**
+          * The absolute URL of a custom poster to be used for the current video.
+         */
+        "poster"?: string;
         /**
           * Whether the fullscreen control should be shown.
          */
@@ -2023,6 +2035,10 @@ declare namespace LocalJSX {
         "muted"?: boolean;
         "onVLoadStart"?: (event: CustomEvent<void>) => void;
         "playsinline"?: boolean;
+        /**
+          * The absolute URL of a custom poster to be used for the current video.
+         */
+        "poster"?: string;
         /**
           * Whether to automatically play the next video in the queue.
          */
@@ -3362,6 +3378,10 @@ declare namespace LocalJSX {
          */
         "portrait"?: boolean;
         /**
+          * The absolute URL of a custom poster to be used for the current video.
+         */
+        "poster"?: string;
+        /**
           * The Vimeo resource ID of the video to load.
          */
         "videoId": string;
@@ -3417,6 +3437,10 @@ declare namespace LocalJSX {
         "muted"?: boolean;
         "onVLoadStart"?: (event: CustomEvent<void>) => void;
         "playsinline"?: boolean;
+        /**
+          * The absolute URL of a custom poster to be used for the current video.
+         */
+        "poster"?: string;
         /**
           * Whether the fullscreen control should be shown.
          */
