@@ -2,7 +2,6 @@
 <VimePlayer controls>
   <VimeHls version="latest" config="{hlsConfig}" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-    <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
   </VimeHls>
   <!-- ... -->
 </VimePlayer>

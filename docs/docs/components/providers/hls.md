@@ -58,7 +58,6 @@ function Example() {
     <VimePlayer controls>
       <VimeHls version="latest" config={hlsConfig} poster="/media/poster.png">
         <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-        <track default kind="subtitles" src="/media/subs/en.vtt" srcLang="en" />
       </VimeHls>
       {/* ... */}
     </VimePlayer>
@@ -76,7 +75,6 @@ function Example() {
   <VimePlayer controls>
     <VimeHls :config="hlsConfig" version="latest" poster="/media/poster.png">
       <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-      <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
     </VimeHls>
     <!-- ... -->
   </VimePlayer>
@@ -112,7 +110,6 @@ function Example() {
 <VimePlayer controls>
   <VimeHls version="latest" config="{hlsConfig}" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-    <track default kind="subtitles" src="/media/subs/en.vtt" srclang="en" />
   </VimeHls>
   <!-- ... -->
 </VimePlayer>
@@ -196,9 +193,9 @@ class Example {
 
 ## Slots
 
-| Slot | Description                                                                  |
-| ---- | ---------------------------------------------------------------------------- |
-|      | Pass `<source>` and `<track>` elements to the underlying HTML5 media player. |
+| Slot | Description                                                    |
+| ---- | -------------------------------------------------------------- |
+|      | Pass `<source>` elements to the underlying HTML5 media player. |
 
 ## Dependencies
 

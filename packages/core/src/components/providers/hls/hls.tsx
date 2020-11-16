@@ -13,7 +13,7 @@ import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatc
 import { withProviderConnect } from '../MediaProvider';
 
 /**
- * @slot - Pass `<source>` and  `<track>` elements to the underlying HTML5 media player.
+ * @slot - Pass `<source>` elements to the underlying HTML5 media player.
  */
 @Component({
   tag: 'vime-hls',
