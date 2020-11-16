@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.7.0](https://github.com/vime-js/vime/compare/v4.6.0...v4.7.0) (2020-11-16)
+
+
+### Features
+
+* **angular:** you can now use `@vime/angular` instead of `@vime/angular/dist` ([bc110f8](https://github.com/vime-js/vime/commit/bc110f82a54a986922ded06cd2b2f0d033a60f07))
+
+
+
+
+
 # [4.6.0](https://github.com/vime-js/vime/compare/v4.5.0...v4.6.0) (2020-11-10)
 
 **Note:** Version bump only for package @vime/angular

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.7.0](https://github.com/vime-js/vime/compare/v4.6.0...v4.7.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* vue components not reactive ([a6a24eb](https://github.com/vime-js/vime/commit/a6a24eb139622685f27eb20b6a9b47004019472c)), closes [#108](https://github.com/vime-js/vime/issues/108)
+
+
+
+
+
 # [4.6.0](https://github.com/vime-js/vime/compare/v4.5.0...v4.6.0) (2020-11-10)
 
 **Note:** Version bump only for package @vime/vue

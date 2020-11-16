@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.7.0](https://github.com/vime-js/vime/compare/v4.6.0...v4.7.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* **core:** stop listening to intersection observer after intersecting ([cd480a9](https://github.com/vime-js/vime/commit/cd480a9fc3e273fdee21925011a83631eb6472c7))
+* vimeo and youtube not firing playback ready when autoplay is `true` ([e083a92](https://github.com/vime-js/vime/commit/e083a9240d3a386b5485976df7b1bf1bf29e58f5)), closes [#111](https://github.com/vime-js/vime/issues/111)
+* vue components not reactive ([a6a24eb](https://github.com/vime-js/vime/commit/a6a24eb139622685f27eb20b6a9b47004019472c)), closes [#108](https://github.com/vime-js/vime/issues/108)
+
+
+
+
+
 # [4.6.0](https://github.com/vime-js/vime/compare/v4.5.0...v4.6.0) (2020-11-10)
 
 
