@@ -16,7 +16,7 @@ const dashToPascalCase = (str: string) => str
 
 export function createComponent<T extends HTMLElement, P = {}>(tagName: string) {
   const isEvent = (prop: string) => prop.indexOf('on') === 0 && prop[2] === prop[2].toUpperCase();
-  const toDomEventName = (prop: string) => prop[0].toLowerCase() + prop.substring(1);
+  const toDomEventName = (prop: string) => prop.charAt(2).toLowerCase() + prop.substring(3);
 
   const Component = forwardRef<T, P>(({
     // eslint-disable-next-line react/prop-types
