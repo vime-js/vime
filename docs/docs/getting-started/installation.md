@@ -252,7 +252,7 @@ at the root `AppModule` or wherever makes the most sense:
 
 ```ts title="app.module.ts"
 import { NgModule } from '@angular/core';
-import { VimeModule } from '@vime/angular/dist';
+import { VimeModule } from '@vime/angular';
 
 @NgModule({
   imports: [

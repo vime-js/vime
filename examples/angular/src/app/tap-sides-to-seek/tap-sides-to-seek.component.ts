@@ -1,5 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
-import { VimeComponent } from '@vime/angular/dist';
+import { VimeComponent } from '@vime/angular';
 
 @Component({
   selector: 'tap-sides-to-seek',

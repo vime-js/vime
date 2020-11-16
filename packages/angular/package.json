@@ -3,7 +3,14 @@
   "version": "4.6.0",
   "description": "Angular bindings for the Vime media player.",
   "license": "MIT",
-  "types": "dist/index.d.ts",
+  "main": "dist/bundles/vime-angular.umd.js",
+  "module": "dist/fesm2015/vime-angular.js",
+  "es2015": "dist/fesm2015/vime-angular.js",
+  "esm2015": "dist/esm2015/vime-angular.js",
+  "fesm2015": "dist/fesm2015/vime-angular.js",
+  "typings": "dist/vime-angular.d.ts",
+  "metadata": "dist/vime-angular.metadata.json",
+  "sideEffects": false,
   "contributors": [
     "Rahim Alwer <rahim_alwer@outlook.com>"
   ],
