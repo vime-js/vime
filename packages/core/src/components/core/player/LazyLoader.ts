@@ -60,7 +60,10 @@ export class LazyLoader {
 
   private onIntersection(entries: IntersectionObserverEntry[]) {
     entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0 || entry.isIntersecting) this.load();
+      if (entry.intersectionRatio > 0 || entry.isIntersecting) {
+        this.load();
+        this.intersectionObs!.unobserve(entry.target);
+      }
     });
   }
 
