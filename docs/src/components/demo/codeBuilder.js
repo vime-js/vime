@@ -58,7 +58,6 @@ const hls = (jsx = false, lib) => `
         data-src="https://media.vimejs.com/hls/index.m3u8" 
         type="application/x-mpegURL" 
       />
-      ${track}
     </${jsx ? 'VimeHls' : 'vime-hls'}>  
 `.trim();
 

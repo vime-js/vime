@@ -56,8 +56,14 @@ export class Playground {
           data-src={this.src ?? (this.src = defaultSrc[this.provider])}
           type={mediaType[this.provider]}
         />
-        <track default kind="subtitles" src={`${BASE_MEDIA_URL}/subs/english.vtt`} srclang="en" label="English" />
-        <track kind="subtitles" src={`${BASE_MEDIA_URL}/subs/spanish.vtt`} srclang="es" label="Spanish" />
+        {
+          (this.provider !== Provider.HLS) && (
+            <Fragment>
+              <track default kind="subtitles" src={`${BASE_MEDIA_URL}/subs/english.vtt`} srclang="en" label="English" />
+              <track kind="subtitles" src={`${BASE_MEDIA_URL}/subs/spanish.vtt`} srclang="es" label="Spanish" />
+            </Fragment>
+          )
+        }
       </Fragment>
     );
   }
