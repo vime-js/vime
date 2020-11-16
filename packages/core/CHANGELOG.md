@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.1](https://github.com/vime-js/vime/compare/v4.7.0...v4.7.1) (2020-11-16)
+
+
+### Bug Fixes
+
+* **providers/hls:** do not load tracks via `<track>` element with hls ([dbde397](https://github.com/vime-js/vime/commit/dbde39700d44180a8ed78cdf8981dfd60a3936cd)), closes [#107](https://github.com/vime-js/vime/issues/107)
+
+
+
+
+
 # [4.7.0](https://github.com/vime-js/vime/compare/v4.6.0...v4.7.0) (2020-11-16)
 
 

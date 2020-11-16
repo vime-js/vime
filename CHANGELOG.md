@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.1](https://github.com/vime-js/vime/compare/v4.7.0...v4.7.1) (2020-11-16)
+
+
+### Bug Fixes
+
+* **providers/hls:** do not load tracks via `<track>` element with hls ([dbde397](https://github.com/vime-js/vime/commit/dbde39700d44180a8ed78cdf8981dfd60a3936cd)), closes [#107](https://github.com/vime-js/vime/issues/107)
+* **react:** cache and event handler is shared by multiple instances ([64c76a7](https://github.com/vime-js/vime/commit/64c76a76e43a46045da9a71133f1bee3bb34ca50))
+* **react:** event listeners are not called ([6f47539](https://github.com/vime-js/vime/commit/6f475398194c72f674b026e45a29cfad6ce5d854))
+
+
+
+
+
 # [4.7.0](https://github.com/vime-js/vime/compare/v4.6.0...v4.7.0) (2020-11-16)
 
 
