@@ -31,7 +31,7 @@ loading file-based media.
 | Event            | Description                                                | Type                                                           |
 | ---------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
 | `vMediaElChange` | Emitted when the underlying media element changes.         | `CustomEvent<HTMLAudioElement ∣ HTMLVideoElement ∣ undefined>` |
-| `vSrcSetChange`  | Emitted when the child `<source />` elements are modified. | `CustomEvent<void>`                                            |
+| `vSrcSetChange`  | Emitted when the child `<source />` elements are modified. | `CustomEvent<MediaResource[]>`                                 |
 
 ## Slots
 
