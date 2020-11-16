@@ -28,6 +28,8 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
 
   private defaultInternalState: any = {};
 
+  private hasCued = false;
+
   private internalState = {
     paused: true,
     duration: 0,
@@ -198,6 +200,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
   }
 
   private onEmbedSrcChange() {
+    this.hasCued = false;
     this.vLoadStart.emit();
   }
 
@@ -225,6 +228,18 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
       });
   }
 
+  private onCued() {
+    if (this.hasCued) return;
+    this.internalState = { ...this.defaultInternalState };
+    this.dispatch('currentSrc', this.embedSrc);
+    this.dispatch('mediaType', MediaType.Video);
+    this.fetchPosterURL!.then((poster) => {
+      this.dispatch('currentPoster', this.poster ?? poster);
+      this.dispatch('playbackReady', true);
+    });
+    this.hasCued = true;
+  }
+
   private onPlayerStateChange(state: YouTubePlayerState) {
     if (state === YouTubePlayerState.Unstarted) return;
 
@@ -239,6 +254,8 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
       this.dispatch('paused', false);
 
       if (!this.internalState.playbackStarted) {
+        // Incase of autoplay which might skip `Cued` event.
+        this.onCued();
         this.dispatch('playbackStarted', true);
         this.internalState.playbackStarted = true;
       }
@@ -246,13 +263,7 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
 
     switch (state) {
       case YouTubePlayerState.Cued:
-        this.internalState = { ...this.defaultInternalState };
-        this.dispatch('currentSrc', this.embedSrc);
-        this.dispatch('mediaType', MediaType.Video);
-        this.fetchPosterURL!.then((poster) => {
-          this.dispatch('currentPoster', this.poster ?? poster);
-          this.dispatch('playbackReady', true);
-        });
+        this.onCued();
         break;
       case YouTubePlayerState.Playing:
         this.dispatch('playing', true);

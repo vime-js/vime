@@ -43,6 +43,8 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
 
   private volume = 50;
 
+  private hasLoaded = false;
+
   private pendingPlayRequest?: any;
 
   private internalState = {
@@ -282,6 +284,29 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
     }
   }
 
+  private onLoaded() {
+    if (this.hasLoaded) return;
+    this.pendingPlayRequest = undefined;
+    this.internalState = { ...this.defaultInternalState };
+    this.dispatch('currentSrc', this.embedSrc);
+    this.dispatch('mediaType', MediaType.Video);
+    this.remoteControl(VimeoCommand.GetDuration);
+    this.remoteControl(VimeoCommand.GetVideoTitle);
+    Promise.all([
+      this.fetchVideoInfo,
+      this.pendingDurationCall?.promise,
+      this.pendingMediaTitleCall?.promise,
+    ]).then(([info, duration, mediaTitle]) => {
+      this.requestTimeUpdates();
+      this.dispatch('aspectRatio', `${info?.width ?? 16}:${info?.height ?? 9}`);
+      this.dispatch('currentPoster', this.poster ?? info?.poster);
+      this.dispatch('duration', duration ?? -1);
+      this.dispatch('mediaTitle', mediaTitle);
+      this.dispatch('playbackReady', true);
+    });
+    this.hasLoaded = true;
+  }
+
   private onVimeoEvent<T extends keyof VimeoDataEventPayload>(
     event: T,
     payload: VimeoDataEventPayload[T],
@@ -293,26 +318,11 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
         });
         break;
       case VimeoDataEvent.Loaded:
-        this.pendingPlayRequest = undefined;
-        this.internalState = { ...this.defaultInternalState };
-        this.dispatch('currentSrc', this.embedSrc);
-        this.dispatch('mediaType', MediaType.Video);
-        this.remoteControl(VimeoCommand.GetDuration);
-        this.remoteControl(VimeoCommand.GetVideoTitle);
-        Promise.all([
-          this.fetchVideoInfo,
-          this.pendingDurationCall?.promise,
-          this.pendingMediaTitleCall?.promise,
-        ]).then(([info, duration, mediaTitle]) => {
-          this.requestTimeUpdates();
-          this.dispatch('aspectRatio', `${info?.width ?? 16}:${info?.height ?? 9}`);
-          this.dispatch('currentPoster', this.poster ?? info?.poster);
-          this.dispatch('duration', duration ?? -1);
-          this.dispatch('mediaTitle', mediaTitle);
-          this.dispatch('playbackReady', true);
-        });
+        this.onLoaded();
         break;
       case VimeoDataEvent.Play:
+        // Incase of autoplay which might skip `Loaded` event.
+        this.onLoaded();
         this.internalState.paused = false;
         this.dispatch('paused', false);
         break;
@@ -390,6 +400,7 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
   }
 
   private onEmbedSrcChange() {
+    this.hasLoaded = false;
     this.vLoadStart.emit();
   }
 
