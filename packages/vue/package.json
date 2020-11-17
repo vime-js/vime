@@ -1,6 +1,6 @@
 {
   "name": "@vime/vue",
-  "version": "4.7.2",
+  "version": "4.7.3",
   "description": "Vue 2 bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -25,7 +25,7 @@
     "build:esm": "tsc --module es6 --outDir dist/esm"
   },
   "dependencies": {
-    "@vime/core": "^4.7.2"
+    "@vime/core": "^4.7.3"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",

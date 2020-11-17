@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.7.3](https://github.com/vime-js/vime/compare/v4.7.2...v4.7.3) (2020-11-17)
+
+
+### Bug Fixes
+
+* re-attempt initiating playback when autoplay is `true` ([35fe5f0](https://github.com/vime-js/vime/commit/35fe5f024c52ed27c8c184f7884760c4ea3a9a69))
+
+
+
+
+
 ## [4.7.2](https://github.com/vime-js/vime/compare/v4.7.1...v4.7.2) (2020-11-17)
 
 **Note:** Version bump only for package @vime/core
