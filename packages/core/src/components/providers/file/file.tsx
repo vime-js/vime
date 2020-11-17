@@ -391,6 +391,8 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       this.dispatch('currentSrc', this.mediaEl!.currentSrc);
       this.dispatch('mediaType', this.getMediaType());
       this.dispatch('playbackReady', true);
+      // Re-attempt play.
+      if (this.autoplay) this.mediaEl!.play();
     }
   }
 

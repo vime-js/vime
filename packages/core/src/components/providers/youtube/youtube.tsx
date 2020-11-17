@@ -236,6 +236,8 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
     this.fetchPosterURL!.then((poster) => {
       this.dispatch('currentPoster', this.poster ?? poster);
       this.dispatch('playbackReady', true);
+      // Re-attempt play.
+      if (this.autoplay) this.remoteControl(YouTubeCommand.Play);
     });
     this.hasCued = true;
   }
@@ -254,8 +256,6 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
       this.dispatch('paused', false);
 
       if (!this.internalState.playbackStarted) {
-        // Incase of autoplay which might skip `Cued` event.
-        this.onCued();
         this.dispatch('playbackStarted', true);
         this.internalState.playbackStarted = true;
       }
@@ -266,6 +266,8 @@ export class YouTube implements MediaProvider<HTMLVimeEmbedElement> {
         this.onCued();
         break;
       case YouTubePlayerState.Playing:
+        // Incase of autoplay which might skip `Cued` event.
+        this.onCued();
         this.dispatch('playing', true);
         break;
       case YouTubePlayerState.Paused:

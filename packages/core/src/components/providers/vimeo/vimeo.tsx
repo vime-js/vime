@@ -303,6 +303,8 @@ export class Vimeo implements MediaProvider<HTMLVimeEmbedElement> {
       this.dispatch('duration', duration ?? -1);
       this.dispatch('mediaTitle', mediaTitle);
       this.dispatch('playbackReady', true);
+      // Re-attempt play.
+      if (this.autoplay) this.remoteControl(VimeoCommand.Play);
     });
     this.hasLoaded = true;
   }
