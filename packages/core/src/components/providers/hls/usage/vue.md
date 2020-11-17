@@ -1,4 +1,4 @@
-```html {3-6,12,17} title="example.vue"
+```html {3-5,11,16} title="example.vue"
 <template>
   <VimePlayer controls>
     <VimeHls :config="hlsConfig" version="latest" poster="/media/poster.png">

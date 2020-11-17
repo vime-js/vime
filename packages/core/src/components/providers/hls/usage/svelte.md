@@ -1,4 +1,4 @@
-```html {2-5,10} title="example.svelte"
+```html {2-4,9} title="example.svelte"
 <VimePlayer controls>
   <VimeHls version="latest" config="{hlsConfig}" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />

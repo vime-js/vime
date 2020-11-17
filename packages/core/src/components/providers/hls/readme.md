@@ -11,7 +11,7 @@ Enables loading, playing and controlling [HLS](https://en.wikipedia.org/wiki/HTT
 
 ### Angular
 
-```html {2-5} title="example.html"
+```html {2-4} title="example.html"
 <vime-player controls>
   <vime-hls version="latest" [config]="hlsConfig" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
@@ -34,7 +34,7 @@ class Example {
 
 ### Html
 
-```html {2-5}
+```html {2-4}
 <vime-player controls>
   <vime-hls version="latest" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
@@ -46,7 +46,7 @@ class Example {
 
 ### React
 
-```tsx {2,14-17}
+```tsx {2,14-16}
 import React from 'react';
 import { VimePlayer, VimeHls } from '@vime/react';
 
@@ -72,7 +72,7 @@ function Example() {
 
 ### Stencil
 
-```tsx {5-13}
+```tsx {5-7}
 class Example {
   render() {
     return (
@@ -90,7 +90,7 @@ class Example {
 
 ### Svelte
 
-```html {2-5,10} title="example.svelte"
+```html {2-4,9} title="example.svelte"
 <VimePlayer controls>
   <VimeHls version="latest" config="{hlsConfig}" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
@@ -113,7 +113,7 @@ class Example {
 
 ### Vue
 
-```html {3-6,12,17} title="example.vue"
+```html {3-5,11,16} title="example.vue"
 <template>
   <VimePlayer controls>
     <VimeHls :config="hlsConfig" version="latest" poster="/media/poster.png">

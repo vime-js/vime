@@ -1,4 +1,4 @@
-```tsx {2,14-17}
+```tsx {2,14-16}
 import React from 'react';
 import { VimePlayer, VimeHls } from '@vime/react';
 

@@ -1,4 +1,4 @@
-```tsx {5-13}
+```tsx {5-7}
 class Example {
   render() {
     return (
