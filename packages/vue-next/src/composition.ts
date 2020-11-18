@@ -2,7 +2,7 @@ import {
   onMounted, readonly, Ref, ref, watch,
 } from 'vue';
 import {
-  createDispatcher, Dispatcher, findRootPlayer, PlayerProps, WritableProps,
+  createDispatcher, Dispatcher, findPlayer, PlayerProps, WritableProps,
   usePlayerContext as useVimeContext,
   isWritableProp,
 } from '@vime/core';
@@ -13,16 +13,16 @@ import {
  * @param el A HTMLElement that is within the player's subtree.
  */
 export const usePlayer = <T extends HTMLElement>(el: Ref<T | null>) => {
-  const player = ref<HTMLVimePlayerElement | null>(null);
+  const player = ref<HTMLVmPlayerElement | null>(null);
 
-  const findPlayer = () => {
-    player.value = el.value ? findRootPlayer(el.value) : null;
+  const find = async () => {
+    player.value = el.value ? (await findPlayer(el.value)) : null;
   };
 
-  onMounted(findPlayer);
-  watch(el, findPlayer);
+  onMounted(find);
+  watch(el, find);
 
-  return readonly(player) as Readonly<Ref<HTMLVimePlayerElement | null>>;
+  return readonly(player) as Readonly<Ref<HTMLVmPlayerElement | null>>;
 };
 
 export type PropBinding<P extends keyof PlayerProps> = P extends keyof WritableProps
@@ -55,9 +55,9 @@ export const usePlayerContext = <T extends HTMLElement, P extends keyof PlayerPr
     if (binding.value !== prevValue) dispatch.value(prop as any, binding.value);
   });
 
-  watch(el, (_a, _b, onInvalidate) => {
+  watch(el, async (_a, _b, onInvalidate) => {
     if (!el.value) return;
-    const off = useVimeContext(
+    const off = await useVimeContext(
       el.value,
       [prop],
       (_, newValue) => {

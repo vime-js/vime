@@ -448,6 +448,6 @@ throughout the player now require the `vm` prefix.
 - `PlayerEvent` is now a type (union of strings) and not enum.
 - `useInternalPlayerContext` has been removed from `@vime/react`.
 - `useInternalPlayerStore` has been removed from `@vime/svelte`.
-- Providers dispatch changes in a separate event (`vProviderChange`).
+- Providers dispatch changes in a separate event (`vmProviderChange`).
 - Scheduler has been removed and merged in a simpler form into the `Player`.
 - The `mounted` and `destroyed` props have been replaced with `attached`.

@@ -7,18 +7,20 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { MediaCrossOriginOption, MediaPreloadOption } from "./components/providers/file/MediaFileProvider";
 import { TooltipDirection, TooltipPosition } from "./components/ui/tooltip/types";
-import { PlayerProp, PlayerProps } from "./components/core/player/PlayerProps";
+import { PlayerProps } from "./components/core/player/PlayerProps";
 import { Logger } from "./components/core/player/PlayerLogger";
 import { Params } from "./utils/network";
-import { AdapterHost, MediaProviderAdapter, MockMediaProviderAdapter } from "./components/providers/MediaProvider";
 import { ViewType } from "./components/core/player/ViewType";
 import { MediaResource } from "./components/providers/file/MediaResource";
+import { PlayerProps as PlayerProps1 } from ".";
+import { IconLibraryResolver } from "./components/ui/icon-library/IconRegistry";
 import { Provider } from "./components/providers/Provider";
 import { MediaType } from "./components/core/player/MediaType";
 import { Translation } from "./components/core/player/lang/Translation";
+import { AdapterHost, MediaProviderAdapter } from "./components/providers/MediaProvider";
 import { SettingsController } from "./components/ui/settings/settings/SettingsController";
 export namespace Components {
-    interface VimeAudio {
+    interface VmAudio {
         /**
           * Whether to use CORS to fetch the related image. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more information.
           * @inheritdoc
@@ -29,7 +31,7 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; setCurrentTextTrack: (trackId: number) => Promise<void>; setTextTrackVisibility: (isVisible: boolean) => Promise<void>; }>;
         /**
           * The title of the current media.
          */
@@ -41,8 +43,7 @@ export namespace Components {
         "preload"?: MediaPreloadOption;
         "willAttach": boolean;
     }
-    interface VimeCaptionControl {
-        "currentCaption"?: PlayerProps['currentCaption'];
+    interface VmCaptionControl {
         /**
           * The URL to an SVG element or fragment to load.
          */
@@ -52,16 +53,22 @@ export namespace Components {
          */
         "hideTooltip": boolean;
         "i18n": PlayerProps['i18n'];
-        "isCaptionsActive": PlayerProps['isCaptionsActive'];
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
+        "isTextTrackVisible": PlayerProps['isTextTrackVisible'];
         /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
           * @inheritdoc
          */
         "keys"?: string;
+        "playbackReady": PlayerProps['playbackReady'];
         /**
           * The URL to an SVG element or fragment to load.
          */
         "showIcon": string;
+        "textTracks": PlayerProps['textTracks'];
         /**
           * The direction in which the tooltip should grow.
          */
@@ -71,21 +78,21 @@ export namespace Components {
          */
         "tooltipPosition": TooltipPosition;
     }
-    interface VimeCaptions {
-        /**
-          * The height of any lower control bar in pixels so that the captions can reposition when it's active.
-         */
-        "controlsHeight": number;
+    interface VmCaptions {
+        "currentTextTrack": PlayerProps['currentTextTrack'];
         /**
           * Whether the captions should be visible or not.
          */
         "hidden": boolean;
         "isControlsActive": PlayerProps['isControlsActive'];
+        "isTextTrackVisible": PlayerProps['isTextTrackVisible'];
         "isVideoView": PlayerProps['isVideoView'];
         "playbackStarted": PlayerProps['playbackStarted'];
-        "textTracks"?: PlayerProps['textTracks'];
+        "textTracks": PlayerProps['textTracks'];
     }
-    interface VimeClickToPlay {
+    interface VmClickToPlay {
+        "forceClick": () => Promise<void>;
+        "isMobile": PlayerProps['isMobile'];
         "isVideoView": PlayerProps['isVideoView'];
         "paused": PlayerProps['paused'];
         /**
@@ -93,11 +100,19 @@ export namespace Components {
          */
         "useOnMobile": boolean;
     }
-    interface VimeControl {
+    interface VmControl {
+        /**
+          * Removes focus from the control.
+         */
+        "blurControl": () => Promise<void>;
         /**
           * If the control has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.
          */
         "expanded"?: boolean;
+        /**
+          * Focuses the control.
+         */
+        "focusControl": () => Promise<void>;
         /**
           * Whether the control should be displayed or not.
          */
@@ -125,15 +140,15 @@ export namespace Components {
          */
         "pressed"?: boolean;
     }
-    interface VimeControlGroup {
+    interface VmControlGroup {
         /**
           * Determines where to add spacing/margin. The amount of spacing is determined by the CSS variable `--control-group-spacing`.
          */
         "space": 'top' | 'bottom' | 'both' | 'none';
     }
-    interface VimeControlSpacer {
+    interface VmControlSpacer {
     }
-    interface VimeControls {
+    interface VmControls {
         /**
           * The length in milliseconds that the controls are active for before fading out. Audio players are not effected by this prop.
          */
@@ -190,7 +205,7 @@ export namespace Components {
          */
         "waitForPlaybackStart": boolean;
     }
-    interface VimeCurrentTime {
+    interface VmCurrentTime {
         /**
           * Whether the time should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`).
          */
@@ -198,14 +213,14 @@ export namespace Components {
         "currentTime": PlayerProps['currentTime'];
         "i18n": PlayerProps['i18n'];
     }
-    interface VimeDailymotion {
+    interface VmDailymotion {
         "autoplay": boolean;
         /**
           * Change the default highlight color used in the controls (hex value without the leading #). Color set in the Partner HQ will override this prop.
          */
         "color"?: string;
         "controls": boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLVimeEmbedElement>; play: () => Promise<void>; pause: () => Promise<void>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<void>; exitFullscreen: () => Promise<void>; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLVmEmbedElement>; play: () => Promise<void>; pause: () => Promise<void>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<void>; exitFullscreen: () => Promise<void>; }>;
         "language": string;
         "logger"?: Logger;
         "loop": boolean;
@@ -244,7 +259,7 @@ export namespace Components {
          */
         "videoId": string;
     }
-    interface VimeDash {
+    interface VmDash {
         /**
           * **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.
           * @inheritdoc
@@ -265,6 +280,7 @@ export namespace Components {
           * @inheritdoc
          */
         "crossOrigin"?: MediaCrossOriginOption;
+        "currentTextTrack": number;
         /**
           * **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.
           * @inheritdoc
@@ -275,7 +291,12 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; }>;
+        /**
+          * Are text tracks enabled by default.
+         */
+        "enableTextTracksByDefault": boolean;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; setCurrentTextTrack: (trackId: number) => Promise<void>; setTextTrackVisibility: (isVisible: boolean) => Promise<void>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; }>;
+        "isTextTrackVisible": boolean;
         /**
           * The title of the current media.
          */
@@ -290,6 +311,7 @@ export namespace Components {
           * @inheritdoc
          */
         "preload"?: MediaPreloadOption;
+        "shouldRenderNativeTextTracks": boolean;
         /**
           * The URL of the `manifest.mpd` file to use.
          */
@@ -299,8 +321,9 @@ export namespace Components {
          */
         "version": string;
     }
-    interface VimeDblClickFullscreen {
+    interface VmDblClickFullscreen {
         "isFullscreenActive": PlayerProps['isFullscreenActive'];
+        "isMobile": PlayerProps['isMobile'];
         "isVideoView": PlayerProps['isVideoView'];
         "playbackReady": PlayerProps['playbackReady'];
         /**
@@ -308,7 +331,7 @@ export namespace Components {
          */
         "useOnMobile": boolean;
     }
-    interface VimeDefaultControls {
+    interface VmDefaultControls {
         /**
           * The length in milliseconds that the controls are active for before fading out. Audio players are not effected by this prop.
          */
@@ -331,10 +354,13 @@ export namespace Components {
          */
         "waitForPlaybackStart": boolean;
     }
-    interface VimeDefaultSettings {
-        "currentCaption"?: PlayerProps['currentCaption'];
+    interface VmDefaultSettings {
+        "audioTracks": PlayerProps['audioTracks'];
+        "currentAudioTrack": number;
+        "currentTextTrack": number;
         "i18n": PlayerProps['i18n'];
-        "isCaptionsActive": PlayerProps['isCaptionsActive'];
+        "isTextTrackVisible": boolean;
+        "isVideoView": PlayerProps['isAudioView'];
         /**
           * Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio`, it will always be `bottomRight`.
          */
@@ -344,9 +370,9 @@ export namespace Components {
         "playbackRate": PlayerProps['playbackRate'];
         "playbackRates": PlayerProps['playbackRates'];
         "playbackReady": PlayerProps['playbackReady'];
-        "textTracks"?: PlayerProps['textTracks'];
+        "textTracks": PlayerProps['textTracks'];
     }
-    interface VimeDefaultUi {
+    interface VmDefaultUi {
         /**
           * Whether the custom captions UI should not be loaded.
          */
@@ -364,9 +390,9 @@ export namespace Components {
          */
         "noDblClickFullscreen": boolean;
         /**
-          * Whether the default icons should not be loaded.
+          * Whether the default loading screen should not be loaded.
          */
-        "noIcons": boolean;
+        "noLoadingScreen": boolean;
         /**
           * Whether the custom poster UI should not be loaded.
          */
@@ -376,15 +402,11 @@ export namespace Components {
          */
         "noSettings": boolean;
         /**
-          * Whether the skeleton loading animation should be shown while the player is loading.
-         */
-        "noSkeleton": boolean;
-        /**
           * Whether the custom spinner UI should not be loaded.
          */
         "noSpinner": boolean;
     }
-    interface VimeEmbed {
+    interface VmEmbed {
         /**
           * A function which accepts the raw message received from the embedded media player via `postMessage` and converts it into a POJO.
          */
@@ -414,7 +436,7 @@ export namespace Components {
          */
         "preconnections": string[];
     }
-    interface VimeEndTime {
+    interface VmEndTime {
         /**
           * Whether the time should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`).
          */
@@ -422,28 +444,7 @@ export namespace Components {
         "duration": PlayerProps['duration'];
         "i18n": PlayerProps['i18n'];
     }
-    interface VimeFaketube {
-        "autoplay": boolean;
-        "controls": boolean;
-        /**
-          * Dispatches a state change event.
-         */
-        "dispatchChange": (prop: PlayerProp, value: any) => Promise<void>;
-        /**
-          * Dispatches the `vLoadStart` event.
-         */
-        "dispatchLoadStart": () => Promise<void>;
-        /**
-          * Returns a mock adapter.
-         */
-        "getAdapter": () => Promise<MockMediaProviderAdapter>;
-        "language": string;
-        "logger"?: Logger;
-        "loop": boolean;
-        "muted": boolean;
-        "playsinline": boolean;
-    }
-    interface VimeFile {
+    interface VmFile {
         /**
           * **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.
           * @inheritdoc
@@ -461,6 +462,7 @@ export namespace Components {
           * @inheritdoc
          */
         "crossOrigin"?: MediaCrossOriginOption;
+        "currentTextTrack": number;
         "currentTime": number;
         /**
           * **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.
@@ -472,7 +474,9 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; setCurrentTextTrack: (trackId: number) => Promise<void>; setTextTrackVisibility: (isVisible: boolean) => Promise<void>; }>;
+        "hasCustomTextManager": boolean;
+        "isTextTrackVisible": boolean;
         "language": string;
         "logger"?: Logger;
         "loop": boolean;
@@ -487,6 +491,7 @@ export namespace Components {
           * The playback rates that are available for this media.
          */
         "playbackRates": number[];
+        "playbackReady": boolean;
         "playbackStarted": boolean;
         "playsinline": boolean;
         /**
@@ -499,19 +504,20 @@ export namespace Components {
           * @inheritdoc
          */
         "preload"?: MediaPreloadOption;
+        "shouldRenderNativeTextTracks": boolean;
         /**
           * Whether to use an `audio` or `video` element to play the media.
          */
         "viewType"?: ViewType;
         "willAttach": boolean;
     }
-    interface VimeFullscreenControl {
+    interface VmFullscreenControl {
         /**
-          * The URL to an SVG element or fragment to display for entering fullscreen.
+          * The name of the enter fullscreen icon to resolve from the icon library.
          */
         "enterIcon": string;
         /**
-          * The URL to an SVG element or fragment to display for exiting fullscreen.
+          * The name of the exit fullscreen icon to resolve from the icon library.
          */
         "exitIcon": string;
         /**
@@ -519,6 +525,10 @@ export namespace Components {
          */
         "hideTooltip": boolean;
         "i18n": PlayerProps['i18n'];
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         "isFullscreenActive": PlayerProps['isFullscreenActive'];
         /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
@@ -535,7 +545,7 @@ export namespace Components {
          */
         "tooltipPosition": TooltipPosition;
     }
-    interface VimeHls {
+    interface VmHls {
         /**
           * **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.
           * @inheritdoc
@@ -565,11 +575,12 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; setCurrentAudioTrack: (trackId: number) => Promise<void>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; setCurrentTextTrack: (trackId: number) => Promise<void>; setTextTrackVisibility: (isVisible: boolean) => Promise<void>; }>;
         /**
           * The title of the current media.
          */
         "mediaTitle"?: string;
+        "playbackReady": boolean;
         /**
           * A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.
           * @inheritdoc
@@ -585,65 +596,115 @@ export namespace Components {
          */
         "version": string;
     }
-    interface VimeIcon {
+    interface VmIcon {
+        "icons": PlayerProps['icons'];
         /**
-          * The URL to an SVG element or fragment to load.
+          * An alternative description to use for accessibility. If omitted, the name or src will be used to generate it.
          */
-        "href"?: string;
-    }
-    interface VimeIcons {
+        "label"?: string;
         /**
-          * The URL to an SVG sprite to load.
+          * The name of a registered icon library.
          */
-        "href": string;
+        "library"?: string;
+        /**
+          * The name of the icon to draw.
+         */
+        "name"?: string;
+        "redraw": () => Promise<void>;
+        /**
+          * The absolute URL of an SVG file to load.
+         */
+        "src"?: string;
     }
-    interface VimeLiveIndicator {
+    interface VmIconLibrary {
+        "icons": PlayerProps['icons'];
+        /**
+          * The name of the icon library to register. Vime provides some default libraries out of the box such as `vime`or `material`.
+         */
+        "name"?: string;
+        /**
+          * A function that translates an icon name to a URL where the corresponding SVG file exists. The URL can be local or a CORS-enabled endpoint.
+         */
+        "resolver"?: IconLibraryResolver;
+    }
+    interface VmLiveIndicator {
         "i18n": PlayerProps['i18n'];
         "isLive": PlayerProps['isLive'];
     }
-    interface VimeMenu {
+    interface VmLoadingScreen {
+        /**
+          * Whether the loading dots are hidden or not.
+         */
+        "hideDots": boolean;
+        "playbackReady": boolean;
+    }
+    interface VmMenu {
         /**
           * Whether the menu is open/visible.
          */
         "active": boolean;
         /**
-          * The `id` attribute value of the control responsible for opening/closing this menu.
+          * Removes focus from the menu.
          */
-        "controller": string;
+        "blurMenu": () => Promise<void>;
         /**
-          * This should be called directly before opening the menu to set the keyboard focus on it. This is a one-time operation and needs to be called everytime prior to opening the menu.
+          * Calculates the height of the settings menu based on its children.
          */
-        "focusOnOpen": () => Promise<void>;
+        "calculateHeight": () => Promise<number>;
         /**
-          * Returns the controller responsible for opening/closing this menu.
+          * Reference to the controller DOM element that is responsible for opening/closing this menu.
          */
-        "getController": () => Promise<HTMLElement>;
+        "controller"?: HTMLElement;
+        /**
+          * Focuses the menu.
+         */
+        "focusMenu": () => Promise<void>;
         /**
           * Returns the currently focused menu item.
          */
-        "getFocusedMenuItem": () => Promise<HTMLVimeMenuItemElement>;
+        "getActiveMenuItem": () => Promise<HTMLVmMenuItemElement | undefined>;
         /**
           * The `id` attribute of the menu.
          */
         "identifier": string;
+        /**
+          * Sets the currently focused menu item.
+         */
+        "setActiveMenuItem": (item?: HTMLVmMenuItemElement | undefined) => Promise<void>;
+        /**
+          * The direction the menu should slide in from.
+         */
+        "slideInDirection"?: 'left' | 'right';
     }
-    interface VimeMenuItem {
+    interface VmMenuItem {
         /**
           * This can provide additional context about the value of a menu item. For example, if the item is a radio button for a set of video qualities, the badge could describe whether the quality is UHD, HD etc.
          */
         "badge"?: string;
         /**
+          * Removes focus from the menu item.
+         */
+        "blurItem": () => Promise<void>;
+        /**
+          * The name of the checkmark icon to resolve from the icon library.
+         */
+        "checkIcon"?: string;
+        /**
           * If this item is to behave as a radio button, then this property determines whether the radio is selected or not. Sets the `aria-checked` property.
          */
         "checked"?: boolean;
         /**
-          * The URL to an SVG element or fragment to load.
-         */
-        "checkedIcon"?: string;
-        /**
           * If the item has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.
          */
         "expanded"?: boolean;
+        /**
+          * Focuses the menu item.
+         */
+        "focusItem": () => Promise<void>;
+        /**
+          * Returns the height of the menu item.
+         */
+        "getHeight": () => Promise<number>;
         /**
           * Whether the item is displayed or not.
          */
@@ -652,6 +713,10 @@ export namespace Components {
           * This can provide additional context about some underlying state of the item. For example, if the menu item opens/closes a submenu with options, the hint could be the currently selected option.
          */
         "hint"?: string;
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         /**
           * The `id` attribute of the item.
          */
@@ -662,23 +727,27 @@ export namespace Components {
          */
         "label": string;
         /**
-          * If the item has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.
+          * If the item has a popup menu, then this should be a reference to it.
          */
-        "menu"?: string;
+        "menu"?: HTMLVmMenuElement;
     }
-    interface VimeMenuRadio {
+    interface VmMenuRadio {
         /**
           * This can provide additional context about the value. For example, if the option is for a set of video qualities, the badge could describe whether the quality is UHD, HD etc.
          */
         "badge"?: string;
         /**
+          * The URL to an SVG element or fragment to load.
+         */
+        "checkIcon"?: string;
+        /**
           * Whether the radio item is selected or not.
          */
         "checked": boolean;
         /**
-          * The URL to an SVG element or fragment to load.
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
          */
-        "checkedIcon"?: string;
+        "icons"?: string;
         /**
           * The title of the radio item displayed to the user.
          */
@@ -688,34 +757,38 @@ export namespace Components {
          */
         "value": string;
     }
-    interface VimeMenuRadioGroup {
+    interface VmMenuRadioGroup {
         /**
           * The current value selected for this group.
          */
         "value"?: string;
     }
-    interface VimeMuteControl {
+    interface VmMuteControl {
         /**
           * Whether the tooltip should not be displayed.
          */
         "hideTooltip": boolean;
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the high volume icon to resolve from the icon library.
          */
         "highVolumeIcon": string;
         "i18n": PlayerProps['i18n'];
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
           * @inheritdoc
          */
         "keys"?: string;
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the low volume icon to resolve from the icon library.
          */
         "lowVolumeIcon": string;
         "muted": PlayerProps['muted'];
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the muted volume icon to resolve from the icon library.
          */
         "mutedIcon": string;
         /**
@@ -728,13 +801,13 @@ export namespace Components {
         "tooltipPosition": TooltipPosition;
         "volume": PlayerProps['volume'];
     }
-    interface VimePipControl {
+    interface VmPipControl {
         /**
-          * The URL to an SVG element or fragment to display for entering PiP.
+          * The name of the enter pip icon to resolve from the icon library.
          */
         "enterIcon": string;
         /**
-          * The URL to an SVG element or fragment to display for exiting PiP.
+          * The name of the exit pip icon to resolve from the icon library.
          */
         "exitIcon": string;
         /**
@@ -742,6 +815,10 @@ export namespace Components {
          */
         "hideTooltip": boolean;
         "i18n": PlayerProps['i18n'];
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         "isPiPActive": PlayerProps['isPiPActive'];
         /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
@@ -758,24 +835,28 @@ export namespace Components {
          */
         "tooltipPosition": TooltipPosition;
     }
-    interface VimePlaybackControl {
+    interface VmPlaybackControl {
         /**
           * Whether the tooltip should not be displayed.
          */
         "hideTooltip": boolean;
         "i18n": PlayerProps['i18n'];
         /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
+        /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
           * @inheritdoc
          */
         "keys"?: string;
         /**
-          * The URL to an SVG element or fragment to load.
+          * The name of the pause icon to resolve from the icon library.
          */
         "pauseIcon": string;
         "paused": PlayerProps['paused'];
         /**
-          * The URL to an SVG element or fragment to load.
+          * The name of the play icon to resolve from the icon library.
          */
         "playIcon": string;
         /**
@@ -787,17 +868,18 @@ export namespace Components {
          */
         "tooltipPosition": TooltipPosition;
     }
-    interface VimePlayer {
+    interface VmPlayer {
         /**
           * The aspect ratio of the player expressed as `width:height` (`16:9`). This is only applied if the `viewType` is `video` and the player is not in fullscreen mode.
           * @inheritDoc
          */
         "aspectRatio": string;
         /**
-          * `@readonly` Whether the player is attached to the DOM.
-          * @inheritDoc
+          * The audio tracks associated with the current media.
+          * @inheritDoc 
+          * @readonly
          */
-        "attached": boolean;
+        "audioTracks": never[];
         /**
           * Whether the player should automatically pause when another Vime player starts/resumes playback.
           * @inheritDoc
@@ -809,13 +891,15 @@ export namespace Components {
          */
         "autoplay": boolean;
         /**
-          * `@readonly` The length of the media in seconds that has been downloaded by the browser.
-          * @inheritDoc
+          * The length of the media in seconds that has been downloaded by the browser.
+          * @inheritDoc 
+          * @readonly
          */
         "buffered": number;
         /**
-          * `@readonly` Whether playback has temporarily stopped because of a lack of temporary data.
-          * @inheritDoc
+          * Whether playback has temporarily stopped because of a lack of temporary data.
+          * @inheritDoc 
+          * @readonly
          */
         "buffering": boolean;
         "callAdapter": (method: keyof MediaProviderAdapter, value?: any) => Promise<any>;
@@ -834,6 +918,11 @@ export namespace Components {
           * @inheritDoc
          */
         "canPlay": (type: string) => Promise<boolean>;
+        /**
+          * Returns whether the current providers allows changing the audio track.
+          * @inheritDoc
+         */
+        "canSetAudioTrack": () => Promise<boolean>;
         /**
           * Returns whether the native browser fullscreen API is available, or the current provider can toggle fullscreen mode. This does not mean that the operation is guaranteed to be successful, only that it can be attempted.
           * @inheritDoc
@@ -855,60 +944,76 @@ export namespace Components {
          */
         "canSetPlaybackRate": () => Promise<boolean>;
         /**
+          * Returns whether the current provider allows changing the text track.
+          * @inheritDoc
+         */
+        "canSetTextTrack": () => Promise<boolean>;
+        /**
+          * Returns whether the current providers allows setting the text track visibility.
+          * @inheritDoc
+         */
+        "canSetTextTrackVisibility": () => Promise<boolean>;
+        /**
           * Indicates whether a user interface should be shown for controlling the resource. Set this to `false` when you want to provide your own custom controls, and `true` if you want the current provider to supply its own default controls. Depending on the provider, changing this prop may cause the player to completely reset.
           * @inheritDoc
          */
         "controls": boolean;
         /**
-          * `@readonly` The selected caption/subtitle text track to display. Defaults to `undefined` if there is none. This does not mean this track is active, only that is the current selection. To know if it is active, check the `isCaptionsActive` prop.
-          * @inheritDoc
+          * Gets the index of the currently active audio track. Defaults to `-1` to when the default audio track is used. If you'd like to set it than see the `setCurrentAudioTrack` method.
+          * @inheritDoc 
+          * @readonly
          */
-        "currentCaption"?: TextTrack;
+        "currentAudioTrack": number;
         /**
-          * `@readonly` The absolute URL of the poster for the current media resource. Defaults to `undefined` if no media/poster has been loaded.
-          * @inheritDoc
+          * The absolute URL of the poster for the current media resource. Defaults to `undefined` if no media/poster has been loaded.
+          * @inheritDoc 
+          * @readonly
          */
         "currentPoster"?: string;
         /**
-          * `@readonly` The current provider name whose responsible for loading and playing media. Defaults to `undefined` when no provider has been loaded.
-          * @inheritDoc
+          * The current provider name whose responsible for loading and playing media. Defaults to `undefined` when no provider has been loaded.
+          * @inheritDoc 
+          * @readonly
          */
         "currentProvider"?: Provider;
         /**
-          * `@readonly` The absolute URL of the media resource that has been chosen. Defaults to `undefined` if no media has been loaded.
-          * @inheritDoc
+          * The absolute URL of the media resource that has been chosen. Defaults to `undefined` if no media has been loaded.
+          * @inheritDoc 
+          * @readonly
          */
         "currentSrc"?: string;
+        /**
+          * Gets the index of the currently active text track. Defaults to `-1` to when all text tracks are disabled. If you'd like to set it than see the `setCurrentTextTrack` method.
+          * @inheritDoc 
+          * @readonly
+         */
+        "currentTextTrack": number;
         /**
           * A `double` indicating the current playback time in seconds. Defaults to `0` if the media has not started to play and has not seeked. Setting this value seeks the media to the new time. The value can be set to a minimum of `0` and maximum of the total length of the media (indicated by the duration prop).
           * @inheritDoc
          */
         "currentTime": number;
         /**
-          * `@readonly` Whether the player is in debug mode and should `console.x` information about its internal state.
+          * Whether the player is in debug mode and should `console.x` information about its internal state.
           * @inheritDoc
          */
         "debug": boolean;
         /**
-          * `@readonly` A `double` indicating the total playback length of the media in seconds. Defaults to `-1` if no media has been loaded. If the media is being streamed live then the duration is equal to `Infinity`.
-          * @inheritDoc
+          * A `double` indicating the total playback length of the media in seconds. Defaults to `-1` if no media has been loaded. If the media is being streamed live then the duration is equal to `Infinity`.
+          * @inheritDoc 
+          * @readonly
          */
         "duration": number;
         /**
-          * Requests to enter fullscreen mode, returning a `Promise` that will resolve if the request is made, or reject with a reason for failure. This method will first attempt to use the browsers native fullscreen API, and then fallback to requesting the provider to do it (if available). Do not rely on a resolved promise to determine if the player is in fullscreen or not. The only way to be certain is by listening to the `vFullscreenChange` event. Some common reasons for failure are: the fullscreen API is not available, the request is made when `viewType` is audio, or the user has not interacted with the page yet.
+          * Requests to enter fullscreen mode, returning a `Promise` that will resolve if the request is made, or reject with a reason for failure. This method will first attempt to use the browsers native fullscreen API, and then fallback to requesting the provider to do it (if available). Do not rely on a resolved promise to determine if the player is in fullscreen or not. The only way to be certain is by listening to the `vmFullscreenChange` event. Some common reasons for failure are: the fullscreen API is not available, the request is made when `viewType` is audio, or the user has not interacted with the page yet.
           * @inheritDoc
          */
         "enterFullscreen": (options?: FullscreenOptions | undefined) => Promise<any>;
         /**
-          * Request to enter picture-in-picture (PiP) mode, returning a `Promise` that will resolve if the request is made, or reject with a reason for failure. Do not rely on a resolved promise to determine if the player is in PiP mode or not. The only way to be certain is by listening to the `vPiPChange` event. Some common reasons for failure are the same as the reasons for `enterFullscreen()`.
+          * Request to enter picture-in-picture (PiP) mode, returning a `Promise` that will resolve if the request is made, or reject with a reason for failure. Do not rely on a resolved promise to determine if the player is in PiP mode or not. The only way to be certain is by listening to the `vmPiPChange` event. Some common reasons for failure are the same as the reasons for `enterFullscreen()`.
           * @inheritDoc
          */
         "enterPiP": () => Promise<void | undefined>;
-        /**
-          * `@readonly` A collection of errors that have occurred ordered by `[oldest, ..., newest]`.
-          * @inheritDoc
-         */
-        "errors": any[];
         /**
           * Requests to exit fullscreen mode, returning a `Promise` that will resolve if the request is successful, or reject with a reason for failure. Refer to `enterFullscreen()` for more information.
           * @inheritDoc
@@ -929,73 +1034,94 @@ export namespace Components {
          */
         "getAdapter": <InternalPlayerType = any>() => Promise<MediaProviderAdapter<InternalPlayerType> | undefined>;
         /**
+          * Returns the inner container.
+         */
+        "getContainer": () => Promise<HTMLDivElement | undefined>;
+        /**
           * Returns the current media provider.
           * @inheritDoc
          */
         "getProvider": <InternalPlayerType = any>() => Promise<AdapterHost<InternalPlayerType> | undefined>;
         /**
-          * `@readonly` A dictionary of translations for the current language.
-          * @inheritDoc
+          * A dictionary of translations for the current language.
+          * @inheritDoc 
+          * @readonly
          */
         "i18n": Translation;
         /**
-          * `@readonly` Whether the current media is of type `audio`, shorthand for `mediaType === MediaType.Audio`.
+          * The default icon library to be used throughout the player. You can use a predefined icon library such as vime, material, remix or boxicons. If you'd like to provide your own see the `<vm-icon-library>` component. Remember to pass in the name of your icon library here.
           * @inheritDoc
+         */
+        "icons": string;
+        /**
+          * Whether the current media is of type `audio`, shorthand for `mediaType === MediaType.Audio`.
+          * @inheritDoc 
+          * @readonly
          */
         "isAudio": boolean;
         /**
-          * `@readonly` Whether the current view is of type `audio`, shorthand for `viewType === ViewType.Audio`.
-          * @inheritDoc
+          * Whether the current view is of type `audio`, shorthand for `viewType === ViewType.Audio`.
+          * @inheritDoc 
+          * @readonly
          */
         "isAudioView": boolean;
-        /**
-          * `@readonly` Whether any captions or subtitles are currently showing.
-          * @inheritDoc
-         */
-        "isCaptionsActive": boolean;
         /**
           * Whether the controls are currently visible. This is currently only supported by custom controls.
           * @inheritDoc
          */
         "isControlsActive": boolean;
         /**
-          * `@readonly` Whether the player is currently in fullscreen mode.
-          * @inheritDoc
+          * Whether the player is currently in fullscreen mode.
+          * @inheritDoc 
+          * @readonly
          */
         "isFullscreenActive": boolean;
         /**
-          * `@readonly` Whether the current media is being broadcast live (`duration === Infinity`).
-          * @inheritDoc
+          * Whether the current media is being broadcast live (`duration === Infinity`).
+          * @inheritDoc 
+          * @readonly
          */
         "isLive": boolean;
         /**
-          * `@readonly` Whether the player is in mobile mode. This is determined by parsing `window.navigator.userAgent`.
-          * @inheritDoc
+          * Whether the player is in mobile mode. This is determined by parsing `window.navigator.userAgent`.
+          * @inheritDoc 
+          * @readonly
          */
         "isMobile": boolean;
         /**
-          * `@readonly` Whether the player is currently in picture-in-picture mode.
-          * @inheritDoc
+          * Whether the player is currently in picture-in-picture mode.
+          * @inheritDoc 
+          * @readonly
          */
         "isPiPActive": boolean;
         /**
-          * `@readonly` Whether the settings menu has been opened and is currently visible. This is currently only supported by custom settings.
-          * @inheritDoc
+          * Whether the settings menu has been opened and is currently visible. This is currently only supported by custom settings.
+          * @inheritDoc 
+          * @readonly
          */
         "isSettingsActive": boolean;
         /**
-          * `@readonly` Whether the player is in touch mode. This is determined by listening for mouse/touch events and toggling this value.
-          * @inheritDoc
+          * Whether the current text tracks is visible. If you'd like to set it than see the `setTrackTrackVisibility` method.
+          * @inheritDoc 
+          * @readonly
+         */
+        "isTextTrackVisible": boolean;
+        /**
+          * Whether the player is in touch mode. This is determined by listening for mouse/touch events and toggling this value.
+          * @inheritDoc 
+          * @readonly
          */
         "isTouch": boolean;
         /**
-          * `@readonly` Whether the current media is of type `video`, shorthand for `mediaType === MediaType.Video`.
-          * @inheritDoc
+          * Whether the current media is of type `video`, shorthand for `mediaType === MediaType.Video`.
+          * @inheritDoc 
+          * @readonly
          */
         "isVideo": boolean;
         /**
-          * `@readonly` Whether the current view is of type `video`, shorthand for `viewType === ViewType.Video`.
-          * @inheritDoc
+          * Whether the current view is of type `video`, shorthand for `viewType === ViewType.Video`.
+          * @inheritDoc 
+          * @readonly
          */
         "isVideoView": boolean;
         /**
@@ -1004,10 +1130,14 @@ export namespace Components {
          */
         "language": string;
         /**
-          * `@readonly` The languages that are currently available. You can add new languages via the `extendLanguage` method.
-          * @inheritDoc
+          * The languages that are currently available. You can add new languages via the `extendLanguage` method.
+          * @inheritDoc 
+          * @readonly
          */
         "languages": string[];
+        /**
+          * @readonly
+         */
         "logger": Logger;
         /**
           * Whether media should automatically start playing from the beginning every time it ends.
@@ -1015,13 +1145,15 @@ export namespace Components {
          */
         "loop": boolean;
         /**
-          * `@readonly` The title of the current media. Defaults to `undefined` if no media has been loaded.
-          * @inheritDoc
+          * The title of the current media. Defaults to `undefined` if no media has been loaded.
+          * @inheritDoc 
+          * @readonly
          */
         "mediaTitle"?: string;
         /**
-          * `@readonly` The type of media that is currently active, whether it's audio or video. Defaults to `undefined` when no media has been loaded or the type cannot be determined.
-          * @inheritDoc
+          * The type of media that is currently active, whether it's audio or video. Defaults to `undefined` when no media has been loaded or the type cannot be determined.
+          * @inheritDoc 
+          * @readonly
          */
         "mediaType"?: MediaType;
         /**
@@ -1045,17 +1177,19 @@ export namespace Components {
          */
         "play": () => Promise<void | undefined>;
         /**
-          * `@readonly` Whether media playback has reached the end. In other words it'll be true if `currentTime === duration`.
-          * @inheritDoc
+          * Whether media playback has reached the end. In other words it'll be true if `currentTime === duration`.
+          * @inheritDoc 
+          * @readonly
          */
         "playbackEnded": boolean;
         /**
-          * `@readonly` The media qualities available for the current media.
-          * @inheritDoc
+          * The media qualities available for the current media.
+          * @inheritDoc 
+          * @readonly
          */
         "playbackQualities": string[];
         /**
-          * Indicates the quality of the media. The value will differ between audio and video. For audio this might be some combination of the encoding format (AAC, MP3), bitrate in kilobits per second (kbps) and sample rate in kilohertz (kHZ). For video this will be the number of vertical pixels it supports. For example, if the video has a resolution of `1920x1080` then the quality will return `1080p`. Defaults to `undefined` which you can interpret as the quality is unknown. The quality can only be set to a quality found in the `playbackQualities` prop. Some providers may not allow changing the quality, you can check if it's possible via `canSetPlaybackQuality()`.
+          * Indicates the quality of the media. The value will differ between audio and video. For audio this might be some combination of the encoding format (AAC, MP3), bitrate in kilobits per second (kbps) and sample rate in kilohertz (kHZ). For video this will be the number of vertical pixels it supports. For example, if the video has a resolution of `1920x1080` then the quality will return `1080p`. Defaults to `undefined` which you can interpret as the quality is unknown. The value can also be `Auto` for adaptive bit streams (ABR), where the provider can automatically manage the playback quality. The quality can only be set to a quality found in the `playbackQualities` prop. Some providers may not allow changing the quality, you can check if it's possible via `canSetPlaybackQuality()`.
           * @inheritDoc
          */
         "playbackQuality"?: string;
@@ -1065,23 +1199,27 @@ export namespace Components {
          */
         "playbackRate": number;
         /**
-          * `@readonly` The playback rates available for the current media.
-          * @inheritDoc
+          * The playback rates available for the current media.
+          * @inheritDoc 
+          * @readonly
          */
         "playbackRates": number[];
         /**
-          * `@readonly` Whether media is ready for playback to begin.
-          * @inheritDoc
+          * Whether media is ready for playback to begin.
+          * @inheritDoc 
+          * @readonly
          */
         "playbackReady": boolean;
         /**
-          * `@readonly` Whether the media has initiated playback. In other words it will be true if `currentTime > 0`.
-          * @inheritDoc
+          * Whether the media has initiated playback. In other words it will be true if `currentTime > 0`.
+          * @inheritDoc 
+          * @readonly
          */
         "playbackStarted": boolean;
         /**
-          * `@readonly` Whether media is actively playing back. Defaults to `false` if no media has loaded or playback has not started.
-          * @inheritDoc
+          * Whether media is actively playing back. Defaults to `false` if no media has loaded or playback has not started.
+          * @inheritDoc 
+          * @readonly
          */
         "playing": boolean;
         /**
@@ -1090,39 +1228,58 @@ export namespace Components {
          */
         "playsinline": boolean;
         /**
-          * `@readonly` Whether the player has loaded and is ready to be interacted with.
-          * @inheritDoc
+          * Whether the player has loaded and is ready to be interacted with.
+          * @inheritDoc 
+          * @readonly
          */
         "ready": boolean;
         /**
-          * `@readonly` Whether the player is in the process of seeking to a new time position.
-          * @inheritDoc
+          * Whether the player is in the process of seeking to a new time position.
+          * @inheritDoc 
+          * @readonly
          */
         "seeking": boolean;
-        "setProvider": (provider: AdapterHost) => Promise<void>;
         /**
-          * `@readonly` The text tracks (WebVTT) associated with the current media.
+          * Sets the currently active audio track given the index.
           * @inheritDoc
          */
-        "textTracks"?: TextTrackList;
+        "setCurrentAudioTrack": (trackId: number) => Promise<void>;
+        /**
+          * Sets the currently active text track given the index. Set to -1 to disable all text tracks.
+          * @inheritDoc
+         */
+        "setCurrentTextTrack": (trackId: number) => Promise<void>;
+        "setProvider": (provider: AdapterHost) => Promise<void>;
+        /**
+          * Sets the visibility of the currently active text track.
+          * @inheritDoc
+         */
+        "setTextTrackVisibility": (isVisible: boolean) => Promise<void>;
+        /**
+          * Whether text tracks should be rendered by native player, set to `false` if using custom display.
+          * @inheritDoc
+         */
+        "shouldRenderNativeTextTracks": boolean;
+        /**
+          * The text tracks associated with the current media.
+          * @inheritDoc 
+          * @readonly
+         */
+        "textTracks": never[];
         /**
           * This property has no role other than scoping CSS selectors.
           * @inheritDoc
          */
         "theme"?: string;
         /**
-          * Toggles the visibility of the captions.
-          * @inheritdoc
-         */
-        "toggleCaptionsVisibility": (isVisible?: boolean | undefined) => Promise<void>;
-        /**
-          * `@readonly` Contains each language and its respective translation map.
+          * Contains each language and its respective translation map.
           * @inheritDoc
          */
         "translations": Record<string, Translation>;
         /**
-          * `@readonly` The type of player view that is being used, whether it's an audio player view or video player view. Normally if the media type is of audio then the view is of type audio, but in some cases it might be desirable to show a different view type. For example, when playing audio with a poster. This is subject to the provider allowing it. Defaults to `undefined` when no media has been loaded.
-          * @inheritDoc
+          * The type of player view that is being used, whether it's an audio player view or video player view. Normally if the media type is of audio then the view is of type audio, but in some cases it might be desirable to show a different view type. For example, when playing audio with a poster. This is subject to the provider allowing it. Defaults to `undefined` when no media has been loaded.
+          * @inheritDoc 
+          * @readonly
          */
         "viewType"?: ViewType;
         /**
@@ -1131,7 +1288,7 @@ export namespace Components {
          */
         "volume": number;
     }
-    interface VimePlayground {
+    interface VmPlayground {
         /**
           * The current poster to load.
          */
@@ -1140,6 +1297,10 @@ export namespace Components {
           * The current media provider.
          */
         "provider": Provider;
+        /**
+          * Whether to show the native controls or not.
+         */
+        "showControls": boolean;
         /**
           * Whether to show the custom Vime UI or not.
          */
@@ -1153,7 +1314,7 @@ export namespace Components {
          */
         "theme": 'light' | 'dark';
     }
-    interface VimePoster {
+    interface VmPoster {
         "currentPoster"?: PlayerProps['currentPoster'];
         "currentTime": PlayerProps['currentTime'];
         /**
@@ -1164,7 +1325,7 @@ export namespace Components {
         "mediaTitle"?: PlayerProps['mediaTitle'];
         "playbackStarted": PlayerProps['playbackStarted'];
     }
-    interface VimeScrim {
+    interface VmScrim {
         /**
           * If this prop is defined, a dark gradient that smoothly fades out without being noticed will be used instead of a set color. This prop also sets the direction in which the dark end of the gradient should start. If the direction is set to `up`, the dark end of the gradient will start at the bottom of the player and fade out to the center. If the direction is set to `down`, the gradient will start at the top of the player and fade out to the center.
          */
@@ -1172,7 +1333,7 @@ export namespace Components {
         "isControlsActive": PlayerProps['isControlsActive'];
         "isVideoView": PlayerProps['isVideoView'];
     }
-    interface VimeScrubberControl {
+    interface VmScrubberControl {
         /**
           * Whether the timestamp in the tooltip should show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`).
          */
@@ -1191,15 +1352,11 @@ export namespace Components {
          */
         "noKeyboard": boolean;
     }
-    interface VimeSettings {
+    interface VmSettings {
         /**
           * Whether the settings menu is opened/closed.
          */
         "active": boolean;
-        /**
-          * The height of any lower control bar in pixels so that the settings can re-position itself accordingly.
-         */
-        "controlsHeight": number;
         "isAudioView": PlayerProps['isAudioView'];
         "isMobile": PlayerProps['isMobile'];
         /**
@@ -1207,20 +1364,32 @@ export namespace Components {
          */
         "pin": 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
         /**
-          * Sets the controller responsible for opening/closing this settings.
+          * Sets the controller responsible for opening/closing this settings menu.
          */
-        "setController": (id: string, controller: SettingsController) => Promise<void>;
+        "setController": (controller: SettingsController) => Promise<void>;
     }
-    interface VimeSettingsControl {
+    interface VmSettingsControl {
+        /**
+          * Removes focus from the control.
+         */
+        "blurControl": () => Promise<void>;
         /**
           * Whether the settings menu this control manages is open.
          */
         "expanded": boolean;
+        /**
+          * Focuses the control.
+         */
+        "focusControl": () => Promise<void>;
         "i18n": PlayerProps['i18n'];
         /**
-          * The URL to an SVG element or fragment to load.
+          * The name of the settings icon to resolve from the icon library.
          */
         "icon": string;
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         /**
           * The DOM `id` of the settings menu this control is responsible for opening/closing.
          */
@@ -1234,14 +1403,14 @@ export namespace Components {
          */
         "tooltipPosition": TooltipPosition;
     }
-    interface VimeSkeleton {
+    interface VmSkeleton {
         /**
-          * Determines which effect the skeleton will use.
+          * Determines which animation effect the skeleton will use.
          */
         "effect": 'sheen' | 'none';
         "ready": PlayerProps['ready'];
     }
-    interface VimeSlider {
+    interface VmSlider {
         /**
           * A human-readable label for the purpose of the slider.
          */
@@ -1267,20 +1436,33 @@ export namespace Components {
          */
         "valueText"?: string;
     }
-    interface VimeSpinner {
+    interface VmSpinner {
         "buffering": PlayerProps['buffering'];
         "currentProvider"?: PlayerProps['currentProvider'];
         "isVideoView": PlayerProps['isVideoView'];
+        "playbackReady": PlayerProps['playbackReady'];
+        /**
+          * Whether the spinner should be active when the player is booting or media is loading.
+         */
+        "showWhenMediaLoading": boolean;
     }
-    interface VimeSubmenu {
+    interface VmSubmenu {
         /**
           * Whether the submenu is open/closed.
          */
         "active": boolean;
         /**
-          * Whether the submenu should be displayed or not.
+          * Returns the controller (`vm-menu-item`) for this submenu.
          */
-        "hidden": boolean;
+        "getController": () => Promise<HTMLVmMenuItemElement | undefined>;
+        /**
+          * Returns the height of the submenu controller.
+         */
+        "getControllerHeight": () => Promise<number>;
+        /**
+          * Returns the menu (`vm-menu`) for this submenu.
+         */
+        "getMenu": () => Promise<HTMLVmMenuElement | undefined>;
         /**
           * This can provide additional context about the current state of the submenu. For example, the hint could be the currently selected option if the submenu contains a radio group.
          */
@@ -1289,8 +1471,12 @@ export namespace Components {
           * The title of the submenu.
          */
         "label": string;
+        /**
+          * The direction the submenu should slide in from.
+         */
+        "slideInDirection"?: 'left' | 'right';
     }
-    interface VimeTime {
+    interface VmTime {
         /**
           * Whether the time should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`).
          */
@@ -1304,7 +1490,7 @@ export namespace Components {
          */
         "seconds": number;
     }
-    interface VimeTimeProgress {
+    interface VmTimeProgress {
         /**
           * Whether the times should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`).
          */
@@ -1314,7 +1500,7 @@ export namespace Components {
          */
         "separator": string;
     }
-    interface VimeTooltip {
+    interface VmTooltip {
         /**
           * Whether the tooltip is visible or not.
          */
@@ -1327,18 +1513,19 @@ export namespace Components {
           * Whether the tooltip is displayed or not.
          */
         "hidden": boolean;
+        "isMobile": PlayerProps['isMobile'];
         "isTouch": PlayerProps['isTouch'];
         /**
           * Determines if the tooltip appears on top/bottom of it's parent.
          */
         "position": TooltipPosition;
     }
-    interface VimeUi {
+    interface VmUi {
         "isFullscreenActive": PlayerProps['isFullscreenActive'];
         "isVideoView": PlayerProps['isVideoView'];
         "playsinline": PlayerProps['playsinline'];
     }
-    interface VimeVideo {
+    interface VmVideo {
         /**
           * **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.
           * @inheritdoc
@@ -1364,7 +1551,8 @@ export namespace Components {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLMediaElement>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; setCurrentTextTrack: (trackId: number) => Promise<void>; setTextTrackVisibility: (isVisible: boolean) => Promise<void>; }>;
+        "hasCustomTextManager": boolean;
         /**
           * The title of the current media.
          */
@@ -1381,7 +1569,7 @@ export namespace Components {
         "preload"?: MediaPreloadOption;
         "willAttach": boolean;
     }
-    interface VimeVimeo {
+    interface VmVimeo {
         "aspectRatio": string;
         "autoplay": boolean;
         /**
@@ -1393,7 +1581,7 @@ export namespace Components {
          */
         "color"?: string;
         "controls": boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLVimeEmbedElement>; play: () => Promise<void>; pause: () => Promise<void>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLVmEmbedElement>; play: () => Promise<void>; pause: () => Promise<void>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; }>;
         "language": string;
         "logger"?: Logger;
         "loop": boolean;
@@ -1416,19 +1604,23 @@ export namespace Components {
          */
         "videoId": string;
     }
-    interface VimeVolumeControl {
+    interface VmVolumeControl {
         /**
           * Whether the tooltip should be hidden.
          */
         "hideTooltip": boolean;
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the high volume icon to resolve from the icon library.
          */
         "highVolumeIcon": string;
         "i18n": PlayerProps['i18n'];
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         "isMobile": PlayerProps['isMobile'];
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the low volume icon to resolve from the icon library.
          */
         "lowVolumeIcon": string;
         /**
@@ -1437,7 +1629,7 @@ export namespace Components {
         "muteKeys"?: string;
         "muted": PlayerProps['muted'];
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the muted volume icon to resolve from the icon library.
          */
         "mutedIcon": string;
         /**
@@ -1454,14 +1646,14 @@ export namespace Components {
         "tooltipPosition": TooltipPosition;
         "volume": PlayerProps['volume'];
     }
-    interface VimeYoutube {
+    interface VmYoutube {
         "autoplay": boolean;
         "controls": boolean;
         /**
           * Whether cookies should be enabled on the embed.
          */
         "cookies": boolean;
-        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLVimeEmbedElement>; play: () => Promise<void>; pause: () => Promise<void>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; }>;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLVmEmbedElement>; play: () => Promise<void>; pause: () => Promise<void>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; }>;
         "language": string;
         "logger"?: Logger;
         "loop": boolean;
@@ -1482,361 +1674,361 @@ export namespace Components {
     }
 }
 declare global {
-    interface HTMLVimeAudioElement extends Components.VimeAudio, HTMLStencilElement {
+    interface HTMLVmAudioElement extends Components.VmAudio, HTMLStencilElement {
     }
-    var HTMLVimeAudioElement: {
-        prototype: HTMLVimeAudioElement;
-        new (): HTMLVimeAudioElement;
+    var HTMLVmAudioElement: {
+        prototype: HTMLVmAudioElement;
+        new (): HTMLVmAudioElement;
     };
-    interface HTMLVimeCaptionControlElement extends Components.VimeCaptionControl, HTMLStencilElement {
+    interface HTMLVmCaptionControlElement extends Components.VmCaptionControl, HTMLStencilElement {
     }
-    var HTMLVimeCaptionControlElement: {
-        prototype: HTMLVimeCaptionControlElement;
-        new (): HTMLVimeCaptionControlElement;
+    var HTMLVmCaptionControlElement: {
+        prototype: HTMLVmCaptionControlElement;
+        new (): HTMLVmCaptionControlElement;
     };
-    interface HTMLVimeCaptionsElement extends Components.VimeCaptions, HTMLStencilElement {
+    interface HTMLVmCaptionsElement extends Components.VmCaptions, HTMLStencilElement {
     }
-    var HTMLVimeCaptionsElement: {
-        prototype: HTMLVimeCaptionsElement;
-        new (): HTMLVimeCaptionsElement;
+    var HTMLVmCaptionsElement: {
+        prototype: HTMLVmCaptionsElement;
+        new (): HTMLVmCaptionsElement;
     };
-    interface HTMLVimeClickToPlayElement extends Components.VimeClickToPlay, HTMLStencilElement {
+    interface HTMLVmClickToPlayElement extends Components.VmClickToPlay, HTMLStencilElement {
     }
-    var HTMLVimeClickToPlayElement: {
-        prototype: HTMLVimeClickToPlayElement;
-        new (): HTMLVimeClickToPlayElement;
+    var HTMLVmClickToPlayElement: {
+        prototype: HTMLVmClickToPlayElement;
+        new (): HTMLVmClickToPlayElement;
     };
-    interface HTMLVimeControlElement extends Components.VimeControl, HTMLStencilElement {
+    interface HTMLVmControlElement extends Components.VmControl, HTMLStencilElement {
     }
-    var HTMLVimeControlElement: {
-        prototype: HTMLVimeControlElement;
-        new (): HTMLVimeControlElement;
+    var HTMLVmControlElement: {
+        prototype: HTMLVmControlElement;
+        new (): HTMLVmControlElement;
     };
-    interface HTMLVimeControlGroupElement extends Components.VimeControlGroup, HTMLStencilElement {
+    interface HTMLVmControlGroupElement extends Components.VmControlGroup, HTMLStencilElement {
     }
-    var HTMLVimeControlGroupElement: {
-        prototype: HTMLVimeControlGroupElement;
-        new (): HTMLVimeControlGroupElement;
+    var HTMLVmControlGroupElement: {
+        prototype: HTMLVmControlGroupElement;
+        new (): HTMLVmControlGroupElement;
     };
-    interface HTMLVimeControlSpacerElement extends Components.VimeControlSpacer, HTMLStencilElement {
+    interface HTMLVmControlSpacerElement extends Components.VmControlSpacer, HTMLStencilElement {
     }
-    var HTMLVimeControlSpacerElement: {
-        prototype: HTMLVimeControlSpacerElement;
-        new (): HTMLVimeControlSpacerElement;
+    var HTMLVmControlSpacerElement: {
+        prototype: HTMLVmControlSpacerElement;
+        new (): HTMLVmControlSpacerElement;
     };
-    interface HTMLVimeControlsElement extends Components.VimeControls, HTMLStencilElement {
+    interface HTMLVmControlsElement extends Components.VmControls, HTMLStencilElement {
     }
-    var HTMLVimeControlsElement: {
-        prototype: HTMLVimeControlsElement;
-        new (): HTMLVimeControlsElement;
+    var HTMLVmControlsElement: {
+        prototype: HTMLVmControlsElement;
+        new (): HTMLVmControlsElement;
     };
-    interface HTMLVimeCurrentTimeElement extends Components.VimeCurrentTime, HTMLStencilElement {
+    interface HTMLVmCurrentTimeElement extends Components.VmCurrentTime, HTMLStencilElement {
     }
-    var HTMLVimeCurrentTimeElement: {
-        prototype: HTMLVimeCurrentTimeElement;
-        new (): HTMLVimeCurrentTimeElement;
+    var HTMLVmCurrentTimeElement: {
+        prototype: HTMLVmCurrentTimeElement;
+        new (): HTMLVmCurrentTimeElement;
     };
-    interface HTMLVimeDailymotionElement extends Components.VimeDailymotion, HTMLStencilElement {
+    interface HTMLVmDailymotionElement extends Components.VmDailymotion, HTMLStencilElement {
     }
-    var HTMLVimeDailymotionElement: {
-        prototype: HTMLVimeDailymotionElement;
-        new (): HTMLVimeDailymotionElement;
+    var HTMLVmDailymotionElement: {
+        prototype: HTMLVmDailymotionElement;
+        new (): HTMLVmDailymotionElement;
     };
-    interface HTMLVimeDashElement extends Components.VimeDash, HTMLStencilElement {
+    interface HTMLVmDashElement extends Components.VmDash, HTMLStencilElement {
     }
-    var HTMLVimeDashElement: {
-        prototype: HTMLVimeDashElement;
-        new (): HTMLVimeDashElement;
+    var HTMLVmDashElement: {
+        prototype: HTMLVmDashElement;
+        new (): HTMLVmDashElement;
     };
-    interface HTMLVimeDblClickFullscreenElement extends Components.VimeDblClickFullscreen, HTMLStencilElement {
+    interface HTMLVmDblClickFullscreenElement extends Components.VmDblClickFullscreen, HTMLStencilElement {
     }
-    var HTMLVimeDblClickFullscreenElement: {
-        prototype: HTMLVimeDblClickFullscreenElement;
-        new (): HTMLVimeDblClickFullscreenElement;
+    var HTMLVmDblClickFullscreenElement: {
+        prototype: HTMLVmDblClickFullscreenElement;
+        new (): HTMLVmDblClickFullscreenElement;
     };
-    interface HTMLVimeDefaultControlsElement extends Components.VimeDefaultControls, HTMLStencilElement {
+    interface HTMLVmDefaultControlsElement extends Components.VmDefaultControls, HTMLStencilElement {
     }
-    var HTMLVimeDefaultControlsElement: {
-        prototype: HTMLVimeDefaultControlsElement;
-        new (): HTMLVimeDefaultControlsElement;
+    var HTMLVmDefaultControlsElement: {
+        prototype: HTMLVmDefaultControlsElement;
+        new (): HTMLVmDefaultControlsElement;
     };
-    interface HTMLVimeDefaultSettingsElement extends Components.VimeDefaultSettings, HTMLStencilElement {
+    interface HTMLVmDefaultSettingsElement extends Components.VmDefaultSettings, HTMLStencilElement {
     }
-    var HTMLVimeDefaultSettingsElement: {
-        prototype: HTMLVimeDefaultSettingsElement;
-        new (): HTMLVimeDefaultSettingsElement;
+    var HTMLVmDefaultSettingsElement: {
+        prototype: HTMLVmDefaultSettingsElement;
+        new (): HTMLVmDefaultSettingsElement;
     };
-    interface HTMLVimeDefaultUiElement extends Components.VimeDefaultUi, HTMLStencilElement {
+    interface HTMLVmDefaultUiElement extends Components.VmDefaultUi, HTMLStencilElement {
     }
-    var HTMLVimeDefaultUiElement: {
-        prototype: HTMLVimeDefaultUiElement;
-        new (): HTMLVimeDefaultUiElement;
+    var HTMLVmDefaultUiElement: {
+        prototype: HTMLVmDefaultUiElement;
+        new (): HTMLVmDefaultUiElement;
     };
-    interface HTMLVimeEmbedElement extends Components.VimeEmbed, HTMLStencilElement {
+    interface HTMLVmEmbedElement extends Components.VmEmbed, HTMLStencilElement {
     }
-    var HTMLVimeEmbedElement: {
-        prototype: HTMLVimeEmbedElement;
-        new (): HTMLVimeEmbedElement;
+    var HTMLVmEmbedElement: {
+        prototype: HTMLVmEmbedElement;
+        new (): HTMLVmEmbedElement;
     };
-    interface HTMLVimeEndTimeElement extends Components.VimeEndTime, HTMLStencilElement {
+    interface HTMLVmEndTimeElement extends Components.VmEndTime, HTMLStencilElement {
     }
-    var HTMLVimeEndTimeElement: {
-        prototype: HTMLVimeEndTimeElement;
-        new (): HTMLVimeEndTimeElement;
+    var HTMLVmEndTimeElement: {
+        prototype: HTMLVmEndTimeElement;
+        new (): HTMLVmEndTimeElement;
     };
-    interface HTMLVimeFaketubeElement extends Components.VimeFaketube, HTMLStencilElement {
+    interface HTMLVmFileElement extends Components.VmFile, HTMLStencilElement {
     }
-    var HTMLVimeFaketubeElement: {
-        prototype: HTMLVimeFaketubeElement;
-        new (): HTMLVimeFaketubeElement;
+    var HTMLVmFileElement: {
+        prototype: HTMLVmFileElement;
+        new (): HTMLVmFileElement;
     };
-    interface HTMLVimeFileElement extends Components.VimeFile, HTMLStencilElement {
+    interface HTMLVmFullscreenControlElement extends Components.VmFullscreenControl, HTMLStencilElement {
     }
-    var HTMLVimeFileElement: {
-        prototype: HTMLVimeFileElement;
-        new (): HTMLVimeFileElement;
+    var HTMLVmFullscreenControlElement: {
+        prototype: HTMLVmFullscreenControlElement;
+        new (): HTMLVmFullscreenControlElement;
     };
-    interface HTMLVimeFullscreenControlElement extends Components.VimeFullscreenControl, HTMLStencilElement {
+    interface HTMLVmHlsElement extends Components.VmHls, HTMLStencilElement {
     }
-    var HTMLVimeFullscreenControlElement: {
-        prototype: HTMLVimeFullscreenControlElement;
-        new (): HTMLVimeFullscreenControlElement;
+    var HTMLVmHlsElement: {
+        prototype: HTMLVmHlsElement;
+        new (): HTMLVmHlsElement;
     };
-    interface HTMLVimeHlsElement extends Components.VimeHls, HTMLStencilElement {
+    interface HTMLVmIconElement extends Components.VmIcon, HTMLStencilElement {
     }
-    var HTMLVimeHlsElement: {
-        prototype: HTMLVimeHlsElement;
-        new (): HTMLVimeHlsElement;
+    var HTMLVmIconElement: {
+        prototype: HTMLVmIconElement;
+        new (): HTMLVmIconElement;
     };
-    interface HTMLVimeIconElement extends Components.VimeIcon, HTMLStencilElement {
+    interface HTMLVmIconLibraryElement extends Components.VmIconLibrary, HTMLStencilElement {
     }
-    var HTMLVimeIconElement: {
-        prototype: HTMLVimeIconElement;
-        new (): HTMLVimeIconElement;
+    var HTMLVmIconLibraryElement: {
+        prototype: HTMLVmIconLibraryElement;
+        new (): HTMLVmIconLibraryElement;
     };
-    interface HTMLVimeIconsElement extends Components.VimeIcons, HTMLStencilElement {
+    interface HTMLVmLiveIndicatorElement extends Components.VmLiveIndicator, HTMLStencilElement {
     }
-    var HTMLVimeIconsElement: {
-        prototype: HTMLVimeIconsElement;
-        new (): HTMLVimeIconsElement;
+    var HTMLVmLiveIndicatorElement: {
+        prototype: HTMLVmLiveIndicatorElement;
+        new (): HTMLVmLiveIndicatorElement;
     };
-    interface HTMLVimeLiveIndicatorElement extends Components.VimeLiveIndicator, HTMLStencilElement {
+    interface HTMLVmLoadingScreenElement extends Components.VmLoadingScreen, HTMLStencilElement {
     }
-    var HTMLVimeLiveIndicatorElement: {
-        prototype: HTMLVimeLiveIndicatorElement;
-        new (): HTMLVimeLiveIndicatorElement;
+    var HTMLVmLoadingScreenElement: {
+        prototype: HTMLVmLoadingScreenElement;
+        new (): HTMLVmLoadingScreenElement;
     };
-    interface HTMLVimeMenuElement extends Components.VimeMenu, HTMLStencilElement {
+    interface HTMLVmMenuElement extends Components.VmMenu, HTMLStencilElement {
     }
-    var HTMLVimeMenuElement: {
-        prototype: HTMLVimeMenuElement;
-        new (): HTMLVimeMenuElement;
+    var HTMLVmMenuElement: {
+        prototype: HTMLVmMenuElement;
+        new (): HTMLVmMenuElement;
     };
-    interface HTMLVimeMenuItemElement extends Components.VimeMenuItem, HTMLStencilElement {
+    interface HTMLVmMenuItemElement extends Components.VmMenuItem, HTMLStencilElement {
     }
-    var HTMLVimeMenuItemElement: {
-        prototype: HTMLVimeMenuItemElement;
-        new (): HTMLVimeMenuItemElement;
+    var HTMLVmMenuItemElement: {
+        prototype: HTMLVmMenuItemElement;
+        new (): HTMLVmMenuItemElement;
     };
-    interface HTMLVimeMenuRadioElement extends Components.VimeMenuRadio, HTMLStencilElement {
+    interface HTMLVmMenuRadioElement extends Components.VmMenuRadio, HTMLStencilElement {
     }
-    var HTMLVimeMenuRadioElement: {
-        prototype: HTMLVimeMenuRadioElement;
-        new (): HTMLVimeMenuRadioElement;
+    var HTMLVmMenuRadioElement: {
+        prototype: HTMLVmMenuRadioElement;
+        new (): HTMLVmMenuRadioElement;
     };
-    interface HTMLVimeMenuRadioGroupElement extends Components.VimeMenuRadioGroup, HTMLStencilElement {
+    interface HTMLVmMenuRadioGroupElement extends Components.VmMenuRadioGroup, HTMLStencilElement {
     }
-    var HTMLVimeMenuRadioGroupElement: {
-        prototype: HTMLVimeMenuRadioGroupElement;
-        new (): HTMLVimeMenuRadioGroupElement;
+    var HTMLVmMenuRadioGroupElement: {
+        prototype: HTMLVmMenuRadioGroupElement;
+        new (): HTMLVmMenuRadioGroupElement;
     };
-    interface HTMLVimeMuteControlElement extends Components.VimeMuteControl, HTMLStencilElement {
+    interface HTMLVmMuteControlElement extends Components.VmMuteControl, HTMLStencilElement {
     }
-    var HTMLVimeMuteControlElement: {
-        prototype: HTMLVimeMuteControlElement;
-        new (): HTMLVimeMuteControlElement;
+    var HTMLVmMuteControlElement: {
+        prototype: HTMLVmMuteControlElement;
+        new (): HTMLVmMuteControlElement;
     };
-    interface HTMLVimePipControlElement extends Components.VimePipControl, HTMLStencilElement {
+    interface HTMLVmPipControlElement extends Components.VmPipControl, HTMLStencilElement {
     }
-    var HTMLVimePipControlElement: {
-        prototype: HTMLVimePipControlElement;
-        new (): HTMLVimePipControlElement;
+    var HTMLVmPipControlElement: {
+        prototype: HTMLVmPipControlElement;
+        new (): HTMLVmPipControlElement;
     };
-    interface HTMLVimePlaybackControlElement extends Components.VimePlaybackControl, HTMLStencilElement {
+    interface HTMLVmPlaybackControlElement extends Components.VmPlaybackControl, HTMLStencilElement {
     }
-    var HTMLVimePlaybackControlElement: {
-        prototype: HTMLVimePlaybackControlElement;
-        new (): HTMLVimePlaybackControlElement;
+    var HTMLVmPlaybackControlElement: {
+        prototype: HTMLVmPlaybackControlElement;
+        new (): HTMLVmPlaybackControlElement;
     };
-    interface HTMLVimePlayerElement extends Components.VimePlayer, HTMLStencilElement {
+    interface HTMLVmPlayerElement extends Components.VmPlayer, HTMLStencilElement {
     }
-    var HTMLVimePlayerElement: {
-        prototype: HTMLVimePlayerElement;
-        new (): HTMLVimePlayerElement;
+    var HTMLVmPlayerElement: {
+        prototype: HTMLVmPlayerElement;
+        new (): HTMLVmPlayerElement;
     };
-    interface HTMLVimePlaygroundElement extends Components.VimePlayground, HTMLStencilElement {
+    interface HTMLVmPlaygroundElement extends Components.VmPlayground, HTMLStencilElement {
     }
-    var HTMLVimePlaygroundElement: {
-        prototype: HTMLVimePlaygroundElement;
-        new (): HTMLVimePlaygroundElement;
+    var HTMLVmPlaygroundElement: {
+        prototype: HTMLVmPlaygroundElement;
+        new (): HTMLVmPlaygroundElement;
     };
-    interface HTMLVimePosterElement extends Components.VimePoster, HTMLStencilElement {
+    interface HTMLVmPosterElement extends Components.VmPoster, HTMLStencilElement {
     }
-    var HTMLVimePosterElement: {
-        prototype: HTMLVimePosterElement;
-        new (): HTMLVimePosterElement;
+    var HTMLVmPosterElement: {
+        prototype: HTMLVmPosterElement;
+        new (): HTMLVmPosterElement;
     };
-    interface HTMLVimeScrimElement extends Components.VimeScrim, HTMLStencilElement {
+    interface HTMLVmScrimElement extends Components.VmScrim, HTMLStencilElement {
     }
-    var HTMLVimeScrimElement: {
-        prototype: HTMLVimeScrimElement;
-        new (): HTMLVimeScrimElement;
+    var HTMLVmScrimElement: {
+        prototype: HTMLVmScrimElement;
+        new (): HTMLVmScrimElement;
     };
-    interface HTMLVimeScrubberControlElement extends Components.VimeScrubberControl, HTMLStencilElement {
+    interface HTMLVmScrubberControlElement extends Components.VmScrubberControl, HTMLStencilElement {
     }
-    var HTMLVimeScrubberControlElement: {
-        prototype: HTMLVimeScrubberControlElement;
-        new (): HTMLVimeScrubberControlElement;
+    var HTMLVmScrubberControlElement: {
+        prototype: HTMLVmScrubberControlElement;
+        new (): HTMLVmScrubberControlElement;
     };
-    interface HTMLVimeSettingsElement extends Components.VimeSettings, HTMLStencilElement {
+    interface HTMLVmSettingsElement extends Components.VmSettings, HTMLStencilElement {
     }
-    var HTMLVimeSettingsElement: {
-        prototype: HTMLVimeSettingsElement;
-        new (): HTMLVimeSettingsElement;
+    var HTMLVmSettingsElement: {
+        prototype: HTMLVmSettingsElement;
+        new (): HTMLVmSettingsElement;
     };
-    interface HTMLVimeSettingsControlElement extends Components.VimeSettingsControl, HTMLStencilElement {
+    interface HTMLVmSettingsControlElement extends Components.VmSettingsControl, HTMLStencilElement {
     }
-    var HTMLVimeSettingsControlElement: {
-        prototype: HTMLVimeSettingsControlElement;
-        new (): HTMLVimeSettingsControlElement;
+    var HTMLVmSettingsControlElement: {
+        prototype: HTMLVmSettingsControlElement;
+        new (): HTMLVmSettingsControlElement;
     };
-    interface HTMLVimeSkeletonElement extends Components.VimeSkeleton, HTMLStencilElement {
+    interface HTMLVmSkeletonElement extends Components.VmSkeleton, HTMLStencilElement {
     }
-    var HTMLVimeSkeletonElement: {
-        prototype: HTMLVimeSkeletonElement;
-        new (): HTMLVimeSkeletonElement;
+    var HTMLVmSkeletonElement: {
+        prototype: HTMLVmSkeletonElement;
+        new (): HTMLVmSkeletonElement;
     };
-    interface HTMLVimeSliderElement extends Components.VimeSlider, HTMLStencilElement {
+    interface HTMLVmSliderElement extends Components.VmSlider, HTMLStencilElement {
     }
-    var HTMLVimeSliderElement: {
-        prototype: HTMLVimeSliderElement;
-        new (): HTMLVimeSliderElement;
+    var HTMLVmSliderElement: {
+        prototype: HTMLVmSliderElement;
+        new (): HTMLVmSliderElement;
     };
-    interface HTMLVimeSpinnerElement extends Components.VimeSpinner, HTMLStencilElement {
+    interface HTMLVmSpinnerElement extends Components.VmSpinner, HTMLStencilElement {
     }
-    var HTMLVimeSpinnerElement: {
-        prototype: HTMLVimeSpinnerElement;
-        new (): HTMLVimeSpinnerElement;
+    var HTMLVmSpinnerElement: {
+        prototype: HTMLVmSpinnerElement;
+        new (): HTMLVmSpinnerElement;
     };
-    interface HTMLVimeSubmenuElement extends Components.VimeSubmenu, HTMLStencilElement {
+    interface HTMLVmSubmenuElement extends Components.VmSubmenu, HTMLStencilElement {
     }
-    var HTMLVimeSubmenuElement: {
-        prototype: HTMLVimeSubmenuElement;
-        new (): HTMLVimeSubmenuElement;
+    var HTMLVmSubmenuElement: {
+        prototype: HTMLVmSubmenuElement;
+        new (): HTMLVmSubmenuElement;
     };
-    interface HTMLVimeTimeElement extends Components.VimeTime, HTMLStencilElement {
+    interface HTMLVmTimeElement extends Components.VmTime, HTMLStencilElement {
     }
-    var HTMLVimeTimeElement: {
-        prototype: HTMLVimeTimeElement;
-        new (): HTMLVimeTimeElement;
+    var HTMLVmTimeElement: {
+        prototype: HTMLVmTimeElement;
+        new (): HTMLVmTimeElement;
     };
-    interface HTMLVimeTimeProgressElement extends Components.VimeTimeProgress, HTMLStencilElement {
+    interface HTMLVmTimeProgressElement extends Components.VmTimeProgress, HTMLStencilElement {
     }
-    var HTMLVimeTimeProgressElement: {
-        prototype: HTMLVimeTimeProgressElement;
-        new (): HTMLVimeTimeProgressElement;
+    var HTMLVmTimeProgressElement: {
+        prototype: HTMLVmTimeProgressElement;
+        new (): HTMLVmTimeProgressElement;
     };
-    interface HTMLVimeTooltipElement extends Components.VimeTooltip, HTMLStencilElement {
+    interface HTMLVmTooltipElement extends Components.VmTooltip, HTMLStencilElement {
     }
-    var HTMLVimeTooltipElement: {
-        prototype: HTMLVimeTooltipElement;
-        new (): HTMLVimeTooltipElement;
+    var HTMLVmTooltipElement: {
+        prototype: HTMLVmTooltipElement;
+        new (): HTMLVmTooltipElement;
     };
-    interface HTMLVimeUiElement extends Components.VimeUi, HTMLStencilElement {
+    interface HTMLVmUiElement extends Components.VmUi, HTMLStencilElement {
     }
-    var HTMLVimeUiElement: {
-        prototype: HTMLVimeUiElement;
-        new (): HTMLVimeUiElement;
+    var HTMLVmUiElement: {
+        prototype: HTMLVmUiElement;
+        new (): HTMLVmUiElement;
     };
-    interface HTMLVimeVideoElement extends Components.VimeVideo, HTMLStencilElement {
+    interface HTMLVmVideoElement extends Components.VmVideo, HTMLStencilElement {
     }
-    var HTMLVimeVideoElement: {
-        prototype: HTMLVimeVideoElement;
-        new (): HTMLVimeVideoElement;
+    var HTMLVmVideoElement: {
+        prototype: HTMLVmVideoElement;
+        new (): HTMLVmVideoElement;
     };
-    interface HTMLVimeVimeoElement extends Components.VimeVimeo, HTMLStencilElement {
+    interface HTMLVmVimeoElement extends Components.VmVimeo, HTMLStencilElement {
     }
-    var HTMLVimeVimeoElement: {
-        prototype: HTMLVimeVimeoElement;
-        new (): HTMLVimeVimeoElement;
+    var HTMLVmVimeoElement: {
+        prototype: HTMLVmVimeoElement;
+        new (): HTMLVmVimeoElement;
     };
-    interface HTMLVimeVolumeControlElement extends Components.VimeVolumeControl, HTMLStencilElement {
+    interface HTMLVmVolumeControlElement extends Components.VmVolumeControl, HTMLStencilElement {
     }
-    var HTMLVimeVolumeControlElement: {
-        prototype: HTMLVimeVolumeControlElement;
-        new (): HTMLVimeVolumeControlElement;
+    var HTMLVmVolumeControlElement: {
+        prototype: HTMLVmVolumeControlElement;
+        new (): HTMLVmVolumeControlElement;
     };
-    interface HTMLVimeYoutubeElement extends Components.VimeYoutube, HTMLStencilElement {
+    interface HTMLVmYoutubeElement extends Components.VmYoutube, HTMLStencilElement {
     }
-    var HTMLVimeYoutubeElement: {
-        prototype: HTMLVimeYoutubeElement;
-        new (): HTMLVimeYoutubeElement;
+    var HTMLVmYoutubeElement: {
+        prototype: HTMLVmYoutubeElement;
+        new (): HTMLVmYoutubeElement;
     };
     interface HTMLElementTagNameMap {
-        "vime-audio": HTMLVimeAudioElement;
-        "vime-caption-control": HTMLVimeCaptionControlElement;
-        "vime-captions": HTMLVimeCaptionsElement;
-        "vime-click-to-play": HTMLVimeClickToPlayElement;
-        "vime-control": HTMLVimeControlElement;
-        "vime-control-group": HTMLVimeControlGroupElement;
-        "vime-control-spacer": HTMLVimeControlSpacerElement;
-        "vime-controls": HTMLVimeControlsElement;
-        "vime-current-time": HTMLVimeCurrentTimeElement;
-        "vime-dailymotion": HTMLVimeDailymotionElement;
-        "vime-dash": HTMLVimeDashElement;
-        "vime-dbl-click-fullscreen": HTMLVimeDblClickFullscreenElement;
-        "vime-default-controls": HTMLVimeDefaultControlsElement;
-        "vime-default-settings": HTMLVimeDefaultSettingsElement;
-        "vime-default-ui": HTMLVimeDefaultUiElement;
-        "vime-embed": HTMLVimeEmbedElement;
-        "vime-end-time": HTMLVimeEndTimeElement;
-        "vime-faketube": HTMLVimeFaketubeElement;
-        "vime-file": HTMLVimeFileElement;
-        "vime-fullscreen-control": HTMLVimeFullscreenControlElement;
-        "vime-hls": HTMLVimeHlsElement;
-        "vime-icon": HTMLVimeIconElement;
-        "vime-icons": HTMLVimeIconsElement;
-        "vime-live-indicator": HTMLVimeLiveIndicatorElement;
-        "vime-menu": HTMLVimeMenuElement;
-        "vime-menu-item": HTMLVimeMenuItemElement;
-        "vime-menu-radio": HTMLVimeMenuRadioElement;
-        "vime-menu-radio-group": HTMLVimeMenuRadioGroupElement;
-        "vime-mute-control": HTMLVimeMuteControlElement;
-        "vime-pip-control": HTMLVimePipControlElement;
-        "vime-playback-control": HTMLVimePlaybackControlElement;
-        "vime-player": HTMLVimePlayerElement;
-        "vime-playground": HTMLVimePlaygroundElement;
-        "vime-poster": HTMLVimePosterElement;
-        "vime-scrim": HTMLVimeScrimElement;
-        "vime-scrubber-control": HTMLVimeScrubberControlElement;
-        "vime-settings": HTMLVimeSettingsElement;
-        "vime-settings-control": HTMLVimeSettingsControlElement;
-        "vime-skeleton": HTMLVimeSkeletonElement;
-        "vime-slider": HTMLVimeSliderElement;
-        "vime-spinner": HTMLVimeSpinnerElement;
-        "vime-submenu": HTMLVimeSubmenuElement;
-        "vime-time": HTMLVimeTimeElement;
-        "vime-time-progress": HTMLVimeTimeProgressElement;
-        "vime-tooltip": HTMLVimeTooltipElement;
-        "vime-ui": HTMLVimeUiElement;
-        "vime-video": HTMLVimeVideoElement;
-        "vime-vimeo": HTMLVimeVimeoElement;
-        "vime-volume-control": HTMLVimeVolumeControlElement;
-        "vime-youtube": HTMLVimeYoutubeElement;
+        "vm-audio": HTMLVmAudioElement;
+        "vm-caption-control": HTMLVmCaptionControlElement;
+        "vm-captions": HTMLVmCaptionsElement;
+        "vm-click-to-play": HTMLVmClickToPlayElement;
+        "vm-control": HTMLVmControlElement;
+        "vm-control-group": HTMLVmControlGroupElement;
+        "vm-control-spacer": HTMLVmControlSpacerElement;
+        "vm-controls": HTMLVmControlsElement;
+        "vm-current-time": HTMLVmCurrentTimeElement;
+        "vm-dailymotion": HTMLVmDailymotionElement;
+        "vm-dash": HTMLVmDashElement;
+        "vm-dbl-click-fullscreen": HTMLVmDblClickFullscreenElement;
+        "vm-default-controls": HTMLVmDefaultControlsElement;
+        "vm-default-settings": HTMLVmDefaultSettingsElement;
+        "vm-default-ui": HTMLVmDefaultUiElement;
+        "vm-embed": HTMLVmEmbedElement;
+        "vm-end-time": HTMLVmEndTimeElement;
+        "vm-file": HTMLVmFileElement;
+        "vm-fullscreen-control": HTMLVmFullscreenControlElement;
+        "vm-hls": HTMLVmHlsElement;
+        "vm-icon": HTMLVmIconElement;
+        "vm-icon-library": HTMLVmIconLibraryElement;
+        "vm-live-indicator": HTMLVmLiveIndicatorElement;
+        "vm-loading-screen": HTMLVmLoadingScreenElement;
+        "vm-menu": HTMLVmMenuElement;
+        "vm-menu-item": HTMLVmMenuItemElement;
+        "vm-menu-radio": HTMLVmMenuRadioElement;
+        "vm-menu-radio-group": HTMLVmMenuRadioGroupElement;
+        "vm-mute-control": HTMLVmMuteControlElement;
+        "vm-pip-control": HTMLVmPipControlElement;
+        "vm-playback-control": HTMLVmPlaybackControlElement;
+        "vm-player": HTMLVmPlayerElement;
+        "vm-playground": HTMLVmPlaygroundElement;
+        "vm-poster": HTMLVmPosterElement;
+        "vm-scrim": HTMLVmScrimElement;
+        "vm-scrubber-control": HTMLVmScrubberControlElement;
+        "vm-settings": HTMLVmSettingsElement;
+        "vm-settings-control": HTMLVmSettingsControlElement;
+        "vm-skeleton": HTMLVmSkeletonElement;
+        "vm-slider": HTMLVmSliderElement;
+        "vm-spinner": HTMLVmSpinnerElement;
+        "vm-submenu": HTMLVmSubmenuElement;
+        "vm-time": HTMLVmTimeElement;
+        "vm-time-progress": HTMLVmTimeProgressElement;
+        "vm-tooltip": HTMLVmTooltipElement;
+        "vm-ui": HTMLVmUiElement;
+        "vm-video": HTMLVmVideoElement;
+        "vm-vimeo": HTMLVmVimeoElement;
+        "vm-volume-control": HTMLVmVolumeControlElement;
+        "vm-youtube": HTMLVmYoutubeElement;
     }
 }
 declare namespace LocalJSX {
-    interface VimeAudio {
+    interface VmAudio {
         /**
           * Whether to use CORS to fetch the related image. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more information.
           * @inheritdoc
@@ -1858,8 +2050,7 @@ declare namespace LocalJSX {
         "preload"?: MediaPreloadOption;
         "willAttach"?: boolean;
     }
-    interface VimeCaptionControl {
-        "currentCaption"?: PlayerProps['currentCaption'];
+    interface VmCaptionControl {
         /**
           * The URL to an SVG element or fragment to load.
          */
@@ -1869,16 +2060,22 @@ declare namespace LocalJSX {
          */
         "hideTooltip"?: boolean;
         "i18n"?: PlayerProps['i18n'];
-        "isCaptionsActive"?: PlayerProps['isCaptionsActive'];
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
+        "isTextTrackVisible"?: PlayerProps['isTextTrackVisible'];
         /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
           * @inheritdoc
          */
         "keys"?: string;
+        "playbackReady"?: PlayerProps['playbackReady'];
         /**
           * The URL to an SVG element or fragment to load.
          */
         "showIcon"?: string;
+        "textTracks"?: PlayerProps['textTracks'];
         /**
           * The direction in which the tooltip should grow.
          */
@@ -1888,29 +2085,20 @@ declare namespace LocalJSX {
          */
         "tooltipPosition"?: TooltipPosition;
     }
-    interface VimeCaptions {
-        /**
-          * The height of any lower control bar in pixels so that the captions can reposition when it's active.
-         */
-        "controlsHeight"?: number;
+    interface VmCaptions {
+        "currentTextTrack"?: PlayerProps['currentTextTrack'];
         /**
           * Whether the captions should be visible or not.
          */
         "hidden"?: boolean;
         "isControlsActive"?: PlayerProps['isControlsActive'];
+        "isTextTrackVisible"?: PlayerProps['isTextTrackVisible'];
         "isVideoView"?: PlayerProps['isVideoView'];
-        /**
-          * Emitted when the active cues change. A cue is active when `currentTime >= cue.startTime && currentTime <= cue.endTime`.
-         */
-        "onVCuesChange"?: (event: CustomEvent<TextTrackCue[]>) => void;
-        /**
-          * Emitted when the current track changes.
-         */
-        "onVTrackChange"?: (event: CustomEvent<TextTrack | undefined>) => void;
         "playbackStarted"?: PlayerProps['playbackStarted'];
         "textTracks"?: PlayerProps['textTracks'];
     }
-    interface VimeClickToPlay {
+    interface VmClickToPlay {
+        "isMobile"?: PlayerProps['isMobile'];
         "isVideoView"?: PlayerProps['isVideoView'];
         "paused"?: PlayerProps['paused'];
         /**
@@ -1918,7 +2106,7 @@ declare namespace LocalJSX {
          */
         "useOnMobile"?: boolean;
     }
-    interface VimeControl {
+    interface VmControl {
         /**
           * If the control has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.
          */
@@ -1946,23 +2134,31 @@ declare namespace LocalJSX {
          */
         "menu"?: string;
         /**
+          * Emitted when the control loses focus.
+         */
+        "onVmBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives focus.
+         */
+        "onVmFocus"?: (event: CustomEvent<void>) => void;
+        /**
           * Emitted when the user is interacting with the control by focusing, touching or hovering on it.
          */
-        "onVInteractionChange"?: (event: CustomEvent<boolean>) => void;
+        "onVmInteractionChange"?: (event: CustomEvent<boolean>) => void;
         /**
           * If the control is a toggle, this indicated whether the control is in a "pressed" state or not. Sets the `aria-pressed` property.
          */
         "pressed"?: boolean;
     }
-    interface VimeControlGroup {
+    interface VmControlGroup {
         /**
           * Determines where to add spacing/margin. The amount of spacing is determined by the CSS variable `--control-group-spacing`.
          */
         "space"?: 'top' | 'bottom' | 'both' | 'none';
     }
-    interface VimeControlSpacer {
+    interface VmControlSpacer {
     }
-    interface VimeControls {
+    interface VmControls {
         /**
           * The length in milliseconds that the controls are active for before fading out. Audio players are not effected by this prop.
          */
@@ -2019,7 +2215,7 @@ declare namespace LocalJSX {
          */
         "waitForPlaybackStart"?: boolean;
     }
-    interface VimeCurrentTime {
+    interface VmCurrentTime {
         /**
           * Whether the time should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`).
          */
@@ -2027,7 +2223,7 @@ declare namespace LocalJSX {
         "currentTime"?: PlayerProps['currentTime'];
         "i18n"?: PlayerProps['i18n'];
     }
-    interface VimeDailymotion {
+    interface VmDailymotion {
         "autoplay"?: boolean;
         /**
           * Change the default highlight color used in the controls (hex value without the leading #). Color set in the Partner HQ will override this prop.
@@ -2038,7 +2234,11 @@ declare namespace LocalJSX {
         "logger"?: Logger;
         "loop"?: boolean;
         "muted"?: boolean;
-        "onVLoadStart"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when an error has occurred.
+         */
+        "onVmError"?: (event: CustomEvent<string | undefined>) => void;
+        "onVmLoadStart"?: (event: CustomEvent<void>) => void;
         "playsinline"?: boolean;
         /**
           * The absolute URL of a custom poster to be used for the current video.
@@ -2073,7 +2273,7 @@ declare namespace LocalJSX {
          */
         "videoId": string;
     }
-    interface VimeDash {
+    interface VmDash {
         /**
           * **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.
           * @inheritdoc
@@ -2094,6 +2294,7 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "crossOrigin"?: MediaCrossOriginOption;
+        "currentTextTrack"?: number;
         /**
           * **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.
           * @inheritdoc
@@ -2105,10 +2306,19 @@ declare namespace LocalJSX {
          */
         "disableRemotePlayback"?: boolean;
         /**
+          * Are text tracks enabled by default.
+         */
+        "enableTextTracksByDefault"?: boolean;
+        "isTextTrackVisible"?: boolean;
+        /**
           * The title of the current media.
          */
         "mediaTitle"?: string;
-        "onVLoadStart"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when an error has occurred.
+         */
+        "onVmError"?: (event: CustomEvent<any>) => void;
+        "onVmLoadStart"?: (event: CustomEvent<void>) => void;
         /**
           * A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.
           * @inheritdoc
@@ -2119,6 +2329,7 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "preload"?: MediaPreloadOption;
+        "shouldRenderNativeTextTracks"?: boolean;
         /**
           * The URL of the `manifest.mpd` file to use.
          */
@@ -2128,8 +2339,9 @@ declare namespace LocalJSX {
          */
         "version"?: string;
     }
-    interface VimeDblClickFullscreen {
+    interface VmDblClickFullscreen {
         "isFullscreenActive"?: PlayerProps['isFullscreenActive'];
+        "isMobile"?: PlayerProps['isMobile'];
         "isVideoView"?: PlayerProps['isVideoView'];
         "playbackReady"?: PlayerProps['playbackReady'];
         /**
@@ -2137,7 +2349,7 @@ declare namespace LocalJSX {
          */
         "useOnMobile"?: boolean;
     }
-    interface VimeDefaultControls {
+    interface VmDefaultControls {
         /**
           * The length in milliseconds that the controls are active for before fading out. Audio players are not effected by this prop.
          */
@@ -2160,10 +2372,13 @@ declare namespace LocalJSX {
          */
         "waitForPlaybackStart"?: boolean;
     }
-    interface VimeDefaultSettings {
-        "currentCaption"?: PlayerProps['currentCaption'];
+    interface VmDefaultSettings {
+        "audioTracks"?: PlayerProps['audioTracks'];
+        "currentAudioTrack"?: number;
+        "currentTextTrack"?: number;
         "i18n"?: PlayerProps['i18n'];
-        "isCaptionsActive"?: PlayerProps['isCaptionsActive'];
+        "isTextTrackVisible"?: boolean;
+        "isVideoView"?: PlayerProps['isAudioView'];
         /**
           * Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio`, it will always be `bottomRight`.
          */
@@ -2175,7 +2390,7 @@ declare namespace LocalJSX {
         "playbackReady"?: PlayerProps['playbackReady'];
         "textTracks"?: PlayerProps['textTracks'];
     }
-    interface VimeDefaultUi {
+    interface VmDefaultUi {
         /**
           * Whether the custom captions UI should not be loaded.
          */
@@ -2193,9 +2408,9 @@ declare namespace LocalJSX {
          */
         "noDblClickFullscreen"?: boolean;
         /**
-          * Whether the default icons should not be loaded.
+          * Whether the default loading screen should not be loaded.
          */
-        "noIcons"?: boolean;
+        "noLoadingScreen"?: boolean;
         /**
           * Whether the custom poster UI should not be loaded.
          */
@@ -2205,15 +2420,11 @@ declare namespace LocalJSX {
          */
         "noSettings"?: boolean;
         /**
-          * Whether the skeleton loading animation should be shown while the player is loading.
-         */
-        "noSkeleton"?: boolean;
-        /**
           * Whether the custom spinner UI should not be loaded.
          */
         "noSpinner"?: boolean;
     }
-    interface VimeEmbed {
+    interface VmEmbed {
         /**
           * A function which accepts the raw message received from the embedded media player via `postMessage` and converts it into a POJO.
          */
@@ -2229,15 +2440,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the embedded player and any new media has loaded.
          */
-        "onVEmbedLoaded"?: (event: CustomEvent<void>) => void;
+        "onVmEmbedLoaded"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when a new message is received from the embedded player via `postMessage`.
          */
-        "onVEmbedMessage"?: (event: CustomEvent<any>) => void;
+        "onVmEmbedMessage"?: (event: CustomEvent<any>) => void;
         /**
           * Emitted when the `embedSrc` or `params` props change. The payload contains the `params` serialized into a query string and appended to `embedSrc`.
          */
-        "onVEmbedSrcChange"?: (event: CustomEvent<string>) => void;
+        "onVmEmbedSrcChange"?: (event: CustomEvent<string>) => void;
         /**
           * Where the src request had originated from without any path information.
          */
@@ -2251,7 +2462,7 @@ declare namespace LocalJSX {
          */
         "preconnections"?: string[];
     }
-    interface VimeEndTime {
+    interface VmEndTime {
         /**
           * Whether the time should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`).
          */
@@ -2259,17 +2470,7 @@ declare namespace LocalJSX {
         "duration"?: PlayerProps['duration'];
         "i18n"?: PlayerProps['i18n'];
     }
-    interface VimeFaketube {
-        "autoplay"?: boolean;
-        "controls"?: boolean;
-        "language"?: string;
-        "logger"?: Logger;
-        "loop"?: boolean;
-        "muted"?: boolean;
-        "onVLoadStart"?: (event: CustomEvent<void>) => void;
-        "playsinline"?: boolean;
-    }
-    interface VimeFile {
+    interface VmFile {
         /**
           * **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.
           * @inheritdoc
@@ -2287,6 +2488,7 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "crossOrigin"?: MediaCrossOriginOption;
+        "currentTextTrack"?: number;
         "currentTime"?: number;
         /**
           * **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.
@@ -2298,6 +2500,8 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
+        "hasCustomTextManager"?: boolean;
+        "isTextTrackVisible"?: boolean;
         "language"?: string;
         "logger"?: Logger;
         "loop"?: boolean;
@@ -2307,20 +2511,25 @@ declare namespace LocalJSX {
         "mediaTitle"?: string;
         "muted"?: boolean;
         "noConnect"?: boolean;
-        "onVLoadStart"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when an error has occurred.
+         */
+        "onVmError"?: (event: CustomEvent<any>) => void;
+        "onVmLoadStart"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the underlying media element changes.
          */
-        "onVMediaElChange"?: (event: CustomEvent<HTMLAudioElement | HTMLVideoElement | undefined>) => void;
+        "onVmMediaElChange"?: (event: CustomEvent<HTMLAudioElement | HTMLVideoElement | undefined>) => void;
         /**
           * Emitted when the child `<source />` elements are modified.
          */
-        "onVSrcSetChange"?: (event: CustomEvent<MediaResource[]>) => void;
+        "onVmSrcSetChange"?: (event: CustomEvent<MediaResource[]>) => void;
         "paused"?: boolean;
         /**
           * The playback rates that are available for this media.
          */
         "playbackRates"?: number[];
+        "playbackReady"?: boolean;
         "playbackStarted"?: boolean;
         "playsinline"?: boolean;
         /**
@@ -2333,19 +2542,20 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "preload"?: MediaPreloadOption;
+        "shouldRenderNativeTextTracks"?: boolean;
         /**
           * Whether to use an `audio` or `video` element to play the media.
          */
         "viewType"?: ViewType;
         "willAttach"?: boolean;
     }
-    interface VimeFullscreenControl {
+    interface VmFullscreenControl {
         /**
-          * The URL to an SVG element or fragment to display for entering fullscreen.
+          * The name of the enter fullscreen icon to resolve from the icon library.
          */
         "enterIcon"?: string;
         /**
-          * The URL to an SVG element or fragment to display for exiting fullscreen.
+          * The name of the exit fullscreen icon to resolve from the icon library.
          */
         "exitIcon"?: string;
         /**
@@ -2353,6 +2563,10 @@ declare namespace LocalJSX {
          */
         "hideTooltip"?: boolean;
         "i18n"?: PlayerProps['i18n'];
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         "isFullscreenActive"?: PlayerProps['isFullscreenActive'];
         /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
@@ -2369,7 +2583,7 @@ declare namespace LocalJSX {
          */
         "tooltipPosition"?: TooltipPosition;
     }
-    interface VimeHls {
+    interface VmHls {
         /**
           * **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.
           * @inheritdoc
@@ -2403,7 +2617,12 @@ declare namespace LocalJSX {
           * The title of the current media.
          */
         "mediaTitle"?: string;
-        "onVLoadStart"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when an error has occurred.
+         */
+        "onVmError"?: (event: CustomEvent<any>) => void;
+        "onVmLoadStart"?: (event: CustomEvent<void>) => void;
+        "playbackReady"?: boolean;
         /**
           * A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.
           * @inheritdoc
@@ -2419,65 +2638,114 @@ declare namespace LocalJSX {
          */
         "version"?: string;
     }
-    interface VimeIcon {
+    interface VmIcon {
+        "icons"?: PlayerProps['icons'];
         /**
-          * The URL to an SVG element or fragment to load.
+          * An alternative description to use for accessibility. If omitted, the name or src will be used to generate it.
          */
-        "href"?: string;
-    }
-    interface VimeIcons {
+        "label"?: string;
         /**
-          * The URL to an SVG sprite to load.
+          * The name of a registered icon library.
          */
-        "href"?: string;
+        "library"?: string;
+        /**
+          * The name of the icon to draw.
+         */
+        "name"?: string;
+        /**
+          * Emitted when the icon failed to load.
+         */
+        "onVmError"?: (event: CustomEvent<{ status?: number }>) => void;
+        /**
+          * Emitted when the icon has loaded.
+         */
+        "onVmLoad"?: (event: CustomEvent<void>) => void;
+        /**
+          * The absolute URL of an SVG file to load.
+         */
+        "src"?: string;
     }
-    interface VimeLiveIndicator {
+    interface VmIconLibrary {
+        "icons"?: PlayerProps['icons'];
+        /**
+          * The name of the icon library to register. Vime provides some default libraries out of the box such as `vime`or `material`.
+         */
+        "name"?: string;
+        /**
+          * A function that translates an icon name to a URL where the corresponding SVG file exists. The URL can be local or a CORS-enabled endpoint.
+         */
+        "resolver"?: IconLibraryResolver;
+    }
+    interface VmLiveIndicator {
         "i18n"?: PlayerProps['i18n'];
         "isLive"?: PlayerProps['isLive'];
     }
-    interface VimeMenu {
+    interface VmLoadingScreen {
+        /**
+          * Whether the loading dots are hidden or not.
+         */
+        "hideDots"?: boolean;
+        "playbackReady"?: boolean;
+    }
+    interface VmMenu {
         /**
           * Whether the menu is open/visible.
          */
         "active"?: boolean;
         /**
-          * The `id` attribute value of the control responsible for opening/closing this menu.
+          * Reference to the controller DOM element that is responsible for opening/closing this menu.
          */
-        "controller": string;
+        "controller"?: HTMLElement;
         /**
           * The `id` attribute of the menu.
          */
         "identifier": string;
         /**
-          * Emitted when the menu has closed/is not active.
-         */
-        "onVClose"?: (event: CustomEvent<void>) => void;
-        /**
           * Emitted when the currently focused menu item changes.
          */
-        "onVFocusMenuItemChange"?: (event: CustomEvent<HTMLVimeMenuItemElement | undefined>) => void;
+        "onVmActiveMenuItemChange"?: (event: CustomEvent<HTMLVmMenuItemElement | undefined>) => void;
         /**
-          * Emitted when the menu items present changes.
+          * Emitted when the active submenu changes.
          */
-        "onVMenuItemsChange"?: (event: CustomEvent<NodeListOf<HTMLVimeMenuItemElement> | undefined>) => void;
+        "onVmActiveSubmenuChange"?: (event: CustomEvent<HTMLVmSubmenuElement | undefined>) => void;
+        /**
+          * Emitted when the menu loses focus.
+         */
+        "onVmBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the menu has closed/is not active.
+         */
+        "onVmClose"?: (event: CustomEvent<HTMLVmMenuElement>) => void;
+        /**
+          * Emitted when the menu is focused.
+         */
+        "onVmFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the height of the menu changes.
+         */
+        "onVmMenuHeightChange"?: (event: CustomEvent<number>) => void;
         /**
           * Emitted when the menu is open/active.
          */
-        "onVOpen"?: (event: CustomEvent<void>) => void;
+        "onVmOpen"?: (event: CustomEvent<HTMLVmMenuElement>) => void;
+        /**
+          * The direction the menu should slide in from.
+         */
+        "slideInDirection"?: 'left' | 'right';
     }
-    interface VimeMenuItem {
+    interface VmMenuItem {
         /**
           * This can provide additional context about the value of a menu item. For example, if the item is a radio button for a set of video qualities, the badge could describe whether the quality is UHD, HD etc.
          */
         "badge"?: string;
         /**
+          * The name of the checkmark icon to resolve from the icon library.
+         */
+        "checkIcon"?: string;
+        /**
           * If this item is to behave as a radio button, then this property determines whether the radio is selected or not. Sets the `aria-checked` property.
          */
         "checked"?: boolean;
-        /**
-          * The URL to an SVG element or fragment to load.
-         */
-        "checkedIcon"?: string;
         /**
           * If the item has a popup menu, this indicates whether the menu is open or not. Sets the `aria-expanded` property.
          */
@@ -2491,6 +2759,10 @@ declare namespace LocalJSX {
          */
         "hint"?: string;
         /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
+        /**
           * The `id` attribute of the item.
          */
         "identifier"?: string;
@@ -2500,23 +2772,35 @@ declare namespace LocalJSX {
          */
         "label": string;
         /**
-          * If the item has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.
+          * If the item has a popup menu, then this should be a reference to it.
          */
-        "menu"?: string;
+        "menu"?: HTMLVmMenuElement;
+        /**
+          * Emitted when the item loses focus.
+         */
+        "onVmBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the item is focused.
+         */
+        "onVmFocus"?: (event: CustomEvent<void>) => void;
     }
-    interface VimeMenuRadio {
+    interface VmMenuRadio {
         /**
           * This can provide additional context about the value. For example, if the option is for a set of video qualities, the badge could describe whether the quality is UHD, HD etc.
          */
         "badge"?: string;
         /**
+          * The URL to an SVG element or fragment to load.
+         */
+        "checkIcon"?: string;
+        /**
           * Whether the radio item is selected or not.
          */
         "checked"?: boolean;
         /**
-          * The URL to an SVG element or fragment to load.
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
          */
-        "checkedIcon"?: string;
+        "icons"?: string;
         /**
           * The title of the radio item displayed to the user.
          */
@@ -2524,46 +2808,58 @@ declare namespace LocalJSX {
         /**
           * Emitted when the radio button is selected.
          */
-        "onVCheck"?: (event: CustomEvent<void>) => void;
+        "onVmCheck"?: (event: CustomEvent<void>) => void;
         /**
           * The value associated with this radio item.
          */
         "value": string;
     }
-    interface VimeMenuRadioGroup {
+    interface VmMenuRadioGroup {
         /**
           * Emitted when a new radio button is selected for this group.
          */
-        "onVCheck"?: (event: CustomEvent<void>) => void;
+        "onVmCheck"?: (event: CustomEvent<void>) => void;
         /**
           * The current value selected for this group.
          */
         "value"?: string;
     }
-    interface VimeMuteControl {
+    interface VmMuteControl {
         /**
           * Whether the tooltip should not be displayed.
          */
         "hideTooltip"?: boolean;
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the high volume icon to resolve from the icon library.
          */
         "highVolumeIcon"?: string;
         "i18n"?: PlayerProps['i18n'];
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
           * @inheritdoc
          */
         "keys"?: string;
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the low volume icon to resolve from the icon library.
          */
         "lowVolumeIcon"?: string;
         "muted"?: PlayerProps['muted'];
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the muted volume icon to resolve from the icon library.
          */
         "mutedIcon"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onVmBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives focus.
+         */
+        "onVmFocus"?: (event: CustomEvent<void>) => void;
         /**
           * The direction in which the tooltip should grow.
          */
@@ -2574,13 +2870,13 @@ declare namespace LocalJSX {
         "tooltipPosition"?: TooltipPosition;
         "volume"?: PlayerProps['volume'];
     }
-    interface VimePipControl {
+    interface VmPipControl {
         /**
-          * The URL to an SVG element or fragment to display for entering PiP.
+          * The name of the enter pip icon to resolve from the icon library.
          */
         "enterIcon"?: string;
         /**
-          * The URL to an SVG element or fragment to display for exiting PiP.
+          * The name of the exit pip icon to resolve from the icon library.
          */
         "exitIcon"?: string;
         /**
@@ -2588,6 +2884,10 @@ declare namespace LocalJSX {
          */
         "hideTooltip"?: boolean;
         "i18n"?: PlayerProps['i18n'];
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         "isPiPActive"?: PlayerProps['isPiPActive'];
         /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
@@ -2604,24 +2904,28 @@ declare namespace LocalJSX {
          */
         "tooltipPosition"?: TooltipPosition;
     }
-    interface VimePlaybackControl {
+    interface VmPlaybackControl {
         /**
           * Whether the tooltip should not be displayed.
          */
         "hideTooltip"?: boolean;
         "i18n"?: PlayerProps['i18n'];
         /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
+        /**
           * A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control.
           * @inheritdoc
          */
         "keys"?: string;
         /**
-          * The URL to an SVG element or fragment to load.
+          * The name of the pause icon to resolve from the icon library.
          */
         "pauseIcon"?: string;
         "paused"?: PlayerProps['paused'];
         /**
-          * The URL to an SVG element or fragment to load.
+          * The name of the play icon to resolve from the icon library.
          */
         "playIcon"?: string;
         /**
@@ -2633,17 +2937,18 @@ declare namespace LocalJSX {
          */
         "tooltipPosition"?: TooltipPosition;
     }
-    interface VimePlayer {
+    interface VmPlayer {
         /**
           * The aspect ratio of the player expressed as `width:height` (`16:9`). This is only applied if the `viewType` is `video` and the player is not in fullscreen mode.
           * @inheritDoc
          */
         "aspectRatio"?: string;
         /**
-          * `@readonly` Whether the player is attached to the DOM.
-          * @inheritDoc
+          * The audio tracks associated with the current media.
+          * @inheritDoc 
+          * @readonly
          */
-        "attached"?: boolean;
+        "audioTracks"?: never[];
         /**
           * Whether the player should automatically pause when another Vime player starts/resumes playback.
           * @inheritDoc
@@ -2655,13 +2960,15 @@ declare namespace LocalJSX {
          */
         "autoplay"?: boolean;
         /**
-          * `@readonly` The length of the media in seconds that has been downloaded by the browser.
-          * @inheritDoc
+          * The length of the media in seconds that has been downloaded by the browser.
+          * @inheritDoc 
+          * @readonly
          */
         "buffered"?: number;
         /**
-          * `@readonly` Whether playback has temporarily stopped because of a lack of temporary data.
-          * @inheritDoc
+          * Whether playback has temporarily stopped because of a lack of temporary data.
+          * @inheritDoc 
+          * @readonly
          */
         "buffering"?: boolean;
         /**
@@ -2670,108 +2977,131 @@ declare namespace LocalJSX {
          */
         "controls"?: boolean;
         /**
-          * `@readonly` The selected caption/subtitle text track to display. Defaults to `undefined` if there is none. This does not mean this track is active, only that is the current selection. To know if it is active, check the `isCaptionsActive` prop.
-          * @inheritDoc
+          * Gets the index of the currently active audio track. Defaults to `-1` to when the default audio track is used. If you'd like to set it than see the `setCurrentAudioTrack` method.
+          * @inheritDoc 
+          * @readonly
          */
-        "currentCaption"?: TextTrack;
+        "currentAudioTrack"?: number;
         /**
-          * `@readonly` The absolute URL of the poster for the current media resource. Defaults to `undefined` if no media/poster has been loaded.
-          * @inheritDoc
+          * The absolute URL of the poster for the current media resource. Defaults to `undefined` if no media/poster has been loaded.
+          * @inheritDoc 
+          * @readonly
          */
         "currentPoster"?: string;
         /**
-          * `@readonly` The current provider name whose responsible for loading and playing media. Defaults to `undefined` when no provider has been loaded.
-          * @inheritDoc
+          * The current provider name whose responsible for loading and playing media. Defaults to `undefined` when no provider has been loaded.
+          * @inheritDoc 
+          * @readonly
          */
         "currentProvider"?: Provider;
         /**
-          * `@readonly` The absolute URL of the media resource that has been chosen. Defaults to `undefined` if no media has been loaded.
-          * @inheritDoc
+          * The absolute URL of the media resource that has been chosen. Defaults to `undefined` if no media has been loaded.
+          * @inheritDoc 
+          * @readonly
          */
         "currentSrc"?: string;
+        /**
+          * Gets the index of the currently active text track. Defaults to `-1` to when all text tracks are disabled. If you'd like to set it than see the `setCurrentTextTrack` method.
+          * @inheritDoc 
+          * @readonly
+         */
+        "currentTextTrack"?: number;
         /**
           * A `double` indicating the current playback time in seconds. Defaults to `0` if the media has not started to play and has not seeked. Setting this value seeks the media to the new time. The value can be set to a minimum of `0` and maximum of the total length of the media (indicated by the duration prop).
           * @inheritDoc
          */
         "currentTime"?: number;
         /**
-          * `@readonly` Whether the player is in debug mode and should `console.x` information about its internal state.
+          * Whether the player is in debug mode and should `console.x` information about its internal state.
           * @inheritDoc
          */
         "debug"?: boolean;
         /**
-          * `@readonly` A `double` indicating the total playback length of the media in seconds. Defaults to `-1` if no media has been loaded. If the media is being streamed live then the duration is equal to `Infinity`.
-          * @inheritDoc
+          * A `double` indicating the total playback length of the media in seconds. Defaults to `-1` if no media has been loaded. If the media is being streamed live then the duration is equal to `Infinity`.
+          * @inheritDoc 
+          * @readonly
          */
         "duration"?: number;
         /**
-          * `@readonly` A collection of errors that have occurred ordered by `[oldest, ..., newest]`.
-          * @inheritDoc
-         */
-        "errors"?: any[];
-        /**
-          * `@readonly` A dictionary of translations for the current language.
-          * @inheritDoc
+          * A dictionary of translations for the current language.
+          * @inheritDoc 
+          * @readonly
          */
         "i18n"?: Translation;
         /**
-          * `@readonly` Whether the current media is of type `audio`, shorthand for `mediaType === MediaType.Audio`.
+          * The default icon library to be used throughout the player. You can use a predefined icon library such as vime, material, remix or boxicons. If you'd like to provide your own see the `<vm-icon-library>` component. Remember to pass in the name of your icon library here.
           * @inheritDoc
+         */
+        "icons"?: string;
+        /**
+          * Whether the current media is of type `audio`, shorthand for `mediaType === MediaType.Audio`.
+          * @inheritDoc 
+          * @readonly
          */
         "isAudio"?: boolean;
         /**
-          * `@readonly` Whether the current view is of type `audio`, shorthand for `viewType === ViewType.Audio`.
-          * @inheritDoc
+          * Whether the current view is of type `audio`, shorthand for `viewType === ViewType.Audio`.
+          * @inheritDoc 
+          * @readonly
          */
         "isAudioView"?: boolean;
-        /**
-          * `@readonly` Whether any captions or subtitles are currently showing.
-          * @inheritDoc
-         */
-        "isCaptionsActive"?: boolean;
         /**
           * Whether the controls are currently visible. This is currently only supported by custom controls.
           * @inheritDoc
          */
         "isControlsActive"?: boolean;
         /**
-          * `@readonly` Whether the player is currently in fullscreen mode.
-          * @inheritDoc
+          * Whether the player is currently in fullscreen mode.
+          * @inheritDoc 
+          * @readonly
          */
         "isFullscreenActive"?: boolean;
         /**
-          * `@readonly` Whether the current media is being broadcast live (`duration === Infinity`).
-          * @inheritDoc
+          * Whether the current media is being broadcast live (`duration === Infinity`).
+          * @inheritDoc 
+          * @readonly
          */
         "isLive"?: boolean;
         /**
-          * `@readonly` Whether the player is in mobile mode. This is determined by parsing `window.navigator.userAgent`.
-          * @inheritDoc
+          * Whether the player is in mobile mode. This is determined by parsing `window.navigator.userAgent`.
+          * @inheritDoc 
+          * @readonly
          */
         "isMobile"?: boolean;
         /**
-          * `@readonly` Whether the player is currently in picture-in-picture mode.
-          * @inheritDoc
+          * Whether the player is currently in picture-in-picture mode.
+          * @inheritDoc 
+          * @readonly
          */
         "isPiPActive"?: boolean;
         /**
-          * `@readonly` Whether the settings menu has been opened and is currently visible. This is currently only supported by custom settings.
-          * @inheritDoc
+          * Whether the settings menu has been opened and is currently visible. This is currently only supported by custom settings.
+          * @inheritDoc 
+          * @readonly
          */
         "isSettingsActive"?: boolean;
         /**
-          * `@readonly` Whether the player is in touch mode. This is determined by listening for mouse/touch events and toggling this value.
-          * @inheritDoc
+          * Whether the current text tracks is visible. If you'd like to set it than see the `setTrackTrackVisibility` method.
+          * @inheritDoc 
+          * @readonly
+         */
+        "isTextTrackVisible"?: boolean;
+        /**
+          * Whether the player is in touch mode. This is determined by listening for mouse/touch events and toggling this value.
+          * @inheritDoc 
+          * @readonly
          */
         "isTouch"?: boolean;
         /**
-          * `@readonly` Whether the current media is of type `video`, shorthand for `mediaType === MediaType.Video`.
-          * @inheritDoc
+          * Whether the current media is of type `video`, shorthand for `mediaType === MediaType.Video`.
+          * @inheritDoc 
+          * @readonly
          */
         "isVideo"?: boolean;
         /**
-          * `@readonly` Whether the current view is of type `video`, shorthand for `viewType === ViewType.Video`.
-          * @inheritDoc
+          * Whether the current view is of type `video`, shorthand for `viewType === ViewType.Video`.
+          * @inheritDoc 
+          * @readonly
          */
         "isVideoView"?: boolean;
         /**
@@ -2780,10 +3110,14 @@ declare namespace LocalJSX {
          */
         "language"?: string;
         /**
-          * `@readonly` The languages that are currently available. You can add new languages via the `extendLanguage` method.
-          * @inheritDoc
+          * The languages that are currently available. You can add new languages via the `extendLanguage` method.
+          * @inheritDoc 
+          * @readonly
          */
         "languages"?: string[];
+        /**
+          * @readonly
+         */
         "logger"?: Logger;
         /**
           * Whether media should automatically start playing from the beginning every time it ends.
@@ -2791,13 +3125,15 @@ declare namespace LocalJSX {
          */
         "loop"?: boolean;
         /**
-          * `@readonly` The title of the current media. Defaults to `undefined` if no media has been loaded.
-          * @inheritDoc
+          * The title of the current media. Defaults to `undefined` if no media has been loaded.
+          * @inheritDoc 
+          * @readonly
          */
         "mediaTitle"?: string;
         /**
-          * `@readonly` The type of media that is currently active, whether it's audio or video. Defaults to `undefined` when no media has been loaded or the type cannot be determined.
-          * @inheritDoc
+          * The type of media that is currently active, whether it's audio or video. Defaults to `undefined` when no media has been loaded or the type cannot be determined.
+          * @inheritDoc 
+          * @readonly
          */
         "mediaType"?: MediaType;
         /**
@@ -2806,222 +3142,234 @@ declare namespace LocalJSX {
          */
         "muted"?: boolean;
         /**
-          * Emitted when the player is attached/deattached from the DOM.
+          * Emitted when the `audioTracks` prop changes value.
           * @inheritDoc
          */
-        "onVAttachedChange"?: (event: CustomEvent<void>) => void;
+        "onVmAudioTracksChange"?: (event: CustomEvent<PlayerProps['audioTracks']>) => void;
         /**
           * Emitted when the `buffered` prop changes value.
           * @inheritDoc
          */
-        "onVBufferedChange"?: (event: CustomEvent<PlayerProps['buffered']>) => void;
+        "onVmBufferedChange"?: (event: CustomEvent<PlayerProps['buffered']>) => void;
         /**
           * Emitted when the `buffering` prop changes value.
           * @inheritDoc
          */
-        "onVBufferingChange"?: (event: CustomEvent<PlayerProps['buffering']>) => void;
+        "onVmBufferingChange"?: (event: CustomEvent<PlayerProps['buffering']>) => void;
         /**
           * Emitted when the `isControlsActive` prop changes value.
           * @inheritDoc
          */
-        "onVControlsChange"?: (event: CustomEvent<PlayerProps['isControlsActive']>) => void;
+        "onVmControlsChange"?: (event: CustomEvent<PlayerProps['isControlsActive']>) => void;
         /**
-          * Emitted when the `currentCaption` prop changes value.
-          * @inheritdoc
+          * Emitted when the `currentAudioTrack` prop changes value.
+          * @inheritDoc
          */
-        "onVCurrentCaptionChange"?: (event: CustomEvent<PlayerProps['currentCaption']>) => void;
+        "onVmCurrentAudioTrackChange"?: (event: CustomEvent<PlayerProps['currentAudioTrack']>) => void;
         /**
           * Emitted when the `currentPoster` prop changes value.
           * @inheritDoc
          */
-        "onVCurrentPosterChange"?: (event: CustomEvent<PlayerProps['currentPoster']>) => void;
+        "onVmCurrentPosterChange"?: (event: CustomEvent<PlayerProps['currentPoster']>) => void;
         /**
           * Emitted when the `currentProvider` prop changes value.
           * @inheritDoc
          */
-        "onVCurrentProviderChange"?: (event: CustomEvent<PlayerProps['currentProvider']>) => void;
+        "onVmCurrentProviderChange"?: (event: CustomEvent<PlayerProps['currentProvider']>) => void;
         /**
           * Emitted when the `currentSrc` prop changes value.
           * @inheritDoc
          */
-        "onVCurrentSrcChange"?: (event: CustomEvent<PlayerProps['currentSrc']>) => void;
+        "onVmCurrentSrcChange"?: (event: CustomEvent<PlayerProps['currentSrc']>) => void;
+        /**
+          * Emitted when the `currentTextTrack` prop changes value.
+          * @inheritDoc
+         */
+        "onVmCurrentTextTrackChange"?: (event: CustomEvent<PlayerProps['currentTextTrack']>) => void;
         /**
           * Emitted when the `currentTime` prop changes value.
           * @inheritDoc
          */
-        "onVCurrentTimeChange"?: (event: CustomEvent<PlayerProps['currentTime']>) => void;
+        "onVmCurrentTimeChange"?: (event: CustomEvent<PlayerProps['currentTime']>) => void;
         /**
           * Emitted when the `duration` prop changes value.
           * @inheritDoc
          */
-        "onVDurationChange"?: (event: CustomEvent<PlayerProps['duration']>) => void;
+        "onVmDurationChange"?: (event: CustomEvent<PlayerProps['duration']>) => void;
         /**
-          * Emitted when the `errors` prop changes value.
+          * Emitted when an any error has occurred within the player.
           * @inheritDoc
          */
-        "onVErrorsChange"?: (event: CustomEvent<PlayerProps['errors']>) => void;
+        "onVmError"?: (event: CustomEvent<any>) => void;
         /**
           * Emitted when the `isFullscreenActive` prop changes value.
           * @inheritDoc
          */
-        "onVFullscreenChange"?: (event: CustomEvent<PlayerProps['isFullscreenActive']>) => void;
+        "onVmFullscreenChange"?: (event: CustomEvent<PlayerProps['isFullscreenActive']>) => void;
         /**
           * Emitted when the `i18n` prop changes value.
-          * @inheritdoc
+          * @inheritDoc
          */
-        "onVI18nChange"?: (event: CustomEvent<PlayerProps['i18n']>) => void;
+        "onVmI18nChange"?: (event: CustomEvent<PlayerProps['i18n']>) => void;
         /**
           * Emitted when the `language` prop changes value.
           * @inheritDoc
          */
-        "onVLanguageChange"?: (event: CustomEvent<PlayerProps['language']>) => void;
+        "onVmLanguageChange"?: (event: CustomEvent<PlayerProps['language']>) => void;
         /**
           * Emitted when the `languages` prop changes value.
           * @inheritDoc
          */
-        "onVLanguagesChange"?: (event: CustomEvent<PlayerProps['languages']>) => void;
+        "onVmLanguagesChange"?: (event: CustomEvent<PlayerProps['languages']>) => void;
         /**
           * Emitted when the `isLive` prop changes value.
           * @inheritDoc
          */
-        "onVLiveChange"?: (event: CustomEvent<PlayerProps['isLive']>) => void;
+        "onVmLiveChange"?: (event: CustomEvent<PlayerProps['isLive']>) => void;
         /**
           * Emitted when the provider starts loading a media resource.
           * @inheritDoc
          */
-        "onVLoadStart"?: (event: CustomEvent<void>) => void;
+        "onVmLoadStart"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the `mediaTitle` prop changes value.
           * @inheritDoc
          */
-        "onVMediaTitleChange"?: (event: CustomEvent<PlayerProps['mediaTitle']>) => void;
+        "onVmMediaTitleChange"?: (event: CustomEvent<PlayerProps['mediaTitle']>) => void;
         /**
           * Emitted when the `mediaType` prop changes value.
           * @inheritDoc
          */
-        "onVMediaTypeChange"?: (event: CustomEvent<PlayerProps['mediaType']>) => void;
+        "onVmMediaTypeChange"?: (event: CustomEvent<PlayerProps['mediaType']>) => void;
         /**
           * Emitted when the `muted` prop changes value.
           * @inheritDoc
          */
-        "onVMutedChange"?: (event: CustomEvent<PlayerProps['muted']>) => void;
+        "onVmMutedChange"?: (event: CustomEvent<PlayerProps['muted']>) => void;
         /**
           * Emitted when the `paused` prop changes value.
           * @inheritDoc
          */
-        "onVPausedChange"?: (event: CustomEvent<PlayerProps['paused']>) => void;
+        "onVmPausedChange"?: (event: CustomEvent<PlayerProps['paused']>) => void;
         /**
           * Emitted when the `isPiPActive` prop changes value.
           * @inheritDoc
          */
-        "onVPiPChange"?: (event: CustomEvent<PlayerProps['isPiPActive']>) => void;
+        "onVmPiPChange"?: (event: CustomEvent<PlayerProps['isPiPActive']>) => void;
         /**
           * Emitted when the media is transitioning from `paused` to `playing`. Event flow: `paused` -> `play` -> `playing`. The media starts `playing` once enough content has buffered to begin/resume playback.
           * @inheritDoc
          */
-        "onVPlay"?: (event: CustomEvent<void>) => void;
+        "onVmPlay"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when playback reaches the end of the media.
           * @inheritDoc
          */
-        "onVPlaybackEnded"?: (event: CustomEvent<void>) => void;
+        "onVmPlaybackEnded"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the `playbackQualities` prop changes value.
           * @inheritDoc
          */
-        "onVPlaybackQualitiesChange"?: (event: CustomEvent<PlayerProps['playbackQualities']>) => void;
+        "onVmPlaybackQualitiesChange"?: (event: CustomEvent<PlayerProps['playbackQualities']>) => void;
         /**
           * Emitted when the `playbackQuality` prop changes value.
           * @inheritDoc
          */
-        "onVPlaybackQualityChange"?: (event: CustomEvent<PlayerProps['playbackQuality']>) => void;
+        "onVmPlaybackQualityChange"?: (event: CustomEvent<PlayerProps['playbackQuality']>) => void;
         /**
           * Emitted when the `playbackRate` prop changes value.
           * @inheritDoc
          */
-        "onVPlaybackRateChange"?: (event: CustomEvent<PlayerProps['playbackRate']>) => void;
+        "onVmPlaybackRateChange"?: (event: CustomEvent<PlayerProps['playbackRate']>) => void;
         /**
           * Emitted when the `playbackRates` prop changes value.
           * @inheritDoc
          */
-        "onVPlaybackRatesChange"?: (event: CustomEvent<PlayerProps['playbackRates']>) => void;
+        "onVmPlaybackRatesChange"?: (event: CustomEvent<PlayerProps['playbackRates']>) => void;
         /**
           * Emitted when the media is ready to begin playback. The following props are guaranteed to be defined when this fires: `mediaTitle`, `currentSrc`, `currentPoster`, `duration`, `mediaType`, `viewType`.
           * @inheritDoc
          */
-        "onVPlaybackReady"?: (event: CustomEvent<void>) => void;
+        "onVmPlaybackReady"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the media initiates playback.
           * @inheritDoc
          */
-        "onVPlaybackStarted"?: (event: CustomEvent<void>) => void;
+        "onVmPlaybackStarted"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the `playing` prop changes value.
           * @inheritDoc
          */
-        "onVPlayingChange"?: (event: CustomEvent<PlayerProps['playing']>) => void;
+        "onVmPlayingChange"?: (event: CustomEvent<PlayerProps['playing']>) => void;
         /**
           * Emitted when the player has loaded and is ready to be interacted with.
           * @inheritDoc
          */
-        "onVReady"?: (event: CustomEvent<void>) => void;
+        "onVmReady"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted directly after the player has successfully transitioned/seeked to a new time position. Event flow: `seeking` -> `seeked`.
           * @inheritDoc
          */
-        "onVSeeked"?: (event: CustomEvent<void>) => void;
+        "onVmSeeked"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the `seeking` prop changes value.
           * @inheritDoc
          */
-        "onVSeekingChange"?: (event: CustomEvent<PlayerProps['seeking']>) => void;
+        "onVmSeekingChange"?: (event: CustomEvent<PlayerProps['seeking']>) => void;
+        /**
+          * Emitted when the `isTextTrackVisible` prop changes value.
+          * @inheritDoc
+         */
+        "onVmTextTrackVisibleChange"?: (event: CustomEvent<PlayerProps['isTextTrackVisible']>) => void;
         /**
           * Emitted when the `textTracks` prop changes value.
           * @inheritDoc
          */
-        "onVTextTracksChange"?: (event: CustomEvent<PlayerProps['textTracks']>) => void;
+        "onVmTextTracksChange"?: (event: CustomEvent<PlayerProps['textTracks']>) => void;
         /**
           * Emitted when the `theme` prop changes value.
           * @inheritDoc
          */
-        "onVThemeChange"?: (event: CustomEvent<PlayerProps['theme']>) => void;
+        "onVmThemeChange"?: (event: CustomEvent<PlayerProps['theme']>) => void;
         /**
           * Emitted when the `isTouch` prop changes value.
           * @inheritDoc
          */
-        "onVTouchChange"?: (event: CustomEvent<PlayerProps['isTouch']>) => void;
+        "onVmTouchChange"?: (event: CustomEvent<PlayerProps['isTouch']>) => void;
         /**
           * Emitted when the `translations` prop changes value.
-          * @inheritdoc
+          * @inheritDoc
          */
-        "onVTranslationsChange"?: (event: CustomEvent<PlayerProps['translations']>) => void;
+        "onVmTranslationsChange"?: (event: CustomEvent<PlayerProps['translations']>) => void;
         /**
           * Emitted when the `viewType` prop changes value.
           * @inheritDoc
          */
-        "onVViewTypeChange"?: (event: CustomEvent<PlayerProps['viewType']>) => void;
+        "onVmViewTypeChange"?: (event: CustomEvent<PlayerProps['viewType']>) => void;
         /**
           * Emitted when the `volume` prop changes value.
           * @inheritDoc
          */
-        "onVVolumeChange"?: (event: CustomEvent<PlayerProps['volume']>) => void;
+        "onVmVolumeChange"?: (event: CustomEvent<PlayerProps['volume']>) => void;
         /**
           * Whether playback should be paused. Defaults to `true` if no media has loaded or playback has not started. Setting this to `true` will begin/resume playback.
           * @inheritDoc
          */
         "paused"?: boolean;
         /**
-          * `@readonly` Whether media playback has reached the end. In other words it'll be true if `currentTime === duration`.
-          * @inheritDoc
+          * Whether media playback has reached the end. In other words it'll be true if `currentTime === duration`.
+          * @inheritDoc 
+          * @readonly
          */
         "playbackEnded"?: boolean;
         /**
-          * `@readonly` The media qualities available for the current media.
-          * @inheritDoc
+          * The media qualities available for the current media.
+          * @inheritDoc 
+          * @readonly
          */
         "playbackQualities"?: string[];
         /**
-          * Indicates the quality of the media. The value will differ between audio and video. For audio this might be some combination of the encoding format (AAC, MP3), bitrate in kilobits per second (kbps) and sample rate in kilohertz (kHZ). For video this will be the number of vertical pixels it supports. For example, if the video has a resolution of `1920x1080` then the quality will return `1080p`. Defaults to `undefined` which you can interpret as the quality is unknown. The quality can only be set to a quality found in the `playbackQualities` prop. Some providers may not allow changing the quality, you can check if it's possible via `canSetPlaybackQuality()`.
+          * Indicates the quality of the media. The value will differ between audio and video. For audio this might be some combination of the encoding format (AAC, MP3), bitrate in kilobits per second (kbps) and sample rate in kilohertz (kHZ). For video this will be the number of vertical pixels it supports. For example, if the video has a resolution of `1920x1080` then the quality will return `1080p`. Defaults to `undefined` which you can interpret as the quality is unknown. The value can also be `Auto` for adaptive bit streams (ABR), where the provider can automatically manage the playback quality. The quality can only be set to a quality found in the `playbackQualities` prop. Some providers may not allow changing the quality, you can check if it's possible via `canSetPlaybackQuality()`.
           * @inheritDoc
          */
         "playbackQuality"?: string;
@@ -3031,23 +3379,27 @@ declare namespace LocalJSX {
          */
         "playbackRate"?: number;
         /**
-          * `@readonly` The playback rates available for the current media.
-          * @inheritDoc
+          * The playback rates available for the current media.
+          * @inheritDoc 
+          * @readonly
          */
         "playbackRates"?: number[];
         /**
-          * `@readonly` Whether media is ready for playback to begin.
-          * @inheritDoc
+          * Whether media is ready for playback to begin.
+          * @inheritDoc 
+          * @readonly
          */
         "playbackReady"?: boolean;
         /**
-          * `@readonly` Whether the media has initiated playback. In other words it will be true if `currentTime > 0`.
-          * @inheritDoc
+          * Whether the media has initiated playback. In other words it will be true if `currentTime > 0`.
+          * @inheritDoc 
+          * @readonly
          */
         "playbackStarted"?: boolean;
         /**
-          * `@readonly` Whether media is actively playing back. Defaults to `false` if no media has loaded or playback has not started.
-          * @inheritDoc
+          * Whether media is actively playing back. Defaults to `false` if no media has loaded or playback has not started.
+          * @inheritDoc 
+          * @readonly
          */
         "playing"?: boolean;
         /**
@@ -3056,33 +3408,42 @@ declare namespace LocalJSX {
          */
         "playsinline"?: boolean;
         /**
-          * `@readonly` Whether the player has loaded and is ready to be interacted with.
-          * @inheritDoc
+          * Whether the player has loaded and is ready to be interacted with.
+          * @inheritDoc 
+          * @readonly
          */
         "ready"?: boolean;
         /**
-          * `@readonly` Whether the player is in the process of seeking to a new time position.
-          * @inheritDoc
+          * Whether the player is in the process of seeking to a new time position.
+          * @inheritDoc 
+          * @readonly
          */
         "seeking"?: boolean;
         /**
-          * `@readonly` The text tracks (WebVTT) associated with the current media.
+          * Whether text tracks should be rendered by native player, set to `false` if using custom display.
           * @inheritDoc
          */
-        "textTracks"?: TextTrackList;
+        "shouldRenderNativeTextTracks"?: boolean;
+        /**
+          * The text tracks associated with the current media.
+          * @inheritDoc 
+          * @readonly
+         */
+        "textTracks"?: never[];
         /**
           * This property has no role other than scoping CSS selectors.
           * @inheritDoc
          */
         "theme"?: string;
         /**
-          * `@readonly` Contains each language and its respective translation map.
+          * Contains each language and its respective translation map.
           * @inheritDoc
          */
         "translations"?: Record<string, Translation>;
         /**
-          * `@readonly` The type of player view that is being used, whether it's an audio player view or video player view. Normally if the media type is of audio then the view is of type audio, but in some cases it might be desirable to show a different view type. For example, when playing audio with a poster. This is subject to the provider allowing it. Defaults to `undefined` when no media has been loaded.
-          * @inheritDoc
+          * The type of player view that is being used, whether it's an audio player view or video player view. Normally if the media type is of audio then the view is of type audio, but in some cases it might be desirable to show a different view type. For example, when playing audio with a poster. This is subject to the provider allowing it. Defaults to `undefined` when no media has been loaded.
+          * @inheritDoc 
+          * @readonly
          */
         "viewType"?: ViewType;
         /**
@@ -3091,7 +3452,7 @@ declare namespace LocalJSX {
          */
         "volume"?: number;
     }
-    interface VimePlayground {
+    interface VmPlayground {
         /**
           * The current poster to load.
          */
@@ -3100,6 +3461,10 @@ declare namespace LocalJSX {
           * The current media provider.
          */
         "provider"?: Provider;
+        /**
+          * Whether to show the native controls or not.
+         */
+        "showControls"?: boolean;
         /**
           * Whether to show the custom Vime UI or not.
          */
@@ -3113,7 +3478,7 @@ declare namespace LocalJSX {
          */
         "theme"?: 'light' | 'dark';
     }
-    interface VimePoster {
+    interface VmPoster {
         "currentPoster"?: PlayerProps['currentPoster'];
         "currentTime"?: PlayerProps['currentTime'];
         /**
@@ -3125,18 +3490,18 @@ declare namespace LocalJSX {
         /**
           * Emitted when the poster has loaded.
          */
-        "onVLoaded"?: (event: CustomEvent<void>) => void;
+        "onVmLoaded"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the poster will be hidden.
          */
-        "onVWillHide"?: (event: CustomEvent<void>) => void;
+        "onVmWillHide"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the poster will be shown.
          */
-        "onVWillShow"?: (event: CustomEvent<void>) => void;
+        "onVmWillShow"?: (event: CustomEvent<void>) => void;
         "playbackStarted"?: PlayerProps['playbackStarted'];
     }
-    interface VimeScrim {
+    interface VmScrim {
         /**
           * If this prop is defined, a dark gradient that smoothly fades out without being noticed will be used instead of a set color. This prop also sets the direction in which the dark end of the gradient should start. If the direction is set to `up`, the dark end of the gradient will start at the bottom of the player and fade out to the center. If the direction is set to `down`, the gradient will start at the top of the player and fade out to the center.
          */
@@ -3144,7 +3509,7 @@ declare namespace LocalJSX {
         "isControlsActive"?: PlayerProps['isControlsActive'];
         "isVideoView"?: PlayerProps['isVideoView'];
     }
-    interface VimeScrubberControl {
+    interface VmScrubberControl {
         /**
           * Whether the timestamp in the tooltip should show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`).
          */
@@ -3163,15 +3528,11 @@ declare namespace LocalJSX {
          */
         "noKeyboard"?: boolean;
     }
-    interface VimeSettings {
+    interface VmSettings {
         /**
           * Whether the settings menu is opened/closed.
          */
         "active"?: boolean;
-        /**
-          * The height of any lower control bar in pixels so that the settings can re-position itself accordingly.
-         */
-        "controlsHeight"?: number;
         "isAudioView"?: PlayerProps['isAudioView'];
         "isMobile"?: PlayerProps['isMobile'];
         /**
@@ -3179,16 +3540,20 @@ declare namespace LocalJSX {
          */
         "pin"?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
     }
-    interface VimeSettingsControl {
+    interface VmSettingsControl {
         /**
           * Whether the settings menu this control manages is open.
          */
         "expanded"?: boolean;
         "i18n"?: PlayerProps['i18n'];
         /**
-          * The URL to an SVG element or fragment to load.
+          * The name of the settings icon to resolve from the icon library.
          */
         "icon"?: string;
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         /**
           * The DOM `id` of the settings menu this control is responsible for opening/closing.
          */
@@ -3202,14 +3567,14 @@ declare namespace LocalJSX {
          */
         "tooltipPosition"?: TooltipPosition;
     }
-    interface VimeSkeleton {
+    interface VmSkeleton {
         /**
-          * Determines which effect the skeleton will use.
+          * Determines which animation effect the skeleton will use.
          */
         "effect"?: 'sheen' | 'none';
         "ready"?: PlayerProps['ready'];
     }
-    interface VimeSlider {
+    interface VmSlider {
         /**
           * A human-readable label for the purpose of the slider.
          */
@@ -3223,9 +3588,17 @@ declare namespace LocalJSX {
          */
         "min"?: number;
         /**
+          * Emitted when the slider loses focus.
+         */
+        "onVmBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the slider receives focus.
+         */
+        "onVmFocus"?: (event: CustomEvent<void>) => void;
+        /**
           * Emitted when the value of the underlying `input` field changes.
          */
-        "onVValueChange"?: (event: CustomEvent<number>) => void;
+        "onVmValueChange"?: (event: CustomEvent<number>) => void;
         /**
           * A number that specifies the granularity that the value must adhere to.
          */
@@ -3239,28 +3612,29 @@ declare namespace LocalJSX {
          */
         "valueText"?: string;
     }
-    interface VimeSpinner {
+    interface VmSpinner {
         "buffering"?: PlayerProps['buffering'];
         "currentProvider"?: PlayerProps['currentProvider'];
         "isVideoView"?: PlayerProps['isVideoView'];
         /**
           * Emitted when the spinner will be hidden.
          */
-        "onVWillHide"?: (event: CustomEvent<void>) => void;
+        "onVmWillHide"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the spinner will be shown.
          */
-        "onVWillShow"?: (event: CustomEvent<void>) => void;
+        "onVmWillShow"?: (event: CustomEvent<void>) => void;
+        "playbackReady"?: PlayerProps['playbackReady'];
+        /**
+          * Whether the spinner should be active when the player is booting or media is loading.
+         */
+        "showWhenMediaLoading"?: boolean;
     }
-    interface VimeSubmenu {
+    interface VmSubmenu {
         /**
           * Whether the submenu is open/closed.
          */
         "active"?: boolean;
-        /**
-          * Whether the submenu should be displayed or not.
-         */
-        "hidden"?: boolean;
         /**
           * This can provide additional context about the current state of the submenu. For example, the hint could be the currently selected option if the submenu contains a radio group.
          */
@@ -3269,8 +3643,20 @@ declare namespace LocalJSX {
           * The title of the submenu.
          */
         "label": string;
+        /**
+          * Emitted when the submenu has closed/is not active.
+         */
+        "onVmCloseSubmenu"?: (event: CustomEvent<HTMLVmSubmenuElement>) => void;
+        /**
+          * Emitted when the submenu is open/active.
+         */
+        "onVmOpenSubmenu"?: (event: CustomEvent<HTMLVmSubmenuElement>) => void;
+        /**
+          * The direction the submenu should slide in from.
+         */
+        "slideInDirection"?: 'left' | 'right';
     }
-    interface VimeTime {
+    interface VmTime {
         /**
           * Whether the time should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`).
          */
@@ -3284,7 +3670,7 @@ declare namespace LocalJSX {
          */
         "seconds"?: number;
     }
-    interface VimeTimeProgress {
+    interface VmTimeProgress {
         /**
           * Whether the times should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`).
          */
@@ -3294,7 +3680,7 @@ declare namespace LocalJSX {
          */
         "separator"?: string;
     }
-    interface VimeTooltip {
+    interface VmTooltip {
         /**
           * Whether the tooltip is visible or not.
          */
@@ -3307,18 +3693,19 @@ declare namespace LocalJSX {
           * Whether the tooltip is displayed or not.
          */
         "hidden"?: boolean;
+        "isMobile"?: PlayerProps['isMobile'];
         "isTouch"?: PlayerProps['isTouch'];
         /**
           * Determines if the tooltip appears on top/bottom of it's parent.
          */
         "position"?: TooltipPosition;
     }
-    interface VimeUi {
+    interface VmUi {
         "isFullscreenActive"?: PlayerProps['isFullscreenActive'];
         "isVideoView"?: PlayerProps['isVideoView'];
         "playsinline"?: PlayerProps['playsinline'];
     }
-    interface VimeVideo {
+    interface VmVideo {
         /**
           * **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.
           * @inheritdoc
@@ -3344,6 +3731,7 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
+        "hasCustomTextManager"?: boolean;
         /**
           * The title of the current media.
          */
@@ -3360,7 +3748,7 @@ declare namespace LocalJSX {
         "preload"?: MediaPreloadOption;
         "willAttach"?: boolean;
     }
-    interface VimeVimeo {
+    interface VmVimeo {
         "aspectRatio"?: string;
         "autoplay"?: boolean;
         /**
@@ -3380,7 +3768,11 @@ declare namespace LocalJSX {
           * Turns off automatically determining the aspect ratio of the current video.
          */
         "noAutoAspectRatio"?: boolean;
-        "onVLoadStart"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when an error has occurred.
+         */
+        "onVmError"?: (event: CustomEvent<any>) => void;
+        "onVmLoadStart"?: (event: CustomEvent<void>) => void;
         "playsinline"?: boolean;
         /**
           * Whether to display the video owner's portrait.
@@ -3395,19 +3787,23 @@ declare namespace LocalJSX {
          */
         "videoId": string;
     }
-    interface VimeVolumeControl {
+    interface VmVolumeControl {
         /**
           * Whether the tooltip should be hidden.
          */
         "hideTooltip"?: boolean;
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the high volume icon to resolve from the icon library.
          */
         "highVolumeIcon"?: string;
         "i18n"?: PlayerProps['i18n'];
+        /**
+          * The name of an icon library to use. Defaults to the library defined by the `icons` player property.
+         */
+        "icons"?: string;
         "isMobile"?: PlayerProps['isMobile'];
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the low volume icon to resolve from the icon library.
          */
         "lowVolumeIcon"?: string;
         /**
@@ -3416,7 +3812,7 @@ declare namespace LocalJSX {
         "muteKeys"?: string;
         "muted"?: PlayerProps['muted'];
         /**
-          * The URL to an SVG element or fragment.
+          * The name of the muted volume icon to resolve from the icon library.
          */
         "mutedIcon"?: string;
         /**
@@ -3433,7 +3829,7 @@ declare namespace LocalJSX {
         "tooltipPosition"?: TooltipPosition;
         "volume"?: PlayerProps['volume'];
     }
-    interface VimeYoutube {
+    interface VmYoutube {
         "autoplay"?: boolean;
         "controls"?: boolean;
         /**
@@ -3444,7 +3840,7 @@ declare namespace LocalJSX {
         "logger"?: Logger;
         "loop"?: boolean;
         "muted"?: boolean;
-        "onVLoadStart"?: (event: CustomEvent<void>) => void;
+        "onVmLoadStart"?: (event: CustomEvent<void>) => void;
         "playsinline"?: boolean;
         /**
           * The absolute URL of a custom poster to be used for the current video.
@@ -3460,112 +3856,112 @@ declare namespace LocalJSX {
         "videoId": string;
     }
     interface IntrinsicElements {
-        "vime-audio": VimeAudio;
-        "vime-caption-control": VimeCaptionControl;
-        "vime-captions": VimeCaptions;
-        "vime-click-to-play": VimeClickToPlay;
-        "vime-control": VimeControl;
-        "vime-control-group": VimeControlGroup;
-        "vime-control-spacer": VimeControlSpacer;
-        "vime-controls": VimeControls;
-        "vime-current-time": VimeCurrentTime;
-        "vime-dailymotion": VimeDailymotion;
-        "vime-dash": VimeDash;
-        "vime-dbl-click-fullscreen": VimeDblClickFullscreen;
-        "vime-default-controls": VimeDefaultControls;
-        "vime-default-settings": VimeDefaultSettings;
-        "vime-default-ui": VimeDefaultUi;
-        "vime-embed": VimeEmbed;
-        "vime-end-time": VimeEndTime;
-        "vime-faketube": VimeFaketube;
-        "vime-file": VimeFile;
-        "vime-fullscreen-control": VimeFullscreenControl;
-        "vime-hls": VimeHls;
-        "vime-icon": VimeIcon;
-        "vime-icons": VimeIcons;
-        "vime-live-indicator": VimeLiveIndicator;
-        "vime-menu": VimeMenu;
-        "vime-menu-item": VimeMenuItem;
-        "vime-menu-radio": VimeMenuRadio;
-        "vime-menu-radio-group": VimeMenuRadioGroup;
-        "vime-mute-control": VimeMuteControl;
-        "vime-pip-control": VimePipControl;
-        "vime-playback-control": VimePlaybackControl;
-        "vime-player": VimePlayer;
-        "vime-playground": VimePlayground;
-        "vime-poster": VimePoster;
-        "vime-scrim": VimeScrim;
-        "vime-scrubber-control": VimeScrubberControl;
-        "vime-settings": VimeSettings;
-        "vime-settings-control": VimeSettingsControl;
-        "vime-skeleton": VimeSkeleton;
-        "vime-slider": VimeSlider;
-        "vime-spinner": VimeSpinner;
-        "vime-submenu": VimeSubmenu;
-        "vime-time": VimeTime;
-        "vime-time-progress": VimeTimeProgress;
-        "vime-tooltip": VimeTooltip;
-        "vime-ui": VimeUi;
-        "vime-video": VimeVideo;
-        "vime-vimeo": VimeVimeo;
-        "vime-volume-control": VimeVolumeControl;
-        "vime-youtube": VimeYoutube;
+        "vm-audio": VmAudio;
+        "vm-caption-control": VmCaptionControl;
+        "vm-captions": VmCaptions;
+        "vm-click-to-play": VmClickToPlay;
+        "vm-control": VmControl;
+        "vm-control-group": VmControlGroup;
+        "vm-control-spacer": VmControlSpacer;
+        "vm-controls": VmControls;
+        "vm-current-time": VmCurrentTime;
+        "vm-dailymotion": VmDailymotion;
+        "vm-dash": VmDash;
+        "vm-dbl-click-fullscreen": VmDblClickFullscreen;
+        "vm-default-controls": VmDefaultControls;
+        "vm-default-settings": VmDefaultSettings;
+        "vm-default-ui": VmDefaultUi;
+        "vm-embed": VmEmbed;
+        "vm-end-time": VmEndTime;
+        "vm-file": VmFile;
+        "vm-fullscreen-control": VmFullscreenControl;
+        "vm-hls": VmHls;
+        "vm-icon": VmIcon;
+        "vm-icon-library": VmIconLibrary;
+        "vm-live-indicator": VmLiveIndicator;
+        "vm-loading-screen": VmLoadingScreen;
+        "vm-menu": VmMenu;
+        "vm-menu-item": VmMenuItem;
+        "vm-menu-radio": VmMenuRadio;
+        "vm-menu-radio-group": VmMenuRadioGroup;
+        "vm-mute-control": VmMuteControl;
+        "vm-pip-control": VmPipControl;
+        "vm-playback-control": VmPlaybackControl;
+        "vm-player": VmPlayer;
+        "vm-playground": VmPlayground;
+        "vm-poster": VmPoster;
+        "vm-scrim": VmScrim;
+        "vm-scrubber-control": VmScrubberControl;
+        "vm-settings": VmSettings;
+        "vm-settings-control": VmSettingsControl;
+        "vm-skeleton": VmSkeleton;
+        "vm-slider": VmSlider;
+        "vm-spinner": VmSpinner;
+        "vm-submenu": VmSubmenu;
+        "vm-time": VmTime;
+        "vm-time-progress": VmTimeProgress;
+        "vm-tooltip": VmTooltip;
+        "vm-ui": VmUi;
+        "vm-video": VmVideo;
+        "vm-vimeo": VmVimeo;
+        "vm-volume-control": VmVolumeControl;
+        "vm-youtube": VmYoutube;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "vime-audio": LocalJSX.VimeAudio & JSXBase.HTMLAttributes<HTMLVimeAudioElement>;
-            "vime-caption-control": LocalJSX.VimeCaptionControl & JSXBase.HTMLAttributes<HTMLVimeCaptionControlElement>;
-            "vime-captions": LocalJSX.VimeCaptions & JSXBase.HTMLAttributes<HTMLVimeCaptionsElement>;
-            "vime-click-to-play": LocalJSX.VimeClickToPlay & JSXBase.HTMLAttributes<HTMLVimeClickToPlayElement>;
-            "vime-control": LocalJSX.VimeControl & JSXBase.HTMLAttributes<HTMLVimeControlElement>;
-            "vime-control-group": LocalJSX.VimeControlGroup & JSXBase.HTMLAttributes<HTMLVimeControlGroupElement>;
-            "vime-control-spacer": LocalJSX.VimeControlSpacer & JSXBase.HTMLAttributes<HTMLVimeControlSpacerElement>;
-            "vime-controls": LocalJSX.VimeControls & JSXBase.HTMLAttributes<HTMLVimeControlsElement>;
-            "vime-current-time": LocalJSX.VimeCurrentTime & JSXBase.HTMLAttributes<HTMLVimeCurrentTimeElement>;
-            "vime-dailymotion": LocalJSX.VimeDailymotion & JSXBase.HTMLAttributes<HTMLVimeDailymotionElement>;
-            "vime-dash": LocalJSX.VimeDash & JSXBase.HTMLAttributes<HTMLVimeDashElement>;
-            "vime-dbl-click-fullscreen": LocalJSX.VimeDblClickFullscreen & JSXBase.HTMLAttributes<HTMLVimeDblClickFullscreenElement>;
-            "vime-default-controls": LocalJSX.VimeDefaultControls & JSXBase.HTMLAttributes<HTMLVimeDefaultControlsElement>;
-            "vime-default-settings": LocalJSX.VimeDefaultSettings & JSXBase.HTMLAttributes<HTMLVimeDefaultSettingsElement>;
-            "vime-default-ui": LocalJSX.VimeDefaultUi & JSXBase.HTMLAttributes<HTMLVimeDefaultUiElement>;
-            "vime-embed": LocalJSX.VimeEmbed & JSXBase.HTMLAttributes<HTMLVimeEmbedElement>;
-            "vime-end-time": LocalJSX.VimeEndTime & JSXBase.HTMLAttributes<HTMLVimeEndTimeElement>;
-            "vime-faketube": LocalJSX.VimeFaketube & JSXBase.HTMLAttributes<HTMLVimeFaketubeElement>;
-            "vime-file": LocalJSX.VimeFile & JSXBase.HTMLAttributes<HTMLVimeFileElement>;
-            "vime-fullscreen-control": LocalJSX.VimeFullscreenControl & JSXBase.HTMLAttributes<HTMLVimeFullscreenControlElement>;
-            "vime-hls": LocalJSX.VimeHls & JSXBase.HTMLAttributes<HTMLVimeHlsElement>;
-            "vime-icon": LocalJSX.VimeIcon & JSXBase.HTMLAttributes<HTMLVimeIconElement>;
-            "vime-icons": LocalJSX.VimeIcons & JSXBase.HTMLAttributes<HTMLVimeIconsElement>;
-            "vime-live-indicator": LocalJSX.VimeLiveIndicator & JSXBase.HTMLAttributes<HTMLVimeLiveIndicatorElement>;
-            "vime-menu": LocalJSX.VimeMenu & JSXBase.HTMLAttributes<HTMLVimeMenuElement>;
-            "vime-menu-item": LocalJSX.VimeMenuItem & JSXBase.HTMLAttributes<HTMLVimeMenuItemElement>;
-            "vime-menu-radio": LocalJSX.VimeMenuRadio & JSXBase.HTMLAttributes<HTMLVimeMenuRadioElement>;
-            "vime-menu-radio-group": LocalJSX.VimeMenuRadioGroup & JSXBase.HTMLAttributes<HTMLVimeMenuRadioGroupElement>;
-            "vime-mute-control": LocalJSX.VimeMuteControl & JSXBase.HTMLAttributes<HTMLVimeMuteControlElement>;
-            "vime-pip-control": LocalJSX.VimePipControl & JSXBase.HTMLAttributes<HTMLVimePipControlElement>;
-            "vime-playback-control": LocalJSX.VimePlaybackControl & JSXBase.HTMLAttributes<HTMLVimePlaybackControlElement>;
-            "vime-player": LocalJSX.VimePlayer & JSXBase.HTMLAttributes<HTMLVimePlayerElement>;
-            "vime-playground": LocalJSX.VimePlayground & JSXBase.HTMLAttributes<HTMLVimePlaygroundElement>;
-            "vime-poster": LocalJSX.VimePoster & JSXBase.HTMLAttributes<HTMLVimePosterElement>;
-            "vime-scrim": LocalJSX.VimeScrim & JSXBase.HTMLAttributes<HTMLVimeScrimElement>;
-            "vime-scrubber-control": LocalJSX.VimeScrubberControl & JSXBase.HTMLAttributes<HTMLVimeScrubberControlElement>;
-            "vime-settings": LocalJSX.VimeSettings & JSXBase.HTMLAttributes<HTMLVimeSettingsElement>;
-            "vime-settings-control": LocalJSX.VimeSettingsControl & JSXBase.HTMLAttributes<HTMLVimeSettingsControlElement>;
-            "vime-skeleton": LocalJSX.VimeSkeleton & JSXBase.HTMLAttributes<HTMLVimeSkeletonElement>;
-            "vime-slider": LocalJSX.VimeSlider & JSXBase.HTMLAttributes<HTMLVimeSliderElement>;
-            "vime-spinner": LocalJSX.VimeSpinner & JSXBase.HTMLAttributes<HTMLVimeSpinnerElement>;
-            "vime-submenu": LocalJSX.VimeSubmenu & JSXBase.HTMLAttributes<HTMLVimeSubmenuElement>;
-            "vime-time": LocalJSX.VimeTime & JSXBase.HTMLAttributes<HTMLVimeTimeElement>;
-            "vime-time-progress": LocalJSX.VimeTimeProgress & JSXBase.HTMLAttributes<HTMLVimeTimeProgressElement>;
-            "vime-tooltip": LocalJSX.VimeTooltip & JSXBase.HTMLAttributes<HTMLVimeTooltipElement>;
-            "vime-ui": LocalJSX.VimeUi & JSXBase.HTMLAttributes<HTMLVimeUiElement>;
-            "vime-video": LocalJSX.VimeVideo & JSXBase.HTMLAttributes<HTMLVimeVideoElement>;
-            "vime-vimeo": LocalJSX.VimeVimeo & JSXBase.HTMLAttributes<HTMLVimeVimeoElement>;
-            "vime-volume-control": LocalJSX.VimeVolumeControl & JSXBase.HTMLAttributes<HTMLVimeVolumeControlElement>;
-            "vime-youtube": LocalJSX.VimeYoutube & JSXBase.HTMLAttributes<HTMLVimeYoutubeElement>;
+            "vm-audio": LocalJSX.VmAudio & JSXBase.HTMLAttributes<HTMLVmAudioElement>;
+            "vm-caption-control": LocalJSX.VmCaptionControl & JSXBase.HTMLAttributes<HTMLVmCaptionControlElement>;
+            "vm-captions": LocalJSX.VmCaptions & JSXBase.HTMLAttributes<HTMLVmCaptionsElement>;
+            "vm-click-to-play": LocalJSX.VmClickToPlay & JSXBase.HTMLAttributes<HTMLVmClickToPlayElement>;
+            "vm-control": LocalJSX.VmControl & JSXBase.HTMLAttributes<HTMLVmControlElement>;
+            "vm-control-group": LocalJSX.VmControlGroup & JSXBase.HTMLAttributes<HTMLVmControlGroupElement>;
+            "vm-control-spacer": LocalJSX.VmControlSpacer & JSXBase.HTMLAttributes<HTMLVmControlSpacerElement>;
+            "vm-controls": LocalJSX.VmControls & JSXBase.HTMLAttributes<HTMLVmControlsElement>;
+            "vm-current-time": LocalJSX.VmCurrentTime & JSXBase.HTMLAttributes<HTMLVmCurrentTimeElement>;
+            "vm-dailymotion": LocalJSX.VmDailymotion & JSXBase.HTMLAttributes<HTMLVmDailymotionElement>;
+            "vm-dash": LocalJSX.VmDash & JSXBase.HTMLAttributes<HTMLVmDashElement>;
+            "vm-dbl-click-fullscreen": LocalJSX.VmDblClickFullscreen & JSXBase.HTMLAttributes<HTMLVmDblClickFullscreenElement>;
+            "vm-default-controls": LocalJSX.VmDefaultControls & JSXBase.HTMLAttributes<HTMLVmDefaultControlsElement>;
+            "vm-default-settings": LocalJSX.VmDefaultSettings & JSXBase.HTMLAttributes<HTMLVmDefaultSettingsElement>;
+            "vm-default-ui": LocalJSX.VmDefaultUi & JSXBase.HTMLAttributes<HTMLVmDefaultUiElement>;
+            "vm-embed": LocalJSX.VmEmbed & JSXBase.HTMLAttributes<HTMLVmEmbedElement>;
+            "vm-end-time": LocalJSX.VmEndTime & JSXBase.HTMLAttributes<HTMLVmEndTimeElement>;
+            "vm-file": LocalJSX.VmFile & JSXBase.HTMLAttributes<HTMLVmFileElement>;
+            "vm-fullscreen-control": LocalJSX.VmFullscreenControl & JSXBase.HTMLAttributes<HTMLVmFullscreenControlElement>;
+            "vm-hls": LocalJSX.VmHls & JSXBase.HTMLAttributes<HTMLVmHlsElement>;
+            "vm-icon": LocalJSX.VmIcon & JSXBase.HTMLAttributes<HTMLVmIconElement>;
+            "vm-icon-library": LocalJSX.VmIconLibrary & JSXBase.HTMLAttributes<HTMLVmIconLibraryElement>;
+            "vm-live-indicator": LocalJSX.VmLiveIndicator & JSXBase.HTMLAttributes<HTMLVmLiveIndicatorElement>;
+            "vm-loading-screen": LocalJSX.VmLoadingScreen & JSXBase.HTMLAttributes<HTMLVmLoadingScreenElement>;
+            "vm-menu": LocalJSX.VmMenu & JSXBase.HTMLAttributes<HTMLVmMenuElement>;
+            "vm-menu-item": LocalJSX.VmMenuItem & JSXBase.HTMLAttributes<HTMLVmMenuItemElement>;
+            "vm-menu-radio": LocalJSX.VmMenuRadio & JSXBase.HTMLAttributes<HTMLVmMenuRadioElement>;
+            "vm-menu-radio-group": LocalJSX.VmMenuRadioGroup & JSXBase.HTMLAttributes<HTMLVmMenuRadioGroupElement>;
+            "vm-mute-control": LocalJSX.VmMuteControl & JSXBase.HTMLAttributes<HTMLVmMuteControlElement>;
+            "vm-pip-control": LocalJSX.VmPipControl & JSXBase.HTMLAttributes<HTMLVmPipControlElement>;
+            "vm-playback-control": LocalJSX.VmPlaybackControl & JSXBase.HTMLAttributes<HTMLVmPlaybackControlElement>;
+            "vm-player": LocalJSX.VmPlayer & JSXBase.HTMLAttributes<HTMLVmPlayerElement>;
+            "vm-playground": LocalJSX.VmPlayground & JSXBase.HTMLAttributes<HTMLVmPlaygroundElement>;
+            "vm-poster": LocalJSX.VmPoster & JSXBase.HTMLAttributes<HTMLVmPosterElement>;
+            "vm-scrim": LocalJSX.VmScrim & JSXBase.HTMLAttributes<HTMLVmScrimElement>;
+            "vm-scrubber-control": LocalJSX.VmScrubberControl & JSXBase.HTMLAttributes<HTMLVmScrubberControlElement>;
+            "vm-settings": LocalJSX.VmSettings & JSXBase.HTMLAttributes<HTMLVmSettingsElement>;
+            "vm-settings-control": LocalJSX.VmSettingsControl & JSXBase.HTMLAttributes<HTMLVmSettingsControlElement>;
+            "vm-skeleton": LocalJSX.VmSkeleton & JSXBase.HTMLAttributes<HTMLVmSkeletonElement>;
+            "vm-slider": LocalJSX.VmSlider & JSXBase.HTMLAttributes<HTMLVmSliderElement>;
+            "vm-spinner": LocalJSX.VmSpinner & JSXBase.HTMLAttributes<HTMLVmSpinnerElement>;
+            "vm-submenu": LocalJSX.VmSubmenu & JSXBase.HTMLAttributes<HTMLVmSubmenuElement>;
+            "vm-time": LocalJSX.VmTime & JSXBase.HTMLAttributes<HTMLVmTimeElement>;
+            "vm-time-progress": LocalJSX.VmTimeProgress & JSXBase.HTMLAttributes<HTMLVmTimeProgressElement>;
+            "vm-tooltip": LocalJSX.VmTooltip & JSXBase.HTMLAttributes<HTMLVmTooltipElement>;
+            "vm-ui": LocalJSX.VmUi & JSXBase.HTMLAttributes<HTMLVmUiElement>;
+            "vm-video": LocalJSX.VmVideo & JSXBase.HTMLAttributes<HTMLVmVideoElement>;
+            "vm-vimeo": LocalJSX.VmVimeo & JSXBase.HTMLAttributes<HTMLVmVimeoElement>;
+            "vm-volume-control": LocalJSX.VmVolumeControl & JSXBase.HTMLAttributes<HTMLVmVolumeControlElement>;
+            "vm-youtube": LocalJSX.VmYoutube & JSXBase.HTMLAttributes<HTMLVmYoutubeElement>;
         }
     }
 }

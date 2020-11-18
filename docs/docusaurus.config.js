@@ -7,7 +7,7 @@ module.exports = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
-  organizationName: 'vime-js',
+  organizationName: 'vm-js',
   projectName: 'vime',
   stylesheets: [
     'https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/default.css',
@@ -21,6 +21,14 @@ module.exports = {
       apiKey: '94e7d7e6c8d755cc7c07513981e18e66',
       indexName: 'vime',
     },
+    googleAnalytics: {
+      trackingID: 'G-Q6KR24MTN7',
+      anonymizeIP: true,
+    },
+    gtag: {
+      trackingID: 'G-Q6KR24MTN7',
+      anonymizeIP: true,
+    },
     navbar: {
       title: 'Vime',
       hideOnScroll: true,
@@ -29,6 +37,11 @@ module.exports = {
         src: 'img/vime.svg',
       },
       items: [
+        {
+          type: 'docsVersionDropdown',
+          position: 'left',
+          dropdownActiveClassDisabled: true,
+        },
         {
           to: 'demo/',
           activeBasePath: 'demo',
@@ -55,6 +68,12 @@ module.exports = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: '5.x',
+            },
+          },
           editUrl: 'https://github.com/vime-js/vime/edit/master/docs/',
         },
         theme: {

@@ -1,4 +1,4 @@
-import { isFunction } from './unit';
+import { isFunction, isUndefined } from './unit';
 import { listen } from './dom';
 
 export const IS_CLIENT = typeof window !== 'undefined';
@@ -16,6 +16,20 @@ export const ORIGIN = (window.location.protocol !== 'file:')
   : undefined;
 
 export type WebKitPresentationMode = 'picture-in-picture' | 'inline' | 'fullscreen';
+
+export const onMobileChange = (callback: (isMobile: boolean) => void) => {
+  if (!IS_CLIENT || isUndefined(window.ResizeObserver)) {
+    callback(IS_MOBILE);
+    return () => {};
+  }
+
+  function onResize() {
+    callback((window.innerWidth <= 480) || IS_MOBILE);
+  }
+
+  callback((window.innerWidth <= 480) || IS_MOBILE);
+  return listen(window, 'resize', onResize);
+};
 
 export const onTouchInputChange = (callback: (isTouch: boolean) => void) => {
   if (!IS_CLIENT) return () => {};

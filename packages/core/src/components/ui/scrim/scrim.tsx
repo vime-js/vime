@@ -1,13 +1,13 @@
-import {
-  h, Component, Host, Prop,
-} from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 import { PlayerProps } from '../../core/player/PlayerProps';
-import { withPlayerContext } from '../../core/player/PlayerContext';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
 import { isUndefined } from '../../../utils/unit';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-scrim',
-  styleUrl: 'scrim.scss',
+  tag: 'vm-scrim',
+  styleUrl: 'scrim.css',
+  shadow: true,
 })
 export class Scrim {
   /**
@@ -19,33 +19,29 @@ export class Scrim {
    */
   @Prop() gradient?: 'up' | 'down';
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isControlsActive: PlayerProps['isControlsActive'] = false;
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['isVideoView', 'isControlsActive']);
   }
 
   render() {
     return (
-      <Host
+      <div
         class={{
+          scrim: true,
           gradient: !isUndefined(this.gradient),
           gradientUp: this.gradient === 'up',
           gradientDown: this.gradient === 'down',
           hidden: !this.isVideoView,
           active: this.isControlsActive,
         }}
-      >
-        <div />
-      </Host>
+      />
     );
   }
 }

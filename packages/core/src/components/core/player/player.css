@@ -1,0 +1,63 @@
+/**
+  * @prop --vm-player-bg: The background color of the player, has no effect on audio players.
+  * @prop --vm-player-font-family: A custom font family to be used throughout the player.
+  * @prop --vm-player-theme: A custom theme (color) to be used throughout the player. Any valid CSS 
+  * `color` property (HEX, RGBA, HLS, ...) can be used.
+  * @prop --vm-player-box-shadow: The shadow cast around the player frame.
+  * @prop --vm-player-border-radius: The border radius of the player.
+  * @prop --vm-blocker-z-index: The blocker's position in the root z-axis stack inside the player.
+  */
+.player {
+  box-sizing: border-box;
+  direction: ltr;
+  font-family: var(--vm-player-font-family);
+  -moz-osx-font-smoothing: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-tap-highlight-color: transparent;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  line-height: 1.7;
+  width: 100%;
+  display: block;
+  max-width: 100%;
+  min-width: 275px;
+  min-height: 40px;
+  position: relative;
+  text-shadow: none;
+  outline: 0;
+  transition: box-shadow 0.3s ease;
+  box-shadow: var(--vm-player-box-shadow);
+  border-radius: var(--vm-player-border-radius);
+}
+
+.player.idle {
+  cursor: none;
+}
+
+.player.audio {
+  background-color: transparent !important;
+}
+
+.player.video {
+  height: 0;
+  overflow: hidden;
+  background-color: var(--vm-player-bg, #000);
+}
+
+.player.fullscreen {
+  margin: 0;
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 0 !important;
+}
+
+.blocker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  z-index: var(--vm-blocker-z-index);
+}

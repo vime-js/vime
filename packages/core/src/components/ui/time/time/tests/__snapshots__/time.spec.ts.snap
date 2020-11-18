@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should be structurally sound 1`] = `
-<vime-time aria-label="Current time">
-  02:00
-</vime-time>
-`;

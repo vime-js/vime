@@ -3,9 +3,11 @@
 import {
   h, Component, Prop, Event, EventEmitter,
 } from '@stencil/core';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-menu-radio',
+  tag: 'vm-menu-radio',
+  shadow: true,
 })
 export class MenuRadio {
   /**
@@ -32,25 +34,36 @@ export class MenuRadio {
   /**
    * The URL to an SVG element or fragment to load.
    */
-  @Prop() checkedIcon?: string = '#vime-checkmark';
+  @Prop() checkIcon?: string = 'check';
+
+  /**
+   * The name of an icon library to use. Defaults to the library defined by the `icons` player
+   * property.
+   */
+  @Prop() icons?: string;
 
   /**
    * Emitted when the radio button is selected.
    */
-  @Event() vCheck!: EventEmitter<void>;
+  @Event() vmCheck!: EventEmitter<void>;
+
+  constructor() {
+    withComponentRegistry(this);
+  }
 
   private onClick() {
     this.checked = true;
-    this.vCheck.emit();
+    this.vmCheck.emit();
   }
 
   render() {
     return (
-      <vime-menu-item
+      <vm-menu-item
         label={this.label}
         checked={this.checked}
         badge={this.badge}
-        checkedIcon={this.checkedIcon}
+        checkIcon={this.checkIcon}
+        icons={this.icons}
         onClick={this.onClick.bind(this)}
       />
     );

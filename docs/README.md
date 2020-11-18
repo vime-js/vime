@@ -26,5 +26,5 @@ $: cd ..
 
 $: yarn install
 
-$: yarn workspace @vime/core build
+$: yarn core build
 ```

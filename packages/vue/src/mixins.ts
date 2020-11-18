@@ -1,18 +1,13 @@
-import Vue from 'vue';
-import { createDispatcher, PlayerProp, usePlayerContext } from '@vime/core';
+import {
+  createDispatcher, PlayerProp, usePlayerContext, findPlayer,
+} from '@vime/core';
 
-const findPlayer = (component?: Vue): HTMLVimePlayerElement | null => {
-  if (!component) return null;
-  const players = Array.from(document.querySelectorAll('vime-player'));
-  return players.find((player) => player.contains(component.$el)) ?? null;
-};
-
-export const VimeMixin = (props: PlayerProp[]) => ({
+export const Mixin = (props: PlayerProp[]) => ({
   data() {
     return {
       player: null,
       playerDispatch: () => {},
-      unbindPlayerContext: () => {},
+      unbindPlayerContext: undefined,
       ...(props.reduce((prev, prop) => ({ ...prev, [prop]: undefined }), {})),
     };
   },
@@ -24,11 +19,13 @@ export const VimeMixin = (props: PlayerProp[]) => ({
     },
   }), {}),
 
-  mounted(this: any) {
-    this.player = findPlayer(this);
+  async mounted(this: any) {
+    this.playerDispatch = () => {};
+    this.unbindPlayerContext = undefined;
+    this.player = await findPlayer(this);
     if (this.player === null) return;
     this.playerDispatch = createDispatcher(this.$el);
-    this.unbindPlayerContext = usePlayerContext(
+    this.unbindPlayerContext = await usePlayerContext(
       this.$el,
       props,
       ((prop, value) => { this[prop] = value; }),
@@ -36,7 +33,7 @@ export const VimeMixin = (props: PlayerProp[]) => ({
     );
   },
 
-  beforeDestroy() {
-    (this as any).unbindPlayerContext();
+  beforeDestroy(this: any) {
+    this.unbindPlayerContext?.();
   },
 });

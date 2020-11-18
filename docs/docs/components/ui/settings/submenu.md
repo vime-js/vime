@@ -1,10 +1,7 @@
 ---
-title: vime-submenu
+title: vm-submenu
 sidebar_label: Submenu
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 A menu that is to be nested inside another menu. A submenu is closed by default and it provides a
 menu item that will open/close it. It's main purpose is to organize a menu by grouping related
@@ -21,117 +18,120 @@ sections/options together that can be navigated to by the user.
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {6-8}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
-      <vime-submenu label="Title">
+    <vm-settings>
+      <vm-submenu label="Title">
         <!-- ... -->
-      </vime-submenu>
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+      </vm-submenu>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,11}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeSettings, VimeSubmenu } from '@vime/react';
+import { Player, Ui, Settings, Submenu } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeSettings>
-          <VimeSubmenu label="Title">{/* ... */}</VimeSubmenu>
-        </VimeSettings>
-      </VimeUi>
-    </VimePlayer>
+        <Settings>
+          <Submenu label="Title">{/* ... */}</Submenu>
+        </Settings>
+      </Ui>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {7-9,16,23} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeSettings>
-        <VimeSubmenu label="Title">
+      <Settings>
+        <Submenu label="Title">
           <!-- ... -->
-        </VimeSubmenu>
-      </VimeSettings>
-    </VimeUi>
-  </VimePlayer>
+        </Submenu>
+      </Settings>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeSettings, VimeSubmenu } from '@vime/vue';
+  import { Player, Ui, Settings, Submenu } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeSettings,
-      VimeSubmenu,
+      Player,
+      Ui,
+      Settings,
+      Submenu,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {6-8,18} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeSettings>
-      <VimeSubmenu label="Title">
+    <Settings>
+      <Submenu label="Title">
         <!-- ... -->
-      </VimeSubmenu>
-    </VimeSettings>
-  </VimeUi>
-</VimePlayer>
+      </Submenu>
+    </Settings>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeSettings, VimeSubmenu } from '@vime/svelte';
+  import { Player, Ui, Settings, Submenu } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -139,15 +139,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-settings>
-            <vime-submenu label="Title">{/* ... */}</vime-submenu>
-          </vime-settings>
-        </vime-ui>
-      </vime-player>
+          <vm-settings>
+            <vm-submenu label="Title">{/* ... */}</vm-submenu>
+          </vm-settings>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -155,65 +155,70 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {6-8} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
-      <vime-submenu label="Title">
+    <vm-settings>
+      <vm-submenu label="Title">
         <!-- ... -->
-      </vime-submenu>
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+      </vm-submenu>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property             | Attribute | Description                                                                                                                                                                     | Type                 | Default     |
-| -------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ----------- |
-| `active`             | `active`  | Whether the submenu is open/closed.                                                                                                                                             | `boolean`            | `false`     |
-| `hidden`             | `hidden`  | Whether the submenu should be displayed or not.                                                                                                                                 | `boolean`            | `false`     |
-| `hint`               | `hint`    | This can provide additional context about the current state of the submenu. For example, the hint could be the currently selected option if the submenu contains a radio group. | `string ∣ undefined` | `undefined` |
-| `label` _(required)_ | `label`   | The title of the submenu.                                                                                                                                                       | `string`             | `undefined` |
+| Property             | Description                                                                                                                                                                     | Type                           | Default     |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------- |
+| `active`             | Whether the submenu is open/closed.                                                                                                                                             | `boolean`                      | `false`     |
+| `hint`               | This can provide additional context about the current state of the submenu. For example, the hint could be the currently selected option if the submenu contains a radio group. | `string ∣ undefined`           | `undefined` |
+| `label` _(required)_ | The title of the submenu.                                                                                                                                                       | `string`                       | `undefined` |
+| `slideInDirection`   | The direction the submenu should slide in from.                                                                                                                                 | `"left" ∣ "right" ∣ undefined` | `'right'`   |
+
+
+## Methods
+
+| Method                | Description                                               | Signature                                                       |
+| --------------------- | --------------------------------------------------------- | --------------------------------------------------------------- |
+| `getController`       | Returns the controller (`vm-menu-item`) for this submenu. | `getController() => Promise<HTMLVmMenuItemElement ∣ undefined>` |
+| `getControllerHeight` | Returns the height of the submenu controller.             | `getControllerHeight() => Promise<number>`                      |
+| `getMenu`             | Returns the menu (`vm-menu`) for this submenu.            | `getMenu() => Promise<HTMLVmMenuElement ∣ undefined>`           |
+
+
+## Events
+
+| Event            | Description                                        | Type                                |
+| ---------------- | -------------------------------------------------- | ----------------------------------- |
+| `vmCloseSubmenu` | Emitted when the submenu has closed/is not active. | `CustomEvent<HTMLVmSubmenuElement>` |
+| `vmOpenSubmenu`  | Emitted when the submenu is open/active.           | `CustomEvent<HTMLVmSubmenuElement>` |
+
 
 ## Slots
 
-| Slot | Description                                                                                                                       |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------- |
-|      | Used to pass in the body of the submenu which is usually a set of choices in the form of a radio group (`vime-menu-radio-group`). |
+| Slot | Description                                                                                                                     |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------- |
+|      | Used to pass in the body of the submenu which is usually a set of choices in the form of a radio group (`vm-menu-radio-group`). |
+
 
 ## Dependencies
 
 ### Used by
 
-- [vime-default-settings](default-settings.md)
+ - [vm-default-settings](./default-settings)
 
 ### Depends on
 
-- [vime-menu-item](menu-item.md)
-- [vime-menu](menu.md)
+- [vm-menu-item](./menu-item)
+- [vm-menu](./menu)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-submenu --> vime-menu-item
-  vime-submenu --> vime-menu
-  vime-menu-item --> vime-icon
-  vime-default-settings --> vime-submenu
-  style vime-submenu fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

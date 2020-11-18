@@ -1,27 +1,27 @@
 <template>
   <div id="app">
     <div id="container">
-      <VimePlayer
+      <Player
         playsinline
         ref="player"
         @vPlaybackReady="onPlaybackReady"
       >
-        <VimeVideo poster="https://media.vimejs.com/poster.png">
+        <Video poster="https://media.vimejs.com/poster.png">
           <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4">
-        </VimeVideo>
+        </Video>
 
-        <VimeDefaultUi>
+        <DefaultUi>
           <!-- Custom UI component. -->
           <TapSidesToSeek />
-        </VimeDefaultUi>
-      </VimePlayer>
+        </DefaultUi>
+      </Player>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/vue-next';
+import { Player, Video, DefaultUi } from '@vime/vue-next';
 
 // Default theme.
 import '@vime/core/themes/default.css';
@@ -35,14 +35,14 @@ import TapSidesToSeek from './TapSidesToSeek.vue';
 export default defineComponent({
   name: 'App',
   components: {
-    VimePlayer,
-    VimeVideo,
-    VimeDefaultUi,
+    Player,
+    Video,
+    DefaultUi,
     TapSidesToSeek,
   },
   setup() {
     // Obtain a ref if you need to call any methods.
-    const player = ref<HTMLVimePlayerElement | null>(null);
+    const player = ref<HTMLVmPlayerElement | null>(null);
     return { player };
   },
   methods: {

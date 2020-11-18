@@ -1,7 +1,7 @@
 ```html {1,4} title="example.svelte"
-<VimeEndTime />
+<EndTime />
 
 <script lang="ts">
-  import { VimeEndTime } from '@vime/svelte';
+  import { EndTime } from '@vime/svelte';
 </script>
 ```

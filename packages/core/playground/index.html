@@ -6,15 +6,29 @@
   <title>Playground | Vime</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <link rel="stylesheet" href="/src/globals/test.css">
-  <link rel="stylesheet" href="/src/globals/themes/default.css">
-  <link rel="stylesheet" href="/src/globals/themes/light.css">
+  <link rel="stylesheet" href="/src/themes/default.css">
+  <link rel="stylesheet" href="/src/themes/light.css">
   <link rel="icon" type="image/png" href="/playground/favicon.ico">
   <script type="module" src="/dist/vime/vime.esm.js"></script>
+
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
-<body class="center">
-
-  <vime-playground></vime-playground>
-
+<body>
+  <vm-playground></vm-playground>
 </body>
 </html>

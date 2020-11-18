@@ -1,10 +1,11 @@
 import {
-  h, Host, Component, Element, Prop,
+  h, Component, Element, Prop,
 } from '@stencil/core';
 import { isString } from '../../../utils/unit';
-import { withPlayerContext } from '../../core/player/PlayerContext';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
 import { PlayerProps } from '../../core/player/PlayerProps';
 import { TooltipDirection, TooltipPosition } from './types';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 let tooltipIdCount = 0;
 
@@ -12,14 +13,15 @@ let tooltipIdCount = 0;
  * @slot - Used to pass in the contents of the tooltip.
  */
 @Component({
-  tag: 'vime-tooltip',
-  styleUrl: 'tooltip.scss',
+  tag: 'vm-tooltip',
+  styleUrl: 'tooltip.css',
+  shadow: true,
 })
 export class Tooltip {
   // Avoid tooltips flashing when player initializing.
   private hasLoaded = false;
 
-  @Element() el!: HTMLVimeTooltipElement;
+  @Element() host!: HTMLVmTooltipElement;
 
   /**
    * Whether the tooltip is displayed or not.
@@ -42,13 +44,15 @@ export class Tooltip {
    */
   @Prop() direction?: TooltipDirection;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isTouch: PlayerProps['isTouch'] = false;
 
+  /** @internal */
+  @Prop() isMobile: PlayerProps['isMobile'] = false;
+
   constructor() {
-    withPlayerContext(this, ['isTouch']);
+    withComponentRegistry(this);
+    withPlayerContext(this, ['isTouch', 'isMobile']);
   }
 
   componentDidLoad() {
@@ -57,19 +61,20 @@ export class Tooltip {
 
   private getId() {
     // eslint-disable-next-line prefer-destructuring
-    const id = this.el.id;
+    const id = this.host.id;
     if (isString(id) && id.length > 0) return id;
     tooltipIdCount += 1;
-    return `vime-tooltip-${tooltipIdCount}`;
+    return `vm-tooltip-${tooltipIdCount}`;
   }
 
   render() {
     return (
-      <Host
+      <div
         id={this.getId()}
         role="tooltip"
-        aria-hidden={(!this.active || this.isTouch) ? 'true' : 'false'}
+        aria-hidden={(!this.active || this.isTouch || this.isMobile) ? 'true' : 'false'}
         class={{
+          tooltip: true,
           hidden: !this.hasLoaded || this.hidden,
           onTop: (this.position === 'top'),
           onBottom: (this.position === 'bottom'),
@@ -78,7 +83,7 @@ export class Tooltip {
         }}
       >
         <slot />
-      </Host>
+      </div>
     );
   }
 }

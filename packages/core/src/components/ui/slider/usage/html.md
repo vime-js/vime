@@ -1,10 +1,10 @@
 ```html
-<vime-slider step="5" max="100" value="50" label="Volume" />
+<vm-slider step="5" max="100" value="50" label="Volume" />
 
 <script>
-  const slider = document.querySelector('vime-slider');
+  const slider = document.querySelector('vm-slider');
 
-  slider.addEventListener('vValueChange', (event) => {
+  slider.addEventListener('vmValueChange', (event) => {
     const newValue = event.detail;
   });
 </script>

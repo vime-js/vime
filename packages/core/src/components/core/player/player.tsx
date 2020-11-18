@@ -1,72 +1,65 @@
 import {
-  Component, Element, Event, EventEmitter, getElement, h, Host,
+  Component, Element, Event, EventEmitter, h, Host,
   Listen, Method, Prop, State, Watch, writeTask,
 } from '@stencil/core';
 import { Universe } from 'stencil-wormhole';
 import { MediaType } from './MediaType';
 import { AdapterHost, MediaProviderAdapter } from '../../providers/MediaProvider';
 import { Provider } from '../../providers/Provider';
-import { isUndefined, isString, isNull } from '../../../utils/unit';
+import { isUndefined, isString } from '../../../utils/unit';
 import { MediaPlayer } from './MediaPlayer';
-import {
-  initialState,
-  isProviderWritableProp,
-  isWritableProp,
-  PlayerProp,
-  PlayerProps,
-  ProviderWritableProps,
-  shouldPropResetOnMediaChange,
-} from './PlayerProps';
+import { initialState, PlayerProp, PlayerProps } from './PlayerProps';
 import { ViewType } from './ViewType';
 import {
-  canAutoplay, IS_MOBILE, onTouchInputChange, IS_IOS, canRotateScreen,
+  canAutoplay, onTouchInputChange, IS_IOS, canRotateScreen, onMobileChange,
 } from '../../../utils/support';
 import { Fullscreen } from './fullscreen/Fullscreen';
 import { en } from './lang/en';
-import { StateChange } from './PlayerDispatcher';
-import { Disposal } from './Disposal';
-import { listen } from '../../../utils/dom';
-import { Autopause } from './Autopause';
+import { Disposal } from '../../../utils/Disposal';
 import { Logger } from './PlayerLogger';
-import { getEventName } from './PlayerEvents';
 import { Translation } from './lang/Translation';
+import { autopause, withAutopause } from './withAutopause';
+import { withProviderHost } from '../../providers/ProviderConnect';
+import { withPlayerEvents } from './withPlayerEvents';
+import { SafeAdapterCall, withPlayerScheduler } from './withPlayerScheduler';
+import { isComponentRegistered, withComponentRegistrar } from './withComponentRegistry';
+import { withFindPlayer } from './findPlayer';
 
 let idCount = 0;
-const immediateAdapterCall = new Set<PlayerProp>(['currentTime', 'paused']);
 
 /**
  * @slot - Used to pass in providers, plugins and UI components.
  */
 @Component({
-  tag: 'vime-player',
-  styleUrl: 'player.scss',
+  tag: 'vm-player',
+  styleUrl: 'player.css',
+  shadow: true,
 })
 export class Player implements MediaPlayer {
-  private provider?: AdapterHost;
+  provider?: AdapterHost;
 
-  private adapter?: MediaProviderAdapter;
+  adapter?: MediaProviderAdapter;
+
+  private safeAdapterCall: SafeAdapterCall;
 
   private fullscreen!: Fullscreen;
 
-  private autopauseMgr!: Autopause;
-
   private disposal = new Disposal();
 
-  // Keeps track of the active caption as we toggle mode/visibility.
-  private toggledCaption?: TextTrack;
+  @Element() host!: HTMLVmPlayerElement;
 
-  // Keeps track of state between render cycles to fire events.
-  private cache = new Map<PlayerProp, any>();
+  @State() container?: HTMLDivElement;
 
-  // Keeps track of the state of the provider.
-  private providerCache = new Map<keyof ProviderWritableProps, any>();
-
-  // Queue of adapter calls to be run when the media is ready for playback.
-  private adapterCalls: ((adapter: MediaProviderAdapter) => Promise<void>)[] = [];
-
-  @Element() el!: HTMLVimePlayerElement;
-
-  @State() shouldCheckForProviderChange = false;
+  @Watch('container')
+  onContainerChange() {
+    this.fullscreen?.destroy();
+    if (isUndefined(this.container)) return;
+    this.fullscreen = new Fullscreen(this.container,
+      (isActive) => {
+        this.isFullscreenActive = isActive;
+        this.rotateDevice();
+      });
+  }
 
   /**
    * ------------------------------------------------------
@@ -74,24 +67,16 @@ export class Player implements MediaPlayer {
    * ------------------------------------------------------
    */
 
-  /**
-   * @inheritDoc
-   */
-  @Prop({ mutable: true }) attached = false;
-
-  /**
-   * @internal
-   */
+  /** @internal @readonly */
   @Prop() logger = new Logger();
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop({ reflect: true }) theme?: string;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
+  @Prop({ reflect: true }) icons = 'vime';
+
+  /** @inheritDoc */
   @Prop({ mutable: true }) paused = true;
 
   @Watch('paused')
@@ -99,20 +84,16 @@ export class Player implements MediaPlayer {
     if (this.paused) {
       this.playing = false;
     } else {
-      this.autopauseMgr.willPlay();
+      autopause(this);
     }
 
     this.safeAdapterCall('paused', !this.paused ? 'play' : 'pause');
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true }) playing = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true }) duration = -1;
 
   @Watch('duration')
@@ -120,29 +101,19 @@ export class Player implements MediaPlayer {
     this.isLive = this.duration === Infinity;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) mediaTitle?: string;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) currentProvider?: Provider;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) currentSrc?: string;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) currentPoster?: string;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop({ mutable: true }) currentTime = 0;
 
   @Watch('currentTime')
@@ -152,19 +123,13 @@ export class Player implements MediaPlayer {
     this.safeAdapterCall('currentTime', 'setCurrentTime');
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop() autoplay = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, reflect: true }) ready = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) playbackReady = false;
 
   @Watch('playbackReady')
@@ -172,14 +137,10 @@ export class Player implements MediaPlayer {
     if (!this.ready) this.ready = true;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop() loop = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop({ mutable: true }) muted = false;
 
   @Watch('muted')
@@ -187,14 +148,10 @@ export class Player implements MediaPlayer {
     this.safeAdapterCall('muted', 'setMuted');
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true }) buffered = 0;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop({ mutable: true }) playbackRate = 1;
 
   private lastRateCheck = 1;
@@ -224,14 +181,10 @@ export class Player implements MediaPlayer {
     this.safeAdapterCall('playbackRate', 'setPlaybackRate');
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) playbackRates = [1];
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop({ mutable: true }) playbackQuality?: string;
 
   private lastQualityCheck?: string;
@@ -261,19 +214,13 @@ export class Player implements MediaPlayer {
     this.safeAdapterCall('playbackQuality', 'setPlaybackQuality');
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) playbackQualities: string[] = [];
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true }) seeking = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop() debug = false;
 
   @Watch('debug')
@@ -281,84 +228,25 @@ export class Player implements MediaPlayer {
     this.logger.silent = !this.debug;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) playbackStarted = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) playbackEnded = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true }) buffering = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop() controls = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop() isControlsActive = false;
 
-  /**
-   * @inheritDoc
-   */
-  @Prop({ mutable: true, attribute: null }) errors: any[] = [];
-
-  @Watch('errors')
-  onErrorsChange(_: any[], prevErrors: any[]) {
-    if (prevErrors.length > 0) this.errors.unshift(prevErrors);
-    this.logger.warn(this.errors[this.errors.length - 1]);
-  }
-
-  /**
-   * @inheritDoc
-   */
-  @Prop({ mutable: true, attribute: null }) textTracks?: TextTrackList;
-
-  /**
-   * @inheritDoc
-   */
-  @Prop({ mutable: true, attribute: null }) currentCaption?: TextTrack;
-
-  /**
-   * @inheritDoc
-   */
-  @Prop({ mutable: true, attribute: null }) isCaptionsActive = false;
-
-  private textTracksChangeListener?: (() => void);
-
-  @Watch('textTracks')
-  onTextTracksChange() {
-    if (isUndefined(this.textTracks)) {
-      this.textTracksChangeListener?.();
-      this.currentCaption = undefined;
-      this.isCaptionsActive = false;
-      return;
-    }
-
-    this.onActiveCaptionChange();
-    this.textTracksChangeListener = listen(
-      this.textTracks!,
-      'change',
-      this.onActiveCaptionChange.bind(this),
-    );
-  }
-
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) isSettingsActive = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop({ mutable: true }) volume = 50;
 
   @Watch('volume')
@@ -367,19 +255,13 @@ export class Player implements MediaPlayer {
     this.safeAdapterCall('volume', 'setVolume');
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) isFullscreenActive = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop({ mutable: true }) aspectRatio = '16:9';
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true }) viewType?: ViewType;
 
   @Watch('viewType')
@@ -390,19 +272,13 @@ export class Player implements MediaPlayer {
     this.isVideoView = this.viewType === ViewType.Video;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) isAudioView = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) isVideoView = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true }) mediaType?: MediaType;
 
   @Watch('mediaType')
@@ -411,49 +287,49 @@ export class Player implements MediaPlayer {
     this.isVideo = this.mediaType === MediaType.Video;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) isAudio = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) isVideo = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) isLive = false;
 
-  /**
-   * @inheritDoc
-   */
-  @Prop({ mutable: true, attribute: null }) isMobile = IS_MOBILE;
+  /** @inheritDoc @readonly */
+  @Prop({ mutable: true, attribute: null }) isMobile = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) isTouch = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) isPiPActive = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
+  @Prop({ attribute: null }) textTracks = [];
+
+  /** @inheritDoc @readonly */
+  @Prop({ attribute: null }) currentTextTrack = -1;
+
+  /** @inheritDoc @readonly */
+  @Prop({ attribute: null }) isTextTrackVisible = true;
+
+  /** @inheritDoc */
+  @Prop({ attribute: null }) shouldRenderNativeTextTracks = true;
+
+  /** @inheritDoc @readonly */
+  @Prop({ attribute: null }) audioTracks = [];
+
+  /** @inheritDoc @readonly */
+  @Prop({ attribute: null }) currentAudioTrack = -1;
+
+  /** @inheritDoc */
   @Prop() autopause = true;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop() playsinline = false;
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop({ mutable: true }) language = 'en';
 
   @Watch('language')
@@ -470,9 +346,7 @@ export class Player implements MediaPlayer {
     this.i18n = this.translations[this.language];
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Prop({
     mutable: true, attribute: null,
   }) translations: Record<string, Translation> = { en };
@@ -484,14 +358,10 @@ export class Player implements MediaPlayer {
     this.i18n = this.translations[this.language];
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) languages = ['en'];
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc @readonly */
   @Prop({ mutable: true, attribute: null }) i18n: Translation = en;
 
   /**
@@ -500,205 +370,140 @@ export class Player implements MediaPlayer {
    * ------------------------------------------------------
    */
 
-  /**
-   * @inheritDoc
-   */
-  @Event() vThemeChange!: EventEmitter<PlayerProps['theme']>;
+  /** @inheritDoc */
+  @Event() vmThemeChange!: EventEmitter<PlayerProps['theme']>;
+
+  /** @inheritDoc */
+  @Event() vmPausedChange!: EventEmitter<PlayerProps['paused']>;
+
+  /** @inheritDoc */
+  @Event() vmPlay!: EventEmitter<void>;
+
+  /** @inheritDoc */
+  @Event() vmPlayingChange!: EventEmitter<PlayerProps['playing']>;
+
+  /** @inheritDoc */
+  @Event() vmSeekingChange!: EventEmitter<PlayerProps['seeking']>;
+
+  /** @inheritDoc */
+  @Event() vmSeeked!: EventEmitter<void>;
+
+  /** @inheritDoc */
+  @Event() vmBufferingChange!: EventEmitter<PlayerProps['buffering']>;
+
+  /** @inheritDoc */
+  @Event() vmDurationChange!: EventEmitter<PlayerProps['duration']>;
+
+  /** @inheritDoc */
+  @Event() vmCurrentTimeChange!: EventEmitter<PlayerProps['currentTime']>;
+
+  /** @inheritDoc */
+  @Event() vmReady!: EventEmitter<void>;
+
+  /** @inheritDoc */
+  @Event() vmPlaybackReady!: EventEmitter<void>;
+
+  /** @inheritDoc */
+  @Event() vmPlaybackStarted!: EventEmitter<void>;
+
+  /** @inheritDoc */
+  @Event() vmPlaybackEnded!: EventEmitter<void>;
+
+  /** @inheritDoc */
+  @Event() vmBufferedChange!: EventEmitter<PlayerProps['buffered']>;
+
+  /** @inheritDoc */
+  @Event() vmError!: EventEmitter<any>;
+
+  @Listen('vmError')
+  onError(event: CustomEvent<any>) {
+    this.logger.warn(event.detail);
+  }
+
+  /** @inheritDoc */
+  @Event() vmLoadStart!: EventEmitter<void>;
+
+  /** @inheritDoc */
+  @Event() vmCurrentProviderChange!: EventEmitter<PlayerProps['currentProvider']>;
+
+  /** @inheritDoc */
+  @Event() vmCurrentSrcChange!: EventEmitter<PlayerProps['currentSrc']>;
+
+  /** @inheritDoc */
+  @Event() vmCurrentPosterChange!: EventEmitter<PlayerProps['currentPoster']>;
+
+  /** @inheritDoc */
+  @Event() vmMediaTitleChange!: EventEmitter<PlayerProps['mediaTitle']>;
+
+  /** @inheritDoc */
+  @Event() vmControlsChange!: EventEmitter<PlayerProps['isControlsActive']>;
+
+  /** @inheritDoc */
+  @Event() vmPlaybackRateChange!: EventEmitter<PlayerProps['playbackRate']>;
+
+  /** @inheritDoc */
+  @Event() vmPlaybackRatesChange!: EventEmitter<PlayerProps['playbackRates']>;
+
+  /** @inheritDoc */
+  @Event() vmPlaybackQualityChange!: EventEmitter<PlayerProps['playbackQuality']>;
+
+  /** @inheritDoc */
+  @Event() vmPlaybackQualitiesChange!: EventEmitter<PlayerProps['playbackQualities']>;
+
+  /** @inheritDoc */
+  @Event() vmMutedChange!: EventEmitter<PlayerProps['muted']>;
+
+  /** @inheritDoc */
+  @Event() vmVolumeChange!: EventEmitter<PlayerProps['volume']>;
+
+  /** @inheritDoc */
+  @Event() vmViewTypeChange!: EventEmitter<PlayerProps['viewType']>;
+
+  /** @inheritDoc */
+  @Event() vmMediaTypeChange!: EventEmitter<PlayerProps['mediaType']>;
+
+  /** @inheritDoc */
+  @Event() vmLiveChange!: EventEmitter<PlayerProps['isLive']>;
+
+  /** @inheritDoc */
+  @Event() vmTouchChange!: EventEmitter<PlayerProps['isTouch']>;
+
+  /** @inheritDoc */
+  @Event() vmLanguageChange!: EventEmitter<PlayerProps['language']>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPausedChange!: EventEmitter<PlayerProps['paused']>;
+  @Event() vmI18nChange!: EventEmitter<PlayerProps['i18n']>;
 
   /**
    * @inheritDoc
    */
-  @Event() vPlay!: EventEmitter<void>;
+  @Event() vmTranslationsChange!: EventEmitter<PlayerProps['translations']>;
 
-  /**
-   * @inheritDoc
-   */
-  @Event() vPlayingChange!: EventEmitter<PlayerProps['playing']>;
+  /** @inheritDoc */
+  @Event() vmLanguagesChange!: EventEmitter<PlayerProps['languages']>;
 
-  /**
-   * @inheritDoc
-   */
-  @Event() vSeekingChange!: EventEmitter<PlayerProps['seeking']>;
+  /** @inheritDoc */
+  @Event() vmFullscreenChange!: EventEmitter<PlayerProps['isFullscreenActive']>;
 
-  /**
-   * @inheritDoc
-   */
-  @Event() vSeeked!: EventEmitter<void>;
+  /** @inheritDoc */
+  @Event() vmPiPChange!: EventEmitter<PlayerProps['isPiPActive']>;
 
-  /**
-   * @inheritDoc
-   */
-  @Event() vBufferingChange!: EventEmitter<PlayerProps['buffering']>;
+  /** @inheritDoc */
+  @Event() vmTextTracksChange!: EventEmitter<PlayerProps['textTracks']>;
 
-  /**
-   * @inheritDoc
-   */
-  @Event() vDurationChange!: EventEmitter<PlayerProps['duration']>;
+  /** @inheritDoc */
+  @Event() vmCurrentTextTrackChange!: EventEmitter<PlayerProps['currentTextTrack']>;
 
-  /**
-   * @inheritDoc
-   */
-  @Event() vCurrentTimeChange!: EventEmitter<PlayerProps['currentTime']>;
+  /** @inheritDoc */
+  @Event() vmTextTrackVisibleChange!: EventEmitter<PlayerProps['isTextTrackVisible']>;
 
-  /**
-   * @inheritDoc
-   */
-  @Event() vAttachedChange!: EventEmitter<void>;
+  /** @inheritDoc */
+  @Event() vmAudioTracksChange!: EventEmitter<PlayerProps['audioTracks']>;
 
-  /**
-   * @inheritDoc
-   */
-  @Event() vReady!: EventEmitter<void>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vPlaybackReady!: EventEmitter<void>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vPlaybackStarted!: EventEmitter<void>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vPlaybackEnded!: EventEmitter<void>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vBufferedChange!: EventEmitter<PlayerProps['buffered']>;
-
-  /**
-   * @inheritdoc
-   */
-  @Event() vCurrentCaptionChange!: EventEmitter<PlayerProps['currentCaption']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vTextTracksChange!: EventEmitter<PlayerProps['textTracks']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vErrorsChange!: EventEmitter<PlayerProps['errors']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vLoadStart!: EventEmitter<void>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vCurrentProviderChange!: EventEmitter<PlayerProps['currentProvider']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vCurrentSrcChange!: EventEmitter<PlayerProps['currentSrc']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vCurrentPosterChange!: EventEmitter<PlayerProps['currentPoster']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vMediaTitleChange!: EventEmitter<PlayerProps['mediaTitle']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vControlsChange!: EventEmitter<PlayerProps['isControlsActive']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vPlaybackRateChange!: EventEmitter<PlayerProps['playbackRate']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vPlaybackRatesChange!: EventEmitter<PlayerProps['playbackRates']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vPlaybackQualityChange!: EventEmitter<PlayerProps['playbackQuality']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vPlaybackQualitiesChange!: EventEmitter<PlayerProps['playbackQualities']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vMutedChange!: EventEmitter<PlayerProps['muted']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vVolumeChange!: EventEmitter<PlayerProps['volume']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vViewTypeChange!: EventEmitter<PlayerProps['viewType']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vMediaTypeChange!: EventEmitter<PlayerProps['mediaType']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vLiveChange!: EventEmitter<PlayerProps['isLive']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vTouchChange!: EventEmitter<PlayerProps['isTouch']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vLanguageChange!: EventEmitter<PlayerProps['language']>;
-
-  /**
-   * @inheritdoc
-   */
-  @Event() vI18nChange!: EventEmitter<PlayerProps['i18n']>;
-
-  /**
-   * @inheritdoc
-   */
-  @Event() vTranslationsChange!: EventEmitter<PlayerProps['translations']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vLanguagesChange!: EventEmitter<PlayerProps['languages']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vFullscreenChange!: EventEmitter<PlayerProps['isFullscreenActive']>;
-
-  /**
-   * @inheritDoc
-   */
-  @Event() vPiPChange!: EventEmitter<PlayerProps['isPiPActive']>;
+  /** @inheritDoc */
+  @Event() vmCurrentAudioTrackChange!: EventEmitter<PlayerProps['currentAudioTrack']>;
 
   /**
    * ------------------------------------------------------
@@ -706,9 +511,7 @@ export class Player implements MediaPlayer {
    * ------------------------------------------------------
    */
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async getProvider<InternalPlayerType = any>(): Promise<
   AdapterHost<InternalPlayerType> | undefined
@@ -716,18 +519,14 @@ export class Player implements MediaPlayer {
     return this.provider;
   }
 
-  /**
-   * @internal testing only.
-   */
+  /** @internal */
   @Method()
   async setProvider(provider: AdapterHost) {
     this.provider = provider;
     this.adapter = await this.provider.getAdapter();
   }
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Method()
   async getAdapter<InternalPlayerType = any>(): Promise<
   MediaProviderAdapter<InternalPlayerType> | undefined
@@ -735,73 +534,55 @@ export class Player implements MediaPlayer {
     return this.adapter;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async play() {
     return this.adapter?.play();
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async pause() {
     return this.adapter?.pause();
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async canPlay(type: string) {
     return this.adapter?.canPlay(type) ?? false;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async canAutoplay() {
     return canAutoplay();
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async canMutedAutoplay() {
     return canAutoplay(true);
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async canSetPlaybackRate() {
     return this.adapter?.canSetPlaybackRate?.() ?? false;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async canSetPlaybackQuality() {
     return this.adapter?.canSetPlaybackQuality?.() ?? false;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async canSetFullscreen() {
     return this.fullscreen!.isSupported || (this.adapter?.canSetFullscreen?.() ?? false);
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async enterFullscreen(options?: FullscreenOptions) {
     if (!this.isVideoView) throw Error('Cannot enter fullscreen on an audio player view.');
@@ -810,26 +591,20 @@ export class Player implements MediaPlayer {
     throw Error('Fullscreen API is not available.');
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async exitFullscreen() {
     if (this.fullscreen!.isSupported) return this.fullscreen!.exitFullscreen();
     return this.adapter?.exitFullscreen?.();
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async canSetPiP() {
     return this.adapter?.canSetPiP?.() ?? false;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async enterPiP() {
     if (!this.isVideoView) throw Error('Cannot enter PiP mode on an audio player view.');
@@ -837,17 +612,49 @@ export class Player implements MediaPlayer {
     return this.adapter?.enterPiP?.();
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Method()
   async exitPiP() {
     return this.adapter?.exitPiP?.();
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
+  @Method()
+  async canSetAudioTrack() {
+    return !isUndefined(this.adapter?.setCurrentAudioTrack);
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async setCurrentAudioTrack(trackId: number) {
+    this.adapter?.setCurrentAudioTrack?.(trackId);
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async canSetTextTrack() {
+    return !isUndefined(this.adapter?.setCurrentTextTrack);
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async setCurrentTextTrack(trackId: number) {
+    this.adapter?.setCurrentTextTrack?.(trackId);
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async canSetTextTrackVisibility() {
+    return !isUndefined(this.adapter?.setTextTrackVisibility);
+  }
+
+  /** @inheritDoc */
+  @Method()
+  async setTextTrackVisibility(isVisible: boolean) {
+    this.adapter?.setTextTrackVisibility?.(isVisible);
+  }
+
+  /** @inheritDoc */
   @Method()
   async extendLanguage(language: string, translation: Partial<Translation>) {
     const translations = {
@@ -861,111 +668,16 @@ export class Player implements MediaPlayer {
     this.translations = translations as Record<string, Translation>;
   }
 
-  @Listen('vMediaProviderConnect')
-  onMediaProviderConnect(event: CustomEvent<AdapterHost>) {
-    event.stopImmediatePropagation();
-
-    const newProvider = getElement(event.detail) as any;
-    if (this.provider === newProvider) return;
-
-    const newProviderName = (newProvider as any)
-      ?.nodeName
-      .toLowerCase()
-      .replace('vime-', '');
-
-    writeTask(async () => {
-      await this.onMediaProviderDisconnect();
-      this.provider = newProvider;
-      this.adapter = await this.provider?.getAdapter();
-      this.currentProvider = Object.values(Provider)
-        .find((provider) => newProviderName === provider);
-    });
-  }
-
-  @Listen('vMediaProviderDisconnect')
-  onMediaProviderDisconnect(event?: Event) {
-    event?.stopImmediatePropagation();
-
-    writeTask(async () => {
-      this.ready = false;
-      this.provider = undefined;
-      this.adapter = undefined;
-      await this.onMediaChange();
-    });
-  }
-
-  private hasMediaChanged = false;
-
-  @Listen('vLoadStart')
-  async onMediaChange(event?: Event) {
-    event?.stopPropagation();
-
-    // Don't reset first time otherwise props intialized by the user will be reset.
-    if (!this.hasMediaChanged) {
-      this.hasMediaChanged = true;
-      return;
-    }
-
-    this.adapterCalls = [];
-    this.providerCache.clear();
-
-    writeTask(() => {
-      (Object.keys(initialState) as PlayerProp[])
-        .filter(shouldPropResetOnMediaChange)
-        .forEach((prop) => { (this as any)[prop] = initialState[prop]; });
-    });
-  }
-
-  @Listen('vStateChange')
-  async onStateChange(event: CustomEvent<StateChange>) {
-    event.stopImmediatePropagation();
-    const { by, prop, value } = event.detail;
-
-    if (!isWritableProp(prop)) {
-      this.logger.warn(`${by.nodeName} tried to change \`${prop}\` but it is readonly.`);
-      return;
-    }
-
-    if (!this.playbackStarted && immediateAdapterCall.has(prop)) {
-      if (prop === 'paused' && !value) {
-        this.adapter?.play();
-      }
-
-      if (prop === 'currentTime') {
-        this.adapter?.play();
-        this.adapter?.setCurrentTime(value as number);
-      }
-    }
-
-    writeTask(() => { (this as any)[prop] = value; });
-  }
-
-  @Listen('vProviderChange')
-  onProviderChange(event: CustomEvent<StateChange<ProviderWritableProps>>) {
-    event.stopImmediatePropagation();
-    const { by, prop, value } = event.detail;
-
-    if (!isProviderWritableProp(prop)) {
-      this.logger.warn(`${by.nodeName} tried to change \`${prop}\` but it is readonly.`);
-      return;
-    }
-
-    writeTask(() => {
-      this.providerCache.set(prop, value);
-      (this as any)[prop] = value;
-    });
+  constructor() {
+    withFindPlayer(this);
+    withComponentRegistrar(this);
+    withAutopause(this);
+    withProviderHost(this);
+    withPlayerEvents(this);
+    this.safeAdapterCall = withPlayerScheduler(this);
   }
 
   connectedCallback() {
-    // Initialize caches.
-    const currentState = this.getPlayerState();
-    (Object.keys(currentState) as PlayerProp[])
-      .forEach((prop) => {
-        this.cache.set(prop, currentState[prop]);
-        this.providerCache.set(prop as keyof ProviderWritableProps, initialState[prop]);
-      });
-
-    this.autopauseMgr = new Autopause(this.el);
     this.onPausedChange();
     this.onCurrentTimeChange();
     this.onVolumeChange();
@@ -973,53 +685,21 @@ export class Player implements MediaPlayer {
     this.onDebugChange();
     this.onTranslationsChange();
     this.onLanguageChange(this.language, initialState.language);
-
-    this.fullscreen = new Fullscreen(
-      this.el,
-      (isActive) => {
-        this.isFullscreenActive = isActive;
-        this.rotateDevice();
-      },
-    );
-
+    this.disposal.add(onMobileChange((isMobile) => { this.isMobile = isMobile; }));
     this.disposal.add(onTouchInputChange((isTouch) => { this.isTouch = isTouch; }));
-    this.attached = true;
   }
 
   componentWillLoad() {
     Universe.create(this, this.getPlayerState());
   }
 
-  componentWillRender() {
-    return this.playbackReady ? this.flushAdapterCalls() : undefined;
-  }
-
-  async componentDidRender() {
-    const props = Array.from(this.cache.keys());
-    for (let i = 0; i < props.length; i += 1) {
-      const prop = props[i];
-      const oldValue = this.cache.get(prop);
-      const newValue = this[prop];
-      if (oldValue !== newValue) {
-        this.fireEvent(prop, newValue, oldValue);
-        this.cache.set(prop, newValue);
-      }
-    }
-  }
-
   disconnectedCallback() {
-    this.adapterCalls = [];
-    this.hasMediaChanged = false;
-    this.textTracksChangeListener?.();
     this.fullscreen.destroy();
-    this.autopauseMgr.destroy();
     this.disposal.empty();
-    this.attached = false;
-    this.shouldCheckForProviderChange = true;
   }
 
   private async rotateDevice() {
-    if (!IS_MOBILE || !canRotateScreen()) return;
+    if (!this.isMobile || !canRotateScreen()) return;
 
     try {
       if (this.isFullscreenActive) {
@@ -1027,12 +707,18 @@ export class Player implements MediaPlayer {
       } else {
         await window.screen.orientation.unlock();
       }
-    } catch (err) { this.errors = [err]; }
+    } catch (err) {
+      this.vmError.emit(err);
+    }
   }
 
   private getPlayerState(): PlayerProps {
-    return (Object.keys(initialState) as PlayerProp[])
-      .reduce((state, prop) => ({ ...state, [prop]: this[prop] }), {}) as any;
+    const state: any = {};
+    const props = Object.keys(initialState) as PlayerProp[];
+    for (let i = 0; i < props.length; i += 1) {
+      state[props[i]] = this[props[i]];
+    }
+    return state;
   }
 
   private calcAspectRatio() {
@@ -1043,113 +729,28 @@ export class Player implements MediaPlayer {
   }
 
   /**
-   * @internal Exposed for E2E testing.
+   * Returns the inner container.
    */
+  @Method()
+  async getContainer() {
+    return this.container;
+  }
+
+  /** @internal Exposed for E2E testing. */
   @Method()
   async callAdapter(method: keyof MediaProviderAdapter, value?: any) {
     return (this.adapter as any)[method](value);
   }
 
-  /**
-   * @inheritdoc
-   */
-  @Method()
-  async toggleCaptionsVisibility(isVisible?: boolean) {
-    const isActive = isVisible ?? !this.isCaptionsActive;
-
-    if (
-      isUndefined(this.textTracks)
-      || (isActive && isUndefined(this.toggledCaption))
-      || (!isActive && isUndefined(this.getActiveCaption()))
-    ) return;
-
-    if (isActive) {
-      this.toggledCaption!.mode = 'showing';
-      this.toggledCaption = undefined;
-      return;
-    }
-
-    const activeCaption = this.getActiveCaption();
-    this.toggledCaption = activeCaption;
-    activeCaption!.mode = this.hasCustomCaptions() ? 'disabled' : 'hidden';
-  }
-
   private hasCustomControls() {
-    return !isNull(this.el.querySelector('vime-ui vime-controls'));
-  }
-
-  private hasCustomCaptions() {
-    return !isNull(this.el.querySelector('vime-ui vime-captions'));
-  }
-
-  private getActiveCaption() {
-    return Array.from(this.textTracks ?? [])
-      .filter((track) => (track.kind === 'subtitles') || (track.kind === 'captions'))
-      .find((track) => track.mode === (this.hasCustomCaptions() ? 'hidden' : 'showing'));
-  }
-
-  private onActiveCaptionChange() {
-    const activeCaption = this.getActiveCaption();
-    this.currentCaption = activeCaption || this.toggledCaption;
-    this.isCaptionsActive = !isUndefined(activeCaption);
-  }
-
-  private isAdapterCallRequired<P extends keyof PlayerProps>(prop: P, value: PlayerProps[P]) {
-    return value !== this.providerCache.get(prop as any);
-  }
-
-  private async safeAdapterCall<P extends keyof PlayerProps>(
-    prop: P,
-    method: keyof MediaProviderAdapter,
-  ) {
-    if (!this.isAdapterCallRequired(prop, this[prop])) return;
-
-    const value = this[prop];
-    const safeCall = async (adapter?: MediaProviderAdapter) => {
-      // @ts-ignore
-      try { await adapter?.[method]?.(value); } catch (e) { this.errors = [e]; }
-    };
-
-    if (this.playbackReady) {
-      await safeCall(this.adapter);
-    } else {
-      this.adapterCalls.push(safeCall);
-    }
-  }
-
-  private async flushAdapterCalls() {
-    if (isUndefined(this.adapter)) return;
-    for (let i = 0; i < this.adapterCalls.length; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      await this.adapterCalls[i](this.adapter);
-    }
-    this.adapterCalls = [];
-  }
-
-  private fireEvent(prop: PlayerProp, newValue: any, oldValue: any) {
-    const events: CustomEvent[] = [];
-
-    events.push(new CustomEvent(getEventName(prop), {
-      bubbles: false,
-      detail: newValue,
-    }));
-
-    if ((prop === 'paused') && !newValue) {
-      events.push(new CustomEvent('vPlay', { bubbles: false }));
-    }
-
-    if ((prop === 'seeking') && oldValue && !newValue) {
-      events.push(new CustomEvent('vSeeked', { bubbles: false }));
-    }
-
-    events.forEach((event) => { this.el.dispatchEvent(event); });
+    return isComponentRegistered(this, 'vm-controls');
   }
 
   private genId() {
-    const id = this.el?.id;
+    const id = this.host?.id;
     if (isString(id) && id.length > 0) return id;
     idCount += 1;
-    return `vime-player-${idCount}`;
+    return `vm-player-${idCount}`;
   }
 
   render() {
@@ -1162,39 +763,50 @@ export class Player implements MediaPlayer {
 
     if (!canShowCustomUI) { this.controls = true; }
 
+    const isIdle = canShowCustomUI
+      && this.hasCustomControls()
+      && this.isVideoView
+      && !this.paused
+      && !this.isControlsActive;
+
+    const isBlockerVisible = !this.controls
+      && canShowCustomUI
+      && this.isVideoView;
+
     return (
       <Host
         id={this.genId()}
-        tabindex="0"
-        aria-label={label}
-        aria-hidden={!this.ready ? 'true' : 'false'}
-        aria-busy={!this.playbackReady ? 'true' : 'false'}
-        style={{
-          paddingBottom: this.isVideoView ? `${this.calcAspectRatio()}%` : undefined,
-        }}
-        class={{
-          idle: canShowCustomUI
-            && this.hasCustomControls()
-            && this.isVideoView
-            && !this.paused
-            && !this.isControlsActive,
-          mobile: this.isMobile,
-          touch: this.isTouch,
-          audio: this.isAudioView,
-          video: this.isVideoView,
-          fullscreen: this.isFullscreenActive,
-        }}
+        idle={isIdle}
+        mobile={this.isMobile}
+        touch={this.isTouch}
+        live={this.isLive}
+        audio={this.isAudioView}
+        video={this.isVideoView}
+        pip={this.isPiPActive}
+        fullscreen={this.isFullscreenActive}
       >
-        {
-          !this.controls
-          && canShowCustomUI
-          && this.isVideoView
-          && <div class="blocker" />
-        }
+        <div
+          aria-label={label}
+          aria-hidden={!this.ready ? 'true' : 'false'}
+          aria-busy={!this.playbackReady ? 'true' : 'false'}
+          class={{
+            player: true,
+            idle: isIdle,
+            audio: this.isAudioView,
+            video: this.isVideoView,
+            fullscreen: this.isFullscreenActive,
+          }}
+          style={{
+            paddingBottom: this.isVideoView ? `${this.calcAspectRatio()}%` : undefined,
+          }}
+          ref={(el) => { writeTask(() => { this.container = el; }); }}
+        >
+          {isBlockerVisible && <div class="blocker" />}
 
-        <Universe.Provider state={this.getPlayerState()}>
-          <slot />
-        </Universe.Provider>
+          <Universe.Provider state={this.getPlayerState()}>
+            <slot />
+          </Universe.Provider>
+        </div>
       </Host>
     );
   }

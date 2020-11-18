@@ -1,14 +1,14 @@
 ```html {2,6,10} title="example.vue"
 <template>
-  <VimeTimeProgress separator="/" />
+  <TimeProgress separator="/" />
 </template>
 
 <script>
-  import { VimeTimeProgress } from '@vime/vue';
+  import { TimeProgress } from '@vime/vue';
 
   export default {
     components: {
-      VimeTimeProgress,
+      TimeProgress,
     },
   };
 </script>

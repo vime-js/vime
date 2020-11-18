@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should be structurally sound 1`] = `
-<vime-embed>
-  <iframe allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen="1" class="lazy" data-src id="vime-iframe-1"></iframe>
-</vime-embed>
-`;

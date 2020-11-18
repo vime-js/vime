@@ -5,35 +5,30 @@ import { ViewType } from '../../core/player/ViewType';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from '../file/MediaFileProvider';
 import { isString } from '../../../utils/unit';
 import { audioRegex } from '../file/utils';
-import { withProviderConnect } from '../MediaProvider';
+import { withProviderConnect } from '../ProviderConnect';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
  */
 @Component({
-  tag: 'vime-audio',
+  tag: 'vm-audio',
 })
 export class Audio implements MediaFileProvider<HTMLMediaElement> {
-  private fileProvider!: HTMLVimeFileElement;
+  private fileProvider!: HTMLVmFileElement;
 
   /**
    * @internal Whether an external SDK will attach itself to the media player and control it.
    */
   @Prop() willAttach = false;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() crossOrigin?: MediaCrossOriginOption;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() preload?: MediaPreloadOption = 'metadata';
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() disableRemotePlayback?: boolean;
 
   /**
@@ -42,12 +37,11 @@ export class Audio implements MediaFileProvider<HTMLMediaElement> {
   @Prop() mediaTitle?: string;
 
   constructor() {
+    withComponentRegistry(this);
     if (!this.willAttach) withProviderConnect(this);
   }
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Method()
   async getAdapter() {
     const adapter = await this.fileProvider.getAdapter();
@@ -58,7 +52,7 @@ export class Audio implements MediaFileProvider<HTMLMediaElement> {
   render() {
     return (
       // @ts-ignore
-      <vime-file
+      <vm-file
         noConnect
         willAttach={this.willAttach}
         crossOrigin={this.crossOrigin}
@@ -69,7 +63,7 @@ export class Audio implements MediaFileProvider<HTMLMediaElement> {
         ref={(el: any) => { this.fileProvider = el; }}
       >
         <slot />
-      </vime-file>
+      </vm-file>
     );
   }
 }

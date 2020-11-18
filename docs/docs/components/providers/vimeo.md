@@ -1,10 +1,7 @@
 ---
-title: vime-vimeo
+title: vm-vimeo
 sidebar_label: Vimeo
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.com).
 
@@ -20,89 +17,92 @@ Enables loading, playing and controlling videos from [Vimeo](https://www.vimeo.c
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {2}
-<vime-player controls>
-  <vime-vimeo video-id="411652396"></vime-vimeo>
+<vm-player controls>
+  <vm-vimeo video-id="411652396"></vm-vimeo>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,7}
 import React from 'react';
-import { VimePlayer, VimeVimeo } from '@vime/react';
+import { Player, Vimeo } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeVimeo videoId="411652396" />
+    <Player controls>
+      <Vimeo videoId="411652396" />
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {3,9,14} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeVimeo videoId="411652396" />
+  <Player controls>
+    <Vimeo videoId="411652396" />
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeVimeo } from '@vime/vue';
+  import { Player, Vimeo } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeVimeo,
+      Player,
+      Vimeo,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {2,7} title="example.svelte"
-<VimePlayer controls>
-  <VimeVimeo videoId="411652396" />
+<Player controls>
+  <Vimeo videoId="411652396" />
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeVimeo } from '@vime/svelte';
+  import { Player, Vimeo } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -110,10 +110,10 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-vimeo videoId="411652396" />
+      <vm-player controls>
+        <vm-vimeo videoId="411652396" />
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -121,51 +121,47 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {2} title="example.html"
-<vime-player controls>
-  <vime-vimeo cookies="true" video-id="411652396"></vime-vimeo>
+<vm-player controls>
+  <vm-vimeo cookies="true" video-id="411652396"></vm-vimeo>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property               | Attribute              | Description                                                                                                      | Type                 | Default     |
-| ---------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------- | ----------- |
-| `byline`               | `byline`               | Whether to display the video owner's name.                                                                       | `boolean`            | `true`      |
-| `color`                | `color`                | The hexadecimal color value of the playback controls. The embed settings of the video might override this value. | `string ∣ undefined` | `undefined` |
-| `noAutoAspectRatio`    | `no-auto-aspect-ratio` | Turns off automatically determining the aspect ratio of the current video.                                       | `boolean`            | `false`     |
-| `portrait`             | `portrait`             | Whether to display the video owner's portrait.                                                                   | `boolean`            | `true`      |
-| `poster`               | `poster`               | The absolute URL of a custom poster to be used for the current video.                                            | `string ∣ undefined` | `undefined` |
-| `videoId` _(required)_ | `video-id`             | The Vimeo resource ID of the video to load.                                                                      | `string`             | `undefined` |
+| Property               | Description                                                                                                      | Type                 | Default     |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------- | ----------- |
+| `byline`               | Whether to display the video owner's name.                                                                       | `boolean`            | `true`      |
+| `color`                | The hexadecimal color value of the playback controls. The embed settings of the video might override this value. | `string ∣ undefined` | `undefined` |
+| `noAutoAspectRatio`    | Turns off automatically determining the aspect ratio of the current video.                                       | `boolean`            | `false`     |
+| `portrait`             | Whether to display the video owner's portrait.                                                                   | `boolean`            | `true`      |
+| `poster`               | The absolute URL of a custom poster to be used for the current video.                                            | `string ∣ undefined` | `undefined` |
+| `videoId` _(required)_ | The Vimeo resource ID of the video to load.                                                                      | `string`             | `undefined` |
+
+
+## Events
+
+| Event     | Description                         | Type               |
+| --------- | ----------------------------------- | ------------------ |
+| `vmError` | Emitted when an error has occurred. | `CustomEvent<any>` |
+
 
 ## Dependencies
 
 ### Used by
 
-- [vime-playground](../core/playground.md)
+ - [vm-playground](./../core/playground)
 
 ### Depends on
 
-- [vime-embed](../core/embed.md)
+- [vm-embed](./../core/embed)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-vimeo --> vime-embed
-  vime-playground --> vime-vimeo
-  style vime-vimeo fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

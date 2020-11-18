@@ -1,13 +1,13 @@
 ```html {6-8} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
-      <vime-submenu label="Title">
+    <vm-settings>
+      <vm-submenu label="Title">
         <!-- ... -->
-      </vime-submenu>
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+      </vm-submenu>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```

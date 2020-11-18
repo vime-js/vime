@@ -2,10 +2,10 @@
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-vimeo videoId="411652396" />
+      <vm-player controls>
+        <vm-vimeo videoId="411652396" />
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }

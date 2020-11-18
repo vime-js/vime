@@ -1,30 +1,30 @@
 ```html {6-14,20,26} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeMenu
+      <Menu
         identifer="menu-id"
         controller="menu-controller-id"
         :active="isMenuActive"
-        @vOpen="onOpen"
-        @vClose="onClose"
+        @vmOpen="onOpen"
+        @vmClose="onClose"
       >
         <!-- ... -->
-      </VimeMenu>
-    </VimeUi>
-  </VimePlayer>
+      </Menu>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeMenu } from '@vime/vue';
+  import { Player, Ui, Menu } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeMenu,
+      Player,
+      Ui,
+      Menu,
     },
     data: {
       isMenuActive: false,

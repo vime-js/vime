@@ -1,7 +1,7 @@
 ```html {1,4} title="example.svelte"
-<VimeCurrentTime />
+<CurrentTime />
 
 <script lang="ts">
-  import { VimeCurrentTime } from '@vime/svelte';
+  import { CurrentTime } from '@vime/svelte';
 </script>
 ```

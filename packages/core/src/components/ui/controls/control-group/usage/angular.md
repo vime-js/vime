@@ -1,19 +1,19 @@
 ```html {6-8,10-14}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
-      <vime-control-group>
-        <vime-scrubber-control></vime-scrubber-control>
-      </vime-control-group>
+    <vm-controls>
+      <vm-control-group>
+        <vm-scrubber-control></vm-scrubber-control>
+      </vm-control-group>
 
-      <vime-control-group space="top">
-        <vime-playback-control></vime-playback-control>
-        <vime-volume-control></vime-volume-control>
+      <vm-control-group space="top">
+        <vm-playback-control></vm-playback-control>
+        <vm-volume-control></vm-volume-control>
         <!-- ... -->
-      </vime-control-group>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      </vm-control-group>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```

@@ -1,14 +1,14 @@
 ```html {2,6,10} title="example.vue"
 <template>
-  <VimeEndTime />
+  <EndTime />
 </template>
 
 <script>
-  import { VimeEndTime } from '@vime/vue';
+  import { EndTime } from '@vime/vue';
 
   export default {
     components: {
-      VimeEndTime,
+      EndTime,
     },
   };
 </script>

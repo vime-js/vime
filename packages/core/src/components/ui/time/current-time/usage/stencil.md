@@ -1,7 +1,7 @@
 ```tsx {3}
 class Example {
   render() {
-    return <vime-current-time />;
+    return <vm-current-time />;
   }
 }
 ```

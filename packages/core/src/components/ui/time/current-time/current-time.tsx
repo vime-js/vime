@@ -1,19 +1,18 @@
 import { h, Component, Prop } from '@stencil/core';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-current-time',
+  tag: 'vm-current-time',
+  styleUrl: 'current-time.css',
+  shadow: true,
 })
 export class CurrentTime {
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() currentTime: PlayerProps['currentTime'] = 0;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
   /**
@@ -23,12 +22,13 @@ export class CurrentTime {
   @Prop() alwaysShowHours = false;
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['currentTime', 'i18n']);
   }
 
   render() {
     return (
-      <vime-time
+      <vm-time
         label={this.i18n.currentTime}
         seconds={this.currentTime}
         alwaysShowHours={this.alwaysShowHours}

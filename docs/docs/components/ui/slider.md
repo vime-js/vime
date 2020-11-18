@@ -1,10 +1,7 @@
 ---
-title: vime-slider
+title: vm-slider
 sidebar_label: Slider
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 A custom styled and ARIA friendly `input[type="range"]` component for inputting numeric values.
 In addition, there are optimizations made for improved touch support (more information can be found
@@ -21,40 +18,43 @@ at https://github.com/sampotts/rangetouch).
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html
-<vime-slider step="5" max="100" value="50" label="Volume" />
+<vm-slider step="5" max="100" value="50" label="Volume" />
 
 <script>
-  const slider = document.querySelector('vime-slider');
+  const slider = document.querySelector('vm-slider');
 
-  slider.addEventListener('vValueChange', (event) => {
+  slider.addEventListener('vmValueChange', (event) => {
     const newValue = event.detail;
   });
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,12-18}
 import React, { useState } from 'react';
-import { VimeSlider } from '@vime/react';
+import { Slider } from '@vime/react';
 
 function Example() {
   const [value, setValue] = useState(50);
@@ -64,39 +64,39 @@ function Example() {
   };
 
   return (
-    <VimeSlider
+    <Slider
       label="Volume"
       step={5}
       max={100}
       value={value}
-      onVValueChange={onValueChange}
+      onVmValueChange={onValueChange}
     />
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {2-8,12,16} title="example.vue"
 <template>
-  <VimeSlider
+  <Slider
     label="Volume"
     :step="5"
     :max="100"
     :value="value"
-    @vValueChange="onValueChange"
+    @vmValueChange="onValueChange"
   />
 </template>
 
 <script>
-  import { VimeSlider } from '@vime/vue';
+  import { Slider } from '@vime/vue';
 
   export default {
     components: {
-      VimeSlider,
+      Slider,
     },
     data: {
       value: 50,
@@ -110,24 +110,24 @@ function Example() {
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```tsx
-<VimeSlider
+<Slider
   label="Volume"
   step={5}
   max={100}
   value={value}
-  on:vValueChange={onValueChange}
+  on:vmValueChange={onValueChange}
 />
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimeSlider } from '@vime/svelte';
+  import { Slider } from '@vime/svelte';
 
   let value = 50;
 
@@ -137,8 +137,8 @@ function Example() {
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -148,16 +148,16 @@ class Example {
 
   private onValueChange(event: CustomEvent<number>) {
     this.value = event.detail;
-  }
+  };
 
   render() {
     return (
-      <VimeSlider
+      <Slider
         label="Volume"
         step={5}
         max={100}
         value={this.value}
-        onVValueChange={this.onValueChange.bind(this)}
+        onVmValueChange={this.onValueChange.bind(this)}
       />
     );
   }
@@ -166,16 +166,15 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html title="example.html"
-<vime-slider
+<vm-slider
   label="Volume"
   [step]="5"
   [max]="100"
   [value]="value"
-  (vValueChange)="onValueChange($event)"
+  (vmValueChange)="onValueChange($event)"
 />
 ```
 
@@ -189,27 +188,31 @@ class Example {
 }
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property    | Attribute    | Description                                                                                | Type                 | Default     |
-| ----------- | ------------ | ------------------------------------------------------------------------------------------ | -------------------- | ----------- |
-| `label`     | `label`      | A human-readable label for the purpose of the slider.                                      | `string ∣ undefined` | `undefined` |
-| `max`       | `max`        | The greatest permitted value.                                                              | `number`             | `10`        |
-| `min`       | `min`        | The lowest value in the range of permitted values.                                         | `number`             | `0`         |
-| `step`      | `step`       | A number that specifies the granularity that the value must adhere to.                     | `number`             | `1`         |
-| `value`     | `value`      | The current value.                                                                         | `number`             | `5`         |
-| `valueText` | `value-text` | Human-readable text alternative for the current value. Defaults to `value:max` percentage. | `string ∣ undefined` | `undefined` |
+| Property    | Description                                                                                | Type                 | Default     |
+| ----------- | ------------------------------------------------------------------------------------------ | -------------------- | ----------- |
+| `label`     | A human-readable label for the purpose of the slider.                                      | `string ∣ undefined` | `undefined` |
+| `max`       | The greatest permitted value.                                                              | `number`             | `10`        |
+| `min`       | The lowest value in the range of permitted values.                                         | `number`             | `0`         |
+| `step`      | A number that specifies the granularity that the value must adhere to.                     | `number`             | `1`         |
+| `value`     | The current value.                                                                         | `number`             | `5`         |
+| `valueText` | Human-readable text alternative for the current value. Defaults to `value:max` percentage. | `string ∣ undefined` | `undefined` |
+
 
 ## Events
 
-| Event          | Description                                                     | Type                  |
-| -------------- | --------------------------------------------------------------- | --------------------- |
-| `vValueChange` | Emitted when the value of the underlying `input` field changes. | `CustomEvent<number>` |
+| Event           | Description                                                     | Type                  |
+| --------------- | --------------------------------------------------------------- | --------------------- |
+| `vmBlur`        | Emitted when the slider loses focus.                            | `CustomEvent<void>`   |
+| `vmFocus`       | Emitted when the slider receives focus.                         | `CustomEvent<void>`   |
+| `vmValueChange` | Emitted when the value of the underlying `input` field changes. | `CustomEvent<number>` |
+
 
 ## CSS Custom Properties
 
@@ -224,22 +227,12 @@ class Example {
 | `--vm-slider-track-height`         | The height of the track.                                          |
 | `--vm-slider-value-color`          | The color of the part of the track filled upto the current value. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-scrubber-control](controls/scrubber-control.md)
-- [vime-volume-control](controls/volume-control.md)
+ - [vm-scrubber-control](./controls/scrubber-control)
+ - [vm-volume-control](./controls/volume-control)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-scrubber-control --> vime-slider
-  vime-volume-control --> vime-slider
-  style vime-slider fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

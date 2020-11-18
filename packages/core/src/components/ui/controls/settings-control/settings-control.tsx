@@ -1,27 +1,45 @@
 import {
-  h, Host, Component, Prop, Element,
+  h, Component, Prop, Element, Watch, State, Method,
 } from '@stencil/core';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { isUndefined } from '../../../../utils/unit';
-import { findUIRoot } from '../../ui/utils';
+import { watchComponentRegistry, withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 let idCount = 0;
 
 @Component({
-  tag: 'vime-settings-control',
-  styleUrl: 'settings-control.scss',
+  tag: 'vm-settings-control',
+  styleUrl: 'settings-control.css',
+  shadow: true,
 })
 export class SettingsControl {
   private id!: string;
 
-  @Element() el!: HTMLVimeSettingsControlElement;
+  private control?: HTMLVmControlElement;
+
+  @Element() host!: HTMLVmSettingsControlElement;
+
+  @State() vmSettings?: HTMLVmSettingsElement;
+
+  @Watch('vmSettings')
+  onComponentsChange() {
+    if (!isUndefined(this.vmSettings)) {
+      this.vmSettings.setController(this.host);
+    }
+  }
 
   /**
-   * The URL to an SVG element or fragment to load.
+   * The name of the settings icon to resolve from the icon library.
    */
-  @Prop() icon = '#vime-settings';
+  @Prop() icon = 'settings';
+
+  /**
+   * The name of an icon library to use. Defaults to the library defined by the `icons` player
+   * property.
+   */
+  @Prop() icons?: string;
 
   /**
    * Whether the tooltip is positioned above/below the control.
@@ -43,58 +61,69 @@ export class SettingsControl {
    */
   @Prop() expanded = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['i18n']);
   }
 
   connectedCallback() {
     idCount += 1;
-    this.id = `vime-settings-control-${idCount}`;
-    this.findSettings();
+    this.id = `vm-settings-control-${idCount}`;
+    watchComponentRegistry(this, 'vm-settings', ((regs) => { [this.vmSettings] = regs; }));
   }
 
-  componentDidLoad() {
-    this.findSettings();
+  /**
+   * Focuses the control.
+   */
+  @Method()
+  async focusControl() {
+    this.control?.focusControl();
   }
 
-  private findSettings() {
-    const settings = findUIRoot(this)?.querySelector('vime-settings');
-    settings?.setController(this.id, this.el);
+  /**
+   * Removes focus from the control.
+   */
+  @Method()
+  async blurControl() {
+    this.control?.blurControl();
   }
 
   render() {
     const hasSettings = !isUndefined(this.menu);
 
     return (
-      <Host
+      <div
         class={{
+          settingsControl: true,
           hidden: !hasSettings,
           active: hasSettings && this.expanded,
         }}
       >
-        <vime-control
+        <vm-control
           identifier={this.id}
           menu={this.menu}
           hidden={!hasSettings}
           expanded={this.expanded}
           label={this.i18n.settings}
+          ref={((control) => { this.control = control; })}
         >
-          <vime-icon href={this.icon} />
+          <vm-icon
+            name={this.icon}
+            library={this.icons}
+          />
 
-          <vime-tooltip
+          <vm-tooltip
             hidden={this.expanded}
             position={this.tooltipPosition}
             direction={this.tooltipDirection}
           >
             {this.i18n.settings}
-          </vime-tooltip>
-        </vime-control>
-      </Host>
+          </vm-tooltip>
+        </vm-control>
+      </div>
     );
   }
 }

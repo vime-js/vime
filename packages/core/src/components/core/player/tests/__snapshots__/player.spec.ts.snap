@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should be structurally sound 1`] = `
-<vime-player aria-busy="true" aria-hidden="true" aria-label="Video Player" debug="" id="vime-player-1" tabindex="0">
-  <!---->
-  <vime-faketube></vime-faketube>
-</vime-player>
-`;

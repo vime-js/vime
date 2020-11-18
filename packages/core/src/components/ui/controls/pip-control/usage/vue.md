@@ -1,25 +1,25 @@
 ```html {7,14,21} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeControls>
-        <VimePipControl />
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      <Controls>
+        <PipControl />
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeControls, VimePipControl } from '@vime/vue';
+  import { Player, Ui, Controls, PipControl } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimePipControl,
+      Player,
+      Ui,
+      Controls,
+      PipControl,
     },
   };
 </script>

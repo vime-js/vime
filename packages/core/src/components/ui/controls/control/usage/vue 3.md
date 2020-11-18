@@ -1,15 +1,15 @@
 ```html {2-10,19,27} title="playback-control.vue"
 <template>
   <div ref="domRef">
-    <VimeControl
+    <Control
       keys="k"
       :label="i18n.playback"
       :pressed="paused"
       @click="onClick"
     >
-      <VimeIcon :href="icon" />
-      <VimeTooltip>{{tooltip}} (k)</VimeTooltip>
-    </VimeControl>
+      <Icon :name="icon" />
+      <Tooltip>{{tooltip}} (k)</Tooltip>
+    </Control>
   </div>
 </template>
 
@@ -17,17 +17,17 @@
 import { defineComponent, ref, computed } from 'vue';
 import {
   usePlayerContext,
-  VimeControl,
-  VimeIcon,
-  VimeTooltip,
+  Control,
+  Icon,
+  Tooltip,
 } from '@vime/vue-next';
 
 export default defineComponent({
   name: 'PlaybackControl',
   components: {
-    VimeControl,
-    VimeIcon,
-    VimeTooltip,
+    Control,
+    Icon,
+    Tooltip,
   },
   setup() {
     const domRef = ref(null);
@@ -35,7 +35,7 @@ export default defineComponent({
     const paused = usePlayerContext(domRef, 'paused', true);
     const i18n = usePlayerContext(domRef, 'i18n', {});
 
-    const icon = computed(() => paused.value ? '#vime-play' : '#vime-pause');
+    const icon = computed(() => paused.value ? 'play' : 'pause');
     const tooltip = computed(() => paused.value ? i18n.value.play : i18n.value.pause);
 
     return { domRef, paused, i18n, icon, tooltip };

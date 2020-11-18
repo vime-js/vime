@@ -14,9 +14,15 @@ export const initialState: { [P in keyof PlayerProps]: PlayerProps[P] } = {
   mediaTitle: undefined,
   currentSrc: undefined,
   currentPoster: undefined,
+  textTracks: [],
+  currentTextTrack: -1,
+  audioTracks: [],
+  currentAudioTrack: -1,
+  isTextTrackVisible: true,
+  shouldRenderNativeTextTracks: true,
+  icons: 'vime',
   currentTime: 0,
   autoplay: false,
-  attached: false,
   ready: false,
   playbackReady: false,
   loop: false,
@@ -33,8 +39,6 @@ export const initialState: { [P in keyof PlayerProps]: PlayerProps[P] } = {
   buffering: false,
   controls: false,
   isControlsActive: false,
-  errors: [],
-  textTracks: undefined,
   volume: 50,
   isFullscreenActive: false,
   aspectRatio: '16:9',
@@ -46,9 +50,7 @@ export const initialState: { [P in keyof PlayerProps]: PlayerProps[P] } = {
   isVideo: false,
   isMobile: false,
   isTouch: false,
-  isCaptionsActive: false,
   isSettingsActive: false,
-  currentCaption: undefined,
   isLive: false,
   isPiPActive: false,
   autopause: true,
@@ -79,10 +81,9 @@ export type WritableProps = Pick<PlayerProps,
 | 'playbackRate'
 | 'playsinline'
 | 'volume'
-| 'errors'
 | 'isSettingsActive'
-| 'isCaptionsActive'
 | 'isControlsActive'
+| 'shouldRenderNativeTextTracks'
 >;
 
 const writableProps = new Set<PlayerProp>([
@@ -99,13 +100,12 @@ const writableProps = new Set<PlayerProp>([
   'translations',
   'playbackQuality',
   'muted',
-  'errors',
   'playbackRate',
   'playsinline',
   'volume',
   'isSettingsActive',
-  'isCaptionsActive',
   'isControlsActive',
+  'shouldRenderNativeTextTracks',
 ]);
 
 export const isReadonlyProp = (prop: PlayerProp) => !writableProps.has(prop);
@@ -123,6 +123,10 @@ const resetableProps = new Set<PlayerProp>([
   'playing',
   'buffering',
   'playbackReady',
+  'textTracks',
+  'currentTextTrack',
+  'audioTracks',
+  'currentAudioTrack',
   'mediaTitle',
   'currentSrc',
   'currentPoster',
@@ -132,80 +136,23 @@ const resetableProps = new Set<PlayerProp>([
   'playbackEnded',
   'playbackQuality',
   'playbackQualities',
-  'textTracks',
   'mediaType',
-  'isCaptionsActive',
 ]);
 
 export const shouldPropResetOnMediaChange = (prop: PlayerProp) => resetableProps.has(prop);
 
 /**
- * Properties that can only be written to by a provider.
- */
-export type ProviderWritableProps = WritableProps & Pick<PlayerProps,
-'ready'
-| 'playing'
-| 'playbackReady'
-| 'playbackStarted'
-| 'playbackEnded'
-| 'seeking'
-| 'buffered'
-| 'buffering'
-| 'duration'
-| 'viewType'
-| 'mediaTitle'
-| 'mediaType'
-| 'textTracks'
-| 'currentSrc'
-| 'currentPoster'
-| 'playbackRates'
-| 'playbackQualities'
-| 'isPiPActive'
-| 'isFullscreenActive'
->;
-
-const providerWritableProps = new Set<PlayerProp>([
-  'ready',
-  'playing',
-  'playbackReady',
-  'playbackStarted',
-  'playbackEnded',
-  'seeking',
-  'buffered',
-  'buffering',
-  'duration',
-  'viewType',
-  'mediaTitle',
-  'mediaType',
-  'textTracks',
-  'currentSrc',
-  'currentPoster',
-  'playbackRates',
-  'playbackQualities',
-  'isPiPActive',
-  'isFullscreenActive',
-]);
-
-export const isProviderWritableProp = (
-  prop: PlayerProp,
-) => isWritableProp(prop) || providerWritableProps.has(prop);
-
-/**
  * Properties that can only be written to by the player directly.
  */
 export type PlayerWritableProps = WritableProps & Pick<PlayerProps,
-| 'currentCaption'
 | 'isMobile'
 | 'isTouch'
-| 'isCaptionsActive'
 | 'isFullscreenActive'
 >;
 
 const playerWritableProps = new Set<PlayerProp>([
-  'currentCaption',
   'isMobile',
   'isTouch',
-  'isCaptionsActive',
   'isFullscreenActive',
 ]);
 
@@ -217,14 +164,16 @@ export type PlayerProp = keyof PlayerProps;
 
 export interface PlayerProps {
   /**
-   * `@readonly` Whether the player is attached to the DOM.
-   */
-  attached: boolean
-
-  /**
    * This property has no role other than scoping CSS selectors.
    */
   theme?: string;
+
+  /**
+   * The default icon library to be used throughout the player. You can use a predefined
+   * icon library such as vime, material, remix or boxicons. If you'd like to provide your own
+   * see the `<vm-icon-library>` component. Remember to pass in the name of your icon library here.
+   */
+  icons: string;
 
   /**
    * Whether playback should be paused. Defaults to `true` if no media has loaded or playback has
@@ -233,32 +182,32 @@ export interface PlayerProps {
   paused: boolean
 
   /**
-   * `@readonly` Whether media is actively playing back. Defaults to `false` if no media has
+   * Whether media is actively playing back. Defaults to `false` if no media has
    * loaded or playback has not started.
    */
   playing: boolean
 
   /**
-   * `@readonly` A `double` indicating the total playback length of the media in seconds. Defaults
+   * A `double` indicating the total playback length of the media in seconds. Defaults
    * to `-1` if no media has been loaded. If the media is being streamed live then the duration is
    * equal to `Infinity`.
    */
   duration: number
 
   /**
-   * `@readonly` The title of the current media. Defaults to `undefined` if no media has been
+   * The title of the current media. Defaults to `undefined` if no media has been
    * loaded.
    */
   mediaTitle?: string
 
   /**
-   * `@readonly` The absolute URL of the media resource that has been chosen. Defaults to
+   * The absolute URL of the media resource that has been chosen. Defaults to
    * `undefined` if no media has been loaded.
    */
   currentSrc?: string
 
   /**
-   * `@readonly` The absolute URL of the poster for the current media resource. Defaults to
+   * The absolute URL of the poster for the current media resource. Defaults to
    * `undefined` if no media/poster has been loaded.
    */
   currentPoster?: string
@@ -281,12 +230,12 @@ export interface PlayerProps {
   autoplay: boolean
 
   /**
-   * `@readonly` Whether the player has loaded and is ready to be interacted with.
+   * Whether the player has loaded and is ready to be interacted with.
    */
   ready: boolean
 
   /**
-   * `@readonly` Whether media is ready for playback to begin.
+   * Whether media is ready for playback to begin.
    */
   playbackReady: boolean
 
@@ -301,7 +250,7 @@ export interface PlayerProps {
   muted: boolean
 
   /**
-   * `@readonly` The length of the media in seconds that has been downloaded by the browser.
+   * The length of the media in seconds that has been downloaded by the browser.
    */
   buffered: number
 
@@ -314,7 +263,7 @@ export interface PlayerProps {
   playbackRate: number
 
   /**
-   * `@readonly` The playback rates available for the current media.
+   * The playback rates available for the current media.
    */
   playbackRates: number[]
 
@@ -324,42 +273,43 @@ export interface PlayerProps {
    * second (kbps) and sample rate in kilohertz (kHZ). For video this will be the number of vertical
    * pixels it supports. For example, if the video has a resolution of `1920x1080` then the quality
    * will return `1080p`. Defaults to `undefined` which you can interpret as the quality is unknown.
-   * The quality can only be set to a quality found in the `playbackQualities` prop. Some providers
-   * may not allow changing the quality, you can check if it's possible via
-   * `canSetPlaybackQuality()`.
+   * The value can also be `Auto` for adaptive bit streams (ABR), where the provider can
+   * automatically manage the playback quality. The quality can only be set to a quality found
+   * in the `playbackQualities` prop. Some providers may not allow changing the quality, you can
+   * check if it's possible via `canSetPlaybackQuality()`.
    */
   playbackQuality?: string
 
   /**
-   * `@readonly` The media qualities available for the current media.
+   * The media qualities available for the current media.
    */
   playbackQualities: string[]
 
   /**
-   * `@readonly` Whether the player is in the process of seeking to a new time position.
+   * Whether the player is in the process of seeking to a new time position.
    */
   seeking: boolean
 
   /**
-   * `@readonly` Whether the player is in debug mode and should `console.x` information about
+   * Whether the player is in debug mode and should `console.x` information about
    * its internal state.
    */
   debug: boolean
 
   /**
-   * `@readonly` Whether the media has initiated playback. In other words it will be true if
+   * Whether the media has initiated playback. In other words it will be true if
    * `currentTime > 0`.
    */
   playbackStarted: boolean
 
   /**
-   * `@readonly` Whether media playback has reached the end. In other words it'll be true if
+   * Whether media playback has reached the end. In other words it'll be true if
    * `currentTime === duration`.
    */
   playbackEnded: boolean
 
   /**
-   * `@readonly` Whether playback has temporarily stopped because of a lack of temporary data.
+   * Whether playback has temporarily stopped because of a lack of temporary data.
    */
   buffering: boolean
 
@@ -378,22 +328,12 @@ export interface PlayerProps {
   isControlsActive: boolean
 
   /**
-   * `@readonly` A collection of errors that have occurred ordered by `[oldest, ..., newest]`.
-   */
-  errors: any[]
-
-  /**
-   * `@readonly` The text tracks (WebVTT) associated with the current media.
-   */
-  textTracks?: TextTrackList
-
-  /**
    * An `int` between `0` (silent) and `100` (loudest) indicating the audio volume.
    */
   volume: number
 
   /**
-   * `@readonly` Whether the player is currently in fullscreen mode.
+   * Whether the player is currently in fullscreen mode.
    */
   isFullscreenActive: boolean
 
@@ -404,7 +344,7 @@ export interface PlayerProps {
   aspectRatio: string
 
   /**
-   * `@readonly` The type of player view that is being used, whether it's an audio player view or
+   * The type of player view that is being used, whether it's an audio player view or
    * video player view. Normally if the media type is of audio then the view is of type audio, but
    * in some cases it might be desirable to show a different view type. For example, when playing
    * audio with a poster. This is subject to the provider allowing it. Defaults to `undefined`
@@ -413,78 +353,66 @@ export interface PlayerProps {
   viewType?: ViewType
 
   /**
-   * `@readonly` Whether the current view is of type `audio`, shorthand for
+   * Whether the current view is of type `audio`, shorthand for
    * `viewType === ViewType.Audio`.
    */
   isAudioView: boolean
 
   /**
-   * `@readonly` Whether the current view is of type `video`, shorthand for
+   * Whether the current view is of type `video`, shorthand for
    * `viewType === ViewType.Video`.
    */
   isVideoView: boolean
 
   /**
-   * `@readonly` The type of media that is currently active, whether it's audio or video. Defaults
+   * The type of media that is currently active, whether it's audio or video. Defaults
    * to `undefined` when no media has been loaded or the type cannot be determined.
    */
   mediaType?: MediaType
 
   /**
-   * `@readonly` Whether the current media is of type `audio`, shorthand for
+   * Whether the current media is of type `audio`, shorthand for
    * `mediaType === MediaType.Audio`.
    */
   isAudio: boolean
 
   /**
-   * `@readonly` Whether the current media is of type `video`, shorthand for
+   * Whether the current media is of type `video`, shorthand for
    * `mediaType === MediaType.Video`.
    */
   isVideo: boolean
 
   /**
-   * `@readonly` Whether the player is in mobile mode. This is determined by parsing
+   * Whether the player is in mobile mode. This is determined by parsing
    * `window.navigator.userAgent`.
    */
   isMobile: boolean
 
   /**
-   * `@readonly` Whether the player is in touch mode. This is determined by listening for
+   * Whether the player is in touch mode. This is determined by listening for
    * mouse/touch events and toggling this value.
    */
   isTouch: boolean
 
   /**
-   * `@readonly` Whether any captions or subtitles are currently showing.
-   */
-  isCaptionsActive: boolean
-
-  /**
-   * `@readonly` Whether the settings menu has been opened and is currently visible. This is
+   * Whether the settings menu has been opened and is currently visible. This is
    * currently only supported by custom settings.
    */
   isSettingsActive: boolean
 
   /**
-   * `@readonly` The current provider name whose responsible for loading and playing media.
+   * The current provider name whose responsible for loading and playing media.
    * Defaults to `undefined` when no provider has been loaded.
    */
   currentProvider?: Provider;
 
   /**
-   * `@readonly` The selected caption/subtitle text track to display. Defaults to `undefined` if
-   * there is none. This does not mean this track is active, only that is the current selection. To
-   * know if it is active, check the `isCaptionsActive` prop.
-   */
-  currentCaption?: TextTrack
-
-  /**
-   * `@readonly` Whether the current media is being broadcast live (`duration === Infinity`).
+   * Whether the current media is being broadcast live (`duration === Infinity`).
    */
   isLive: boolean
 
   /**
-   * `@readonly` Whether the player is currently in picture-in-picture mode.
+   * Whether the player is currently in picture-in-picture mode.
    */
   isPiPActive: boolean
 
@@ -501,6 +429,42 @@ export interface PlayerProps {
   playsinline: boolean
 
   /**
+   * The text tracks associated with the current media.
+   */
+  textTracks: TextTrack[]
+
+  /**
+   * Gets the index of the currently active text track. Defaults to `-1` to when
+   * all text tracks are disabled. If you'd like to set it than see the `setCurrentTextTrack`
+   * method.
+   */
+  currentTextTrack: number
+
+  /**
+   * Whether the current text tracks is visible. If you'd like to set it than see
+   * the `setTrackTrackVisibility` method.
+   */
+  isTextTrackVisible: boolean
+
+  /**
+   * Whether text tracks should be rendered by native player, set to `false` if using
+   * custom display.
+   */
+  shouldRenderNativeTextTracks: boolean
+
+  /**
+   * The audio tracks associated with the current media.
+   */
+  audioTracks: any[]
+
+  /**
+   * Gets the index of the currently active audio track. Defaults to `-1` to when
+   * the default audio track is used. If you'd like to set it than see the `setCurrentAudioTrack`
+   * method.
+   */
+  currentAudioTrack: number
+
+  /**
    * The current language of the player. This can be any code defined via the `extendLanguage`
    * method or the default `en`. It's recommended to use an ISO 639-1 code as that'll be used by
    * Vime when adding new language defaults in the future.
@@ -508,23 +472,21 @@ export interface PlayerProps {
   language: string
 
   /**
-   * `@readonly` The languages that are currently available. You can add new languages via the
+   * The languages that are currently available. You can add new languages via the
    * `extendLanguage` method.
    */
   languages: string[]
 
   /**
-   * `@readonly` Contains each language and its respective translation map.
+   * Contains each language and its respective translation map.
    */
   translations: Record<string, Translation>,
 
   /**
-   * `@readonly` A dictionary of translations for the current language.
+   * A dictionary of translations for the current language.
    */
   i18n: Translation | Record<string, string>
 
-  /**
-   * @internal
-   */
+  /** @internal */
   logger?: Logger
 }

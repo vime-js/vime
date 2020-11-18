@@ -21,19 +21,19 @@ inside the `<head>` element of your HTML file.
 <!-- Default theme. ~960B -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/default.css"
+  href="https://cdn.jsdelivr.net/npm/@vime/core@^5/themes/default.css"
 />
 
 <!-- Optional light theme (extends default). ~400B -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/light.css"
+  href="https://cdn.jsdelivr.net/npm/@vime/core@^5/themes/light.css"
 />
 
 <!-- Library and all of its components are lazy loaded, so nothing to sweat about here. ~3kB -->
 <script
   type="module"
-  src="https://cdn.jsdelivr.net/npm/@vime/core@^4/dist/vime/vime.esm.js"
+  src="https://cdn.jsdelivr.net/npm/@vime/core@^5/dist/vime/vime.esm.js"
 ></script>
 ```
 
@@ -74,11 +74,15 @@ section. See the [Video](../components/providers/video#dependencies) component a
 :::
 
 ```js
-import { VimePlayer, VimeVideo, VimeFile } from '@vime/core';
+import { VmPlayer, VmVideo, VmFile, defineCustomElements } from '@vime/core';
 
-customElements.define('vime-player', VimePlayer);
-customElements.define('vime-video', VimeVideo);
-customElements.define('vime-file', VimeFile);
+// 1. Manually define them to be as efficient as possible.
+customElements.define('vm-player', VmPlayer);
+customElements.define('vm-video', VmVideo);
+customElements.define('vm-file', VmFile);
+
+// 2. Can't be bothered? Load them all in, may bloat your final bundle size a little.
+defineCustomElements();
 ```
 
 And ... we're all done 🎉 &nbsp; Let's move onto [setting up our player](./player).
@@ -132,13 +136,13 @@ CSS variables for styling the player. Add the following to the `<head>` element 
 <!-- Default theme. ~960B -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/default.css"
+  href="https://cdn.jsdelivr.net/npm/@vime/core@^5/themes/default.css"
 />
 
 <!-- Optional light theme (extends default). ~400B -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/light.css"
+  href="https://cdn.jsdelivr.net/npm/@vime/core@^5/themes/light.css"
 />
 ```
 
@@ -247,7 +251,7 @@ package by running the following in our terminal...
 npm i @vime/angular
 ```
 
-For the last step we simply need to import the `VimeModule` into our application, you can do this 
+For the last step we simply need to import the `Module` into our application, you can do this 
 at the root `AppModule` or wherever makes the most sense:
 
 ```ts title="app.module.ts"

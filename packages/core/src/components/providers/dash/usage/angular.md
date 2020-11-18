@@ -1,13 +1,13 @@
 ```html {2-7} title="example.html"
-<vime-player controls>
-  <vime-dash
+<vm-player controls>
+  <vm-dash
     [config]="dashConfig"
     src="/media/manifest.mpd"
     version="latest"
     poster="/media/poster.png"
-  ></vime-dash>
+  ></vm-dash>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 ```ts title="example.ts"

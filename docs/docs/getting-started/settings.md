@@ -33,17 +33,17 @@ more information on what properties you can pass in.
 <TabItem value="html">
 
 ```html {7-9} title="player.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
   
   <!-- We turn off the settings that come with the default UI. -->
-  <vime-default-ui no-settings>
+  <vm-default-ui no-settings>
     <!-- We setup the default settings and pass in any options.  -->
-    <vime-default-settings pin="bottomRight">
+    <vm-default-settings pin="bottomRight">
       <!-- We can extend the settings with new options here. -->
-    </vime-default-settings>
-  </vime-default-ui>
-</vime-player>
+    </vm-default-settings>
+  </vm-default-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -52,21 +52,21 @@ more information on what properties you can pass in.
 
 ```tsx {12-14} title="Player.tsx"
 import React from 'react';
-import { VimePlayer, VimeDefaultUi, VimeDefaultSettings } from '@vime/react';
+import { Player, DefaultUi, DefaultSettings } from '@vime/react';
 
 function Player() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
 
       {/* We turn off the settings that come with the default UI. */}
-      <VimeDefaultUi noSettings>
+      <DefaultUi noSettings>
         {/* We setup the default settings and pass in any options.  */}
-        <VimeDefaultSettings pin="bottomRight">
+        <DefaultSettings pin="bottomRight">
           {/* We can extend the settings with new options here. */}
-        </VimeDefaultSettings>
-      </VimeDefaultUi>
-    </VimePlayer>
+        </DefaultSettings>
+      </DefaultUi>
+    </Player>
   );
 }
 ```
@@ -77,27 +77,27 @@ function Player() {
 
 ```html {8-10} title="Player.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
 
     <!-- We turn off the settings that come with the default UI. -->
-    <VimeDefaultUi noSettings>
+    <DefaultUi noSettings>
       <!-- We setup the default settings and pass in any options. -->
-      <VimeDefaultSettings pin="bottomRight">
+      <DefaultSettings pin="bottomRight">
         <!-- We can extend the settings with new options here. -->
-      </VimeDefaultSettings>
-    </VimeDefaultUi>
-  </VimePlayer>
+      </DefaultSettings>
+    </DefaultUi>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeDefaultUi, VimeDefaultSettings } from '@vime/vue';
+  import { Player, DefaultUi, DefaultSettings } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeDefaultUi,
-      VimeDefaultSettings,
+      Player,
+      DefaultUi,
+      DefaultSettings,
     },
   };
 </script>
@@ -108,20 +108,20 @@ function Player() {
 <TabItem value="svelte">
 
 ```html {7-9} title="Player.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
 
   <!-- We turn off the settings that come with the default UI. -->
-  <VimeDefaultUi noSettings>
+  <DefaultUi noSettings>
     <!-- We setup the default settings and pass in any options. -->
-    <VimeDefaultSettings pin="bottomRight">
+    <DefaultSettings pin="bottomRight">
       <!-- We can extend the settings with new options here. -->
-    </VimeDefaultSettings>
-  </VimeDefaultUi>
-</VimePlayer>
+    </DefaultSettings>
+  </DefaultUi>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeDefaultUi, VimeDefaultSettings } from '@vime/svelte';
+  import { Player, DefaultUi, DefaultSettings } from '@vime/svelte';
 </script>
 ```
 
@@ -135,17 +135,17 @@ class Player {
 
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
 
         {/* We turn off the settings that come with the default UI. */}
-        <vime-default-ui noSettings>
+        <vm-default-ui noSettings>
           {/* We setup the default settings and pass in any options.  */}
-          <vime-default-settings pin="bottomRight">
+          <vm-default-settings pin="bottomRight">
             {/* We can extend the settings with new options here. */}
-          </vime-default-settings>
-        </vime-default-ui>
-      </vime-player>
+          </vm-default-settings>
+        </vm-default-ui>
+      </vm-player>
     );
   }
 }
@@ -156,17 +156,17 @@ class Player {
 <TabItem value="angular">
 
 ```html {7-9} title="player.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
 
   <!-- We turn off the settings that come with the default UI. -->
-  <vime-default-ui no-settings>
+  <vm-default-ui no-settings>
     <!-- We setup the default settings and pass in any options.  -->
-    <vime-default-settings pin="bottomRight">
+    <vm-default-settings pin="bottomRight">
       <!-- We can extend the settings with new options here. -->
-    </vime-default-settings>
-  </vime-default-ui>
-</vime-player>
+    </vm-default-settings>
+  </vm-default-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -225,33 +225,33 @@ Okay let's play with some of these components in the following example to see ho
 <TabItem value="html">
 
 ```html {5-21} title="player.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
   
-  <vime-default-ui no-settings>
-    <vime-settings>
-      <vime-menu-item label="Menu Item 1" badge="BADGE"></vime-menu-item>
+  <vm-default-ui no-settings>
+    <vm-settings>
+      <vm-menu-item label="Menu Item 1" badge="BADGE"></vm-menu-item>
       
-      <vime-menu-item label="Menu Item 2" hint="Hint"></vime-menu-item>
+      <vm-menu-item label="Menu Item 2" hint="Hint"></vm-menu-item>
       
-      <vime-submenu label="Submenu 1" hint="1">
-        <vime-menu-radio-group value="1">
-          <vime-menu-radio label="Option 1" value="1"></vime-menu-radio>
-          <vime-menu-radio label="Option 2" value="2"></vime-menu-radio>
-          <vime-menu-radio label="Option 3" value="3"></vime-menu-radio>
-        </vime-menu-radio-group>
-      </vime-submenu>
+      <vm-submenu label="Submenu 1" hint="1">
+        <vm-menu-radio-group value="1">
+          <vm-menu-radio label="Option 1" value="1"></vm-menu-radio>
+          <vm-menu-radio label="Option 2" value="2"></vm-menu-radio>
+          <vm-menu-radio label="Option 3" value="3"></vm-menu-radio>
+        </vm-menu-radio-group>
+      </vm-submenu>
       
-      <vime-submenu label="Submenu 2">
+      <vm-submenu label="Submenu 2">
         Random content in here.
-      </vime-submenu>
-    </vime-settings>
-  </vime-default-ui>
-</vime-player>
+      </vm-submenu>
+    </vm-settings>
+  </vm-default-ui>
+</vm-player>
 
 <script>
-  const submenu = document.querySelector('vime-submenu[aria-label="Submenu 1"]');
-  const radioGroup = submenu.querySelector('vime-menu-radio-group');
+  const submenu = document.querySelector('vm-submenu[aria-label="Submenu 1"]');
+  const radioGroup = submenu.querySelector('vm-menu-radio-group');
   
   radioGroup.addEventListener('vCheck', (event) => {
     const radio = event.target;
@@ -267,13 +267,13 @@ Okay let's play with some of these components in the following example to see ho
 ```tsx {33-49} title="Player.tsx"
 import React, { useState } from 'react';
 import { 
-  VimePlayer,
-  VimeDefaultUi,
-  VimeSettings,
-  VimeMenuItem,
-  VimeSubmenu,
-  VimeMenuRadio,
-  VimeMenuRadioGroup,
+  Player,
+  DefaultUi,
+  Settings,
+  MenuItem,
+  Submenu,
+  MenuRadio,
+  MenuRadioGroup,
 } from '@vime/react';
 
 function Player() {
@@ -288,34 +288,34 @@ function Player() {
   };
 
   const onCheck = (event: Event) => {
-    const radio = event.target as HTMLVimeMenuRadioElement;
+    const radio = event.target as HTMLVmMenuRadioElement;
     setValue(radio.value);
   };
 
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
 
-      <VimeDefaultUi noSettings>
-        <VimeSettings>
-          <VimeMenuItem label="Menu Item 1" badge="BADGE" onClick={onMenuItem1Click} />
+      <DefaultUi noSettings>
+        <Settings>
+          <MenuItem label="Menu Item 1" badge="BADGE" onClick={onMenuItem1Click} />
           
-          <VimeMenuItem label="Menu Item 2" hint="Hint" onClick={onMenuItem2Click} />
+          <MenuItem label="Menu Item 2" hint="Hint" onClick={onMenuItem2Click} />
           
-          <VimeSubmenu label="Submenu 1" hint={value}>
-            <VimeMenuRadioGroup value={value} onVCheck={onCheck}>
-              <VimeMenuRadio label="Option 1" value="1" />
-              <VimeMenuRadio label="Option 2" value="2" />
-              <VimeMenuRadio label="Option 3" value="3" />
-            </VimeMenuRadioGroup>
-          </VimeSubmenu>
+          <Submenu label="Submenu 1" hint={value}>
+            <MenuRadioGroup value={value} onVmCheck={onCheck}>
+              <MenuRadio label="Option 1" value="1" />
+              <MenuRadio label="Option 2" value="2" />
+              <MenuRadio label="Option 3" value="3" />
+            </MenuRadioGroup>
+          </Submenu>
           
-          <VimeSubmenu label="Submenu 2">
+          <Submenu label="Submenu 2">
             Random content in here.
-          </VimeSubmenu>
-        </VimeSettings>
-      </VimeDefaultUi>
-    </VimePlayer>
+          </Submenu>
+        </Settings>
+      </DefaultUi>
+    </Player>
   );
 };
 ```
@@ -326,51 +326,51 @@ function Player() {
 
 ```html {6-22} title="Player.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
 
-    <VimeDefaultUi noSettings>
-      <VimeSettings>
-        <VimeMenuItem label="Menu Item 1" badge="BADGE" @click="onMenuItem1Click" />
+    <DefaultUi noSettings>
+      <Settings>
+        <MenuItem label="Menu Item 1" badge="BADGE" @click="onMenuItem1Click" />
         
-        <VimeMenuItem label="Menu Item 2" hint="Hint" @click="onMenuItem2Click" />
+        <MenuItem label="Menu Item 2" hint="Hint" @click="onMenuItem2Click" />
         
-        <VimeSubmenu label="Submenu 1" :hint="value">
-          <VimeMenuRadioGroup :value="value" @vCheck="onCheck">
-            <VimeMenuRadio label="Option 1" value="1" />
-            <VimeMenuRadio label="Option 2" value="2" />
-            <VimeMenuRadio label="Option 3" value="3" />
-          </VimeMenuRadioGroup>
-        </VimeSubmenu>
+        <Submenu label="Submenu 1" :hint="value">
+          <MenuRadioGroup :value="value" @vCheck="onCheck">
+            <MenuRadio label="Option 1" value="1" />
+            <MenuRadio label="Option 2" value="2" />
+            <MenuRadio label="Option 3" value="3" />
+          </MenuRadioGroup>
+        </Submenu>
         
-        <VimeSubmenu label="Submenu 2">
+        <Submenu label="Submenu 2">
           Random content in here.
-        </VimeSubmenu>
-      </VimeSettings>
-    </VimeDefaultUi>
-  </VimePlayer>
+        </Submenu>
+      </Settings>
+    </DefaultUi>
+  </Player>
 </template>
 
 <script>
   import { 
-    VimePlayer,
-    VimeDefaultUi,
-    VimeSettings,
-    VimeMenuItem,
-    VimeSubmenu,
-    VimeMenuRadio,
-    VimeMenuRadioGroup,
+    Player,
+    DefaultUi,
+    Settings,
+    MenuItem,
+    Submenu,
+    MenuRadio,
+    MenuRadioGroup,
   } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeDefaultUi,
-      VimeSettings,
-      VimeMenuItem,
-      VimeSubmenu,
-      VimeMenuRadio,
-      VimeMenuRadioGroup,
+      Player,
+      DefaultUi,
+      Settings,
+      MenuItem,
+      Submenu,
+      MenuRadio,
+      MenuRadioGroup,
     },
     data: {
       value: '1',
@@ -396,39 +396,39 @@ function Player() {
 <TabItem value="svelte">
 
 ```html {5-21} title="Player.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
 
-  <VimeDefaultUi noSettings>
-    <VimeSettings>
-      <VimeMenuItem label="Menu Item 1" badge="BADGE" on:click={onMenuItem1Click} />
+  <DefaultUi noSettings>
+    <Settings>
+      <MenuItem label="Menu Item 1" badge="BADGE" on:click={onMenuItem1Click} />
       
-      <VimeMenuItem label="Menu Item 2" hint="Hint" on:click={onMenuItem2Click} />
+      <MenuItem label="Menu Item 2" hint="Hint" on:click={onMenuItem2Click} />
       
-      <VimeSubmenu label="Submenu 1" hint={value}>
-        <VimeMenuRadioGroup {value} on:vCheck={onCheck}>
-          <VimeMenuRadio label="Option 1" value="1" />
-          <VimeMenuRadio label="Option 2" value="2" />
-          <VimeMenuRadio label="Option 3" value="3" />
-        </VimeMenuRadioGroup>
-      </VimeSubmenu>
+      <Submenu label="Submenu 1" hint={value}>
+        <MenuRadioGroup {value} on:vCheck={onCheck}>
+          <MenuRadio label="Option 1" value="1" />
+          <MenuRadio label="Option 2" value="2" />
+          <MenuRadio label="Option 3" value="3" />
+        </MenuRadioGroup>
+      </Submenu>
       
-      <VimeSubmenu label="Submenu 2">
+      <Submenu label="Submenu 2">
         Random content in here.
-      </VimeSubmenu>
-    </VimeSettings>
-  </VimeDefaultUi>
-</VimePlayer>
+      </Submenu>
+    </Settings>
+  </DefaultUi>
+</Player>
 
 <script lang="ts">
   import { 
-    VimePlayer,
-    VimeDefaultUi,
-    VimeSettings,
-    VimeMenuItem,
-    VimeSubmenu,
-    VimeMenuRadio,
-    VimeMenuRadioGroup,
+    Player,
+    DefaultUi,
+    Settings,
+    MenuItem,
+    Submenu,
+    MenuRadio,
+    MenuRadioGroup,
   } from '@vime/svelte';
 
   let value = '1';
@@ -442,7 +442,7 @@ function Player() {
   };
 
   const onCheck = (event: Event) => {
-    const radio = event.target as HTMLVimeMenuRadioElement;
+    const radio = event.target as HTMLVmMenuRadioElement;
     value = radio.value;
   };
 </script>
@@ -465,43 +465,43 @@ class Player {
   }
 
   private onCheck(event: Event) {
-    const radio = event.target as HTMLVimeMenuRadioElement;
+    const radio = event.target as HTMLVmMenuRadioElement;
     this.value = radio.value;
   }
 
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
 
-        <vime-default-ui noSettings>
-          <vime-settings>
-            <vime-menu-item 
+        <vm-default-ui noSettings>
+          <vm-settings>
+            <vm-menu-item 
               label="Menu Item 1" 
               badge="BADGE"
               onClick={this.onMenuItem1Click.bind(this)}
             />
             
-            <vime-menu-item 
+            <vm-menu-item 
               label="Menu Item 2" 
               hint="Hint" 
               onClick={this.onMenuItem2Click.bind(this)}
             />
             
-            <vime-submenu label="Submenu 1" hint={this.value}>
-              <vime-menu-radio-group value={this.value} onVCheck={this.onCheck.bind(this)}>
-                <vime-menu-radio label="Option 1" value="1"></vime-menu-radio>
-                <vime-menu-radio label="Option 2" value="2"></vime-menu-radio>
-                <vime-menu-radio label="Option 3" value="3"></vime-menu-radio>
-              </vime-menu-radio-group>
-            </vime-submenu>
+            <vm-submenu label="Submenu 1" hint={this.value}>
+              <vm-menu-radio-group value={this.value} onVmCheck={this.onCheck.bind(this)}>
+                <vm-menu-radio label="Option 1" value="1"></vm-menu-radio>
+                <vm-menu-radio label="Option 2" value="2"></vm-menu-radio>
+                <vm-menu-radio label="Option 3" value="3"></vm-menu-radio>
+              </vm-menu-radio-group>
+            </vm-submenu>
             
-            <vime-submenu label="Submenu 2">
+            <vm-submenu label="Submenu 2">
               Random content in here.
-            </vime-submenu>
-          </vime-settings>
-        </vime-default-ui>
-      </vime-player>
+            </vm-submenu>
+          </vm-settings>
+        </vm-default-ui>
+      </vm-player>
     );
   }
 }
@@ -512,37 +512,37 @@ class Player {
 <TabItem value="angular">
 
 ```html {5-29} title="player.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
 
-  <vime-default-ui no-settings>
-    <vime-settings>
-      <vime-menu-item 
+  <vm-default-ui no-settings>
+    <vm-settings>
+      <vm-menu-item 
         label="Menu Item 1" 
         badge="BADGE" 
         (click)="onMenuItem1Click"
-      ></vime-menu-item>
+      ></vm-menu-item>
       
-      <vime-menu-item 
+      <vm-menu-item 
         label="Menu Item 2" 
         hint="Hint" 
         (click)="onMenuItem2Click"
-      ></vime-menu-item>
+      ></vm-menu-item>
       
-      <vime-submenu label="Submenu 1" [hint]="value">
-        <vime-menu-radio-group [value]="value" (vCheck)="onCheck">
-          <vime-menu-radio label="Option 1" value="1"></vime-menu-radio>
-          <vime-menu-radio label="Option 2" value="2"></vime-menu-radio>
-          <vime-menu-radio label="Option 3" value="3"></vime-menu-radio>
-        </vime-menu-radio-group>
-      </vime-submenu>
+      <vm-submenu label="Submenu 1" [hint]="value">
+        <vm-menu-radio-group [value]="value" (vCheck)="onCheck">
+          <vm-menu-radio label="Option 1" value="1"></vm-menu-radio>
+          <vm-menu-radio label="Option 2" value="2"></vm-menu-radio>
+          <vm-menu-radio label="Option 3" value="3"></vm-menu-radio>
+        </vm-menu-radio-group>
+      </vm-submenu>
       
-      <vime-submenu label="Submenu 2">
+      <vm-submenu label="Submenu 2">
         Random content in here.
-      </vime-submenu>
-    </vime-settings>
-  </vime-default-ui>
-</vime-player>
+      </vm-submenu>
+    </vm-settings>
+  </vm-default-ui>
+</vm-player>
 ```
 
 ```ts title="player.ts"
@@ -558,7 +558,7 @@ class Player {
   }
 
   onCheck(event: Event) {
-    const radio = event.target as HTMLVimeMenuRadioElement;
+    const radio = event.target as HTMLVmMenuRadioElement;
     this.value = radio.value;
   }
 }

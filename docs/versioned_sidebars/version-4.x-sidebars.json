@@ -1,0 +1,311 @@
+{
+  "version-4.x/docs": [
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Welcome",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-4.x/welcome/introduction"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/welcome/design-principles"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/welcome/contributing"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Getting Started",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-4.x/getting-started/installation"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/getting-started/player"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/getting-started/providers"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/getting-started/ui"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/getting-started/controls"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/getting-started/settings"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/getting-started/styling"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x/getting-started/i18n"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Components",
+      "items": [
+        {
+          "collapsed": true,
+          "type": "category",
+          "label": "Core",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-4.x/components/core/embed"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/core/player"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/core/playground"
+            }
+          ]
+        },
+        {
+          "collapsed": true,
+          "type": "category",
+          "label": "Providers",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-4.x/components/providers/audio"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/providers/dailymotion"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/providers/dash"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/providers/faketube"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/providers/file"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/providers/hls"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/providers/video"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/providers/vimeo"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/providers/youtube"
+            }
+          ]
+        },
+        {
+          "collapsed": true,
+          "type": "category",
+          "label": "UI",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/captions"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/click-to-play"
+            },
+            {
+              "collapsed": true,
+              "type": "category",
+              "label": "Controls",
+              "items": [
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/caption-control"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/control-group"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/control-spacer"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/control"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/controls"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/default-controls"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/fullscreen-control"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/mute-control"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/pip-control"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/playback-control"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/scrubber-control"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/settings-control"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/controls/volume-control"
+                }
+              ]
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/dbl-click-fullscreen"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/default-ui"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/icon"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/icons"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/live-indicator"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/poster"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/scrim"
+            },
+            {
+              "collapsed": true,
+              "type": "category",
+              "label": "Settings",
+              "items": [
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/settings/default-settings"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/settings/menu-item"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/settings/menu-radio-group"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/settings/menu-radio"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/settings/menu"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/settings/settings"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/settings/submenu"
+                }
+              ]
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/skeleton"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/slider"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/spinner"
+            },
+            {
+              "collapsed": true,
+              "type": "category",
+              "label": "Time",
+              "items": [
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/time/current-time"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/time/end-time"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/time/time-progress"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-4.x/components/ui/time/time"
+                }
+              ]
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/tooltip"
+            },
+            {
+              "type": "doc",
+              "id": "version-4.x/components/ui/ui"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 ```html title="example.html"
-<vime-embed
+<vm-embed
   embed-src="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
   media-title="Agent 327: Operation Barbershop"
   origin="https://www.youtube-nocookie.com"
   [params]="params"
-  (vEmbedMessage)="onMessage($event)"
+  (vmEmbedMessage)="onMessage($event)"
 />
 ```
 

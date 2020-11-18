@@ -3,7 +3,7 @@
   * @prop --vm-time-font-size: The size of the font displaying the time.
   * @prop --vm-time-font-weight: The weight of the font displaying the time.
   */
-vime-time {
+.time {
   display: flex;
   align-items: center;
   color: var(--vm-time-color);

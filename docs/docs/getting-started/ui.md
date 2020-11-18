@@ -28,8 +28,8 @@ of the box...
 
 ```html {19-21} title="player.html"
 <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
-<vime-player>
-  <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
+<vm-player>
+  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
     <source 
       data-src="https://media.vimejs.com/720p.mp4" 
       type="video/mp4" 
@@ -41,14 +41,14 @@ of the box...
       srclang="en" 
       label="English" 
     />
-  </vime-video> 
+  </vm-video> 
 
-  <!-- We've replaced the `<vime-ui>` element. -->
+  <!-- We've replaced the `<vm-ui>` element. -->
   <!-- We can also turn off any features we don't want via properties. -->
-  <vime-default-ui no-click-to-play>
+  <vm-default-ui no-click-to-play>
     <!-- We can place our own UI components here to extend the default UI. -->
-  </vime-default-ui>
-</vime-player>
+  </vm-default-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -57,13 +57,13 @@ of the box...
 
 ```tsx {24-26} title="Player.tsx"
 import React from 'react';
-import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/react';
+import { Player, Video, DefaultUi } from '@vime/react';
 
 function Player() {
   return (
     {/* Notice we turned off controls? We're supplying our own, so we hide the native ones. */}
-    <VimePlayer>
-      <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+    <Player>
+      <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
         <source 
           data-src="https://media.vimejs.com/720p.mp4" 
           type="video/mp4" 
@@ -75,14 +75,14 @@ function Player() {
           srcLang="en" 
           label="English" 
         />
-      </VimeVideo> 
+      </Video> 
 
-      {/* We've replaced the `<VimeUi />` component. */}
+      {/* We've replaced the `<Ui />` component. */}
       {/* We can turn off any features we don't want via properties. */}
-      <VimeDefaultUi noClickToPlay>
+      <DefaultUi noClickToPlay>
         {/* We can place our own UI components here to extend the default UI. */}
-      </VimeDefaultUi>
-    </VimePlayer>
+      </DefaultUi>
+    </Player>
   );
 }
 ```
@@ -94,8 +94,8 @@ function Player() {
 ```html {20-22} title="Player.vue"
 <template>
   <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
-  <VimePlayer>
-    <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+  <Player>
+    <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
       <source 
         data-src="https://media.vimejs.com/720p.mp4" 
         type="video/mp4" 
@@ -107,24 +107,24 @@ function Player() {
         srclang="en" 
         label="English" 
       />
-    </VimeVideo> 
+    </Video> 
 
-    <!-- We've replaced the `<VimeUi />` component. -->
+    <!-- We've replaced the `<Ui />` component. -->
     <!-- We can turn off any features we don't want via properties. -->
-    <VimeDefaultUi noClickToPlay>
+    <DefaultUi noClickToPlay>
       <!-- We can place our own UI components here to extend the default UI. -->
-    </VimeDefaultUi>
-  </VimePlayer>
+    </DefaultUi>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/vue';
+  import { Player, Video, DefaultUi } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeVideo,
-      VimeDefaultUi,
+      Player,
+      Video,
+      DefaultUi,
     },
   };
 </script>
@@ -136,8 +136,8 @@ function Player() {
 
 ```html {19-21} title="Player.svelte"
 <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
-<VimePlayer>
-  <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+<Player>
+  <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
     <source 
       data-src="https://media.vimejs.com/720p.mp4" 
       type="video/mp4" 
@@ -149,17 +149,17 @@ function Player() {
       srclang="en" 
       label="English" 
     />
-  </VimeVideo> 
+  </Video> 
 
-  <!-- We've replaced the `<VimeUi />` component. -->
+  <!-- We've replaced the `<Ui />` component. -->
   <!-- We can turn off any features we don't want via properties. -->
-  <VimeDefaultUi noClickToPlay>
+  <DefaultUi noClickToPlay>
     <!-- We can place our own UI components here to extend the default UI. -->
-  </VimeDefaultUi>
-</VimePlayer>
+  </DefaultUi>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/svelte';
+  import { Player, Video, DefaultUi } from '@vime/svelte';
 </script>
 ```
 
@@ -174,8 +174,8 @@ class Player {
   render() {
     return (
       {/* Notice we turned off controls? We're supplying our own, so we hide the native ones. */}
-      <vime-player>
-        <vime-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+      <vm-player>
+        <vm-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
           <source 
             data-src="https://media.vimejs.com/720p.mp4" 
             type="video/mp4" 
@@ -187,14 +187,14 @@ class Player {
             srclang="en" 
             label="English" 
           />
-        </vime-video>
+        </vm-video>
 
-        {/* We've replaced the `<vime-ui>` component. */}
+        {/* We've replaced the `<vm-ui>` component. */}
         {/* We can turn off any features we don't want via properties. */}
-        <vime-default-ui noClickToPlay>
+        <vm-default-ui noClickToPlay>
           {/* We can place our own UI components here to extend the default UI. */}
-        </vime-default-ui>
-      </vime-player>
+        </vm-default-ui>
+      </vm-player>
     );
   }
 }
@@ -206,8 +206,8 @@ class Player {
 
 ```html {19-21} title="player.html"
 <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
-<vime-player>
-  <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
+<vm-player>
+  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
     <source 
       data-src="https://media.vimejs.com/720p.mp4" 
       type="video/mp4" 
@@ -219,14 +219,14 @@ class Player {
       srclang="en" 
       label="English" 
     />
-  </vime-video> 
+  </vm-video> 
 
-  <!-- We've replaced the `<vime-ui>` element. -->
+  <!-- We've replaced the `<vm-ui>` element. -->
   <!-- We can also turn off any features we don't want via properties. -->
-  <vime-default-ui no-click-to-play>
+  <vm-default-ui no-click-to-play>
     <!-- We can place our own UI components here to extend the default UI. -->
-  </vime-default-ui>
-</vime-player>
+  </vm-default-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -247,7 +247,7 @@ import BasicPlayer from '../../src/components/players/LoadableBasicPlayer'
 Remember to load the default player theme or you might see something you regret 😱
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/default.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@^5/themes/default.css" />
 ```
 :::
 
@@ -288,8 +288,8 @@ Here's some links for you to learn about web components:
 :::
 
 ```html {16-22} title="player.html"
-<vime-player>
-  <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
+<vm-player>
+  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
     <source 
       data-src="https://media.vimejs.com/720p.mp4" 
       type="video/mp4" 
@@ -301,16 +301,16 @@ Here's some links for you to learn about web components:
       srclang="en" 
       label="English" 
     />
-  </vime-video> 
+  </vm-video> 
 
-  <vime-ui>
+  <vm-ui>
     <!-- Vime components. -->
-    <vime-click-to-play></vime-click-to-play>
-    <vime-spinner></vime-spinner>
+    <vm-click-to-play></vm-click-to-play>
+    <vm-spinner></vm-spinner>
     <!-- Custom web component. -->
     <tap-sides-to-seek></tap-sides-to-seek>
-  </vime-ui>
-</vime-player>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -324,18 +324,18 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 ```tsx {28-34} title="Player.tsx"
 import React from 'react';
 import { 
-  VimePlayer, 
-  VimeVideo, 
-  VimeUi, 
-  VimeClickToPlay,
-  VimeSpinner,
+  Player, 
+  Video, 
+  Ui, 
+  ClickToPlay,
+  Spinner,
 } from '@vime/react';
 import TapSidesToSeek from './TapSidesToSeek';
 
 function Player() {
   return (
-    <VimePlayer>
-      <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+    <Player>
+      <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
         <source 
           data-src="https://media.vimejs.com/720p.mp4" 
           type="video/mp4" 
@@ -347,16 +347,16 @@ function Player() {
           srcLang="en" 
           label="English" 
         />
-      </VimeVideo> 
+      </Video> 
 
-      <VimeUi>
+      <Ui>
         {/* Vime components. */}
-        <VimeClickToPlay />
-        <VimeSpinner />
+        <ClickToPlay />
+        <Spinner />
         {/* Custom component. */}
         <TapSidesToSeek />
-      </VimeUi>
-    </VimePlayer>
+      </Ui>
+    </Player>
   );
 }
 ```
@@ -372,8 +372,8 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 ```html {18-24} title="Player.vue"
 <template>
   <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
-  <VimePlayer>
-    <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+  <Player>
+    <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
       <source 
         data-src="https://media.vimejs.com/720p.mp4" 
         type="video/mp4" 
@@ -385,35 +385,35 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
         srclang="en" 
         label="English" 
       />
-    </VimeVideo> 
+    </Video> 
 
-    <VimeUi>
+    <Ui>
       <!-- Vime components. -->
-      <VimeClickToPlay />
-      <VimeSpinner />
+      <ClickToPlay />
+      <Spinner />
       <!-- Custom component. -->
       <TapSidesToSeek />
-    </VimeUi>
-  </VimePlayer>
+    </Ui>
+  </Player>
 </template>
 
 <script>
   import { 
-    VimePlayer, 
-    VimeVideo, 
-    VimeUi, 
-    VimeClickToPlay,
-    VimeSpinner,
+    Player, 
+    Video, 
+    Ui, 
+    ClickToPlay,
+    Spinner,
   } from '@vime/vue';
   import TapSidesToSeek from './TapSidesToSeek.vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeVideo,
-      VimeUi,
-      VimeClickToPlay,
-      VimeSpinner,
+      Player,
+      Video,
+      Ui,
+      ClickToPlay,
+      Spinner,
       TapSidesToSeek,
     },
   };
@@ -429,8 +429,8 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 :::
 
 ```html {16-22} title="Player.svelte"
-<VimePlayer>
-  <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+<Player>
+  <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
     <source 
       data-src="https://media.vimejs.com/720p.mp4" 
       type="video/mp4" 
@@ -442,24 +442,24 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
       srclang="en" 
       label="English" 
     />
-  </VimeVideo> 
+  </Video> 
 
-  <VimeUi>
+  <Ui>
     <!-- Vime components. -->
-    <VimeClickToPlay />
-    <VimeSpinner />
+    <ClickToPlay />
+    <Spinner />
     <!-- Custom component. -->
     <TapSidesToSeek />
-  </VimeUi>
-</VimePlayer>
+  </Ui>
+</Player>
 
 <script lang="ts">
   import { 
-    VimePlayer, 
-    VimeVideo, 
-    VimeUi, 
-    VimeClickToPlay, 
-    VimeSpinner, 
+    Player, 
+    Video, 
+    Ui, 
+    ClickToPlay, 
+    Spinner, 
   } from '@vime/svelte';
   import TapSidesToSeek from './TapSidesToSeek.svelte';
 </script>
@@ -479,8 +479,8 @@ class Player {
 
   render() {
     return (
-      <vime-player>
-        <vime-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+      <vm-player>
+        <vm-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
           <source 
             data-src="https://media.vimejs.com/720p.mp4" 
             type="video/mp4" 
@@ -492,16 +492,16 @@ class Player {
             srclang="en" 
             label="English" 
           />
-        </vime-video>
+        </vm-video>
 
-        <vime-ui>
+        <vm-ui>
           {/* Vime components. */}
-          <vime-click-to-play />
-          <vime-spinner />
+          <vm-click-to-play />
+          <vm-spinner />
           {/* Custom component. */}
           <tap-sides-to-seek />
-        </vime-ui>
-      </vime-player>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -516,8 +516,8 @@ You can view the custom `<tap-sides-to-seek>` component [here](https://github.co
 :::
 
 ```html {16-22} title="player.html"
-<vime-player>
-  <vime-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
+<vm-player>
+  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
     <source 
       data-src="https://media.vimejs.com/720p.mp4" 
       type="video/mp4" 
@@ -529,16 +529,16 @@ You can view the custom `<tap-sides-to-seek>` component [here](https://github.co
       srclang="en" 
       label="English" 
     />
-  </vime-video> 
+  </vm-video> 
 
-  <vime-ui>
+  <vm-ui>
     <!-- Vime components. -->
-    <vime-click-to-play></vime-click-to-play>
-    <vime-spinner></vime-spinner>
+    <vm-click-to-play></vm-click-to-play>
+    <vm-spinner></vm-spinner>
     <!-- Custom component. -->
     <tap-sides-to-seek></tap-sides-to-seek>
-  </vime--ui>
-</vime-player>
+  </vm-ui>
+</vm-player>
 ```
 
 </TabItem>

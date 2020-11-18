@@ -1,29 +1,25 @@
 {
-  "extends": "../../tsconfig.json",
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": true,
-    "flatModuleOutFile": "core.js",
-    "flatModuleId": "@vime/angular",
-    "skipTemplateCodegen": true,
-    "fullTemplateTypeCheck": false,
-    "enableResourceInlining": true,
-    "enableIvy": false,
-  },
+  "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "dist",
-    "pretty": true,
-    "removeComments": false,
-    "importHelpers": true,
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-    "baseUrl": ".",
-    "module": "es6",
-    "target": "es6",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "es2020",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "paths": {
-      "@vime/core": ["../core"],
+      "@vime/angular": [
+        "dist/vime/angular/vime-angular",
+        "dist/vime/angular"
+      ]
     }
-  },
-  "exclude": ["node_modules"],
-  "files": ["src/index.ts"]
+  }
 }

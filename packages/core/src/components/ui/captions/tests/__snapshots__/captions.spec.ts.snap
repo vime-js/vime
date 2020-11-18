@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should be structurally sound 1`] = `
-<vime-captions style="transform: translateY(-24px);">
-  <span></span>
-</vime-captions>
-`;

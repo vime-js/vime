@@ -1,10 +1,7 @@
 ---
-title: vime-click-to-play
+title: vm-click-to-play
 sidebar_label: ClickToPlay
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 Enables toggling playback by clicking the player.
 
@@ -12,102 +9,105 @@ Enables toggling playback by clicking the player.
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-click-to-play></vime-click-to-play>
-  </vime-ui>
-</vime-player>
+    <vm-click-to-play></vm-click-to-play>
+  </vm-ui>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeClickToPlay } from '@vime/react';
+import { Player, Ui, ClickToPlay } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeClickToPlay />
-      </VimeUi>
-    </VimePlayer>
+        <ClickToPlay />
+      </Ui>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeClickToPlay />
-    </VimeUi>
-  </VimePlayer>
+      <ClickToPlay />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeClickToPlay } from '@vime/vue';
+  import { Player, Ui, ClickToPlay } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeClickToPlay,
+      Player,
+      Ui,
+      ClickToPlay,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeClickToPlay />
-  </VimeUi>
-</VimePlayer>
+    <ClickToPlay />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeClickToPlay } from '@vime/svelte';
+  import { Player, Ui, ClickToPlay } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -115,13 +115,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-click-to-play />
-        </vime-ui>
-      </vime-player>
+          <vm-click-to-play />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -129,29 +129,29 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-click-to-play></vime-click-to-play>
-  </vime-ui>
-</vime-player>
+    <vm-click-to-play></vm-click-to-play>
+  </vm-ui>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property      | Attribute       | Description                                                                                            | Type      | Default |
-| ------------- | --------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------- |
-| `useOnMobile` | `use-on-mobile` | By default this is disabled on mobile to not interfere with playback, set this to `true` to enable it. | `boolean` | `false` |
+| Property      | Description                                                                                            | Type      | Default |
+| ------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------- |
+| `useOnMobile` | By default this is disabled on mobile to not interfere with playback, set this to `true` to enable it. | `boolean` | `false` |
+
 
 ## CSS Custom Properties
 
@@ -159,20 +159,11 @@ class Example {
 | ---------------------------- | ------------------------------------------------------ |
 | `--vm-click-to-play-z-index` | The position in the UI z-axis stack inside the player. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-ui](default-ui.md)
+ - [vm-default-ui](./default-ui)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-default-ui --> vime-click-to-play
-  style vime-click-to-play fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

@@ -2,14 +2,14 @@
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-dash
+      <vm-player controls>
+        <vm-dash
           src="/media/manifest.mpd"
           version="latest"
           poster="/media/poster.png"
         />
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }

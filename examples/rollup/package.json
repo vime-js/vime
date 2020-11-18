@@ -8,7 +8,7 @@
     "start": "sirv public"
   },
   "dependencies": {
-    "@vime/core": "^4.2.0"
+    "@vime/core": "^5.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^10.0.0",

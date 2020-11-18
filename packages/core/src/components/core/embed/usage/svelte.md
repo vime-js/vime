@@ -1,16 +1,16 @@
 ```tsx
-<VimeEmbed
+<Embed
   embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
   origin="https://www.youtube-nocookie.com"
   mediaTitle="Agent 327: Operation Barbershop"
   params={params}
-  on:vEmbedMessage={onMessage}
+  on:vmEmbedMessage={onMessage}
 />
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimeEmbed } from '@vime/svelte';
+  import { Embed } from '@vime/svelte';
 
   const params = {
     autoplay: 1,

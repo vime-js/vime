@@ -1,8 +1,8 @@
 ```html {3-5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-  </vime-ui>
-</vime-player>
+  </vm-ui>
+</vm-player>
 ```

@@ -1,23 +1,23 @@
 ```html {3-8,14,19} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeDash
+  <Player controls>
+    <Dash
       src="/media/manifest.mpd"
       :config="dashConfig"
       version="latest"
       poster="/media/poster.png"
     />
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeDash } from '@vime/vue';
+  import { Player, Dash } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeDash,
+      Player,
+      Dash,
     },
 
     data: {

@@ -1,10 +1,13 @@
 import { EventEmitter } from '@stencil/core';
 import { PlayerProp, PlayerProps } from './PlayerProps';
 
+export const LOAD_START_EVENT = 'vmLoadStart';
+
 // Events that toggle state and the prop is named `is{PropName}...`.
 const isToggleStateEvent = new Set<PlayerProp>([
   'isFullscreenActive',
   'isControlsActive',
+  'isTextTrackVisible',
   'isPiPActive',
   'isLive',
   'isTouch',
@@ -23,226 +26,249 @@ const hasShortenedEventName = new Set<PlayerProp>([
 ]);
 
 export const getEventName = (prop: PlayerProp): keyof PlayerEvents => {
-  // Example: isFullscreenActive -> vFullscreenChange
+  // Example: isFullscreenActive -> vmFullscreenChange
   if (isToggleStateEvent.has(prop)) {
-    return `v${prop.replace('is', '').replace('Active', '')}Change` as any;
+    return `vm${prop.replace('is', '').replace('Active', '')}Change` as any;
   }
 
-  // Example: playbackStarted -> vPlaybackStarted
+  // Example: playbackStarted -> vmPlaybackStarted
   if (hasShortenedEventName.has(prop)) {
-    return `v${prop.charAt(0).toUpperCase()}${prop.slice(1)}` as any;
+    return `vm${prop.charAt(0).toUpperCase()}${prop.slice(1)}` as any;
   }
 
-  // Example: currentTime -> vCurrentTimeChange
-  return `v${prop.charAt(0).toUpperCase()}${prop.slice(1)}Change` as any;
+  // Example: currentTime -> vmCurrentTimeChange
+  return `vm${prop.charAt(0).toUpperCase()}${prop.slice(1)}Change` as any;
 };
+
+export function firePlayerEvent<P extends keyof PlayerProps>(
+  el: HTMLElement,
+  prop: P,
+  newValue: PlayerProps[P],
+  oldValue: PlayerProps[P],
+) {
+  const events: CustomEvent[] = [];
+  events.push(new CustomEvent(getEventName(prop), { detail: newValue }));
+  if ((prop === 'paused') && !newValue) events.push(new CustomEvent('vmPlay'));
+  if ((prop === 'seeking') && oldValue && !newValue) events.push(new CustomEvent('vmSeeked'));
+  events.forEach((event) => { el.dispatchEvent(event); });
+}
 
 export type PlayerEvent = keyof PlayerEvents;
 
 export interface PlayerEvents {
   /**
-   * Emitted when the player is attached/deattached from the DOM.
-   */
-  vAttachedChange: EventEmitter<void>;
-
-  /**
    * Emitted when the `theme` prop changes value.
    */
-  vThemeChange: EventEmitter<PlayerProps['theme']>;
+  vmThemeChange: EventEmitter<PlayerProps['theme']>;
 
   /**
    * Emitted when the `paused` prop changes value.
    */
-  vPausedChange: EventEmitter<PlayerProps['paused']>
+  vmPausedChange: EventEmitter<PlayerProps['paused']>
 
   /**
    * Emitted when the media is transitioning from `paused` to `playing`. Event flow: `paused` ->
    * `play` -> `playing`. The media starts `playing` once enough content has buffered to
    * begin/resume playback.
    */
-  vPlay: EventEmitter<void>
+  vmPlay: EventEmitter<void>
 
   /**
    * Emitted when the `playing` prop changes value.
    */
-  vPlayingChange: EventEmitter<PlayerProps['playing']>
+  vmPlayingChange: EventEmitter<PlayerProps['playing']>
 
   /**
    * Emitted when the `seeking` prop changes value.
    */
-  vSeekingChange: EventEmitter<PlayerProps['seeking']>
+  vmSeekingChange: EventEmitter<PlayerProps['seeking']>
 
   /**
    * Emitted directly after the player has successfully transitioned/seeked to a new time position.
    * Event flow: `seeking` -> `seeked`.
    */
-  vSeeked: EventEmitter<void>
+  vmSeeked: EventEmitter<void>
 
   /**
    * Emitted when the `buffering` prop changes value.
    */
-  vBufferingChange: EventEmitter<PlayerProps['buffering']>
+  vmBufferingChange: EventEmitter<PlayerProps['buffering']>
 
   /**
    * Emitted when the `duration` prop changes value.
    */
-  vDurationChange: EventEmitter<PlayerProps['duration']>
+  vmDurationChange: EventEmitter<PlayerProps['duration']>
 
   /**
    * Emitted when the `currentTime` prop changes value.
    */
-  vCurrentTimeChange: EventEmitter<PlayerProps['currentTime']>
+  vmCurrentTimeChange: EventEmitter<PlayerProps['currentTime']>
 
   /**
    * Emitted when the player has loaded and is ready to be interacted with.
    */
-  vReady: EventEmitter<void>;
+  vmReady: EventEmitter<void>;
+
+  /**
+   * Emitted when an any error has occurred within the player.
+   */
+  vmError: EventEmitter<any>
 
   /**
    * Emitted when the media is ready to begin playback. The following props are guaranteed to be
    * defined when this fires: `mediaTitle`, `currentSrc`, `currentPoster`, `duration`, `mediaType`,
    * `viewType`.
    */
-  vPlaybackReady: EventEmitter<void>;
+  vmPlaybackReady: EventEmitter<void>;
 
   /**
    * Emitted when the media initiates playback.
    */
-  vPlaybackStarted: EventEmitter<void>
+  vmPlaybackStarted: EventEmitter<void>
 
   /**
    * Emitted when playback reaches the end of the media.
    */
-  vPlaybackEnded: EventEmitter<void>
+  vmPlaybackEnded: EventEmitter<void>
 
   /**
    * Emitted when the `buffered` prop changes value.
    */
-  vBufferedChange: EventEmitter<PlayerProps['buffered']>
+  vmBufferedChange: EventEmitter<PlayerProps['buffered']>
 
   /**
    * Emitted when the `currentProvider` prop changes value.
    */
-  vCurrentProviderChange: EventEmitter<PlayerProps['currentProvider']>
+  vmCurrentProviderChange: EventEmitter<PlayerProps['currentProvider']>
 
   /**
    * Emitted when the `currentSrc` prop changes value.
    */
-  vCurrentSrcChange: EventEmitter<PlayerProps['currentSrc']>
+  vmCurrentSrcChange: EventEmitter<PlayerProps['currentSrc']>
 
   /**
    * Emitted when the `currentPoster` prop changes value.
    */
-  vCurrentPosterChange: EventEmitter<PlayerProps['currentPoster']>
+  vmCurrentPosterChange: EventEmitter<PlayerProps['currentPoster']>
 
   /**
    * Emitted when the `mediaTitle` prop changes value.
    */
-  vMediaTitleChange: EventEmitter<PlayerProps['mediaTitle']>
-
-  /**
-   * Emitted when the `errors` prop changes value.
-   */
-  vErrorsChange: EventEmitter<PlayerProps['errors']>
-
-  /**
-   * Emitted when the `textTracks` prop changes value.
-   */
-  vTextTracksChange: EventEmitter<PlayerProps['textTracks']>
+  vmMediaTitleChange: EventEmitter<PlayerProps['mediaTitle']>
 
   /**
    * Emitted when the provider starts loading a media resource.
    */
-  vLoadStart: EventEmitter<void>
+  vmLoadStart: EventEmitter<void>
 
   /**
    * Emitted when the `playbackRate` prop changes value.
    */
-  vPlaybackRateChange: EventEmitter<PlayerProps['playbackRate']>
+  vmPlaybackRateChange: EventEmitter<PlayerProps['playbackRate']>
 
   /**
    * Emitted when the `playbackRates` prop changes value.
    */
-  vPlaybackRatesChange: EventEmitter<PlayerProps['playbackRates']>
+  vmPlaybackRatesChange: EventEmitter<PlayerProps['playbackRates']>
 
   /**
    *
    * Emitted when the `playbackQuality` prop changes value.
    */
-  vPlaybackQualityChange: EventEmitter<PlayerProps['playbackQuality']>
+  vmPlaybackQualityChange: EventEmitter<PlayerProps['playbackQuality']>
 
   /**
    * Emitted when the `playbackQualities` prop changes value.
    */
-  vPlaybackQualitiesChange: EventEmitter<PlayerProps['playbackQualities']>
+  vmPlaybackQualitiesChange: EventEmitter<PlayerProps['playbackQualities']>
 
   /**
    * Emitted when the `muted` prop changes value.
    */
-  vMutedChange: EventEmitter<PlayerProps['muted']>
+  vmMutedChange: EventEmitter<PlayerProps['muted']>
 
   /**
    * Emitted when the `volume` prop changes value.
    */
-  vVolumeChange: EventEmitter<PlayerProps['volume']>
+  vmVolumeChange: EventEmitter<PlayerProps['volume']>
 
   /**
    * Emitted when the `mediaType` prop changes value.
    */
-  vMediaTypeChange: EventEmitter<PlayerProps['mediaType']>
+  vmMediaTypeChange: EventEmitter<PlayerProps['mediaType']>
 
   /**
    * Emitted when the `viewType` prop changes value.
    */
-  vViewTypeChange: EventEmitter<PlayerProps['viewType']>
+  vmViewTypeChange: EventEmitter<PlayerProps['viewType']>
 
   /**
    * Emitted when the `isControlsActive` prop changes value.
    */
-  vControlsChange: EventEmitter<PlayerProps['isControlsActive']>
-
-  /**
-   * Emitted when the `currentCaption` prop changes value.
-   */
-  vCurrentCaptionChange: EventEmitter<PlayerProps['currentCaption']>
+  vmControlsChange: EventEmitter<PlayerProps['isControlsActive']>
 
   /**
    * Emitted when the `isLive` prop changes value.
    */
-  vLiveChange: EventEmitter<PlayerProps['isLive']>
+  vmLiveChange: EventEmitter<PlayerProps['isLive']>
 
   /**
    * Emitted when the `isTouch` prop changes value.
    */
-  vTouchChange: EventEmitter<PlayerProps['isTouch']>
+  vmTouchChange: EventEmitter<PlayerProps['isTouch']>
 
   /**
    * Emitted when the `language` prop changes value.
    */
-  vLanguageChange: EventEmitter<PlayerProps['language']>
+  vmLanguageChange: EventEmitter<PlayerProps['language']>
 
   /**
    * Emitted when the `languages` prop changes value.
    */
-  vLanguagesChange: EventEmitter<PlayerProps['languages']>
+  vmLanguagesChange: EventEmitter<PlayerProps['languages']>
 
   /**
    * Emitted when the `i18n` prop changes value.
    */
-  vI18nChange: EventEmitter<PlayerProps['i18n']>
+  vmI18nChange: EventEmitter<PlayerProps['i18n']>
 
   /**
    * Emitted when the `translations` prop changes value.
    */
-  vTranslationsChange: EventEmitter<PlayerProps['translations']>
+  vmTranslationsChange: EventEmitter<PlayerProps['translations']>
 
   /**
    * Emitted when the `isFullscreenActive` prop changes value.
    */
-  vFullscreenChange: EventEmitter<PlayerProps['isFullscreenActive']>
+  vmFullscreenChange: EventEmitter<PlayerProps['isFullscreenActive']>
 
   /**
    * Emitted when the `isPiPActive` prop changes value.
    */
-  vPiPChange: EventEmitter<PlayerProps['isPiPActive']>
+  vmPiPChange: EventEmitter<PlayerProps['isPiPActive']>
+
+  /**
+   * Emitted when the `textTracks` prop changes value.
+   */
+  vmTextTracksChange: EventEmitter<PlayerProps['textTracks']>;
+
+  /**
+   * Emitted when the `currentTextTrack` prop changes value.
+   */
+  vmCurrentTextTrackChange: EventEmitter<PlayerProps['currentTextTrack']>;
+
+  /**
+   * Emitted when the `isTextTrackVisible` prop changes value.
+   */
+  vmTextTrackVisibleChange: EventEmitter<PlayerProps['isTextTrackVisible']>;
+
+  /**
+   * Emitted when the `audioTracks` prop changes value.
+   */
+  vmAudioTracksChange: EventEmitter<PlayerProps['audioTracks']>;
+
+  /**
+   * Emitted when the `currentAudioTrack` prop changes value.
+   */
+  vmCurrentAudioTrackChange: EventEmitter<PlayerProps['currentAudioTrack']>;
 }

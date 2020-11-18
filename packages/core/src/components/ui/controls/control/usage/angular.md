@@ -1,24 +1,24 @@
 ```html title="playback-control.html"
-<vime-control
+<vm-control
   keys="k"
   [label]="i18n.playback"
   [pressed]="paused"
   (click)="onClick()"
 >
-  <vime-icon [href]="icon"></vime-icon>
-  <vime-tooltip>{{tooltip}} (k)</vime-tooltip>
-</vime-control>
+  <vm-icon [name]="icon"></vm-icon>
+  <vm-tooltip>{{tooltip}} (k)</vm-tooltip>
+</vm-control>
 ```
 
 ```ts title="playback-control.ts"
 import { Component, ElementRef } from '@angular/core';
-import { VimeComponent } from '@vime/angular';
+import { Component } from '@vime/angular';
 
 @Component({
   selector: 'playback-control',
   templateUrl: './playback-control.html',
 })
-class PlaybackControl extends VimeComponent {
+class PlaybackControl extends Component {
   paused = true;
 
   i18n = {};
@@ -28,7 +28,7 @@ class PlaybackControl extends VimeComponent {
   }
 
   get icon() {
-    return this.paused ? '#vime-play' : '#vime-pause';
+    return this.paused ? 'play' : 'pause';
   }
 
   get tooltip() {

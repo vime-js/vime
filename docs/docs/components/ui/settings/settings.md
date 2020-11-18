@@ -1,10 +1,7 @@
 ---
-title: vime-settings
+title: vm-settings
 sidebar_label: Settings
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 A container for a collection of submenus and options for the player. On desktop, the settings is
 displayed as a small popup menu (scroll appears if `height >= maxHeight`) on the bottom right-hand
@@ -22,108 +19,111 @@ the settings is displayed as a [bottom sheet](https://material.io/components/she
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {5-7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
+    <vm-settings>
       <!-- ... -->
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeSettings } from '@vime/react';
+import { Player, Ui, Settings } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeSettings>{/* ... */}</VimeSettings>
-      </VimeUi>
-    </VimePlayer>
+        <Settings>{/* ... */}</Settings>
+      </Ui>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {6-8,14,20} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeSettings>
+      <Settings>
         <!-- ... -->
-      </VimeSettings>
-    </VimeUi>
-  </VimePlayer>
+      </Settings>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeSettings } from '@vime/vue';
+  import { Player, Ui, Settings } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeSettings,
+      Player,
+      Ui,
+      Settings,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {5-7,12} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeSettings>
+    <Settings>
       <!-- ... -->
-    </VimeSettings>
-  </VimeUi>
-</VimePlayer>
+    </Settings>
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeSettings } from '@vime/svelte';
+  import { Player, Ui, Settings } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -131,13 +131,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-settings>{/* ... */}</vime-settings>
-        </vime-ui>
-      </vime-player>
+          <vm-settings>{/* ... */}</vm-settings>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -145,49 +145,46 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {5-7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-settings>
+    <vm-settings>
       <!-- ... -->
-    </vime-settings>
-  </vime-ui>
-</vime-player>
+    </vm-settings>
+  </vm-ui>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property         | Attribute         | Description                                                                                                                                                                                | Type                                                    | Default         |
-| ---------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- | --------------- |
-| `active`         | `active`          | Whether the settings menu is opened/closed.                                                                                                                                                | `boolean`                                               | `false`         |
-| `controlsHeight` | `controls-height` | The height of any lower control bar in pixels so that the settings can re-position itself accordingly.                                                                                     | `number`                                                | `0`             |
-| `pin`            | `pin`             | Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio` (always `bottomRight`) and on mobile devices (always bottom sheet). | `"bottomLeft" ∣ "bottomRight" ∣ "topLeft" ∣ "topRight"` | `'bottomRight'` |
+| Property | Description                                                                                                                                                                                | Type                                                    | Default         |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- | --------------- |
+| `active` | Whether the settings menu is opened/closed.                                                                                                                                                | `boolean`                                               | `false`         |
+| `pin`    | Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio` (always `bottomRight`) and on mobile devices (always bottom sheet). | `"bottomLeft" ∣ "bottomRight" ∣ "topLeft" ∣ "topRight"` | `'bottomRight'` |
+
 
 ## Methods
 
-### `setController(id: string, controller: SettingsController) => Promise<void>`
+| Method          | Description                                                             | Signature                                                        |
+| --------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `setController` | Sets the controller responsible for opening/closing this settings menu. | `setController(controller: SettingsController) => Promise<void>` |
 
-Sets the controller responsible for opening/closing this settings.
-
-#### Returns
-
-Type: `Promise<void>`
 
 ## Slots
 
 | Slot | Description                                                                     |
 | ---- | ------------------------------------------------------------------------------- |
 |      | Used to pass in the body of the settings menu, which usually contains submenus. |
+
 
 ## CSS Custom Properties
 
@@ -201,27 +198,17 @@ Type: `Promise<void>`
 | `--vm-settings-scroll-width`       | The width of the settings scrollbar.            |
 | `--vm-settings-shadow`             | The shadow cast around the settings menu frame. |
 | `--vm-settings-transition`         | The CSS transitions for the settings menu.      |
-| `--vm-settings-width`              | The width of the settings menu.                 |
+| `--vm-settings-width`              | The width of the settings menu on desktop.      |
+
 
 ## Dependencies
 
 ### Used by
 
-- [vime-default-settings](default-settings.md)
+ - [vm-default-settings](./default-settings)
 
 ### Depends on
 
-- [vime-menu](menu.md)
+- [vm-menu](./menu)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-settings --> vime-menu
-  vime-default-settings --> vime-settings
-  style vime-settings fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

@@ -72,7 +72,7 @@
   max-width: 980px;
 }
 
-.player > vime-player {
+.player > vm-player {
   z-index: 1;
 }
 

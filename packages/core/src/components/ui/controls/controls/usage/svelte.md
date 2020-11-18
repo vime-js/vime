@@ -1,17 +1,17 @@
 ```tsx {5-7}
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls fullWidth activeDuration={3200}>
+    <Controls fullWidth activeDuration={3200}>
       <!-- ... -->
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    </Controls>
+  </Ui>
+</Player>
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeControls } from '@vime/svelte';
+  import { Player, Ui, Controls } from '@vime/svelte';
 </script>
 ```

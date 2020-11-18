@@ -1,11 +1,11 @@
 ```html {5-7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-menu identifer="menu-id" controller="menu-controller-id" active>
+    <vm-menu identifer="menu-id" controller="menu-controller-id" active>
       <!-- ... -->
-    </vime-menu>
-  </vime-ui>
-</vime-player>
+    </vm-menu>
+  </vm-ui>
+</vm-player>
 ```

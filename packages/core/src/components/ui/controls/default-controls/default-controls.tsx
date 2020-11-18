@@ -1,12 +1,14 @@
 import {
-  h, Host, Component, Prop,
+  h, Component, Prop, Fragment,
 } from '@stencil/core';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 
 @Component({
-  tag: 'vime-default-controls',
+  tag: 'vm-default-controls',
   styleUrl: 'default-controls.css',
+  shadow: true,
 })
 export class DefaultControls {
   /**
@@ -32,32 +34,23 @@ export class DefaultControls {
    */
   @Prop() hideOnMouseLeave = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() theme?: PlayerProps['theme'];
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isMobile: PlayerProps['isMobile'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isLive: PlayerProps['isLive'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isAudioView: PlayerProps['isAudioView'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, [
       'theme',
       'isMobile',
@@ -69,107 +62,105 @@ export class DefaultControls {
 
   private buildAudioControls() {
     return (
-      <vime-controls fullWidth>
-        <vime-playback-control tooltipDirection="right" />
-        <vime-volume-control />
-        {!this.isLive && <vime-current-time />}
-        {this.isLive && <vime-control-spacer />}
-        {!this.isLive && <vime-scrubber-control /> }
-        {this.isLive && <vime-live-indicator />}
-        {!this.isLive && <vime-end-time />}
-        {!this.isLive && <vime-settings-control tooltipDirection="left" />}
+      <vm-controls fullWidth>
+        <vm-playback-control tooltipDirection="right" />
+        <vm-volume-control />
+        {!this.isLive && <vm-current-time />}
+        {this.isLive && <vm-control-spacer />}
+        {!this.isLive && <vm-scrubber-control /> }
+        {this.isLive && <vm-live-indicator />}
+        {!this.isLive && <vm-end-time />}
+        {!this.isLive && <vm-settings-control tooltipDirection="left" />}
         <div style={{ marginLeft: '0', paddingRight: '2px' }} />
-      </vime-controls>
+      </vm-controls>
     );
   }
 
   private buildMobileVideoControls() {
-    const lowerControls = (
-      <vime-controls
-        pin="bottomLeft"
-        fullWidth
-        activeDuration={this.activeDuration}
-        waitForPlaybackStart={this.waitForPlaybackStart}
-        hideWhenPaused={this.hideWhenPaused}
-      >
-        <vime-control-group>
-          <vime-current-time />
-          <vime-control-spacer />
-          <vime-end-time />
-          <vime-fullscreen-control />
-        </vime-control-group>
-
-        <vime-control-group space="top">
-          <vime-scrubber-control />
-        </vime-control-group>
-      </vime-controls>
-    );
-
     return (
-      <Host>
-        <vime-scrim />
+      <Fragment>
+        <vm-scrim gradient="up" />
 
-        <vime-controls
+        <vm-controls
           pin="topLeft"
           fullWidth
           activeDuration={this.activeDuration}
           waitForPlaybackStart={this.waitForPlaybackStart}
           hideWhenPaused={this.hideWhenPaused}
         >
-          <vime-control-spacer />
-          <vime-volume-control />
-          {!this.isLive && <vime-caption-control />}
-          {!this.isLive && <vime-settings-control />}
-          {this.isLive && <vime-fullscreen-control />}
-        </vime-controls>
+          <vm-control-spacer />
+          <vm-volume-control />
+          {!this.isLive && <vm-caption-control />}
+          {!this.isLive && <vm-settings-control />}
+          {this.isLive && <vm-fullscreen-control />}
+        </vm-controls>
 
-        <vime-controls
+        <vm-controls
           pin="center"
+          justify="center"
           activeDuration={this.activeDuration}
           waitForPlaybackStart={this.waitForPlaybackStart}
           hideWhenPaused={this.hideWhenPaused}
         >
-          <vime-playback-control style={{ '--vm-control-scale': '1.5' }} />
-        </vime-controls>
+          <vm-playback-control style={{ '--vm-control-scale': '1.3' }} />
+        </vm-controls>
 
-        {!this.isLive && lowerControls}
-      </Host>
+        {!this.isLive && (
+          <vm-controls
+            pin="bottomLeft"
+            fullWidth
+            activeDuration={this.activeDuration}
+            waitForPlaybackStart={this.waitForPlaybackStart}
+            hideWhenPaused={this.hideWhenPaused}
+          >
+            <vm-control-group>
+              <vm-current-time />
+              <vm-control-spacer />
+              <vm-end-time />
+              <vm-fullscreen-control />
+            </vm-control-group>
+
+            <vm-control-group space="top">
+              <vm-scrubber-control />
+            </vm-control-group>
+          </vm-controls>
+        )}
+      </Fragment>
     );
   }
 
   private buildDesktopVideoControls() {
-    const scrubberControlGroup = (
-      <vime-control-group>
-        <vime-scrubber-control />
-      </vime-control-group>
-    );
-
     return (
-      <Host>
-        {(this.theme !== 'light') && <vime-scrim gradient="up" />}
+      <Fragment>
+        {(this.theme !== 'light') && <vm-scrim gradient="up" />}
 
-        <vime-controls
+        <vm-controls
+          fullWidth
+          pin="bottomRight"
           activeDuration={this.activeDuration}
           waitForPlaybackStart={this.waitForPlaybackStart}
           hideWhenPaused={this.hideWhenPaused}
           hideOnMouseLeave={this.hideOnMouseLeave}
-          fullWidth
         >
-          {!this.isLive && scrubberControlGroup}
+          {!this.isLive && (
+            <vm-control-group>
+              <vm-scrubber-control />
+            </vm-control-group>
+          )}
 
-          <vime-control-group space={this.isLive ? 'none' : 'top'}>
-            <vime-playback-control tooltipDirection="right" />
-            <vime-volume-control />
-            {!this.isLive && <vime-time-progress />}
-            <vime-control-spacer />
-            {!this.isLive && <vime-caption-control />}
-            {this.isLive && <vime-live-indicator />}
-            <vime-pip-control />
-            {!this.isLive && <vime-settings-control />}
-            <vime-fullscreen-control tooltipDirection="left" />
-          </vime-control-group>
-        </vime-controls>
-      </Host>
+          <vm-control-group space={this.isLive ? 'none' : 'top'}>
+            <vm-playback-control tooltipDirection="right" />
+            <vm-volume-control />
+            {!this.isLive && <vm-time-progress />}
+            <vm-control-spacer />
+            {!this.isLive && <vm-caption-control />}
+            {this.isLive && <vm-live-indicator />}
+            <vm-pip-control />
+            {!this.isLive && <vm-settings-control />}
+            <vm-fullscreen-control tooltipDirection="left" />
+          </vm-control-group>
+        </vm-controls>
+      </Fragment>
     );
   }
 
@@ -177,6 +168,6 @@ export class DefaultControls {
     if (this.isAudioView) return this.buildAudioControls();
     if (this.isVideoView && this.isMobile) return this.buildMobileVideoControls();
     if (this.isVideoView) return this.buildDesktopVideoControls();
-    return undefined;
+    return null;
   }
 }

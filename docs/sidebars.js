@@ -9,7 +9,9 @@ module.exports = {
         'welcome/introduction',
         'welcome/design-principles',
         'welcome/contributing',
+        'welcome/release-notes',
       ],
+      collapsed: false,
     },
     {
       type: 'category',

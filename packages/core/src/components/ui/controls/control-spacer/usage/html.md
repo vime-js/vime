@@ -1,14 +1,14 @@
 ```html {8}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls full-width>
-      <vime-playback-control></vime-playback-control>
-      <vime-volume-control></vime-volume-control>
-      <vime-control-spacer></vime-control-spacer>
-      <vime-fullscreen-control></vime-fullscreen-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+    <vm-controls full-width>
+      <vm-playback-control></vm-playback-control>
+      <vm-volume-control></vm-volume-control>
+      <vm-control-spacer></vm-control-spacer>
+      <vm-fullscreen-control></vm-fullscreen-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```

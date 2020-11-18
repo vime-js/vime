@@ -3,7 +3,7 @@ import { OutputTargetCustom } from '@stencil/core/internal';
 import { generateAngularFiles } from './generateAngularFiles';
 import { sortComponents } from '../targetHelpers';
 
-const OUTPUT_DIR = path.resolve(__dirname, '../../../angular/src');
+const OUTPUT_DIR = path.resolve(__dirname, '../../../angular/projects/vime/angular/src');
 const PROXIES_FILE = path.resolve(OUTPUT_DIR, 'components.ts');
 const MODULE_FILE = path.resolve(OUTPUT_DIR, 'VimeModule.ts');
 

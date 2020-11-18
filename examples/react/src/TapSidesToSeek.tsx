@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { usePlayerContext } from "@vime/react";
 import './TapSidesToSeek.css';
 

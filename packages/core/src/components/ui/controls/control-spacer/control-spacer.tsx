@@ -1,13 +1,13 @@
-import { h, Host, Component } from '@stencil/core';
+import { Component } from '@stencil/core';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-control-spacer',
+  tag: 'vm-control-spacer',
   styleUrl: 'control-spacer.css',
+  shadow: true,
 })
 export class ControlSpacer {
-  render() {
-    return (
-      <Host />
-    );
+  constructor() {
+    withComponentRegistry(this);
   }
 }

@@ -1,20 +1,20 @@
 ```html {2-8,12,16} title="example.vue"
 <template>
-  <VimeSlider
+  <Slider
     label="Volume"
     :step="5"
     :max="100"
     :value="value"
-    @vValueChange="onValueChange"
+    @vmValueChange="onValueChange"
   />
 </template>
 
 <script>
-  import { VimeSlider } from '@vime/vue';
+  import { Slider } from '@vime/vue';
 
   export default {
     components: {
-      VimeSlider,
+      Slider,
     },
     data: {
       value: 50,

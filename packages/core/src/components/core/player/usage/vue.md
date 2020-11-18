@@ -1,29 +1,29 @@
 ```html {2-16,20,24-25} title="example.vue"
 <template>
-  <VimePlayer
+  <Player
     controls
     autoplay
     muted
     ref="player"
     :currentTime="currentTime"
-    @vCurrentTimeChange="onTimeUpdate"
-    @vFullscreenChange="onFullscreenChange"
+    @vmCurrentTimeChange="onTimeUpdate"
+    @vmFullscreenChange="onFullscreenChange"
   >
     <!-- Provider component is placed here. -->
 
-    <VimeUi>
+    <Ui>
       <!-- UI components are placed here. -->
-    </VimeUi>
-  </VimePlayer>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi } from '@vime/vue';
+  import { Player, Ui } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
+      Player,
+      Ui,
     },
 
     computed: {

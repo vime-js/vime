@@ -11,7 +11,7 @@ export class TapSidesToSeekComponent extends VimeComponent {
   duration = -1;
 
   /**
-   * When we extend the `VimeComponent` class a few things are happening under the hood.
+   * When we extend the `Component` class a few things are happening under the hood.
    *
    * 1. The super constructor overwrites all player properties with fresh getters/setters. Not all
    * properties contain setters (readonly), so it's best to refer to the documentation.
@@ -20,7 +20,7 @@ export class TapSidesToSeekComponent extends VimeComponent {
    * 3. The component will dispatch any updates to the player if a writable player prop is changed.
    * 4. When the component is destroyed, it will automatically unbind itself from the player.
    *
-   * IMPORTANT: The `ElementRef` is required as the `VimeComponent` class uses it to dispatch
+   * IMPORTANT: The `ElementRef` is required as the `Component` class uses it to dispatch
    * custom events to the player. Angular automatically injects this value.
    *
    * @see https://vimejs.com/components/core/player/api

@@ -1,15 +1,24 @@
 /**
-  * @prop --vm-icon-color: The color of the icon.
-  * @prop --vm-icon-scale: The amount to scale the size of the icon up or down by.
-  * @prop --vm-icon-width: The width of the icon.
-  * @prop --vm-icon-height: The height of the icon.
-  */
-vime-icon > svg {
+ * @prop --vm-icon-fill: The icon fill color.
+ * @prop --vm-icon-stroke: The icon stroke color.
+ * @prop --vm-icon-transform: Transformations applied to the icon.
+ * @prop --vm-icon-transition: Transitions applied to the icon.
+ */
+:host {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  contain: strict;
+  box-sizing: content-box !important;
+}
+
+.icon,
+svg {
   display: block;
-  color: var(--vm-icon-color);
-  width: var(--vm-icon-width, 18px);
-  height: var(--vm-icon-height, 18px);
-  transform: scale(var(--vm-icon-scale, 1));
-  fill: currentColor;
-  pointer-events: none;
+  height: 100%;
+  width: 100%;
+  transition: var(--vm-icon-transition);
+  transform: var(--vm-icon-transform);
+  fill: var(--vm-icon-fill, currentColor);
+  stroke: var(--vm-icon-stroke);
 }

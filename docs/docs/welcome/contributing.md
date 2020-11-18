@@ -22,7 +22,7 @@ a few ideas to get started:
 - Start using Vime. Go through the [Getting Started](../getting-started/installation) guides. Does
   everything work as expected? If not, we're always looking for ways to improve. Let us know by
   [opening an issue](https://github.com/vime-js/vime/issues).
-- Look through the [v2 issues](https://github.com/vime-js/vime/labels/v2). If you find an issue
+- Look through the [issues](https://github.com/vime-js/vime/issues). If you find an issue
   you would like to fix, [open a pull request](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github).
 - Help us in making the docs better. File an issue if you find anything that is confusing or can be
   improved.

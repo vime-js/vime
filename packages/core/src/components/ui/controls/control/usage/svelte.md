@@ -1,26 +1,26 @@
 ```tsx
-<VimeControl
+<Control
   keys="k"
   label={$i18n.playback}
   pressed={paused}
   on:click={onClick}
   bind:this={ref}
 >
-  <VimeIcon href={icon} />
-  <VimeTooltip>{tooltip} (k)</VimeTooltip>
-</VimeControl>
+  <Icon name={icon} />
+  <Tooltip>{tooltip} (k)</Tooltip>
+</Control>
 ```
 
 ```html {4}
 <script lang="ts">
   import {
     usePlayerStore,
-    VimeControl,
-    VimeIcon,
-    VimeTooltip,
+    Control,
+    Icon,
+    Tooltip,
   } from '@vime/svelte';
 
-  let ref: VimeControl;
+  let ref: Control;
 
   const { paused, i18n } = usePlayerStore(() => ref);
 
@@ -28,7 +28,7 @@
     $paused = !$paused;
   };
 
-  $: icon = $paused ? '#vime-play' : '#vime-pause';
+  $: icon = $paused ? 'play' : 'pause';
   $: tooltip = $paused ? $i18n.play : $i18n.pause;
 </script>
 ```

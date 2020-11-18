@@ -14,13 +14,15 @@ import {
 import { isNull, isString } from '../../../utils/unit';
 import { appendParamsToURL, Params, preconnect } from '../../../utils/network';
 import { LazyLoader } from '../player/LazyLoader';
+import { withComponentRegistry } from '../player/withComponentRegistry';
 
 let idCount = 0;
 const connected = new Set();
 
 @Component({
-  tag: 'vime-embed',
-  styleUrl: 'embed.scss',
+  tag: 'vm-embed',
+  styleUrl: 'embed.css',
+  shadow: true,
 })
 export class Embed implements ComponentInterface {
   private id!: string;
@@ -29,7 +31,7 @@ export class Embed implements ComponentInterface {
 
   private lazyLoader!: LazyLoader;
 
-  @Element() el!: HTMLVimeEmbedElement;
+  @Element() host!: HTMLVmEmbedElement;
 
   @State() srcWithParams = '';
 
@@ -63,7 +65,7 @@ export class Embed implements ComponentInterface {
       if (preconnect(this.srcWithParams)) connected.add(this.embedSrc);
     }
 
-    this.vEmbedSrcChange.emit(this.srcWithParams);
+    this.vmEmbedSrcChange.emit(this.srcWithParams);
   }
 
   /**
@@ -87,17 +89,17 @@ export class Embed implements ComponentInterface {
    * Emitted when the `embedSrc` or `params` props change. The payload contains the `params`
    * serialized into a query string and appended to `embedSrc`.
    */
-  @Event({ bubbles: false }) vEmbedSrcChange!: EventEmitter<string>;
+  @Event({ bubbles: false }) vmEmbedSrcChange!: EventEmitter<string>;
 
   /**
    * Emitted when a new message is received from the embedded player via `postMessage`.
    */
-  @Event({ bubbles: false }) vEmbedMessage!: EventEmitter<any>;
+  @Event({ bubbles: false }) vmEmbedMessage!: EventEmitter<any>;
 
   /**
    * Emitted when the embedded player and any new media has loaded.
    */
-  @Event({ bubbles: false }) vEmbedLoaded!: EventEmitter<void>;
+  @Event({ bubbles: false }) vmEmbedLoaded!: EventEmitter<void>;
 
   @Watch('preconnections')
   preconnectionsChange() {
@@ -110,8 +112,12 @@ export class Embed implements ComponentInterface {
       });
   }
 
+  constructor() {
+    withComponentRegistry(this);
+  }
+
   connectedCallback() {
-    this.lazyLoader = new LazyLoader(this.el, ['data-src'], (el) => {
+    this.lazyLoader = new LazyLoader(this.host!, ['data-src'], (el) => {
       const src = el.getAttribute('data-src');
       el.removeAttribute('src');
       if (!isNull(src)) el.setAttribute('src', src);
@@ -133,7 +139,7 @@ export class Embed implements ComponentInterface {
     if (!originMatches) return;
 
     const message = this.decoder?.(e.data) ?? e.data;
-    if (message) this.vEmbedMessage.emit(message);
+    if (message) this.vmEmbedMessage.emit(message);
   }
 
   /**
@@ -145,12 +151,12 @@ export class Embed implements ComponentInterface {
   }
 
   private onLoad() {
-    this.vEmbedLoaded.emit();
+    this.vmEmbedLoaded.emit();
   }
 
   private genIframeId() {
     idCount += 1;
-    this.id = `vime-iframe-${idCount}`;
+    this.id = `vm-iframe-${idCount}`;
   }
 
   render() {

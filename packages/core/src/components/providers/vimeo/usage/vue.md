@@ -1,18 +1,18 @@
 ```html {3,9,14} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeVimeo videoId="411652396" />
+  <Player controls>
+    <Vimeo videoId="411652396" />
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeVimeo } from '@vime/vue';
+  import { Player, Vimeo } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeVimeo,
+      Player,
+      Vimeo,
     },
   };
 </script>

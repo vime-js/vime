@@ -8,7 +8,7 @@ export const ignoreChecks = () => [
   '// @ts-nocheck',
 ].join('\n');
 
-export const fileName = (c: ComponentCompilerMeta) => dashToPascalCase(c.tagName);
+export const fileName = (c: ComponentCompilerMeta) => dashToPascalCase(c.tagName).slice(2);
 
 export const buildImports = (
   dir: string,

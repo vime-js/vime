@@ -1,14 +1,14 @@
 ```html {2,6,10} title="example.vue"
 <template>
-  <VimeCurrentTime />
+  <CurrentTime />
 </template>
 
 <script>
-  import { VimeCurrentTime } from '@vime/vue';
+  import { CurrentTime } from '@vime/vue';
 
   export default {
     components: {
-      VimeCurrentTime,
+      CurrentTime,
     },
   };
 </script>

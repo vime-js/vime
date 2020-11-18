@@ -1,9 +1,7 @@
 ```html
-<!-- Markup -->
-<vime-icon>
-  <rect width="300" height="100" />
-</vime-icon>
+<!-- Src. -->
+<vm-icon src="/icons/my-icon.svg" label="An icon"></vm-icon>
 
-<!-- URL -->
-<vime-icon href="#vime-play"></vime-icon>
+<!-- Icon library. -->
+<vm-icon name="pause" library="material" label="Pause"></vm-icon>
 ```

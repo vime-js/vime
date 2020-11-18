@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import './App.css';
-import { VimePlayer, VimeVideo, VimeDefaultUi, usePlayerContext } from '@vime/react';
+import { Player, Video, DefaultUi, usePlayerContext } from '@vime/react';
 
 // Default theme.
 import '@vime/core/themes/default.css';
@@ -13,7 +13,7 @@ import TapSidesToSeek from './TapSidesToSeek';
 
 function App() {
 	// Obtain a ref if you need to call any methods.
-  const player = useRef<HTMLVimePlayerElement>(null);
+  const player = useRef<HTMLVmPlayerElement>(null);
 
   const onPlaybackReady = () => {
     // ...
@@ -28,20 +28,20 @@ function App() {
 
   return (
     <div id="container">
-      <VimePlayer
+      <Player
         playsinline 
         ref={player}
-        onVPlaybackReady={onPlaybackReady}
+        onVmPlaybackReady={onPlaybackReady}
       >
-        <VimeVideo poster="https://media.vimejs.com/poster.png">
+        <Video poster="https://media.vimejs.com/poster.png">
           <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
-        </VimeVideo>
+        </Video>
 
-        <VimeDefaultUi>
+        <DefaultUi>
           {/* Custom UI Component. */}
           <TapSidesToSeek />
-        </VimeDefaultUi>
-      </VimePlayer>
+        </DefaultUi>
+      </Player>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 ```html {1,4} title="example.svelte"
-<VimeTimeProgress separator="/" />
+<TimeProgress separator="/" />
 
 <script lang="ts">
-  import { VimeTimeProgress } from '@vime/svelte';
+  import { TimeProgress } from '@vime/svelte';
 </script>
 ```

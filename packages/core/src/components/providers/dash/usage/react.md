@@ -1,6 +1,6 @@
 ```tsx {2,14-19}
 import React from 'react';
-import { VimePlayer, VimeDash } from '@vime/react';
+import { Player, Dash } from '@vime/react';
 
 function Example() {
   /**
@@ -11,15 +11,15 @@ function Example() {
   };
 
   return (
-    <VimePlayer controls>
-      <VimeDash
+    <Player controls>
+      <Dash
         src="/media/manifest.mpd"
         version="latest"
         config={dashConfig}
         poster="/media/poster.png"
       />
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```

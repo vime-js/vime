@@ -6,22 +6,24 @@ import {
   isNullOrUndefined, isString, isUndefined,
 } from '../../../utils/unit';
 import { loadSDK } from '../../../utils/network';
-import { canPlayHLSNatively } from '../../../utils/support';
 import { hlsRegex, hlsTypeRegex } from '../file/utils';
 import { MediaType } from '../../core/player/MediaType';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
-import { withProviderConnect } from '../MediaProvider';
+import { withProviderConnect } from '../ProviderConnect';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
+import { PlayerProps } from '../../core/player/PlayerProps';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
 
 /**
  * @slot - Pass `<source>` elements to the underlying HTML5 media player.
  */
 @Component({
-  tag: 'vime-hls',
+  tag: 'vm-hls',
 })
 export class HLS implements MediaFileProvider {
   private hls?: any;
 
-  private videoProvider!: HTMLVimeVideoElement;
+  private videoProvider!: HTMLVmVideoElement;
 
   private mediaEl?: HTMLVideoElement;
 
@@ -40,52 +42,46 @@ export class HLS implements MediaFileProvider {
    */
   @Prop({ attribute: 'config' }) config?: any;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() crossOrigin?: MediaCrossOriginOption;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() preload?: MediaPreloadOption = 'metadata';
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() poster?: string;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() controlsList?: string;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop({ attribute: 'auto-pip' }) autoPiP?: boolean;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop({ attribute: 'disable-pip' }) disablePiP?: boolean;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() disableRemotePlayback?: boolean;
+
+  /** @internal */
+  @Prop() playbackReady = false;
 
   /**
    * The title of the current media.
    */
   @Prop() mediaTitle?: string;
 
+  /** @internal */
+  @Event() vmLoadStart!: EventEmitter<void>;
+
   /**
-   * @internal
+   * Emitted when an error has occurred.
    */
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event() vmError!: EventEmitter<any>;
 
   constructor() {
+    withComponentRegistry(this);
+    withPlayerContext(this, ['playbackReady']);
     withProviderConnect(this);
   }
 
@@ -107,14 +103,14 @@ export class HLS implements MediaFileProvider {
   }
 
   private async setupHls() {
-    if (!isUndefined(this.hls) || canPlayHLSNatively()) return;
+    if (!isUndefined(this.hls)) return;
 
     try {
-      const url = `https://cdn.jsdelivr.net/npm/hls.js@${this.version}`;
+      const url = `https://cdn.jsdelivr.net/npm/hls.js@${this.version}/dist/hls.min.js`;
       const Hls = await loadSDK(url, 'Hls');
 
       if (!Hls.isSupported()) {
-        this.dispatch('errors', [new Error('hls.js is not supported')]);
+        this.vmError.emit('hls.js is not supported');
         return;
       }
 
@@ -125,7 +121,16 @@ export class HLS implements MediaFileProvider {
         this.onSrcChange();
       });
 
-      this.hls!.on(Hls.Events.ERROR, (e: any, data: any) => {
+      this.hls!.on(Hls.Events.AUDIO_TRACKS_UPDATED, () => {
+        this.dispatch('audioTracks', this.hls.audioTracks);
+        this.dispatch('currentAudioTrack', this.hls.audioTrack);
+      });
+
+      this.hls!.on(Hls.Events.AUDIO_TRACK_SWITCHED, () => {
+        this.dispatch('currentAudioTrack', this.hls.audioTrack);
+      });
+
+      this.hls!.on(Hls.Events.ERROR, (event: any, data: any) => {
         if (data.fatal) {
           switch (data.type) {
             case Hls.ErrorTypes.NETWORK_ERROR:
@@ -140,19 +145,46 @@ export class HLS implements MediaFileProvider {
           }
         }
 
-        this.dispatch('errors', [{ e, data }]);
+        this.vmError.emit({ event, data });
       });
 
       this.hls!.on(Hls.Events.MANIFEST_PARSED, () => {
         this.dispatch('mediaType', MediaType.Video);
         this.dispatch('currentSrc', this.src);
-        this.dispatch('playbackReady', true);
+        this.dispatchLevels();
+      });
+
+      this.hls!.on(Hls.Events.LEVEL_LOADED, (_: any, data: any) => {
+        if (!this.playbackReady) {
+          this.dispatch('duration', data.details.totalduration);
+          this.dispatch('playbackReady', true);
+        }
       });
 
       this.hls!.attachMedia(this.mediaEl);
     } catch (e) {
-      this.dispatch('errors', [e]);
+      this.vmError.emit(e);
     }
+  }
+
+  private dispatchLevels() {
+    if (!this.hls.levels || this.hls.levels.length === 0) return;
+
+    this.dispatch('playbackQualities', [
+      'Auto',
+      ...this.hls.levels.map(this.levelToPlaybackQuality),
+    ]);
+
+    this.dispatch('playbackQuality', 'Auto');
+  }
+
+  private levelToPlaybackQuality(level: any) {
+    return (level === -1) ? 'Auto' : `${level.height}p`;
+  }
+
+  private findLevelIndexFromQuality(quality: PlayerProps['playbackQuality']) {
+    return this.hls.levels
+      .findIndex((level: any) => this.levelToPlaybackQuality(level) === quality);
   }
 
   private destroyHls() {
@@ -160,7 +192,7 @@ export class HLS implements MediaFileProvider {
     this.hasAttached = false;
   }
 
-  @Listen('vMediaElChange')
+  @Listen('vmMediaElChange')
   async onMediaElChange(event: CustomEvent<HTMLVideoElement | undefined>) {
     this.destroyHls();
     if (isUndefined(event.detail)) return;
@@ -169,17 +201,15 @@ export class HLS implements MediaFileProvider {
     setTimeout(async () => { await this.setupHls(); }, 50);
   }
 
-  @Listen('vSrcSetChange')
+  @Listen('vmSrcSetChange')
   private async onSrcChange() {
     if (this.hasAttached && this.hls.url !== this.src) {
-      this.vLoadStart.emit();
+      this.vmLoadStart.emit();
       this.hls!.loadSource(this.src);
     }
   }
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Method()
   async getAdapter() {
     const adapter = await this.videoProvider.getAdapter();
@@ -189,13 +219,26 @@ export class HLS implements MediaFileProvider {
       getInternalPlayer: async () => this.hls,
       canPlay: async (type: any) => (isString(type) && hlsRegex.test(type))
         || canVideoProviderPlay(type),
+      canSetPlaybackQuality: async () => this.hls?.levels?.length > 0,
+      setPlaybackQuality: async (quality: string) => {
+        if (!isUndefined(this.hls)) {
+          this.hls.currentLevel = this.findLevelIndexFromQuality(quality);
+          // Update the provider cache.
+          this.dispatch('playbackQuality', quality);
+        }
+      },
+      setCurrentAudioTrack: async (trackId: number) => {
+        if (!isUndefined(this.hls)) {
+          this.hls.audioTrack = trackId;
+        }
+      },
     };
   }
 
   render() {
     return (
-      <vime-video
-        willAttach={!canPlayHLSNatively()}
+      <vm-video
+        willAttach
         crossOrigin={this.crossOrigin}
         preload={this.preload}
         poster={this.poster}
@@ -207,7 +250,7 @@ export class HLS implements MediaFileProvider {
         ref={(el: any) => { this.videoProvider = el; }}
       >
         <slot />
-      </vime-video>
+      </vm-video>
     );
   }
 }

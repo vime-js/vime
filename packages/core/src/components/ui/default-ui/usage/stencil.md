@@ -2,10 +2,10 @@
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-default-ui />
-      </vime-player>
+        <vm-default-ui />
+      </vm-player>
     );
   }
 }

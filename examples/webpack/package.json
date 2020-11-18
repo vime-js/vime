@@ -7,7 +7,7 @@
     "serve": "webpack serve --open true"
   },
   "dependencies": {
-    "@vime/core": "^4.2.0"
+    "@vime/core": "^5.0.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",

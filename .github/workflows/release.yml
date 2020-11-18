@@ -5,35 +5,14 @@ on:
     branches:
       - master
     paths:
+      - 'package.json'
       - 'packages/**'
       - '!packages/**/*.md'
       - '.github/workflows/**'
 
 jobs:
-#   # @see https://medium.com/attest-engineering/adding-a-unique-github-build-identifier-7aa2e83cadca
-#   build_id:
-#     name: Build Id
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Create build id
-#         id: build_id
-#         run: echo "::set-output name=id::$(date +%s)"
-      
-#       - name: Cache build id
-#         uses: actions/cache@v2
-#         with:
-#           path: ${{ github.workspace }}/.build-id
-#           key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}-${{ steps.build_id.outputs.id }}
-      
-#       - name: Store build id
-#         run: |
-#           mkdir -p .build-id 
-#           echo $BUILD_ID > .build-id/id
-#         env:
-#           BUILD_ID: ${{ steps.build_id.outputs.id }}
-  
-  prepare:
-    name: Prepare
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -50,196 +29,14 @@ jobs:
         with:
           path: '**/node_modules'
           key: deps-${{ hashFiles('yarn.lock') }}
-      
-      - name: Cache cypress binary
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache
-          key: cypress-${{ hashFiles('yarn.lock') }}
-      
-      - name: Cache build
-        id: build
-        uses: actions/cache@v2
-        with:
-          path: '**/dist'
-          key: build-${{ github.run_id }}
-      
-      - name: Cache svelte source
-        uses: actions/cache@v2
-        with:
-          path: 'packages/svelte/src'
-          key: build-${{ github.run_id }}
-      
-      - name: Cache loader
-        uses: actions/cache@v2
-        with:
-          path: 'packages/core/loader'
-          key: loader-${{ github.run_id }}
 
       - name: Install dependencies
         if: steps.deps.outputs.cache-hit != 'true'
         run: yarn install
       
       - name: Build
-        if: steps.build.outputs.cache-hit != 'true'
         run: yarn build
       
-  test_unit:
-    name: Unit Tests
-    needs: [prepare]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: Setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
-      
-      - name: Restore dependencies
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: deps-${{ hashFiles('yarn.lock') }}
-      
-      - name: Run unit tests
-        run: yarn workspace @vime/core test:unit.coverage
-      
-      - name: Upload codecov report artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: codecov-unit
-          path: packages/core/jest-coverage
-
-  # instrument:
-  #   name: Instrument
-  #   needs: [prepare]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-      
-  #     - name: Setup node.js
-  #       uses: actions/setup-node@v2-beta
-  #       with:
-  #         node-version: 14
-
-  #     - name: Restore build
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: '**/dist'
-  #         key: build-${{ github.run_id }}
-      
-  #     - name: Cache instrumentation
-  #       id: instrument
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: 'packages/core/dist'
-  #         key: instrument-${{ github.run_id }}
-
-  #     - name: Instrument
-  #       if: steps.instrument.outputs.cache-hit != 'true'
-  #       run: yarn workspace @vime/core instrument
-
-  # test_e2e:
-  #   name: E2E Tests
-  #   needs: [build_id, instrument]
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       containers: [1, 2, 3, 4, 5, 6, 7, 8]
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-      
-  #     - name: Setup node.js
-  #       uses: actions/setup-node@v2-beta
-  #       with:
-  #         node-version: 14
-      
-  #     - name: Restore build id from cache
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ${{ github.workspace }}/.build-id
-  #         key: ${{ runner.os }}-build-id-${{ github.head_ref }}-${{ github.sha }}
-      
-  #     - name: Set build id
-  #       id: build_id
-  #       run: echo "::set-output name=id::$(cat .build-id/id)"
-      
-  #     - name: Restore dependencies
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: '**/node_modules'
-  #         key: deps-${{ hashFiles('yarn.lock') }}
-      
-  #     - name: Restore cypress binary
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ~/.cache
-  #         key: cypress-${{ hashFiles('yarn.lock') }}
-      
-  #     - name: Restore instrumentation
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: 'packages/core/dist'
-  #         key: instrument-${{ github.run_id }}
-      
-  #     - name: Run e2e tests
-  #       run:  yarn workspace @vime/core test:e2e.ci
-  #       env:
-  #         BUILD_ID: '${{ github.sha }}-${{ github.workflow }}-${{ github.event_name }}'
-  #         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-  #     - name: Upload codecov report artifact
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: codecov-e2e-${{ matrix.containers }}
-  #         path: packages/core/cypress-coverage
-
-  codecov:
-    name: Code Coverage
-    needs: [test_unit]
-    # needs: [test_unit, test_e2e]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: Setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
-
-      - name: Download codecov report artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: packages/core
-
-      - name: Upload report to codecov
-        run: cd packages/core && npx codecov
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-  
-  release:
-    name: Release
-    needs: [test_unit]
-    # needs: [test_unit, test_e2e]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: "0"
-      
-      - name: Setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
-
       - name: Setup git identity
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -252,30 +49,6 @@ jobs:
         run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
-      
-      - name: Restore dependencies
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: deps-${{ hashFiles('yarn.lock') }}
-
-      - name: Restore build
-        uses: actions/cache@v2
-        with:
-          path: '**/dist'
-          key: build-${{ github.run_id }}
-      
-      - name: Restore svelte source
-        uses: actions/cache@v2
-        with:
-          path: 'packages/svelte/src'
-          key: build-${{ github.run_id }}
-
-      - name: Restore loader
-        uses: actions/cache@v2
-        with:
-          path: 'packages/core/loader'
-          key: loader-${{ github.run_id }}
 
       - name: Release packages
         run: yarn release

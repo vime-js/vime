@@ -1,14 +1,14 @@
 ```html {6-9}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls full-width>
-      <vime-control label="Playback" keys="k" pressed="false">
-        <vime-icon href="#vime-play"></vime-icon>
-        <vime-tooltip>Play (k)</vime-tooltip>
-      </vime-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+    <vm-controls full-width>
+      <vm-control label="Playback" keys="k" pressed="false">
+        <vm-icon name="play"></vm-icon>
+        <vm-tooltip>Play (k)</vm-tooltip>
+      </vm-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```

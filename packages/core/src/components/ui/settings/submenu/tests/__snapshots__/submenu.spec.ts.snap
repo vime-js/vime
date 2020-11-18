@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should be structurally sound 1`] = `
-<vime-submenu>
-  <!---->
-  <vime-menu-item identifier="vime-submenu-1-controller" menu="vime-submenu-1"></vime-menu-item>
-  <vime-menu controller="vime-submenu-1-controller" identifier="vime-submenu-1"></vime-menu>
-</vime-submenu>
-`;

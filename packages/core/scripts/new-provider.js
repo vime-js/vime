@@ -26,7 +26,7 @@ readline.question('What\'s the name of the provider in proper case (Vimeo)? ', (
   template = template.replace('EventEmitter,', 'EventEmitter, Component,');
   template = template.replace(
     '// @component',
-    `@Component({\n  tag: 'vime-${name.toLowerCase()}',\n})`,
+    `@Component({\n  tag: 'vm-${name.toLowerCase()}',\n  shadow: true,\n})`,
   );
 
   fs.mkdirSync(dir);

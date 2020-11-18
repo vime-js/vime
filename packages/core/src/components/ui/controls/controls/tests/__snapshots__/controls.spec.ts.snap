@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`should be structurally sound 1`] = `
-<vime-controls pin="bottomLeft" style="bottom: 0; left: 0; flex-direction: row; align-items: center; justify-content: start;">
-  <!---->
-</vime-controls>
-`;

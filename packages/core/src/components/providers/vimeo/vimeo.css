@@ -1,0 +1,9 @@
+:host {
+  z-index: var(--vm-media-z-index);
+}
+
+vime-embed.hideControls {
+  display: block;
+  width: 100%;
+  position: relative;
+}

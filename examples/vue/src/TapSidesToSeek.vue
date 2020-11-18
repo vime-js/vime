@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import { VimeMixin } from '@vime/vue';
+import { Mixin } from '@vime/vue';
 
 @Component({
   /**
@@ -18,14 +18,14 @@ import { VimeMixin } from '@vime/vue';
    * are changed, it will dispatch an update to the player. (3) An additional `player` property 
    * is bound incase we need to interact with it directly (`this.player`).
    */
-  mixins: [VimeMixin([
+  mixins: [Mixin([
     'currentTime',
     'duration',
   ])]
 })
 export default class TapSidesToSeek extends Vue {
   // Use the player DOM ref if you need to call any methods.
-  player!: HTMLVimePlayerElement;
+  player!: HTMLVmPlayerElement;
 
   currentTime = 0;
 

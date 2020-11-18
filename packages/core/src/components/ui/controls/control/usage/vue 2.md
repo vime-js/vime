@@ -1,30 +1,30 @@
 ```html {2-10,16,24} title="playback-control.vue"
 <template>
-  <VimeControl
+  <Control
     keys="k"
     :label="i18n.playback"
     :pressed="paused"
     @click="onClick"
   >
-    <VimeIcon :href="icon" />
-    <VimeTooltip>{{tooltip}} (k)</VimeTooltip>
-  </VimeControl>
+    <Icon :name="icon" />
+    <Tooltip>{{tooltip}} (k)</Tooltip>
+  </Control>
 </template>
 
 <script>
   import {
-    VimeMixin,
-    VimeControl,
-    VimeIcon,
-    VimeTooltip,
+    Mixin,
+    Control,
+    Icon,
+    Tooltip,
   } from '@vime/vue';
 
   export default {
-    mixins: [VimeMixin(['paused', 'i18n'])]
+    mixins: [Mixin(['paused', 'i18n'])]
     components: {
-      VimeControl,
-      VimeIcon,
-      VimeTooltip,
+      Control,
+      Icon,
+      Tooltip,
     },
     data: {
       paused: true,
@@ -32,7 +32,7 @@
     },
     computed: {
       icon() {
-        return this.paused ? '#vime-play' : '#vime-pause';
+        return this.paused ? 'play' : 'pause';
       },
       tooltip() {
         return this.paused ? this.i18n.play : this.i18n.pause;

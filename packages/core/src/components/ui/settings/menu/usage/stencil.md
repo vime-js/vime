@@ -12,21 +12,21 @@ class Example {
 
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-menu
+          <vm-menu
             identifer="menu-id"
             controller="menu-controller-id"
             active={this.isMenuActive}
-            onVOpen={this.onOpen.bind(this)}
-            onVClose={this.onClose.bind(this)}
+            onVmOpen={this.onOpen.bind(this)}
+            onVmClose={this.onClose.bind(this)}
           >
             {/* ... */}
-          </vime-menu>
-        </vime-ui>
-      </vime-player>
+          </vm-menu>
+        </vm-ui>
+      </vm-player>
     );
   }
 }

@@ -4,23 +4,31 @@ import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatc
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-playback-control',
+  tag: 'vm-playback-control',
+  shadow: true,
 })
 export class PlaybackControl implements KeyboardControl {
   private dispatch!: Dispatcher;
 
   /**
-   * The URL to an SVG element or fragment to load.
+   * The name of the play icon to resolve from the icon library.
    */
-  @Prop() playIcon = '#vime-play';
+  @Prop() playIcon = 'play';
 
   /**
-   * The URL to an SVG element or fragment to load.
+   * The name of the pause icon to resolve from the icon library.
    */
-  @Prop() pauseIcon = '#vime-pause';
+  @Prop() pauseIcon = 'pause';
+
+  /**
+   * The name of an icon library to use. Defaults to the library defined by the `icons` player
+   * property.
+   */
+  @Prop() icons?: string;
 
   /**
    * Whether the tooltip is positioned above/below the control.
@@ -37,22 +45,17 @@ export class PlaybackControl implements KeyboardControl {
    */
   @Prop() hideTooltip = false;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() keys?: string = 'k';
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() paused: PlayerProps['paused'] = true;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['paused', 'i18n']);
   }
 
@@ -69,22 +72,25 @@ export class PlaybackControl implements KeyboardControl {
     const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
-      <vime-control
+      <vm-control
         label={this.i18n.playback}
         keys={this.keys}
         pressed={!this.paused}
         onClick={this.onClick.bind(this)}
       >
-        <vime-icon href={this.paused ? this.playIcon : this.pauseIcon} />
+        <vm-icon
+          name={this.paused ? this.playIcon : this.pauseIcon}
+          library={this.icons}
+        />
 
-        <vime-tooltip
+        <vm-tooltip
           hidden={this.hideTooltip}
           position={this.tooltipPosition}
           direction={this.tooltipDirection}
         >
           {tooltipWithHint}
-        </vime-tooltip>
-      </vime-control>
+        </vm-tooltip>
+      </vm-control>
     );
   }
 }

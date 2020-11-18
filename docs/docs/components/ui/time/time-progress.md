@@ -1,10 +1,7 @@
 ---
-title: vime-time-progress
+title: vm-time-progress
 sidebar_label: TimeProgress
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 Formats and displays the progression of playback as `currentTime (separator) endTime`.
 
@@ -19,105 +16,108 @@ Formats and displays the progression of playback as `currentTime (separator) end
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html
-<vime-time-progress separator="/" />
+<vm-time-progress separator="/" />
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,5}
 import React from 'react';
-import { VimeTimeProgress } from '@vime/react';
+import { TimeProgress } from '@vime/react';
 
 function Example() {
-  return <VimeTimeProgress separator="/" />;
+  return (<TimeProgress separator="/" />);
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {2,6,10} title="example.vue"
 <template>
-  <VimeTimeProgress separator="/" />
+  <TimeProgress separator="/" />
 </template>
 
 <script>
-  import { VimeTimeProgress } from '@vime/vue';
+  import { TimeProgress } from '@vime/vue';
 
   export default {
     components: {
-      VimeTimeProgress,
+      TimeProgress,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {1,4} title="example.svelte"
-<VimeTimeProgress separator="/" />
+<TimeProgress separator="/" />
 
 <script lang="ts">
-  import { VimeTimeProgress } from '@vime/svelte';
+  import { TimeProgress } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
 ```tsx {3}
 class Example {
   render() {
-    return <vime-time-progress separator="/" />;
+    return <vm-time-progress separator="/" />;
   }
 }
 ```
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html title="example.html"
-<vime-time-progress separator="/" />
+<vm-time-progress separator="/" />
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property          | Attribute           | Description                                                                                                            | Type      | Default |
-| ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
-| `alwaysShowHours` | `always-show-hours` | Whether the times should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`). | `boolean` | `false` |
-| `separator`       | `separator`         | The string used to separate the current time and end time.                                                             | `string`  | `'/'`   |
+| Property          | Description                                                                                                            | Type      | Default |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| `alwaysShowHours` | Whether the times should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`). | `boolean` | `false` |
+| `separator`       | The string used to separate the current time and end time.                                                             | `string`  | `'/'`   |
+
 
 ## CSS Custom Properties
 
@@ -125,29 +125,16 @@ class Example {
 | ----------------- | ------------------------------------------ |
 | `--vm-time-color` | The color of the text displaying the time. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](../controls/default-controls.md)
+ - [vm-default-controls](./../controls/default-controls)
 
 ### Depends on
 
-- [vime-current-time](current-time.md)
-- [vime-end-time](end-time.md)
+- [vm-current-time](./current-time)
+- [vm-end-time](./end-time)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-time-progress --> vime-current-time
-  vime-time-progress --> vime-end-time
-  vime-current-time --> vime-time
-  vime-end-time --> vime-time
-  vime-default-controls --> vime-time-progress
-  style vime-time-progress fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

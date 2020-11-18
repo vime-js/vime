@@ -1,12 +1,12 @@
 ```html {7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-volume-control></vime-volume-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-volume-control></vm-volume-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```

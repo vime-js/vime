@@ -1,10 +1,7 @@
 ---
-title: vime-control-group
+title: vm-control-group
 sidebar_label: ControlGroup
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 A simple container that enables player controls to be organized into groups. Each group starts on
 a new line.
@@ -20,164 +17,167 @@ a new line.
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {6-8,10-13}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls full-width>
-      <vime-control-group>
-        <vime-scrubber-control></vime-scrubber-control>
-      </vime-control-group>
+    <vm-controls full-width>
+      <vm-control-group>
+        <vm-scrubber-control></vm-scrubber-control>
+      </vm-control-group>
 
-      <vime-control-group space="top">
-        <vime-playback-control></vime-playback-control>
-        <vime-volume-control></vime-volume-control>
-      </vime-control-group>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-control-group space="top">
+        <vm-playback-control></vm-playback-control>
+        <vm-volume-control></vm-volume-control>
+      </vm-control-group>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {6,18-20,22-25}
 import React from 'react';
 import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
-  VimeControlGroup,
-  VimeScrubberControl,
-  VimePlaybackControl,
-  VimeVolumeControl,
+  Player,
+  Ui,
+  Controls,
+  ControlGroup,
+  ScrubberControl,
+  PlaybackControl,
+  VolumeControl,
 } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
-        <VimeControls fullWidth>
-          <VimeControlGroup>
-            <VimeScrubberControl />
-          </VimeControlGroup>
+      <Ui>
+        <Controls fullWidth>
+          <ControlGroup>
+            <ScrubberControl />
+          </ControlGroup>
 
-          <VimeControlGroup space="top">
-            <VimePlaybackControl />
-            <VimeVolumeControl />
-          </VimeControlGroup>
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+          <ControlGroup space="top">
+            <PlaybackControl />
+            <VolumeControl />
+          </ControlGroup>
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {6-8,10-13,24,35} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
-      <VimeControls>
-        <VimeControlGroup>
-          <VimeScrubberControl />
-        </VimeControlGroup>
+    <Ui>
+      <Controls>
+        <ControlGroup>
+          <ScrubberControl />
+        </ControlGroup>
 
-        <VimeControlGroup space="top">
-          <VimePlaybackControl />
-          <VimeVolumeControl />
-        </VimeControlGroup>
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+        <ControlGroup space="top">
+          <PlaybackControl />
+          <VolumeControl />
+        </ControlGroup>
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
   import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeControlGroup,
-    VimeScrubberControl,
-    VimePlaybackControl,
-    VimeVolumeControl,
+    Player,
+    Ui,
+    Controls,
+    ControlGroup,
+    ScrubberControl,
+    PlaybackControl,
+    VolumeControl,
   } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimeControlGroup,
-      VimeScrubberControl,
-      VimePlaybackControl,
-      VimeVolumeControl,
+      Player,
+      Ui,
+      Controls,
+      ControlGroup,
+      ScrubberControl,
+      PlaybackControl,
+      VolumeControl,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {6-8,10-13,26} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls fullWidth>
-      <VimeControlGroup>
-        <VimeScrubberControl />
-      </VimeControlGroup>
+    <Controls fullWidth>
+      <ControlGroup>
+        <ScrubberControl />
+      </ControlGroup>
 
-      <VimeControlGroup space="top">
-        <VimePlaybackControl />
-        <VimeVolumeControl />
-      </VimeControlGroup>
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+      <ControlGroup space="top">
+        <PlaybackControl />
+        <VolumeControl />
+      </ControlGroup>
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
   import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimePlaybackControl,
-    VimeVolumeControl,
-    VimeScrubberControl,
-    VimeControlGroup,
+    Player,
+    Ui,
+    Controls,
+    PlaybackControl,
+    VolumeControl,
+    ScrubberControl,
+    ControlGroup,
   } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -185,21 +185,21 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
-          <vime-controls fullWidth>
-            <vime-control-group>
-              <vime-scrubber-control />
-            </vime-control-group>
+        <vm-ui>
+          <vm-controls fullWidth>
+            <vm-control-group>
+              <vm-scrubber-control />
+            </vm-control-group>
 
-            <vime-control-group space="top">
-              <vime-playback-control />
-              <vime-volume-control />
-            </vime-control-group>
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+            <vm-control-group space="top">
+              <vm-playback-control />
+              <vm-volume-control />
+            </vm-control-group>
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -207,39 +207,39 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {6-8,10-14}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
-      <vime-control-group>
-        <vime-scrubber-control></vime-scrubber-control>
-      </vime-control-group>
+    <vm-controls>
+      <vm-control-group>
+        <vm-scrubber-control></vm-scrubber-control>
+      </vm-control-group>
 
-      <vime-control-group space="top">
-        <vime-playback-control></vime-playback-control>
-        <vime-volume-control></vime-volume-control>
+      <vm-control-group space="top">
+        <vm-playback-control></vm-playback-control>
+        <vm-volume-control></vm-volume-control>
         <!-- ... -->
-      </vime-control-group>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      </vm-control-group>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property | Attribute | Description                                                                                                                | Type                                 | Default  |
-| -------- | --------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | -------- |
-| `space`  | `space`   | Determines where to add spacing/margin. The amount of spacing is determined by the CSS variable `--control-group-spacing`. | `"both" ∣ "bottom" ∣ "none" ∣ "top"` | `'none'` |
+| Property | Description                                                                                                                | Type                                 | Default  |
+| -------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | -------- |
+| `space`  | Determines where to add spacing/margin. The amount of spacing is determined by the CSS variable `--control-group-spacing`. | `"both" ∣ "bottom" ∣ "none" ∣ "top"` | `'none'` |
+
 
 ## CSS Custom Properties
 
@@ -247,20 +247,11 @@ class Example {
 | ---------------------------- | --------------------------------- |
 | `--vm-control-group-spacing` | The space between control groups. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-controls](default-controls.md)
+ - [vm-default-controls](./default-controls)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-default-controls --> vime-control-group
-  style vime-control-group fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

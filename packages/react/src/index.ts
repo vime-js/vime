@@ -6,11 +6,11 @@ export {
   PlayerEvents,
   ViewType,
   MediaType,
-  loadSprite,
   Translation,
   Provider,
   AdapterHost,
   MediaProviderAdapter,
+  watchComponentRegistry,
 } from '@vime/core';
 
 export * from './components';

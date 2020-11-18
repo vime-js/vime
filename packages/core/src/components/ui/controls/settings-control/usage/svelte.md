@@ -1,20 +1,20 @@
 ```html {6,16} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls>
-      <VimeSettingsControl />
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    <Controls>
+      <SettingsControl />
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
   import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeSettingsControl,
+    Player,
+    Ui,
+    Controls,
+    SettingsControl,
   } from '@vime/svelte';
 </script>
 ```

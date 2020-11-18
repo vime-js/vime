@@ -1,16 +1,16 @@
 ```tsx
-<VimeSlider
+<Slider
   label="Volume"
   step={5}
   max={100}
   value={value}
-  on:vValueChange={onValueChange}
+  on:vmValueChange={onValueChange}
 />
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimeSlider } from '@vime/svelte';
+  import { Slider } from '@vime/svelte';
 
   let value = 50;
 

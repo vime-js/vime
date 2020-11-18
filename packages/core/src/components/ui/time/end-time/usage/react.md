@@ -1,8 +1,8 @@
 ```tsx {2,5}
 import React from 'react';
-import { VimeEndTime } from '@vime/react';
+import { EndTime } from '@vime/react';
 
 function Example() {
-  return (<VimeEndTime />);
+  return (<EndTime />);
 }
 ```

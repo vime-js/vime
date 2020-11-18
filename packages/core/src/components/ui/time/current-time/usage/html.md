@@ -1,3 +1,3 @@
 ```html
-<vime-current-time />
+<vm-current-time />
 ```

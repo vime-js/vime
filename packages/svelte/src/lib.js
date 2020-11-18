@@ -4,6 +4,5 @@ export const define = (tagName, clazz) => {
 };
 
 export const setProp = (el, prop, value) => {
-  // eslint-disable-next-line no-param-reassign
   if (el) el[prop] = value;
 };

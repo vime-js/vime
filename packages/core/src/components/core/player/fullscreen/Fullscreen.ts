@@ -1,7 +1,7 @@
 import { getFullscreenApi } from './FullscreenApi';
 import { isUndefined } from '../../../../utils/unit';
 import { listen } from '../../../../utils/dom';
-import { Disposal } from '../Disposal';
+import { Disposal } from '../../../../utils/Disposal';
 
 export class Fullscreen {
   private disposal = new Disposal();

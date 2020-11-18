@@ -1,13 +1,15 @@
 import {
-  h, Host, Component, Element, Prop,
+  h, Component, Element, Prop,
 } from '@stencil/core';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-control-group',
-  styleUrl: 'control-group.scss',
+  tag: 'vm-control-group',
+  styleUrl: 'control-group.css',
+  shadow: true,
 })
 export class ControlNewLine {
-  @Element() el!: HTMLVimeControlGroupElement;
+  @Element() host!: HTMLVmControlGroupElement;
 
   /**
    * Determines where to add spacing/margin. The amount of spacing is determined by the CSS variable
@@ -15,16 +17,21 @@ export class ControlNewLine {
    */
   @Prop() space: 'top' | 'bottom' | 'both' | 'none' = 'none';
 
+  constructor() {
+    withComponentRegistry(this);
+  }
+
   render() {
     return (
-      <Host
+      <div
         class={{
+          controlGroup: true,
           spaceTop: (this.space !== 'none' && this.space !== 'bottom'),
           spaceBottom: (this.space !== 'none' && this.space !== 'top'),
         }}
       >
         <slot />
-      </Host>
+      </div>
     );
   }
 }

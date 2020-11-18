@@ -1,6 +1,6 @@
 ```tsx {2,20-28}
 import React, { useState } from "react";
-import { VimePlayer, VimeUi, VimeMenu } from "@vime/react";
+import { Player, Ui, Menu } from "@vime/react";
 
 function Example() {
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -14,21 +14,21 @@ function Example() {
   };
 
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeMenu
+        <Menu
           identifer="menu-id"
           controller="menu-controller-id"
           active={isMenuActive}
-          onVOpen={onOpen}
-          onVClose={onClose}
+          onVmOpen={onOpen}
+          onVmClose={onClose}
         >
           <!-- ... -->
-        </VimeMenu>
-      </VimeUi>
-    </VimePlayer>
+        </Menu>
+      </Ui>
+    </Player>
   );
 }
 ```

@@ -1,11 +1,11 @@
 ```tsx {2,7-22}
 import React from 'react';
-import { VimePlayer, VimeVideo } from '@vime/react';
+import { Player, Video } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeVideo>
+    <Player controls>
+      <Video>
         <source data-src="/media/video.mp4" type="video/mp4" />
         <track
           default
@@ -20,9 +20,9 @@ function Example() {
           srcLang="es"
           label="Spanish"
         />
-      </VimeVideo>
+      </Video>
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```

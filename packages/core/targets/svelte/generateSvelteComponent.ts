@@ -35,6 +35,11 @@ let __mounted = false;
 
 const dispatch = createEventDispatcher();
 
+let className;
+
+export let style;
+export { className as class };
+
 ${
   properties
     .map((prop) => `export let ${prop.name}${!prop.required ? ` = ${safeDefaultValue(prop.defaultValue) ? prop.defaultValue : 'undefined'}` : ''};`).join('\n')
@@ -71,6 +76,8 @@ const onEvent = (e) => {
 </script>
 
 <${tagName} 
+  class={className}
+  style={style}
   ${properties
     .filter((prop) => !!prop.attribute)
     .map((prop) => `${prop.attribute}={${prop.name}}`).join('\n  ')}

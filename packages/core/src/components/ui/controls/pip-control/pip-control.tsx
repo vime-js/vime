@@ -1,29 +1,36 @@
 import {
-  h, Host, Component, Prop, Watch, State,
+  h, Component, Prop, Watch, State, Host,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
-import { findRootPlayer } from '../../../core/player/utils';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { getPlayerFromRegistry, withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-pip-control',
+  tag: 'vm-pip-control',
   styleUrl: 'pip-control.css',
+  shadow: true,
 })
 export class PiPControl implements KeyboardControl {
   @State() canSetPiP = false;
 
   /**
-   * The URL to an SVG element or fragment to display for entering PiP.
+   * The name of the enter pip icon to resolve from the icon library.
    */
-  @Prop() enterIcon = '#vime-enter-pip';
+  @Prop() enterIcon = 'pip-enter';
 
   /**
-   * The URL to an SVG element or fragment to display for exiting PiP.
+   * The name of the exit pip icon to resolve from the icon library.
    */
-  @Prop() exitIcon = '#vime-exit-pip';
+  @Prop() exitIcon = 'pip-exit';
+
+  /**
+   * The name of an icon library to use. Defaults to the library defined by the `icons` player
+   * property.
+   */
+  @Prop() icons?: string;
 
   /**
    * Whether the tooltip is positioned above/below the control.
@@ -40,39 +47,36 @@ export class PiPControl implements KeyboardControl {
    */
   @Prop() hideTooltip = false;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() keys?: string = 'p';
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isPiPActive: PlayerProps['isPiPActive'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() playbackReady: PlayerProps['playbackReady'] = false;
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
-    const player = findRootPlayer(this);
-    this.canSetPiP = await player.canSetPiP();
+    const player = getPlayerFromRegistry(this);
+    this.canSetPiP = await player?.canSetPiP() ?? false;
   }
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['isPiPActive', 'playbackReady', 'i18n']);
   }
 
+  componentDidLoad() {
+    this.onPlaybackReadyChange();
+  }
+
   private onClick() {
-    const player = findRootPlayer(this);
-    !this.isPiPActive ? player.enterPiP() : player.exitPiP();
+    const player = getPlayerFromRegistry(this);
+    !this.isPiPActive ? player?.enterPiP() : player?.exitPiP();
   }
 
   render() {
@@ -80,28 +84,27 @@ export class PiPControl implements KeyboardControl {
     const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
-      <Host
-        class={{
-          hidden: !this.canSetPiP,
-        }}
-      >
-        <vime-control
+      <Host hidden={!this.canSetPiP}>
+        <vm-control
           label={this.i18n.pip}
           keys={this.keys}
           pressed={this.isPiPActive}
           hidden={!this.canSetPiP}
           onClick={this.onClick.bind(this)}
         >
-          <vime-icon href={this.isPiPActive ? this.exitIcon : this.enterIcon} />
+          <vm-icon
+            name={this.isPiPActive ? this.exitIcon : this.enterIcon}
+            library={this.icons}
+          />
 
-          <vime-tooltip
+          <vm-tooltip
             hidden={this.hideTooltip}
             position={this.tooltipPosition}
             direction={this.tooltipDirection}
           >
             {tooltipWithHint}
-          </vime-tooltip>
-        </vime-control>
+          </vm-tooltip>
+        </vm-control>
       </Host>
     );
   }

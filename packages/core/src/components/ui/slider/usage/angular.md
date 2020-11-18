@@ -1,10 +1,10 @@
 ```html title="example.html"
-<vime-slider
+<vm-slider
   label="Volume"
   [step]="5"
   [max]="100"
   [value]="value"
-  (vValueChange)="onValueChange($event)"
+  (vmValueChange)="onValueChange($event)"
 />
 ```
 

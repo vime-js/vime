@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { VimePlayer } from '@vime/angular';
+import { Player } from '@vime/angular';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +7,7 @@ import { VimePlayer } from '@vime/angular';
 })
 export class AppComponent {
   // Obtain a ref if you need to call any methods.
-  @ViewChild('player') player!: VimePlayer;
+  @ViewChild('player') player!: Player;
 
   onPlaybackReady() {
     // ...

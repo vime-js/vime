@@ -7,12 +7,12 @@ class Example {
 
   render() {
     return (
-      <vime-embed
+      <vm-embed
         embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
         params={{ autoplay: 1, muted: 1, controls: 0 }}
         mediaTitle="Agent 327: Operation Barbershop"
         origin="https://www.youtube-nocookie.com"
-        onVEmbedMessage={this.onMessage.bind(this)}
+        onVmEmbedMessage={this.onMessage.bind(this)}
       />
     );
   }

@@ -1,10 +1,10 @@
 ```html {2-6}
-<vime-player controls>
-  <vime-dash
+<vm-player controls>
+  <vm-dash
     src="/media/manifest.mpd"
     version="latest"
     poster="/media/poster.png"
-  ></vime-dash>
+  ></vm-dash>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```

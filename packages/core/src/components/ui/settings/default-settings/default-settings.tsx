@@ -1,33 +1,34 @@
 import {
-  h, Component, Prop, Watch, forceUpdate,
+  h, Component, Prop, State, Watch,
 } from '@stencil/core';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
-import { Disposal } from '../../../core/player/Disposal';
-import { listen } from '../../../../utils/dom';
-import { isUndefined } from '../../../../utils/unit';
+import { Disposal } from '../../../../utils/Disposal';
 import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
-import { findRootPlayer } from '../../../core/player/utils';
+import { findPlayer } from '../../../core/player/findPlayer';
+import { getPlayerFromRegistry, withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 /**
- * @slot - Used to extend the settings with additional menu options (see `vime-submenu` or
- * `vime-menu-item`).
+ * @slot - Used to extend the settings with additional menu options (see `vm-submenu` or
+ * `vm-menu-item`).
  */
 @Component({
-  tag: 'vime-default-settings',
+  tag: 'vm-default-settings',
+  shadow: true,
+  styleUrl: 'default-settings.css',
 })
 export class DefaultSettings {
   private textTracksDisposal = new Disposal();
 
   private dispatch!: Dispatcher;
 
-  private player?: HTMLVimePlayerElement;
+  @State() canSetPlaybackRate = false;
 
-  private rateSubmenu: any;
+  @State() canSetPlaybackQuality = false;
 
-  private qualitySubmenu: any;
+  @State() canSetTextTrack = false;
 
-  private captionsSubmenu: any;
+  @State() canSetAudioTrack = false;
 
   /**
    * Pins the settings to the defined position inside the video player. This has no effect when
@@ -37,61 +38,65 @@ export class DefaultSettings {
     reflect: true,
   }) pin: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' = 'bottomRight';
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() playbackReady: PlayerProps['playbackReady'] = false;
 
-  /**
-   * @internal
-   */
+  @Watch('playbackReady')
+  async onPlaybackReady() {
+    const player = await findPlayer(this);
+    this.canSetPlaybackQuality = await player.canSetPlaybackQuality();
+    this.canSetPlaybackRate = await player.canSetPlaybackRate();
+  }
+
+  /** @internal */
   @Prop() playbackRate: PlayerProps['playbackRate'] = 1;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() playbackRates: PlayerProps['playbackRates'] = [1];
 
-  /**
-   * @internal
-   */
+  /** @internal */
+  @Prop() isVideoView: PlayerProps['isAudioView'] = false;
+
+  /** @internal */
   @Prop() playbackQuality?: PlayerProps['playbackQuality'];
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() playbackQualities: PlayerProps['playbackQualities'] = [];
 
-  /**
-   * @internal
-   */
-  @Prop() isCaptionsActive: PlayerProps['isCaptionsActive'] = false;
+  /** @internal */
+  @Prop() textTracks: PlayerProps['textTracks'] = [];
 
-  /**
-   * @internal
-   */
-  @Prop() currentCaption?: PlayerProps['currentCaption'];
+  /** @internal */
+  @Prop() currentTextTrack = -1;
 
-  /**
-   * @internal
-   */
-  @Prop() textTracks?: PlayerProps['textTracks'];
+  /** @internal */
+  @Prop() audioTracks: PlayerProps['audioTracks'] = [];
+
+  @Watch('audioTracks')
+  @Watch('playbackReady')
+  async onAudioTracksChange() {
+    const player = getPlayerFromRegistry(this);
+    this.canSetAudioTrack = (await player?.canSetAudioTrack()) ?? false;
+  }
+
+  /** @internal */
+  @Prop() currentAudioTrack = -1;
+
+  /** @internal */
+  @Prop() isTextTrackVisible = true;
 
   @Watch('textTracks')
-  onTextTracksChange() {
-    this.textTracksDisposal.empty();
-    if (isUndefined(this.textTracks)) return;
-    this.textTracksDisposal.add(listen(this.textTracks!, 'change', () => {
-      setTimeout(() => forceUpdate(this), 300);
-    }));
+  @Watch('playbackReady')
+  async onTextTracksChange() {
+    const player = getPlayerFromRegistry(this);
+    this.canSetTextTrack = (await player?.canSetTextTrack()) ?? false;
   }
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, [
       'i18n',
       'playbackReady',
@@ -99,186 +104,184 @@ export class DefaultSettings {
       'playbackRates',
       'playbackQuality',
       'playbackQualities',
-      'isCaptionsActive',
-      'currentCaption',
+      'isVideoView',
       'textTracks',
+      'currentTextTrack',
+      'isTextTrackVisible',
+      'audioTracks',
+      'currentAudioTrack',
     ]);
   }
 
   connectedCallback() {
-    this.player = findRootPlayer(this);
     this.dispatch = createDispatcher(this);
   }
 
-  componentWillRender() {
-    if (!this.playbackReady) return undefined;
-
-    return Promise.all([
-      this.buildPlaybackRateSubmenu(),
-      this.buildPlaybackQualitySubmenu(),
-      this.buildCaptionsSubmenu(),
-    ]);
+  componentDidLoad() {
+    this.onTextTracksChange();
   }
 
   disconnectedCallback() {
-    this.player = undefined;
     this.textTracksDisposal.empty();
   }
 
   private onPlaybackRateSelect(event: Event) {
-    const radio = event.target as HTMLVimeMenuRadioElement;
+    const radio = event.target as HTMLVmMenuRadioElement;
     this.dispatch('playbackRate', parseFloat(radio.value));
   }
 
-  private async buildPlaybackRateSubmenu() {
-    const canSetPlaybackRate = await this.player?.canSetPlaybackRate();
-
-    if (this.playbackRates.length === 1 || !canSetPlaybackRate) {
-      this.rateSubmenu = (
-        <vime-menu-item label={this.i18n.playbackRate} hint={this.i18n.normal} />
+  private buildPlaybackRateSubmenu() {
+    if (this.playbackRates.length <= 1 || !this.canSetPlaybackRate) {
+      return (
+        <vm-menu-item label={this.i18n.playbackRate} hint={this.i18n.normal} />
       );
-      return;
     }
 
     const formatRate = (rate: number) => ((rate === 1) ? this.i18n.normal : `${rate}`);
 
-    const radios = this.playbackRates.map((rate) => (
-      <vime-menu-radio
-        label={formatRate(rate)}
-        value={`${rate}`}
-      />
-    ));
-
-    this.rateSubmenu = (
-      <vime-submenu label={this.i18n.playbackRate} hint={formatRate(this.playbackRate)}>
-        <vime-menu-radio-group
+    return (
+      <vm-submenu label={this.i18n.playbackRate} hint={formatRate(this.playbackRate)}>
+        <vm-menu-radio-group
           value={`${this.playbackRate}`}
-          onVCheck={this.onPlaybackRateSelect.bind(this)}
+          onVmCheck={this.onPlaybackRateSelect.bind(this)}
         >
-          {radios}
-        </vime-menu-radio-group>
-      </vime-submenu>
+          {this.playbackRates.map((rate) => (
+            <vm-menu-radio label={formatRate(rate)} value={`${rate}`} />
+          ))}
+        </vm-menu-radio-group>
+      </vm-submenu>
     );
   }
 
   private onPlaybackQualitySelect(event: Event) {
-    const radio = event.target as HTMLVimeMenuRadioElement;
+    const radio = event.target as HTMLVmMenuRadioElement;
     this.dispatch('playbackQuality', radio.value);
   }
 
-  private async buildPlaybackQualitySubmenu() {
-    const canSetPlaybackQuality = await this.player?.canSetPlaybackQuality();
-
-    if (this.playbackQualities.length === 0 || !canSetPlaybackQuality) {
-      this.qualitySubmenu = (
-        <vime-menu-item
+  private buildPlaybackQualitySubmenu() {
+    if (this.playbackQualities.length <= 1 || !this.canSetPlaybackQuality) {
+      return (
+        <vm-menu-item
           label={this.i18n.playbackQuality}
           hint={this.playbackQuality ?? this.i18n.auto}
         />
       );
-      return;
     }
 
     // @TODO this doesn't account for audio qualities yet.
     const getBadge = (quality: string) => {
       const verticalPixels = parseInt(quality.slice(0, -1), 10);
-      if (verticalPixels > 2160) return 'UHD';
+      if (verticalPixels >= 2160) return 'UHD';
       if (verticalPixels >= 1080) return 'HD';
       return undefined;
     };
 
-    const radios = this.playbackQualities.map((quality) => (
-      <vime-menu-radio
-        label={quality}
-        value={quality}
-        badge={getBadge(quality)}
-      />
-    ));
-
-    this.qualitySubmenu = (
-      <vime-submenu label={this.i18n.playbackQuality} hint={this.playbackQuality}>
-        <vime-menu-radio-group
+    return (
+      <vm-submenu label={this.i18n.playbackQuality} hint={this.playbackQuality}>
+        <vm-menu-radio-group
           value={this.playbackQuality}
-          onVCheck={this.onPlaybackQualitySelect.bind(this)}
+          onVmCheck={this.onPlaybackQualitySelect.bind(this)}
         >
-          {radios}
-        </vime-menu-radio-group>
-      </vime-submenu>
+          {this.playbackQualities.map((quality) => (
+            <vm-menu-radio
+              label={quality}
+              value={quality}
+              badge={getBadge(quality)}
+            />
+          ))}
+        </vm-menu-radio-group>
+      </vm-submenu>
     );
   }
 
-  private async onCaptionSelect(event: Event) {
-    const radio = event.target as HTMLVimeMenuRadioElement;
-    const index = parseInt(radio.value, 10);
-    const player = findRootPlayer(this);
+  private onTextTrackSelect(event: Event) {
+    const radio = event.target as HTMLVmMenuRadioElement;
+    const trackId = parseInt(radio.value, 10);
+    const player = getPlayerFromRegistry(this);
 
-    if (index === -1) {
-      await player.toggleCaptionsVisibility(false);
+    if (trackId === -1) {
+      player?.setTextTrackVisibility(false);
       return;
     }
 
-    const track = Array.from(this.textTracks ?? [])[index];
-    if (!isUndefined(track)) {
-      if (!isUndefined(this.currentCaption)) this.currentCaption!.mode = 'disabled';
-      track.mode = 'showing';
-      await player.toggleCaptionsVisibility(true);
-    }
+    player?.setTextTrackVisibility(true);
+    player?.setCurrentTextTrack(trackId);
   }
 
-  private async buildCaptionsSubmenu() {
-    const captions = Array.from(this.textTracks ?? [])
-      .filter((track) => ['captions', 'subtitles'].includes(track.kind));
-
-    if (captions.length === 0) {
-      this.captionsSubmenu = (
-        <vime-menu-item label={this.i18n.subtitlesOrCc} hint={this.i18n.none} />
+  private buildTextTracksSubmenu() {
+    if (this.textTracks.length <= 1 || !this.canSetTextTrack) {
+      return (
+        <vm-menu-item
+          label={this.i18n.subtitlesOrCc}
+          hint={this.textTracks[this.currentTextTrack]?.label ?? this.i18n.none}
+        />
       );
-      return;
     }
 
-    const getTrackValue = (
-      track: TextTrack,
-    ) => `${Array.from(this.textTracks!).findIndex((t) => t === track)}`;
-
-    const radios = [(
-      <vime-menu-radio
-        label={this.i18n.off}
-        value="-1"
-      />
-    )].concat(captions.map((track) => (
-      <vime-menu-radio
-        label={track.label}
-        value={getTrackValue(track)}
-      />
-    )));
-
-    const groupValue = (!this.isCaptionsActive || isUndefined(this.currentCaption))
-      ? '-1'
-      : getTrackValue(this.currentCaption!);
-
-    this.captionsSubmenu = (
-      <vime-submenu
+    return (
+      <vm-submenu
         label={this.i18n.subtitlesOrCc}
-        hint={(this.isCaptionsActive ? this.currentCaption?.label : undefined) ?? this.i18n.off}
+        hint={
+          this.isTextTrackVisible ? this.textTracks[this.currentTextTrack]?.label : this.i18n.off
+        }
       >
-        <vime-menu-radio-group
-          value={groupValue}
-          onVCheck={this.onCaptionSelect.bind(this)}
+        <vm-menu-radio-group
+          value={`${!this.isTextTrackVisible ? -1 : this.currentTextTrack}`}
+          onVmCheck={this.onTextTrackSelect.bind(this)}
         >
-          {radios}
-        </vime-menu-radio-group>
-      </vime-submenu>
+          {[(
+            <vm-menu-radio label={this.i18n.off} value="-1" />
+          )].concat(this.textTracks.map((track, i) => (
+            <vm-menu-radio label={track.label} value={`${i}`} />
+          )))}
+        </vm-menu-radio-group>
+      </vm-submenu>
+    );
+  }
+
+  private onAudioTrackSelect(event: Event) {
+    const radio = event.target as HTMLVmMenuRadioElement;
+    const trackId = parseInt(radio.value, 10);
+    const player = getPlayerFromRegistry(this);
+    player?.setCurrentAudioTrack(trackId);
+  }
+
+  private buildAudioTracksMenu() {
+    if (this.audioTracks.length <= 1 || !this.canSetAudioTrack) {
+      return (
+        <vm-menu-item
+          label={this.i18n.audio}
+          hint={this.audioTracks[this.currentAudioTrack]?.label ?? this.i18n.default}
+        />
+      );
+    }
+
+    return (
+      <vm-submenu
+        label={this.i18n.audio}
+        hint={this.audioTracks[this.currentAudioTrack]?.label}
+      >
+        <vm-menu-radio-group
+          value={`${this.currentAudioTrack}`}
+          onVmCheck={this.onAudioTrackSelect.bind(this)}
+        >
+          {(this.audioTracks.map((track, i) => (
+            <vm-menu-radio label={track.label} value={`${i}`} />
+          )))}
+        </vm-menu-radio-group>
+      </vm-submenu>
     );
   }
 
   render() {
     return (
-      <vime-settings pin={this.pin}>
-        {this.rateSubmenu}
-        {this.qualitySubmenu}
-        {this.captionsSubmenu}
+      <vm-settings pin={this.pin}>
+        {this.buildAudioTracksMenu()}
+        {this.buildPlaybackRateSubmenu()}
+        {this.buildPlaybackQualitySubmenu()}
+        {this.isVideoView && this.buildTextTracksSubmenu()}
         <slot />
-      </vime-settings>
+      </vm-settings>
     );
   }
 }

@@ -5,7 +5,8 @@
     "publish": {
       "message": "chore(release): publish %s 🥳",
       "conventionalCommits": true,
-      "createRelease": "github"
+      "createRelease": "github",
+      "registry": "https://registry.npmjs.org"
     }
   },
   "packages": [

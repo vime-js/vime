@@ -1,6 +1,6 @@
 import {
   PlayerProp, usePlayerContext, PlayerProps,
-  Dispatcher, createDispatcher, findRootPlayer,
+  Dispatcher, createDispatcher, findPlayer,
   WritableProps, isWritableProp, initialState,
 } from '@vime/core';
 import { onMount } from 'svelte';
@@ -32,12 +32,13 @@ type Ref<T extends HTMLElement> = (() => T | SvelteWebComponent<T>);
  */
 export const usePlayer = <T extends HTMLElement>(
   ref: Ref<T>,
-  callback: (player: HTMLVimePlayerElement) => void,
+  callback: (player: HTMLVmPlayerElement) => void,
 ) => {
-  onMount(() => {
+  onMount(async () => {
     let el: any = ref();
     if (el.$$) el = el.getWebComponent();
-    callback(findRootPlayer(el));
+    const player = await findPlayer(el);
+    callback(player);
   });
 };
 
@@ -49,11 +50,13 @@ export const usePlayer = <T extends HTMLElement>(
  * @param playerRef A function which returns the player to create the store for.
  *
  * @example
- * <vime-player bind:this={player}>
+ * <Player bind:this={player}>
  *  <!-- ... -->
- * </vime-player>
+ * <Player>
  *
  * <script lang="ts">
+ *  import { Player } from '@vime/svelte';
+ *
  *  let player;
  *
  *  const { currentTime } = usePlayerStore(() => player);
@@ -75,7 +78,7 @@ export const usePlayerStore = <T extends HTMLElement>(ref: Ref<T>): PlayerStore 
     const canWrite = isWritableProp(prop);
 
     const set = (value: PlayerProps[P]) => {
-      if (!unwrap(internalStoreRef.get('attached')!)) {
+      if (!unwrap(internalStoreRef.get('ready')!)) {
         mountedQueue.push(() => { dispatch(prop as any, value); });
       } else {
         dispatch(prop as any, value);
@@ -101,28 +104,30 @@ export const usePlayerStore = <T extends HTMLElement>(ref: Ref<T>): PlayerStore 
       [prop]: vimeable(prop, initialState[prop]),
     }), {});
 
-  onMount(() => {
+  onMount(async () => {
     let el: any = ref();
     if (el.$$) el = el.getWebComponent();
 
-    const player = findRootPlayer(el);
+    const player = await findPlayer(el);
     dispatch = createDispatcher(el);
-    internalStoreRef.get('attached')!.set(player.attached);
+    internalStoreRef.get('ready')!.set(player.ready);
 
-    const disconnect = usePlayerContext(
+    const disconnect = await usePlayerContext(
       el,
       (Object.keys(initialState) as PlayerProp[]),
       (prop, value) => { internalStoreRef.get(prop as PlayerProp)!.set(value); },
+      player,
     );
 
-    if (!player.attached) {
-      const off = usePlayerContext(
+    if (!player.ready) {
+      const off = await usePlayerContext(
         el,
-        ['attached'],
+        ['ready'],
         () => {
           onPlayerMounted();
           off();
         },
+        player,
       );
     }
 

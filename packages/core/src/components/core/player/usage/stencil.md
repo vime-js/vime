@@ -2,7 +2,7 @@
 import { h } from '@stencil/core';
 
 class Example {
-  private player!: HTMLVimePlayerElement;
+  private player!: HTMLVmPlayerElement;
 
   @State() currentTime = 0;
   
@@ -27,19 +27,19 @@ class Example {
 
   render() {
     return (
-      <vime-player
+      <vm-player
         controls
         autoplay
         muted
         currentTime={this.currentTime}
-        onVCurrentTimeChange={this.onTimeUpdate.bind(this)}
-        onVFullscreenChange={this.onFullscreenChange.bind(this)}
+        onVmCurrentTimeChange={this.onTimeUpdate.bind(this)}
+        onVmFullscreenChange={this.onFullscreenChange.bind(this)}
         ref={(el) => { this.player = el; }}
       >
         {/* Provider component is placed here. */}
 
-        <vime-ui>{/* UI components are placed here. */}</vime-ui>
-      </vime-player>
+        <vm-ui>{/* UI components are placed here. */}</vm-ui>
+      </vm-player>
     );
   }
 }

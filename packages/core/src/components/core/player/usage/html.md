@@ -1,17 +1,17 @@
 ```html
-<vime-player controls autoplay muted current-time="30">
+<vm-player controls autoplay muted current-time="30">
   <!-- Provider component is placed here. -->
 
-  <vime-ui>
+  <vm-ui>
     <!-- UI components are placed here. -->
-  </vime-ui>
-</vime-player>
+  </vm-ui>
+</vm-player>
 
 <script>
-  const player = document.querySelector('vime-player');
+  const player = document.querySelector('vm-player');
 
   // Listening to an event.
-  player.addEventListener('vCurrentTimeChange', (event) => {
+  player.addEventListener('vmCurrentTimeChange', (event) => {
     const currentTime = event.detail;
     // ...
   });

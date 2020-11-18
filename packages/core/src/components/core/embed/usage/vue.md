@@ -1,20 +1,20 @@
 ```html {2-8,12,16} title="example.vue"
 <template>
-  <VimeEmbed
+  <Embed
     embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
     mediaTitle="Agent 327: Operation Barbershop"
     origin="https://www.youtube-nocookie.com"
     :params="params"
-    @vEmbedMessage="onMessage"
+    @vmEmbedMessage="onMessage"
   />
 </template>
 
 <script>
-  import { VimeEmbed } from '@vime/vue';
+  import { Embed } from '@vime/vue';
 
   export default {
     components: {
-      VimeEmbed,
+      Embed,
     },
 
     data: {

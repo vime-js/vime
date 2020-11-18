@@ -1,6 +1,6 @@
 ```html {2-17,22} title="example.svelte"
-<VimePlayer controls>
-  <VimeVideo videoId="411652396">
+<Player controls>
+  <Video videoId="411652396">
     <source data-src="/media/video.mp4" type="video/mp4" />
     <track
       default
@@ -15,11 +15,11 @@
       srclang="es"
       label="Spanish"
     />
-  </VimeVideo>
+  </Video>
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeVideo } from '@vime/svelte';
+  import { Player, Video } from '@vime/svelte';
 </script>
 ```

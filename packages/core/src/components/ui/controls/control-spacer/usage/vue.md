@@ -1,38 +1,38 @@
 ```html {8,22,33} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
-      <VimeControls>
-        <VimePlaybackControl />
-        <VimeVolumeControl />
-        <VimeControlSpacer />
-        <VimeFullscreenControl />
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+    <Ui>
+      <Controls>
+        <PlaybackControl />
+        <VolumeControl />
+        <ControlSpacer />
+        <FullscreenControl />
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
   import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimePlaybackControl,
-    VimeVolumeControl,
-    VimeControlSpacer,
-    VimeFullscreenControl,
+    Player,
+    Ui,
+    Controls,
+    PlaybackControl,
+    VolumeControl,
+    ControlSpacer,
+    FullscreenControl,
   } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimePlaybackControl,
-      VimeVolumeControl,
-      VimeControlSpacer,
-      VimeFullscreenControl,
+      Player,
+      Ui,
+      Controls,
+      PlaybackControl,
+      VolumeControl,
+      ControlSpacer,
+      FullscreenControl,
     },
   };
 </script>

@@ -1,42 +1,42 @@
 ```html {6-8,10-13,24,35} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
-      <VimeControls>
-        <VimeControlGroup>
-          <VimeScrubberControl />
-        </VimeControlGroup>
+    <Ui>
+      <Controls>
+        <ControlGroup>
+          <ScrubberControl />
+        </ControlGroup>
 
-        <VimeControlGroup space="top">
-          <VimePlaybackControl />
-          <VimeVolumeControl />
-        </VimeControlGroup>
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+        <ControlGroup space="top">
+          <PlaybackControl />
+          <VolumeControl />
+        </ControlGroup>
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
   import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeControlGroup,
-    VimeScrubberControl,
-    VimePlaybackControl,
-    VimeVolumeControl,
+    Player,
+    Ui,
+    Controls,
+    ControlGroup,
+    ScrubberControl,
+    PlaybackControl,
+    VolumeControl,
   } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimeControlGroup,
-      VimeScrubberControl,
-      VimePlaybackControl,
-      VimeVolumeControl,
+      Player,
+      Ui,
+      Controls,
+      ControlGroup,
+      ScrubberControl,
+      PlaybackControl,
+      VolumeControl,
     },
   };
 </script>

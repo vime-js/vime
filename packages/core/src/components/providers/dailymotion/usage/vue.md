@@ -1,18 +1,18 @@
 ```html {3,9,14} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />
+  <Player controls>
+    <Dailymotion videoId="k3b11PemcuTrmWvYe0q" />
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeDailymotion } from '@vime/vue';
+  import { Player, Dailymotion } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeDailymotion,
+      Player,
+      Dailymotion,
     },
   };
 </script>

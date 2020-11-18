@@ -1,10 +1,7 @@
 ---
-title: vime-video
+title: vm-video
 sidebar_label: Video
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 Enables loading, playing and controlling videos via the HTML5 [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video) element.
 
@@ -14,23 +11,26 @@ Enables loading, playing and controlling videos via the HTML5 [`<video>`](https:
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {2-17}
-<vime-player controls>
-  <vime-video poster="/media/poster.png">
+<vm-player controls>
+  <vm-video poster="/media/poster.png">
     <source data-src="/media/video.mp4" type="video/mp4" />
     <track
       default
@@ -45,24 +45,24 @@ values={[
       srclang="es"
       label="Spanish"
     />
-  </vime-video>
+  </vm-video>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,7-22}
 import React from 'react';
-import { VimePlayer, VimeVideo } from '@vime/react';
+import { Player, Video } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeVideo>
+    <Player controls>
+      <Video>
         <source data-src="/media/video.mp4" type="video/mp4" />
         <track
           default
@@ -77,22 +77,22 @@ function Example() {
           srcLang="es"
           label="Spanish"
         />
-      </VimeVideo>
+      </Video>
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {3-18,24,29} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeVideo>
+  <Player controls>
+    <Video>
       <source data-src="/media/video.mp4" type="video/mp4" />
       <track
         default
@@ -107,31 +107,31 @@ function Example() {
         srclang="es"
         label="Spanish"
       />
-    </VimeVideo>
+    </Video>
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeVideo } from '@vime/vue';
+  import { Player, Video } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeVideo,
+      Player,
+      Video,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {2-17,22} title="example.svelte"
-<VimePlayer controls>
-  <VimeVideo videoId="411652396">
+<Player controls>
+  <Video videoId="411652396">
     <source data-src="/media/video.mp4" type="video/mp4" />
     <track
       default
@@ -146,17 +146,17 @@ function Example() {
       srclang="es"
       label="Spanish"
     />
-  </VimeVideo>
+  </Video>
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeVideo } from '@vime/svelte';
+  import { Player, Video } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -164,8 +164,8 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-video poster="/media/poster.png">
+      <vm-player controls>
+        <vm-video poster="/media/poster.png">
           <source data-src="/media/video.mp4" type="video/mp4" />
           <track
             default
@@ -180,9 +180,9 @@ class Example {
             srclang="es"
             label="Spanish"
           />
-        </vime-video>
+        </vm-video>
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -190,12 +190,11 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {2-17} title="example.html"
-<vime-player controls>
-  <vime-video poster="/media/poster.png">
+<vm-player controls>
+  <vm-video poster="/media/poster.png">
     <source data-src="/media/video.mp4" type="video/mp4" />
     <track
       default
@@ -210,28 +209,29 @@ class Example {
       srclang="fr"
       label="French"
     />
-  </vime-video>
+  </vm-video>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property                | Attribute                 | Description                                                                                                                                                                                                                                                                        | Type                                               | Default      |
-| ----------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------ |
-| `autoPiP`               | `auto-pip`                | **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.                                                                                           | `boolean ∣ undefined`                              | `undefined`  |
-| `controlsList`          | `controls-list`           | Determines what controls to show on the media element whenever the browser shows its own set of controls (e.g. when the controls attribute is specified).                                                                                                                          | `string ∣ undefined`                               | `undefined`  |
-| `crossOrigin`           | `cross-origin`            | Whether to use CORS to fetch the related image. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more information.                                                                                                                          | `"" ∣ "anonymous" ∣ "use-credentials" ∣ undefined` | `undefined`  |
-| `disablePiP`            | `disable-pip`             | **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.                                                                                                                             | `boolean ∣ undefined`                              | `undefined`  |
-| `disableRemotePlayback` | `disable-remote-playback` | **EXPERIMENTAL:** Whether to disable the capability of remote playback in devices that are attached using wired (HDMI, DVI, etc.) and wireless technologies (Miracast, Chromecast, DLNA, AirPlay, etc).                                                                            | `boolean ∣ undefined`                              | `undefined`  |
-| `mediaTitle`            | `media-title`             | The title of the current media.                                                                                                                                                                                                                                                    | `string ∣ undefined`                               | `undefined`  |
-| `poster`                | `poster`                  | A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.                                                                      | `string ∣ undefined`                               | `undefined`  |
-| `preload`               | `preload`                 | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" ∣ "auto" ∣ "metadata" ∣ "none" ∣ undefined`    | `'metadata'` |
+| Property                | Description                                                                                                                                                                                                                                                                        | Type                                               | Default      |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------ |
+| `autoPiP`               | **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.                                                                                           | `boolean ∣ undefined`                              | `undefined`  |
+| `controlsList`          | Determines what controls to show on the media element whenever the browser shows its own set of controls (e.g. when the controls attribute is specified).                                                                                                                          | `string ∣ undefined`                               | `undefined`  |
+| `crossOrigin`           | Whether to use CORS to fetch the related image. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more information.                                                                                                                          | `"" ∣ "anonymous" ∣ "use-credentials" ∣ undefined` | `undefined`  |
+| `disablePiP`            | **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.                                                                                                                             | `boolean ∣ undefined`                              | `undefined`  |
+| `disableRemotePlayback` | **EXPERIMENTAL:** Whether to disable the capability of remote playback in devices that are attached using wired (HDMI, DVI, etc.) and wireless technologies (Miracast, Chromecast, DLNA, AirPlay, etc).                                                                            | `boolean ∣ undefined`                              | `undefined`  |
+| `mediaTitle`            | The title of the current media.                                                                                                                                                                                                                                                    | `string ∣ undefined`                               | `undefined`  |
+| `poster`                | A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.                                                                      | `string ∣ undefined`                               | `undefined`  |
+| `preload`               | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" ∣ "auto" ∣ "metadata" ∣ "none" ∣ undefined`    | `'metadata'` |
+
 
 ## Slots
 
@@ -239,29 +239,17 @@ class Example {
 | ---- | ---------------------------------------------------------------------------- |
 |      | Pass `<source>` and `<track>` elements to the underlying HTML5 media player. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-dash](dash.md)
-- [vime-hls](hls.md)
-- [vime-playground](../core/playground.md)
+ - [vm-dash](./dash)
+ - [vm-hls](./hls)
+ - [vm-playground](./../core/playground)
 
 ### Depends on
 
-- [vime-file](file.md)
+- [vm-file](./file)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-video --> vime-file
-  vime-dash --> vime-video
-  vime-hls --> vime-video
-  vime-playground --> vime-video
-  style vime-video fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

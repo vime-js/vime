@@ -1,28 +1,28 @@
 ```tsx {8,20}
 import React from 'react';
 import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
-  VimePlaybackControl,
-  VimeVolumeControl,
-  VimeControlSpacer,
-  VimeFullscreenControl,
+  Player,
+  Ui,
+  Controls,
+  PlaybackControl,
+  VolumeControl,
+  ControlSpacer,
+  FullscreenControl,
 } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
-        <VimeControls fullWidth>
-          <VimePlaybackControl />
-          <VimeVolumeControl />
-          <VimeControlSpacer />
-          <VimeFullscreenControl />
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+      <Ui>
+        <Controls fullWidth>
+          <PlaybackControl />
+          <VolumeControl />
+          <ControlSpacer />
+          <FullscreenControl />
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```

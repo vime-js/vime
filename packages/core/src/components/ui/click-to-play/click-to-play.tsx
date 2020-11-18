@@ -1,14 +1,16 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import {
-  h, Component, Host, Prop,
+  h, Component, Prop, Method,
 } from '@stencil/core';
 import { createDispatcher, Dispatcher } from '../../core/player/PlayerDispatcher';
 import { PlayerProps } from '../../core/player/PlayerProps';
-import { withPlayerContext } from '../../core/player/PlayerContext';
-import { IS_MOBILE } from '../../../utils/support';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-click-to-play',
-  styleUrl: 'click-to-play.scss',
+  tag: 'vm-click-to-play',
+  styleUrl: 'click-to-play.css',
+  shadow: true,
 })
 export class ClickToPlay {
   private dispatch!: Dispatcher;
@@ -19,33 +21,40 @@ export class ClickToPlay {
    */
   @Prop() useOnMobile = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() paused: PlayerProps['paused'] = true;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
+  /** @internal */
+  @Prop() isMobile: PlayerProps['isMobile'] = false;
+
   constructor() {
-    withPlayerContext(this, ['paused', 'isVideoView']);
+    withComponentRegistry(this);
+    withPlayerContext(this, ['paused', 'isVideoView', 'isMobile']);
   }
 
   connectedCallback() {
     this.dispatch = createDispatcher(this);
   }
 
-  private onClick() {
+  /** @internal */
+  @Method()
+  async forceClick() {
+    this.onClick();
+  }
+
+  onClick() {
     this.dispatch('paused', !this.paused);
   }
 
   render() {
     return (
-      <Host
+      <div
         class={{
-          enabled: this.isVideoView && (!IS_MOBILE || this.useOnMobile),
+          clickToPlay: true,
+          enabled: this.isVideoView && (!this.isMobile || this.useOnMobile),
         }}
         onClick={this.onClick.bind(this)}
       />

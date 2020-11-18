@@ -16,14 +16,10 @@ import {
 export class TapSidesToSeek {
   private dispatch!: Dispatcher;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() currentTime: PlayerProps['currentTime'] = 0;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() duration: PlayerProps['duration'] = -1;
 
   connectedCallback() {

@@ -1,6 +1,6 @@
 ```html {2}
-<vime-player controls>
-  <vime-youtube video-id="DyTCOwB0DVw"></vime-youtube>
+<vm-player controls>
+  <vm-youtube video-id="DyTCOwB0DVw"></vm-youtube>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```

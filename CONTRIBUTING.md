@@ -89,10 +89,7 @@ The only directory from here that really matters is the [`src`](./packages/core/
 contains all the source code for Vime. Inside it you'll find:
 
 - `utils`: This directory contains utility functions used throughout Vime.
-- `globals`: This directory contains code that is shared/applied to all components.
 - `components/core`: This directory contains components the are the heart of Vime such as the `Player`.
-- `components/plugins`: This directory contains components that add completely new functionality to
-  the Vime player such as the Chromecast plugin.
 - `components/providers`: This directory contains the components that are responsible for loading
   and controlling media players such as YouTube, Vimeo etc.
 - `components/ui`: This directory contains user interface (UI) components such as controls or captions.
@@ -106,8 +103,6 @@ $: yarn build
 
 - `build`: This script will build the package and generate/update any new component documentation.
 - `serve`: This script will boot the development environment at `http://localhost:3336`.
-- `test:unit.watch`: This script will run all unit tests, and watch for file changes to re-run.
-- `cy:open`: This script will launch the Cypress GUI for performing E2E testing.
 - `generate:provider`: This script will create a new media provider.
 
 ## 🖌️ Code Style
@@ -130,34 +125,12 @@ In regards to naming variables:
 
 ### CSS
 
-This project utilizes both CSS and [SCSS](https://sass-lang.com). You can create either file per
-component depending on the complexity of your styling needs.
-
 There are no styling or formatting rules, simply refer to other files to maintain some
-consistency, and don't use any naming conventions such as BEM. Make sure to scope each file by
-always referring to the root component selector first in any CSS declaration.
-
-For example, if we have a slider component we could create some styles like so:
-
-```scss
-vime-slider {
-  // ...
-
-  // vime-slider.active
-  &.active {
-    // ...
-  }
-
-  // vime-slider .child
-  & .child {
-    // ...
-  }
-}
-```
+consistency, and don't use any special naming conventions such as BEM. 
 
 ## 🧰 Core
 
-At the root of Vime we always have the [`vime-player`](./packages/core/src/components/core/player/player.tsx)
+At the root of Vime we always have the [`vm-player`](./packages/core/src/components/core/player/player.tsx)
 component, which maintains the current state of the player and keeps plugins, providers and UI components
 in sync. Properties are passed down from the player to update child components through a context
 provider (exactly like `React.ContextProvider`), and updates are sent to the player by dispatching
@@ -166,9 +139,8 @@ Any "special" properties that require calling a method on the provider are watch
 automatically. For example, updating the `currentTime` property will trigger a call to the provider's
 `setCurrentTime` method.
 
-It's important to note that changes don't happen immediately but rather asynchronously. The player
-maintains its own queue for processing all state changes, so as updates comes through the
-events, they are processed and queued to happen in the next render cycle.
+It's important to note that changes don't happen immediately but rather asynchronously, 
+they are processed and queued to happen in the next render cycle.
 
 There are only "two" simple functions that matter when creating a new Vime component and interacting
 with the player. Let's go through them briefly one at a time.
@@ -181,7 +153,7 @@ separate context function is used for providers simply as a shorthand, because a
 the same subset of player properties.
 
 The `createDispatcher` (`createProviderDispatcher` for providers) function creates an event dispatcher
-to send updates to the player through the `vStateChange` (`vProviderChange` for providers) event. The
+to send updates to the player through the `vmStateChange` (`vmProviderChange` for providers) event. The
 dispatcher is typed to simply take in a player property that can be written to, and its new value. You
 can refer to existing Vime components to see its usage. A separate event is used for providers
 because they have additional write privileges (`buffered`, `seeking` etc.), and it helps the
@@ -205,20 +177,13 @@ Let's pretend we're creating a new provider for Twitch, the steps will generally
 6. The Twitch player is loaded in an `<iframe>` so we'll need to setup the `Embed` component.
 
 From here onwards it's best to refer to existing providers as a guide and slowly implement each
-method you see. Don't forget to emit the `vLoadStart` event when new media is loading, and to
+method you see. Don't forget to emit the `vmLoadStart` event when new media is loading, and to
 finalize the `getAdapter` method.
 
 As we're building out our provider we'll want to see and test it in the browser. There's
-already a file setup to do this. Go to [`playground/index.html`](./packages/core/playground/index.html)
-and add the provider just like the others have already been done so. You can serve the dev environment
+already a file setup to do this. Go to the [`playground`](./packages/core/src/components/core/playground/playground.tsx)
+component and add the provider just like the others have already been done so. You can serve the dev environment
 `yarn serve`, and select the file through the explorer to begin interacting with it in the browser.
-
-When it comes to running automated E2E tests on the provider we can head over to
-[`cypress/tests/providers`](./packages/core/cypress/tests/providers) and add our provider just like
-the others have already been done so. Launch the Cypress testing environment `yarn cy:open`, and
-run the test file we just created. A few tests are a little flaky, re-run if you're sure something
-should pass. At the minimum, the test harness should give you a good idea of everything your provider
-should be able to perform.
 
 After we wrap up all our testing and we're satisfied, the final steps are:
 
@@ -240,34 +205,13 @@ player. Hide/show and position it accordingly, and if it's inside a video player
 the `z-index` and `pointer-events` css properties of any elements that are positioned absolutely,
 such as a container that stretches out the entire video player. We don't want to block other
 components and prevent them from being interacted with. Open the 
-[default theme](./packages/core/src/globals/themes/default.css), and go to the `Z-Index` section 
+[default theme](./packages/core/src/themes/default.css), and go to the `Z-Index` section 
 to see existing z-index levels.
 
 If you're creating any new CSS variables then make sure to document them (see existing components on
-how to do so), and set the values inside the [default theme](./packages/core/src/globals/themes/default.css)
+how to do so), and set the values inside the [default theme](./packages/core/src/themes/default.css)
 CSS file. If the component also has a light theme, set the variable values inside the
-[light theme](./packages/core/src/globals/themes/light.css) CSS file.
-
-UI components can be structurally, visually, unit or E2E tested. All UI test files are located
-either in the `tests` directory next to the component or in
-[`cypress/tests/ui`](./packages/core/cypress/tests/ui).
-
-- Structural tests inform us on whether what's rendered in the DOM is correct. We can use Jest
-  snapshots to get the structure of the component's DOM tree and validate it.
-- Visual tests are a manual test in which we validate the correctness of the component by seeing,
-  and interacting with it directly in the browser. You can create a `index.html` file in the `tests`
-  directory of the component, and visit it by serving the development environment `yarn serve`,
-  and navigating to the file through the explorer. If it's part of the default UI then see
-  [`playground/index.html`](./packages/core/playground/index.html).
-- Unit tests enable us to test specific state changes and their outcomes, such as the changing of a
-  component property. Create the `component.spec.ts` file in the `tests` directory of the component,
-  and refer to existing tests to guide you here. For some additional context, review the
-  [Stencil unit testing guide](https://stenciljs.com/docs/unit-testing).
-- E2E tests allow us to behave as the end user, and see if components interact with each other
-  correctly in a real world scenario. These are performed with Cypress. Refer to existing tests
-  in the [`cypress/tests/ui`](./packages/core/cypress/tests/ui) directory to guide you.
-
-> TIP: You can press "p" when running unit tests with Jest to filter which tests are run.
+[light theme](./packages/core/src/themes/light.css) CSS file.
 
 After we wrap up all our testing and we're satisfied, the final steps are:
 

@@ -19,7 +19,7 @@ function* getComponents(dir = resolve(__dirname, '../docs/components')) {
 
 const formatSidebarLabel = (name) => name
   .toLowerCase()
-  .replace('vime-', '')
+  .replace('vm-', '')
   .replace(/(?:^|-)\w/g, (match) => match.toUpperCase())
   .replace(/-/g, '')
   .replace('Ui', 'UI');

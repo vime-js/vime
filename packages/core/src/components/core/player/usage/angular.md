@@ -1,26 +1,26 @@
 ```html title="example.html"
-<vime-player
+<vm-player
   #player
   autoplay
   muted
   [currentTime]="currentTime"
-  (vCurrentTimeChange)="onTimeUpdate($event)"
-  (vFullscreenChange)="onFullscreenChange($event)"
+  (vmCurrentTimeChange)="onTimeUpdate($event)"
+  (vmFullscreenChange)="onFullscreenChange($event)"
 >
   <!-- Provider component is placed here. -->
 
-  <vime-ui>
+  <vm-ui>
     <!-- UI components are placed here. -->
-  </vime-ui>
-</vime-player>
+  </vm-ui>
+</vm-player>
 ```
 
 ```ts title="example.ts"
 import { ViewChild } from '@angular/core';
-import { VimePlayer } from '@vime/angular';
+import { Player } from '@vime/angular';
 
 class Example {
-  @ViewChild('player') player!: VimePlayer;
+  @ViewChild('player') player!: Player;
 
   currentTime = 0;
 

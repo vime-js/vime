@@ -1,11 +1,11 @@
-import {
-  h, Host, Component, Prop,
-} from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 import { formatTime } from '../../../../utils/formatters';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-time',
+  tag: 'vm-time',
   styleUrl: 'time.css',
+  shadow: true,
 })
 export class Time {
   /**
@@ -24,11 +24,18 @@ export class Time {
    */
   @Prop() alwaysShowHours = false;
 
+  constructor() {
+    withComponentRegistry(this);
+  }
+
   render() {
     return (
-      <Host aria-label={this.label}>
+      <div
+        class="time"
+        aria-label={this.label}
+      >
         {formatTime(Math.max(0, this.seconds), this.alwaysShowHours)}
-      </Host>
+      </div>
     );
   }
 }

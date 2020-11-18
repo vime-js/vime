@@ -15,6 +15,8 @@ export const en: Translation = {
   volume: 'Volume',
   mute: 'Mute',
   unmute: 'Unmute',
+  audio: 'Audio',
+  default: 'Default',
   captions: 'Captions',
   subtitlesOrCc: 'Subtitles/CC',
   enableCaptions: 'Enable subtitles/captions',

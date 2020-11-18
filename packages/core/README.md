@@ -7,8 +7,8 @@ the building blocks of Vime.
 ## Example
 
 ```html
-<vime-player autoplay muted>
-  <vime-video poster="/media/poster.png" cross-origin>
+<vm-player autoplay muted>
+  <vm-video poster="/media/poster.png" cross-origin>
     <source data-src="/media/video.mp4" type="video/mp4" />
     <track
       default
@@ -23,30 +23,30 @@ the building blocks of Vime.
       srclang="es"
       label="Spanish"
     />
-  </vime-video>
+  </vm-video>
 
-  <vime-ui>
-    <vime-click-to-play />
-    <vime-captions />
-    <vime-poster />
-    <vime-spinner />
-    <vime-default-settings />
-    <vime-controls pin="bottomLeft" active-duration="2750" full-width>
-      <vime-playback-control tooltip-direction="right" />
-      <vime-volume-control />
-      <vime-time-progress />
-      <vime-control-spacer />
-      <vime-caption-control />
-      <vime-pip-control keys="p" />
-      <vime-settings-control />
-      <vime-fullscreen-control keys="f" tooltip-direction="left" />
-    </vime-controls>
-  </vime-ui>
+  <vm-ui>
+    <vm-click-to-play />
+    <vm-captions />
+    <vm-poster />
+    <vm-spinner />
+    <vm-default-settings />
+    <vm-controls pin="bottomLeft" active-duration="2750" full-width>
+      <vm-playback-control tooltip-direction="right" />
+      <vm-volume-control />
+      <vm-time-progress />
+      <vm-control-spacer />
+      <vm-caption-control />
+      <vm-pip-control keys="p" />
+      <vm-settings-control />
+      <vm-fullscreen-control keys="f" tooltip-direction="left" />
+    </vm-controls>
+  </vm-ui>
 
-  <vime-plugins>
-    <vime-chromecast />
-  </vime-plugins>
-</vime-player>
+  <vm-plugins>
+    <vm-chromecast />
+  </vm-plugins>
+</vm-player>
 ```
 
 ## Related

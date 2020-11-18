@@ -1,13 +1,13 @@
 ```html {2-5,10} title="example.svelte"
-<VimePlayer controls>
-  <VimeAudio>
+<Player controls>
+  <Audio>
     <source data-src="/media/audio.mp3" type="audio/mp3" />
     <!-- <source> and <track> elements are placed here. -->
-  </VimeAudio>
+  </Audio>
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeAudio } from '@vime/svelte';
+  import { Player, Audio } from '@vime/svelte';
 </script>
 ```

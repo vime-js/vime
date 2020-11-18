@@ -1,157 +1,47 @@
 import {
-  h, Component, Prop, Watch, Host, State, Event, EventEmitter,
+  h, Component, Prop, Watch, State,
 } from '@stencil/core';
 import { PlayerProps } from '../../core/player/PlayerProps';
-import { Disposal } from '../../core/player/Disposal';
-import { isUndefined } from '../../../utils/unit';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
+import { isNullOrUndefined } from '../../../utils/unit';
+import { Disposal } from '../../../utils/Disposal';
 import { listen } from '../../../utils/dom';
-import { withPlayerContext } from '../../core/player/PlayerContext';
+import { createDispatcher, Dispatcher } from '../../core/player/PlayerDispatcher';
+import { withControlsCollisionDetection } from '../controls/controls/withControlsCollisionDetection';
+import { findPlayer } from '../../core/player/findPlayer';
 
 @Component({
-  tag: 'vime-captions',
-  styleUrl: 'captions.scss',
+  tag: 'vm-captions',
+  styleUrl: 'captions.css',
+  shadow: true,
 })
 export class Captions {
-  private textTracksDisposal = new Disposal();
+  private dispatch!: Dispatcher;
 
-  private textTrackDisposal = new Disposal();
+  private sizeDisposal = new Disposal();
 
-  private state = new Map<TextTrack, TextTrackMode>();
+  private textDisposal = new Disposal();
 
   @State() isEnabled = false;
 
-  @State() activeTrack?: TextTrack;
+  @State() cue?: string;
 
-  @Watch('activeTrack')
-  onActiveTrackChange() {
-    this.vTrackChange.emit(this.activeTrack);
-  }
-
-  @State() activeCues: TextTrackCue[] = [];
-
-  @Watch('activeCues')
-  onActiveCuesChange() {
-    this.vCuesChange.emit(this.activeCues);
-  }
+  @State() fontSize: 'sm' | 'md' | 'lg' | 'xl' = 'sm';
 
   /**
    * Whether the captions should be visible or not.
    */
   @Prop() hidden = false;
 
-  /**
-   * The height of any lower control bar in pixels so that the captions can reposition when it's
-   * active.
-   */
-  @Prop() controlsHeight = 0;
-
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isControlsActive: PlayerProps['isControlsActive'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() playbackStarted: PlayerProps['playbackStarted'] = false;
-
-  /**
-   * @internal
-   */
-  @Prop() textTracks?: PlayerProps['textTracks'];
-
-  /**
-   * Emitted when the current track changes.
-   */
-  @Event({ bubbles: false }) vTrackChange!: EventEmitter<TextTrack | undefined>;
-
-  /**
-   * Emitted when the active cues change. A cue is active when
-   * `currentTime >= cue.startTime && currentTime <= cue.endTime`.
-   */
-  @Event({ bubbles: false }) vCuesChange!: EventEmitter<TextTrackCue[]>;
-
-  constructor() {
-    withPlayerContext(this, [
-      'isVideoView',
-      'playbackStarted',
-      'isControlsActive',
-      'textTracks',
-    ]);
-  }
-
-  disconnectedCallback() {
-    this.cleanup();
-  }
-
-  private cleanup() {
-    this.state.clear();
-    this.textTracksDisposal.empty();
-    this.textTrackDisposal.empty();
-  }
-
-  private onCueChange() {
-    this.activeCues = Array.from(this.activeTrack?.activeCues ?? []);
-  }
-
-  private onTrackChange() {
-    this.activeCues = [];
-    this.textTrackDisposal.empty();
-    if (isUndefined(this.activeTrack)) return;
-    this.textTrackDisposal.add(listen(this.activeTrack!, 'cuechange', this.onCueChange.bind(this)));
-  }
-
-  private findActiveTrack() {
-    let activeTrack: TextTrack;
-
-    Array.from(this.textTracks!).forEach((track) => {
-      if (isUndefined(activeTrack) && (track.mode === 'showing')) {
-        // eslint-disable-next-line no-param-reassign
-        track.mode = 'hidden';
-        activeTrack = track;
-        this.state.set(track, 'hidden');
-      } else {
-        // eslint-disable-next-line no-param-reassign
-        track.mode = 'disabled';
-        this.state.set(track, 'disabled');
-      }
-    });
-
-    return activeTrack!;
-  }
-
-  private onTracksChange() {
-    let hasChanged = false;
-
-    Array.from(this.textTracks!).forEach((track) => {
-      if (!hasChanged) {
-        hasChanged = !this.state.has(track) || (track.mode !== this.state.get(track));
-      }
-
-      this.state.set(track, track.mode);
-    });
-
-    if (hasChanged) {
-      const activeTrack = this.findActiveTrack();
-      if (this.activeTrack !== activeTrack) {
-        this.activeTrack = activeTrack;
-        this.onTrackChange();
-      }
-    }
-  }
-
-  @Watch('textTracks')
-  onTextTracksListChange() {
-    this.cleanup();
-    if (isUndefined(this.textTracks)) return;
-    this.onTracksChange();
-    this.textTracksDisposal.add(listen(this.textTracks!, 'change', this.onTracksChange.bind(this)));
-  }
 
   @Watch('isVideoView')
   @Watch('playbackStarted')
@@ -159,27 +49,109 @@ export class Captions {
     this.isEnabled = this.playbackStarted && this.isVideoView;
   }
 
-  private renderCurrentCue() {
-    const currentCue = this.activeCues[0];
-    if (isUndefined(currentCue)) return '';
+  /** @internal */
+  @Prop() textTracks: PlayerProps['textTracks'] = [];
+
+  /** @internal */
+  @Prop() currentTextTrack: PlayerProps['currentTextTrack'] = -1;
+
+  /** @internal */
+  @Prop() isTextTrackVisible: PlayerProps['isTextTrackVisible'] = true;
+
+  @Watch('textTracks')
+  @Watch('currentTextTrack')
+  onTextTracksChange() {
+    const textTrack = this.textTracks[this.currentTextTrack];
+
+    const renderCues = () => {
+      const activeCues = Array.from(textTrack.activeCues ?? []);
+      this.renderCurrentCue(activeCues[0] as VTTCue);
+    };
+
+    this.textDisposal.empty();
+
+    if (!isNullOrUndefined(textTrack)) {
+      renderCues();
+      this.textDisposal.add(listen(textTrack, 'cuechange', renderCues));
+    }
+  }
+
+  constructor() {
+    withComponentRegistry(this);
+    withControlsCollisionDetection(this);
+    withPlayerContext(this, [
+      'isVideoView',
+      'playbackStarted',
+      'isControlsActive',
+      'textTracks',
+      'currentTextTrack',
+      'isTextTrackVisible',
+    ]);
+  }
+
+  connectedCallback() {
+    this.dispatch = createDispatcher(this);
+    this.dispatch('shouldRenderNativeTextTracks', false);
+    this.onTextTracksChange();
+    this.onPlayerResize();
+  }
+
+  disconnectedCallback() {
+    this.textDisposal.empty();
+    this.sizeDisposal.empty();
+    this.dispatch('shouldRenderNativeTextTracks', true);
+  }
+
+  private async onPlayerResize() {
+    const player = await findPlayer(this);
+    const container = await player.getContainer();
+
+    const resizeObs = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      const { width } = entry.contentRect;
+      if (width >= 1360) {
+        this.fontSize = 'xl';
+      } else if (width >= 1024) {
+        this.fontSize = 'lg';
+      } else if (width >= 768) {
+        this.fontSize = 'md';
+      } else {
+        this.fontSize = 'sm';
+      }
+    });
+
+    resizeObs.observe(container!);
+  }
+
+  private renderCurrentCue(cue?: VTTCue) {
+    if (isNullOrUndefined(cue)) {
+      this.cue = '';
+      return;
+    }
+
     const div = document.createElement('div');
-    div.append((currentCue as VTTCue)!.getCueAsHTML());
-    return div.innerHTML.trim();
+    div.append(cue.getCueAsHTML());
+    this.cue = div.innerHTML.trim();
   }
 
   render() {
     return (
-      <Host
+      <div
         style={{
-          transform: `translateY(-${this.isControlsActive ? this.controlsHeight : 24}px)`,
+          transform: `translateY(calc(${this.isControlsActive ? 'var(--vm-controls-height)' : '24px'} * -1))`,
         }}
         class={{
+          captions: true,
           enabled: this.isEnabled,
           hidden: this.hidden,
+          fontMd: (this.fontSize === 'md'),
+          fontLg: (this.fontSize === 'lg'),
+          fontXl: (this.fontSize === 'xl'),
+          inactive: !this.isTextTrackVisible,
         }}
       >
-        <span>{this.renderCurrentCue()}</span>
-      </Host>
+        <span class="cue">{this.cue}</span>
+      </div>
     );
   }
 }

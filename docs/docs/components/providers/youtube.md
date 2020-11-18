@@ -1,10 +1,7 @@
 ---
-title: vime-youtube
+title: vm-youtube
 sidebar_label: Youtube
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 Enables loading, playing and controlling videos from [YouTube](https://www.youtube.com).
 
@@ -27,89 +24,92 @@ Enables loading, playing and controlling videos from [YouTube](https://www.youtu
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {2}
-<vime-player controls>
-  <vime-youtube video-id="DyTCOwB0DVw"></vime-youtube>
+<vm-player controls>
+  <vm-youtube video-id="DyTCOwB0DVw"></vm-youtube>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,7}
 import React from 'react';
-import { VimePlayer, VimeYoutube } from '@vime/react';
+import { Player, Youtube } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeYoutube videoId="DyTCOwB0DVw" />
+    <Player controls>
+      <Youtube videoId="DyTCOwB0DVw" />
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {3,9,14} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeYoutube videoId="DyTCOwB0DVw" />
+  <Player controls>
+    <Youtube videoId="DyTCOwB0DVw" />
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeYoutube } from '@vime/vue';
+  import { Player, Youtube } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeYoutube,
+      Player,
+      Youtube,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {2,7} title="example.svelte"
-<VimePlayer controls>
-  <VimeYoutube videoId="DyTCOwB0DVw" />
+<Player controls>
+  <Youtube videoId="DyTCOwB0DVw" />
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeYoutube } from '@vime/svelte';
+  import { Player, Youtube } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -117,10 +117,10 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-youtube videoId="DyTCOwB0DVw" />
+      <vm-player controls>
+        <vm-youtube videoId="DyTCOwB0DVw" />
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -128,49 +128,38 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {2} title="example.html"
-<vime-player controls>
-  <vime-youtube cookies="true" video-id="DyTCOwB0DVw"></vime-youtube>
+<vm-player controls>
+  <vm-youtube cookies="true" video-id="DyTCOwB0DVw"></vm-youtube>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property                | Attribute                 | Description                                                           | Type                 | Default     |
-| ----------------------- | ------------------------- | --------------------------------------------------------------------- | -------------------- | ----------- |
-| `cookies`               | `cookies`                 | Whether cookies should be enabled on the embed.                       | `boolean`            | `false`     |
-| `poster`                | `poster`                  | The absolute URL of a custom poster to be used for the current video. | `string ∣ undefined` | `undefined` |
-| `showFullscreenControl` | `show-fullscreen-control` | Whether the fullscreen control should be shown.                       | `boolean`            | `true`      |
-| `videoId` _(required)_  | `video-id`                | The YouTube resource ID of the video to load.                         | `string`             | `undefined` |
+| Property                | Description                                                           | Type                 | Default     |
+| ----------------------- | --------------------------------------------------------------------- | -------------------- | ----------- |
+| `cookies`               | Whether cookies should be enabled on the embed.                       | `boolean`            | `false`     |
+| `poster`                | The absolute URL of a custom poster to be used for the current video. | `string ∣ undefined` | `undefined` |
+| `showFullscreenControl` | Whether the fullscreen control should be shown.                       | `boolean`            | `true`      |
+| `videoId` _(required)_  | The YouTube resource ID of the video to load.                         | `string`             | `undefined` |
+
 
 ## Dependencies
 
 ### Used by
 
-- [vime-playground](../core/playground.md)
+ - [vm-playground](./../core/playground)
 
 ### Depends on
 
-- [vime-embed](../core/embed.md)
+- [vm-embed](./../core/embed)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-youtube --> vime-embed
-  vime-playground --> vime-youtube
-  style vime-youtube fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

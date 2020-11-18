@@ -1,6 +1,6 @@
 ```tsx {2,12-18}
 import React, { useState } from 'react';
-import { VimeSlider } from '@vime/react';
+import { Slider } from '@vime/react';
 
 function Example() {
   const [value, setValue] = useState(50);
@@ -10,12 +10,12 @@ function Example() {
   };
 
   return (
-    <VimeSlider
+    <Slider
       label="Volume"
       step={5}
       max={100}
       value={value}
-      onVValueChange={onValueChange}
+      onVmValueChange={onValueChange}
     />
   );
 }

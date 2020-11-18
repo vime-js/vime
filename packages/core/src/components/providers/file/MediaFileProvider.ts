@@ -1,11 +1,11 @@
-import { AdapterHost, MediaProviderAdapter } from '../MediaProvider';
+import { AdapterProvider, MediaProviderAdapter } from '../MediaProvider';
 
 export type MediaCrossOriginOption = '' | 'anonymous' | 'use-credentials';
 export type MediaPreloadOption = '' | 'none' | 'metadata' | 'auto';
 
 export interface MediaFileProvider<
   InternalPlayerType = any,
-> extends AdapterHost<InternalPlayerType> {
+> extends AdapterProvider<InternalPlayerType> {
   /**
    * Whether to use CORS to fetch the related image. See
    * [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more
@@ -55,8 +55,6 @@ export interface MediaFileProvider<
    */
   disableRemotePlayback?: boolean
 
-  /**
-   * @internal
-   */
+  /** @internal */
   getAdapter(): Promise<MediaProviderAdapter<InternalPlayerType>>
 }

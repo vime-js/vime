@@ -1,39 +1,34 @@
 import {
-  h, Host, Component,
-  Prop, Element, Watch,
-  State,
+  h, Component, Prop, Watch, State, Host,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
-import { Disposal } from '../../../core/player/Disposal';
-import { listen, isColliding } from '../../../../utils/dom';
-import { isNullOrUndefined } from '../../../../utils/unit';
+import { Disposal } from '../../../../utils/Disposal';
+import { listen } from '../../../../utils/dom';
 import { debounce } from '../../../../utils/timing';
-import { findRootPlayer } from '../../../core/player/utils';
-import { findUIRoot } from '../../ui/utils';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { findPlayer } from '../../../core/player/findPlayer';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
+import { registerControlsForCollisionDetection } from './withControlsCollisionDetection';
 
 /**
  * We want to keep the controls active state in-sync per player.
  */
-const playerRef: Record<any, HTMLVimePlayerElement> = {};
+const playerRef: Record<any, HTMLVmPlayerElement> = {};
 const hideControlsTimeout: Record<any, number | undefined> = {};
-const captionsCollisions = new Map<any, number>();
-const settingsCollisions = new Map<any, number>();
 
 /**
  * @slot - Used to pass in controls.
  */
 @Component({
-  tag: 'vime-controls',
-  styleUrl: 'controls.scss',
+  tag: 'vm-controls',
+  styleUrl: 'controls.css',
+  shadow: true,
 })
 export class Controls {
   private dispatch!: Dispatcher;
 
   private disposal = new Disposal();
-
-  @Element() el!: HTMLVimeControlsElement;
 
   @State() isInteracting = false;
 
@@ -106,37 +101,27 @@ export class Controls {
    */
   @Prop() hideOnMouseLeave = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isAudioView: PlayerProps['isAudioView'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isSettingsActive: PlayerProps['isSettingsActive'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() playbackReady: PlayerProps['playbackReady'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isControlsActive: PlayerProps['isControlsActive'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() paused: PlayerProps['paused'] = true;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() playbackStarted: PlayerProps['playbackStarted'] = false;
 
   constructor() {
+    withComponentRegistry(this);
+    registerControlsForCollisionDetection(this);
     withPlayerContext(this, [
       'playbackReady',
       'isAudioView',
@@ -151,29 +136,20 @@ export class Controls {
     this.dispatch = createDispatcher(this);
     this.onControlsChange();
     this.setupPlayerListeners();
-    this.checkForCaptionsCollision();
-    this.checkForSettingsCollision();
   }
 
   componentWillLoad() {
     this.onControlsChange();
   }
 
-  componentDidRender() {
-    this.checkForCaptionsCollision();
-    this.checkForSettingsCollision();
-  }
-
   disconnectedCallback() {
     this.disposal.empty();
     delete hideControlsTimeout[playerRef[this]];
     delete playerRef[this];
-    captionsCollisions.delete(this);
-    settingsCollisions.delete(this);
   }
 
-  private setupPlayerListeners() {
-    const player = findRootPlayer(this);
+  private async setupPlayerListeners() {
+    const player = await findPlayer(this);
     const events = ['focus', 'keydown', 'click', 'touchstart', 'mouseleave'];
     events.forEach((event) => {
       this.disposal.add(listen(player, event, this.onControlsChange.bind(this)));
@@ -183,32 +159,6 @@ export class Controls {
     );
     // @ts-ignore
     playerRef[this] = player;
-  }
-
-  private getHeight() {
-    return parseFloat(window.getComputedStyle(this.el).height);
-  }
-
-  private adjustHeightOnCollision(selector: 'vime-captions' | 'vime-settings', marginTop = 0) {
-    const el = findUIRoot(this)?.querySelector(selector);
-    if (isNullOrUndefined(el)) return;
-    const height = this.getHeight() + marginTop;
-    const aboveControls = (selector === 'vime-settings')
-      && ((el as HTMLVimeSettingsElement).pin.startsWith('top'));
-    const hasCollided = isColliding(el, this.el);
-    const willCollide = isColliding(el, this.el, 0, aboveControls ? -height : height);
-    const collisions = (selector === 'vime-captions') ? captionsCollisions : settingsCollisions;
-    collisions.set(this, (hasCollided || willCollide) ? height : 0);
-    el.controlsHeight = Math.max(0, Math.max(...collisions.values()));
-  }
-
-  private checkForCaptionsCollision() {
-    if (this.isAudioView) return;
-    this.adjustHeightOnCollision('vime-captions');
-  }
-
-  private checkForSettingsCollision() {
-    this.adjustHeightOnCollision('vime-settings', (this.isAudioView ? 4 : 0));
   }
 
   private show() {
@@ -306,26 +256,29 @@ export class Controls {
 
   render() {
     return (
-      <Host
-        style={{
-          ...this.getPosition(),
-          flexDirection: this.direction,
-          alignItems: (this.align === 'center') ? 'center' : `flex-${this.align}`,
-          justifyContent: this.justify,
-        }}
-        class={{
-          audio: this.isAudioView,
-          hidden: this.hidden,
-          active: this.playbackReady && this.isControlsActive,
-          fullWidth: this.isAudioView || this.fullWidth,
-          fullHeight: !this.isAudioView && this.fullHeight,
-        }}
-        onMouseEnter={this.onStartInteraction.bind(this)}
-        onMouseLeave={this.onEndInteraction.bind(this)}
-        onTouchStart={this.onStartInteraction.bind(this)}
-        onTouchEnd={this.onEndInteraction.bind(this)}
-      >
-        <slot />
+      <Host video={!this.isAudioView}>
+        <div
+          style={{
+            ...this.getPosition(),
+            flexDirection: this.direction,
+            alignItems: (this.align === 'center') ? 'center' : `flex-${this.align}`,
+            justifyContent: this.justify,
+          }}
+          class={{
+            controls: true,
+            audio: this.isAudioView,
+            hidden: this.hidden,
+            active: this.playbackReady && this.isControlsActive,
+            fullWidth: this.isAudioView || this.fullWidth,
+            fullHeight: !this.isAudioView && this.fullHeight,
+          }}
+          onMouseEnter={this.onStartInteraction.bind(this)}
+          onMouseLeave={this.onEndInteraction.bind(this)}
+          onTouchStart={this.onStartInteraction.bind(this)}
+          onTouchEnd={this.onEndInteraction.bind(this)}
+        >
+          <slot />
+        </div>
       </Host>
     );
   }

@@ -6,10 +6,9 @@ sidebar_label: Design Principles
 - 🎨 &nbsp;**Customization.** Every part of Vime should be optional, easily accessible and customizable.
   This is achieved by:
 
-  - No shadow DOM so all components can be directly referenced and modified freely through the DOM or framework.
   - We provide all the building blocks for you to create your own UI.
   - CSS variables are available for all components so you can restyle anything you want.
-  - Every single component is optional aside from the root `vime-player` component.
+  - Every single component is optional aside from the root `vm-player` component.
   - All component's core behaviour, style and function can be modified via properties and methods.
   - Multi-provider support so you're free to choose what type of media to play and where you host
     your content.
@@ -62,8 +61,3 @@ sidebar_label: Design Principles
     is organized to help you get started quickly.
   - All the ugly and boring parts have been automated by our continous integration system (GitHub Actions).
     Simply clone, make changes and push!
-
-- 🧪 &nbsp;**Testing.** We've dedicated extra time and attention to ensuring Vime is tested as much as
-  possible. Over 200+ unit tests, UI E2E tests, accessibility tests, and a provider test harness all
-  ensure Vime is functioning correctly and up-to-standard. All package releases must go through our
-  full suite of tests before being sent out into the wild.

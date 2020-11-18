@@ -1,31 +1,31 @@
 ```tsx {8,20-22}
 import React from 'react';
 import {
-  VimePlayer,
-  VimeUi,
-  VimeSettings,
-  VimeSubmenu,
-  VimeMenuRadioGroup,
-  VimeMenuRadio,
+  Player,
+  Ui,
+  Settings,
+  Submenu,
+  MenuRadioGroup,
+  MenuRadio,
 } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeSettings>
-          <VimeSubmenu label="Playback Rate">
-            <VimeMenuRadioGroup value="1">
-              <VimeMenuRadio label="0.5" value="0.5" />
-              <VimeMenuRadio label="Normal" value="1" />
-              <VimeMenuRadio label="2" value="2" />
-            </VimeMenuRadioGroup>
-          </VimeSubmenu>
-        </VimeSettings>
-      </VimeUi>
-    </VimePlayer>
+        <Settings>
+          <Submenu label="Playback Rate">
+            <MenuRadioGroup value="1">
+              <MenuRadio label="0.5" value="0.5" />
+              <MenuRadio label="Normal" value="1" />
+              <MenuRadio label="2" value="2" />
+            </MenuRadioGroup>
+          </Submenu>
+        </Settings>
+      </Ui>
+    </Player>
   );
 }
 ```

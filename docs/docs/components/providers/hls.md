@@ -1,10 +1,7 @@
 ---
-title: vime-hls
+title: vm-hls
 sidebar_label: Hls
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 Enables loading, playing and controlling [HLS](https://en.wikipedia.org/wiki/HTTP_Live_Streaming) based media. If the [browser does not support HLS](https://caniuse.com/#search=hls) then the [`hls.js`](https://github.com/video-dev/hls.js) library is downloaded and used as a fallback to play the stream.
 
@@ -14,37 +11,40 @@ Enables loading, playing and controlling [HLS](https://en.wikipedia.org/wiki/HTT
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {2-4}
-<vime-player controls>
-  <vime-hls version="latest" poster="/media/poster.png">
+<vm-player controls>
+  <vm-hls version="latest" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-  </vime-hls>
+  </vm-hls>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,14-16}
 import React from 'react';
-import { VimePlayer, VimeHls } from '@vime/react';
+import { Player, Hls } from '@vime/react';
 
 function Example() {
   /**
@@ -55,38 +55,38 @@ function Example() {
   };
 
   return (
-    <VimePlayer controls>
-      <VimeHls version="latest" config={hlsConfig} poster="/media/poster.png">
+    <Player controls>
+      <Hls version="latest" config={hlsConfig} poster="/media/poster.png">
         <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-      </VimeHls>
+      </Hls>
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {3-5,11,16} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeHls :config="hlsConfig" version="latest" poster="/media/poster.png">
+  <Player controls>
+    <Hls :config="hlsConfig" version="latest" poster="/media/poster.png">
       <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-    </VimeHls>
+    </Hls>
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeHls } from '@vime/vue';
+  import { Player, Hls } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeHls,
+      Player,
+      Hls,
     },
 
     data: {
@@ -101,21 +101,21 @@ function Example() {
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {2-4,9} title="example.svelte"
-<VimePlayer controls>
-  <VimeHls version="latest" config="{hlsConfig}" poster="/media/poster.png">
+<Player controls>
+  <Hls version="latest" config="{hlsConfig}" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-  </VimeHls>
+  </Hls>
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeHls } from '@vime/svelte';
+  import { Player, Hls } from '@vime/svelte';
 
   /**
    * @see https://hls-js.netlify.app/api-docs/file/src/config.ts.html.
@@ -126,8 +126,8 @@ function Example() {
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -135,12 +135,12 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-hls version="latest" poster="/media/poster.png">
+      <vm-player controls>
+        <vm-hls version="latest" poster="/media/poster.png">
           <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-        </vime-hls>
+        </vm-hls>
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -148,16 +148,15 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {2-4} title="example.html"
-<vime-player controls>
-  <vime-hls version="latest" [config]="hlsConfig" poster="/media/poster.png">
+<vm-player controls>
+  <vm-hls version="latest" [config]="hlsConfig" poster="/media/poster.png">
     <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-  </vime-hls>
+  </vm-hls>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
 ```ts title="example.ts"
@@ -171,25 +170,33 @@ class Example {
 }
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property                | Attribute                 | Description                                                                                                                                                                                                                                                                        | Type                                               | Default      |
-| ----------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------ |
-| `autoPiP`               | `auto-pip`                | **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.                                                                                           | `boolean ∣ undefined`                              | `undefined`  |
-| `config`                | `config`                  | The `hls.js` configuration.                                                                                                                                                                                                                                                        | `any`                                              | `undefined`  |
-| `controlsList`          | `controls-list`           | Determines what controls to show on the media element whenever the browser shows its own set of controls (e.g. when the controls attribute is specified).                                                                                                                          | `string ∣ undefined`                               | `undefined`  |
-| `crossOrigin`           | `cross-origin`            | Whether to use CORS to fetch the related image. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more information.                                                                                                                          | `"" ∣ "anonymous" ∣ "use-credentials" ∣ undefined` | `undefined`  |
-| `disablePiP`            | `disable-pip`             | **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.                                                                                                                             | `boolean ∣ undefined`                              | `undefined`  |
-| `disableRemotePlayback` | `disable-remote-playback` | **EXPERIMENTAL:** Whether to disable the capability of remote playback in devices that are attached using wired (HDMI, DVI, etc.) and wireless technologies (Miracast, Chromecast, DLNA, AirPlay, etc).                                                                            | `boolean ∣ undefined`                              | `undefined`  |
-| `mediaTitle`            | `media-title`             | The title of the current media.                                                                                                                                                                                                                                                    | `string ∣ undefined`                               | `undefined`  |
-| `poster`                | `poster`                  | A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.                                                                      | `string ∣ undefined`                               | `undefined`  |
-| `preload`               | `preload`                 | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" ∣ "auto" ∣ "metadata" ∣ "none" ∣ undefined`    | `'metadata'` |
-| `version`               | `version`                 | The NPM package version of the `hls.js` library to download and use if HLS is not natively supported.                                                                                                                                                                              | `string`                                           | `'latest'`   |
+| Property                | Description                                                                                                                                                                                                                                                                        | Type                                               | Default      |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------ |
+| `autoPiP`               | **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.                                                                                           | `boolean ∣ undefined`                              | `undefined`  |
+| `config`                | The `hls.js` configuration.                                                                                                                                                                                                                                                        | `any`                                              | `undefined`  |
+| `controlsList`          | Determines what controls to show on the media element whenever the browser shows its own set of controls (e.g. when the controls attribute is specified).                                                                                                                          | `string ∣ undefined`                               | `undefined`  |
+| `crossOrigin`           | Whether to use CORS to fetch the related image. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more information.                                                                                                                          | `"" ∣ "anonymous" ∣ "use-credentials" ∣ undefined` | `undefined`  |
+| `disablePiP`            | **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.                                                                                                                             | `boolean ∣ undefined`                              | `undefined`  |
+| `disableRemotePlayback` | **EXPERIMENTAL:** Whether to disable the capability of remote playback in devices that are attached using wired (HDMI, DVI, etc.) and wireless technologies (Miracast, Chromecast, DLNA, AirPlay, etc).                                                                            | `boolean ∣ undefined`                              | `undefined`  |
+| `mediaTitle`            | The title of the current media.                                                                                                                                                                                                                                                    | `string ∣ undefined`                               | `undefined`  |
+| `poster`                | A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.                                                                      | `string ∣ undefined`                               | `undefined`  |
+| `preload`               | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" ∣ "auto" ∣ "metadata" ∣ "none" ∣ undefined`    | `'metadata'` |
+| `version`               | The NPM package version of the `hls.js` library to download and use if HLS is not natively supported.                                                                                                                                                                              | `string`                                           | `'latest'`   |
+
+
+## Events
+
+| Event     | Description                         | Type               |
+| --------- | ----------------------------------- | ------------------ |
+| `vmError` | Emitted when an error has occurred. | `CustomEvent<any>` |
+
 
 ## Slots
 
@@ -197,26 +204,15 @@ class Example {
 | ---- | -------------------------------------------------------------- |
 |      | Pass `<source>` elements to the underlying HTML5 media player. |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-playground](../core/playground.md)
+ - [vm-playground](./../core/playground)
 
 ### Depends on
 
-- [vime-video](video.md)
+- [vm-video](./video)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-hls --> vime-video
-  vime-video --> vime-file
-  vime-playground --> vime-hls
-  style vime-hls fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

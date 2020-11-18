@@ -1,10 +1,7 @@
 ---
-title: vime-dailymotion
+title: vm-dailymotion
 sidebar_label: Dailymotion
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 Enables loading, playing and controlling videos from [Dailymotion](https://www.dailymotion.com).
 
@@ -21,89 +18,92 @@ Enables loading, playing and controlling videos from [Dailymotion](https://www.d
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {2}
-<vime-player controls>
-  <vime-dailymotion video-id="k3b11PemcuTrmWvYe0q"></vime-dailymotion>
+<vm-player controls>
+  <vm-dailymotion video-id="k3b11PemcuTrmWvYe0q"></vm-dailymotion>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,7}
 import React from 'react';
-import { VimePlayer, VimeDailymotion } from '@vime/react';
+import { Player, Dailymotion } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />
+    <Player controls>
+      <Dailymotion videoId="k3b11PemcuTrmWvYe0q" />
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {3,9,14} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />
+  <Player controls>
+    <Dailymotion videoId="k3b11PemcuTrmWvYe0q" />
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeDailymotion } from '@vime/vue';
+  import { Player, Dailymotion } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeDailymotion,
+      Player,
+      Dailymotion,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {2,7} title="example.svelte"
-<VimePlayer controls>
-  <VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />
+<Player controls>
+  <Dailymotion videoId="k3b11PemcuTrmWvYe0q" />
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeDailymotion } from '@vime/svelte';
+  import { Player, Dailymotion } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -111,10 +111,10 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-dailymotion videoId="k3b11PemcuTrmWvYe0q" />
+      <vm-player controls>
+        <vm-dailymotion videoId="k3b11PemcuTrmWvYe0q" />
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }
@@ -122,57 +122,53 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {2-5} title="example.html"
-<vime-player controls>
-  <vime-dailymotion
+<vm-player controls>
+  <vm-dailymotion
     color="fff"
     video-id="k3b11PemcuTrmWvYe0q"
-  ></vime-dailymotion>
+  ></vm-dailymotion>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property               | Attribute               | Description                                                                                                                                     | Type                 | Default     |
-| ---------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ----------- |
-| `color`                | `color`                 | Change the default highlight color used in the controls (hex value without the leading #). Color set in the Partner HQ will override this prop. | `string ∣ undefined` | `undefined` |
-| `poster`               | `poster`                | The absolute URL of a custom poster to be used for the current video.                                                                           | `string ∣ undefined` | `undefined` |
-| `shouldAutoplayQueue`  | `should-autoplay-queue` | Whether to automatically play the next video in the queue.                                                                                      | `boolean`            | `false`     |
-| `showDailymotionLogo`  | `show-dailymotion-logo` | Whether to display the Dailymotion logo.                                                                                                        | `boolean`            | `false`     |
-| `showShareButtons`     | `show-share-buttons`    | Whether to show buttons for sharing the video.                                                                                                  | `boolean`            | `false`     |
-| `showUpNextQueue`      | `show-up-next-queue`    | Whether to show the 'Up Next' queue.                                                                                                            | `boolean`            | `false`     |
-| `showVideoInfo`        | `show-video-info`       | Whether to show video information (title and owner) on the start screen.                                                                        | `boolean`            | `true`      |
-| `syndication`          | `syndication`           | Forwards your syndication key to the player.                                                                                                    | `string ∣ undefined` | `undefined` |
-| `videoId` _(required)_ | `video-id`              | The Dailymotion resource ID of the video to load.                                                                                               | `string`             | `undefined` |
+| Property               | Description                                                                                                                                     | Type                 | Default     |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ----------- |
+| `color`                | Change the default highlight color used in the controls (hex value without the leading #). Color set in the Partner HQ will override this prop. | `string ∣ undefined` | `undefined` |
+| `poster`               | The absolute URL of a custom poster to be used for the current video.                                                                           | `string ∣ undefined` | `undefined` |
+| `shouldAutoplayQueue`  | Whether to automatically play the next video in the queue.                                                                                      | `boolean`            | `false`     |
+| `showDailymotionLogo`  | Whether to display the Dailymotion logo.                                                                                                        | `boolean`            | `false`     |
+| `showShareButtons`     | Whether to show buttons for sharing the video.                                                                                                  | `boolean`            | `false`     |
+| `showUpNextQueue`      | Whether to show the 'Up Next' queue.                                                                                                            | `boolean`            | `false`     |
+| `showVideoInfo`        | Whether to show video information (title and owner) on the start screen.                                                                        | `boolean`            | `true`      |
+| `syndication`          | Forwards your syndication key to the player.                                                                                                    | `string ∣ undefined` | `undefined` |
+| `videoId` _(required)_ | The Dailymotion resource ID of the video to load.                                                                                               | `string`             | `undefined` |
+
+
+## Events
+
+| Event     | Description                         | Type                              |
+| --------- | ----------------------------------- | --------------------------------- |
+| `vmError` | Emitted when an error has occurred. | `CustomEvent<string ∣ undefined>` |
+
 
 ## Dependencies
 
 ### Used by
 
-- [vime-playground](../core/playground.md)
+ - [vm-playground](./../core/playground)
 
 ### Depends on
 
-- [vime-embed](../core/embed.md)
+- [vm-embed](./../core/embed)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-dailymotion --> vime-embed
-  vime-playground --> vime-dailymotion
-  style vime-dailymotion fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

@@ -1,7 +1,7 @@
 ```html {3-18,24,29} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeVideo>
+  <Player controls>
+    <Video>
       <source data-src="/media/video.mp4" type="video/mp4" />
       <track
         default
@@ -16,18 +16,18 @@
         srclang="es"
         label="Spanish"
       />
-    </VimeVideo>
+    </Video>
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeVideo } from '@vime/vue';
+  import { Player, Video } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeVideo,
+      Player,
+      Video,
     },
   };
 </script>

@@ -1,9 +1,9 @@
 ```tsx {2,31-43}
 import React, { useState, useRef } from 'react';
-import { VimePlayer, VimeUi } from '@vime/react';
+import { Player, Ui } from '@vime/react';
 
 function Example() {
-  const player = useRef<HTMLVimePlayerElement>(null);
+  const player = useRef<HTMLVmPlayerElement>(null);
   const [currentTime, setCurrentTime] = useState(0);
 
   // If you prefer hooks ...
@@ -29,19 +29,19 @@ function Example() {
   };
 
   return (
-    <VimePlayer
+    <Player
       controls
       autoplay
       muted
       ref={player}
       currentTime={currentTime}
-      onVCurrentTimeChange={onTimeUpdate}
-      onVFullscreenChange={onFullscreenChange}
+      onVmCurrentTimeChange={onTimeUpdate}
+      onVmFullscreenChange={onFullscreenChange}
     >
       {/* Provider component is placed here. */}
 
-      <VimeUi>{/* UI components are placed here. */}</VimeUi>
-    </VimePlayer>
+      <Ui>{/* UI components are placed here. */}</Ui>
+    </Player>
   );
 }
 ```

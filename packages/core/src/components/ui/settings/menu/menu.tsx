@@ -1,39 +1,40 @@
-/* eslint-disable no-param-reassign */
-
 import {
-  h, Host, Component, Prop, Listen, Event, EventEmitter, Element, State, Watch, Method, writeTask,
+  h, Component, Prop, Event, EventEmitter, Element, Watch, Method, State, Listen, writeTask,
 } from '@stencil/core';
-import { buildNoAncestorSelector } from '../../../../utils/dom';
-import { isUndefined, isNull } from '../../../../utils/unit';
+import { isUndefined } from '../../../../utils/unit';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
+import { menuItemHunter } from './menuItemHunter';
 
 /**
  * @slot - Used to pass in the body of the menu which usually contains menu items, radio groups
  * and/or submenus.
  */
 @Component({
-  tag: 'vime-menu',
-  styleUrl: 'menu.scss',
+  tag: 'vm-menu',
+  styleUrl: 'menu.css',
+  shadow: true,
 })
 export class Menu {
-  private shouldFocusOnOpen = false;
+  private menu?: HTMLDivElement;
 
-  private submenus!: NodeListOf<HTMLVimeMenuElement>;
+  private hasDisconnected = false;
 
-  @Element() el!: HTMLVimeMenuElement;
+  container?: HTMLDivElement;
 
-  @State() menuItems!: NodeListOf<HTMLVimeMenuItemElement>;
+  @Element() host!: HTMLVmMenuElement;
 
-  @Watch('menuItems')
-  onMenuItemsChange() {
-    this.vMenuItemsChange.emit(this.menuItems);
+  @State() activeMenuItem?: HTMLVmMenuItemElement;
+
+  @Watch('activeMenuItem')
+  onActiveMenuitemChange() {
+    this.vmActiveMenuItemChange.emit(this.activeMenuItem);
   }
 
-  @State() currFocusedMenuItem = 0;
+  @State() activeSubmenu?: HTMLVmSubmenuElement;
 
-  @Watch('currFocusedMenuItem')
-  async onFocusedMenuItemChange() {
-    const menuItem = await this.getFocusedMenuItem();
-    this.vFocusMenuItemChange.emit(menuItem);
+  @Watch('activeSubmenu')
+  onActiveSubmenuChange() {
+    this.vmActiveSubmenuChange.emit(this.activeSubmenu);
   }
 
   /**
@@ -43,12 +44,11 @@ export class Menu {
 
   @Watch('active')
   onActiveChange() {
-    if (this.active) {
-      this.findMenuItems();
-      this.findSubmenus();
+    if (this.hasDisconnected) return;
+    this.active ? this.vmOpen.emit(this.host) : this.vmClose.emit(this.host);
+    if (this.controller?.tagName.toLowerCase() === 'vm-menu-item') {
+      (this.controller as HTMLVmMenuItemElement).expanded = true;
     }
-
-    this.active ? this.vOpen.emit() : this.vClose.emit();
   }
 
   /**
@@ -57,209 +57,300 @@ export class Menu {
   @Prop() identifier!: string;
 
   /**
-   * The `id` attribute value of the control responsible for opening/closing this menu.
+   * Reference to the controller DOM element that is responsible for opening/closing this menu.
    */
-  @Prop() controller!: string;
+  @Prop() controller?: HTMLElement;
+
+  /**
+   * The direction the menu should slide in from.
+   */
+  @Prop() slideInDirection?: 'left' | 'right';
 
   /**
    * Emitted when the menu is open/active.
    */
-  @Event() vOpen!: EventEmitter<void>;
+  @Event() vmOpen!: EventEmitter<HTMLVmMenuElement>;
 
   /**
    * Emitted when the menu has closed/is not active.
    */
-  @Event() vClose!: EventEmitter<void>;
+  @Event() vmClose!: EventEmitter<HTMLVmMenuElement>;
 
   /**
-   * Emitted when the menu items present changes.
+   * Emitted when the menu is focused.
    */
-  @Event() vMenuItemsChange!: EventEmitter<NodeListOf<HTMLVimeMenuItemElement> | undefined>;
+  @Event() vmFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the menu loses focus.
+   */
+  @Event() vmBlur!: EventEmitter<void>;
+
+  /**
+   * Emitted when the active submenu changes.
+   */
+  @Event() vmActiveSubmenuChange!: EventEmitter<HTMLVmSubmenuElement | undefined>;
 
   /**
    * Emitted when the currently focused menu item changes.
    */
-  @Event() vFocusMenuItemChange!: EventEmitter<HTMLVimeMenuItemElement | undefined>;
+  @Event() vmActiveMenuItemChange!: EventEmitter<HTMLVmMenuItemElement | undefined>;
+
+  /**
+   * Emitted when the height of the menu changes.
+   */
+  @Event({ bubbles: false }) vmMenuHeightChange!: EventEmitter<number>;
+
+  constructor() {
+    withComponentRegistry(this);
+  }
 
   connectedCallback() {
-    this.findMenuItems();
+    this.hasDisconnected = false;
   }
 
   componentDidRender() {
-    if (this.active && this.shouldFocusOnOpen) {
-      writeTask(() => {
-        this.el.focus();
-        this.shouldFocusOnOpen = false;
-      });
-    }
+    writeTask(() => {
+      if (!this.hasDisconnected) this.calculateHeight();
+    });
+  }
+
+  disconnectedCallback() {
+    this.controller = undefined;
+    this.hasDisconnected = true;
   }
 
   /**
-   * Returns the controller responsible for opening/closing this menu.
+   * Focuses the menu.
    */
   @Method()
-  async getController() {
-    return document.querySelector(`#${this.controller}`) as HTMLElement;
+  async focusMenu() {
+    this.menu?.focus();
+  }
+
+  /**
+   * Removes focus from the menu.
+   */
+  @Method()
+  async blurMenu() {
+    this.menu?.blur();
   }
 
   /**
    * Returns the currently focused menu item.
    */
   @Method()
-  async getFocusedMenuItem() {
-    return this.menuItems[this.currFocusedMenuItem];
+  async getActiveMenuItem() {
+    return this.activeMenuItem;
   }
 
   /**
-   * This should be called directly before opening the menu to set the keyboard focus on it. This
-   * is a one-time operation and needs to be called everytime prior to opening the menu.
+   * Sets the currently focused menu item.
    */
   @Method()
-  async focusOnOpen() {
-    this.shouldFocusOnOpen = true;
+  async setActiveMenuItem(item?: HTMLVmMenuItemElement) {
+    item?.focusItem();
+    this.activeMenuItem = item;
   }
 
-  private findMenuItems() {
-    this.menuItems = document.querySelectorAll(
-      buildNoAncestorSelector(`#${this.identifier}`, 'vime-menu', 'vime-menu-item', 5),
-    );
-  }
+  /**
+   * Calculates the height of the settings menu based on its children.
+   */
+  @Method()
+  async calculateHeight() {
+    let height = 0;
 
-  private async focusController() {
-    const controller = await this.getController();
-    controller?.focus();
-  }
+    if (this.activeSubmenu) {
+      const submenu = await this.activeSubmenu.getMenu();
+      height = await submenu?.calculateHeight() ?? 0;
+      height += (await this.activeSubmenu.getControllerHeight());
+    } else {
+      const children = (this.container?.firstChild as HTMLSlotElement)
+        .assignedElements(({ flatten: true }));
 
-  private focusMenuItem(index: number) {
-    let boundIndex = (index >= 0) ? index : (this.menuItems.length - 1);
-    if (boundIndex >= this.menuItems.length) boundIndex = 0;
-    this.currFocusedMenuItem = boundIndex;
-    this.menuItems[boundIndex]?.focus();
-  }
-
-  private openSubmenu() {
-    const menuItem = this.menuItems[this.currFocusedMenuItem];
-    if (isUndefined(menuItem)) return;
-    menuItem!.click();
-    writeTask(() => {
-      const submenu = document.querySelector(`#${menuItem!.menu}`) as HTMLVimeMenuElement;
-      submenu?.focus();
-    });
-  }
-
-  private onOpen(event: Event) {
-    event.stopPropagation();
-    this.findMenuItems();
-    this.currFocusedMenuItem = 0;
-    // Prevents forwarding click event that opened the menu to menu item.
-    setTimeout(() => { this.menuItems[this.currFocusedMenuItem]?.focus(); }, 10);
-    this.active = true;
-  }
-
-  private onClose() {
-    this.currFocusedMenuItem = -1;
-    this.active = false;
-    this.focusController();
-  }
-
-  private onClick(event: Event) {
-    event.stopPropagation();
-  }
-
-  private onKeyDown(event: KeyboardEvent) {
-    if (!this.active || this.menuItems.length === 0) return;
-    event.preventDefault();
-    event.stopPropagation();
-    switch (event.key) {
-      case 'Escape':
-        this.onClose();
-        break;
-      case 'ArrowDown':
-      case 'Tab':
-        this.focusMenuItem(this.currFocusedMenuItem + 1);
-        break;
-      case 'ArrowUp':
-        this.focusMenuItem(this.currFocusedMenuItem - 1);
-        break;
-      case 'ArrowLeft':
-        this.onClose();
-        break;
-      case 'ArrowRight':
-      case 'Enter':
-      case ' ':
-        this.openSubmenu();
-        break;
-      case 'Home':
-      case 'PageUp':
-        this.focusMenuItem(0);
-        break;
-      case 'End':
-      case 'PageDown':
-        this.focusMenuItem(this.menuItems!.length - 1);
-        break;
+      children?.forEach((child) => {
+        height += parseFloat(window.getComputedStyle(child).height);
+      });
     }
+
+    this.vmMenuHeightChange.emit(height);
+    return height;
   }
 
-  private findSubmenus() {
-    this.submenus = document.querySelectorAll(
-      buildNoAncestorSelector(`#${this.identifier}`, 'vime-menu', 'vime-menu', 4),
-    );
+  @Listen('vmOpenSubmenu')
+  onOpenSubmenu(event: CustomEvent<HTMLVmSubmenuElement>) {
+    event.stopPropagation();
+    if (!isUndefined(this.activeSubmenu)) this.activeSubmenu.active = false;
+    this.activeSubmenu = event.detail;
+    this.getChildren().forEach((child) => {
+      if (child !== this.activeSubmenu) {
+        child.style.opacity = '0';
+        child.style.visibility = 'hidden';
+      }
+    });
+    writeTask(() => { this.activeSubmenu!.active = true; });
   }
 
-  private isValidSubmenu(submenu: HTMLElement | null) {
-    if (isNull(submenu)) return false;
-    return !isUndefined(Array.from(this.submenus).find((menu) => menu.id === submenu!.id));
-  }
-
-  private toggleSubmenu(submenu: HTMLVimeMenuElement, isActive: boolean) {
-    if (!this.isValidSubmenu(submenu)) return;
-
-    Array.from(this.menuItems)
-      .filter((menuItem) => menuItem.identifier !== submenu.controller)
-      .forEach((menuItem) => { menuItem.hidden = isActive; });
-
-    submenu.active = isActive;
-  }
-
-  @Listen('vOpen')
-  onSubmenuOpen(event: CustomEvent<void>) {
-    const submenu = event.target as HTMLVimeMenuElement;
-    this.toggleSubmenu(submenu, true);
-  }
-
-  @Listen('vClose')
-  onSubmenuClose(event: CustomEvent<void>) {
-    const submenu = event.target as HTMLVimeMenuElement;
-    this.toggleSubmenu(submenu, false);
+  @Listen('vmCloseSubmenu')
+  onCloseSubmenu(event?: Event) {
+    event?.stopPropagation();
+    if (!isUndefined(this.activeSubmenu)) this.activeSubmenu.active = false;
+    this.getChildren().forEach((child) => {
+      if (child !== this.activeSubmenu) {
+        child.style.opacity = '';
+        child.style.visibility = '';
+      }
+    });
+    writeTask(() => { this.activeSubmenu = undefined; });
   }
 
   @Listen('click', { target: 'window' })
   onWindowClick() {
-    if (this.active) this.active = false;
+    this.onCloseSubmenu();
+    this.onClose();
   }
 
   @Listen('keydown', { target: 'window' })
   onWindowKeyDown(event: KeyboardEvent) {
-    if (this.active && (event.key === 'Escape')) this.onClose();
+    if (this.active && (event.key === 'Escape')) {
+      this.onCloseSubmenu();
+      this.onClose();
+      this.focusController();
+    }
+  }
+
+  private getChildren() {
+    const assignedElements = this.host
+      .shadowRoot!
+      .querySelector('slot')
+      ?.assignedElements({ flatten: true });
+
+    return (assignedElements ?? []) as HTMLElement[];
+  }
+
+  private getMenuItems() {
+    const assignedElements = this.host
+      .shadowRoot!
+      .querySelector('slot')
+      ?.assignedElements({ flatten: true });
+    return menuItemHunter(assignedElements);
+  }
+
+  private focusController() {
+    if (!isUndefined((this.controller as HTMLVmMenuItemElement)?.focusItem)) {
+      (this.controller as HTMLVmMenuItemElement)?.focusItem();
+    } else if (!isUndefined((this.controller as HTMLVmControlElement)?.focusControl)) {
+      (this.controller as HTMLVmControlElement)?.focusControl();
+    } else {
+      this.controller?.focus();
+    }
+  }
+
+  private triggerMenuItem() {
+    if (isUndefined(this.activeMenuItem)) return;
+    this.activeMenuItem.click();
+    // If it controls a menu then focus it essentially opening it.
+    this.activeMenuItem!.menu?.focusMenu();
+  }
+
+  private onClose() {
+    this.activeMenuItem = undefined;
+    this.active = false;
+  }
+
+  private onClick(event: Event) {
+    // Stop the event from propagating while playing with menu so that when it is clicked outside
+    // the menu we can close it in the `onWindowClick` handler above.
+    event.stopPropagation();
+  }
+
+  private onFocus() {
+    this.active = true;
+    [this.activeMenuItem] = this.getMenuItems();
+    this.activeMenuItem?.focusItem();
+    this.vmFocus.emit();
+  }
+
+  private onBlur() {
+    this.vmBlur.emit();
+  }
+
+  private foucsMenuItem(items: HTMLVmMenuItemElement[], index: number) {
+    if (index < 0) index = items.length - 1;
+    if (index > items.length - 1) index = 0;
+    this.activeMenuItem = items[index];
+    this.activeMenuItem.focusItem();
+  }
+
+  private onKeyDown(event: KeyboardEvent) {
+    if (!this.active) return;
+    event.preventDefault();
+    event.stopPropagation();
+
+    const items = this.getMenuItems();
+    let index = items.findIndex((item) => item === this.activeMenuItem);
+
+    switch (event.key) {
+      case 'Escape':
+        this.onClose();
+        this.focusController();
+        break;
+      case 'ArrowDown':
+      case 'Tab':
+        this.foucsMenuItem(items, index += 1);
+        break;
+      case 'ArrowUp':
+        this.foucsMenuItem(items, index -= 1);
+        break;
+      case 'ArrowLeft':
+        this.onClose();
+        this.focusController();
+        break;
+      case 'ArrowRight':
+      case 'Enter':
+      case ' ':
+        this.triggerMenuItem();
+        break;
+      case 'Home':
+      case 'PageUp':
+        this.foucsMenuItem(items, 0);
+        break;
+      case 'End':
+      case 'PageDown':
+        this.foucsMenuItem(items, items.length - 1);
+        break;
+    }
   }
 
   render() {
     return (
-      <Host
+      <div
         id={this.identifier}
+        class={{
+          menu: true,
+          slideIn: !isUndefined(this.slideInDirection),
+          slideInFromLeft: this.slideInDirection === 'left',
+          slideInFromRight: this.slideInDirection === 'right',
+        }}
         role="menu"
         tabindex="-1"
-        aria-labelledby={this.controller}
+        aria-labelledby={
+          (this.controller as HTMLVmMenuItemElement)?.identifier ?? this.controller?.id
+        }
         aria-hidden={!this.active ? 'true' : 'false'}
-        onFocus={this.onOpen.bind(this)}
+        onFocus={this.onFocus.bind(this)}
+        onBlur={this.onBlur.bind(this)}
         onClick={this.onClick.bind(this)}
         onKeyDown={this.onKeyDown.bind(this)}
+        ref={((el) => { this.menu = el; })}
       >
-        {/* Seems like without this div unnecessary re-renders keep happening. */}
-        <div>
+        <div
+          class="container"
+          ref={((el) => { this.container = el; })}
+        >
           <slot />
         </div>
-      </Host>
+      </div>
     );
   }
 }

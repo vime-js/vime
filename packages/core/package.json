@@ -29,60 +29,27 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "stencil build --docs",
-    "build:post": "node scripts/post-build.js",
+    "build": "stencil build",
     "build:themes": "rimraf themes/* && yarn min:theme.default && yarn min:theme.light",
-    "min:theme.default": "cleancss -o themes/default.css src/globals/themes/default.css",
-    "min:theme.light": "cleancss -o themes/light.css src/globals/themes/light.css",
+    "min:theme.default": "cleancss -o themes/default.css src/themes/default.css",
+    "min:theme.light": "cleancss -o themes/light.css src/themes/light.css",
     "generate": "stencil generate",
     "generate:provider": "node scripts/new-provider.js",
     "serve": "stencil build --dev --watch --port 3336 --serve",
-    "serve:prod": "sirv --single playground/index.html --cors --port 3444",
-    "test:unit": "stencil test src --spec --max-workers=2",
-    "test:unit.debug": "npx --node-arg=\"--inspect-brk\" stencil test --spec",
-    "test:unit.watch": "stencil test src --spec --watchAll --max-workers=2",
-    "test:unit.coverage": "yarn test:unit --coverage",
-    "test:e2e": "start-server-and-test serve http://localhost:3336 cy:run",
-    "test:e2e.ci": "start-server-and-test serve:prod http://localhost:3444 cy:run.ci",
-    "instrument": "npx nyc instrument dist --in-place",
-    "cy:open": "cypress open",
-    "cy:run": "cypress run",
-    "cy:run.prod": "cypress run --config baseUrl=http://localhost:3444",
-    "cy:run.ci": "cypress run --record --group @vime/core --headless --parallel --ci-build-id $BUILD_ID --config baseUrl=http://localhost:3444"
+    "serve:prod": "sirv --single playground/index.html --cors --port 3444"
   },
   "dependencies": {
     "@stencil/core": "2.2.0",
     "stencil-wormhole": "^3.2.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.5",
-    "@babel/preset-env": "^7.11.5",
-    "@cypress/code-coverage": "^3.8.1",
-    "@cypress/skip-test": "^2.5.0",
-    "@cypress/webpack-preprocessor": "^5.4.5",
-    "@rollup/plugin-node-resolve": "^10.0.0",
-    "@stencil/sass": "^1.3.2",
     "@types/hls.js": "^0.13.1",
-    "@types/jest": "^26.0.13",
     "@types/node": "^14.6.3",
-    "@types/puppeteer": "^3.0.1",
-    "babel-loader": "^8.1.0",
     "clean-css-cli": "^4.3.0",
-    "cypress": "^5.1.0",
-    "cypress-plugin-snapshots": "^1.4.4",
-    "cypress-plugin-tab": "^1.0.5",
-    "jest": "^26.4.2",
-    "jest-cli": "^26.4.2",
-    "jest-watch-typeahead": "^0.6.0",
-    "js-base64": "2.5.2",
-    "prettier": "^2.1.1",
     "rimraf": "^3.0.2",
     "sirv-cli": "^1.0.6",
-    "start-server-and-test": "^1.11.3",
     "svelte": "^3.24.1",
-    "ts-loader": "^8.0.3",
-    "typescript": "^4.0.2",
-    "webpack": "^4"
+    "typescript": "^4.0.2"
   },
   "publishConfig": {
     "access": "public"
@@ -102,8 +69,5 @@
     "dash",
     "custom",
     "web components"
-  ],
-  "nyc": {
-    "report-dir": "cypress-coverage"
-  }
+  ]
 }

@@ -1,0 +1,130 @@
+/**
+  * @prop --vm-menu-item-hint-font-size: The font size of the hint text.
+  * @prop --vm-menu-item-hint-color: The color of the hint text.
+  * @prop --vm-menu-item-hint-opacity: The opacity of the hint text.
+  * @prop --vm-menu-item-badge-color: The color of the badge text.
+  * @prop --vm-menu-item-badge-bg: The background color of the badge.
+  * @prop --vm-menu-item-badge-font-size: The font size of the the badge text. 
+  * @prop --vm-menu-item-arrow-color: The color of the left/right arrow on a navigational menu item.
+  * @prop --vm-menu-item-check-icon-size: The width of the checked icon.
+  * @prop --vm-menu-item-padding: The padding within each menu item.
+  * @prop --vm-menu-item-focus-color: The color of a menu item's text when it is being focused or hovered on.
+  * @prop --vm-menu-item-focus-bg: The background color of a menu item when it is being focused or hovered on.
+  * @prop --vm-menu-item-tap-highlight: The highlight color when a menu item is tapped.
+  * @prop --vm-menu-item-divider-color: The color of the divider between a navigational menu item and the menu body.
+  */
+:host {
+  display: block;
+}
+
+.menuItem {
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
+  color: var(--vm-menu-color);
+  background: var(--vm-menu-bg);
+  font-size: var(--vm-menu-font-size);
+  font-weight: var(--vm-menu-font-weight);
+  padding: var(--vm-menu-item-padding);
+  touch-action: manipulation;
+  box-sizing: border-box;
+}
+
+.menuItem:focus {
+  outline: 0;
+}
+
+.menuItem.hidden {
+  display: none;
+}
+
+.menuItem.tapHighlight {
+  background: var(--vm-menu-item-tap-highlight);
+}
+
+.menuItem.showDivider {
+  border-bottom: 0.5px solid var(--vm-menu-item-divider-color);
+}
+
+.menuItem.notTouch:hover,
+.menuItem.notTouch:focus {
+  outline: 0;
+  color: var(--vm-menu-item-focus-color);
+  background-color: var(--vm-menu-item-focus-bg);
+}
+
+.menuItem[aria-expanded='true'] {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  width: 100%;
+}
+
+.menuItem[aria-hidden='true'] {
+  display: none;
+}
+
+.menuItem[aria-checked='true'] vm-icon {
+  opacity: 1;
+  visibility: visible;
+}
+
+vm-icon {
+  display: inline-block;
+}
+
+vm-icon {
+  fill: currentColor;
+  pointer-events: none;
+  font-size: var(--vm-menu-item-check-icon-size);
+  margin-right: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--vm-fade-transition);
+}
+
+.hint {
+  display: inline-block;
+  margin-left: auto;
+  overflow: hidden;
+  pointer-events: none;
+  margin-right: 6px;
+  font-size: var(--vm-menu-item-hint-font-size);
+  opacity: var(--vm-menu-item-hint-opacity);
+  color: var(--vm-menu-item-hint-color);
+}
+
+.badge {
+  display: inline-block;
+  line-height: 1;
+  overflow: hidden;
+  pointer-events: none;
+  margin-left: 6px;
+  color: var(--vm-menu-item-badge-color);
+  background: var(--vm-menu-item-badge-bg);
+  font-size: var(--vm-menu-item-badge-font-size);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.arrow {
+  color: var(--vm-menu-item-arrow-color);
+  border: 2px solid;
+  padding: 2px;
+  display: inline-block;
+  border-width: 0 2px 2px 0;
+}
+
+.arrow.left {
+  margin-right: 6px;
+  transform: rotate(135deg);
+}
+
+.arrow.right {
+  transform: rotate(-45deg);
+  opacity: 0.38;
+}

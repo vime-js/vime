@@ -1,8 +1,8 @@
 ```tsx {2,5}
 import React from 'react';
-import { VimeTime } from '@vime/react';
+import { Time } from '@vime/react';
 
 function Example() {
-  return (<VimeTime label="Time" seconds={120} />);
+  return (<Time label="Time" seconds={120} />);
 }
 ```

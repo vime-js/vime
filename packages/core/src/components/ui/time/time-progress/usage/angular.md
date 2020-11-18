@@ -1,3 +1,3 @@
 ```html title="example.html"
-<vime-time-progress separator="/" />
+<vm-time-progress separator="/" />
 ```

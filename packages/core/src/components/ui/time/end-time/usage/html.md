@@ -1,3 +1,3 @@
 ```html
-<vime-end-time />
+<vm-end-time />
 ```

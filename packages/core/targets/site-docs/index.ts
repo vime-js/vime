@@ -1,120 +1,67 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-param-reassign */
-import { resolve } from 'path';
 import fs from 'fs';
+import { resolve } from 'path';
 import { JsonDocs, JsonDocsComponent } from '@stencil/core/internal';
-import { isUndefined } from '../../src/utils/unit';
-// @ts-ignore
-import { formatSidebarLabel } from '../../../../docs/helpers/components-sidebar';
+import { propsToMarkdown } from './markdown/markdown-props';
+import { methodsToMarkdown } from './markdown/markdown-methods';
+import { eventsToMarkdown } from './markdown/markdown-events';
+import { slotsToMarkdown } from './markdown/markdown-slots';
+import { stylesToMarkdown } from './markdown/markdown-css-props';
+import { usageToMarkdown } from './markdown/markdown-usage';
+import { depsToMarkdown } from './markdown/markdown-dependencies';
 
-const prettier = require('prettier');
+const OUTPUT_ROOT = resolve(__dirname, '../../../../docs/docs');
+const AUTO_GEN_COMMENT = '<!-- Auto Generated Below -->';
 
-const writeFrontMatter = (content: string) => {
-  const name = /^#\s([a-z-]+)/.exec(content)![1];
-  const label = formatSidebarLabel(name);
-  return content.replace(/^#\s[a-z-]+/,
-    '---\n'
-    + `title: ${name}\n`
-    + `sidebar_label: ${label}\n`
-    + '---');
-};
+const getDefaultReadme = (component: JsonDocsComponent) => [
+  `# ${component.tag}`, '', '', '',
+].join('\n');
 
-const rewriteURLs = (content: string) => content.replace(/\[[a-z-`]+\]\(.+\)/gm, (match) => {
-  if (match === null) return '';
-  const componentName = /\[(.+)\]/.exec(match)![1]!;
-  const path = /\((.+)\)/.exec(match)![1]!;
-  return `[${componentName}](${path.replace('../', '').replace('/readme.md', '')}.md)`;
-});
+const generateMarkdown = (
+  userContent: string,
+  component: JsonDocsComponent,
+  allComponents: JsonDocsComponent[],
+) => [
+  userContent,
+  AUTO_GEN_COMMENT,
+  '',
+  ...usageToMarkdown(component.usage),
+  ...propsToMarkdown(component.props),
+  ...methodsToMarkdown(component.methods),
+  ...eventsToMarkdown(component.events),
+  ...slotsToMarkdown(component.slots),
+  ...stylesToMarkdown(component.styles),
+  ...(component.dependencies ? depsToMarkdown(component, allComponents) : []),
+  '',
+].join('\n');
 
-const escapePipeInTables = (content: string) => content.replace(/\s\\\|\s/g, ' ∣ ');
-
-const putCodeUsageInTabs = (content: string) => {
-  const usageBlockStart = content.indexOf('## Usage');
-  if (usageBlockStart === -1) return content;
-  const usageBlockEnd = content.slice(usageBlockStart).search(/\n##\s/)!;
-  const usageBlock = content.substr(usageBlockStart, usageBlockEnd).replace(/\s*\S*$/, '');
-
-  content = content.replace(/(---\s+)(?=[A-Z])/,
-    '---\n\n'
-    + 'import Tabs from \'@theme/Tabs\'\n'
-    + 'import TabItem from \'@theme/TabItem\'\n\n');
-
-  const values: string[] = [];
-  const tabs: string[] = [];
-  const order: string[] = ['html', 'react', 'vue', 'vue 2', 'vue 3', 'svelte', 'stencil', 'angular'];
-  const getValue = (header: string) => header.replace('### ', '').toLowerCase();
-
-  const langHeaders = usageBlock
-    .match(/###\s(.+)/gm)!
-    .sort((a, b) => order.indexOf(getValue(a)) - order.indexOf(getValue(b)));
-
-  langHeaders.forEach((langHeader) => {
-    const label = langHeader.replace('### ', '');
-    const value = getValue(langHeader);
-    values.push(`{ label: '${value === 'html' ? label.toUpperCase() : label}', value: '${value}' }`);
-
-    const codeBlockStart = usageBlock.indexOf(langHeader);
-    const codeBlockEnd = usageBlock.slice(codeBlockStart).search(/\n\n#/);
-    const codeBlock = usageBlock
-      .substr(codeBlockStart, (codeBlockEnd === -1 ? undefined : codeBlockEnd))
-      .replace(`${langHeader}\n\n`, '');
-
-    tabs.push(`
-<TabItem value="${value}">
-
-${codeBlock}
-
-</TabItem>
-    `);
-  });
-
-  return content.replace(usageBlock, `
-## Usage
-
-<Tabs
-  groupId="framework"
-  defaultValue="html"
-  values={[
-    ${values.join(',\n\t')}
-  ]}>
-${tabs.join('\n')}
-</Tabs>
-  `);
-};
-
-const outputRoot = resolve(__dirname, '../../../../docs/docs');
-
-const generateComponentDoc = async (component: JsonDocsComponent) => {
-  const hasReadme = !isUndefined(component.readmePath);
-  let content = hasReadme ? fs.readFileSync(component.readmePath!).toString() : '';
-  content = rewriteURLs(content);
-  content = writeFrontMatter(content);
-  content = escapePipeInTables(content);
-  content = putCodeUsageInTabs(content);
-  content = prettier.format(content, {
-    parser: 'markdown',
-    printWidth: 80,
-    tabWidth: 2,
-    singleQuote: true,
-    logLevel: 'silent',
-  });
+const generateComponentDoc = async (
+  component: JsonDocsComponent,
+  allComponents: JsonDocsComponent[],
+) => {
   const outputPathFromRoot = `${component.dirPath!.match(/components\/.+/)![0]}.md`;
-  const outputPath = resolve(outputRoot, outputPathFromRoot);
+  const outputPath = resolve(OUTPUT_ROOT, outputPathFromRoot);
   const isUpdate = fs.existsSync(outputPath);
+  const originalFileContent = isUpdate
+    ? fs.readFileSync(outputPath).toString()
+    : getDefaultReadme(component);
+  const userContent = originalFileContent.substr(0, originalFileContent.indexOf(`\n${AUTO_GEN_COMMENT}`));
+  const newContent = generateMarkdown(userContent, component, allComponents);
+  const hasContentChanged = !isUpdate || (originalFileContent !== newContent);
+
+  if (!hasContentChanged) return;
+
   if (!isUpdate) {
     fs.mkdirSync(outputPath.substr(0, outputPath.lastIndexOf('/')), { recursive: true });
-    fs.writeFileSync(outputPath, content);
-    console.log(`created site docs: ${outputPathFromRoot}`);
+    fs.writeFileSync(outputPath, newContent);
+    console.log(`created doc: ${outputPathFromRoot}`);
   } else {
-    const prevContent = fs.readFileSync(outputPath).toString();
-    if (prevContent !== content) {
-      fs.writeFileSync(outputPath, content);
-      console.log(`updated site docs: ${outputPathFromRoot}`);
-    }
+    fs.writeFileSync(outputPath, newContent);
+    console.log(`updated doc: ${outputPathFromRoot}`);
   }
 };
 
-export const siteDocsGenerator = async (docs: JsonDocs) => {
-  if (!fs.existsSync(outputRoot)) { fs.mkdirSync(outputRoot); }
-  await Promise.all(docs.components.map(generateComponentDoc));
+export const siteDocsOutputTarget = async (docs: JsonDocs) => {
+  if (!fs.existsSync(OUTPUT_ROOT)) { fs.mkdirSync(OUTPUT_ROOT); }
+  const { components } = docs;
+  await Promise.all(components.map((component) => generateComponentDoc(component, components)));
 };

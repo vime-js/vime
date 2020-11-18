@@ -1,23 +1,23 @@
 ```html {5-7,13,19} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
-      <VimeControls fullWidth :activeDuration="3200">
+    <Ui>
+      <Controls fullWidth :activeDuration="3200">
         <!-- ... -->
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeControls } from '@vime/vue';
+  import { Player, Ui, Controls } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
+      Player,
+      Ui,
+      Controls,
     },
   };
 </script>

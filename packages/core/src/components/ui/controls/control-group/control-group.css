@@ -1,0 +1,33 @@
+/**
+  * @prop --vm-control-group-spacing: The space between control groups.
+  */
+:host {
+  width: 100%;
+}
+
+.controlGroup {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: inherit;
+  align-items: inherit;
+  justify-content: inherit;
+  box-sizing: border-box;
+}
+
+.controlGroup.spaceTop {
+  margin-top: var(--vm-control-group-spacing);
+}
+
+.controlGroup.spaceBottom {
+  margin-bottom: var(--vm-control-group-spacing);
+}
+
+::slotted(*) {
+  margin-left: var(--vm-controls-spacing);
+}
+
+::slotted(*:first-child) {
+  margin-left: 0;
+}

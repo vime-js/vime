@@ -1,9 +1,9 @@
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-default-controls [active-duration]="2750"></vime-default-controls>
-  </vime-ui>
-</vime-player>
+    <vm-default-controls [active-duration]="2750"></vm-default-controls>
+  </vm-ui>
+</vm-player>
 ```

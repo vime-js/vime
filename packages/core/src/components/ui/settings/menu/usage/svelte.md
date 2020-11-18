@@ -1,24 +1,24 @@
 ```tsx {5-13}
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeMenu
+    <Menu
       identifer="menu-id"
       controller="menu-controller-id"
       active={isMenuActive}
-      on:vOpen={onOpen}
-      on:vClose={onClose}
+      on:vmOpen={onOpen}
+      on:vmClose={onClose}
     >
       <!-- ... -->
-    </VimeMenu>
-  </VimeUi>
-</VimePlayer>
+    </Menu>
+  </Ui>
+</Player>
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeMenu } from '@vime/svelte';
+  import { Player, Ui, Menu } from '@vime/svelte';
 
   let isMenuActive = false;
 

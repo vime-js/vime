@@ -7,7 +7,7 @@
     "serve": "stencil build --dev --watch --serve"
   },
   "dependencies": {
-    "@vime/core": "^4.0.0"
+    "@vime/core": "^5.0.0"
   },
   "devDependencies": {
     "@stencil/core": "^2.0.0",

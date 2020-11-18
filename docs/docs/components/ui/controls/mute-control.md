@@ -1,10 +1,7 @@
 ---
-title: vime-mute-control
+title: vm-mute-control
 sidebar_label: MuteControl
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 A control for toggling whether there is audio output or not. In other words the muted state of
 the player.
@@ -20,117 +17,120 @@ the player.
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-mute-control></vime-mute-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-mute-control></vm-mute-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,11}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeControls, VimeMuteControl } from '@vime/react';
+import { Player, Ui, Controls, MuteControl } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeControls>
-          <VimeMuteControl />
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+        <Controls>
+          <MuteControl />
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {7,14,21} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeControls>
-        <VimeMuteControl />
-      </VimeControls>
-    </VimeUi>
-  </VimePlayer>
+      <Controls>
+        <MuteControl />
+      </Controls>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeControls, VimeMuteControl } from '@vime/vue';
+  import { Player, Ui, Controls, MuteControl } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeControls,
-      VimeMuteControl,
+      Player,
+      Ui,
+      Controls,
+      MuteControl,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {6,16} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeControls>
-      <VimeMuteControl />
-    </VimeControls>
-  </VimeUi>
-</VimePlayer>
+    <Controls>
+      <MuteControl />
+    </Controls>
+  </Ui>
+</Player>
 
 <script lang="ts">
   import {
-    VimePlayer,
-    VimeUi,
-    VimeControls,
-    VimeMuteControl,
+    Player,
+    Ui,
+    Controls,
+    MuteControl,
   } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -138,15 +138,15 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls>
-            <vime-mute-control />
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          <vm-controls>
+            <vm-mute-control />
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -154,62 +154,58 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {7} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-controls>
+    <vm-controls>
       <!-- ... -->
-      <vime-mute-control></vime-mute-control>
-    </vime-controls>
-  </vime-ui>
-</vime-player>
+      <vm-mute-control></vm-mute-control>
+    </vm-controls>
+  </vm-ui>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property           | Attribute           | Description                                                                                                                                                   | Type                           | Default               |
-| ------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | --------------------- |
-| `hideTooltip`      | `hide-tooltip`      | Whether the tooltip should not be displayed.                                                                                                                  | `boolean`                      | `false`               |
-| `highVolumeIcon`   | `high-volume-icon`  | The URL to an SVG element or fragment.                                                                                                                        | `string`                       | `'#vime-volume-high'` |
-| `keys`             | `keys`              | A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string ∣ undefined`           | `'m'`                 |
-| `lowVolumeIcon`    | `low-volume-icon`   | The URL to an SVG element or fragment.                                                                                                                        | `string`                       | `'#vime-volume-low'`  |
-| `mutedIcon`        | `muted-icon`        | The URL to an SVG element or fragment.                                                                                                                        | `string`                       | `'#vime-volume-mute'` |
-| `tooltipDirection` | `tooltip-direction` | The direction in which the tooltip should grow.                                                                                                               | `"left" ∣ "right" ∣ undefined` | `undefined`           |
-| `tooltipPosition`  | `tooltip-position`  | Whether the tooltip is positioned above/below the control.                                                                                                    | `"bottom" ∣ "top"`             | `'top'`               |
+| Property           | Description                                                                                                                                                   | Type                           | Default         |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | --------------- |
+| `hideTooltip`      | Whether the tooltip should not be displayed.                                                                                                                  | `boolean`                      | `false`         |
+| `highVolumeIcon`   | The name of the high volume icon to resolve from the icon library.                                                                                            | `string`                       | `'volume-high'` |
+| `icons`            | The name of an icon library to use. Defaults to the library defined by the `icons` player property.                                                           | `string ∣ undefined`           | `undefined`     |
+| `keys`             | A slash (`/`) separated string of JS keyboard keys (`KeyboardEvent.key`), that when caught in a `keydown` event, will trigger a `click` event on the control. | `string ∣ undefined`           | `'m'`           |
+| `lowVolumeIcon`    | The name of the low volume icon to resolve from the icon library.                                                                                             | `string`                       | `'volume-low'`  |
+| `mutedIcon`        | The name of the muted volume icon to resolve from the icon library.                                                                                           | `string`                       | `'volume-mute'` |
+| `tooltipDirection` | The direction in which the tooltip should grow.                                                                                                               | `"left" ∣ "right" ∣ undefined` | `undefined`     |
+| `tooltipPosition`  | Whether the tooltip is positioned above/below the control.                                                                                                    | `"bottom" ∣ "top"`             | `'top'`         |
+
+
+## Events
+
+| Event     | Description                              | Type                |
+| --------- | ---------------------------------------- | ------------------- |
+| `vmBlur`  | Emitted when the control loses focus.    | `CustomEvent<void>` |
+| `vmFocus` | Emitted when the control receives focus. | `CustomEvent<void>` |
+
 
 ## Dependencies
 
 ### Used by
 
-- [vime-volume-control](volume-control.md)
+ - [vm-volume-control](./volume-control)
 
 ### Depends on
 
-- [vime-control](control.md)
-- [vime-icon](../icon.md)
-- [vime-tooltip](../tooltip.md)
+- [vm-control](./control)
+- [vm-icon](./../icon)
+- [vm-tooltip](./../tooltip)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-mute-control --> vime-control
-  vime-mute-control --> vime-icon
-  vime-mute-control --> vime-tooltip
-  vime-volume-control --> vime-mute-control
-  style vime-mute-control fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

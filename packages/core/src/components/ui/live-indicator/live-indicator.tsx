@@ -1,38 +1,36 @@
-import {
-  h, Host, Component, Prop,
-} from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 import { PlayerProps } from '../../core/player/PlayerProps';
-import { withPlayerContext } from '../../core/player/PlayerContext';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
+import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-live-indicator',
-  styleUrl: 'live-indicator.scss',
+  tag: 'vm-live-indicator',
+  styleUrl: 'live-indicator.css',
+  shadow: true,
 })
 export class LiveIndicator {
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isLive: PlayerProps['isLive'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['isLive', 'i18n']);
   }
 
   render() {
     return (
-      <Host
+      <div
         class={{
+          liveIndicator: true,
           hidden: !this.isLive,
         }}
       >
         <div class="indicator" />
         {this.i18n.live}
-      </Host>
+      </div>
     );
   }
 }

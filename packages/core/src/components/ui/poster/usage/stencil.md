@@ -2,13 +2,13 @@
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-poster />
-        </vime-ui>
-      </vime-player>
+          <vm-poster />
+        </vm-ui>
+      </vm-player>
     );
   }
 }

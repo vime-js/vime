@@ -7,7 +7,7 @@ import { Component, h } from '@stencil/core';
 })
 export class AppHome {
   // Obtain a ref if you need to call any methods.
-  private player!: HTMLVimePlayerElement;
+  private player!: HTMLVmPlayerElement;
 
   private onPlaybackReady() {
     // ...
@@ -16,20 +16,20 @@ export class AppHome {
   render() {
     return (
       <div class="container">
-        <vime-player
+        <vm-player
           playsinline
-          onVPlaybackReady={this.onPlaybackReady.bind(this)}
+          onVmPlaybackReady={this.onPlaybackReady.bind(this)}
           ref={(el) => { this.player = el; }}
         >
-          <vime-video poster="https://media.vimejs.com/poster.png">
+          <vm-video poster="https://media.vimejs.com/poster.png">
             <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
-          </vime-video>
+          </vm-video>
 
-          <vime-default-ui>
+          <vm-default-ui>
             {/* Custom UI Component. */}
             <tap-sides-to-seek />
-          </vime-default-ui>
-        </vime-player>
+          </vm-default-ui>
+        </vm-player>
       </div>
     );
   }

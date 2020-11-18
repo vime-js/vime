@@ -1,13 +1,13 @@
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeSkeleton />
-  </VimeUi>
-</VimePlayer>
+    <Skeleton />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeSkeleton } from '@vime/svelte';
+  import { Player, Ui, Skeleton } from '@vime/svelte';
 </script>
 ```

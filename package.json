@@ -19,8 +19,7 @@
     "angular": "yarn workspace @vime/angular",
     "lint": "eslint ./packages --quiet --fix --ignore-path .gitignore",
     "build": "yarn core build && yarn react build && yarn vue build && yarn vue:next build && yarn svelte build && yarn angular build",
-    "release": "lerna publish --yes",
-    "upgrade:all": "yarn upgrade && yarn upgrade --cwd \"examples/angular\" && yarn upgrade --cwd \"examples/react\" && yarn upgrade --cwd \"examples/html\" && yarn upgrade --cwd \"examples/rollup\" && yarn upgrade --cwd \"examples/stencil\" && yarn upgrade --cwd \"examples/svelte\" && yarn upgrade --cwd \"examples/vue\" && yarn upgrade --cwd \"examples/webpack\" && yarn upgrade --cwd \"docs\""
+    "release": "lerna publish --yes"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",

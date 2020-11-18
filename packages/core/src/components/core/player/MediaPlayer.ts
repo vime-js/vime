@@ -2,6 +2,7 @@ import { ComponentInterface } from '@stencil/core';
 import { PlayerProps } from './PlayerProps';
 import { PlayerEvents } from './PlayerEvents';
 import { PlayerMethods } from './PlayerMethods';
+import { ProviderHost } from '../../providers/ProviderConnect';
 
 type Indexable = { [P in keyof PlayerProps]: PlayerProps[P] };
 
@@ -15,4 +16,5 @@ export interface MediaPlayer extends
   PlayerProps,
   PlayerEvents,
   PlayerMethods,
-  Indexable {}
+  Indexable,
+  ProviderHost {}

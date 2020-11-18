@@ -1,10 +1,7 @@
 ---
-title: vime-captions
+title: vm-captions
 sidebar_label: Captions
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 Renders and displays VTT cues by hooking into the `textTracks` player property. This is a simple
 implementation that can only handle rendering one text track, and one cue for the given track at a
@@ -26,102 +23,105 @@ to be used in combination with the native HTML5 player controls.
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-captions></vime-captions>
-  </vime-ui>
-</vime-player>
+    <vm-captions></vm-captions>
+  </vm-ui>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeCaptions } from '@vime/react';
+import { Player, Ui, Captions } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeCaptions />
-      </VimeUi>
-    </VimePlayer>
+        <Captions />
+      </Ui>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeCaptions />
-    </VimeUi>
-  </VimePlayer>
+      <Captions />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeCaptions } from '@vime/vue';
+  import { Player, Ui, Captions } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeCaptions,
+      Player,
+      Ui,
+      Captions,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeCaptions />
-  </VimeUi>
-</VimePlayer>
+    <Captions />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeCaptions } from '@vime/svelte';
+  import { Player, Ui, Captions } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -129,13 +129,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-captions />
-        </vime-ui>
-      </vime-player>
+          <vm-captions />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -143,37 +143,29 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-captions></vime-captions>
-  </vime-ui>
-</vime-player>
+    <vm-captions></vm-captions>
+  </vm-ui>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property         | Attribute         | Description                                                                                         | Type      | Default |
-| ---------------- | ----------------- | --------------------------------------------------------------------------------------------------- | --------- | ------- |
-| `controlsHeight` | `controls-height` | The height of any lower control bar in pixels so that the captions can reposition when it's active. | `number`  | `0`     |
-| `hidden`         | `hidden`          | Whether the captions should be visible or not.                                                      | `boolean` | `false` |
+| Property | Description                                    | Type      | Default |
+| -------- | ---------------------------------------------- | --------- | ------- |
+| `hidden` | Whether the captions should be visible or not. | `boolean` | `false` |
 
-## Events
-
-| Event          | Description                                                                                                             | Type                                 |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| `vCuesChange`  | Emitted when the active cues change. A cue is active when `currentTime >= cue.startTime && currentTime <= cue.endTime`. | `CustomEvent<TextTrackCue[]>`        |
-| `vTrackChange` | Emitted when the current track changes.                                                                                 | `CustomEvent<TextTrack ∣ undefined>` |
 
 ## CSS Custom Properties
 
@@ -189,20 +181,11 @@ class Example {
 | `--vm-captions-text-color`        | The color of the captions text.                           |
 | `--vm-captions-z-index`           | The position in the UI z-axis stack inside the player.    |
 
+
 ## Dependencies
 
 ### Used by
 
-- [vime-default-ui](default-ui.md)
+ - [vm-default-ui](./default-ui)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-default-ui --> vime-captions
-  style vime-captions fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

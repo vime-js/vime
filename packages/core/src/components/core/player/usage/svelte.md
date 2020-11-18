@@ -1,24 +1,24 @@
 ```tsx
-<VimePlayer
+<Player
   controls
   autoplay
   muted
   ref={player}
   currentTime={currentTime}
-  on:vCurrentTimeChange={onTimeUpdate}
-  on:vFullscreenChange={onFullscreenChange}
+  on:vmCurrentTimeChange={onTimeUpdate}
+  on:vmFullscreenChange={onFullscreenChange}
 >
   <!-- Provider component is placed here. -->
 
-  <VimeUi><!-- UI components are placed here. --></VimeUi>
-</VimePlayer>
+  <Ui><!-- UI components are placed here. --></Ui>
+</Player>
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimePlayer, VimeUi, usePlayerStore } from '@vime/svelte';
+  import { Player, Ui, usePlayerStore } from '@vime/svelte';
 
-  let player: VimePlayer;
+  let player: Player;
   let currentTime = 0;
 
   // OPTIONAL: If you prefer you can use the player store.

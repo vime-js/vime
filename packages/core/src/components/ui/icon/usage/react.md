@@ -1,17 +1,15 @@
-```tsx {2,8-10,13}
+```tsx {2,8,11}
 import React from 'react';
-import { VimeIcon } from '@vime/react';
+import { Icon } from '@vime/react';
 
 function Example() {
   return (
     <div>
-      {/* Markup */}
-      <VimeIcon>
-        <rect width="300" height="100" />
-      </VimeIcon>
+      {/* Src. */}
+      <Icon src="/icons/my-icon.svg" label="An icon" />
 
-      {/* URL */}
-      <VimeIcon href="#vime-play" />
+      {/* Icon library. */}
+      <Icon name="play" library="material" label="Play" />
     </div>
   );
 }

@@ -1,19 +1,18 @@
 import { h, Component, Prop } from '@stencil/core';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { PlayerProps } from '../../../core/player/PlayerProps';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-end-time',
+  tag: 'vm-end-time',
+  styleUrl: 'end-time.css',
+  shadow: true,
 })
 export class EndTime {
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() duration: PlayerProps['duration'] = -1;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
   /**
@@ -23,12 +22,13 @@ export class EndTime {
   @Prop() alwaysShowHours = false;
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['duration', 'i18n']);
   }
 
   render() {
     return (
-      <vime-time
+      <vm-time
         label={this.i18n.duration}
         seconds={Math.max(0, this.duration)}
         alwaysShowHours={this.alwaysShowHours}

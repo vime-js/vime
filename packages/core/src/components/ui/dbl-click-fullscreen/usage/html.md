@@ -1,9 +1,9 @@
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-dbl-click-fullscreen></vime-dbl-click-fullscreen>
-  </vime-ui>
-</vime-player>
+    <vm-dbl-click-fullscreen></vm-dbl-click-fullscreen>
+  </vm-ui>
+</vm-player>
 ```

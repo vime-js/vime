@@ -1,0 +1,47 @@
+{
+  "name": "@vime/angular",
+  "version": "4.7.3",
+  "description": "Angular bindings for the Vime media player.",
+  "license": "MIT",
+  "contributors": [
+    "Rahim Alwer <rahim_alwer@outlook.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vime-js/vime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "peerDependencies": {
+    "@angular/common": "^11.0.4",
+    "@angular/core": "^11.0.4",
+    "rxjs": "^6.6.2"
+  },
+  "dependencies": {
+    "@vime/core": "^4.7.3",
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "rxjs": "^6.6.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "vime",
+    "player",
+    "media",
+    "angular",
+    "audio",
+    "video",
+    "html5",
+    "stenciljs",
+    "youtube",
+    "dailymotion",
+    "vimeo",
+    "hls",
+    "dash",
+    "custom"
+  ]
+}

@@ -1,15 +1,13 @@
-```tsx {6-8,11}
+```tsx {6,9}
 class Example {
   render() {
     return (
       <div>
-        {/* Markup */}
-        <vime-icon>
-          <rect width="300" height="100" />
-        </vime-icon>
+        {/* Src. */}
+        <vm-icon src="/icons/my-icon.svg" label="An icon" />
 
-        {/* URL */}
-        <vime-icon href="#vime-play" />
+        {/* Icon library. */}
+        <vm-icon name="play" library="material" label="Play" />
       </div>
     );
   }

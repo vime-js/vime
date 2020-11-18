@@ -1,16 +1,16 @@
 ```tsx {2,7-10}
 import React from 'react';
-import { VimePlayer, VimeAudio } from '@vime/react';
+import { Player, Audio } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer controls>
-      <VimeAudio>
+    <Player controls>
+      <Audio>
         <source data-src="/media/audio.mp3" type="audio/mp3" />
         {/* <source> and <track> elements are placed here. */}
-      </VimeAudio>
+      </Audio>
       {/* ... */}
-    </VimePlayer>
+    </Player>
   );
 }
 ```

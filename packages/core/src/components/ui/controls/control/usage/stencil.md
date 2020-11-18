@@ -13,14 +13,10 @@ import {
 export class PlaybackControl {
   private dispatch!: Dispatcher;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() paused: PlayerProps['paused'] = true;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
   connectedCallback() {
@@ -33,17 +29,17 @@ export class PlaybackControl {
 
   render() {
     return (
-      <vime-control
+      <vm-control
         keys="k"
         label={this.i18n.playback}
         pressed={this.paused}
         onClick={this.onClick.bind(this)}
       >
-        <vime-icon href={this.paused ? '#vime-play' : '#vime-pause'} />
-        <vime-tooltip>
+        <vm-icon name={this.paused ? 'play' : 'pause'} />
+        <vm-tooltip>
           {this.paused ? this.i18n.play : this.i18n.pause} (k)
-        </vime-tooltip>
-      </vime-control>
+        </vm-tooltip>
+      </vm-control>
     );
   }
 }

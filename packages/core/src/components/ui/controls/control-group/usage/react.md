@@ -1,32 +1,32 @@
 ```tsx {6,18-20,22-25}
 import React from 'react';
 import {
-  VimePlayer,
-  VimeUi,
-  VimeControls,
-  VimeControlGroup,
-  VimeScrubberControl,
-  VimePlaybackControl,
-  VimeVolumeControl,
+  Player,
+  Ui,
+  Controls,
+  ControlGroup,
+  ScrubberControl,
+  PlaybackControl,
+  VolumeControl,
 } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
-        <VimeControls fullWidth>
-          <VimeControlGroup>
-            <VimeScrubberControl />
-          </VimeControlGroup>
+      <Ui>
+        <Controls fullWidth>
+          <ControlGroup>
+            <ScrubberControl />
+          </ControlGroup>
 
-          <VimeControlGroup space="top">
-            <VimePlaybackControl />
-            <VimeVolumeControl />
-          </VimeControlGroup>
-        </VimeControls>
-      </VimeUi>
-    </VimePlayer>
+          <ControlGroup space="top">
+            <PlaybackControl />
+            <VolumeControl />
+          </ControlGroup>
+        </Controls>
+      </Ui>
+    </Player>
   );
 }
 ```

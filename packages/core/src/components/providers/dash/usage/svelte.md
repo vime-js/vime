@@ -1,16 +1,16 @@
 ```html {2-7,12} title="example.svelte"
-<VimePlayer controls>
-  <VimeDash
+<Player controls>
+  <Dash
     src="/media/manifest.mpd"
     version="latest"
     config="{dashConfig}"
     poster="/media/poster.png"
   />
   <!-- ... -->
-</VimePlayer>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeDash } from '@vime/svelte';
+  import { Player, Dash } from '@vime/svelte';
 
   /**
    * @see https://github.com/Dash-Industry-Forum/dash.js.

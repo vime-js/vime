@@ -1,15 +1,16 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import {
-  h, Component, Host, Prop, Watch, State,
+  h, Component, Prop, Watch, State,
 } from '@stencil/core';
 import { PlayerProps } from '../../core/player/PlayerProps';
-import { withPlayerContext } from '../../core/player/PlayerContext';
-import { IS_MOBILE } from '../../../utils/support';
-import { findRootPlayer } from '../../core/player/utils';
-import { findUIRoot } from '../ui/utils';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
+import { findPlayer } from '../../core/player/findPlayer';
+import { getComponentFromRegistry, withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-dbl-click-fullscreen',
-  styleUrl: 'dbl-click-fullscreen.scss',
+  tag: 'vm-dbl-click-fullscreen',
+  styleUrl: 'dbl-click-fullscreen.css',
+  shadow: true,
 })
 export class DblClickFullscreen {
   @State() canSetFullscreen = false;
@@ -20,43 +21,41 @@ export class DblClickFullscreen {
    */
   @Prop() useOnMobile = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isFullscreenActive: PlayerProps['isFullscreenActive'] = true;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isVideoView: PlayerProps['isVideoView'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() playbackReady: PlayerProps['playbackReady'] = false;
+
+  /** @internal */
+  @Prop() isMobile: PlayerProps['isMobile'] = false;
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
-    const player = findRootPlayer(this);
+    const player = await findPlayer(this);
     this.canSetFullscreen = await player.canSetFullscreen();
   }
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, [
       'playbackReady',
       'isFullscreenActive',
       'isVideoView',
+      'isMobile',
     ]);
   }
 
-  private onTriggerClickToPlay() {
-    const ui = findUIRoot(this);
-    const clickToPlay = ui?.querySelector('vime-click-to-play');
-    clickToPlay?.dispatchEvent(new Event('click'));
+  private async onTriggerClickToPlay() {
+    const [clickToPlay] = getComponentFromRegistry(this, 'vm-click-to-play');
+    await clickToPlay?.forceClick();
   }
 
-  private onToggleFullscreen() {
-    const player = findRootPlayer(this);
+  private async onToggleFullscreen() {
+    const player = await findPlayer(this);
     this.isFullscreenActive ? player.exitFullscreen() : player.enterFullscreen();
   }
 
@@ -80,12 +79,13 @@ export class DblClickFullscreen {
 
   render() {
     return (
-      <Host
+      <div
         class={{
+          dblClickFullscreen: true,
           enabled: this.playbackReady
             && this.canSetFullscreen
             && this.isVideoView
-            && (!IS_MOBILE || this.useOnMobile),
+            && (!this.isMobile || this.useOnMobile),
         }}
         onClick={this.onClick.bind(this)}
       />

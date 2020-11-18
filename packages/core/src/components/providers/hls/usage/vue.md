@@ -1,20 +1,20 @@
 ```html {3-5,11,16} title="example.vue"
 <template>
-  <VimePlayer controls>
-    <VimeHls :config="hlsConfig" version="latest" poster="/media/poster.png">
+  <Player controls>
+    <Hls :config="hlsConfig" version="latest" poster="/media/poster.png">
       <source data-src="/media/index.m3u8" type="application/x-mpegURL" />
-    </VimeHls>
+    </Hls>
     <!-- ... -->
-  </VimePlayer>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeHls } from '@vime/vue';
+  import { Player, Hls } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeHls,
+      Player,
+      Hls,
     },
 
     data: {

@@ -1,29 +1,36 @@
 import {
-  h, Host, Component, Prop, State, Watch,
+  h, Component, Prop, State, Watch, Host,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
-import { findRootPlayer } from '../../../core/player/utils';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { getPlayerFromRegistry, withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-fullscreen-control',
+  tag: 'vm-fullscreen-control',
   styleUrl: 'fullscreen-control.css',
+  shadow: true,
 })
 export class FullscreenControl implements KeyboardControl {
   @State() canSetFullscreen = false;
 
   /**
-   * The URL to an SVG element or fragment to display for entering fullscreen.
+   * The name of the enter fullscreen icon to resolve from the icon library.
    */
-  @Prop() enterIcon = '#vime-enter-fullscreen';
+  @Prop() enterIcon = 'fullscreen-enter';
 
   /**
-   * The URL to an SVG element or fragment to display for exiting fullscreen.
+   * The name of the exit fullscreen icon to resolve from the icon library.
    */
-  @Prop() exitIcon = '#vime-exit-fullscreen';
+  @Prop() exitIcon = 'fullscreen-exit';
+
+  /**
+   * The name of an icon library to use. Defaults to the library defined by the `icons` player
+   * property.
+   */
+  @Prop() icons?: string;
 
   /**
    * Whether the tooltip is positioned above/below the control.
@@ -40,33 +47,26 @@ export class FullscreenControl implements KeyboardControl {
    */
   @Prop() hideTooltip = false;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() keys?: string = 'f';
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() isFullscreenActive: PlayerProps['isFullscreenActive'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() playbackReady: PlayerProps['playbackReady'] = false;
 
   @Watch('playbackReady')
   async onPlaybackReadyChange() {
-    const player = findRootPlayer(this);
-    this.canSetFullscreen = await player.canSetFullscreen();
+    const player = getPlayerFromRegistry(this);
+    this.canSetFullscreen = await player?.canSetFullscreen() ?? false;
   }
 
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, [
       'isFullscreenActive',
       'playbackReady',
@@ -74,9 +74,13 @@ export class FullscreenControl implements KeyboardControl {
     ]);
   }
 
+  componentDidLoad() {
+    this.onPlaybackReadyChange();
+  }
+
   private onClick() {
-    const player = findRootPlayer(this);
-    !this.isFullscreenActive ? player.enterFullscreen() : player.exitFullscreen();
+    const player = getPlayerFromRegistry(this);
+    !this.isFullscreenActive ? player?.enterFullscreen() : player?.exitFullscreen();
   }
 
   render() {
@@ -84,28 +88,27 @@ export class FullscreenControl implements KeyboardControl {
     const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
-      <Host
-        class={{
-          hidden: !this.canSetFullscreen,
-        }}
-      >
-        <vime-control
+      <Host hidden={!this.canSetFullscreen}>
+        <vm-control
           label={this.i18n.fullscreen}
           keys={this.keys}
           pressed={this.isFullscreenActive}
           hidden={!this.canSetFullscreen}
           onClick={this.onClick.bind(this)}
         >
-          <vime-icon href={this.isFullscreenActive ? this.exitIcon : this.enterIcon} />
+          <vm-icon
+            name={this.isFullscreenActive ? this.exitIcon : this.enterIcon}
+            library={this.icons}
+          />
 
-          <vime-tooltip
+          <vm-tooltip
             hidden={this.hideTooltip}
             position={this.tooltipPosition}
             direction={this.tooltipDirection}
           >
             {tooltipWithHint}
-          </vime-tooltip>
-        </vime-control>
+          </vm-tooltip>
+        </vm-control>
       </Host>
     );
   }

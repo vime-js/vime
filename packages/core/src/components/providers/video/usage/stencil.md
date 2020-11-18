@@ -2,8 +2,8 @@
 class Example {
   render() {
     return (
-      <vime-player controls>
-        <vime-video poster="/media/poster.png">
+      <vm-player controls>
+        <vm-video poster="/media/poster.png">
           <source data-src="/media/video.mp4" type="video/mp4" />
           <track
             default
@@ -18,9 +18,9 @@ class Example {
             srclang="es"
             label="Spanish"
           />
-        </vime-video>
+        </vm-video>
         {/* ... */}
-      </vime-player>
+      </vm-player>
     );
   }
 }

@@ -1,0 +1,423 @@
+{
+  "version-1.x/docs": [
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Welcome",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.x/welcome/introduction"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.x/welcome/getting-started"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Integrations",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.x/integrations/svelte"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.x/integrations/sapper"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Preview",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.x/preview/setup"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.x/preview/api"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Lite",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.x/lite/setup"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.x/lite/usage"
+        }, {
+          "collapsed": true,
+          "type": "category",
+          "label": "API",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-1.x/lite/api/player"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/lite/api/embed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Standard",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.x/standard/setup"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.x/standard/notes"
+        }, {
+          "collapsed": true,
+          "type": "category",
+          "label": "API",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-1.x/standard/api/player"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/standard/api/media-type"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/standard/api/video-quality"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/standard/api/player-state"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Complete",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.x/complete/setup"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.x/complete/customization"
+        }, {
+          "collapsed": true,
+          "type": "category",
+          "label": "API",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-1.x/complete/api/player"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/complete/api/plugin"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/complete/api/plugin-role"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/complete/api/plugins-manager"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/complete/api/registry"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Guides",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.x/guides/loading-media"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Plugins",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-1.x/plugins/getting-started"
+        },
+        {
+          "type": "doc",
+          "id": "version-1.x/plugins/how-it-works"
+        },
+        {
+          "collapsed": true,
+          "type": "category",
+          "label": "API",
+          "items": [
+            {
+              "type": "doc",
+              "id": "version-1.x/plugins/api/boot"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/plugins/api/icons"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/plugins/api/poster"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/plugins/api/scrim"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/plugins/api/spinner"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/plugins/api/captions"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/plugins/api/action-display"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/plugins/api/click-to-play"
+            },
+            {
+              "type": "doc",
+              "id": "version-1.x/plugins/api/dbl-click-fullscreen"
+            },
+            {
+              "collapsed": true,
+              "type": "category",
+              "label": "Keyboard",
+              "items": [
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/keyboard/keyboard"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/keyboard/keyboard-shortcut"
+                }
+              ]
+            },
+            {
+              "collapsed": true,
+              "type": "category",
+              "label": "Tooltips",
+              "items": [
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/tooltips/tooltips"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/tooltips/tooltip"
+                }
+              ]
+            },
+            {
+              "collapsed": true,
+              "type": "category",
+              "label": "Controls",
+              "items": [
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/controls/controls"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/controls/control-group"
+                },
+                {
+                  "collapsed": true,
+                  "type": "category",
+                  "label": "Control",
+                  "items": [
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/control-interface"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/toggle-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/control-spacer"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/control-new-line"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/live-indicator"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/control-new-line"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/live-indicator"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/playback-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/big-playback-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/mute-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/volume-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/caption-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/pip-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/fullscreen-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/scrubber-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/settings-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/seek-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/seek-forward-control"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "version-1.x/plugins/api/controls/control/seek-backward-control"
+                    },
+                    {
+                      "collapsed": true,
+                      "type": "category",
+                      "label": "Time",
+                      "items": [
+                        {
+                          "type": "doc",
+                          "id": "version-1.x/plugins/api/controls/control/time/time"
+                        },
+                        {
+                          "type": "doc",
+                          "id": "version-1.x/plugins/api/controls/control/time/time-divider"
+                        },
+                        {
+                          "type": "doc",
+                          "id": "version-1.x/plugins/api/controls/control/time/current-time"
+                        },
+                        {
+                          "type": "doc",
+                          "id": "version-1.x/plugins/api/controls/control/time/end-time"
+                        },
+                        {
+                          "type": "doc",
+                          "id": "version-1.x/plugins/api/controls/control/time/time-progress"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "collapsed": true,
+              "type": "category",
+              "label": "Settings",
+              "items": [
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/settings/settings"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/settings/menu/menu"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/settings/menu/menu-control"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/settings/menu/menu-item"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/settings/menu/menu-item-radio"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/settings/menu/menu-options"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/settings/menu/submenu/submenu"
+                },
+                {
+                  "type": "doc",
+                  "id": "version-1.x/plugins/api/settings/menu/submenu/select-submenu"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

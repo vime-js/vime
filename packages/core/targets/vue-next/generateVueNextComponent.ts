@@ -14,7 +14,8 @@ export const generateVueNextComponent = (
 ${ignoreChecks()}
 import { defineComponent } from 'vue';
 import { method, render } from '../lib';
-${generateImports(cmpMeta, components, ['JSX', 'Components'])}
+import type { JSX, Components } from '@vime/core/dist/types';
+${generateImports(cmpMeta, components)}
 
 export default defineComponent<JSX.${displayName}, {}, {}, {}, {
   ${methods

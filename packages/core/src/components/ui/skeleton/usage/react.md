@@ -1,16 +1,16 @@
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeSkeleton } from '@vime/react';
+import { Player, Ui, Skeleton } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeSkeleton />
-      </VimeUi>
-    </VimePlayer>
+        <Skeleton />
+      </Ui>
+    </Player>
   );
 }
 ```

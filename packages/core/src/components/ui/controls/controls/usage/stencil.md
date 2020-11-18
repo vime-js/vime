@@ -2,15 +2,15 @@
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls fullWidth activeDuration={3200}>
+          <vm-controls fullWidth activeDuration={3200}>
             {/* ... */}
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }

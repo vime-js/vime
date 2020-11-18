@@ -1,27 +1,30 @@
 import {
-  h, Host, Component, Prop,
+  h, Component, Prop, State, Watch, Host,
 } from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
-import { isUndefined } from '../../../../utils/unit';
 import { KeyboardControl } from '../control/KeyboardControl';
-import { findRootPlayer } from '../../../core/player/utils';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { getPlayerFromRegistry, withComponentRegistry } from '../../../core/player/withComponentRegistry';
+import { isUndefined } from '../../../../utils/unit';
 
 @Component({
-  tag: 'vime-caption-control',
+  tag: 'vm-caption-control',
   styleUrl: 'caption-control.css',
+  shadow: true,
 })
 export class CaptionControl implements KeyboardControl {
-  /**
-   * The URL to an SVG element or fragment to load.
-   */
-  @Prop() showIcon = '#vime-captions-on';
+  @State() canToggleCaptionVisibility = false;
 
   /**
    * The URL to an SVG element or fragment to load.
    */
-  @Prop() hideIcon = '#vime-captions-off';
+  @Prop() showIcon = 'captions-on';
+
+  /**
+   * The URL to an SVG element or fragment to load.
+   */
+  @Prop() hideIcon = 'captions-off';
 
   /**
    * Whether the tooltip is positioned above/below the control.
@@ -39,65 +42,79 @@ export class CaptionControl implements KeyboardControl {
   @Prop() hideTooltip = false;
 
   /**
-   * @inheritdoc
+   * The name of an icon library to use. Defaults to the library defined by the `icons` player
+   * property.
    */
+  @Prop() icons?: string;
+
+  /** @inheritdoc */
   @Prop() keys?: string = 'c';
 
-  /**
-   * @internal
-   */
-  @Prop() currentCaption?: PlayerProps['currentCaption'];
-
-  /**
-   * @internal
-   */
-  @Prop() isCaptionsActive: PlayerProps['isCaptionsActive'] = false;
-
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
+  /** @internal */
+  @Prop() playbackReady: PlayerProps['playbackReady'] = false;
+
+  /** @internal */
+  @Prop() textTracks: PlayerProps['textTracks'] = [];
+
+  /** @internal */
+  @Prop() isTextTrackVisible: PlayerProps['isTextTrackVisible'] = false;
+
+  @Watch('textTracks')
+  @Watch('playbackReady')
+  async onTextTracksChange() {
+    const player = getPlayerFromRegistry(this);
+    this.canToggleCaptionVisibility = (this.textTracks.length > 0)
+      && (await player?.canSetTextTrackVisibility() ?? false);
+  }
+
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, [
-      'isCaptionsActive',
-      'currentCaption',
       'i18n',
+      'textTracks',
+      'isTextTrackVisible',
+      'playbackReady',
     ]);
   }
 
+  componentDidLoad() {
+    this.onTextTracksChange();
+  }
+
   private onClick() {
-    const player = findRootPlayer(this);
-    player.toggleCaptionsVisibility();
+    const player = getPlayerFromRegistry(this);
+    player?.setTextTrackVisibility?.(!this.isTextTrackVisible);
   }
 
   render() {
-    const tooltip = this.isCaptionsActive ? this.i18n.disableCaptions : this.i18n.enableCaptions;
+    const tooltip = this.isTextTrackVisible ? this.i18n.disableCaptions : this.i18n.enableCaptions;
     const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
-      <Host
-        class={{
-          hidden: isUndefined(this.currentCaption),
-        }}
-      >
-        <vime-control
+      <Host hidden={!this.canToggleCaptionVisibility}>
+        <vm-control
           label={this.i18n.captions}
           keys={this.keys}
-          hidden={isUndefined(this.currentCaption)}
-          pressed={this.isCaptionsActive}
+          hidden={!this.canToggleCaptionVisibility}
+          pressed={this.isTextTrackVisible}
           onClick={this.onClick.bind(this)}
         >
-          <vime-icon href={this.isCaptionsActive ? this.showIcon : this.hideIcon} />
+          <vm-icon
+            name={this.isTextTrackVisible ? this.showIcon : this.hideIcon}
+            library={this.icons}
+          />
 
-          <vime-tooltip
+          <vm-tooltip
             hidden={this.hideTooltip}
             position={this.tooltipPosition}
             direction={this.tooltipDirection}
           >
             {tooltipWithHint}
-          </vime-tooltip>
-        </vime-control>
+          </vm-tooltip>
+        </vm-control>
       </Host>
     );
   }

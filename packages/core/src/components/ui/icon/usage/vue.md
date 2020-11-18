@@ -1,22 +1,20 @@
-```html {4-6,9,14,18} title="example.vue"
+```html {4,7,12,16} title="example.vue"
 <template>
   <div>
-    <!-- Markup -->
-    <VimeIcon>
-      <rect width="300" height="100" />
-    </VimeIcon>
+    <!-- Src. -->
+    <Icon src="/icons/my-icon.svg" label="An icon" />
 
-    <!-- URL -->
-    <VimeIcon href="#vime-play" />
+    <!-- Icon library. -->
+    <Icon name="pause" library="material" label="Pause" />
   </div>
 </template>
 
 <script>
-  import { VimeIcon } from '@vime/vue';
+  import { Icon } from '@vime/vue';
 
   export default {
     components: {
-      VimeIcon,
+      Icon,
     },
   };
 </script>

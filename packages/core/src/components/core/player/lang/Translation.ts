@@ -16,6 +16,8 @@ export interface Translation {
   mute: string
   unmute: string
   captions: string
+  audio: string
+  default: string
   subtitlesOrCc: string
   enableCaptions: string
   disableCaptions: string

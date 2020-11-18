@@ -33,18 +33,18 @@ more information on what properties you can pass in.
 <TabItem value="html">
 
 ```html {7-10} title="player.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
  
   <!-- We turn off the controls that come with the default UI. -->
-  <vime-default-ui no-controls>
+  <vm-default-ui no-controls>
     <!-- We setup the default controls and pass in any options.  -->
-    <vime-default-controls 
+    <vm-default-controls 
       hide-on-mouse-leave 
       active-duration="2000"
-    ></vime-default-controls>
-  </vime-default-ui>
-</vime-player>
+    ></vm-default-controls>
+  </vm-default-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -53,22 +53,22 @@ more information on what properties you can pass in.
 
 ```tsx {12-15} title="Player.tsx"
 import React from 'react';
-import { VimePlayer, VimeDefaultUi, VimeDefaultControls } from '@vime/react';
+import { Player, DefaultUi, DefaultControls } from '@vime/react';
 
 function Player() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
 
       {/* We turn off the controls that come with the default UI. */}
-      <VimeDefaultUi noControls>
+      <DefaultUi noControls>
         {/* We setup the default controls and pass in any options. */}
-        <VimeDefaultControls
+        <DefaultControls
           hideOnMouseLeave
           activeDuration={2000}
         />
-      </VimeDefaultUi>
-    </VimePlayer>
+      </DefaultUi>
+    </Player>
   );
 }
 ```
@@ -79,28 +79,28 @@ function Player() {
 
 ```html {8-11} title="Player.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
 
     <!-- We turn off the controls that come with the default UI. -->
-    <VimeDefaultUi noControls>
+    <DefaultUi noControls>
       <!-- We setup the default controls and pass in any options. -->
-      <VimeDefaultControls
+      <DefaultControls
         hideOnMouseLeave
         :activeDuration="2000"
       />
-    </VimeDefaultUi>
-  </VimePlayer>
+    </DefaultUi>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeDefaultUi, VimeDefaultControls } from '@vime/vue';
+  import { Player, DefaultUi, DefaultControls } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeDefaultUi,
-      VimeDefaultControls,
+      Player,
+      DefaultUi,
+      DefaultControls,
     },
   };
 </script>
@@ -111,21 +111,21 @@ function Player() {
 <TabItem value="svelte">
 
 ```html {7-10} title="Player.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
 
   <!-- We turn off the controls that come with the default UI. -->
-  <VimeDefaultUi noControls>
+  <DefaultUi noControls>
     <!-- We setup the default controls and pass in any options. -->
-    <VimeDefaultControls
+    <DefaultControls
       hideOnMouseLeave
       activeDuration={2000}
     />
-  </VimeDefaultUi>
-</VimePlayer>
+  </DefaultUi>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeDefaultUi, VimeDefaultControls } from '@vime/svelte';
+  import { Player, DefaultUi, DefaultControls } from '@vime/svelte';
 </script>
 ```
 
@@ -139,18 +139,18 @@ class Player {
 
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
 
         {/* We turn off the controls that come with the default UI. */}
-        <vime-default-ui noControls>
+        <vm-default-ui noControls>
           {/* We setup the default controls and pass in any options.  */}
-          <vime-default-controls 
+          <vm-default-controls 
             hideOnMouseLeave
             activeDuration={2000}
           />
-        </vime-default-ui>
-      </vime-player>
+        </vm-default-ui>
+      </vm-player>
     );
   }
 }
@@ -161,18 +161,18 @@ class Player {
 <TabItem value="angular">
 
 ```html {7-10} title="player.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
 
   <!-- We turn off the controls that come with the default UI. -->
-  <vime-default-ui no-controls>
+  <vm-default-ui no-controls>
     <!-- We setup the default controls and pass in any options.  -->
-    <vime-default-controls 
+    <vm-default-controls 
       hide-on-mouse-leave 
       [active-duration]="2000"
-    ></vime-default-controls>
-  </vime-default-ui>
-</vime-player>
+    ></vm-default-controls>
+  </vm-default-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -219,31 +219,31 @@ component documentation for an example of how to create a custom control.
 <TabItem value="html">
 
 ```html {6-23} title="player.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
   
   <!-- We turn off the controls that come with the default UI. -->
-  <vime-default-ui no-controls>
-    <vime-scrim></vime-scrim>
+  <vm-default-ui no-controls>
+    <vm-scrim></vm-scrim>
 
-    <vime-controls full-width pin="topLeft">
-      <vime-control-spacer></vime-control-spacer>
-      <vime-mute-control><vime-mute-control>
-    </vime-controls>
+    <vm-controls full-width pin="topLeft">
+      <vm-control-spacer></vm-control-spacer>
+      <vm-mute-control></vm-mute-control>
+    </vm-controls>
 
-    <vime-controls pin="center">
-      <vime-playback-control 
+    <vm-controls pin="center">
+      <vm-playback-control 
         hide-tooltip 
         style="--vm-control-scale: 1.7;"
-      ></vime-playback-control>
-    </vime-controls>
+      ></vm-playback-control>
+    </vm-controls>
     
-    <vime-controls full-width pin="bottomLeft">
-      <vime-control-spacer></vime-control-spacer>
-      <vime-time-progress></vime-time-progress>
-    </vime-controls>
-  </vime-default-ui>
-</vime-player>
+    <vm-controls full-width pin="bottomLeft">
+      <vm-control-spacer></vm-control-spacer>
+      <vm-time-progress></vm-time-progress>
+    </vm-controls>
+  </vm-default-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -253,40 +253,40 @@ component documentation for an example of how to create a custom control.
 ```tsx {20-34} title="Player.tsx"
 import React from 'react';
 import { 
-  VimePlayer,
-  VimeDefaultUi, 
-  VimeScrim,
-  VimeControls,
-  VimeControlSpacer,
-  VimeMuteControl,
-  VimePlaybackControl,
-  VimeTimeProgress,
+  Player,
+  DefaultUi, 
+  Scrim,
+  Controls,
+  ControlSpacer,
+  MuteControl,
+  PlaybackControl,
+  TimeProgress,
 } from '@vime/react';
 
 function Player() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
 
       {/* We turn off the controls that come with the default UI. */}
-      <VimeDefaultUi noControls>
-        <VimeScrim />
+      <DefaultUi noControls>
+        <Scrim />
 
-        <VimeControls fullWidth pin="topLeft">
-          <VimeControlSpacer />
-          <VimeMuteControl />
-        </VimeControls>
+        <Controls fullWidth pin="topLeft">
+          <ControlSpacer />
+          <MuteControl />
+        </Controls>
 
-        <VimeControls pin="center">
-          <VimePlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />
-        </VimeControls>
+        <Controls pin="center">
+          <PlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />
+        </Controls>
         
-        <VimeControls fullWidth pin="bottomLeft">
-          <VimeControlSpacer />
-          <VimeTimeProgress />
-        </VimeControls>
-      </VimeDefaultUi>
-    </VimePlayer>
+        <Controls fullWidth pin="bottomLeft">
+          <ControlSpacer />
+          <TimeProgress />
+        </Controls>
+      </DefaultUi>
+    </Player>
   );
 }
 ```
@@ -297,58 +297,58 @@ function Player() {
 
 ```html {7-21} title="Player.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
 
     <!-- We turn off the controls that come with the default UI. -->
-    <VimeDefaultUi noControls>
-      <VimeScrim />
+    <DefaultUi noControls>
+      <Scrim />
 
-      <VimeControls fullWidth pin="topLeft">
-        <VimeControlSpacer />
-        <VimeMuteControl />
-      </VimeControls>
+      <Controls fullWidth pin="topLeft">
+        <ControlSpacer />
+        <MuteControl />
+      </Controls>
 
-      <VimeControls pin="center">
-        <VimePlaybackControl hideTooltip />
-      </VimeControls>
+      <Controls pin="center">
+        <PlaybackControl hideTooltip />
+      </Controls>
       
-      <VimeControls fullWidth pin="bottomLeft">
-        <VimeControlSpacer />
-        <VimeTimeProgress />
-      </VimeControls>
-    </VimeDefaultUi>
-  </VimePlayer>
+      <Controls fullWidth pin="bottomLeft">
+        <ControlSpacer />
+        <TimeProgress />
+      </Controls>
+    </DefaultUi>
+  </Player>
 </template>
 
 <script>
   import { 
-    VimePlayer,
-    VimeDefaultUi,
-    VimeScrim,
-    VimeControls,
-    VimeControlSpacer,
-    VimeMuteControl,
-    VimePlaybackControl,
-    VimeTimeProgress,
+    Player,
+    DefaultUi,
+    Scrim,
+    Controls,
+    ControlSpacer,
+    MuteControl,
+    PlaybackControl,
+    TimeProgress,
   } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeDefaultUi,
-      VimeScrim,
-      VimeControls,
-      VimeControlSpacer,
-      VimeMuteControl,
-      VimePlaybackControl,
-      VimeTimeProgress,
+      Player,
+      DefaultUi,
+      Scrim,
+      Controls,
+      ControlSpacer,
+      MuteControl,
+      PlaybackControl,
+      TimeProgress,
     },
   };
 </script>
 
 <style>
-  vime-playback-control {
+  vm-playback-control {
     --vm-control-scale: 1.7;
   }
 </style>
@@ -359,44 +359,44 @@ function Player() {
 <TabItem value="svelte">
 
 ```html {6-20} title="Player.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
 
   <!-- We turn off the controls that come with the default UI. -->
-  <VimeDefaultUi noControls>
-    <VimeScrim />
+  <DefaultUi noControls>
+    <Scrim />
 
-    <VimeControls fullWidth pin="topLeft">
-      <VimeControlSpacer />
-      <VimeMuteControl />
-    </VimeControls>
+    <Controls fullWidth pin="topLeft">
+      <ControlSpacer />
+      <MuteControl />
+    </Controls>
 
-    <VimeControls pin="center">
-      <VimePlaybackControl hideTooltip />
-    </VimeControls>
+    <Controls pin="center">
+      <PlaybackControl hideTooltip />
+    </Controls>
     
-    <VimeControls fullWidth pin="bottomLeft">
-      <VimeControlSpacer />
-      <VimeTimeProgress />
-    </VimeControls>
-  </VimeDefaultUi>
-</VimePlayer>
+    <Controls fullWidth pin="bottomLeft">
+      <ControlSpacer />
+      <TimeProgress />
+    </Controls>
+  </DefaultUi>
+</Player>
 
 <script lang="ts">
   import { 
-    VimePlayer,
-    VimeDefaultUi,
-    VimeScrim,
-    VimeControls,
-    VimeControlSpacer,
-    VimeMuteControl,
-    VimePlaybackControl,
-    VimeTimeProgress,
+    Player,
+    DefaultUi,
+    Scrim,
+    Controls,
+    ControlSpacer,
+    MuteControl,
+    PlaybackControl,
+    TimeProgress,
   } from '@vime/svelte';
 </script>
 
 <style>
-  :global(vime-playback-control) {
+  :global(vm-playback-control) {
     --vm-control-scale: 1.7;
   }
 </style>
@@ -412,31 +412,31 @@ class Player {
 
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
 
         {/* We turn off the controls that come with the default UI. */}
-        <vime-default-ui noControls>
-          <vime-scrim />
+        <vm-default-ui noControls>
+          <vm-scrim />
 
-          <vime-controls fullWidth pin="topLeft">
-            <vime-control-spacer />
-            <vime-mute-control />
-          </vime-controls>
+          <vm-controls fullWidth pin="topLeft">
+            <vm-control-spacer />
+            <vm-mute-control />
+          </vm-controls>
 
-          <vime-controls pin="center">
-            <vime-playback-control 
+          <vm-controls pin="center">
+            <vm-playback-control 
               hideTooltip 
               style={{ '--vm-control-scale': '1.7' }}
             />
-          </vime-controls>
+          </vm-controls>
           
-          <vime-controls fullWidth pin="bottomLeft">
-            <vime-control-spacer />
-            <vime-time-progress />
-          </vime-controls>
-        </vime-default-ui>
-      </vime-player>
+          <vm-controls fullWidth pin="bottomLeft">
+            <vm-control-spacer />
+            <vm-time-progress />
+          </vm-controls>
+        </vm-default-ui>
+      </vm-player>
     );
   }
 }
@@ -447,31 +447,31 @@ class Player {
 <TabItem value="angular">
 
 ```html {6-23} title="player.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
 
   <!-- We turn off the controls that come with the default UI. -->
-  <vime-default-ui no-controls>
-    <vime-scrim></vime-scrim>
+  <vm-default-ui no-controls>
+    <vm-scrim></vm-scrim>
 
-    <vime-controls full-width pin="topLeft">
-      <vime-control-spacer></vime-control-spacer>
-      <vime-mute-control><vime-mute-control>
-    </vime-controls>
+    <vm-controls full-width pin="topLeft">
+      <vm-control-spacer></vm-control-spacer>
+      <vm-mute-control></vm-mute-control>
+    </vm-controls>
 
-    <vime-controls pin="center">
-      <vime-playback-control 
+    <vm-controls pin="center">
+      <vm-playback-control 
         hide-tooltip 
         style="--vm-control-scale: 1.7;"
-      ></vime-playback-control>
-    </vime-controls>
+      ></vm-playback-control>
+    </vm-controls>
     
-    <vime-controls full-width pin="bottomLeft">
-      <vime-control-spacer></vime-control-spacer>
-      <vime-time-progress></vime-time-progress>
-    </vime-controls>
-  </vime-default-ui>
-</vime-player>
+    <vm-controls full-width pin="bottomLeft">
+      <vm-control-spacer></vm-control-spacer>
+      <vm-time-progress></vm-time-progress>
+    </vm-controls>
+  </vm-default-ui>
+</vm-player>
 ```
 
 </TabItem>
@@ -489,10 +489,9 @@ Of course the example hasn't been styled and needs more work but we'll leave tha
 learn more about it in the [Styling](./styling) guide. To summarize we've seen how to customize 
 the default controls via properties, and how to extend the default UI with our own sets of 
 controls. If we wanted to build our own UI from scratch, we could take the last example and place 
-it inside `VimeUi` instead of `VimeDefaultUi`, and we'd also need to add the 
-[`VimeIcons`](../components/ui/icons) component to load the default icons. From here you should be 
-able to easily put together your own controls. Also if you missed it, the [Control](../components/ui/controls/control)
-component documentation re-creates the playback control, to demonstrate how you could create a 
-completely custom control in your library/framework.
+it inside `Ui` instead of `DefaultUi`. From here you should be able to easily put together your 
+own controls. Also if you missed it, the [Control](../components/ui/controls/control) component 
+documentation re-creates the playback control, to demonstrate how you could create a completely 
+custom control in your library/framework.
 
 🚂 &nbsp;Let's move onto [settings!](./settings)

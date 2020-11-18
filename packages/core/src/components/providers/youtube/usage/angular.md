@@ -1,6 +1,6 @@
 ```html {2} title="example.html"
-<vime-player controls>
-  <vime-youtube cookies="true" video-id="DyTCOwB0DVw"></vime-youtube>
+<vm-player controls>
+  <vm-youtube cookies="true" video-id="DyTCOwB0DVw"></vm-youtube>
   <!-- ... -->
-</vime-player>
+</vm-player>
 ```

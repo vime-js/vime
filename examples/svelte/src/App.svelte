@@ -1,8 +1,8 @@
 <script lang="ts">
 	import {
-		VimePlayer,
-		VimeVideo, 
-		VimeDefaultUi,
+		Player,
+		Video, 
+		DefaultUi,
 		usePlayerStore,
 	} from '@vime/svelte';
 
@@ -10,7 +10,7 @@
 	import TapSidesToSeek from './TapSidesToSeek.svelte';
 
 	// Obtain a ref if you need to call any methods.
-	let player: VimePlayer;
+	let player: Player;
 
 	/**
 	 * All player properties are available through the store. If you prefer, you could also pass 
@@ -26,15 +26,15 @@
 </script>
 
 <div id="container">
-	<VimePlayer on:vPlaybackReady={onPlaybackReady} bind:this={player}>
-		<VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+	<Player on:vPlaybackReady={onPlaybackReady} bind:this={player}>
+		<Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
 			<source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4">
-		</VimeVideo>
+		</Video>
 
-		<VimeDefaultUi>
+		<DefaultUi>
 			<TapSidesToSeek />
-		</VimeDefaultUi>
-	</VimePlayer>
+		</DefaultUi>
+	</Player>
 </div>
 
 <style>

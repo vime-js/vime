@@ -1,13 +1,11 @@
-```html {2-4,7,10} title="example.svelte"
-<!-- Markup -->
-<VimeIcon>
-  <rect width="300" height="100" />
-</VimeIcon>
+```html {2,5,8} title="example.svelte"
+<!-- Src. -->
+<Icon src="/icons/my-icon.svg" label="An icon" />
 
-<!-- URL -->
-<VimeIcon href="#vime-play" />
+<!-- Icon library. -->
+<Icon name="pause" library="material" label="Pause" />
 
 <script lang="ts">
-  import { VimeIcon } from '@vime/svelte';
+  import { Icon } from '@vime/svelte';
 <script>
 ```

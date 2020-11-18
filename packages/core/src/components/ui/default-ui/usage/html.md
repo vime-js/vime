@@ -1,6 +1,6 @@
 ```html {3}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-default-ui></vime-default-ui>
-</vime-player>
+  <vm-default-ui></vm-default-ui>
+</vm-player>
 ```

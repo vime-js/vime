@@ -1,15 +1,15 @@
 ```tsx {5}
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeDefaultControls activeDuration={3200} />
-  </VimeUi>
-</VimePlayer>
+    <DefaultControls activeDuration={3200} />
+  </Ui>
+</Player>
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeDefaultControls } from '@vime/svelte';
+  import { Player, Ui, DefaultControls } from '@vime/svelte';
 </script>
 ```

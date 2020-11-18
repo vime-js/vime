@@ -20,6 +20,7 @@
   --ifm-container-width: 1280px;
   --docusaurus-announcement-bar-height: 40px !important;
   --ifm-tabs-color: #c1c1c1;
+  --ifm-table-cell-padding: 8px;
 }
 
 :root[data-theme="dark"] {
@@ -141,4 +142,14 @@ code {
   --tp-button-background-color-focus: var(--tp-active-color);
   --tp-button-background-color-hover: var(--tp-active-color);
   --tp-button-foreground-color: var(--tp-fg-color);
+}
+
+table {
+  font-size: 12px;
+}
+
+@media screen and (min-width: 1600px) {
+  table {
+    font-size: 14px;
+  }
 }

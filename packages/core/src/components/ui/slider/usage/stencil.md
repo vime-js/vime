@@ -8,12 +8,12 @@ class Example {
 
   render() {
     return (
-      <VimeSlider
+      <Slider
         label="Volume"
         step={5}
         max={100}
         value={this.value}
-        onVValueChange={this.onValueChange.bind(this)}
+        onVmValueChange={this.onValueChange.bind(this)}
       />
     );
   }

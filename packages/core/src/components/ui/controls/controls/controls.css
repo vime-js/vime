@@ -1,0 +1,65 @@
+/**
+  * @prop --vm-controls-padding: The padding inside the controls.
+  * @prop --vm-controls-bg: The background color of the controls.
+  * @prop --vm-controls-border-radius: The border radius of the controls.
+  * @prop --vm-controls-spacing: The space between controls.
+  * @prop --vm-controls-z-index: The position in the UI z-axis stack inside the player.
+  */
+:host {
+  position: relative;
+  width: 100%;
+  z-index: var(--vm-controls-z-index);
+}
+
+:host([video]) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.controls {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  flex-wrap: wrap;
+  pointer-events: auto;
+  box-sizing: border-box;
+  background: var(--vm-controls-bg);
+  padding: var(--vm-controls-padding);
+  border-radius: var(--vm-controls-border-radius);
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--vm-fade-transition);
+}
+
+.controls.audio {
+  position: relative;
+}
+
+.controls.hidden {
+  display: none;
+}
+
+.controls.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.controls.fullWidth {
+  width: 100%;
+}
+
+.controls.fullHeight {
+  height: 100%;
+}
+
+::slotted(*:not(vm-control-group)) {
+  margin-left: var(--vm-controls-spacing);
+}
+
+::slotted(*:not(vm-control-group):first-child) {
+  margin-left: 0;
+}

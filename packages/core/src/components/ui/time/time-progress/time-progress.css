@@ -1,12 +1,14 @@
 /**
   * @prop --vm-time-color: The color of the text displaying the time.
   */
-vime-time-progress {
+.timeProgress {
   display: flex;
+  width: 100%;
+  height: 100%;
   align-items: center;
   color: var(--vm-time-color);
 }
 
-vime-time-progress > span {
+.separator {
   margin: 0 4px;
 }

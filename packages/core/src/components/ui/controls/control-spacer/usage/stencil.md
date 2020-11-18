@@ -2,18 +2,18 @@
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-controls fullWidth>
-            <vime-playback-control />
-            <vime-volume-control />
-            <vime-control-spacer />
-            <vime-fullscreen-control />
-          </vime-controls>
-        </vime-ui>
-      </vime-player>
+          <vm-controls fullWidth>
+            <vm-playback-control />
+            <vm-volume-control />
+            <vm-control-spacer />
+            <vm-fullscreen-control />
+          </vm-controls>
+        </vm-ui>
+      </vm-player>
     );
   }
 }

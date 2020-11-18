@@ -1,31 +1,41 @@
-import { h, Component, Prop } from '@stencil/core';
+import {
+  h, Component, Prop, Event, EventEmitter,
+} from '@stencil/core';
 import { PlayerProps } from '../../../core/player/PlayerProps';
-import { withPlayerContext } from '../../../core/player/PlayerContext';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { Dispatcher, createDispatcher } from '../../../core/player/PlayerDispatcher';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 import { isUndefined } from '../../../../utils/unit';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-mute-control',
+  tag: 'vm-mute-control',
+  shadow: true,
 })
 export class MuteControl implements KeyboardControl {
   private dispatch!: Dispatcher;
 
   /**
-   * The URL to an SVG element or fragment.
+   * The name of the low volume icon to resolve from the icon library.
    */
-  @Prop() lowVolumeIcon = '#vime-volume-low';
+  @Prop() lowVolumeIcon = 'volume-low';
 
   /**
-   * The URL to an SVG element or fragment.
+   * The name of the high volume icon to resolve from the icon library.
    */
-  @Prop() highVolumeIcon = '#vime-volume-high';
+  @Prop() highVolumeIcon = 'volume-high';
 
   /**
-   * The URL to an SVG element or fragment.
+   * The name of the muted volume icon to resolve from the icon library.
    */
-  @Prop() mutedIcon = '#vime-volume-mute';
+  @Prop() mutedIcon = 'volume-mute';
+
+  /**
+   * The name of an icon library to use. Defaults to the library defined by the `icons` player
+   * property.
+   */
+  @Prop() icons?: string;
 
   /**
    * Whether the tooltip is positioned above/below the control.
@@ -42,27 +52,30 @@ export class MuteControl implements KeyboardControl {
    */
   @Prop() hideTooltip = false;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() keys?: string = 'm';
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() volume: PlayerProps['volume'] = 50;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() muted: PlayerProps['muted'] = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
+  /**
+   * Emitted when the control receives focus.
+   */
+  @Event() vmFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the control loses focus.
+   */
+  @Event() vmBlur!: EventEmitter<void>;
+
   constructor() {
+    withComponentRegistry(this);
     withPlayerContext(this, ['muted', 'volume', 'i18n']);
   }
 
@@ -84,22 +97,22 @@ export class MuteControl implements KeyboardControl {
     const tooltipWithHint = !isUndefined(this.keys) ? `${tooltip} (${this.keys})` : tooltip;
 
     return (
-      <vime-control
+      <vm-control
         label={this.i18n.mute}
         pressed={this.muted}
         keys={this.keys}
         onClick={this.onClick.bind(this)}
       >
-        <vime-icon href={this.getIcon()} />
+        <vm-icon name={this.getIcon()} library={this.icons} />
 
-        <vime-tooltip
+        <vm-tooltip
           hidden={this.hideTooltip}
           position={this.tooltipPosition}
           direction={this.tooltipDirection}
         >
           {tooltipWithHint}
-        </vime-tooltip>
-      </vime-control>
+        </vm-tooltip>
+      </vm-control>
     );
   }
 }

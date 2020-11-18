@@ -11,6 +11,40 @@ export function listen<T extends Event | UIEvent>(
   return () => node.removeEventListener(event, handler as EventListener, options);
 }
 
+export function fireEventAndRetry<T>(
+  el: HTMLElement,
+  event: CustomEvent<T>,
+  onFail?: () => void,
+  interval = 300,
+  maxRetries = 10,
+) {
+  let timeout: any;
+  let attempt = 0;
+  let found = false;
+
+  function retry() {
+    if (found) return;
+
+    timeout = setTimeout(() => {
+      if (attempt === maxRetries) {
+        onFail?.();
+        return;
+      }
+
+      el.dispatchEvent(event);
+      attempt += 1;
+      retry();
+    }, interval);
+  }
+
+  retry();
+
+  return () => {
+    window.clearTimeout(timeout);
+    found = true;
+  };
+}
+
 export const findShadowRoot = (el: Node): ShadowRoot | null => {
   if (el instanceof ShadowRoot) return el;
   if (!el.parentNode) return null;

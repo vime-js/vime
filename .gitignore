@@ -8,9 +8,9 @@ packages/*/www/
 packages/*/loader/
 packages/*/cypress/videos/
 packages/*/cypress/screenshots/
-packages/angular/src/components.ts
-packages/angular/src/VimeModule.ts
-packages/angular/src/components/
+packages/angular/projects/vime/angular/src/components.ts
+packages/angular/projects/vime/angular/src/VimeModule.ts
+packages/angular/projects/vime/angular/src/components/
 packages/react/src/components.ts
 packages/react/src/components
 packages/svelte/src/components.ts
@@ -46,6 +46,7 @@ chrome-profiler-events*.json
 speed-measure-plugin*.json
 !yarn.lock
 
+docs/yarn.lock
 examples/*/yarn.lock
 
 /tmp

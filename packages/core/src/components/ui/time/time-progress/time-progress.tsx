@@ -1,10 +1,10 @@
-import {
-  h, Host, Component, Prop,
-} from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 @Component({
-  tag: 'vime-time-progress',
+  tag: 'vm-time-progress',
   styleUrl: 'time-progress.css',
+  shadow: true,
 })
 export class TimeProgress {
   /**
@@ -18,19 +18,23 @@ export class TimeProgress {
    */
   @Prop() alwaysShowHours = false;
 
+  constructor() {
+    withComponentRegistry(this);
+  }
+
   render() {
     return (
-      <Host>
-        <vime-current-time
+      <div class="timeProgress">
+        <vm-current-time
           alwaysShowHours={this.alwaysShowHours}
         />
-        <span>
+        <span class="separator">
           {this.separator}
         </span>
-        <vime-end-time
+        <vm-end-time
           alwaysShowHours={this.alwaysShowHours}
         />
-      </Host>
+      </div>
     );
   }
 }

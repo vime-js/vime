@@ -1,19 +1,19 @@
 ```html {5-13} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-menu
+    <vm-menu
       identifer="menu-id"
       controller="menu-controller-id"
       [active]="isMenuActive"
-      (vOpen)="onOpen()"
-      (vClose)="onClose()"
+      (vmOpen)="onOpen()"
+      (vmClose)="onClose()"
     >
       <!-- ... -->
-    </vime-menu>
-  </vime-ui>
-</vime-player>
+    </vm-menu>
+  </vm-ui>
+</vm-player>
 ```
 
 ```ts title="example.ts"

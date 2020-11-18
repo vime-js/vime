@@ -8,8 +8,8 @@
     "serve": "webpack-dev-server"
   },
   "dependencies": {
-    "@vime/core": "^4.2.0",
-    "@vime/svelte": "^4.2.0"
+    "@vime/core": "^5.0.0",
+    "@vime/svelte": "^5.0.0"
   },
   "devDependencies": {
     "@tsconfig/svelte": "^1.0.10",

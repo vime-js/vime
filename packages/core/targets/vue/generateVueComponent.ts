@@ -15,7 +15,8 @@ export const generateVueComponent = (
 ${ignoreChecks()}
 import Vue, { PropOptions } from 'vue';
 import { method, render } from '../lib';
-${generateImports(cmpMeta, components, ['Components'])}
+import type { Components } from '@vime/core/dist/types';
+${generateImports(cmpMeta, components)}
 
 export default Vue.extend({
   props: {

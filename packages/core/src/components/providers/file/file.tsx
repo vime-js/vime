@@ -1,9 +1,10 @@
 /* eslint-disable no-continue, jsx-a11y/media-has-caption */
 
 import {
-  h, Prop, Method, Component, Event, EventEmitter, Watch, Element,
+  h, Prop, Method, Component, Event, EventEmitter, Watch, Element, State,
 } from '@stencil/core';
-import { withProviderContext, MediaProvider, withProviderConnect } from '../MediaProvider';
+import { MediaProvider } from '../MediaProvider';
+import { withProviderConnect } from '../ProviderConnect';
 import { ViewType } from '../../core/player/ViewType';
 import { MediaFileProvider, MediaPreloadOption, MediaCrossOriginOption } from './MediaFileProvider';
 import {
@@ -16,33 +17,32 @@ import {
 } from '../../../utils/support';
 import { MediaType } from '../../core/player/MediaType';
 import { listen } from '../../../utils/dom';
-import { Disposal } from '../../core/player/Disposal';
-import { findRootPlayer } from '../../core/player/utils';
+import { Disposal } from '../../../utils/Disposal';
 import { createProviderDispatcher, ProviderDispatcher } from '../ProviderDispatcher';
 import { Logger } from '../../core/player/PlayerLogger';
 import { LazyLoader } from '../../core/player/LazyLoader';
 import { MediaResource } from './MediaResource';
-import { createDispatcher } from '../../core/player/PlayerDispatcher';
+import { watchComponentRegistry, withComponentRegistry } from '../../core/player/withComponentRegistry';
+import { withProviderContext } from '../withProviderContext';
 
 /**
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
  */
 @Component({
-  tag: 'vime-file',
-  styleUrl: 'file.scss',
+  tag: 'vm-file',
+  styleUrl: 'file.css',
+  scoped: true,
 })
 export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<HTMLMediaElement> {
   private dispatch!: ProviderDispatcher;
 
   private timeRAF?: number;
 
-  private disposal = new Disposal();
+  private textTracksDisposal = new Disposal();
 
   private lazyLoader?: LazyLoader;
 
   private wasPausedBeforeSeeking = true;
-
-  private playbackQuality?: string;
 
   private currentSrcSet: MediaResource[] = [];
 
@@ -52,26 +52,20 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   private mediaQueryDisposal = new Disposal();
 
-  @Element() el!: HTMLVimeFileElement;
+  @Element() host!: HTMLVmFileElement;
 
-  /**
-   * @internal Whether an external SDK will attach itself to the media player and control it.
-   */
+  @State() vmPoster?: HTMLVmPosterElement;
+
+  /** @internal Whether an external SDK will attach itself to the media player and control it. */
   @Prop() willAttach = false;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() crossOrigin?: MediaCrossOriginOption;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() preload?: MediaPreloadOption = 'metadata';
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() poster?: string;
 
   /**
@@ -86,27 +80,19 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   @Watch('poster')
   onPosterChange() {
-    this.dispatch('currentPoster', this.poster);
+    if (!this.playbackStarted) this.mediaEl?.load();
   }
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() controlsList?: string;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop({ attribute: 'auto-pip' }) autoPiP?: boolean;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop({ attribute: 'disable-pip' }) disablePiP?: boolean;
 
-  /**
-   * @inheritdoc
-   */
+  /** @inheritdoc */
   @Prop() disableRemotePlayback?: boolean;
 
   /**
@@ -124,79 +110,73 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
    */
   @Prop() playbackRates: number[] = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2];
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() language = 'en';
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() autoplay = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() controls = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() logger?: Logger;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() loop = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() muted = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() playsinline = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() noConnect = false;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() paused = true;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   @Prop() currentTime = 0;
 
-  /**
-   * @internal
-   */
+  /** @internal */
+  @Prop() playbackReady = false;
+
+  /** @internal */
   @Prop() playbackStarted = false;
 
+  /** @internal */
+  @Event() vmLoadStart!: EventEmitter<void>;
+
   /**
-   * @internal
+   * Emitted when an error has occurred.
    */
-  @Event() vLoadStart!: EventEmitter<void>;
+  @Event() vmError!: EventEmitter<any>;
 
   /**
    * Emitted when the underlying media element changes.
    */
-  @Event() vMediaElChange!: EventEmitter<HTMLAudioElement | HTMLVideoElement | undefined>;
+  @Event() vmMediaElChange!: EventEmitter<HTMLAudioElement | HTMLVideoElement | undefined>;
 
   /**
    * Emitted when the child `<source />` elements are modified.
    */
-  @Event() vSrcSetChange!: EventEmitter<MediaResource[]>;
+  @Event() vmSrcSetChange!: EventEmitter<MediaResource[]>;
 
   constructor() {
+    withComponentRegistry(this);
     if (!this.noConnect) withProviderConnect(this);
-    withProviderContext(this, ['playbackStarted', 'currentTime', 'paused']);
+    withProviderContext(this, [
+      'playbackReady',
+      'playbackStarted',
+      'currentTime',
+      'paused',
+      'currentTextTrack',
+      'isTextTrackVisible',
+      'shouldRenderNativeTextTracks',
+    ]);
+    watchComponentRegistry(this, 'vm-poster', ((regs) => { [this.vmPoster] = regs; }));
   }
 
   connectedCallback() {
@@ -205,13 +185,12 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.onViewTypeChange();
     this.onPosterChange();
     this.onMediaTitleChange();
-    this.listenToTextTracksChanges();
   }
 
   componentDidRender() {
     if (this.prevMediaEl !== this.mediaEl) {
       this.prevMediaEl = this.mediaEl;
-      this.vMediaElChange.emit(this.mediaEl);
+      this.vmMediaElChange.emit(this.mediaEl);
     }
   }
 
@@ -221,14 +200,14 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   disconnectedCallback() {
     this.mediaQueryDisposal.empty();
+    this.textTracksDisposal.empty();
     this.cancelTimeUpdates();
-    this.disposal.empty();
     this.lazyLoader?.destroy();
     this.wasPausedBeforeSeeking = true;
   }
 
   private initLazyLoader() {
-    this.lazyLoader = new LazyLoader(this.el, ['data-src', 'data-poster'], () => {
+    this.lazyLoader = new LazyLoader(this.host, ['data-src', 'data-poster'], () => {
       if (isNullOrUndefined(this.mediaEl)) return;
 
       const poster = this.mediaEl.getAttribute('data-poster');
@@ -249,15 +228,6 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       child.removeAttribute('src');
       if (isNull(src)) continue;
       child.setAttribute('data-vs', src);
-
-      if (!isNull(child.getAttribute('data-quality'))) {
-        const quality = child.getAttribute('data-quality');
-        if (quality !== this.playbackQuality) {
-          child.removeAttribute('src');
-          continue;
-        }
-      }
-
       child.setAttribute('src', src);
     }
   }
@@ -269,16 +239,12 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
     const srcSet = sources.map((source) => ({
       src: source.getAttribute('data-vs')!,
-      quality: source.getAttribute('data-quality') ?? undefined,
       media: source.getAttribute('data-media') ?? undefined,
       ref: source,
     }));
 
     const didChange = (this.currentSrcSet.length !== srcSet.length)
-      || (srcSet.some((resource, i) => (
-        (this.currentSrcSet[i].src !== resource.src)
-        || (this.currentSrcSet[i].quality !== resource.quality)
-      )));
+      || srcSet.some((resource, i) => this.currentSrcSet[i].src !== resource.src);
 
     if (didChange) {
       this.currentSrcSet = srcSet;
@@ -287,72 +253,15 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onSrcSetChange() {
+    this.textTracksDisposal.empty();
     this.mediaQueryDisposal.empty();
-    this.vLoadStart.emit();
-    this.vSrcSetChange.emit(this.currentSrcSet);
-    if (this.hasPlaybackQualities()) {
-      this.dispatch('playbackQualities', this.getPlaybackQualities());
-      this.pickInitialPlaybackQuality();
-      this.refresh();
-    }
-    this.mediaEl?.load();
-  }
-
-  private hasPlaybackQualities() {
-    return this.currentSrcSet.every((resource) => !!resource.quality);
-  }
-
-  private getPlaybackQualities() {
-    if (!this.hasPlaybackQualities()) return [];
-    return this.currentSrcSet.map((resource) => resource.quality!);
-  }
-
-  private pickInitialPlaybackQuality() {
-    if (!isUndefined(this.playbackQuality)) return;
-
-    const getQualityValue = (
-      resource: MediaResource,
-    ) => Number(resource.quality?.slice(0, -1) ?? 0);
-
-    const sortMediaResource = (
-      a: MediaResource,
-      b: MediaResource,
-    ) => getQualityValue(a) - getQualityValue(b);
-
-    // Try to find best quality based on media queries.
-    let mediaResource = this.currentSrcSet
-      .filter((resource) => {
-        if (!isString(resource.media)) return false;
-        const query = window.matchMedia(resource.media);
-        const dispatch = createDispatcher(this);
-
-        this.mediaQueryDisposal.add(listen(query, 'change', (e) => {
-          if ((e as any).matches) dispatch('playbackQuality', resource.quality);
-        }));
-
-        return query.matches;
-      })
-      .sort(sortMediaResource)
-      .pop();
-
-    // Otherwise pick best quality based on window width.
-    if (isUndefined(mediaResource)) {
-      mediaResource = this.currentSrcSet
-        .find((resource) => getQualityValue(resource) > window.innerWidth);
-    }
-
-    // Otehrwise pick best quality.
-    if (isUndefined(mediaResource)) {
-      mediaResource = this.currentSrcSet.sort(sortMediaResource).pop();
-    }
-
-    this.playbackQuality = mediaResource?.quality;
-    this.dispatch('playbackQuality', mediaResource?.quality);
+    this.vmLoadStart.emit();
+    this.vmSrcSetChange.emit(this.currentSrcSet);
+    if (!this.willAttach) this.mediaEl?.load();
   }
 
   private hasCustomPoster() {
-    const root = findRootPlayer(this);
-    return !IS_IOS && !isNull(root.querySelector('vime-ui vime-poster'));
+    return !IS_IOS && !isUndefined(this.vmPoster);
   }
 
   private cancelTimeUpdates() {
@@ -373,26 +282,17 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onLoadedMetadata() {
-    this.onTracksChange();
-
-    // Reset player state on quality change.
-    if (this.playbackStarted) {
-      this.mediaEl!.muted = this.muted;
-      if (this.currentTime > 0) this.mediaEl!.currentTime = this.currentTime;
-      if (!this.paused) this.mediaEl!.play();
-    } else {
-      this.onProgress();
-      this.dispatch('currentPoster', this.poster);
-      this.dispatch('duration', this.mediaEl!.duration);
-      this.dispatch('playbackRates', this.playbackRates);
-    }
+    this.listenToTextTracksForChanges();
+    this.onTextTracksChange();
+    this.onProgress();
+    this.dispatch('currentPoster', this.poster);
+    this.dispatch('duration', this.mediaEl!.duration);
+    this.dispatch('playbackRates', this.playbackRates);
 
     if (!this.willAttach) {
       this.dispatch('currentSrc', this.mediaEl!.currentSrc);
       this.dispatch('mediaType', this.getMediaType());
       this.dispatch('playbackReady', true);
-      // Re-attempt play.
-      if (this.autoplay) this.mediaEl!.play();
     }
   }
 
@@ -457,14 +357,14 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onError() {
-    this.dispatch('errors', [this.mediaEl!.error]);
+    this.vmError.emit(this.mediaEl!.error);
   }
 
   private attemptToPlay() {
     try {
       this.mediaEl?.play();
     } catch (e) {
-      this.dispatch('errors', [e]);
+      this.vmError.emit(e);
     }
   }
 
@@ -514,20 +414,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
     this.dispatch('isPiPActive', false);
   }
 
-  private onTracksChange() {
-    this.dispatch('textTracks', this.mediaEl!.textTracks);
-  }
-
-  private listenToTextTracksChanges() {
-    if (isUndefined(this.mediaEl)) return;
-    this.disposal.add(
-      listen(this.mediaEl!.textTracks, 'change', this.onTracksChange.bind(this)),
-    );
-  }
-
-  /**
-   * @internal
-   */
+  /** @internal */
   @Method()
   async getAdapter() {
     return {
@@ -549,21 +436,127 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       setPlaybackRate: async (rate: number) => {
         if (this.mediaEl) this.mediaEl.playbackRate = rate;
       },
-      canSetPlaybackQuality: async () => this.hasPlaybackQualities(),
-      setPlaybackQuality: async (quality: string) => {
-        this.cancelTimeUpdates();
-        this.playbackQuality = quality;
-        this.refresh();
-        this.mediaEl?.load();
-        this.dispatch('playbackQuality', this.playbackQuality);
-      },
       canSetPiP: async () => canUsePiP(),
       enterPiP: () => this.togglePiP(true),
       exitPiP: () => this.togglePiP(false),
       canSetFullscreen: async () => canFullscreenVideo(),
       enterFullscreen: () => this.toggleFullscreen(true),
       exitFullscreen: () => this.toggleFullscreen(false),
+      setCurrentTextTrack: async (trackId: number) => {
+        if (trackId !== this.currentTextTrack) this.toggleTextTrackModes(trackId);
+      },
+      setTextTrackVisibility: async (isVisible: boolean) => {
+        this.isTextTrackVisible = isVisible;
+        this.toggleTextTrackModes(this.currentTextTrack);
+      },
     };
+  }
+
+  /** @internal */
+  @Prop() currentTextTrack = -1;
+
+  /** @internal */
+  @Prop() hasCustomTextManager = false;
+
+  @Watch('hasCustomTextManager')
+  onHasCustomTextManagerChange() {
+    if (this.hasCustomTextManager) {
+      this.textTracksDisposal.empty();
+    } else if (this.playbackReady) {
+      this.listenToTextTracksForChanges();
+    }
+  }
+
+  /** @internal */
+  @Prop() isTextTrackVisible = true;
+
+  /** @internal */
+  @Prop() shouldRenderNativeTextTracks = true;
+
+  @Watch('shouldRenderNativeTextTracks')
+  onShouldRenderNativeTextTracksChange() {
+    if (this.hasCustomTextManager) return;
+    this.toggleTextTrackModes(this.currentTextTrack);
+  }
+
+  private getFilteredTextTracks() {
+    const tracks = [];
+    const textTrackList = Array.from(this.mediaEl!.textTracks);
+
+    for (let i = 0; i < textTrackList.length; i += 1) {
+      const track = textTrackList[i];
+      // Edge adds a track without a label; we don't want to use it.
+      if ((track.kind === 'subtitles' || track.kind === 'captions') && track.label) {
+        tracks.push(textTrackList[i]);
+      }
+    }
+
+    return tracks;
+  }
+
+  private listenToTextTracksForChanges() {
+    if (this.hasCustomTextManager) return;
+    this.textTracksDisposal.empty();
+    if (isUndefined(this.mediaEl)) return;
+    this.textTracksDisposal.add(
+      listen(this.mediaEl!.textTracks, 'change', this.onTextTracksChange.bind(this)),
+    );
+  }
+
+  private onTextTracksChange() {
+    const tracks = this.getFilteredTextTracks();
+
+    let trackId = -1;
+    for (let id = 0; id < tracks.length; id += 1) {
+      if (tracks[id].mode === 'hidden') {
+        // Do not break in case there is a following track with showing.
+        trackId = id;
+      } else if (tracks[id].mode === 'showing') {
+        trackId = id;
+        break;
+      }
+    }
+
+    if (!this.shouldRenderNativeTextTracks && tracks[trackId]?.mode === 'showing') {
+      tracks[trackId].mode = 'hidden';
+      return;
+    }
+
+    if (this.shouldRenderNativeTextTracks) {
+      this.isTextTrackVisible = (trackId !== -1) && (tracks[trackId].mode === 'showing');
+      this.dispatch('isTextTrackVisible', this.isTextTrackVisible);
+    }
+
+    this.dispatch('textTracks', tracks);
+    this.dispatch('currentTextTrack', (
+      this.shouldRenderNativeTextTracks && !this.isTextTrackVisible
+    ) ? -1 : trackId);
+  }
+
+  private toggleTextTrackModes(newTrackId: number) {
+    if (isNullOrUndefined(this.mediaEl)) return;
+
+    const { textTracks } = this.mediaEl;
+
+    if (newTrackId === -1) {
+      Array.from(textTracks).forEach((track) => { track.mode = 'disabled'; });
+    } else {
+      const oldTrack = textTracks[this.currentTextTrack];
+      if (oldTrack) oldTrack.mode = 'disabled';
+    }
+
+    const nextTrack = textTracks[newTrackId];
+
+    if (nextTrack) {
+      nextTrack.mode = (this.isTextTrackVisible && this.shouldRenderNativeTextTracks)
+        ? 'showing'
+        : 'hidden';
+    }
+
+    this.dispatch('currentTextTrack', (
+      this.shouldRenderNativeTextTracks && !this.isTextTrackVisible
+    ) ? -1 : newTrackId);
+    this.dispatch('isTextTrackVisible', this.isTextTrackVisible);
   }
 
   render() {
@@ -575,7 +568,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       'x5-playsinline': this.playsinline,
       'webkit-playsinline': this.playsinline,
       controls: this.controls,
-      crossorigin: this.crossOrigin,
+      crossorigin: (this.crossOrigin === '') ? 'anonymous' : this.crossOrigin,
       controlslist: this.controlsList,
       'data-poster': !this.hasCustomPoster() ? this.poster : undefined,
       loop: this.loop,

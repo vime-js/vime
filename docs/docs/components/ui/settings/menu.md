@@ -1,10 +1,7 @@
 ---
-title: vime-menu
+title: vm-menu
 sidebar_label: Menu
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 This component is responsible for containing and managing menu items and submenus. The menu is ARIA
 friendly by ensuring the correct ARIA properties are set, and enabling keyboard navigation when it
@@ -25,40 +22,43 @@ you want an easier starting point see [`vime-default-settings`](default-settings
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {5-7}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-menu identifer="menu-id" controller="menu-controller-id" active>
+    <vm-menu identifer="menu-id" controller="menu-controller-id" active>
       <!-- ... -->
-    </vime-menu>
-  </vime-ui>
-</vime-player>
+    </vm-menu>
+  </vm-ui>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,20-28}
 import React, { useState } from "react";
-import { VimePlayer, VimeUi, VimeMenu } from "@vime/react";
+import { Player, Ui, Menu } from "@vime/react";
 
 function Example() {
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -72,57 +72,57 @@ function Example() {
   };
 
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeMenu
+        <Menu
           identifer="menu-id"
           controller="menu-controller-id"
           active={isMenuActive}
-          onVOpen={onOpen}
-          onVClose={onClose}
+          onVmOpen={onOpen}
+          onVmClose={onClose}
         >
           <!-- ... -->
-        </VimeMenu>
-      </VimeUi>
-    </VimePlayer>
+        </Menu>
+      </Ui>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {6-14,20,26} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeMenu
+      <Menu
         identifer="menu-id"
         controller="menu-controller-id"
         :active="isMenuActive"
-        @vOpen="onOpen"
-        @vClose="onClose"
+        @vmOpen="onOpen"
+        @vmClose="onClose"
       >
         <!-- ... -->
-      </VimeMenu>
-    </VimeUi>
-  </VimePlayer>
+      </Menu>
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeMenu } from '@vime/vue';
+  import { Player, Ui, Menu } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeMenu,
+      Player,
+      Ui,
+      Menu,
     },
     data: {
       isMenuActive: false,
@@ -140,32 +140,32 @@ function Example() {
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```tsx {5-13}
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeMenu
+    <Menu
       identifer="menu-id"
       controller="menu-controller-id"
       active={isMenuActive}
-      on:vOpen={onOpen}
-      on:vClose={onClose}
+      on:vmOpen={onOpen}
+      on:vmClose={onClose}
     >
       <!-- ... -->
-    </VimeMenu>
-  </VimeUi>
-</VimePlayer>
+    </Menu>
+  </Ui>
+</Player>
 ```
 
 ```html {2}
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeMenu } from '@vime/svelte';
+  import { Player, Ui, Menu } from '@vime/svelte';
 
   let isMenuActive = false;
 
@@ -179,8 +179,8 @@ function Example() {
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -198,21 +198,21 @@ class Example {
 
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-menu
+          <vm-menu
             identifer="menu-id"
             controller="menu-controller-id"
             active={this.isMenuActive}
-            onVOpen={this.onOpen.bind(this)}
-            onVClose={this.onClose.bind(this)}
+            onVmOpen={this.onOpen.bind(this)}
+            onVmClose={this.onClose.bind(this)}
           >
             {/* ... */}
-          </vime-menu>
-        </vime-ui>
-      </vime-player>
+          </vm-menu>
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -220,25 +220,24 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {5-13} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-menu
+    <vm-menu
       identifer="menu-id"
       controller="menu-controller-id"
       [active]="isMenuActive"
-      (vOpen)="onOpen()"
-      (vClose)="onClose()"
+      (vmOpen)="onOpen()"
+      (vmClose)="onClose()"
     >
       <!-- ... -->
-    </vime-menu>
-  </vime-ui>
-</vime-player>
+    </vm-menu>
+  </vm-ui>
+</vm-player>
 ```
 
 ```ts title="example.ts"
@@ -255,60 +254,51 @@ class Example {
 }
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property                  | Attribute    | Description                                                                        | Type      | Default     |
-| ------------------------- | ------------ | ---------------------------------------------------------------------------------- | --------- | ----------- |
-| `active`                  | `active`     | Whether the menu is open/visible.                                                  | `boolean` | `false`     |
-| `controller` _(required)_ | `controller` | The `id` attribute value of the control responsible for opening/closing this menu. | `string`  | `undefined` |
-| `identifier` _(required)_ | `identifier` | The `id` attribute of the menu.                                                    | `string`  | `undefined` |
+| Property                  | Description                                                                                | Type                           | Default     |
+| ------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------ | ----------- |
+| `active`                  | Whether the menu is open/visible.                                                          | `boolean`                      | `false`     |
+| `controller`              | Reference to the controller DOM element that is responsible for opening/closing this menu. | `HTMLElement ∣ undefined`      | `undefined` |
+| `identifier` _(required)_ | The `id` attribute of the menu.                                                            | `string`                       | `undefined` |
+| `slideInDirection`        | The direction the menu should slide in from.                                               | `"left" ∣ "right" ∣ undefined` | `undefined` |
 
-## Events
-
-| Event                  | Description                                           | Type                                                           |
-| ---------------------- | ----------------------------------------------------- | -------------------------------------------------------------- |
-| `vClose`               | Emitted when the menu has closed/is not active.       | `CustomEvent<void>`                                            |
-| `vFocusMenuItemChange` | Emitted when the currently focused menu item changes. | `CustomEvent<HTMLVimeMenuItemElement ∣ undefined>`             |
-| `vMenuItemsChange`     | Emitted when the menu items present changes.          | `CustomEvent<NodeListOf<HTMLVimeMenuItemElement> ∣ undefined>` |
-| `vOpen`                | Emitted when the menu is open/active.                 | `CustomEvent<void>`                                            |
 
 ## Methods
 
-### `focusOnOpen() => Promise<void>`
+| Method              | Description                                                       | Signature                                                                      |
+| ------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `blurMenu`          | Removes focus from the menu.                                      | `blurMenu() => Promise<void>`                                                  |
+| `calculateHeight`   | Calculates the height of the settings menu based on its children. | `calculateHeight() => Promise<number>`                                         |
+| `focusMenu`         | Focuses the menu.                                                 | `focusMenu() => Promise<void>`                                                 |
+| `getActiveMenuItem` | Returns the currently focused menu item.                          | `getActiveMenuItem() => Promise<HTMLVmMenuItemElement ∣ undefined>`            |
+| `setActiveMenuItem` | Sets the currently focused menu item.                             | `setActiveMenuItem(item?: HTMLVmMenuItemElement ∣ undefined) => Promise<void>` |
 
-This should be called directly before opening the menu to set the keyboard focus on it. This
-is a one-time operation and needs to be called everytime prior to opening the menu.
 
-#### Returns
+## Events
 
-Type: `Promise<void>`
+| Event                    | Description                                           | Type                                             |
+| ------------------------ | ----------------------------------------------------- | ------------------------------------------------ |
+| `vmActiveMenuItemChange` | Emitted when the currently focused menu item changes. | `CustomEvent<HTMLVmMenuItemElement ∣ undefined>` |
+| `vmActiveSubmenuChange`  | Emitted when the active submenu changes.              | `CustomEvent<HTMLVmSubmenuElement ∣ undefined>`  |
+| `vmBlur`                 | Emitted when the menu loses focus.                    | `CustomEvent<void>`                              |
+| `vmClose`                | Emitted when the menu has closed/is not active.       | `CustomEvent<HTMLVmMenuElement>`                 |
+| `vmFocus`                | Emitted when the menu is focused.                     | `CustomEvent<void>`                              |
+| `vmMenuHeightChange`     | Emitted when the height of the menu changes.          | `CustomEvent<number>`                            |
+| `vmOpen`                 | Emitted when the menu is open/active.                 | `CustomEvent<HTMLVmMenuElement>`                 |
 
-### `getController() => Promise<HTMLElement>`
-
-Returns the controller responsible for opening/closing this menu.
-
-#### Returns
-
-Type: `Promise<HTMLElement>`
-
-### `getFocusedMenuItem() => Promise<HTMLVimeMenuItemElement>`
-
-Returns the currently focused menu item.
-
-#### Returns
-
-Type: `Promise<HTMLVimeMenuItemElement>`
 
 ## Slots
 
 | Slot | Description                                                                                           |
 | ---- | ----------------------------------------------------------------------------------------------------- |
 |      | Used to pass in the body of the menu which usually contains menu items, radio groups and/or submenus. |
+
 
 ## CSS Custom Properties
 
@@ -318,24 +308,15 @@ Type: `Promise<HTMLVimeMenuItemElement>`
 | `--vm-menu-color`       | The text color within the menu.                        |
 | `--vm-menu-font-size`   | The font size of text within the menu.                 |
 | `--vm-menu-font-weight` | The font weight of text within the menu.               |
+| `--vm-menu-transition`  | The CSS transitions applied to the menu.               |
 | `--vm-menu-z-index`     | The position in the UI z-axis stack inside the player. |
+
 
 ## Dependencies
 
 ### Used by
 
-- [vime-settings](settings.md)
-- [vime-submenu](submenu.md)
+ - [vm-settings](./settings)
+ - [vm-submenu](./submenu)
 
-### Graph
 
-```mermaid
-graph TD;
-  vime-settings --> vime-menu
-  vime-submenu --> vime-menu
-  style vime-menu fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_

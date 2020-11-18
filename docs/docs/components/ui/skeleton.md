@@ -1,10 +1,7 @@
 ---
-title: vime-skeleton
+title: vm-skeleton
 sidebar_label: Skeleton
 ---
-
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 
 A temporary placeholder that is used while content is loading. The implementation was inspired
 by [Shoelace](https://github.com/shoelace-style/shoelace), thanks Cory!
@@ -13,102 +10,105 @@ by [Shoelace](https://github.com/shoelace-style/shoelace), thanks Cory!
 
 ## Usage
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 <Tabs
 groupId="framework"
 defaultValue="html"
 values={[
-{ label: 'HTML', value: 'html' },
-{ label: 'React', value: 'react' },
-{ label: 'Vue', value: 'vue' },
-{ label: 'Svelte', value: 'svelte' },
-{ label: 'Stencil', value: 'stencil' },
-{ label: 'Angular', value: 'angular' }
+  { label: 'HTML', value: 'html' },
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Stencil', value: 'stencil' },
+  { label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 ```html {5}
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-skeleton></vime-skeleton>
-  </vime-ui>
-</vime-player>
+    <vm-skeleton></vm-skeleton>
+  </vm-ui>
+</vm-player>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="react">
 
 ```tsx {2,10}
 import React from 'react';
-import { VimePlayer, VimeUi, VimeSkeleton } from '@vime/react';
+import { Player, Ui, Skeleton } from '@vime/react';
 
 function Example() {
   return (
-    <VimePlayer>
+    <Player>
       {/* ... */}
-      <VimeUi>
+      <Ui>
         {/* ... */}
-        <VimeSkeleton />
-      </VimeUi>
-    </VimePlayer>
+        <Skeleton />
+      </Ui>
+    </Player>
   );
 }
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="vue">
 
 ```html {6,12,18} title="example.vue"
 <template>
-  <VimePlayer>
+  <Player>
     <!-- ... -->
-    <VimeUi>
+    <Ui>
       <!-- ... -->
-      <VimeSkeleton />
-    </VimeUi>
-  </VimePlayer>
+      <Skeleton />
+    </Ui>
+  </Player>
 </template>
 
 <script>
-  import { VimePlayer, VimeUi, VimeSkeleton } from '@vime/vue';
+  import { Player, Ui, Skeleton } from '@vime/vue';
 
   export default {
     components: {
-      VimePlayer,
-      VimeUi,
-      VimeSkeleton,
+      Player,
+      Ui,
+      Skeleton,
     },
   };
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="svelte">
 
 ```html {5,10} title="example.svelte"
-<VimePlayer>
+<Player>
   <!-- ... -->
-  <VimeUi>
+  <Ui>
     <!-- ... -->
-    <VimeSkeleton />
-  </VimeUi>
-</VimePlayer>
+    <Skeleton />
+  </Ui>
+</Player>
 
 <script lang="ts">
-  import { VimePlayer, VimeUi, VimeSkeleton } from '@vime/svelte';
+  import { Player, Ui, Skeleton } from '@vime/svelte';
 </script>
 ```
 
-</TabItem>
 
+</TabItem>
 
 <TabItem value="stencil">
 
@@ -116,13 +116,13 @@ function Example() {
 class Example {
   render() {
     return (
-      <vime-player>
+      <vm-player>
         {/* ... */}
-        <vime-ui>
+        <vm-ui>
           {/* ... */}
-          <vime-skeleton />
-        </vime-ui>
-      </vime-player>
+          <vm-skeleton />
+        </vm-ui>
+      </vm-player>
     );
   }
 }
@@ -130,29 +130,29 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {5} title="example.html"
-<vime-player>
+<vm-player>
   <!-- ... -->
-  <vime-ui>
+  <vm-ui>
     <!-- ... -->
-    <vime-skeleton></vime-skeleton>
-  </vime-ui>
-</vime-player>
+    <vm-skeleton></vm-skeleton>
+  </vm-ui>
+</vm-player>
 ```
 
+
 </TabItem>
-    
 </Tabs>
 
 
 ## Properties
 
-| Property | Attribute | Description                                    | Type               | Default   |
-| -------- | --------- | ---------------------------------------------- | ------------------ | --------- |
-| `effect` | `effect`  | Determines which effect the skeleton will use. | `"none" ∣ "sheen"` | `'sheen'` |
+| Property | Description                                              | Type               | Default   |
+| -------- | -------------------------------------------------------- | ------------------ | --------- |
+| `effect` | Determines which animation effect the skeleton will use. | `"none" ∣ "sheen"` | `'sheen'` |
+
 
 ## CSS Custom Properties
 
@@ -162,20 +162,4 @@ class Example {
 | `--vm-skeleton-sheen-color` | The sheen color when the skeleton is in its loading state. |
 | `--vm-skeleton-z-index`     | The position in the UI z-axis stack inside the player.     |
 
-## Dependencies
 
-### Used by
-
-- [vime-default-ui](default-ui.md)
-
-### Graph
-
-```mermaid
-graph TD;
-  vime-default-ui --> vime-skeleton
-  style vime-skeleton fill:#f9f,stroke:#333,stroke-width:4px
-```
-
----
-
-_Built with [StencilJS](https://stenciljs.com/)_
