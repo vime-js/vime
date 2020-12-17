@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.2 (2020-12-17)
+
+
+### Bug Fixes
+
+* **react:** split dom/wc props ([f906522](https://github.com/vime-js/vime/commit/f9065226aaff6afd1da2d3a439b3bf8d75f1e459))
+
+
+
+
+
 ## 5.0.1 (2020-12-17)
 
 
