@@ -28,6 +28,7 @@
     "workbox-strategies": "^5.1.3"
   },
   "devDependencies": {
+    "file-loader": "^6.2.0",
     "typescript": "^4.0.2",
     "webpack": "^5.0.0"
   },
