@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import composeRefs from '@seznam/compose-react-refs';
 import {
-  createElement, forwardRef, useCallback, useEffect, useRef, useState,
+  createElement, forwardRef, HTMLAttributes, useCallback, useEffect, useRef, useState,
 } from 'react';
 
 export const define = (tagName: string, clazz: any) => {
@@ -14,13 +15,16 @@ const dashToPascalCase = (str: string) => str
   .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
   .join('');
 
-export function createComponent<T extends HTMLElement, P = {}>(tagName: string) {
+export function createComponent<T extends HTMLElement, P extends HTMLAttributes<any> = {}>(
+  tagName: string,
+) {
   const isEvent = (prop: string) => prop.indexOf('on') === 0 && prop[2] === prop[2].toUpperCase();
   const toDomEventName = (prop: string) => prop.charAt(2).toLowerCase() + prop.substring(3);
 
   const Component = forwardRef<T, P>(({
-    // eslint-disable-next-line react/prop-types
     children,
+    className,
+    style,
     ...props
   }, forwardedRef) => {
     const [ref, setRef] = useState<T | null>(null);
@@ -61,7 +65,11 @@ export function createComponent<T extends HTMLElement, P = {}>(tagName: string) 
       });
     }, [ref, props]);
 
-    return createElement(tagName, { ref: composeRefs(setRefCb, forwardedRef) }, children);
+    return createElement(tagName, {
+      ref: composeRefs(setRefCb, forwardedRef),
+      className,
+      style,
+    }, { children });
   });
 
   Component.displayName = dashToPascalCase(tagName);
