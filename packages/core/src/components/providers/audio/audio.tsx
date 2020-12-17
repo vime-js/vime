@@ -44,7 +44,7 @@ export class Audio implements MediaFileProvider<HTMLMediaElement> {
   /** @internal */
   @Method()
   async getAdapter() {
-    const adapter = await this.fileProvider.getAdapter();
+    const adapter = (await this.fileProvider?.getAdapter()) ?? {};
     adapter.canPlay = async (type: any) => isString(type) && audioRegex.test(type);
     return adapter;
   }

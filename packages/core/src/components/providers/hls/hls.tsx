@@ -212,13 +212,13 @@ export class HLS implements MediaFileProvider {
   /** @internal */
   @Method()
   async getAdapter() {
-    const adapter = await this.videoProvider.getAdapter();
+    const adapter = (await this.videoProvider?.getAdapter()) ?? {};
     const canVideoProviderPlay = adapter.canPlay;
     return {
       ...adapter,
       getInternalPlayer: async () => this.hls,
       canPlay: async (type: any) => (isString(type) && hlsRegex.test(type))
-        || canVideoProviderPlay(type),
+        || (canVideoProviderPlay?.(type) ?? false),
       canSetPlaybackQuality: async () => this.hls?.levels?.length > 0,
       setPlaybackQuality: async (quality: string) => {
         if (!isUndefined(this.hls)) {

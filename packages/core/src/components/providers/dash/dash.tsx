@@ -259,13 +259,13 @@ export class Dash implements MediaFileProvider<any> {
   /** @internal */
   @Method()
   async getAdapter() {
-    const adapter = await this.videoProvider.getAdapter();
+    const adapter = (await this.videoProvider?.getAdapter()) ?? {};
     const canVideoProviderPlay = adapter.canPlay;
     return {
       ...adapter,
       getInternalPlayer: async () => this.dash,
       canPlay: async (type: any) => (isString(type) && dashRegex.test(type))
-        || canVideoProviderPlay(type),
+        || (canVideoProviderPlay?.(type) ?? false),
       canSetPlaybackQuality: async () => {
         try {
           return this.dash?.getBitrateInfoListFor('video')?.length > 0;

@@ -59,7 +59,7 @@ export class Video implements MediaFileProvider<HTMLMediaElement> {
   /** @internal */
   @Method()
   async getAdapter() {
-    return this.fileProvider.getAdapter();
+    return this.fileProvider?.getAdapter();
   }
 
   render() {
