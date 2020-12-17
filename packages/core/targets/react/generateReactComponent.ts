@@ -21,6 +21,9 @@ export interface ${name}Props extends JSX.${displayName}, HTMLAttributes<HTML${d
   children?: ReactNode | ReactNode[]
 };
 
-export default createComponent<HTML${displayName}Element, ${name}Props>('${tagName}');
+export default createComponent<HTML${displayName}Element, ${name}Props>(
+  '${tagName}',
+  new Set(${cmpMeta.properties.map((prop) => `'${prop.name}'`).join(',')}),
+);
   `;
 };

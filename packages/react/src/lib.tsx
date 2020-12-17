@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import composeRefs from '@seznam/compose-react-refs';
 import {
-  createElement, forwardRef, HTMLAttributes, useCallback, useEffect, useRef, useState,
+  createElement, forwardRef, HTMLAttributes, useCallback, useEffect, useMemo, useState,
 } from 'react';
 
 export const define = (tagName: string, clazz: any) => {
@@ -17,59 +17,36 @@ const dashToPascalCase = (str: string) => str
 
 export function createComponent<T extends HTMLElement, P extends HTMLAttributes<any> = {}>(
   tagName: string,
+  componentProps: Set<string>,
 ) {
-  const isEvent = (prop: string) => prop.indexOf('on') === 0 && prop[2] === prop[2].toUpperCase();
-  const toDomEventName = (prop: string) => prop.charAt(2).toLowerCase() + prop.substring(3);
-
   const Component = forwardRef<T, P>(({
     children,
-    className,
-    style,
     ...props
   }, forwardedRef) => {
     const [ref, setRef] = useState<T | null>(null);
     const setRefCb = useCallback((node: T | null) => { setRef(node); }, []);
-    const cache = useRef(new Map());
-    const eventHandlers = useRef(new Map());
 
-    const listen = useCallback((prop: string, handler?: () => void) => {
-      const domEvent = toDomEventName(prop);
-      eventHandlers.current.get(domEvent)?.();
-      if (!ref || !handler) return;
-      ref!.addEventListener(domEvent, handler);
-      eventHandlers.current.set(domEvent, () => { ref!.removeEventListener(domEvent, handler); });
-    }, []);
+    const domProps = useMemo(() => Object.keys(props)
+      .filter((prop) => !componentProps.has(prop))
+      .reduce((p, c) => ({ ...p, [c]: (props as any)[c] }), {}), [props]);
 
-    const cleanup = useCallback(() => {
-      cache.current.clear();
-      eventHandlers.current.forEach((fn) => fn());
-      eventHandlers.current.clear();
-    }, []);
-
-    useEffect(() => () => { cleanup(); }, []);
+    const wcProps = useMemo(() => Array.from(componentProps)
+      .reduce((p, c) => ({ ...p, [c]: (props as any)[c] }), {}), [props]);
 
     useEffect(() => {
-      if (!ref) {
-        cleanup();
-        return;
-      }
+      if (!ref) return;
 
-      Object.keys(props).forEach((prop) => {
-        if (cache.current.get(prop) !== (props as any)[prop]) {
-          isEvent(prop)
-            ? listen(prop, (props as any)[prop])
-            : ((ref as any)[prop] = (props as any)[prop]);
-
-          cache.current.set(prop, (props as any)[prop]);
+      Object.keys(wcProps).forEach((prop) => {
+        if ((ref as any)[prop] !== (wcProps as any)[prop]) {
+          ((ref as any)[prop] = (wcProps as any)[prop]);
         }
       });
-    }, [ref, props]);
+    }, [ref, wcProps]);
 
     return createElement(tagName, {
       ref: composeRefs(setRefCb, forwardedRef),
-      className,
-      style,
-    }, { children });
+      ...domProps,
+    }, children);
   });
 
   Component.displayName = dashToPascalCase(tagName);

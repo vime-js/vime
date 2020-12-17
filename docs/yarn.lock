@@ -1910,21 +1910,21 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@vime/core@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@vime/core/-/core-5.0.0.tgz#876de1fc6a5ab60a09c5c9b8147af8294cdfa334"
-  integrity sha512-5A7Ak/7nuii4svMA5xsiOxSylZje1XeVvJaKXYakwEcHqJTySsRFThKekc5m+FcrUnCeV01nkOwQpb49fusaCA==
+"@vime/core@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@vime/core/-/core-5.0.1.tgz#a9460c9247da1df2121c372bd4d75ad3732c5919"
+  integrity sha512-OJyZBgMLvzOnvSM900YpFT28S9cRqw477bC0nmmThMF+DAvp6FIoQ6qgNJSGD1OMqAhDzpqnw7HDca6S78taPg==
   dependencies:
     "@stencil/core" "2.2.0"
     stencil-wormhole "^3.2.2"
 
 "@vime/react@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@vime/react/-/react-5.0.0.tgz#d9f11636810ee3a42d6cde6f9627ba625b0de60c"
-  integrity sha512-dgn4OpIYUb37fhkMk/nK228Nn7orIPpxy+UIbAWvjca9i5BESHwBjX3D0SgX6F5EnHsS+qjWVlKCBPC/OuF18Q==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@vime/react/-/react-5.0.1.tgz#1cc5612a56a11e1b20b43f93e763686574e8e132"
+  integrity sha512-REESHiDti+tVfSB+iqNNt2QtXLp4pZOiTazssTJSNp+6tBHTwKD+fAuffrwRLRyNMWg4OPyKevQ+Baqd+C6snA==
   dependencies:
     "@seznam/compose-react-refs" "^1.0.4"
-    "@vime/core" "^5.0.0"
+    "@vime/core" "^5.0.1"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
