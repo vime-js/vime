@@ -34,10 +34,11 @@ export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
   // Queue of adapter calls to be run when the media is ready for playback.
   let adapterCalls: ((adapter: MediaProviderAdapter) => Promise<void>)[] = [];
   async function flushAdapterCalls() {
-    if (isUndefined(player.adapter)) return;
+    const adapter = await player.adapter;
+    if (isUndefined(adapter)) return;
     for (let i = 0; i < adapterCalls.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      await adapterCalls[i](player.adapter);
+      await adapterCalls[i](adapter);
     }
     adapterCalls = [];
   }
@@ -61,7 +62,7 @@ export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
     });
   }
 
-  function onStateChange(event: CustomEvent<StateChange>) {
+  async function onStateChange(event: CustomEvent<StateChange>) {
     event.stopImmediatePropagation();
     const { by, prop, value } = event.detail;
 
@@ -71,13 +72,15 @@ export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
     }
 
     if (!player.playbackStarted && immediateAdapterCall.has(prop)) {
+      const adapter = await player.adapter;
+
       if (prop === 'paused' && !value) {
-        player.adapter?.play();
+        adapter?.play();
       }
 
       if (prop === 'currentTime') {
-        player.adapter?.play();
-        player.adapter?.setCurrentTime(value as number);
+        adapter?.play();
+        adapter?.setCurrentTime(value as number);
       }
     }
 
@@ -125,7 +128,7 @@ export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
     };
 
     if (player.playbackReady) {
-      await safeCall(player.adapter);
+      await safeCall(await player.adapter);
     } else {
       adapterCalls.push(safeCall);
     }
