@@ -691,7 +691,7 @@ export class Player implements MediaPlayer {
   }
 
   disconnectedCallback() {
-    this.fullscreen.destroy();
+    this.fullscreen?.destroy();
     this.disposal.empty();
   }
 
