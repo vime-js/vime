@@ -1249,7 +1249,6 @@ export namespace Components {
           * @inheritDoc
          */
         "setCurrentTextTrack": (trackId: number) => Promise<void>;
-        "setProvider": (provider: AdapterHost) => Promise<void>;
         /**
           * Sets the visibility of the currently active text track.
           * @inheritDoc

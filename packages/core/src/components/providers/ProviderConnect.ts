@@ -4,7 +4,7 @@ import { listen } from '../../utils/dom';
 import { createStencilHook } from '../../utils/stencil';
 import { StateChange } from '../core/player/PlayerDispatcher';
 import { PlayerProps } from '../core/player/PlayerProps';
-import { AdapterHost, MediaProviderAdapter } from './MediaProvider';
+import { AdapterHost } from './MediaProvider';
 import { Provider } from './Provider';
 import { PROVIDER_CHANGE_EVENT } from './ProviderDispatcher';
 import { ProviderWritableProps, isProviderWritableProp } from './ProviderProps';
@@ -23,7 +23,6 @@ export interface ProviderHost extends ProviderWritableProps {
   currentProvider?: Provider
   logger?: PlayerProps['logger']
   provider?: AdapterHost
-  adapter?: MediaProviderAdapter
   onProviderDisconnect?: () => void
 }
 
@@ -52,7 +51,6 @@ export function withProviderHost(connector: ProviderHost) {
     writeTask(async () => {
       connector.ready = false;
       connector.provider = undefined;
-      connector.adapter = undefined;
       cache.clear();
       connector.onProviderDisconnect?.();
       el.dispatchEvent(buildProviderConnectEvent(PROVIDER_DISCONNECT_EVENT));
@@ -74,7 +72,6 @@ export function withProviderHost(connector: ProviderHost) {
 
     writeTask(async () => {
       connector.provider = host;
-      connector.adapter = await host?.getAdapter();
       connector.currentProvider = Object.values(Provider)
         .find((provider) => name === provider);
       createStencilHook(hostRef, undefined, () => onDisconnect());

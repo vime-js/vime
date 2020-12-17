@@ -38,7 +38,9 @@ let idCount = 0;
 export class Player implements MediaPlayer {
   provider?: AdapterHost;
 
-  adapter?: MediaProviderAdapter;
+  get adapter() {
+    return this.provider?.getAdapter();
+  }
 
   private safeAdapterCall: SafeAdapterCall;
 
@@ -160,7 +162,7 @@ export class Player implements MediaPlayer {
   async onPlaybackRateChange(newRate: number, prevRate: number) {
     if (newRate === this.lastRateCheck) return;
 
-    if (!(await this.adapter?.canSetPlaybackRate?.())) {
+    if (!(await (await this.adapter)?.canSetPlaybackRate?.())) {
       this.logger.log('provider cannot change `playbackRate`.');
       this.lastRateCheck = prevRate;
       this.playbackRate = prevRate;
@@ -193,7 +195,7 @@ export class Player implements MediaPlayer {
   async onPlaybackQualityChange(newQuality: string, prevQuality: string) {
     if (isUndefined(newQuality) || (newQuality === this.lastQualityCheck)) return;
 
-    if (!(await this.adapter?.canSetPlaybackQuality?.())) {
+    if (!(await (await this.adapter)?.canSetPlaybackQuality?.())) {
       this.logger.log('provider cannot change `playbackQuality`.');
       this.lastQualityCheck = prevQuality;
       this.playbackQuality = prevQuality;
@@ -521,13 +523,6 @@ export class Player implements MediaPlayer {
 
   /** @internal */
   @Method()
-  async setProvider(provider: AdapterHost) {
-    this.provider = provider;
-    this.adapter = await this.provider.getAdapter();
-  }
-
-  /** @internal */
-  @Method()
   async getAdapter<InternalPlayerType = any>(): Promise<
   MediaProviderAdapter<InternalPlayerType> | undefined
   > {
@@ -537,19 +532,19 @@ export class Player implements MediaPlayer {
   /** @inheritDoc */
   @Method()
   async play() {
-    return this.adapter?.play();
+    return (await this.adapter)?.play();
   }
 
   /** @inheritDoc */
   @Method()
   async pause() {
-    return this.adapter?.pause();
+    return (await this.adapter)?.pause();
   }
 
   /** @inheritDoc */
   @Method()
   async canPlay(type: string) {
-    return this.adapter?.canPlay(type) ?? false;
+    return (await this.adapter)?.canPlay(type) ?? false;
   }
 
   /** @inheritDoc */
@@ -567,19 +562,19 @@ export class Player implements MediaPlayer {
   /** @inheritDoc */
   @Method()
   async canSetPlaybackRate() {
-    return this.adapter?.canSetPlaybackRate?.() ?? false;
+    return (await this.adapter)?.canSetPlaybackRate?.() ?? false;
   }
 
   /** @inheritDoc */
   @Method()
   async canSetPlaybackQuality() {
-    return this.adapter?.canSetPlaybackQuality?.() ?? false;
+    return (await this.adapter)?.canSetPlaybackQuality?.() ?? false;
   }
 
   /** @inheritDoc */
   @Method()
   async canSetFullscreen() {
-    return this.fullscreen!.isSupported || (this.adapter?.canSetFullscreen?.() ?? false);
+    return this.fullscreen!.isSupported || ((await this.adapter)?.canSetFullscreen?.() ?? false);
   }
 
   /** @inheritDoc */
@@ -587,7 +582,9 @@ export class Player implements MediaPlayer {
   async enterFullscreen(options?: FullscreenOptions) {
     if (!this.isVideoView) throw Error('Cannot enter fullscreen on an audio player view.');
     if (this.fullscreen!.isSupported) return this.fullscreen!.enterFullscreen(options);
-    if (await this.adapter?.canSetFullscreen?.()) return this.adapter?.enterFullscreen?.(options);
+    if (await (await this.adapter)?.canSetFullscreen?.()) {
+      return (await this.adapter)?.enterFullscreen?.(options);
+    }
     throw Error('Fullscreen API is not available.');
   }
 
@@ -595,13 +592,13 @@ export class Player implements MediaPlayer {
   @Method()
   async exitFullscreen() {
     if (this.fullscreen!.isSupported) return this.fullscreen!.exitFullscreen();
-    return this.adapter?.exitFullscreen?.();
+    return (await this.adapter)?.exitFullscreen?.();
   }
 
   /** @inheritDoc */
   @Method()
   async canSetPiP() {
-    return this.adapter?.canSetPiP?.() ?? false;
+    return (await this.adapter)?.canSetPiP?.() ?? false;
   }
 
   /** @inheritDoc */
@@ -609,49 +606,49 @@ export class Player implements MediaPlayer {
   async enterPiP() {
     if (!this.isVideoView) throw Error('Cannot enter PiP mode on an audio player view.');
     if (!(await this.canSetPiP())) throw Error('Picture-in-Picture API is not available.');
-    return this.adapter?.enterPiP?.();
+    return (await this.adapter)?.enterPiP?.();
   }
 
   /** @inheritDoc */
   @Method()
   async exitPiP() {
-    return this.adapter?.exitPiP?.();
+    return (await this.adapter)?.exitPiP?.();
   }
 
   /** @inheritDoc */
   @Method()
   async canSetAudioTrack() {
-    return !isUndefined(this.adapter?.setCurrentAudioTrack);
+    return !isUndefined((await this.adapter)?.setCurrentAudioTrack);
   }
 
   /** @inheritDoc */
   @Method()
   async setCurrentAudioTrack(trackId: number) {
-    this.adapter?.setCurrentAudioTrack?.(trackId);
+    (await this.adapter)?.setCurrentAudioTrack?.(trackId);
   }
 
   /** @inheritDoc */
   @Method()
   async canSetTextTrack() {
-    return !isUndefined(this.adapter?.setCurrentTextTrack);
+    return !isUndefined((await this.adapter)?.setCurrentTextTrack);
   }
 
   /** @inheritDoc */
   @Method()
   async setCurrentTextTrack(trackId: number) {
-    this.adapter?.setCurrentTextTrack?.(trackId);
+    (await this.adapter)?.setCurrentTextTrack?.(trackId);
   }
 
   /** @inheritDoc */
   @Method()
   async canSetTextTrackVisibility() {
-    return !isUndefined(this.adapter?.setTextTrackVisibility);
+    return !isUndefined((await this.adapter)?.setTextTrackVisibility);
   }
 
   /** @inheritDoc */
   @Method()
   async setTextTrackVisibility(isVisible: boolean) {
-    this.adapter?.setTextTrackVisibility?.(isVisible);
+    (await this.adapter)?.setTextTrackVisibility?.(isVisible);
   }
 
   /** @inheritDoc */
@@ -739,7 +736,7 @@ export class Player implements MediaPlayer {
   /** @internal Exposed for E2E testing. */
   @Method()
   async callAdapter(method: keyof MediaProviderAdapter, value?: any) {
-    return (this.adapter as any)[method](value);
+    return ((await this.adapter) as any)[method](value);
   }
 
   private hasCustomControls() {
