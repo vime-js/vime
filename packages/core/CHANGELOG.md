@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.3 (2020-12-17)
+
+
+### Bug Fixes
+
+* adapter calls throw if called too early ([a57d68c](https://github.com/vime-js/vime/commit/a57d68c95bbad27af090f207deaa864bb2c53431))
+
+
+
+
+
 ## 5.0.2 (2020-12-17)
 
 
