@@ -424,7 +424,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       canPlay: async (type: any) => isString(type)
         && (audioRegex.test(type) || videoRegex.test(type)),
       setCurrentTime: async (time: number) => {
-        if (this.mediaEl) this.mediaEl.currentTime = time;
+        if (this.mediaEl && this.currentTime !== time) this.mediaEl.currentTime = time;
       },
       setMuted: async (muted: boolean) => {
         if (this.mediaEl) this.mediaEl.muted = muted;

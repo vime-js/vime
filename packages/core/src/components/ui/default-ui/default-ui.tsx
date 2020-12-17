@@ -65,7 +65,6 @@ export class DefaultUI {
         {!this.noLoadingScreen && <vm-loading-screen />}
         {!this.noControls && <vm-default-controls />}
         {!this.noSettings && <vm-default-settings />}
-        {!this.noSettings && <vm-default-settings />}
         <slot />
       </vm-ui>
     );
