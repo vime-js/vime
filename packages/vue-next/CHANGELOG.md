@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.1 (2020-12-17)
+
+
+### Bug Fixes
+
+* **react:** pass className and style to render function ([45136c1](https://github.com/vime-js/vime/commit/45136c1dab4359590f4f43dd3b17d536ba133fb2))
+
+
+
+
+
 # 5.0.0 (2020-12-17)
 
 
