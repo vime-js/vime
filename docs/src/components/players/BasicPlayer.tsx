@@ -1,12 +1,12 @@
 import React from 'react';
-import { VimePlayer, VimeVideo, VimeDefaultUi } from '@vime/react';
+import { Player, Video, DefaultUi } from '@vime/react';
 
 const BasicPlayer = ({ 
   showDefaultUi = false,
   defaultUiProps = {}
 }) => (
-  <VimePlayer controls={!showDefaultUi}>
-    <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+  <Player controls={!showDefaultUi}>
+    <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
       <source 
         data-src="https://media.vimejs.com/720p.mp4" 
         type="video/mp4" 
@@ -18,10 +18,10 @@ const BasicPlayer = ({
         srcLang="en" 
         label="English" 
       />
-    </VimeVideo> 
+    </Video> 
 
-    {showDefaultUi && <VimeDefaultUi {...defaultUiProps} />}
-  </VimePlayer>
+    {showDefaultUi && <DefaultUi {...defaultUiProps} />}
+  </Player>
 );
 
 export default BasicPlayer;

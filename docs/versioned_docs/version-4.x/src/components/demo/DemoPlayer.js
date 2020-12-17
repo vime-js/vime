@@ -1,21 +1,21 @@
 import React, { Fragment } from 'react';
 import { 
-  VimePlayer, 
-  VimeVideo, 
-  VimeDefaultUi, 
-  VimeYoutube, 
-  VimeVimeo,
-  VimeDailymotion,
-  VimeDash,
-  VimeHls,
-  VimeAudio,
+  Player as VmPlayer, 
+  Video as VmVideo, 
+  DefaultUi as VmDefaultUi, 
+  Youtube as VmYoutube, 
+  Vimeo as VmVimeo,
+  Dailymotion as VmDailymotion,
+  Dash as VmDash,
+  Hls as VmHls,
+  Audio as VmAudio,
 } from '@vime/react';
 
 const poster = 'https://media.vimejs.com/poster.png';
 
-const YouTube = () => (<VimeYoutube videoId="DyTCOwB0DVw" />);
-const Vimeo = () => (<VimeVimeo videoId="411652396" />);
-const Dailymotion = () => (<VimeDailymotion videoId="k3b11PemcuTrmWvYe0q" />);
+const YouTube = () => (<VmYoutube videoId="DyTCOwB0DVw" />);
+const Vimeo = () => (<VmVimeo videoId="411652396" />);
+const Dailymotion = () => (<VmDailymotion videoId="k3b11PemcuTrmWvYe0q" />);
 
 const Tracks = () => (
   <Fragment>
@@ -30,30 +30,30 @@ const Tracks = () => (
 );
 
 const Hls = () => (
-  <VimeHls crossOrigin="" poster={poster}>
+  <VmHls crossOrigin="" poster={poster}>
     <source data-src="https://media.vimejs.com/hls/index.m3u8" type="application/x-mpegURL" />
     <Tracks />
-  </VimeHls>  
+  </VmHls>  
 );
 
 const Dash = () => (
-  <VimeDash src="https://media.vimejs.com/mpd/manifest.mpd" poster={poster} />
+  <VmDash src="https://media.vimejs.com/mpd/manifest.mpd" poster={poster} />
 );
 
 const Audio = () => (
-  <VimeAudio crossOrigin="">
+  <VmAudio crossOrigin="">
     <source data-src="https://media.vimejs.com/audio.mp3" type="audio/mp3" />
-  </VimeAudio>
+  </VmAudio>
 );
 
 const Video = () => (
-  <VimeVideo crossOrigin="" poster={poster}>
+  <VmVideo crossOrigin="" poster={poster}>
     <source 
       data-src="https://media.vimejs.com/720p.mp4" 
       type="video/mp4" 
     />
     <Tracks />
-  </VimeVideo> 
+  </VmVideo> 
 );
 
 const ProviderMap = {
@@ -84,7 +84,7 @@ const DemoPlayer = ({
   provider = 'video',
   showDefaultUi = false,
 }) => (
-  <VimePlayer 
+  <VmPlayer 
     key={genKey(provider, showDefaultUi)}
     theme={theme} 
     style={{ '--vm-player-theme': color }} 
@@ -92,8 +92,8 @@ const DemoPlayer = ({
     noSkeleton
   >
     {ProviderMap[provider]}
-    {showDefaultUi && <VimeDefaultUi />}
-  </VimePlayer>
+    {showDefaultUi && <VmDefaultUi />}
+  </VmPlayer>
 );
 
 export default DemoPlayer;

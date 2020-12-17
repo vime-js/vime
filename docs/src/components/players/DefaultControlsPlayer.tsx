@@ -1,14 +1,14 @@
 import React from 'react';
 import { 
-  VimePlayer, 
-  VimeVideo, 
-  VimeDefaultUi,
-  VimeDefaultControls, 
+  Player, 
+  Video, 
+  DefaultUi,
+  DefaultControls, 
 } from '@vime/react';
 
 const DefaultControlsPlayer = () => (
-  <VimePlayer>
-    <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+  <Player>
+    <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
       <source 
         data-src="https://media.vimejs.com/720p.mp4" 
         type="video/mp4" 
@@ -20,15 +20,15 @@ const DefaultControlsPlayer = () => (
         srcLang="en" 
         label="English" 
       />
-    </VimeVideo> 
+    </Video> 
 
-    <VimeDefaultUi noControls>
-      <VimeDefaultControls
+    <DefaultUi noControls>
+      <DefaultControls
         hideOnMouseLeave
         activeDuration={2000}
       />
-    </VimeDefaultUi>
-  </VimePlayer>
+    </DefaultUi>
+  </Player>
 );
 
 export default DefaultControlsPlayer;

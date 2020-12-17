@@ -1,16 +1,16 @@
 import React from 'react';
 import { 
-  VimePlayer, 
-  VimeVideo, 
-  VimeUi, 
-  VimeClickToPlay,
-  VimeSpinner,
+  Player, 
+  Video, 
+  Ui, 
+  ClickToPlay,
+  Spinner,
 } from '@vime/react';
 import { TapSidesToSeek } from './TapSidesToSeek';
 
 const ClickPlayer = () => (
-  <VimePlayer>
-    <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+  <Player>
+    <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
       <source 
         data-src="https://media.vimejs.com/720p.mp4" 
         type="video/mp4" 
@@ -22,14 +22,14 @@ const ClickPlayer = () => (
         srcLang="en" 
         label="English" 
       />
-    </VimeVideo> 
+    </Video> 
 
-    <VimeUi>
-      <VimeClickToPlay />
-      <VimeSpinner />
+    <Ui>
+      <ClickToPlay />
+      <Spinner />
       <TapSidesToSeek />
-    </VimeUi>
-  </VimePlayer>
+    </Ui>
+  </Player>
 );
 
 export default ClickPlayer;

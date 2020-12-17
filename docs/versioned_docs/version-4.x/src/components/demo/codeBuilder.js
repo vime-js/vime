@@ -38,15 +38,15 @@ const video = (jsx = false, lib) => `
 `.trim();
 
 const youtube = (jsx = false, lib) => `
-    <${jsx ? 'Youtube' : 'vm-youtube'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="DyTCOwB0DVw"${(jsx || isStencil(lib)) ? ' />' : '><vm-youtube>'}
+    <${jsx ? 'Youtube' : 'vm-youtube'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="DyTCOwB0DVw"${(jsx || isStencil(lib)) ? ' />' : '></vm-youtube>'}
 `.trim();
 
 const vimeo = (jsx = false, lib) => `
-    <${jsx ? 'Vimeo' : 'vm-vimeo'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="411652396"${(jsx || isStencil(lib)) ? ' />' : '><vm-vimeo>'}
+    <${jsx ? 'Vimeo' : 'vm-vimeo'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="411652396"${(jsx || isStencil(lib)) ? ' />' : '></vm-vimeo>'}
 `.trim();
 
 const dailymotion = (jsx = false, lib) => `
-    <${jsx ? 'Dailymotion' : 'vm-dailymotion'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="k3b11PemcuTrmWvYe0q"${(jsx || isStencil(lib)) ? ' />' : '><vm-dailymotion>'}
+    <${jsx ? 'Dailymotion' : 'vm-dailymotion'} ${(jsx || isStencil(lib)) ? 'videoId' : 'video-id'}="k3b11PemcuTrmWvYe0q"${(jsx || isStencil(lib)) ? ' />' : '></vm-dailymotion>'}
 `.trim();
 
 const hls = (jsx = false, lib) => `
@@ -65,7 +65,7 @@ const dash = (jsx = false, lib) => `
     <${jsx ? 'Dash' : 'vm-dash'} 
       src="https://media.vimejs.com/mpd/manifest.mpd" 
       poster="${poster}"
-    ${(jsx || isStencil(lib)) ? '/>' : '><vm-dash>'}
+    ${(jsx || isStencil(lib)) ? '/>' : '></vm-dash>'}
 `.trim();
 
 const providers = {

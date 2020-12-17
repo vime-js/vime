@@ -19,9 +19,9 @@ import { Seo } from '../../src/seo';
 Vime is a customizable, extensible, accessible and framework agnostic media player.
 </p>
 
-import BasicPlayer from '../../src/components/players/LoadableBasicPlayer'
+import IntroPlayer from '../../src/components/players/LoadableIntroPlayer'
 
-<BasicPlayer showDefaultUi />
+<IntroPlayer />
 <br />
 
 <div style={{

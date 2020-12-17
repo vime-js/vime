@@ -10,8 +10,8 @@ module.exports = {
   organizationName: 'vm-js',
   projectName: 'vime',
   stylesheets: [
-    'https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/default.css',
-    'https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/light.css',
+    'https://cdn.jsdelivr.net/npm/@vime/core@^5/themes/default.css',
+    'https://cdn.jsdelivr.net/npm/@vime/core@^5/themes/light.css',
   ],
   themeConfig: {
     announcementBar: {

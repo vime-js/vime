@@ -1,19 +1,19 @@
 import React from 'react';
 import { 
-  VimePlayer,
-  VimeVideo, 
-  VimeDefaultUi, 
-  VimeScrim,
-  VimeControls,
-  VimeControlSpacer,
-  VimeMuteControl,
-  VimePlaybackControl,
-  VimeTimeProgress,
+  Player,
+  Video, 
+  DefaultUi, 
+  Scrim,
+  Controls,
+  ControlSpacer,
+  MuteControl,
+  PlaybackControl,
+  TimeProgress,
 } from '@vime/react';
 
 const CustomControlsPlayer = () => (
-  <VimePlayer>
-    <VimeVideo crossOrigin="" poster="https://media.vimejs.com/poster.png">
+  <Player>
+    <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
       <source 
         data-src="https://media.vimejs.com/720p.mp4" 
         type="video/mp4" 
@@ -25,27 +25,26 @@ const CustomControlsPlayer = () => (
         srcLang="en" 
         label="English" 
       />
-    </VimeVideo> 
+    </Video> 
 
-    <VimeDefaultUi noControls>
-      <VimeScrim />
+    <DefaultUi noControls>
+      <Scrim />
 
-      <VimeControls fullWidth pin="topLeft">
-        <VimeControlSpacer />
-        <VimeMuteControl />
-      </VimeControls>
+      <Controls fullWidth pin="topLeft">
+        <ControlSpacer />
+        <MuteControl />
+      </Controls>
 
-      <VimeControls pin="center">
-        {/* @ts-ignore */}
-        <VimePlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />
-      </VimeControls>
+      <Controls pin="center">
+        <PlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />
+      </Controls>
       
-      <VimeControls fullWidth pin="bottomLeft">
-        <VimeControlSpacer />
-        <VimeTimeProgress />
-      </VimeControls>
-    </VimeDefaultUi>
-  </VimePlayer>
+      <Controls fullWidth pin="bottomLeft">
+        <ControlSpacer />
+        <TimeProgress />
+      </Controls>
+    </DefaultUi>
+  </Player>
 );
 
 export default CustomControlsPlayer;
