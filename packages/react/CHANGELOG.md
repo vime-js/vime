@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.5 (2020-12-17)
+
+
+### Bug Fixes
+
+* duplicate settings in default ui ([150a8e0](https://github.com/vime-js/vime/commit/150a8e07c4eb7dbfbb9bab3195b5cc1201605c94))
+
+
+
+
+
 ## 5.0.4 (2020-12-17)
 
 **Note:** Version bump only for package @vime/react
