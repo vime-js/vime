@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 5.0.0 (2020-12-17)
+
+
+### Features
+
+* v5 ([933347b](https://github.com/vime-js/vime/commit/933347b5fd2a38b74ef6e3f7d6a779c4b0f0d0c3))
+
+
+### BREAKING CHANGES
+
+* see #126 for a breakdown on what's new/changed.
+
+
+
+
+
 ## [4.7.3](https://github.com/vime-js/vime/compare/v4.7.2...v4.7.3) (2020-11-17)
 
 **Note:** Version bump only for package @vime/vue
