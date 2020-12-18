@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.6 (2020-12-18)
+
+
+### Bug Fixes
+
+* **angular:** unpack dist into root package ([6be7076](https://github.com/vime-js/vime/commit/6be70767a15b8a508a949f5d916633c9574db1e7))
+
+
+
+
+
 ## 5.0.5 (2020-12-17)
 
 
