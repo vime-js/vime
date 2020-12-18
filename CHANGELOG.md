@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.7 (2020-12-18)
+
+
+### Bug Fixes
+
+* dont attempt to load youtube/dailymotion/vimeo video if `videoId` is undefined ([5acb6c7](https://github.com/vime-js/vime/commit/5acb6c7c38382010a67efc3c6f3c47010e2f6d87))
+
+
+
+
+
 ## 5.0.6 (2020-12-18)
 
 
