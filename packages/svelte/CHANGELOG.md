@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.8 (2020-12-18)
+
+
+### Bug Fixes
+
+* embed component should not load undefined `embedSrc` ([4ff11ae](https://github.com/vime-js/vime/commit/4ff11aefd68fcacdfc0a2cfecf833de9cc44f9ad))
+
+
+
+
+
 ## 5.0.7 (2020-12-18)
 
 
