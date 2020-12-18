@@ -61,8 +61,14 @@ export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
 
   @Watch('videoId')
   onVideoIdChange() {
-    this.embedSrc = `${this.getOrigin()}/embed/video/${this.videoId}?api=1`;
     this.internalState = { ...this.defaultInternalState };
+
+    if (!this.videoId) {
+      this.embedSrc = '';
+      return;
+    }
+
+    this.embedSrc = `${this.getOrigin()}/embed/video/${this.videoId}?api=1`;
     this.fetchVideoInfo = this.getVideoInfo();
     this.pendingMediaTitleCall = deferredPromise();
   }

@@ -67,6 +67,11 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
   @Watch('cookies')
   @Watch('videoId')
   onVideoIdChange() {
+    if (!this.videoId) {
+      this.embedSrc = '';
+      return;
+    }
+
     this.embedSrc = `${this.getOrigin()}/embed/${this.videoId}`;
     this.fetchPosterURL = this.findPosterURL();
   }

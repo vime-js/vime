@@ -72,8 +72,14 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
 
   @Watch('videoId')
   onVideoIdChange() {
-    this.embedSrc = `${this.getOrigin()}/video/${this.videoId}`;
     this.cancelTimeUpdates();
+
+    if (!this.videoId) {
+      this.embedSrc = '';
+      return;
+    }
+
+    this.embedSrc = `${this.getOrigin()}/video/${this.videoId}`;
     this.pendingDurationCall = deferredPromise();
     this.pendingMediaTitleCall = deferredPromise();
     this.fetchVideoInfo = this.getVideoInfo();
