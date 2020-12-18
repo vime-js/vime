@@ -11,7 +11,7 @@ import {
   State,
   Watch,
 } from '@stencil/core';
-import { isNull, isString } from '../../../utils/unit';
+import { isNull, isString, isUndefined } from '../../../utils/unit';
 import { appendParamsToURL, Params, preconnect } from '../../../utils/network';
 import { LazyLoader } from '../player/LazyLoader';
 import { withComponentRegistry } from '../player/withComponentRegistry';
@@ -33,7 +33,7 @@ export class Embed implements ComponentInterface {
 
   @Element() host!: HTMLVmEmbedElement;
 
-  @State() srcWithParams = '';
+  @State() srcWithParams: string | undefined = '';
 
   @State() hasEnteredViewport = false;
 
@@ -55,12 +55,19 @@ export class Embed implements ComponentInterface {
 
   @Watch('embedSrc')
   @Watch('params')
-  srcChange() {
-    this.srcWithParams = appendParamsToURL(this.embedSrc, this.params);
+  onEmbedSrcChange() {
+    this.srcWithParams = (isString(this.embedSrc) && this.embedSrc.length > 0)
+      ? appendParamsToURL(this.embedSrc, this.params)
+      : undefined;
   }
 
   @Watch('srcWithParams')
   srcWithParamsChange() {
+    if (isUndefined(this.srcWithParams)) {
+      this.vmEmbedSrcChange.emit(this.srcWithParams);
+      return;
+    }
+
     if (!this.hasEnteredViewport && !connected.has(this.embedSrc)) {
       if (preconnect(this.srcWithParams)) connected.add(this.embedSrc);
     }
@@ -123,7 +130,7 @@ export class Embed implements ComponentInterface {
       if (!isNull(src)) el.setAttribute('src', src);
     });
 
-    this.srcChange();
+    this.onEmbedSrcChange();
     this.genIframeId();
   }
 
