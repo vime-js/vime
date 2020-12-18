@@ -1,6 +1,6 @@
 {
   "name": "@vime/angular",
-  "version": "4.7.3",
+  "version": "5.0.0",
   "description": "Angular bindings for the Vime media player.",
   "license": "MIT",
   "contributors": [
@@ -13,13 +13,21 @@
   "bugs": {
     "url": "https://github.com/vime-js/vime/issues"
   },
+  "files": [
+    "bundles",
+    "components",
+    "esm2015",
+    "fesm2015",
+    "*.d.ts",
+    "vime-angular.metadata.json"
+  ],
   "peerDependencies": {
     "@angular/common": "^11.0.4",
     "@angular/core": "^11.0.4",
     "rxjs": "^6.6.2"
   },
   "dependencies": {
-    "@vime/core": "^4.7.3",
+    "@vime/core": "^5.0.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {

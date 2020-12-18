@@ -4,21 +4,21 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod"
-  },
-  "dependencies": {
-    "@angular/common": "~11.0.4",
-    "@angular/compiler": "~11.0.4",
-    "@angular/core": "~11.0.4",
-    "rxjs": "~6.6.0",
-    "tslib": "^2.0.0",
-    "zone.js": "~0.10.2"
+    "build": "ng build --prod",
+    "prepare": "node scripts/bump-version.js && node scripts/unpack-dist.js"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.4",
     "@angular/cli": "~11.0.4",
+    "@angular/common": "~11.0.4",
+    "@angular/compiler": "~11.0.4",
     "@angular/compiler-cli": "~11.0.4",
+    "@angular/core": "~11.0.4",
+    "fs-extra": "^9.0.1",
     "ng-packagr": "^11.0.0",
-    "typescript": "~4.0.2"
+    "rxjs": "~6.6.0",
+    "tslib": "^2.0.0",
+    "typescript": "~4.0.2",
+    "zone.js": "~0.10.2"
   }
 }

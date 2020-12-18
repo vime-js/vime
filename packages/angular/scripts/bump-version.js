@@ -1,4 +1,3 @@
-// package.json dist/vime/angular
 const fs = require('fs');
 const path = require('path');
 
