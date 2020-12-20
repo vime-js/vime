@@ -8,11 +8,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* remove comment ([2072065](https://github.com/vime-js/vime/commit/2072065d74c16007068f4ca511d39720a0ee19cc))
-
-
-
-
+* avoid accidentally rendering two iframes ([a880a4e](https://github.com/vime-js/vime/commit/a880a4e36b6562b3044e7b24db399599e1fab8d9))
+* embedded media (youtube/vimeo/dailymotion) not updating view type ([ef660a4](https://github.com/vime-js/vime/commit/ef660a4402a3f4d9494c96cd297e7902062f16da))
 
 ## 5.0.9 (2020-12-20)
 
