@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.9 (2020-12-20)
+
+
+### Bug Fixes
+
+* file provider not setting current time when updated ([98890b9](https://github.com/vime-js/vime/commit/98890b966cac1b638c68011e028dab6c60f079f7))
+
+
+
+
+
 ## 5.0.8 (2020-12-18)
 
 
