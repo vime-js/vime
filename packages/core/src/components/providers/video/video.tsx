@@ -1,5 +1,5 @@
 import {
-  h, Method, Component, Prop,
+  h, Method, Component, Prop, Listen,
 } from '@stencil/core';
 import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 import { ViewType } from '../../core/player/ViewType';
@@ -53,7 +53,17 @@ export class Video implements MediaFileProvider<HTMLMediaElement> {
 
   constructor() {
     withComponentRegistry(this);
-    if (!this.willAttach) withProviderConnect(this);
+    withProviderConnect(this);
+  }
+
+  @Listen('vmMediaProviderConnect')
+  onProviderConnect(event: Event) {
+    if (this.willAttach) event.stopImmediatePropagation();
+  }
+
+  @Listen('vmMediaProviderDisconnect')
+  onProviderDisconnect(event: Event) {
+    if (this.willAttach) event.stopImmediatePropagation();
   }
 
   /** @internal */

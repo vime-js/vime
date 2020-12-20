@@ -1,7 +1,7 @@
 /* eslint-disable no-continue, jsx-a11y/media-has-caption */
 
 import {
-  h, Prop, Method, Component, Event, EventEmitter, Watch, Element, State,
+  h, Prop, Method, Component, Event, EventEmitter, Watch, Element, State, Listen,
 } from '@stencil/core';
 import { MediaProvider } from '../MediaProvider';
 import { withProviderConnect } from '../ProviderConnect';
@@ -166,7 +166,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
 
   constructor() {
     withComponentRegistry(this);
-    if (!this.noConnect) withProviderConnect(this);
+    withProviderConnect(this);
     withProviderContext(this, [
       'playbackReady',
       'playbackStarted',
@@ -479,6 +479,16 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   onShouldRenderNativeTextTracksChange() {
     if (this.hasCustomTextManager) return;
     this.toggleTextTrackModes(this.currentTextTrack);
+  }
+
+  @Listen('vmMediaProviderConnect')
+  onProviderConnect(event: Event) {
+    if (this.noConnect) event.stopImmediatePropagation();
+  }
+
+  @Listen('vmMediaProviderDisconnect')
+  onProviderDisconnect(event: Event) {
+    if (this.noConnect) event.stopImmediatePropagation();
   }
 
   private getFilteredTextTracks() {

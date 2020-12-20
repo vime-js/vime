@@ -81,8 +81,8 @@ export class HLS implements MediaFileProvider {
 
   constructor() {
     withComponentRegistry(this);
-    withPlayerContext(this, ['playbackReady']);
     withProviderConnect(this);
+    withPlayerContext(this, ['playbackReady']);
   }
 
   connectedCallback() {
