@@ -751,7 +751,6 @@ export class Player implements MediaPlayer {
   }
 
   render() {
-    console.log(this.isVideoView, this.calcAspectRatio());
     const label = `${this.isAudioView ? 'Audio Player' : 'Video Player'}`
       + `${!isUndefined(this.mediaTitle) ? ` - ${this.mediaTitle}` : ''}`;
 
