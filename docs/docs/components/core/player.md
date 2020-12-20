@@ -494,10 +494,3 @@ class Example {
 | `--vm-player-theme`         | A custom theme (color) to be used throughout the player. Any valid CSS `color` property (HEX, RGBA, HLS, ...) can be used. |
 
 
-## Dependencies
-
-### Used by
-
- - [vm-playground](./playground)
-
-

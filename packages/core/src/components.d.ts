@@ -1287,32 +1287,6 @@ export namespace Components {
          */
         "volume": number;
     }
-    interface VmPlayground {
-        /**
-          * The current poster to load.
-         */
-        "poster": string;
-        /**
-          * The current media provider.
-         */
-        "provider": Provider;
-        /**
-          * Whether to show the native controls or not.
-         */
-        "showControls": boolean;
-        /**
-          * Whether to show the custom Vime UI or not.
-         */
-        "showCustomUI": boolean;
-        /**
-          * The current `src` to load into the provider.
-         */
-        "src"?: string;
-        /**
-          * The current custom UI theme, won't work if custom UI is turned off.
-         */
-        "theme": 'light' | 'dark';
-    }
     interface VmPoster {
         "currentPoster"?: PlayerProps['currentPoster'];
         "currentTime": PlayerProps['currentTime'];
@@ -1865,12 +1839,6 @@ declare global {
         prototype: HTMLVmPlayerElement;
         new (): HTMLVmPlayerElement;
     };
-    interface HTMLVmPlaygroundElement extends Components.VmPlayground, HTMLStencilElement {
-    }
-    var HTMLVmPlaygroundElement: {
-        prototype: HTMLVmPlaygroundElement;
-        new (): HTMLVmPlaygroundElement;
-    };
     interface HTMLVmPosterElement extends Components.VmPoster, HTMLStencilElement {
     }
     var HTMLVmPosterElement: {
@@ -2006,7 +1974,6 @@ declare global {
         "vm-pip-control": HTMLVmPipControlElement;
         "vm-playback-control": HTMLVmPlaybackControlElement;
         "vm-player": HTMLVmPlayerElement;
-        "vm-playground": HTMLVmPlaygroundElement;
         "vm-poster": HTMLVmPosterElement;
         "vm-scrim": HTMLVmScrimElement;
         "vm-scrubber-control": HTMLVmScrubberControlElement;
@@ -3451,32 +3418,6 @@ declare namespace LocalJSX {
          */
         "volume"?: number;
     }
-    interface VmPlayground {
-        /**
-          * The current poster to load.
-         */
-        "poster"?: string;
-        /**
-          * The current media provider.
-         */
-        "provider"?: Provider;
-        /**
-          * Whether to show the native controls or not.
-         */
-        "showControls"?: boolean;
-        /**
-          * Whether to show the custom Vime UI or not.
-         */
-        "showCustomUI"?: boolean;
-        /**
-          * The current `src` to load into the provider.
-         */
-        "src"?: string;
-        /**
-          * The current custom UI theme, won't work if custom UI is turned off.
-         */
-        "theme"?: 'light' | 'dark';
-    }
     interface VmPoster {
         "currentPoster"?: PlayerProps['currentPoster'];
         "currentTime"?: PlayerProps['currentTime'];
@@ -3887,7 +3828,6 @@ declare namespace LocalJSX {
         "vm-pip-control": VmPipControl;
         "vm-playback-control": VmPlaybackControl;
         "vm-player": VmPlayer;
-        "vm-playground": VmPlayground;
         "vm-poster": VmPoster;
         "vm-scrim": VmScrim;
         "vm-scrubber-control": VmScrubberControl;
@@ -3943,7 +3883,6 @@ declare module "@stencil/core" {
             "vm-pip-control": LocalJSX.VmPipControl & JSXBase.HTMLAttributes<HTMLVmPipControlElement>;
             "vm-playback-control": LocalJSX.VmPlaybackControl & JSXBase.HTMLAttributes<HTMLVmPlaybackControlElement>;
             "vm-player": LocalJSX.VmPlayer & JSXBase.HTMLAttributes<HTMLVmPlayerElement>;
-            "vm-playground": LocalJSX.VmPlayground & JSXBase.HTMLAttributes<HTMLVmPlaygroundElement>;
             "vm-poster": LocalJSX.VmPoster & JSXBase.HTMLAttributes<HTMLVmPosterElement>;
             "vm-scrim": LocalJSX.VmScrim & JSXBase.HTMLAttributes<HTMLVmScrimElement>;
             "vm-scrubber-control": LocalJSX.VmScrubberControl & JSXBase.HTMLAttributes<HTMLVmScrubberControlElement>;

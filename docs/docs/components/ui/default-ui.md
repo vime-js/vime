@@ -177,10 +177,6 @@ class Example {
 
 ## Dependencies
 
-### Used by
-
- - [vm-playground](./../core/playground)
-
 ### Depends on
 
 - [vm-ui](./ui)

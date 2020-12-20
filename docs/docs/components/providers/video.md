@@ -246,7 +246,6 @@ class Example {
 
  - [vm-dash](./dash)
  - [vm-hls](./hls)
- - [vm-playground](./../core/playground)
 
 ### Depends on
 
