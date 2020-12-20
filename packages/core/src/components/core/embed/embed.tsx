@@ -173,8 +173,7 @@ export class Embed implements ComponentInterface {
         class="lazy"
         title={this.mediaTitle}
         data-src={this.srcWithParams}
-        // @ts-ignore
-        allowfullscreen="1"
+        allowFullScreen
         allow="autoplay; encrypted-media; picture-in-picture"
         onLoad={this.onLoad.bind(this)}
         ref={(el: any) => { this.iframe = el; }}
