@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.10 (2020-12-20)
+
+
+### Bug Fixes
+
+* remove comment ([2072065](https://github.com/vime-js/vime/commit/2072065d74c16007068f4ca511d39720a0ee19cc))
+
+
+
+
+
 ## 5.0.9 (2020-12-20)
 
 

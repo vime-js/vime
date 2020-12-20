@@ -1,6 +1,6 @@
 {
   "name": "@vime/angular",
-  "version": "5.0.9",
+  "version": "5.0.10",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
