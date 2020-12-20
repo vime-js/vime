@@ -13,16 +13,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.12 (2020-12-20)
 
-**Note:** Version bump only for package @vime/angular
+### Bug Fixes
 
-
+* hls/dash provider connection not being established ([70b5e055](https://github.com/vime-js/vime/commit/70b5e055eab8aef28a9804fd3d49ca8e2ddf6a06))
+* handle youtube falling back to an unstarted state after loading ([a6c3923b](https://github.com/vime-js/vime/commit/a6c3923b4d3dbf5073eeebab586301eeb530f7d1))
 
 
 
 ## 5.0.11 (2020-12-20)
 
-**Note:** Version bump only for package @vime/angular
+### Bug Fixes
 
+* youtube widget referrer parameter causes CORS issues ([1b6f0235](https://github.com/vime-js/vime/commit/1b6f0235fb96b02bedab5fc80cf3cf7909bf24aa))
+* vimeo not hiding controls ([24a21223](https://github.com/vime-js/vime/commit/24a212236272678592017db4b64ab6ff258be2b6))
 
 
 
@@ -32,7 +35,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* remove comment ([2072065](https://github.com/vime-js/vime/commit/2072065d74c16007068f4ca511d39720a0ee19cc))
+* avoid accidentally rendering two iframes ([a880a4e](https://github.com/vime-js/vime/commit/a880a4e36b6562b3044e7b24db399599e1fab8d9))
+* embedded media (youtube/vimeo/dailymotion) not updating view type ([ef660a4](https://github.com/vime-js/vime/commit/ef660a4402a3f4d9494c96cd297e7902062f16da))
 
 
 
