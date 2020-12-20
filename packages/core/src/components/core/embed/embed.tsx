@@ -174,7 +174,7 @@ export class Embed implements ComponentInterface {
         title={this.mediaTitle}
         data-src={this.srcWithParams}
         allowFullScreen
-        allow="autoplay; encrypted-media; picture-in-picture"
+        allow="autoplay; encrypted-media; picture-in-picture;"
         onLoad={this.onLoad.bind(this)}
         ref={(el: any) => { this.iframe = el; }}
       />

@@ -33,12 +33,11 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
 
   private defaultInternalState: any = {};
 
-  private hasCued = false;
-
   private internalState = {
     paused: true,
     duration: 0,
     seeking: false,
+    playbackReady: false,
     playbackStarted: false,
     currentTime: 0,
     lastTimeUpdate: 0,
@@ -192,7 +191,6 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
   }
 
   private onEmbedSrcChange() {
-    this.hasCued = false;
     this.vmLoadStart.emit();
     this.dispatch('viewType', ViewType.Video);
   }
@@ -222,7 +220,7 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
   }
 
   private onCued() {
-    if (this.hasCued) return;
+    if (this.internalState.playbackReady) return;
     this.internalState = { ...this.defaultInternalState };
     this.dispatch('currentSrc', this.embedSrc);
     this.dispatch('mediaType', MediaType.Video);
@@ -230,11 +228,20 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
       this.dispatch('currentPoster', this.poster ?? poster);
       this.dispatch('playbackReady', true);
     });
-    this.hasCued = true;
+    this.internalState.playbackReady = true;
   }
 
   private onPlayerStateChange(state: YouTubePlayerState) {
-    if (state === YouTubePlayerState.Unstarted) return;
+    // Sometimes the embed falls back to an unstarted state for some unknown reason, this will
+    // make sure the player is configured to the right starting state.
+    if (this.internalState.playbackReady && (state === YouTubePlayerState.Unstarted)) {
+      this.internalState.paused = true;
+      this.internalState.playbackStarted = false;
+      this.dispatch('buffering', false);
+      this.dispatch('paused', true);
+      this.dispatch('playbackStarted', false);
+      return;
+    }
 
     const isPlaying = (state === YouTubePlayerState.Playing);
     const isBuffering = (state === YouTubePlayerState.Buffering);
