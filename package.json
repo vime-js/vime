@@ -19,7 +19,7 @@
     "angular": "yarn workspace @vime/angular",
     "lint": "eslint ./packages --quiet --fix --ignore-path .gitignore",
     "build": "yarn core build && yarn react build && yarn vue build && yarn vue:next build && yarn svelte build && yarn angular build",
-    "release": "lerna publish --yes"
+    "release": "lerna publish --yes --conventional-commits"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",

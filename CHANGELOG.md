@@ -5,9 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.12 (2020-12-20)
 
-**Note:** Version bump only for package vime
+### Bug Fixes
 
-
+* hls/dash provider connection not being established ([70b5e055](https://github.com/vime-js/vime/commit/70b5e055eab8aef28a9804fd3d49ca8e2ddf6a06))
+* handle youtube falling back to an unstarted state after loading ([a6c3923b](https://github.com/vime-js/vime/commit/a6c3923b4d3dbf5073eeebab586301eeb530f7d1))
 
 
 
