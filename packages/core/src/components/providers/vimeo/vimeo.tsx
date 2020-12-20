@@ -400,6 +400,7 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
   private onEmbedSrcChange() {
     this.hasLoaded = false;
     this.vmLoadStart.emit();
+    this.dispatch('viewType', ViewType.Video);
   }
 
   private onEmbedMessage(event: CustomEvent<VimeoMessage>) {

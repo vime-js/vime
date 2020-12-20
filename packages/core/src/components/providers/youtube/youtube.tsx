@@ -195,6 +195,7 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
   private onEmbedSrcChange() {
     this.hasCued = false;
     this.vmLoadStart.emit();
+    this.dispatch('viewType', ViewType.Video);
   }
 
   private onEmbedLoaded() {

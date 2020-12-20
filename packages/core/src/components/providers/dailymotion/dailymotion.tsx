@@ -219,6 +219,7 @@ export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
 
   private onEmbedSrcChange() {
     this.vmLoadStart.emit();
+    this.dispatch('viewType', ViewType.Video);
   }
 
   private onEmbedMessage(event: CustomEvent<DailymotionMessage>) {
