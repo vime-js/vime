@@ -5,8 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.11 (2020-12-20)
 
-**Note:** Version bump only for package vime
+### Bug Fixes
 
+* youtube widget referrer parameter causes CORS issues ([1b6f0235](https://github.com/vime-js/vime/commit/1b6f0235fb96b02bedab5fc80cf3cf7909bf24aa))
+* vimeo not hiding controls ([24a21223](https://github.com/vime-js/vime/commit/24a212236272678592017db4b64ab6ff258be2b6))
 
 
 
@@ -18,6 +20,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * avoid accidentally rendering two iframes ([a880a4e](https://github.com/vime-js/vime/commit/a880a4e36b6562b3044e7b24db399599e1fab8d9))
 * embedded media (youtube/vimeo/dailymotion) not updating view type ([ef660a4](https://github.com/vime-js/vime/commit/ef660a4402a3f4d9494c96cd297e7902062f16da))
+
+
 
 ## 5.0.9 (2020-12-20)
 
