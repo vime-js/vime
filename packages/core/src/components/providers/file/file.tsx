@@ -326,6 +326,8 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
   }
 
   private onSeeked() {
+    // Avoid calling `attemptToPlay` if seeking to 0 on 0.
+    if (this.currentTime === 0 && !this.playbackStarted) return;
     this.dispatch('seeking', false);
     if (!this.playbackStarted || !this.wasPausedBeforeSeeking) this.attemptToPlay();
     this.wasPausedBeforeSeeking = true;
@@ -424,7 +426,7 @@ export class File implements MediaFileProvider<HTMLMediaElement>, MediaProvider<
       canPlay: async (type: any) => isString(type)
         && (audioRegex.test(type) || videoRegex.test(type)),
       setCurrentTime: async (time: number) => {
-        if (this.mediaEl && this.currentTime !== time) this.mediaEl.currentTime = time;
+        if (this.mediaEl) this.mediaEl.currentTime = time;
       },
       setMuted: async (muted: boolean) => {
         if (this.mediaEl) this.mediaEl.muted = muted;
