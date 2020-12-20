@@ -7,22 +7,22 @@ export const define = (tagName: string, clazz: any) => {
   if (isClient && !customElements.get(tagName)) customElements.define(tagName, clazz);
 };
 
-export const proxyInputs = (Cmp: any, inputs: string[]) => {
-  const Prototype = Cmp.prototype;
-  inputs.forEach((item) => {
-    Object.defineProperty(Prototype, item, {
+export const proxyInputs = (Component: any, inputs: string[]) => {
+  const Prototype = Component.prototype;
+  inputs.forEach((input) => {
+    Object.defineProperty(Prototype, input, {
       get() {
-        return this.el[item];
+        return this.el[input];
       },
       set(val: any) {
-        this.z.runOutsideAngular(() => (this.el[item] = val));
+        this.z.runOutsideAngular(() => (this.el[input] = val));
       },
     });
   });
 };
 
-export const proxyMethods = (Cmp: any, methods: string[]) => {
-  const Prototype = Cmp.prototype;
+export const proxyMethods = (Component: any, methods: string[]) => {
+  const Prototype = Component.prototype;
   methods.forEach((methodName) => {
     Prototype[methodName] = function () {
       const args = arguments;
@@ -36,11 +36,9 @@ export const initOutputs = (instance: any, events: string[]) => {
 }
 
 export function ProxyCmp(opts: { inputs?: any; methods?: any }) {
-  const decorator = function (cls: any) {
-    if (opts.inputs) proxyInputs(cls, opts.inputs);
-    if (opts.methods) proxyMethods(cls, opts.methods);
-    return cls;
+  return function (Component: any) {
+    if (opts.inputs) proxyInputs(Component, opts.inputs);
+    if (opts.methods) proxyMethods(Component, opts.methods);
+    return Component;
   };
-
-  return decorator;
 }

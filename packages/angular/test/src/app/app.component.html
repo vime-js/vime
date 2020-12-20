@@ -1,0 +1,61 @@
+<div id="container">
+  <vm-player 
+    #player
+    playsinline
+    (vPlaybackReady)="onPlaybackReady()"
+  >
+    <vm-default-ui>
+      <!-- Custom UI component. -->
+      <tap-sides-to-seek></tap-sides-to-seek>
+    </vm-default-ui>
+
+      <!-- YOUTUBE -->
+      <!-- <vm-youtube video-id="DyTCOwB0DVw"></vm-youtube> -->
+      
+      <!-- VIMEO -->
+      <!-- <vm-vimeo video-id="411652396"></vm-vimeo> -->
+      
+      <!-- DAILYMOTION -->
+      <!-- <vm-dailymotion video-id="k3b11PemcuTrmWvYe0q"></vm-dailymotion> -->
+      
+      <!-- VIDEO -->
+      <!-- <vm-video cross-origin="anonymous" poster="https://media.vimejs.com/poster.png">
+        <source data-src="https://media.vimejs.com/720.mp4" type="video/mp4" />
+        <track default kind="subtitles" src="https://media.vimejs.com/subs/english.vtt" srclang="en" label="English" />
+        <track kind="subtitles" src="https://media.vimejs.com/subs/spanish.vtt" srclang="es" label="Spanish" />
+      </vm-video> -->
+      
+      <!-- AUDIO -->
+      <!-- <vm-audio cross-origin="anonymous">
+        <source data-src="https://media.vimejs.com/audio.mp3" type="audio/mp3" />
+      </vm-audio> -->
+      
+      <!-- HLS -->
+      <!-- <vm-hls cross-origin="anonymous" poster="https://media.vimejs.com/poster.png">
+        <source data-src="https://media.vimejs.com/hls/index.m3u8" type="application/x-mpegURL" />
+      </vm-hls> -->
+      
+      <!-- DASH -->
+      <!-- <vm-dash 
+        cross-origin="anonymous" 
+        src="https://media.vimejs.com/mpd/manifest.mpd"
+        poster="https://media.vimejs.com/poster.png"></vm-dash> -->
+  </vm-player>
+</div>
+
+<style>
+  :host {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #container {
+    width: 100%;
+    max-width: 960px;
+  }
+</style>
+
+

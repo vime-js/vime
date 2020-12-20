@@ -22,6 +22,73 @@
           }
         }
       }
+    }, 
+    "@vime/angular-test": {
+      "projectType": "application",
+      "root": "test",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/vime/test",
+            "index": "test/src/index.html",
+            "main": "test/src/main.ts",
+            "polyfills": "test/src/polyfills.ts",
+            "tsConfig": "test/tsconfig.json",
+            "aot": true,
+            "assets": [
+              "src/favicon.ico"
+            ],
+            "styles": [
+              "test/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "test/src/environments/environment.ts",
+                  "with": "test/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "@vime/angular-test:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "@vime/angular-test:build:production"
+            }
+          }
+        }
+      }
     }
   },
   "defaultProject": "@vime/angular"
