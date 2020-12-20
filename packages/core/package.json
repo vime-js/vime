@@ -30,6 +30,7 @@
   },
   "scripts": {
     "build": "stencil build",
+    "build:watch": "stencil build --watch",
     "build:themes": "rimraf themes/* && yarn min:theme.default && yarn min:theme.light",
     "min:theme.default": "cleancss -o themes/default.css src/themes/default.css",
     "min:theme.light": "cleancss -o themes/light.css src/themes/light.css",
