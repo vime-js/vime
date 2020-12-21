@@ -287,7 +287,7 @@ Here's some links for you to learn about web components:
 - [Robinwieruch - Web Component Tutorial for Beginners](https://www.robinwieruch.de/web-components-tutorial)
 :::
 
-```html {16-22} title="player.html"
+```html {16-23} title="player.html"
 <vm-player>
   <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
     <source 
@@ -307,6 +307,7 @@ Here's some links for you to learn about web components:
     <!-- Vime components. -->
     <vm-click-to-play></vm-click-to-play>
     <vm-spinner></vm-spinner>
+    <vm-poster></vm-poster>
     <!-- Custom web component. -->
     <tap-sides-to-seek></tap-sides-to-seek>
   </vm-ui>
@@ -321,7 +322,7 @@ Here's some links for you to learn about web components:
 You can view the custom `TapSidesToSeek` component [here](https://github.com/vime-js/vime/blob/master/examples/react/src/TapSidesToSeek.tsx).
 :::
 
-```tsx {28-34} title="Player.tsx"
+```tsx {29-36} title="Player.tsx"
 import React from 'react';
 import { 
   Player, 
@@ -329,6 +330,7 @@ import {
   Ui, 
   ClickToPlay,
   Spinner,
+  Poster,
 } from '@vime/react';
 import TapSidesToSeek from './TapSidesToSeek';
 
@@ -353,6 +355,7 @@ function Player() {
         {/* Vime components. */}
         <ClickToPlay />
         <Spinner />
+        <Poster />
         {/* Custom component. */}
         <TapSidesToSeek />
       </Ui>
@@ -369,7 +372,7 @@ function Player() {
 You can view the custom `TapSidesToSeek` component [here](https://github.com/vime-js/vime/blob/master/examples/vue/src/TapSidesToSeek.vue).
 :::
 
-```html {18-24} title="Player.vue"
+```html {18-25} title="Player.vue"
 <template>
   <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
   <Player>
@@ -391,6 +394,7 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
       <!-- Vime components. -->
       <ClickToPlay />
       <Spinner />
+      <Poster />
       <!-- Custom component. -->
       <TapSidesToSeek />
     </Ui>
@@ -404,6 +408,7 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
     Ui, 
     ClickToPlay,
     Spinner,
+    Poster,
   } from '@vime/vue';
   import TapSidesToSeek from './TapSidesToSeek.vue';
 
@@ -414,6 +419,7 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
       Ui,
       ClickToPlay,
       Spinner,
+      Poster,
       TapSidesToSeek,
     },
   };
@@ -428,7 +434,7 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 You can view the custom `TapSidesToSeek` component [here](https://github.com/vime-js/vime/blob/master/examples/svelte/src/TapSidesToSeek.svelte).
 :::
 
-```html {16-22} title="Player.svelte"
+```html {16-23} title="Player.svelte"
 <Player>
   <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
     <source 
@@ -448,6 +454,7 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
     <!-- Vime components. -->
     <ClickToPlay />
     <Spinner />
+    <Poster />
     <!-- Custom component. -->
     <TapSidesToSeek />
   </Ui>
@@ -459,7 +466,8 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
     Video, 
     Ui, 
     ClickToPlay, 
-    Spinner, 
+    Spinner,
+    Poster,
   } from '@vime/svelte';
   import TapSidesToSeek from './TapSidesToSeek.svelte';
 </script>
@@ -473,7 +481,7 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 You can view the custom `<tap-sides-to-seek>` component [here](https://github.com/vime-js/vime/tree/master/examples/stencil/src/components/tap-sides-to-seek).
 :::
 
-```tsx {21-27} title="player.tsx"
+```tsx {21-28} title="player.tsx"
 class Player {
   // ...
 
@@ -498,6 +506,7 @@ class Player {
           {/* Vime components. */}
           <vm-click-to-play />
           <vm-spinner />
+          <vm-poster />
           {/* Custom component. */}
           <tap-sides-to-seek />
         </vm-ui>
@@ -515,7 +524,7 @@ class Player {
 You can view the custom `<tap-sides-to-seek>` component [here](https://github.com/vime-js/vime/tree/master/examples/angular/src/app/tap-sides-to-seek).
 :::
 
-```html {16-22} title="player.html"
+```html {16-23} title="player.html"
 <vm-player>
   <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
     <source 
@@ -535,6 +544,7 @@ You can view the custom `<tap-sides-to-seek>` component [here](https://github.co
     <!-- Vime components. -->
     <vm-click-to-play></vm-click-to-play>
     <vm-spinner></vm-spinner>
+    <vm-poster></vm-poster>
     <!-- Custom component. -->
     <tap-sides-to-seek></tap-sides-to-seek>
   </vm-ui>

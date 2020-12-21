@@ -5,6 +5,7 @@ import {
   Ui, 
   ClickToPlay,
   Spinner,
+  Poster,
 } from '@vime/react';
 import { TapSidesToSeek } from './TapSidesToSeek';
 
@@ -27,6 +28,7 @@ const ClickPlayer = () => (
     <Ui>
       <ClickToPlay />
       <Spinner />
+      <Poster />
       <TapSidesToSeek />
     </Ui>
   </Player>

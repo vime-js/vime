@@ -23,6 +23,7 @@ export const TapSidesToSeek = () => {
     <div 
       ref={ref}
       className={styles.tapSidesToSeek}
+      style={{ zIndex: 21 }}
     >
       <div 
         className={styles.tapTarget}
