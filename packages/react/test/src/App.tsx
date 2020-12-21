@@ -50,14 +50,14 @@ function App() {
         {/* <Youtube videoId="DyTCOwB0DVw" /> */}
 
         {/* VIMEO */}
-        {/* <vimeo videoId="411652396" /> */}
+        {/* <Vimeo videoId="411652396" /> */}
 
         {/* DAILYMOTION */}
-        {/* <dailymotion videoId="k3b11PemcuTrmWvYe0q" /> */}
+        {/* <Dailymotion videoId="k3b11PemcuTrmWvYe0q" /> */}
 
         {/* VIDEO */}
         {/* <Video crossOrigin="anonymous" poster="https://media.vimejs.com/poster.png">
-          <source data-src="https://media.vimejs.com/720.mp4" type="video/mp4" />
+          <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
           <track default kind="subtitles" src="https://media.vimejs.com/subs/english.vtt" srcLang="en" label="English" />
           <track kind="subtitles" src="https://media.vimejs.com/subs/spanish.vtt" srcLang="es" label="Spanish" />
         </Video> */}

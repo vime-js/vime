@@ -23,7 +23,7 @@ export interface ${name}Props extends JSX.${displayName}, HTMLAttributes<HTML${d
 
 export default createComponent<HTML${displayName}Element, ${name}Props>(
   '${tagName}',
-  new Set(${cmpMeta.properties.map((prop) => `'${prop.name}'`).join(',')}),
+  new Set([${cmpMeta.properties.map((prop) => `'${prop.name}'`).join(',')}]),
 );
   `;
 };
