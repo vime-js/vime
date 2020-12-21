@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.16 (2020-12-21)
+
+
+### Bug Fixes
+
+* **angular:** add for support angular 9/10 ([1d251f1](https://github.com/vime-js/vime/commit/1d251f1efb25f2f4879b849a15e73289393b1393)), closes [#124](https://github.com/vime-js/vime/issues/124)
+
+
+
+
+
 ## 5.0.15 (2020-12-21)
 
 **Note:** Version bump only for package @vime/core
