@@ -6,7 +6,7 @@ import { generate$$TypeDefs, generateSvelteTypings, replaceSvelteMethodDefs } fr
 import { ignoreChecks, sortComponents } from '../targetHelpers';
 
 const OUTPUT_DIR = path.resolve(__dirname, '../../../svelte/src');
-const PROXIES_FILE = path.resolve(OUTPUT_DIR, 'components.ts');
+const PROXIES_FILE = path.resolve(OUTPUT_DIR, 'components/index.ts');
 
 export const svelteOutputTarget = (outputTarget: SvelteTargetConfig = {}): OutputTargetCustom => ({
   type: 'custom',

@@ -18,7 +18,7 @@ Vue.config.ignoredElements = [...Vue.config.ignoredElements, ...vimeTags];
   const entry = [
     ignoreChecks(),
     ignoreElements,
-    buildImports('./components', '', cmps),
+    buildImports(cmps),
     buildExports(cmps),
   ].join('\n');
 

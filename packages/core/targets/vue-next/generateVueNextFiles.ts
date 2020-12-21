@@ -7,7 +7,7 @@ import { generateVueNextComponent } from './generateVueNextComponent';
 export const generateVueNextFiles = async (cmps: ComponentCompilerMeta[]) => {
   const entry = [
     ignoreChecks(),
-    buildImports('./components', '', cmps),
+    buildImports(cmps),
     buildExports(cmps),
   ].join('\n');
 

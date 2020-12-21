@@ -7,7 +7,7 @@ import { generateReactComponent } from './generateReactComponent';
 export const generateReactFiles = async (cmps: ComponentCompilerMeta[]) => {
   const entry = [
     ignoreChecks(),
-    buildImports('./components', '', cmps),
+    buildImports(cmps),
     buildExports(cmps),
   ].join('\n');
 

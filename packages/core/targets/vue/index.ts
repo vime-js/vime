@@ -4,7 +4,7 @@ import { sortComponents } from '../targetHelpers';
 import { generateVueFiles } from './generateVueFiles';
 
 const OUTPUT_DIR = path.resolve(__dirname, '../../../vue/src');
-const PROXIES_FILE = path.resolve(OUTPUT_DIR, 'components.ts');
+const PROXIES_FILE = path.resolve(OUTPUT_DIR, 'components/index.ts');
 
 export const vueOutputTarget = (): OutputTargetCustom => ({
   type: 'custom',

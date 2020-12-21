@@ -4,7 +4,7 @@ import { generateReactFiles } from './generateReactFiles';
 import { sortComponents } from '../targetHelpers';
 
 const OUTPUT_DIR = path.resolve(__dirname, '../../../react/src');
-const PROXIES_FILE = path.resolve(OUTPUT_DIR, 'components.ts');
+const PROXIES_FILE = path.resolve(OUTPUT_DIR, 'components/index.ts');
 
 export const reactOutputTarget = (): OutputTargetCustom => ({
   type: 'custom',

@@ -13,7 +13,7 @@ export const generateSvelteFiles = async (
 ) => {
   const entry = [
     ignoreChecks(),
-    buildImports('./components', '', components),
+    buildImports(components),
     buildExports(components),
   ].join('\n');
 
@@ -25,7 +25,7 @@ export const generateSvelteFiles = async (
 
   const uncompiledEntry = [
     ignoreChecks(),
-    buildImports('.', '.svelte', components),
+    buildImports(components, '.svelte'),
     buildExports(components),
   ].join('\n');
 

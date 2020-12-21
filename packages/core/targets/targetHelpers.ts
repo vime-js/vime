@@ -11,11 +11,10 @@ export const ignoreChecks = () => [
 export const fileName = (c: ComponentCompilerMeta) => dashToPascalCase(c.tagName).slice(2);
 
 export const buildImports = (
-  dir: string,
-  ext = '',
   components: ComponentCompilerMeta[],
+  ext = '',
   isDefaultExport = true,
-) => components.map((c) => `import ${isDefaultExport ? `${fileName(c)}Proxy` : `{ ${fileName(c)} as ${fileName(c)}Proxy }`} from '${dir}/${fileName(c)}${ext}';`).join('\n');
+) => components.map((c) => `import ${isDefaultExport ? `${fileName(c)}Proxy` : `{ ${fileName(c)} as ${fileName(c)}Proxy }`} from './${fileName(c)}${ext}';`).join('\n');
 
 export const buildExports = (components: ComponentCompilerMeta[]) => components
   .map((c) => `export const ${fileName(c)} = /*#__PURE__*/${fileName(c)}Proxy;`).join('\n');

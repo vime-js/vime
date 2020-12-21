@@ -8,17 +8,12 @@ packages/*/www/
 packages/*/loader/
 packages/*/cypress/videos/
 packages/*/cypress/screenshots/
-packages/angular/projects/vime/angular/src/components.ts
 packages/angular/projects/vime/angular/src/VimeModule.ts
 packages/angular/projects/vime/angular/src/components/
-packages/react/src/components.ts
 packages/react/src/components
-packages/svelte/src/components.ts
 packages/svelte/src/components/
 packages/svelte/src/svelte/
-packages/vue/src/components.ts
 packages/vue/src/components/
-packages/vue-next/src/components.ts
 packages/vue-next/src/components/
 
 *~

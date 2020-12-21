@@ -5,7 +5,7 @@ import { generateAngularComponent } from './generateAngularComponent';
 export const generateAngularFiles = async (cmps: ComponentCompilerMeta[]) => {
   const entry = [
     ignoreChecks(),
-    cmps.map((cmp) => `export { ${fileName(cmp)} } from './components/${fileName(cmp)}';`).join('\n'),
+    cmps.map((cmp) => `export { ${fileName(cmp)} } from './${fileName(cmp)}';`).join('\n'),
   ].join('\n');
 
   const module = `
