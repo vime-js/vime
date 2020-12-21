@@ -35,7 +35,8 @@ const CustomControlsPlayer = () => (
         <MuteControl />
       </Controls>
 
-      <Controls pin="center">
+      <Controls pin="center" justify="center">
+        {/* @ts-ignore */}
         <PlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />
       </Controls>
       
