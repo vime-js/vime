@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.15 (2020-12-21)
+
+**Note:** Version bump only for package @vime/angular
+
+
+
+
+
 ## 5.0.14 (2020-12-21)
 
 
