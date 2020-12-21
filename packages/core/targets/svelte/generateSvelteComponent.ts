@@ -1,5 +1,5 @@
 import type { ComponentCompilerMeta } from '@stencil/core/internal';
-import { generateImports, safeDefaultValue } from '../targetHelpers';
+import { defineAllDependencies, importAllDepdencies, safeDefaultValue } from '../targetHelpers';
 import { ComponentBindingConfig } from './SvelteTargetConfig';
 
 export const generateSvelteComponent = (
@@ -23,7 +23,8 @@ export const generateSvelteComponent = (
 
   return `
 <script context="module">
-${generateImports(cmpMeta, components)}
+${importAllDepdencies(cmpMeta, components)}
+${defineAllDependencies(cmpMeta, components)}
 </script>
 
 <script>

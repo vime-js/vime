@@ -1,7 +1,7 @@
 import { ComponentCompilerMeta } from '@stencil/core/internal';
 import { dashToPascalCase } from '../../src/utils/string';
 import {
-  fileName, generateImports, ignoreChecks, jsxEventName,
+  defineAllDependencies, fileName, ignoreChecks, importAllDepdencies, jsxEventName,
 } from '../targetHelpers';
 
 export const generateAngularComponent = (
@@ -19,7 +19,7 @@ ${ignoreChecks()}
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone } from '@angular/core';
 import { ProxyCmp, initOutputs } from '../lib';
 import type { JSX, Components } from '@vime/core/dist/types';
-${generateImports(cmpMeta, components)}
+${importAllDepdencies(cmpMeta, components)}
 
 const ${name}Inputs: string[] = [
   ${properties.map((prop) => `'${prop.name}',`).join('\n  ')}
@@ -57,6 +57,7 @@ export class ${name} {
     .join('\n  ')}
 
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    ${defineAllDependencies(cmpMeta, components).trim().split('\n').join('\n    ')}
     c.detach();
     this.el = r.nativeElement;
     initOutputs(this, [${events.filter((event) => !event.internal).map((event) => `'${event.name}'`).join(', ')}])

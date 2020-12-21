@@ -1,6 +1,6 @@
 import { ComponentCompilerMeta } from '@stencil/core/internal';
 import { dashToPascalCase } from '../../src/utils/string';
-import { generateImports, ignoreChecks } from '../targetHelpers';
+import { defineAllDependencies, ignoreChecks, importAllDepdencies } from '../targetHelpers';
 
 export const generateVueNextComponent = (
   cmpMeta: ComponentCompilerMeta,
@@ -15,7 +15,8 @@ ${ignoreChecks()}
 import { defineComponent } from 'vue';
 import { method, render } from '../lib';
 import type { JSX, Components } from '@vime/core/dist/types';
-${generateImports(cmpMeta, components)}
+${importAllDepdencies(cmpMeta, components)}
+${defineAllDependencies(cmpMeta, components)}
 
 export default defineComponent<JSX.${displayName}, {}, {}, {}, {
   ${methods

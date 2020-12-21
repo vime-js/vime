@@ -1,6 +1,8 @@
 import { ComponentCompilerMeta } from '@stencil/core/internal';
 import { dashToPascalCase } from '../../src/utils/string';
-import { fileName, generateImports, ignoreChecks } from '../targetHelpers';
+import {
+  defineAllDependencies, fileName, ignoreChecks, importAllDepdencies,
+} from '../targetHelpers';
 
 export const generateReactComponent = (
   cmpMeta: ComponentCompilerMeta,
@@ -15,7 +17,8 @@ ${ignoreChecks()}
 import React, { ReactNode, HTMLAttributes } from 'react';
 import { createComponent } from '../lib';
 import type { JSX } from '@vime/core/dist/types';
-${generateImports(cmpMeta, components)}
+${importAllDepdencies(cmpMeta, components)}
+${defineAllDependencies(cmpMeta, components)}
 
 export interface ${name}Props extends JSX.${displayName}, HTMLAttributes<HTML${displayName}Element> {
   children?: ReactNode | ReactNode[]

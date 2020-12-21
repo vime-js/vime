@@ -36,35 +36,48 @@ export const safeDefaultValue = (value?: string) => {
   }
 };
 
-export const generateImports = (
+export const findAllDependencies = (
   cmpMeta: ComponentCompilerMeta,
   components: ComponentCompilerMeta[],
-  moreImports: string[] = [],
-  importExt?: string,
 ) => {
-  const getDeps = (tagName: string) => components
+  const getDirectDeps = (tagName: string) => components
     .find((cmp) => cmp.tagName === tagName)
     ?.dependencies ?? [];
 
-  const getAllImports = (tagName: string, imports: Set<string> = new Set()) => {
+  const getDepTree = (tagName: string, imports: Set<string> = new Set()) => {
     imports.add(tagName);
-    const deps = getDeps(tagName) ?? [];
-    deps.forEach((dep) => { getAllImports(dep, imports); });
+    const deps = getDirectDeps(tagName) ?? [];
+    deps.forEach((dep) => { getDepTree(dep, imports); });
     return Array.from(imports);
   };
 
-  const imports = getAllImports(cmpMeta.tagName)
+  return getDepTree(cmpMeta.tagName)
     .map((tagName) => ({ tagName, className: dashToPascalCase(tagName) }));
+};
 
+export const importAllDepdencies = (
+  cmpMeta: ComponentCompilerMeta,
+  components: ComponentCompilerMeta[],
+) => {
+  const deps = findAllDependencies(cmpMeta, components);
   return `
 import { 
-  ${[...imports
-    .map((i) => (importExt ? `${i.className} as ${i.className}${importExt}` : i.className)), ...moreImports]
+  ${[...deps
+    .map((i) => i.className)]
     .join(',\n  ')} 
 } from '@vime/core';
 
 import { define } from '../lib';
+  `;
+};
 
-${imports.map((cmp) => `define('${cmp.tagName}', ${cmp.className}${importExt ?? ''});`).join('\n')}
+export const defineAllDependencies = (
+  cmpMeta: ComponentCompilerMeta,
+  components: ComponentCompilerMeta[],
+) => {
+  const deps = findAllDependencies(cmpMeta, components);
+
+  return `
+${deps.map((cmp) => `define('${cmp.tagName}', ${cmp.className});`).join('\n')}
   `;
 };

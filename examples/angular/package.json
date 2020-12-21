@@ -32,6 +32,6 @@
     "jest-diff": "^26.6.2",
     "pretty-format": "^26.6.2",
     "ts-node": "~9.0.0",
-    "typescript": "^4.0.5"
+    "typescript": "^3.9.2"
   }
 }
