@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.18 (2020-12-21)
+
+
+### Bug Fixes
+
+* **angular:** revert changes in 5.0.17 ([e56912c](https://github.com/vime-js/vime/commit/e56912c66d0e26ca0cb438660b8ab3246314903e))
+
+
+
+
+
 ## 5.0.17 (2020-12-21)
 
 
