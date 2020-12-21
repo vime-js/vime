@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.14 (2020-12-21)
+
+
+### Bug Fixes
+
+* **angular:** not working in production ([d7d42a4](https://github.com/vime-js/vime/commit/d7d42a46eb1373b22b2c9ab3abd0f3ab40a26ef5)), closes [#124](https://github.com/vime-js/vime/issues/124)
+
+
+
+
+
 ## 5.0.13 (2020-12-20)
 
 **Note:** Version bump only for package @vime/react
