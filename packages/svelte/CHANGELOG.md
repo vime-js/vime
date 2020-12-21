@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.17 (2020-12-21)
+
+
+### Bug Fixes
+
+* **angular:** keep ngcc script in dist ([69df28c](https://github.com/vime-js/vime/commit/69df28c1ab6cc39993b86284d3aaf712f33c0287))
+
+
+
+
+
 ## 5.0.16 (2020-12-21)
 
 
