@@ -37,6 +37,9 @@ export class HLS implements MediaFileProvider {
    */
   @Prop() version = 'latest';
 
+  /**
+   * User-configurable HLS source (supersedes this.version).
+   */
   @Prop() hlsSrc?: string;
 
   /**
