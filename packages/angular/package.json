@@ -1,6 +1,6 @@
 {
   "name": "@vime/angular",
-  "version": "5.0.18",
+  "version": "5.0.19",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -10,7 +10,7 @@
     "prepare": "node scripts/bump-version.js && node scripts/unpack-dist.js"
   },
   "dependencies": {
-    "@vime/core": "^5.0.18"
+    "@vime/core": "^5.0.19"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.4",
