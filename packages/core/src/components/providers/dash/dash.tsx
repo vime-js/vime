@@ -54,7 +54,7 @@ export class Dash implements MediaFileProvider<any> {
    * The URL where the `dashjs` library source can be found. If this property is used, then the
    * `version` property is ignored.
    */
-  @Prop() dashSrc?: string;
+  @Prop() libSrc?: string;
 
   /**
    * The `dashjs` configuration.
@@ -159,7 +159,7 @@ export class Dash implements MediaFileProvider<any> {
 
   private async setupDash() {
     try {
-      const url = this.dashSrc || `https://cdn.jsdelivr.net/npm/dashjs@${this.version}/dist/dash.all.min.js`;
+      const url = this.libSrc || `https://cdn.jsdelivr.net/npm/dashjs@${this.version}/dist/dash.all.min.js`;
       // eslint-disable-next-line no-shadow
       const DashSDK = await loadSDK(url, 'dashjs');
 
