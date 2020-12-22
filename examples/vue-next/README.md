@@ -13,7 +13,7 @@ $: git clone https://github.com/vime-js/vime --depth=1
 
 $: cd vime/examples/vue-next
 
-$: yarn install
+$: npm install
 
-$: yarn serve
+$: npm run serve
 ```

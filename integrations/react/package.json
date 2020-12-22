@@ -1,0 +1,67 @@
+{
+  "name": "@vime/react",
+  "version": "5.0.19",
+  "description": "React bindings for the Vime media player.",
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "contributors": [
+    "Rahim Alwer <rahim_alwer@outlook.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vime-js/vime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vime-js/vime/issues"
+  },
+  "scripts": {
+    "build": "rimraf dist && npm run build:cjs && npm run build:esm",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "build:esm": "tsc --module es6 --outDir dist/esm",
+    "serve": "snowpack dev",
+    "lint": ""
+  },
+  "dependencies": {
+    "@seznam/compose-react-refs": "^1.0.4",
+    "@vime/core": "^5.0.19"
+  },
+  "devDependencies": {
+    "@snowpack/plugin-react-refresh": "^2.3.9",
+    "@snowpack/plugin-typescript": "^1.1.1",
+    "@types/react": "^16.9.9",
+    "@types/react-dom": "^16.9.9",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "rimraf": "^3.0.2",
+    "snowpack": "^2.0.0",
+    "typescript": "^4.0.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "vime",
+    "player",
+    "media",
+    "react",
+    "audio",
+    "video",
+    "html5",
+    "stenciljs",
+    "youtube",
+    "dailymotion",
+    "vimeo",
+    "hls",
+    "dash",
+    "custom"
+  ]
+}

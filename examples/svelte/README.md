@@ -15,7 +15,7 @@ $: git clone https://github.com/vime-js/vime --depth=1
 
 $: cd vime/examples/svelte
 
-$: yarn install
+$: npm install
 
-$: yarn serve
+$: npm run serve
 ```

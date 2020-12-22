@@ -29,9 +29,9 @@ a few ideas to get started:
 - Take a look at the [features requested](https://github.com/vime-js/vime/labels/enhancement) by
   others in the community and consider opening a pull request if you see something you want to work on.
 - Is there a new provider you'd like us to support? See our
-  [Providers Guide](https://github.com/vime-js/vime/blob/master/CONTRIBUTING.md#-providers).
+  [Providers Guide](https://github.com/vime-js/vime/blob/master/.github/PROVIDERS.md).
 - Want to add some shiny new UI features? See our
-  [UI Guide](https://github.com/vime-js/vime/blob/master/CONTRIBUTING.md#%EF%B8%8F-ui-components).
+  [UI Guide](https://github.com/vime-js/vime/blob/master/.github/UI.md).
 
 ### Join our Discord channel
 
@@ -47,5 +47,5 @@ system (GitHub Actions).
 ## Writing Code
 
 The best way to get started writing code is by going through the
-[Contributing Guide](https://github.com/vime-js/vime/blob/master/CONTRIBUTING.md) on GitHub. It contains
+[Contributing Guide](https://github.com/vime-js/vime/blob/master/.github/CONTRIBUTING.md) on GitHub. It contains
 instructions for everything you need to go from zero to PR!

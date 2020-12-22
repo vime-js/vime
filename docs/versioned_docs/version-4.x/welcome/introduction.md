@@ -187,7 +187,7 @@ Please remember to be respectful and patient as this is a community driven proje
 ## 🔨 &nbsp;Contributing
 
 If you'd like to contribute and help in building a better media player for the web, then everything
-you need to get started can be found in the [Contributing Guide](https://github.com/vime-js/vime/blob/master/CONTRIBUTING.md).
+you need to get started can be found in the [Contributing Guide](https://github.com/vime-js/vime/blob/master/.github/CONTRIBUTING.md).
 
 ## ❤️ &nbsp;Sponsors
 
