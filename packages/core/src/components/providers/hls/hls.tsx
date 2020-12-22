@@ -37,6 +37,8 @@ export class HLS implements MediaFileProvider {
    */
   @Prop() version = 'latest';
 
+  @Prop() hlsSrc?: string;
+
   /**
    * The `hls.js` configuration.
    */
@@ -106,7 +108,7 @@ export class HLS implements MediaFileProvider {
     if (!isUndefined(this.hls)) return;
 
     try {
-      const url = `https://cdn.jsdelivr.net/npm/hls.js@${this.version}/dist/hls.min.js`;
+      const url = this.hlsSrc || `https://cdn.jsdelivr.net/npm/hls.js@${this.version}/dist/hls.min.js`;
       const Hls = await loadSDK(url, 'Hls');
 
       if (!Hls.isSupported()) {
