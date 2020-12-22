@@ -298,6 +298,10 @@ export namespace Components {
         "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; setCurrentTextTrack: (trackId: number) => Promise<void>; setTextTrackVisibility: (isVisible: boolean) => Promise<void>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; }>;
         "isTextTrackVisible": boolean;
         /**
+          * The URL where the `dashjs` library source can be found. If this property is used, then the `version` property is ignored.
+         */
+        "libSrc"?: string;
+        /**
           * The title of the current media.
          */
         "mediaTitle"?: string;
@@ -576,6 +580,10 @@ export namespace Components {
          */
         "disableRemotePlayback"?: boolean;
         "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; canPlay: (type: any) => Promise<boolean>; canSetPlaybackQuality: () => Promise<boolean>; setPlaybackQuality: (quality: string) => Promise<void>; setCurrentAudioTrack: (trackId: number) => Promise<void>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<any>; exitFullscreen: () => Promise<any>; setCurrentTextTrack: (trackId: number) => Promise<void>; setTextTrackVisibility: (isVisible: boolean) => Promise<void>; }>;
+        /**
+          * The URL where the `hls.js` library source can be found. If this property is used, then the `version` property is ignored.
+         */
+        "libSrc"?: string;
         /**
           * The title of the current media.
          */
@@ -2277,6 +2285,10 @@ declare namespace LocalJSX {
         "enableTextTracksByDefault"?: boolean;
         "isTextTrackVisible"?: boolean;
         /**
+          * The URL where the `dashjs` library source can be found. If this property is used, then the `version` property is ignored.
+         */
+        "libSrc"?: string;
+        /**
           * The title of the current media.
          */
         "mediaTitle"?: string;
@@ -2579,6 +2591,10 @@ declare namespace LocalJSX {
           * @inheritdoc
          */
         "disableRemotePlayback"?: boolean;
+        /**
+          * The URL where the `hls.js` library source can be found. If this property is used, then the `version` property is ignored.
+         */
+        "libSrc"?: string;
         /**
           * The title of the current media.
          */
