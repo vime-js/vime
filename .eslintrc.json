@@ -10,7 +10,8 @@
   ],
   "ignorePatterns": [
     "docs/**",
-    "packages/angular/src/directives/**"
+    "packages/angular/src/directives/**",
+    "packages/svelte/**/*.svelte"
   ],
   "rules": {
     "no-console": "off",
