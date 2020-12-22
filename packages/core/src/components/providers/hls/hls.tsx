@@ -38,7 +38,8 @@ export class HLS implements MediaFileProvider {
   @Prop() version = 'latest';
 
   /**
-   * User-configurable HLS source (supersedes this.version).
+   * The URL where the `hls.js` library source can be found. If this property is used, then the
+   * `version` property is ignored.
    */
   @Prop() hlsSrc?: string;
 
