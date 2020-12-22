@@ -282,6 +282,10 @@ export namespace Components {
         "crossOrigin"?: MediaCrossOriginOption;
         "currentTextTrack": number;
         /**
+          * The URL where the `dashjs` library source can be found. If this property is used, then the `version` property is ignored.
+         */
+        "dashSrc"?: string;
+        /**
           * **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.
           * @inheritdoc
          */
@@ -2265,6 +2269,10 @@ declare namespace LocalJSX {
          */
         "crossOrigin"?: MediaCrossOriginOption;
         "currentTextTrack"?: number;
+        /**
+          * The URL where the `dashjs` library source can be found. If this property is used, then the `version` property is ignored.
+         */
+        "dashSrc"?: string;
         /**
           * **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.
           * @inheritdoc
