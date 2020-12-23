@@ -8,16 +8,6 @@ async function main() {
     const tasks = [];
 
     validatePackages(tasks, common.packages);
-    
-    tasks.push({
-      title: 'Check local working tree',
-      task: () =>
-        execa('git', ['status', '--porcelain']).then(r => r.stdout).then(status => {
-          if (status !== '') {
-            throw new Error(`\n\n${status}\n\nUnclean working tree. There are files that have not been committed after a build/lint step.`);
-          }
-        })
-    })
 
     const listr = new Listr(tasks, { showSubtasks: true });
     await listr.run();
