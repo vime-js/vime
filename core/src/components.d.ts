@@ -515,6 +515,7 @@ export namespace Components {
           * Whether to use an `audio` or `video` element to play the media.
          */
         "viewType"?: ViewType;
+        "volume": number;
         "willAttach": boolean;
     }
     interface VmFullscreenControl {
@@ -2529,6 +2530,7 @@ declare namespace LocalJSX {
           * Whether to use an `audio` or `video` element to play the media.
          */
         "viewType"?: ViewType;
+        "volume"?: number;
         "willAttach"?: boolean;
     }
     interface VmFullscreenControl {

@@ -169,6 +169,9 @@ implements
 
   /** @internal */
   @Prop() currentTime = 0;
+  
+  /** @internal */
+  @Prop() volume = 0;
 
   /** @internal */
   @Prop() playbackReady = false;
@@ -203,6 +206,7 @@ implements
       'playbackReady',
       'playbackStarted',
       'currentTime',
+      'volume',
       'paused',
       'currentTextTrack',
       'isTextTrackVisible',
@@ -327,6 +331,7 @@ implements
   }
 
   private onLoadedMetadata() {
+    this.mediaEl!.volume = (this.volume / 100);
     this.listenToTextTracksForChanges();
     this.onTextTracksChange();
     this.onProgress();
