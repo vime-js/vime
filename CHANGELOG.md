@@ -7,69 +7,37 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package vime
 
-
-
-
-
 ## 5.0.18 (2020-12-21)
-
 
 ### Bug Fixes
 
 * **angular:** revert changes in 5.0.17 ([e56912c](https://github.com/vime-js/vime/commit/e56912c66d0e26ca0cb438660b8ab3246314903e))
 
-
-
-
-
 ## 5.0.17 (2020-12-21)
-
 
 ### Bug Fixes
 
 * **angular:** keep ngcc script in dist ([69df28c](https://github.com/vime-js/vime/commit/69df28c1ab6cc39993b86284d3aaf712f33c0287))
 
-
-
-
-
 ## 5.0.16 (2020-12-21)
-
 
 ### Bug Fixes
 
 * **angular:** add for support angular 9/10 ([1d251f1](https://github.com/vime-js/vime/commit/1d251f1efb25f2f4879b849a15e73289393b1393)), closes [#124](https://github.com/vime-js/vime/issues/124)
 
-
-
-
-
 ## 5.0.15 (2020-12-21)
 
 **Note:** Version bump only for package vime
 
-
-
-
-
 ## 5.0.14 (2020-12-21)
-
 
 ### Bug Fixes
 
 * **angular:** not working in production ([d7d42a4](https://github.com/vime-js/vime/commit/d7d42a46eb1373b22b2c9ab3abd0f3ab40a26ef5)), closes [#124](https://github.com/vime-js/vime/issues/124)
 
-
-
-
-
 ## 5.0.13 (2020-12-20)
 
 **Note:** Version bump only for package vime
-
-
-
-
 
 ## 5.0.12 (2020-12-20)
 
@@ -78,8 +46,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * hls/dash provider connection not being established ([70b5e055](https://github.com/vime-js/vime/commit/70b5e055eab8aef28a9804fd3d49ca8e2ddf6a06))
 * handle youtube falling back to an unstarted state after loading ([a6c3923b](https://github.com/vime-js/vime/commit/a6c3923b4d3dbf5073eeebab586301eeb530f7d1))
 
-
-
 ## 5.0.11 (2020-12-20)
 
 ### Bug Fixes
@@ -87,152 +53,90 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * youtube widget referrer parameter causes CORS issues ([1b6f0235](https://github.com/vime-js/vime/commit/1b6f0235fb96b02bedab5fc80cf3cf7909bf24aa))
 * vimeo not hiding controls ([24a21223](https://github.com/vime-js/vime/commit/24a212236272678592017db4b64ab6ff258be2b6))
 
-
-
-
 ## 5.0.10 (2020-12-20)
-
 
 ### Bug Fixes
 
 * avoid accidentally rendering two iframes ([a880a4e](https://github.com/vime-js/vime/commit/a880a4e36b6562b3044e7b24db399599e1fab8d9))
 * embedded media (youtube/vimeo/dailymotion) not updating view type ([ef660a4](https://github.com/vime-js/vime/commit/ef660a4402a3f4d9494c96cd297e7902062f16da))
 
-
-
 ## 5.0.9 (2020-12-20)
-
 
 ### Bug Fixes
 
 * file provider not setting current time when updated ([98890b9](https://github.com/vime-js/vime/commit/98890b966cac1b638c68011e028dab6c60f079f7))
 
 
-
-
-
 ## 5.0.8 (2020-12-18)
-
 
 ### Bug Fixes
 
 * embed component should not load undefined `embedSrc` ([4ff11ae](https://github.com/vime-js/vime/commit/4ff11aefd68fcacdfc0a2cfecf833de9cc44f9ad))
 
-
-
-
-
 ## 5.0.7 (2020-12-18)
-
 
 ### Bug Fixes
 
 * dont attempt to load youtube/dailymotion/vimeo video if `videoId` is undefined ([5acb6c7](https://github.com/vime-js/vime/commit/5acb6c7c38382010a67efc3c6f3c47010e2f6d87))
 
 
-
-
-
 ## 5.0.6 (2020-12-18)
-
 
 ### Bug Fixes
 
 * **angular:** unpack dist into root package ([6be7076](https://github.com/vime-js/vime/commit/6be70767a15b8a508a949f5d916633c9574db1e7))
 
 
-
-
-
 ## 5.0.5 (2020-12-17)
-
 
 ### Bug Fixes
 
 * duplicate settings in default ui ([150a8e0](https://github.com/vime-js/vime/commit/150a8e07c4eb7dbfbb9bab3195b5cc1201605c94))
-
-
-
-
 
 ## 5.0.4 (2020-12-17)
 
 **Note:** Version bump only for package vime
 
 
-
-
-
 ## 5.0.3 (2020-12-17)
-
 
 ### Bug Fixes
 
 * adapter calls throw if called too early ([a57d68c](https://github.com/vime-js/vime/commit/a57d68c95bbad27af090f207deaa864bb2c53431))
 
-
-
-
-
 ## 5.0.2 (2020-12-17)
-
 
 ### Bug Fixes
 
 * **react:** split dom/wc props ([f906522](https://github.com/vime-js/vime/commit/f9065226aaff6afd1da2d3a439b3bf8d75f1e459))
 
-
-
-
-
 ## 5.0.1 (2020-12-17)
-
 
 ### Bug Fixes
 
 * **react:** pass className and style to render function ([45136c1](https://github.com/vime-js/vime/commit/45136c1dab4359590f4f43dd3b17d536ba133fb2))
 
-
-
-
-
 # 5.0.0 (2020-12-17)
-
 
 ### Features
 
 * v5 ([933347b](https://github.com/vime-js/vime/commit/933347b5fd2a38b74ef6e3f7d6a779c4b0f0d0c3))
 
-
 ### BREAKING CHANGES
 
 * see #126 for a breakdown on what's new/changed.
 
-
-
-
-
 ## [4.7.3](https://github.com/vime-js/vime/compare/v4.7.2...v4.7.3) (2020-11-17)
-
 
 ### Bug Fixes
 
 * re-attempt initiating playback when autoplay is `true` ([35fe5f0](https://github.com/vime-js/vime/commit/35fe5f024c52ed27c8c184f7884760c4ea3a9a69))
 
-
-
-
-
 ## [4.7.2](https://github.com/vime-js/vime/compare/v4.7.1...v4.7.2) (2020-11-17)
 
 **Note:** Version bump only for package vime
 
-
-
-
-
 ## [4.7.1](https://github.com/vime-js/vime/compare/v4.7.0...v4.7.1) (2020-11-16)
-
 
 ### Bug Fixes
 
@@ -240,12 +144,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **react:** cache and event handler is shared by multiple instances ([64c76a7](https://github.com/vime-js/vime/commit/64c76a76e43a46045da9a71133f1bee3bb34ca50))
 * **react:** event listeners are not called ([6f47539](https://github.com/vime-js/vime/commit/6f475398194c72f674b026e45a29cfad6ce5d854))
 
-
-
-
-
 # [4.7.0](https://github.com/vime-js/vime/compare/v4.6.0...v4.7.0) (2020-11-16)
-
 
 ### Bug Fixes
 
@@ -254,33 +153,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **svelte:** could not resolve lib file ([2c4c850](https://github.com/vime-js/vime/commit/2c4c850969d7beb920be7790f1d8a56387611cd6)), closes [#110](https://github.com/vime-js/vime/issues/110)
 * vue components not reactive ([a6a24eb](https://github.com/vime-js/vime/commit/a6a24eb139622685f27eb20b6a9b47004019472c)), closes [#108](https://github.com/vime-js/vime/issues/108)
 
-
 ### Features
 
 * **angular:** you can now use `@vime/angular` instead of `@vime/angular/dist` ([bc110f8](https://github.com/vime-js/vime/commit/bc110f82a54a986922ded06cd2b2f0d033a60f07))
 
-
-
-
-
 # [4.6.0](https://github.com/vime-js/vime/compare/v4.5.0...v4.6.0) (2020-11-10)
-
 
 ### Bug Fixes
 
 * **ui/settings:** root settings menu dissapears during exit transition ([97dc4f9](https://github.com/vime-js/vime/commit/97dc4f9691232df822402062363115c07600f463))
 
-
 ### Features
 
 * **providers/file:** allow multiple static file qualities to be used ([589f05b](https://github.com/vime-js/vime/commit/589f05be1cffedda82c775a7cb784223556a4000)), closes [#86](https://github.com/vime-js/vime/issues/86)
 
-
-
-
-
 # [4.5.0](https://github.com/vime-js/vime/compare/v4.4.0...v4.5.0) (2020-11-10)
-
 
 ### Features
 
@@ -289,12 +176,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * smoother opening transition for the settings menu ([298987f](https://github.com/vime-js/vime/commit/298987fffe949ae2b2dca18312796004a717ba74))
 * **providers/vimeo:** automatically determine aspect ratio of vimeo videos ([a2d5446](https://github.com/vime-js/vime/commit/a2d5446c3dc5264746c9f243d1a76a4df681cb02)), closes [#99](https://github.com/vime-js/vime/issues/99)
 
-
-
-
-
 # [4.4.0](https://github.com/vime-js/vime/compare/v4.3.3...v4.4.0) (2020-11-09)
-
 
 ### Bug Fixes
 
@@ -303,65 +185,39 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **providers/youtube:** player not paused when video ends and incorrect end time ([b774b39](https://github.com/vime-js/vime/commit/b774b3929521c617d76a5205a688eeb29a8b1e86)), closes [#96](https://github.com/vime-js/vime/issues/96)
 * paused/currentTime change before user interaction requires immediate adapter call ([2afb2be](https://github.com/vime-js/vime/commit/2afb2beb8acef7ddf854da0e8b183c62c2673a33)), closes [#100](https://github.com/vime-js/vime/issues/100) [#95](https://github.com/vime-js/vime/issues/95)
 
-
 ### Features
 
 * **providers:** cache any fetched video metadata ([b757f75](https://github.com/vime-js/vime/commit/b757f7584dfc6faf066a5df101c7e36a7d05cfd1))
 * allow dynamically changing the current provider ([4a7a43d](https://github.com/vime-js/vime/commit/4a7a43d284e989f468800093662581221419d324))
 * new `vime-playground` component for testing and playing with vime ([6ab4ec2](https://github.com/vime-js/vime/commit/6ab4ec2741e0af10eccaffaad8596a9df2e66b05))
 
-
-
-
-
 ## [4.3.3](https://github.com/vime-js/vime/compare/v4.3.2...v4.3.3) (2020-11-06)
-
 
 ### Bug Fixes
 
 * **core:** hls/dash not reconnecting to DOM properly ([426c206](https://github.com/vime-js/vime/commit/426c2064c35ca276133a5b99bcbb04d171c70815))
 
-
-
-
-
 ## [4.3.2](https://github.com/vime-js/vime/compare/v4.3.1...v4.3.2) (2020-11-05)
-
 
 ### Bug Fixes
 
 * add @stencil/core back to deps ([77fb4f6](https://github.com/vime-js/vime/commit/77fb4f6c8533ccbe3f42b09c86aa4893c980f6f4))
 
-
-
-
-
 ## [4.3.1](https://github.com/vime-js/vime/compare/v4.3.0...v4.3.1) (2020-11-04)
-
 
 ### Bug Fixes
 
 * **core:** remove @stencil/core dependency from custom-elements-bundle ([52620af](https://github.com/vime-js/vime/commit/52620af7db567eee0e3cf0b88ecc6361b2dde22f))
 * **core:** remove jest types from dist ([833ad05](https://github.com/vime-js/vime/commit/833ad05cf77e7b61c951e74478db140bc2e31044))
 
-
-
-
-
 # [4.3.0](https://github.com/vime-js/vime/compare/v4.2.0...v4.3.0) (2020-11-04)
-
 
 ### Features
 
 * bundling (rollup/webpack) support and major improvements to treeshaking ([4af48c4](https://github.com/vime-js/vime/commit/4af48c474e61f3355caf23e89d891e10eaeb4f45))
 * fresh output targets for all frameworks with treeshaking support + vue 3 bindings, closes [#82](https://github.com/vime-js/vime/issues/82) [#88](https://github.com/vime-js/vime/issues/88) [#71](https://github.com/vime-js/vime/issues/71) [#92](https://github.com/vime-js/vime/issues/92)
 
-
-
-
-
 # [4.2.0](https://github.com/vime-js/vime/compare/v4.1.3...v4.2.0) (2020-10-02)
-
 
 ### Bug Fixes
 
@@ -369,17 +225,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ui/captions:** add some spacing below captions when controls are hidden ([93193fe](https://github.com/vime-js/vime/commit/93193fe12529c544bdb306666f1df0a832117620))
 * **ui/controls:** lower controls not interactable on mobile ([703c07f](https://github.com/vime-js/vime/commit/703c07fbb72507e4f6c73e087c2edebcb077d76d))
 
-
 ### Features
 
 * **ui:** enter landscape mode when entering fullscreen on mobile ([c636d80](https://github.com/vime-js/vime/commit/c636d80ceb412ce5b88c5e34af18282bdd86a195))
 
-
-
-
-
 ## [4.1.3](https://github.com/vime-js/vime/compare/v4.1.2...v4.1.3) (2020-10-01)
-
 
 ### Bug Fixes
 
@@ -387,65 +237,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **providers/vimeo:** toggling muted state not working ([ad38e38](https://github.com/vime-js/vime/commit/ad38e38a5f6a4cf08a21798b0d3f6d6226bd045f))
 * **providers/youtube:** hide custom spinner to not overlap with native one ([78d4c5f](https://github.com/vime-js/vime/commit/78d4c5f01169a18ae112a347ceed173d3063cb56))
 
-
-
-
-
 ## [4.1.2](https://github.com/vime-js/vime/compare/v4.1.1...v4.1.2) (2020-09-26)
-
 
 ### Bug Fixes
 
 * cjs exports are broken due to missing `esModuleInterop` typescript flag ([5aea798](https://github.com/vime-js/vime/commit/5aea798a363e4509f203ba231f75b3937afe2d0d)), closes [#68](https://github.com/vime-js/vime/issues/68)
 
-
-
-
-
 ## [4.1.1](https://github.com/vime-js/vime/compare/v4.1.0...v4.1.1) (2020-09-25)
-
 
 ### Bug Fixes
 
 * **svelte:** raw svelte files missing in package ([62f67b0](https://github.com/vime-js/vime/commit/62f67b0de182806774ae9157c6240b16c170a67a))
 
-
-
-
-
 # [4.1.0](https://github.com/vime-js/vime/compare/v4.0.2...v4.1.0) (2020-09-23)
-
 
 ### Features
 
 * **ui/control:** slightly scale up when focused ([9c34f91](https://github.com/vime-js/vime/commit/9c34f914d2e84ece8273a67f559f1f90eedabc7d))
 
-
-
-
-
 ## [4.0.2](https://github.com/vime-js/vime/compare/v4.0.1...v4.0.2) (2020-09-22)
 
 **Note:** Version bump only for package vime
 
-
-
-
-
 ## [4.0.1](https://github.com/vime-js/vime/compare/v4.0.0...v4.0.1) (2020-09-21)
-
 
 ### Bug Fixes
 
 * **theme:** make skeleton sheen more noticable ([b2cd250](https://github.com/vime-js/vime/commit/b2cd25092daaad6f30a22f18c804dd52333391ae))
 * **ui/icons:** handle loading icons inside shadow dom ([e91416e](https://github.com/vime-js/vime/commit/e91416e998045a0b6f5f0d15dca513c33a1be74b))
 
-
-
-
-
 # [4.0.0](https://github.com/vime-js/vime/compare/v3.2.2...v4.0.0) (2020-09-20)
-
 
 ### Bug Fixes
 
@@ -454,12 +275,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * export only types from components ([4ec48a1](https://github.com/vime-js/vime/commit/4ec48a16db110cfa3876b72565a1a3572ff4c563))
 * prefix all css variables with `vm` ([c00da36](https://github.com/vime-js/vime/commit/c00da3600f02c24cb0daee9e256474e0f69dddc0))
 
-
 ### Features
 
 * **ui:** new double click fullscreen component ([0ede81b](https://github.com/vime-js/vime/commit/0ede81b7d02f4495144453a24d3276235c8b7d12))
 * **ui:** new skeleton component ([9a0e0eb](https://github.com/vime-js/vime/commit/9a0e0ebcafc7b730f1c43cbc8a599193d19082a6))
-
 
 ### BREAKING CHANGES
 
@@ -467,20 +286,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * Styling will break as all the CSS variables used
 throughout the player now require the `vm` prefix.
 
-
-
-
-
 ## [3.2.2](https://github.com/vime-js/vime/compare/v3.2.1...v3.2.2) (2020-09-17)
-
 
 ### Bug Fixes
 
 * update vime description ([625f14a](https://github.com/vime-js/vime/commit/625f14ae3d0fbdd830fc6a33d035898da9ee3552))
-
-
-
-
 
 ## [3.2.1](https://github.com/vime-js/vime/compare/v3.2.0...v3.2.1) (2020-09-14)
 
@@ -489,20 +299,11 @@ throughout the player now require the `vm` prefix.
 
 * incorrect typing on `extendLanguage` method ([7a5bdc6](https://github.com/vime-js/vime/commit/7a5bdc673fb5ed247792319bd2bf414ae261bcd8))
 
-
-
-
-
 # [3.2.0](https://github.com/vime-js/vime/compare/v3.1.0...v3.2.0) (2020-09-14)
-
 
 ### Features
 
 * language translation interface ([2f99724](https://github.com/vime-js/vime/commit/2f99724b34b95d33fdc9207533b5e9dc05fdb304))
-
-
-
-
 
 # [3.1.0](https://github.com/vime-js/vime/compare/v3.0.2...v3.1.0) (2020-09-11)
 
@@ -513,39 +314,23 @@ throughout the player now require the `vm` prefix.
 * playback rate/quality change not calling adapter ([3e73a4f](https://github.com/vime-js/vime/commit/3e73a4ff9c4a3245f685a7040106c77f82317f08))
 * **ui/controls:** only hide on mouse leave when not paused ([84af138](https://github.com/vime-js/vime/commit/84af1387ef273f23c4b9f7f9bc20745f19d1be36))
 
-
 ### Features
 
 * allow tooltips to be positioned above/below on predefined controls ([dad2424](https://github.com/vime-js/vime/commit/dad24245a8dd576c67eadc005f7fe6749222b94e))
 
-
-
-
-
 ## [3.0.2](https://github.com/vime-js/vime/compare/v3.0.1...v3.0.2) (2020-09-11)
-
 
 ### Bug Fixes
 
 * **ui/default-controls:** hide on mouse leave option not working ([93b467c](https://github.com/vime-js/vime/commit/93b467c79bd531cdd3316a240f9916cda4c408ec))
 
-
-
-
-
 ## [3.0.1](https://github.com/vime-js/vime/compare/v3.0.0...v3.0.1) (2020-09-10)
-
 
 ### Bug Fixes
 
 * include loader in new releases ([0b7e0aa](https://github.com/vime-js/vime/commit/0b7e0aa7ff5f8bce3c5ffa75262a246c45979a35))
 
-
-
-
-
 # 3.0.0 (2020-09-10)
-
 
 ### Bug Fixes
 
@@ -594,7 +379,6 @@ throughout the player now require the `vm` prefix.
 * **preview:** poster not displaying ([e6ea00d](https://github.com/vime-js/vime/commit/e6ea00d0c2cd46b1627b8e1bd014ea6a172ba8e7))
 * ssr support ([7f994ec](https://github.com/vime-js/vime/commit/7f994ec57b9e1add4a2930e04d81904f4e2cfae8)), closes [#38](https://github.com/vime-js/vime/issues/38)
 * **preview:** static folder missing in release ([376a724](https://github.com/vime-js/vime/commit/376a7243bda9ab6a667d0dea5de875e3286be40e))
-
 
 ### Features
 
@@ -647,7 +431,6 @@ throughout the player now require the `vm` prefix.
 * **core/ui/spinner:** add events ([45ee9e3](https://github.com/vime-js/vime/commit/45ee9e395e9d12e452c276c1807ceecf5a26d394))
 * **preview:** inline play icon to avoid additional setup ([8789491](https://github.com/vime-js/vime/commit/87894915f9f453461c8e61ba3f2d7ee89479ad55))
 * **vue:** create vue bindings/package ([c034fe5](https://github.com/vime-js/vime/commit/c034fe59bba3b62ab2c919757ee7fb53c93b8a74))
-
 
 ### BREAKING CHANGES
 

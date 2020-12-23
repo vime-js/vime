@@ -51,7 +51,7 @@ sidebar_label: Design Principles
   time and effort to making it what it is. Vime strives for great CX by:
 
   - Being open to all. No special requirements, anyone can be a contributor!
-  - A detailed [contributing guide](https://github.com/vime-js/vime/blob/master/CONTRIBUTING.md) has
+  - A detailed [contributing guide](https://github.com/vime-js/vime/blob/master/.github/CONTRIBUTING.md) has
     been created to get you from zero to PR.
   - The [#contributors](https://discord.gg/feZ6cAE) channel has been created for contributors
     to help each other, and get feedback on new ideas.

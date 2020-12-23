@@ -3,13 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - master
-    paths:
-      - 'package.json'
-      - 'packages/**'
-      - 'docs/**'
-      - '!packages/**/*.md'
-      - '.github/workflows/**'
+      - release
 
 jobs:
   release:
@@ -19,39 +13,79 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: Setup node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v2-beta
         with:
           node-version: 14
-      
-      - name: Cache dependencies
-        id: deps
+
+      - name: Cache Root Dependencies
+        id: rootDeps
         uses: actions/cache@v2
         with:
-          path: '**/node_modules'
-          key: deps-${{ hashFiles('yarn.lock') }}
+          path: './node_modules'
+          key: deps-${{ hashFiles('package-lock.json') }}
 
-      - name: Install dependencies
-        if: steps.deps.outputs.cache-hit != 'true'
-        run: yarn install
+      - name: Install Root Dependencies
+        if: steps.rootDeps.outputs.cache-hit != 'true'
+        run: npm install
       
-      - name: Build
-        run: yarn build
+      - name: Cache Core Dependencies
+        id: coreDeps
+        uses: actions/cache@v2
+        with:
+          path: 'core/node_modules'
+          key: deps-${{ hashFiles('core/package-lock.json') }}
       
-      - name: Setup git identity
+      - name: Cache Angular Dependencies
+        id: angularDeps
+        uses: actions/cache@v2
+        with:
+          path: 'integrations/angular/node_modules'
+          key: deps-${{ hashFiles('integrations/angular/package-lock.json') }}
+      
+      - name: Cache React Dependencies
+        id: reactDeps
+        uses: actions/cache@v2
+        with:
+          path: 'integrations/react/node_modules'
+          key: deps-${{ hashFiles('integrations/react/package-lock.json') }}
+      
+      - name: Cache Svelte Dependencies
+        id: svelteDeps
+        uses: actions/cache@v2
+        with:
+          path: 'integrations/svelte/node_modules'
+          key: deps-${{ hashFiles('integrations/svelte/package-lock.json') }}
+      
+      - name: Cache Vue Dependencies
+        id: vueDeps
+        uses: actions/cache@v2
+        with:
+          path: 'integrations/vue/node_modules'
+          key: deps-${{ hashFiles('integrations/vue/package-lock.json') }}
+      
+      - name: Cache VueNext Dependencies
+        id: vueNextDeps
+        uses: actions/cache@v2
+        with:
+          path: 'integrations/vue-next/node_modules'
+          key: deps-${{ hashFiles('integrations/vue-next/package-lock.json') }}
+
+      - name: Setup Git Identity
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           
-      - name: Setup npm authentication
-        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+      
+      - name: Prepare Packages
+        run: npm run release:prepare.ci
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }} 
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Release packages
-        run: yarn release
+      - name: Release Packages
+        run: npm run release
         env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
