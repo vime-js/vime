@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@babel/core": "^7.11.5",
-    "@docusaurus/core": "^2.0.0-alpha.62",
-    "@docusaurus/plugin-pwa": "^2.0.0-alpha.62",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.62",
+    "@docusaurus/core": "^2.0.0-alpha.66",
+    "@docusaurus/plugin-pwa": "^2.0.0-alpha.66",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.66",
     "@loadable/component": "^5.14.1",
     "@mdx-js/react": "^1.6.16",
     "@vime/react": "^5.0.15",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "file-loader": "^6.2.0",
     "typescript": "^4.0.2",
-    "webpack": "^5.0.0"
+    "webpack": "^4.0.0"
   },
   "browserslist": {
     "production": [

@@ -56,6 +56,9 @@ module.exports = {
         },
       ],
     },
+    footer: {
+      links: [],
+    },
     prism: {
       // eslint-disable-next-line global-require
       theme: require('prism-react-renderer/themes/oceanicNext'),
