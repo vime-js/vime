@@ -18,7 +18,7 @@ async function main() {
     const install = process.argv.indexOf('--no-install') < 0;
     const ci = process.argv.indexOf('--ci') > -1;
 
-    // Compile and verify packages
+    // compile and verify packages
     await preparePackages(common.packages, version, install);
 
     if (ci) {
@@ -44,25 +44,25 @@ async function gitCommitRelease(version) {
 }
 
 async function preparePackages(packages, version, install) {
-  // Execution order matters
+  // execution order matters
   const tasks = [];
 
-  // Check git is nice and clean local and remote
+  // check git is nice and clean local and remote
   common.checkGit(tasks);
 
-  // Test we're good with git
+  // test we're good with git
   validateGit(tasks, version);
 
-  // Add all the prepare scripts
-  // Run all these tasks before updating package.json version
+  // add all the prepare scripts
+  // run all these tasks before updating package.json version
   packages.forEach(package => {
     common.preparePackage(tasks, package, version, install);
   });
 
-  // Add update package.json of each project
+  // add update package.json of each project
   common.updatePackageVersions(tasks, packages, version);
 
-  // Generate changelog
+  // generate changelog
   generateChangeLog(tasks);
 
   const listr = new Listr(tasks, { showSubtasks: true });

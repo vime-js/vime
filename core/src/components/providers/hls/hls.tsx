@@ -116,7 +116,7 @@ export class HLS implements MediaFileProvider {
     if (isNullOrUndefined(this.videoProvider)) return undefined;
     const sources = this.videoProvider.querySelectorAll('source');
     const currSource = Array.from(sources).find(
-      (source) => hlsRegex.test(source.src) || hlsTypeRegex.test(source.type)
+      (source) => hlsRegex.test(source.src) || hlsTypeRegex.test(source.type),
     );
     return currSource?.src;
   }
@@ -205,7 +205,7 @@ export class HLS implements MediaFileProvider {
 
   private findLevelIndexFromQuality(quality: PlayerProps['playbackQuality']) {
     return this.hls.levels.findIndex(
-      (level: any) => this.levelToPlaybackQuality(level) === quality
+      (level: any) => this.levelToPlaybackQuality(level) === quality,
     );
   }
 

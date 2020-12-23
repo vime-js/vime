@@ -65,12 +65,12 @@ export class Controls {
    * Sets the `justify-content` flex property that aligns the individual controls on the main-axis.
    */
   @Prop() justify:
-    | 'start'
-    | 'center'
-    | 'end'
-    | 'space-around'
-    | 'space-between'
-    | 'space-evenly' = 'start';
+  | 'start'
+  | 'center'
+  | 'end'
+  | 'space-around'
+  | 'space-between'
+  | 'space-evenly' = 'start';
 
   /**
    * Pins the controls to the defined position inside the video player. This has no effect when
@@ -80,7 +80,7 @@ export class Controls {
     reflect: true,
   })
   pin: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'center' =
-    'bottomLeft';
+  'bottomLeft';
 
   /**
    * The length in milliseconds that the controls are active for before fading out. Audio players
@@ -157,15 +157,15 @@ export class Controls {
     const events = ['focus', 'keydown', 'click', 'touchstart', 'mouseleave'];
     events.forEach((event) => {
       this.disposal.add(
-        listen(player, event, this.onControlsChange.bind(this))
+        listen(player, event, this.onControlsChange.bind(this)),
       );
     });
     this.disposal.add(
       listen(
         player,
         'mousemove',
-        debounce(this.onControlsChange, 50, true).bind(this)
-      )
+        debounce(this.onControlsChange, 50, true).bind(this),
+      ),
     );
     // @ts-ignore
     playerRef[this] = player;

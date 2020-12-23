@@ -99,14 +99,14 @@ export class Settings {
     this.disposal.add(
       listen(this.controller, 'click', () => {
         this.active = !this.active;
-      })
+      }),
     );
     this.disposal.add(
       listen(this.controller, 'keydown', (event: KeyboardEvent) => {
         if (event.key !== 'Enter') return;
         // We're looking for !active because the `click` event above will toggle it to active.
         if (!this.active) this.menu.focusMenu();
-      })
+      }),
     );
   }
 

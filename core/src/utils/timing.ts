@@ -3,7 +3,7 @@ import { isUndefined } from './unit';
 export const debounce = (
   func: (...args: any[]) => void,
   wait = 1000,
-  immediate = false
+  immediate = false,
 ) => {
   let timeout: number | undefined;
 

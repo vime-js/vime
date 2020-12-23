@@ -162,7 +162,7 @@ export class Embed implements ComponentInterface {
   async postMessage(message: any, target?: string) {
     this.iframe?.contentWindow?.postMessage(
       JSON.stringify(message),
-      target ?? '*'
+      target ?? '*',
     );
   }
 

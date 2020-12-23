@@ -40,7 +40,7 @@ export const objOrParseJSON = <T>(input: any): T | undefined =>
  */
 export const loadImage = (
   src: string,
-  minWidth = 1
+  minWidth = 1,
 ): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     const image = new Image();
@@ -57,7 +57,7 @@ export const loadImage = (
 export const loadScript = (
   src: string,
   onLoad: () => void,
-  onError: (e: any) => void = () => {}
+  onError: (e: any) => void = () => {},
 ) => {
   const script = document.createElement('script');
   script.src = src;
@@ -80,7 +80,7 @@ export const decodeJSON = <T>(data: any): T | undefined => {
  */
 export const tryDecodeURIComponent = (
   component: string,
-  fallback = ''
+  fallback = '',
 ): string => {
   if (!IS_CLIENT) return fallback;
   try {
@@ -154,7 +154,7 @@ export const serializeQueryString = (params: Params): string => {
 export const preconnect = (
   url: string,
   rel: 'preconnect' | 'prefetch' | 'preload' = 'preconnect',
-  as?: string
+  as?: string,
 ): boolean => {
   if (!IS_CLIENT) return false;
 
@@ -189,7 +189,7 @@ export const appendParamsToURL = (url: string, params: string | Params) =>
     url,
     isObject(params)
       ? serializeQueryString(params as Params)
-      : (params as string)
+      : (params as string),
   );
 
 /**
@@ -215,7 +215,7 @@ export const loadSDK = <SDKType = any>(
   sdkGlobalVar: string,
   sdkReadyVar?: string,
   isLoaded: (sdk: SDKType) => boolean = () => true,
-  loadScriptFn = loadScript
+  loadScriptFn = loadScript,
 ) => {
   const getGlobal = (key: any) => {
     if (!isUndefined(window[key])) return window[key];
@@ -263,7 +263,7 @@ export const loadSDK = <SDKType = any>(
           request.reject(e);
         });
         delete pendingSDKRequests[url];
-      }
+      },
     );
   });
 };

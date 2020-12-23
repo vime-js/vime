@@ -193,7 +193,7 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
 
   private remoteControl<T extends keyof YouTubeCommandArg>(
     command: T,
-    arg?: YouTubeCommandArg[T]
+    arg?: YouTubeCommandArg[T],
   ) {
     return this.embed.postMessage({
       event: 'command',
@@ -226,7 +226,7 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
     // Seems like we have to wait a random small delay or else YT player isn't ready.
     window.setTimeout(
       () => this.embed.postMessage({ event: 'listening' }),
-      100
+      100,
     );
   }
 
@@ -369,7 +369,7 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
           this.internalState.seeking = false;
           this.dispatch('seeking', false);
         },
-        this.internalState.paused ? 100 : 0
+        this.internalState.paused ? 100 : 0,
       );
     }
   }
@@ -405,7 +405,7 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
 
     if (isNumber(info.videoLoadedFraction)) {
       this.onBufferedChange(
-        info.videoLoadedFraction! * this.internalState.duration
+        info.videoLoadedFraction! * this.internalState.duration,
       );
     }
 
@@ -417,15 +417,15 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
       this.dispatch(
         'playbackQualities',
         info.availableQualityLevels!.map((q) =>
-          mapYouTubePlaybackQuality(q)
-        ) as string[]
+          mapYouTubePlaybackQuality(q),
+        ) as string[],
       );
     }
 
     if (isString(info.playbackQuality)) {
       this.dispatch(
         'playbackQuality',
-        mapYouTubePlaybackQuality(info.playbackQuality!)
+        mapYouTubePlaybackQuality(info.playbackQuality!),
       );
     }
 

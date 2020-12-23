@@ -191,7 +191,7 @@ export class Player implements MediaPlayer {
     if (!this.playbackRates.includes(newRate)) {
       this.logger.log(
         `invalid \`playbackRate\` of ${newRate}, ` +
-          `valid values are [${this.playbackRates.join(', ')}]`
+          `valid values are [${this.playbackRates.join(', ')}]`,
       );
       this.lastRateCheck = prevRate;
       this.playbackRate = prevRate;
@@ -224,7 +224,7 @@ export class Player implements MediaPlayer {
     if (!this.playbackQualities.includes(newQuality)) {
       this.logger.log(
         `invalid \`playbackQuality\` of ${newQuality}, ` +
-          `valid values are [${this.playbackQualities.join(', ')}]`
+          `valid values are [${this.playbackQualities.join(', ')}]`,
       );
       this.lastQualityCheck = prevQuality;
       this.playbackQuality = prevQuality;
@@ -358,7 +358,7 @@ export class Player implements MediaPlayer {
     if (!this.languages.includes(this.language)) {
       this.logger.log(
         `invalid \`language\` of ${this.language}, ` +
-          `valid values are [${this.languages.join(', ')}]`
+          `valid values are [${this.languages.join(', ')}]`,
       );
       this.language = prevLanguage;
       return;
@@ -448,7 +448,7 @@ export class Player implements MediaPlayer {
 
   /** @inheritDoc */
   @Event() vmCurrentProviderChange!: EventEmitter<
-    PlayerProps['currentProvider']
+  PlayerProps['currentProvider']
   >;
 
   /** @inheritDoc */
@@ -471,12 +471,12 @@ export class Player implements MediaPlayer {
 
   /** @inheritDoc */
   @Event() vmPlaybackQualityChange!: EventEmitter<
-    PlayerProps['playbackQuality']
+  PlayerProps['playbackQuality']
   >;
 
   /** @inheritDoc */
   @Event() vmPlaybackQualitiesChange!: EventEmitter<
-    PlayerProps['playbackQualities']
+  PlayerProps['playbackQualities']
   >;
 
   /** @inheritDoc */
@@ -524,12 +524,12 @@ export class Player implements MediaPlayer {
 
   /** @inheritDoc */
   @Event() vmCurrentTextTrackChange!: EventEmitter<
-    PlayerProps['currentTextTrack']
+  PlayerProps['currentTextTrack']
   >;
 
   /** @inheritDoc */
   @Event() vmTextTrackVisibleChange!: EventEmitter<
-    PlayerProps['isTextTrackVisible']
+  PlayerProps['isTextTrackVisible']
   >;
 
   /** @inheritDoc */
@@ -537,7 +537,7 @@ export class Player implements MediaPlayer {
 
   /** @inheritDoc */
   @Event() vmCurrentAudioTrackChange!: EventEmitter<
-    PlayerProps['currentAudioTrack']
+  PlayerProps['currentAudioTrack']
   >;
 
   /**
@@ -549,7 +549,7 @@ export class Player implements MediaPlayer {
   /** @inheritDoc */
   @Method()
   async getProvider<InternalPlayerType = any>(): Promise<
-    AdapterHost<InternalPlayerType> | undefined
+  AdapterHost<InternalPlayerType> | undefined
   > {
     return this.provider;
   }
@@ -557,7 +557,7 @@ export class Player implements MediaPlayer {
   /** @internal */
   @Method()
   async getAdapter<InternalPlayerType = any>(): Promise<
-    MediaProviderAdapter<InternalPlayerType> | undefined
+  MediaProviderAdapter<InternalPlayerType> | undefined
   > {
     return this.adapter;
   }
@@ -725,12 +725,12 @@ export class Player implements MediaPlayer {
     this.disposal.add(
       onMobileChange((isMobile) => {
         this.isMobile = isMobile;
-      })
+      }),
     );
     this.disposal.add(
       onTouchInputChange((isTouch) => {
         this.isTouch = isTouch;
-      })
+      }),
     );
   }
 

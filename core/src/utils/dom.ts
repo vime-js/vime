@@ -5,7 +5,7 @@ export function listen<T extends Event | UIEvent>(
   node: EventTarget,
   event: string,
   handler: (event: T) => void,
-  options?: boolean | AddEventListenerOptions | EventListenerOptions
+  options?: boolean | AddEventListenerOptions | EventListenerOptions,
 ) {
   node.addEventListener(event, handler as EventListener, options);
   return () =>
@@ -17,7 +17,7 @@ export function fireEventAndRetry<T>(
   event: CustomEvent<T>,
   onFail?: () => void,
   interval = 300,
-  maxRetries = 10
+  maxRetries = 10,
 ) {
   let timeout: any;
   let attempt = 0;
@@ -58,7 +58,7 @@ export const isColliding = (
   translateAx = 0,
   translateAy = 0,
   translateBx = 0,
-  translateBy = 0
+  translateBy = 0,
 ) => {
   const aRect = a.getBoundingClientRect();
   const bRect = b.getBoundingClientRect();
@@ -74,7 +74,7 @@ export const buildNoAncestorSelector = (
   root: string,
   ancestor: string,
   selector: string,
-  depth: number
+  depth: number,
 ) => {
   const baseQuery = (modifier: string) => `${root} > ${modifier} ${selector}, `;
   const buildQuery = (deep = 1) =>

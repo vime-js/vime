@@ -89,7 +89,7 @@ export class Slider {
     const sliderThumbWidth = parseFloat(
       window
         .getComputedStyle(this.host)
-        .getPropertyValue('--vm-slider-thumb-width')
+        .getPropertyValue('--vm-slider-thumb-width'),
     );
 
     const thumbWidth =
@@ -135,7 +135,7 @@ export class Slider {
     input.dispatchEvent(
       new window.Event(event.type === 'touchend' ? 'change' : 'input', {
         bubbles: true,
-      })
+      }),
     );
   }
 

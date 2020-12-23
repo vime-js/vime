@@ -243,7 +243,7 @@ export class DefaultSettings {
           {[<vm-menu-radio label={this.i18n.off} value="-1" />].concat(
             this.textTracks.map((track, i) => (
               <vm-menu-radio label={track.label} value={`${i}`} />
-            ))
+            )),
           )}
         </vm-menu-radio-group>
       </vm-submenu>

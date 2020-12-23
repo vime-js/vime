@@ -89,7 +89,7 @@ export class VolumeControl {
           ? Math.min(100, this.volume + 5)
           : Math.max(0, this.volume - 5);
         this.dispatch('volume', parseInt(`${newVolume}`, 10));
-      })
+      }),
     );
   }
 

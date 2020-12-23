@@ -61,7 +61,7 @@ import { withProviderContext } from '../withProviderContext';
   scoped: true,
 })
 export class File
-  implements
+implements
     MediaFileProvider<HTMLMediaElement>,
     MediaProvider<HTMLMediaElement> {
   private dispatch!: ProviderDispatcher;
@@ -188,7 +188,7 @@ export class File
    * Emitted when the underlying media element changes.
    */
   @Event() vmMediaElChange!: EventEmitter<
-    HTMLAudioElement | HTMLVideoElement | undefined
+  HTMLAudioElement | HTMLVideoElement | undefined
   >;
 
   /**
@@ -252,7 +252,7 @@ export class File
 
         this.refresh();
         this.didSrcSetChange();
-      }
+      },
     );
   }
 
@@ -456,7 +456,7 @@ export class File
     this.dispatch('isPiPActive', mode === WebkitPresentationMode.PiP);
     this.dispatch(
       'isFullscreenActive',
-      mode === WebkitPresentationMode.Fullscreen
+      mode === WebkitPresentationMode.Fullscreen,
     );
   }
 
@@ -570,8 +570,8 @@ export class File
       listen(
         this.mediaEl!.textTracks,
         'change',
-        this.onTextTracksChange.bind(this)
-      )
+        this.onTextTracksChange.bind(this),
+      ),
     );
   }
 
@@ -608,7 +608,7 @@ export class File
       'currentTextTrack',
       this.shouldRenderNativeTextTracks && !this.isTextTrackVisible
         ? -1
-        : trackId
+        : trackId,
     );
   }
 
@@ -639,7 +639,7 @@ export class File
       'currentTextTrack',
       this.shouldRenderNativeTextTracks && !this.isTextTrackVisible
         ? -1
-        : newTrackId
+        : newTrackId,
     );
     this.dispatch('isTextTrackVisible', this.isTextTrackVisible);
   }
@@ -696,7 +696,7 @@ export class File
         {...mediaProps}
         // @ts-ignore
         onwebkitpresentationmodechanged={this.onPresentationModeChange.bind(
-          this
+          this,
         )}
         onenterpictureinpicture={this.onEnterPiP.bind(this)}
         onleavepictureinpicture={this.onLeavePiP.bind(this)}

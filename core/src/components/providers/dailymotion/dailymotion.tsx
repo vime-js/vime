@@ -193,7 +193,7 @@ export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
 
   private remoteControl<T extends DailymotionCommand>(
     command: T,
-    arg?: DailymotionCommandArg[T]
+    arg?: DailymotionCommandArg[T],
   ) {
     return this.embed.postMessage({
       command,
@@ -222,7 +222,7 @@ export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
     const apiEndpoint = 'https://api.dailymotion.com';
     return window
       .fetch(
-        `${apiEndpoint}/video/${this.videoId}?fields=duration,thumbnail_1080_url`
+        `${apiEndpoint}/video/${this.videoId}?fields=duration,thumbnail_1080_url`,
       )
       .then((response) => response.json())
       .then((data) => {
@@ -269,12 +269,12 @@ export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
         this.remoteControl(DailymotionCommand.Muted, this.internalState.muted);
         this.remoteControl(
           DailymotionCommand.Volume,
-          this.internalState.volume
+          this.internalState.volume,
         );
         if (this.internalState.currentTime > 0) {
           this.remoteControl(
             DailymotionCommand.Seek,
-            this.internalState.currentTime
+            this.internalState.currentTime,
           );
         }
         break;
@@ -326,7 +326,7 @@ export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
       case DailymotionEvent.QualitiesAvailable:
         this.dispatch(
           'playbackQualities',
-          msg.qualities!.map((q: string) => `${q}p`)
+          msg.qualities!.map((q: string) => `${q}p`),
         );
         break;
       case DailymotionEvent.QualityChange:

@@ -49,7 +49,7 @@ export const onTouchInputChange = (callback: (isTouch: boolean) => void) => {
       lastTouchTime = new Date().getTime();
       callback(true);
     },
-    true
+    true,
   );
 
   const offMouseListener = listen(
@@ -60,7 +60,7 @@ export const onTouchInputChange = (callback: (isTouch: boolean) => void) => {
       if (new Date().getTime() - lastTouchTime < 500) return;
       callback(false);
     },
-    true
+    true,
   );
 
   return () => {
@@ -153,7 +153,7 @@ export const canUsePiP = (): boolean =>
  */
 export const canAutoplay = (
   muted = true,
-  playsinline = true
+  playsinline = true,
 ): Promise<boolean> => {
   if (!IS_CLIENT) return Promise.resolve(false);
 

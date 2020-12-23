@@ -58,7 +58,7 @@ export class IconLibrary {
   private register() {
     registerIconLibrary(
       this.name ?? this.icons,
-      this.name ? this.resolver : undefined
+      this.name ? this.resolver : undefined,
     );
   }
 }

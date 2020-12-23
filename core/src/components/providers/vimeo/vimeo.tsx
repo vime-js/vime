@@ -196,7 +196,7 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
 
   private remoteControl<T extends keyof VimeoCommandArg>(
     command: T,
-    arg?: VimeoCommandArg[T]
+    arg?: VimeoCommandArg[T],
   ) {
     return this.embed.postMessage({
       method: command,
@@ -257,7 +257,7 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
       this.remoteControl(
         this.internalState.playbackStarted
           ? VimeoCommand.Pause
-          : VimeoCommand.Play
+          : VimeoCommand.Play,
       );
     }
 
@@ -292,7 +292,7 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
 
   private onVimeoMethod<T extends keyof VimeoCommandArg>(
     method: T,
-    arg: VimeoCommandArg[T]
+    arg: VimeoCommandArg[T],
   ) {
     switch (method) {
       case VimeoCommand.GetCurrentTime:
@@ -332,7 +332,7 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
 
   private onVimeoEvent<T extends keyof VimeoDataEventPayload>(
     event: T,
-    payload: VimeoDataEventPayload[T]
+    payload: VimeoDataEventPayload[T],
   ) {
     switch (event) {
       case VimeoDataEvent.Ready:
@@ -470,7 +470,7 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
         if (!muted) this.volume = this.volume > 0 ? this.volume : 30;
         this.remoteControl(
           VimeoCommand.SetVolume,
-          muted ? 0 : this.volume / 100
+          muted ? 0 : this.volume / 100,
         );
       },
       setVolume: async (volume: number) => {

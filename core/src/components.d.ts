@@ -188,11 +188,11 @@ export namespace Components {
           * Sets the `justify-content` flex property that aligns the individual controls on the main-axis.
          */
         "justify": | 'start'
-    | 'center'
-    | 'end'
-    | 'space-around'
-    | 'space-between'
-    | 'space-evenly';
+  | 'center'
+  | 'end'
+  | 'space-around'
+  | 'space-between'
+  | 'space-evenly';
         "paused": PlayerProps['paused'];
         /**
           * Pins the controls to the defined position inside the video player. This has no effect when the view is of type `audio`.
@@ -2174,11 +2174,11 @@ declare namespace LocalJSX {
           * Sets the `justify-content` flex property that aligns the individual controls on the main-axis.
          */
         "justify"?: | 'start'
-    | 'center'
-    | 'end'
-    | 'space-around'
-    | 'space-between'
-    | 'space-evenly';
+  | 'center'
+  | 'end'
+  | 'space-around'
+  | 'space-between'
+  | 'space-evenly';
         "paused"?: PlayerProps['paused'];
         /**
           * Pins the controls to the defined position inside the video player. This has no effect when the view is of type `audio`.

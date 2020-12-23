@@ -136,7 +136,7 @@ export class Dash implements MediaFileProvider<any> {
     if (!this.shouldRenderNativeTextTracks || isUndefined(this.dash)) return;
 
     this.dash.setTextTrack(
-      !this.isTextTrackVisible ? -1 : this.currentTextTrack
+      !this.isTextTrackVisible ? -1 : this.currentTextTrack,
     );
 
     if (!this.isTextTrackVisible) {
@@ -232,7 +232,7 @@ export class Dash implements MediaFileProvider<any> {
     return this.dash
       .getBitrateInfoListFor('video')
       .findIndex(
-        (level: any) => this.levelToPlaybackQuality(level) === quality
+        (level: any) => this.levelToPlaybackQuality(level) === quality,
       );
   }
 
@@ -266,8 +266,8 @@ export class Dash implements MediaFileProvider<any> {
       listen(
         this.mediaEl.textTracks,
         'change',
-        this.onTextTracksChange.bind(this)
-      )
+        this.onTextTracksChange.bind(this),
+      ),
     );
   }
 

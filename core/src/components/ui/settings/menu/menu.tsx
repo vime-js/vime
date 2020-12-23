@@ -100,14 +100,14 @@ export class Menu {
    * Emitted when the active submenu changes.
    */
   @Event() vmActiveSubmenuChange!: EventEmitter<
-    HTMLVmSubmenuElement | undefined
+  HTMLVmSubmenuElement | undefined
   >;
 
   /**
    * Emitted when the currently focused menu item changes.
    */
   @Event() vmActiveMenuItemChange!: EventEmitter<
-    HTMLVmMenuItemElement | undefined
+  HTMLVmMenuItemElement | undefined
   >;
 
   /**

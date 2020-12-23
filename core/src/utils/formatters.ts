@@ -11,6 +11,6 @@ export const formatTime = (seconds = 0, alwaysShowHours = false) => {
   const secs = getSeconds(seconds);
 
   return `${alwaysShowHours || hours > 0 ? `${hours}:` : ''}${format(
-    mins
+    mins,
   )}:${format(secs)}`;
 };

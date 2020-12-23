@@ -125,7 +125,7 @@ export class MenuItem {
   @Method()
   async getHeight() {
     return parseFloat(
-      this.menuItem ? window.getComputedStyle(this.menuItem).height : '0'
+      this.menuItem ? window.getComputedStyle(this.menuItem).height : '0',
     );
   }
 

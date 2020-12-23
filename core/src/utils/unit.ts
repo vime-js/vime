@@ -26,5 +26,5 @@ export const isInstanceOf = (input: any, constructor: any) =>
 
 export const isPrototypeOf = (input: any, object: any) =>
   Boolean(
-    input && object && Object.isPrototypeOf.call(object.prototype, input)
+    input && object && Object.isPrototypeOf.call(object.prototype, input),
   );

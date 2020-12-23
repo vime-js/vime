@@ -14,7 +14,7 @@ export type StencilHook =
 export function wrapStencilHook(
   component: any,
   lifecycle: StencilHook,
-  hook: Function
+  hook: Function,
 ) {
   const prevHook = component[lifecycle];
   // eslint-disable-next-line func-names
@@ -27,7 +27,7 @@ export function wrapStencilHook(
 export function createStencilHook(
   component: any,
   onConnect?: () => void,
-  onDisconnect?: () => void
+  onDisconnect?: () => void,
 ) {
   let hasLoaded = false;
 

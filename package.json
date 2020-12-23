@@ -11,7 +11,7 @@
     "release:prepare": "node .scripts/prepare.js",
     "release:prepare.ci": "node .scripts/prepare.js --ci",
     "release": "node .scripts/release.js",
-    "validate": "npm run release:prepare && node .scripts/validate.js",
+    "validate": "node .scripts/validate.js",
     "changelog": "conventional-changelog -p angular -i ./CHANGELOG.md -k core -s"
   },
   "devDependencies": {

@@ -117,7 +117,7 @@ export class ScrubberControl {
     const thumbWidth = parseFloat(
       window
         .getComputedStyle(this.slider)
-        .getPropertyValue('--vm-slider-thumb-width')
+        .getPropertyValue('--vm-slider-thumb-width'),
     );
     const leftLimit = tooltipRect.width / 2 - thumbWidth / 2;
     const rightLimit = bounds.width - tooltipRect.width / 2 - thumbWidth / 2;
@@ -141,11 +141,11 @@ export class ScrubberControl {
     const rect = this.host.getBoundingClientRect();
     const percent = Math.max(
       0,
-      Math.min(100, (100 / rect.width) * (event.pageX - rect.left))
+      Math.min(100, (100 / rect.width) * (event.pageX - rect.left)),
     );
     this.timestamp = formatTime(
       (this.duration / 100) * percent,
-      this.alwaysShowHours
+      this.alwaysShowHours,
     );
     this.setTooltipPosition((percent / 100) * rect.width);
 

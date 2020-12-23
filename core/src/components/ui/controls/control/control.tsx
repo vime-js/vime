@@ -53,7 +53,7 @@ export class Control implements KeyboardControl {
         if (codes.includes(event.key)) {
           this.button.click();
         }
-      })
+      }),
     );
   }
 
@@ -190,6 +190,9 @@ export class Control implements KeyboardControl {
   }
 
   render() {
+    const isMenuExpanded = this.expanded ? 'true' : 'false';
+    const isPressed = this.pressed ? 'true' : 'false';
+
     return (
       <button
         class={{
@@ -202,22 +205,8 @@ export class Control implements KeyboardControl {
         aria-label={this.label}
         aria-haspopup={!isUndefined(this.menu) ? 'true' : undefined}
         aria-controls={this.menu}
-        // eslint-disable-next-line no-nested-ternary
-        aria-expanded={
-          !isUndefined(this.menu)
-            ? this.expanded
-              ? 'true'
-              : 'false'
-            : undefined
-        }
-        // eslint-disable-next-line no-nested-ternary
-        aria-pressed={
-          !isUndefined(this.pressed)
-            ? this.pressed
-              ? 'true'
-              : 'false'
-            : undefined
-        }
+        aria-expanded={!isUndefined(this.menu) ? isMenuExpanded : undefined}
+        aria-pressed={!isUndefined(this.pressed) ? isPressed : undefined}
         aria-hidden={this.hidden ? 'true' : 'false'}
         aria-describedby={this.describedBy}
         onTouchStart={this.onTouchStart.bind(this)}

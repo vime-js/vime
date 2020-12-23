@@ -90,10 +90,10 @@ function preparePackage(tasks, package, version, install) {
   const projectRoot = projectPath(package);
   const pkg = readPkg(package);
 
-  const projectTasks = [];
+  const packageTasks = [];
 
   if (version) {
-    projectTasks.push({
+    packageTasks.push({
       title: `${pkg.name}: validate new version`,
       task: () => {
         if (!isVersionGreater(pkg.version, version)) {
@@ -105,10 +105,10 @@ function preparePackage(tasks, package, version, install) {
     });
 
     if (install) {
-      projectTasks.push({
+      packageTasks.push({
         title: `${pkg.name}: install npm dependencies`,
         task: async () => {
-          await fs.remove(path.join(projectRoot, 'node_modules'));
+          // await fs.remove(path.join(projectRoot, 'node_modules'));
           await execa('npm', ['i', '--legacy-peer-deps'], { cwd: projectRoot });
         }
       });
@@ -117,36 +117,34 @@ function preparePackage(tasks, package, version, install) {
 
   if (package !== 'docs') {
     if (package !== 'core') {
-      projectTasks.push({
+      packageTasks.push({
         title: `${pkg.name}: npm link @vime/core`,
         task: () => execa('npm', ['link', '@vime/core', '--legacy-peer-deps'], { cwd: projectRoot })
       });
     }
 
-    // Lint
     if (version) {
-      projectTasks.push({
+      packageTasks.push({
         title: `${pkg.name}: lint`,
         task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
       });
     }
 
-    // Build
-    projectTasks.push({
+    packageTasks.push({
       title: `${pkg.name}: build`,
       task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
     });
 
-    // Link core for integrations
+    // link @vime/core for integrations
     if (package === 'core') {
-      projectTasks.push({
+      packageTasks.push({
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link', '--legacy-peer-deps'], { cwd: projectRoot })
       });
     }
 
     if (version) {
-      projectTasks.push({
+      packageTasks.push({
         title: `${pkg.name}: update @vime/core dep to ${version}`,
         task: () => {
           updateDependency(pkg, '@vime/core', version);
@@ -157,7 +155,7 @@ function preparePackage(tasks, package, version, install) {
   }
 
   if (package === 'docs') {
-    projectTasks.push({
+    packageTasks.push({
       title: `${pkg.name}: update @vime/react dep to ${version}`,
       task: () => {
         updateDependency(pkg, '@vime/react', version);
@@ -166,10 +164,9 @@ function preparePackage(tasks, package, version, install) {
     });
   }
 
-  // Add project tasks
   tasks.push({
     title: `Prepare ${bold(pkg.name)}`,
-    task: () => new Listr(projectTasks)
+    task: () => new Listr(packageTasks)
   });
 }
 
