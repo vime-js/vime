@@ -99,15 +99,15 @@ consistency, and don't use any special naming conventions such as BEM.
 
 ## 🏗️ Architecture
 
-For how Vime works in general see the [Architecture](./ARCHITECTURE) document.
+For how Vime works in general see the [Architecture](./ARCHITECTURE.md) document.
 
 ## 🖥️ UI
 
-For how to add new UI components or work on them in general see the [UI](./UI) document.
+For how to add new UI components or work on them in general see the [UI](./UI.md) document.
 
 ## 🎥 Providers
 
-For how to add new providers or work on them in general see the [Providers](./Providers) document.
+For how to add new providers or work on them in general see the [Providers](./PROVIDERS.md) document.
 
 ## 📖 Documentation
 
