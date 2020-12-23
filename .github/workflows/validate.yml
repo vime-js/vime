@@ -1,0 +1,82 @@
+name: Validate
+
+on: pull_request
+
+jobs:
+  release:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+
+      - name: Cache Root Dependencies
+        id: rootDeps
+        uses: actions/cache@v2
+        with:
+          path: './node_modules'
+          key: deps-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Root Dependencies
+        if: steps.rootDeps.outputs.cache-hit != 'true'
+        run: npm install
+      
+      - name: Cache Core Dependencies
+        id: coreDeps
+        uses: actions/cache@v2
+        with:
+          path: 'core/node_modules'
+          key: deps-${{ hashFiles('core/package-lock.json') }}
+      
+      - name: Cache Angular Dependencies
+        id: angularDeps
+        uses: actions/cache@v2
+        with:
+          path: 'integrations/angular/node_modules'
+          key: deps-${{ hashFiles('integrations/angular/package-lock.json') }}
+      
+      - name: Cache React Dependencies
+        id: reactDeps
+        uses: actions/cache@v2
+        with:
+          path: 'integrations/react/node_modules'
+          key: deps-${{ hashFiles('integrations/react/package-lock.json') }}
+      
+      - name: Cache Svelte Dependencies
+        id: svelteDeps
+        uses: actions/cache@v2
+        with:
+          path: 'integrations/svelte/node_modules'
+          key: deps-${{ hashFiles('integrations/svelte/package-lock.json') }}
+      
+      - name: Cache Vue Dependencies
+        id: vueDeps
+        uses: actions/cache@v2
+        with:
+          path: 'integrations/vue/node_modules'
+          key: deps-${{ hashFiles('integrations/vue/package-lock.json') }}
+      
+      - name: Cache VueNext Dependencies
+        id: vueNextDeps
+        uses: actions/cache@v2
+        with:
+          path: 'integrations/vue-next/node_modules'
+          key: deps-${{ hashFiles('integrations/vue-next/package-lock.json') }}
+
+      - name: Setup Git Identity
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Validate Packages
+        run: npm run validate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -52,7 +52,6 @@ async function main() {
     } else {
       console.log(`\nvime ${version} published to ${NPM_TAG}!! 🎉\n`);
     }
-
   } catch (err) {
     console.log('\n', red(err), '\n');
     process.exit(1);
