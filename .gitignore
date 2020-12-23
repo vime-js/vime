@@ -48,6 +48,7 @@ examples/*/*.lock
 .nyc_output/
 .stencil/
 .idea/
+.vscode/
 .sass-cache/
 .docusaurus/
 .cache-loader/
