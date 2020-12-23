@@ -133,7 +133,7 @@ export const canUsePiPInSafari = (): boolean => {
   const video = document.createElement('video');
   // @ts-ignore
   return (
-    isFunction(video.webkitSupportsPresentationMode) &&
+    isFunction((video as any).webkitSupportsPresentationMode) &&
     // @ts-ignore
     isFunction(video.webkitSetPresentationMode) &&
     !IS_IPHONE
