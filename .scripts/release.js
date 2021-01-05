@@ -152,7 +152,7 @@ async function publishGithub(version, gitTag, changelog, npmTag) {
   }
 
   await octokit.repos.createRelease({
-    owner: 'vimejs',
+    owner: 'vime-js',
     repo: 'vime',
     target_commitish: branch,
     tag_name: gitTag,
