@@ -148,6 +148,13 @@ table {
   font-size: 12px;
 }
 
+body {
+  --num-1: 1;
+  /* Strange bug where minification defaults to value 9, wrapping in calc prevents it. */
+  --ifm-z-index-overlay: calc(998 + var(--num-1)) !important;
+  --ifm-z-index-fixed: calc(998 + var(--num-1)) !important;
+}
+
 @media screen and (min-width: 1600px) {
   table {
     font-size: 14px;
