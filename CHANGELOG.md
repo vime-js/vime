@@ -1,3 +1,12 @@
+## 5.0.24 (2021-01-05)
+
+
+### Bug Fixes
+
+* **ci:** copy readme file into angular dist package ([8fa1105](https://github.com/vime-js/vime/commit/8fa11052b8d28041badcc953cd9ab0c85ec57545))
+
+
+
 ## 5.0.23 (2021-01-05)
 
 
