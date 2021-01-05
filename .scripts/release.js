@@ -29,10 +29,10 @@ async function main() {
 
     if(!dryRun) {
       // Copy license
-      packages.forEach(package => { copyLicenseToPackage(package, tasks); });
+      common.packages.forEach(package => { copyLicenseToPackage(package, tasks); });
 
       // copy changelog
-      packages.forEach(package => { copyChangelogToPackage(package, tasks); });
+      common.packages.forEach(package => { copyChangelogToPackage(package, tasks); });
 
       // publish each package in NPM
       common.publishPackages(tasks, common.packages, version, NPM_TAG);
