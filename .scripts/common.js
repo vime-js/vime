@@ -165,48 +165,6 @@ function preparePackage(tasks, package, version, install) {
   });
 }
 
-function prepareDevPackage(tasks, package, version) {
-  const projectRoot = projectPath(package);
-  const pkg = readPkg(package);
-
-  const projectTasks = [];
-
-  if (package !== 'docs') {
-    if (package !== 'core') {
-      projectTasks.push({
-        title: `${pkg.name}: npm link @vime/core`,
-        task: () => execa('npm', ['link', '@vime/core', '--legacy-peer-deps'], { cwd: projectRoot })
-      });
-    }
-
-    projectTasks.push({
-      title: `${pkg.name}: update @vime/core dep to ${version}`,
-      task: () => {
-        updateDependency(pkg, '@vime/core', version);
-        writePkg(package, pkg);
-      }
-    });
-
-    projectTasks.push({
-      title: `${pkg.name}: build`,
-      task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
-    });
-
-    if (package === 'core') {
-      projectTasks.push({
-        title: `${pkg.name}: npm link`,
-        task: () => execa('npm', ['link', '--legacy-peer-deps'], { cwd: projectRoot })
-      });
-    }
-  }
-
-  // Add project tasks
-  tasks.push({
-    title: `Prepare dev build: ${bold(pkg.name)}`,
-    task: () => new Listr(projectTasks)
-  });
-}
-
 function updatePackageVersions(tasks, packages, version) {
   packages.forEach(package => {
     updatePackageVersion(tasks, package, version);
@@ -223,7 +181,7 @@ function updatePackageVersions(tasks, packages, version) {
     });
 
     // @vime/angular needs to update the dist version
-    if (package === 'angular') {
+    if (package === 'integrations/angular') {
       const distPackage = path.join(package, 'dist/vime/angular');
 
       updatePackageVersion(tasks, distPackage, version);
@@ -272,7 +230,7 @@ function publishPackages(tasks, packages, version, npmTag = 'latest') {
   packages.forEach(package => {
     let projectRoot = projectPath(package);
 
-    if (package === 'angular') {
+    if (package === 'integrations/angular') {
       projectRoot = path.join(projectRoot, 'dist/vime/angular')
     }
 
@@ -314,7 +272,6 @@ module.exports = {
   getNewVersion,
   packages,
   packagePath,
-  prepareDevPackage,
   preparePackage,
   projectPath,
   publishPackages,

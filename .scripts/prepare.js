@@ -57,6 +57,7 @@ async function preparePackages(packages, version, install) {
   // run all these tasks before updating package.json version
   packages.forEach(package => {
     common.preparePackage(tasks, package, version, install);
+    copyNPMConfigToPackage(package, tasks);
   });
 
   // add update package.json of each project
@@ -64,6 +65,7 @@ async function preparePackages(packages, version, install) {
 
   // generate changelog
   generateChangeLog(tasks);
+
 
   const listr = new Listr(tasks, { showSubtasks: true });
   await listr.run();
@@ -102,6 +104,19 @@ function validateGit(tasks, version) {
         )
     },
   );
+}
+
+function copyNPMConfigToPackage(package, tasks) {
+  const pkg = common.readPkg(package);
+  const configPath = path.resolve(common.rootDir, '.npmrc');
+  let pkgPath = common.projectPath(package);
+  if (package === 'integrations/angular') pkgPath = path.join(pkgPath, 'dist/vime/angular');
+  const pkgConfigPath = path.resolve(pkgPath, '.npmrc');
+
+  tasks.push({
+    title: `copying .npmrc to ${pkg.name}`,
+    task: () => fs.copyFile(configPath, pkgConfigPath),
+  });
 }
 
 function generateChangeLog(tasks) {
