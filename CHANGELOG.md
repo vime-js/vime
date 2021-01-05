@@ -1,3 +1,12 @@
+## 5.0.25 (2021-01-05)
+
+
+### Bug Fixes
+
+* **integrations:** set build target to es6 ([4ce26ad](https://github.com/vime-js/vime/commit/4ce26ad3f6a8b34f3e549a4844048e2bafe4f1ef))
+
+
+
 ## 5.0.24 (2021-01-05)
 
 
