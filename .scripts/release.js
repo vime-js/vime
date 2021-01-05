@@ -14,8 +14,7 @@ async function main() {
       throw new Error('env.GH_TOKEN is undefined');
     }
 
-    const version = await common.getNewVersion('release');
-    if (typeof version === 'undefined') return;
+    const { version } = common.readPkg('core');
 
     checkProductionRelease();
 
