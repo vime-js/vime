@@ -1,3 +1,12 @@
+## 5.0.23 (2021-01-05)
+
+
+### Bug Fixes
+
+* **ci:** release angular from dist dir ([be712ee](https://github.com/vime-js/vime/commit/be712eef98251007e9870ca51a1b5569e989f23e))
+
+
+
 ## 5.0.22 (2021-01-05)
 
 **Note:** Version bump only for package vime
