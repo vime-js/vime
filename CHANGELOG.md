@@ -1,3 +1,7 @@
+## 5.0.22 (2021-01-05)
+
+
+
 ## 5.0.19 (2020-12-22)
 
 **Note:** Version bump only for package vime

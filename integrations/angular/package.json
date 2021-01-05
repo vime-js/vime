@@ -1,6 +1,6 @@
 {
   "name": "@vime/angular",
-  "version": "5.0.21",
+  "version": "5.0.22",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -10,7 +10,7 @@
     "lint": ""
   },
   "dependencies": {
-    "@vime/core": "5.0.21"
+    "@vime/core": "5.0.22"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.4",
