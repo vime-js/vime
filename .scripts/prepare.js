@@ -63,9 +63,10 @@ async function preparePackages(packages, version, install) {
   // add update package.json of each project
   common.updatePackageVersions(tasks, packages, version);
 
+  copyAngularReadme(tasks);
+
   // generate changelog
   generateChangeLog(tasks);
-
 
   const listr = new Listr(tasks, { showSubtasks: true });
   await listr.run();
@@ -104,6 +105,16 @@ function validateGit(tasks, version) {
         )
     },
   );
+}
+
+function copyAngularReadme(tasks) {
+  const angularPkg = path.resolve(common.rootDir, 'integrations/angular');
+  const readmeFile = path.resolve(angularPkg, 'README.md');
+  const targetPath = path.resolve(angularPkg, 'dist/vime/angular/README.md');
+  tasks.push({
+    title: 'copying README.md to @vime/angular',
+    task: () => fs.copyFile(readmeFile, targetPath),
+  });
 }
 
 function copyNPMConfigToPackage(package, tasks) {
