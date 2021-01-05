@@ -13,8 +13,9 @@ export class Fullscreen {
     private readonly listener: (isActive: boolean) => void,
   ) {
     if (this.isSupported) {
+
       this.disposal.add(listen(
-        document,
+        this.el,
         this.api.fullscreenchange!,
         this.onFullscreenChange.bind(this),
       ));
@@ -29,7 +30,7 @@ export class Fullscreen {
        * */
       if ((document as any).webkitExitFullscreen) {
         this.disposal.add(listen(
-          document,
+          this.el,
           'webkitfullscreenchange',
           this.onFullscreenChange.bind(this),
         ));
@@ -38,7 +39,7 @@ export class Fullscreen {
       // We listen to this for the same reasons as above except when the browser is Firefox.
       if ((document as any).mozCancelFullScreen) {
         this.disposal.add(listen(
-          document,
+          this.el,
           'mozfullscreenchange',
           this.onFullscreenChange.bind(this),
         ));

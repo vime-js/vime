@@ -720,6 +720,7 @@ export class Player implements MediaPlayer {
     this.onVolumeChange();
     this.onMutedChange();
     this.onDebugChange();
+    this.onContainerChange();
     this.onTranslationsChange();
     this.onLanguageChange(this.language, initialState.language);
     this.disposal.add(
