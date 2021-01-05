@@ -8,24 +8,31 @@ import { isUndefined } from '../../../utils/unit';
 
 export type IconLibraryResolver = (name: string) => string;
 
-export const ICONS_BASE_CDN_URL = (process.env.NODE_ENV === 'development')
-  ? '/icons'
-  : 'https://cdn.jsdelivr.net/npm/@vime/core@latest/icons';
+export const ICONS_BASE_CDN_URL =
+  process.env.NODE_ENV === 'development'
+    ? '/icons'
+    : 'https://cdn.jsdelivr.net/npm/@vime/core@latest/icons';
 
-const registry = new Map<string, IconLibraryResolver>(Object.entries({
-  vime: (iconName) => `${ICONS_BASE_CDN_URL}/vime/vm-${iconName}.svg`,
-  material: (iconName) => `${ICONS_BASE_CDN_URL}/material/md-${iconName}.svg`,
-}));
+const registry = new Map<string, IconLibraryResolver>(
+  Object.entries({
+    vime: (iconName) => `${ICONS_BASE_CDN_URL}/vime/vm-${iconName}.svg`,
+    material: (iconName) => `${ICONS_BASE_CDN_URL}/material/md-${iconName}.svg`,
+  }),
+);
 
 const watch = new Set<HTMLVmIconElement>();
 
 export function withIconRegistry(component: any) {
   const el = getElement(component) as HTMLVmIconElement;
-  createStencilHook(component, () => {
-    watch.add(el);
-  }, () => {
-    watch.delete(el);
-  });
+  createStencilHook(
+    component,
+    () => {
+      watch.add(el);
+    },
+    () => {
+      watch.delete(el);
+    },
+  );
 }
 
 export const getIconLibraryResolver = (name: string) => registry.get(name);

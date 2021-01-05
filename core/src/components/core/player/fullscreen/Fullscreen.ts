@@ -13,12 +13,13 @@ export class Fullscreen {
     private readonly listener: (isActive: boolean) => void,
   ) {
     if (this.isSupported) {
-
-      this.disposal.add(listen(
-        this.el,
-        this.api.fullscreenchange!,
-        this.onFullscreenChange.bind(this),
-      ));
+      this.disposal.add(
+        listen(
+          this.el,
+          this.api.fullscreenchange!,
+          this.onFullscreenChange.bind(this),
+        ),
+      );
 
       /* *
        * We have to listen to this on webkit, because no `fullscreenchange` event is fired when the
@@ -29,20 +30,24 @@ export class Fullscreen {
        *  3. Calling requestFullscreen inside an iframe.
        * */
       if ((document as any).webkitExitFullscreen) {
-        this.disposal.add(listen(
-          this.el,
-          'webkitfullscreenchange',
-          this.onFullscreenChange.bind(this),
-        ));
+        this.disposal.add(
+          listen(
+            this.el,
+            'webkitfullscreenchange',
+            this.onFullscreenChange.bind(this),
+          ),
+        );
       }
 
       // We listen to this for the same reasons as above except when the browser is Firefox.
       if ((document as any).mozCancelFullScreen) {
-        this.disposal.add(listen(
-          this.el,
-          'mozfullscreenchange',
-          this.onFullscreenChange.bind(this),
-        ));
+        this.disposal.add(
+          listen(
+            this.el,
+            'mozfullscreenchange',
+            this.onFullscreenChange.bind(this),
+          ),
+        );
       }
     }
   }
@@ -54,16 +59,21 @@ export class Fullscreen {
 
   async exitFullscreen() {
     if (!this.isSupported) throw Error('Fullscreen API is not available.');
-    if (!this.isActive) throw Error('Player is not currently in fullscreen mode to exit.');
+    if (!this.isActive)
+      throw Error('Player is not currently in fullscreen mode to exit.');
     return (document as any)[this.api.exitFullscreen!]();
   }
 
   get isActive() {
     if (!this.isSupported) return false;
-    const fullscreenEl = (document as any)[this.api.fullscreenElement!] as Document['fullscreenElement'];
-    return (this.el === fullscreenEl)
-      || this.el.matches(`:${this.api.fullscreen}`)
-      || this.el.contains(fullscreenEl);
+    const fullscreenEl = (document as any)[
+      this.api.fullscreenElement!
+    ] as Document['fullscreenElement'];
+    return (
+      this.el === fullscreenEl ||
+      this.el.matches(`:${this.api.fullscreen}`) ||
+      this.el.contains(fullscreenEl)
+    );
   }
 
   get isSupported() {

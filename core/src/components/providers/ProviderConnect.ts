@@ -18,12 +18,12 @@ export type ProviderCache = Map<keyof ProviderWritableProps, any>;
 export type ProviderConnectEventDetail = AdapterHost;
 
 export interface ProviderHost extends ProviderWritableProps {
-  [PROVIDER_CACHE_KEY]?: ProviderCache
-  ready: boolean
-  currentProvider?: Provider
-  logger?: PlayerProps['logger']
-  provider?: AdapterHost
-  onProviderDisconnect?: () => void
+  [PROVIDER_CACHE_KEY]?: ProviderCache;
+  ready: boolean;
+  currentProvider?: Provider;
+  logger?: PlayerProps['logger'];
+  provider?: AdapterHost;
+  onProviderDisconnect?: () => void;
 }
 
 function buildProviderConnectEvent(name: string, host?: AdapterHost) {
@@ -42,9 +42,11 @@ export function withProviderHost(connector: ProviderHost) {
   connector[PROVIDER_CACHE_KEY] = cache;
 
   function initCache() {
-    (Object.keys(connector) as (keyof ProviderWritableProps)[]).forEach((prop) => {
-      cache.set(prop, connector[prop]);
-    });
+    (Object.keys(connector) as (keyof ProviderWritableProps)[]).forEach(
+      (prop) => {
+        cache.set(prop, connector[prop]);
+      },
+    );
   }
 
   function onDisconnect() {
@@ -65,15 +67,13 @@ export function withProviderHost(connector: ProviderHost) {
     const host = getElement(event.detail) as AdapterHost;
     if (connector.provider === host) return;
 
-    const name = host
-      ?.nodeName
-      .toLowerCase()
-      .replace('vm-', '');
+    const name = host?.nodeName.toLowerCase().replace('vm-', '');
 
     writeTask(async () => {
       connector.provider = host;
-      connector.currentProvider = Object.values(Provider)
-        .find((provider) => name === provider);
+      connector.currentProvider = Object.values(Provider).find(
+        (provider) => name === provider,
+      );
       createStencilHook(hostRef, undefined, () => onDisconnect());
     });
   }
@@ -83,7 +83,9 @@ export function withProviderHost(connector: ProviderHost) {
     const { by, prop, value } = event.detail;
 
     if (!isProviderWritableProp(prop)) {
-      connector.logger?.warn(`${by.nodeName} tried to change \`${prop}\` but it is readonly.`);
+      connector.logger?.warn(
+        `${by.nodeName} tried to change \`${prop}\` but it is readonly.`,
+      );
       return;
     }
 
@@ -93,13 +95,17 @@ export function withProviderHost(connector: ProviderHost) {
     });
   }
 
-  createStencilHook(connector, () => {
-    disposal.add(listen(el, PROVIDER_CONNECT_EVENT, onConnect));
-    disposal.add(listen(el, PROVIDER_CHANGE_EVENT, onChange));
-  }, () => {
-    disposal.empty();
-    cache.clear();
-  });
+  createStencilHook(
+    connector,
+    () => {
+      disposal.add(listen(el, PROVIDER_CONNECT_EVENT, onConnect));
+      disposal.add(listen(el, PROVIDER_CHANGE_EVENT, onChange));
+    },
+    () => {
+      disposal.empty();
+      cache.clear();
+    },
+  );
 }
 
 export function withProviderConnect(ref: any) {

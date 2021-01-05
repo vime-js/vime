@@ -10,15 +10,20 @@ export function withPlayerEvents(player: MediaPlayer) {
   const cache = new Map<PlayerProp, any>();
 
   function initCache() {
-    (Object.keys(initialState) as PlayerProp[])
-      .forEach((prop) => { cache.set(prop, player[prop]); });
+    (Object.keys(initialState) as PlayerProp[]).forEach((prop) => {
+      cache.set(prop, player[prop]);
+    });
   }
 
-  createStencilHook(player, () => {
-    initCache();
-  }, () => {
-    cache.clear();
-  });
+  createStencilHook(
+    player,
+    () => {
+      initCache();
+    },
+    () => {
+      cache.clear();
+    },
+  );
 
   const { componentDidRender } = player;
   player.componentDidRender = function () {

@@ -1,6 +1,6 @@
 {
   "name": "@vime/core",
-  "version": "5.0.20",
+  "version": "5.0.21",
   "description": "Customizable, extensible, accessible and framework agnostic media player.",
   "license": "MIT",
   "sideEffects": false,

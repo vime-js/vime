@@ -11,8 +11,8 @@ type Indexable = { [P in keyof PlayerProps]: PlayerProps[P] };
  *
  * @ref https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
  */
-export interface MediaPlayer extends
-  ComponentInterface,
+export interface MediaPlayer
+  extends ComponentInterface,
   PlayerProps,
   PlayerEvents,
   PlayerMethods,

@@ -1,7 +1,11 @@
 /* eslint-disable func-names */
 import { getElement, writeTask } from '@stencil/core';
 import {
-  initialState, isWritableProp, PlayerProp, shouldPropResetOnMediaChange, WritableProps,
+  initialState,
+  isWritableProp,
+  PlayerProp,
+  shouldPropResetOnMediaChange,
+  WritableProps,
 } from './PlayerProps';
 import { MediaPlayer } from './MediaPlayer';
 import { createStencilHook, wrapStencilHook } from '../../../utils/stencil';
@@ -18,7 +22,7 @@ const immediateAdapterCall = new Set<PlayerProp>(['currentTime', 'paused']);
 
 export type SafeAdapterCall = <P extends keyof WritableProps>(
   prop: P,
-  method: keyof MediaProviderAdapter,
+  method: keyof MediaProviderAdapter
 ) => Promise<void>;
 
 export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
@@ -27,8 +31,9 @@ export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
   const disposal = new Disposal();
 
   function initCache() {
-    (Object.keys(initialState) as PlayerProp[])
-      .forEach((prop) => { cache.set(prop, player[prop]); });
+    (Object.keys(initialState) as PlayerProp[]).forEach((prop) => {
+      cache.set(prop, player[prop]);
+    });
   }
 
   // Queue of adapter calls to be run when the media is ready for playback.
@@ -58,7 +63,9 @@ export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
     writeTask(() => {
       (Object.keys(initialState) as PlayerProp[])
         .filter(shouldPropResetOnMediaChange)
-        .forEach((prop) => { (player as any)[prop] = initialState[prop]; });
+        .forEach((prop) => {
+          (player as any)[prop] = initialState[prop];
+        });
     });
   }
 
@@ -67,7 +74,9 @@ export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
     const { by, prop, value } = event.detail;
 
     if (!isWritableProp(prop)) {
-      player.logger?.warn(`${by.nodeName} tried to change \`${prop}\` but it is readonly.`);
+      player.logger?.warn(
+        `${by.nodeName} tried to change \`${prop}\` but it is readonly.`,
+      );
       return;
     }
 
@@ -84,7 +93,9 @@ export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
       }
     }
 
-    writeTask(() => { (player as any)[prop] = value; });
+    writeTask(() => {
+      (player as any)[prop] = value;
+    });
   }
 
   // Called by ProviderConnect.
@@ -94,17 +105,22 @@ export function withPlayerScheduler(player: MediaPlayer): SafeAdapterCall {
     if (onProviderDisconnect) onProviderDisconnect.call(player);
   };
 
-  createStencilHook(player, () => {
-    initCache();
-    disposal.add(listen(el, LOAD_START_EVENT, onMediaChange));
-    disposal.add(listen(el, STATE_CHANGE_EVENT, onStateChange));
-  }, () => {
-    cache.clear();
-    disposal.empty();
-  });
+  createStencilHook(
+    player,
+    () => {
+      initCache();
+      disposal.add(listen(el, LOAD_START_EVENT, onMediaChange));
+      disposal.add(listen(el, STATE_CHANGE_EVENT, onStateChange));
+    },
+    () => {
+      cache.clear();
+      disposal.empty();
+    },
+  );
 
   wrapStencilHook(player, 'componentWillRender', async () => {
-    if (player.playbackReady && adapterCalls.length > 0) await flushAdapterCalls();
+    if (player.playbackReady && adapterCalls.length > 0)
+      await flushAdapterCalls();
   });
 
   function isAdapterCallRequired<P extends keyof WritableProps>(

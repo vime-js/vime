@@ -10,7 +10,7 @@ export interface VimeoParams {
    *
    * @default undefined
    */
-  id?: string
+  id?: string;
 
   /**
    * Whether to pause the current video when another Vimeo video on the same page starts to play.
@@ -18,7 +18,7 @@ export interface VimeoParams {
    *
    * @default true
    */
-  autopause?: boolean
+  autopause?: boolean;
 
   /**
    * Whether to start playback of the video automatically. This feature might not work on all
@@ -26,7 +26,7 @@ export interface VimeoParams {
    *
    * @default false
    */
-  autoplay?: boolean
+  autoplay?: boolean;
 
   /**
    * Whether the player is in background mode, which hides the playback controls, enables autoplay,
@@ -34,14 +34,14 @@ export interface VimeoParams {
    *
    * @default false
    */
-  background?: boolean
+  background?: boolean;
 
   /**
    * Whether to display the video owner's name.
    *
    * @default true
    */
-  byline?: boolean
+  byline?: boolean;
 
   /**
    * The hexadecimal color value of the playback controls. The embed settings of the video
@@ -49,7 +49,7 @@ export interface VimeoParams {
    *
    * @default '00ADEF'
    */
-  color?: string
+  color?: string;
 
   /**
    * This parameter will hide all elements in the player (play bar, sharing buttons, etc) for a
@@ -61,21 +61,21 @@ export interface VimeoParams {
    *
    * @default true
    */
-  controls?: boolean
+  controls?: boolean;
 
   /**
    * The height of the video in pixels.
    *
    * @default undefined
    */
-  height?: number
+  height?: number;
 
   /**
    * Whether to restart the video automatically after reaching the end.
    *
    * @default false
    */
-  loop?: boolean
+  loop?: boolean;
 
   /**
    * The height of the video in pixels, where the video won't exceed its native height, no matter
@@ -83,7 +83,7 @@ export interface VimeoParams {
    *
    * @default undefined
    */
-  maxheight?: number
+  maxheight?: number;
 
   /**
    * The width of the video in pixels, where the video won't exceed its native width, no matter the
@@ -91,7 +91,7 @@ export interface VimeoParams {
    *
    * @default undefined
    */
-  maxwidth?: number
+  maxwidth?: number;
 
   /**
    * Whether the video is muted upon loading. The true value is required for the autoplay behavior
@@ -99,7 +99,7 @@ export interface VimeoParams {
    *
    * @default false
    */
-  muted?: boolean
+  muted?: boolean;
 
   /**
    * Whether the video plays inline on supported mobile devices. To force the device to play the
@@ -107,14 +107,14 @@ export interface VimeoParams {
    *
    * @default true
    */
-  playsinline?: boolean
+  playsinline?: boolean;
 
   /**
    * Whether to display the video owner's portrait.
    *
    * @default true
    */
-  portrait?: boolean
+  portrait?: boolean;
 
   /**
    * Whether the player displays speed controls in the preferences menu and enables the playback
@@ -122,26 +122,26 @@ export interface VimeoParams {
    *
    * @default false
    */
-  speed?: boolean
+  speed?: boolean;
 
   /**
    * Whether the player displays the title overlay.
    *
    * @default true
    */
-  title?: boolean
+  title?: boolean;
 
   /**
    * Whether the responsive player and transparent background are enabled.
    *
    * @default true
    */
-  transparent?: boolean
+  transparent?: boolean;
 
   /**
    * The width of the video in pixels.
    *
    * @default undefined
    */
-  width?: number
+  width?: number;
 }

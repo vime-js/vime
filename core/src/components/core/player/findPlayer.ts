@@ -13,14 +13,22 @@ export function withFindPlayer(player: MediaPlayer) {
   const el = getElement(player) as HTMLVmPlayerElement;
 
   let off: () => void;
-  createStencilHook(player, () => {
-    off = listen(el, FIND_PLAYER_EVENT, (event: CustomEvent<FoundPlayerCallback>) => {
-      event.stopPropagation();
-      event.detail(el);
-    });
-  }, () => {
-    off?.();
-  });
+  createStencilHook(
+    player,
+    () => {
+      off = listen(
+        el,
+        FIND_PLAYER_EVENT,
+        (event: CustomEvent<FoundPlayerCallback>) => {
+          event.stopPropagation();
+          event.detail(el);
+        },
+      );
+    },
+    () => {
+      off?.();
+    },
+  );
 }
 
 /**
@@ -33,7 +41,9 @@ export function withFindPlayer(player: MediaPlayer) {
  * @param maxRetries - The number of times to retry firing the event.
  */
 export const findPlayer = (ref: any, interval = 300, maxRetries = 10) => {
-  const el = (isInstanceOf(ref, HTMLElement) ? ref : getElement(ref)) as HTMLElement;
+  const el = (isInstanceOf(ref, HTMLElement)
+    ? ref
+    : getElement(ref)) as HTMLElement;
   const search = deferredPromise<HTMLVmPlayerElement>();
 
   let stopFiring: () => void;
@@ -47,9 +57,15 @@ export const findPlayer = (ref: any, interval = 300, maxRetries = 10) => {
     },
   });
 
-  stopFiring = fireEventAndRetry(el, event, () => {
-    search.reject(`Could not find player for ${el.nodeName}`);
-  }, interval, maxRetries);
+  stopFiring = fireEventAndRetry(
+    el,
+    event,
+    () => {
+      search.reject(`Could not find player for ${el.nodeName}`);
+    },
+    interval,
+    maxRetries,
+  );
 
   return search.promise;
 };

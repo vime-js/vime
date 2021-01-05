@@ -10,10 +10,8 @@ import { listen } from '../../../utils/dom';
  * @param component A Stencil component instance.
  * @param props A set of props to watch and update on the given component instance.
  */
-export const withPlayerContext = (
-  component: any,
-  props: PlayerProp[],
-) => openWormhole(component, props);
+export const withPlayerContext = (component: any, props: PlayerProp[]) =>
+  openWormhole(component, props);
 
 /**
  * Finds the closest ancestor player to the given `ref` and watches the given props for changes. On
@@ -26,14 +24,19 @@ export const withPlayerContext = (
 export const usePlayerContext = async (
   ref: HTMLElement,
   props: PlayerProp[],
-  updater: <P extends keyof PlayerProps>(prop: P, value: PlayerProps[P]) => void,
+  updater: <P extends keyof PlayerProps>(
+    prop: P,
+    value: PlayerProps[P]
+  ) => void,
   playerRef?: HTMLVmPlayerElement,
 ) => {
   const player = playerRef ?? (await findPlayer(ref));
 
   const listeners = props.map((prop) => {
     const event = getEventName(prop);
-    return listen(player, event, () => { updater(prop, player[prop]); });
+    return listen(player, event, () => {
+      updater(prop, player[prop]);
+    });
   });
 
   return () => {

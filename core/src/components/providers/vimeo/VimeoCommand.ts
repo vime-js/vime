@@ -20,17 +20,17 @@ export const enum VimeoCommand {
 }
 
 export interface VimeoCommandArg {
-  [VimeoCommand.Play]: void
-  [VimeoCommand.Pause]: void
-  [VimeoCommand.SetMuted]: boolean
-  [VimeoCommand.SetVolume]: number
-  [VimeoCommand.GetDuration]: void
-  [VimeoCommand.GetCurrentTime]: void
-  [VimeoCommand.SetCurrentTime]: number
-  [VimeoCommand.SetPlaybackRate]: number
-  [VimeoCommand.AddEventListener]: VimeoEvent
-  [VimeoCommand.GetVideoTitle]: string
-  [VimeoCommand.GetTextTracks]: void
-  [VimeoCommand.EnableTextTrack]: void
-  [VimeoCommand.DisableTextTrack]: void
+  [VimeoCommand.Play]: void;
+  [VimeoCommand.Pause]: void;
+  [VimeoCommand.SetMuted]: boolean;
+  [VimeoCommand.SetVolume]: number;
+  [VimeoCommand.GetDuration]: void;
+  [VimeoCommand.GetCurrentTime]: void;
+  [VimeoCommand.SetCurrentTime]: number;
+  [VimeoCommand.SetPlaybackRate]: number;
+  [VimeoCommand.AddEventListener]: VimeoEvent;
+  [VimeoCommand.GetVideoTitle]: string;
+  [VimeoCommand.GetTextTracks]: void;
+  [VimeoCommand.EnableTextTrack]: void;
+  [VimeoCommand.DisableTextTrack]: void;
 }

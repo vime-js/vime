@@ -14,13 +14,19 @@ const collisions = new Map<HTMLElement, Map<HTMLElement, number>>();
 function update() {
   writeTask(() => {
     controls.forEach((controlsEl) => {
-      const controlsHeight = parseFloat(window.getComputedStyle(controlsEl!).height);
+      const controlsHeight = parseFloat(
+        window.getComputedStyle(controlsEl!).height,
+      );
       watch.forEach((watchedEl) => {
         const watchedElCollisions = collisions.get(watchedEl)!;
         const hasCollided = isColliding(watchedEl, controlsEl);
-        const willCollide = isColliding(watchedEl, controlsEl, 0, controlsHeight)
-        || isColliding(watchedEl, controlsEl, 0, -controlsHeight);
-        watchedElCollisions.set(controlsEl, (hasCollided || willCollide) ? controlsHeight : 0);
+        const willCollide =
+          isColliding(watchedEl, controlsEl, 0, controlsHeight) ||
+          isColliding(watchedEl, controlsEl, 0, -controlsHeight);
+        watchedElCollisions.set(
+          controlsEl,
+          hasCollided || willCollide ? controlsHeight : 0,
+        );
       });
     });
 
@@ -42,16 +48,20 @@ export function registerControlsForCollisionDetection(component: any) {
     return el.shadowRoot!.querySelector('.controls') as HTMLElement;
   }
 
-  createStencilHook(component, () => {
-    const innerEl = getInnerEl();
-    if (!isNull(innerEl)) {
-      controls.add(innerEl);
+  createStencilHook(
+    component,
+    () => {
+      const innerEl = getInnerEl();
+      if (!isNull(innerEl)) {
+        controls.add(innerEl);
+        update();
+      }
+    },
+    () => {
+      controls.delete(getInnerEl());
       update();
-    }
-  }, () => {
-    controls.delete(getInnerEl());
-    update();
-  });
+    },
+  );
 
   wrapStencilHook(component, 'componentDidLoad', () => {
     controls.add(getInnerEl());
@@ -63,12 +73,16 @@ export function registerControlsForCollisionDetection(component: any) {
 
 export function withControlsCollisionDetection(component: any) {
   const el = getElement(component);
-  createStencilHook(component, () => {
-    watch.add(el);
-    collisions.set(el, new Map());
-    update();
-  }, () => {
-    watch.delete(el);
-    collisions.delete(el);
-  });
+  createStencilHook(
+    component,
+    () => {
+      watch.add(el);
+      collisions.set(el, new Map());
+      update();
+    },
+    () => {
+      watch.delete(el);
+      collisions.delete(el);
+    },
+  );
 }

@@ -41,14 +41,14 @@ const apiMap = [
 ];
 
 interface FullscreenApi {
-  prefixed: boolean
-  requestFullscreen?: string
-  exitFullscreen?: string
-  fullscreenElement?: string
-  fullscreenEnabled?: string
-  fullscreenchange?: string
-  fullscreenerror?: string
-  fullscreen?: string
+  prefixed: boolean;
+  requestFullscreen?: string;
+  exitFullscreen?: string;
+  fullscreenElement?: string;
+  fullscreenEnabled?: string;
+  fullscreenchange?: string;
+  fullscreenerror?: string;
+  fullscreen?: string;
 }
 
 /**

@@ -44,28 +44,28 @@ export const enum VimeoDataEvent {
 }
 
 export interface VimeoProgressPayload {
-  seconds: number
-  percent: number
-  duration: number
+  seconds: number;
+  percent: number;
+  duration: number;
 }
 
 export interface VimeoDataEventPayload {
-  [VimeoDataEvent.Play]: void
-  [VimeoDataEvent.Pause]: void
-  [VimeoDataEvent.Ready]: void
-  [VimeoDataEvent.PlayProgress]: VimeoProgressPayload
-  [VimeoDataEvent.LoadProgress]: VimeoProgressPayload
-  [VimeoDataEvent.BufferStart]: void
-  [VimeoDataEvent.BufferEnd]: void
-  [VimeoDataEvent.Loaded]: void
-  [VimeoDataEvent.Finish]: void
-  [VimeoDataEvent.Seeking]: void
-  [VimeoDataEvent.Seeked]: void
-  [VimeoDataEvent.CueChange]: void
-  [VimeoDataEvent.FullscreenChange]: { fullscreen: boolean }
-  [VimeoDataEvent.VolumeChange]: { volume: number }
-  [VimeoDataEvent.DurationChange]: { duration: number }
-  [VimeoDataEvent.PlaybackRateChange]: { playbackRate: number }
-  [VimeoDataEvent.TextTrackChange]: void
-  [VimeoDataEvent.Error]: any
+  [VimeoDataEvent.Play]: void;
+  [VimeoDataEvent.Pause]: void;
+  [VimeoDataEvent.Ready]: void;
+  [VimeoDataEvent.PlayProgress]: VimeoProgressPayload;
+  [VimeoDataEvent.LoadProgress]: VimeoProgressPayload;
+  [VimeoDataEvent.BufferStart]: void;
+  [VimeoDataEvent.BufferEnd]: void;
+  [VimeoDataEvent.Loaded]: void;
+  [VimeoDataEvent.Finish]: void;
+  [VimeoDataEvent.Seeking]: void;
+  [VimeoDataEvent.Seeked]: void;
+  [VimeoDataEvent.CueChange]: void;
+  [VimeoDataEvent.FullscreenChange]: { fullscreen: boolean };
+  [VimeoDataEvent.VolumeChange]: { volume: number };
+  [VimeoDataEvent.DurationChange]: { duration: number };
+  [VimeoDataEvent.PlaybackRateChange]: { playbackRate: number };
+  [VimeoDataEvent.TextTrackChange]: void;
+  [VimeoDataEvent.Error]: any;
 }

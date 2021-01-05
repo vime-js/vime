@@ -1,4 +1,4 @@
 export interface CaptionsAdapter {
-  setCurrentTextTrack?(trackId: number): Promise<void>
-  setTextTrackVisibility?(isVisible: boolean): Promise<void>
+  setCurrentTextTrack?(trackId: number): Promise<void>;
+  setTextTrackVisibility?(isVisible: boolean): Promise<void>;
 }

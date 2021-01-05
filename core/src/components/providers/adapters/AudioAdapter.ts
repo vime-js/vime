@@ -1,3 +1,3 @@
 export interface AudioAdapter {
-  setCurrentAudioTrack?(trackId: number): Promise<void>
+  setCurrentAudioTrack?(trackId: number): Promise<void>;
 }

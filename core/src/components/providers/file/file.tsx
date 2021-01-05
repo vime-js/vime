@@ -169,7 +169,7 @@ implements
 
   /** @internal */
   @Prop() currentTime = 0;
-  
+
   /** @internal */
   @Prop() volume = 0;
 
@@ -331,7 +331,7 @@ implements
   }
 
   private onLoadedMetadata() {
-    this.mediaEl!.volume = (this.volume / 100);
+    this.mediaEl!.volume = this.volume / 100;
     this.listenToTextTracksForChanges();
     this.onTextTracksChange();
     this.onProgress();

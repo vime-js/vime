@@ -10,7 +10,7 @@ export interface YouTubeParams {
    *
    * @default 0
    */
-  autoplay?: 0 | 1
+  autoplay?: 0 | 1;
 
   /**
    * This parameter specifies whether the initial video will load with audio muted. Supported values
@@ -18,7 +18,7 @@ export interface YouTubeParams {
    *
    * @default 0
    */
-  mute?: 0 | 1
+  mute?: 0 | 1;
 
   /**
    * This parameter specifies the default language that the player will use to display captions.
@@ -29,13 +29,13 @@ export interface YouTubeParams {
    * cc_load_policy parameter, then captions will not display by default, but will display in the
    * specified language if the user opts to turn captions on.
    */
-  cc_lang_pref?: string
+  cc_lang_pref?: string;
 
   /**
    * Setting the parameter's value to 1 causes closed captions to be shown by default, even if the
    * user has turned captions off. The default behavior is based on user preference.
    */
-  cc_load_policy?: 1
+  cc_load_policy?: 1;
 
   /**
    * This parameter specifies the color that will be used in the player's video progress bar to
@@ -47,7 +47,7 @@ export interface YouTubeParams {
    *
    * @default 'red'
    */
-  color?: 'red' | 'white'
+  color?: 'red' | 'white';
 
   /**
    * This parameter indicates whether the video player controls are displayed:
@@ -57,7 +57,7 @@ export interface YouTubeParams {
    *
    * @default 1
    */
-  controls?: 0 | 1
+  controls?: 0 | 1;
 
   /**
    * Setting the parameter's value to 1 causes the player to not respond to keyboard controls. The
@@ -78,7 +78,7 @@ export interface YouTubeParams {
    *
    * @default 0
    */
-  disablekb?: 0 | 1
+  disablekb?: 0 | 1;
 
   /**
    * Setting the parameter's value to 1 enables the player to be controlled via IFrame or JavaScript
@@ -90,7 +90,7 @@ export interface YouTubeParams {
    *
    * @default 0
    */
-  enablejsapi?: 0 | 1
+  enablejsapi?: 0 | 1;
 
   /**
    * This parameter causes the player to begin playing the video at the given number of seconds
@@ -101,7 +101,7 @@ export interface YouTubeParams {
    *
    * @default undefined
    */
-  start?: number
+  start?: number;
 
   /**
    * This parameter specifies the time, measured in seconds from the start of the video, when the
@@ -113,7 +113,7 @@ export interface YouTubeParams {
    *
    * @default undefined
    */
-  end?: number
+  end?: number;
 
   /**
    * Setting this parameter to 0 prevents the fullscreen button from displaying in the player. The
@@ -121,7 +121,7 @@ export interface YouTubeParams {
    *
    * @default 1
    */
-  fs?: 0 | 1
+  fs?: 0 | 1;
 
   /**
    * Sets the player's interface language. The parameter value is an ISO 639-1 two-letter language
@@ -132,7 +132,7 @@ export interface YouTubeParams {
    * track. Note that YouTube might select a different caption track language for a particular user
    * based on the user's individual language preferences and the availability of caption tracks.
    */
-  hl?: string
+  hl?: string;
 
   /**
    * Setting the parameter's value to 1 causes video annotations to be shown by default, whereas
@@ -140,7 +140,7 @@ export interface YouTubeParams {
    *
    * @default 1
    */
-  iv_load_policy?: 1 | 3
+  iv_load_policy?: 1 | 3;
 
   /**
    * The `list` parameter, in conjunction with the `listType` parameter, identifies the content that
@@ -161,7 +161,7 @@ export interface YouTubeParams {
    *
    * @default undefined
    */
-  list?: string
+  list?: string;
 
   /**
    * The listType parameter, in conjunction with the list parameter, identifies the content that
@@ -172,7 +172,7 @@ export interface YouTubeParams {
    *
    * @default undefined
    */
-  listType?: 'playlist' | 'search' | 'user_uploads'
+  listType?: 'playlist' | 'search' | 'user_uploads';
 
   /**
    * In the case of a single video player, a setting of 1 causes the player to play the initial
@@ -181,7 +181,7 @@ export interface YouTubeParams {
    *
    * @default 0
    */
-  loop?: 0 | 1
+  loop?: 0 | 1;
 
   /**
    * This parameter lets you use a YouTube player that does not show a YouTube logo. Set the
@@ -191,7 +191,7 @@ export interface YouTubeParams {
    *
    * @default undefined
    */
-  modestbranding?: 1
+  modestbranding?: 1;
 
   /**
    * This parameter provides an extra security measure for the IFrame API and is only supported for
@@ -200,7 +200,7 @@ export interface YouTubeParams {
    *
    * @default undefined
    */
-  origin?: string
+  origin?: string;
 
   /**
    * This parameter specifies a comma-separated list of video IDs to play. If you specify a value,
@@ -209,7 +209,7 @@ export interface YouTubeParams {
    *
    * @default undefined
    */
-  playlist?: string
+  playlist?: string;
 
   /**
    * This parameter controls whether videos play inline or fullscreen in an HTML5 player on iOS.
@@ -223,7 +223,7 @@ export interface YouTubeParams {
    *
    * @default 0
    */
-  playsinline?: 0 | 1
+  playsinline?: 0 | 1;
 
   /**
    * If the rel parameter is set to 0, related videos will come from the same channel as the video
@@ -232,7 +232,7 @@ export interface YouTubeParams {
    *
    * @default 1
    */
-  rel?: 0 | 1
+  rel?: 0 | 1;
 
   /**
    * This parameter identifies the URL where the player is embedded. This value is used in YouTube
@@ -244,5 +244,5 @@ export interface YouTubeParams {
    *
    * @default undefined
    */
-  widget_referrer?: string
+  widget_referrer?: string;
 }

@@ -16,16 +16,20 @@ export type ProviderDispatcher = <P extends keyof ProviderWritableProps>(
  *
  * @param ref A component reference to dispatch the state change events from.
  */
-export const createProviderDispatcher = (
-  ref: any,
-): ProviderDispatcher => (prop: any, value: any) => {
+export const createProviderDispatcher = (ref: any): ProviderDispatcher => (
+  prop: any,
+  value: any,
+) => {
   const el = isInstanceOf(ref, HTMLElement) ? ref : getElement(ref);
 
-  const event = new CustomEvent<StateChange<ProviderWritableProps>>(PROVIDER_CHANGE_EVENT, {
-    bubbles: true,
-    composed: true,
-    detail: { by: el, prop, value },
-  });
+  const event = new CustomEvent<StateChange<ProviderWritableProps>>(
+    PROVIDER_CHANGE_EVENT,
+    {
+      bubbles: true,
+      composed: true,
+      detail: { by: el, prop, value },
+    },
+  );
 
   el.dispatchEvent(event);
 };

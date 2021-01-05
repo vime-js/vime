@@ -5,9 +5,9 @@ import { isInstanceOf } from '../../../utils/unit';
 export const STATE_CHANGE_EVENT = 'vmStateChange';
 
 export type StateChange<T = WritableProps, P extends keyof T = keyof T> = {
-  by: HTMLElement,
-  prop: P,
-  value: T[P]
+  by: HTMLElement;
+  prop: P;
+  value: T[P];
 };
 
 export type Dispatcher = <P extends keyof WritableProps>(
@@ -21,9 +21,10 @@ export type Dispatcher = <P extends keyof WritableProps>(
  *
  * @param ref An element to dispatch the state change events from.
  */
-export const createDispatcher = (
-  ref: any,
-): Dispatcher => (prop: any, value: any) => {
+export const createDispatcher = (ref: any): Dispatcher => (
+  prop: any,
+  value: any,
+) => {
   const el = isInstanceOf(ref, HTMLElement) ? ref : getElement(ref);
 
   const event = new CustomEvent<StateChange>(STATE_CHANGE_EVENT, {

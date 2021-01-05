@@ -16,11 +16,11 @@ export class LazyLoader {
     if (isNullOrUndefined(this.el)) return;
 
     this.intersectionObs = this.canObserveIntersection()
-      ? (new IntersectionObserver(this.onIntersection.bind(this)))
+      ? new IntersectionObserver(this.onIntersection.bind(this))
       : undefined;
 
     this.mutationObs = this.canObserveMutations()
-      ? (new MutationObserver(this.onMutation.bind(this)))
+      ? new MutationObserver(this.onMutation.bind(this))
       : undefined;
 
     this.mutationObs?.observe(this.el, {
@@ -71,7 +71,9 @@ export class LazyLoader {
   }
 
   private getLazyElements() {
-    const root = !isNullOrUndefined(this.el.shadowRoot) ? this.el.shadowRoot : this.el;
+    const root = !isNullOrUndefined(this.el.shadowRoot)
+      ? this.el.shadowRoot
+      : this.el;
     return root!.querySelectorAll<HTMLElement>('.lazy');
   }
 

@@ -1,12 +1,17 @@
 import {
-  isWritableProp, PlayerProp, PlayerProps, WritableProps,
+  isWritableProp,
+  PlayerProp,
+  PlayerProps,
+  WritableProps,
 } from '../core/player/PlayerProps';
 
 /**
  * Properties that can only be written to by a provider.
  */
-export type ProviderWritableProps = WritableProps & Pick<PlayerProps,
-'ready'
+export type ProviderWritableProps = WritableProps &
+Pick<
+PlayerProps,
+| 'ready'
 | 'playing'
 | 'playbackReady'
 | 'playbackStarted'
@@ -57,6 +62,5 @@ const providerWritableProps = new Set<PlayerProp>([
   'isFullscreenActive',
 ]);
 
-export const isProviderWritableProp = (
-  prop: PlayerProp,
-) => isWritableProp(prop) || providerWritableProps.has(prop);
+export const isProviderWritableProp = (prop: PlayerProp) =>
+  isWritableProp(prop) || providerWritableProps.has(prop);

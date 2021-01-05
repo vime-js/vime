@@ -13,12 +13,12 @@ export const enum DailymotionCommand {
 }
 
 export interface DailymotionCommandArg {
-  [DailymotionCommand.Play]: void
-  [DailymotionCommand.Pause]: void
-  [DailymotionCommand.Seek]: number
-  [DailymotionCommand.Volume]: number
-  [DailymotionCommand.Controls]: boolean
-  [DailymotionCommand.Muted]: boolean
-  [DailymotionCommand.Quality]: string
-  [DailymotionCommand.Fullscreen]: boolean
+  [DailymotionCommand.Play]: void;
+  [DailymotionCommand.Pause]: void;
+  [DailymotionCommand.Seek]: number;
+  [DailymotionCommand.Volume]: number;
+  [DailymotionCommand.Controls]: boolean;
+  [DailymotionCommand.Muted]: boolean;
+  [DailymotionCommand.Quality]: string;
+  [DailymotionCommand.Fullscreen]: boolean;
 }
