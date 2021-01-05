@@ -23,8 +23,8 @@
   },
   "scripts": {
     "build": "rimraf dist && npm run build:cjs && npm run build:esm",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
-    "build:esm": "tsc --module es6 --outDir dist/esm",
+    "build:cjs": "tsc --target es5 --module commonjs --outDir dist/cjs",
+    "build:esm": "tsc --target es6 --module es6 --outDir dist/esm",
     "lint": ""
   },
   "dependencies": {
