@@ -6,6 +6,7 @@ const Listr = require('listr');
 const { bold, cyan, yellow, reset, dim } = require('kleur');
 const { promisify } = require('util');
 const conventionalRecommendedBump = require(`conventional-recommended-bump`);
+const { release } = require('os');
 
 const rootDir = path.join(__dirname, '../');
 
@@ -41,12 +42,6 @@ function projectPath(project) {
 async function getNewVersion(step) {
   const bump = promisify(conventionalRecommendedBump);
   const { releaseType, reason } = await bump({ preset: 'angular' });
-
-  if (releaseType === 'patch' && reason === 'There are 0 BREAKING CHANGES and 0 features') {
-    console.log(yellow(`No changes since the last commit, skipping ${step}.`))
-    return undefined;
-  }
-
   const { version: oldVersion } = readPkg('core');
   const newVersion = semver.inc(oldVersion, releaseType);
   return newVersion;
