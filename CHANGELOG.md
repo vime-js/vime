@@ -1,3 +1,12 @@
+## 5.0.27 (2021-01-06)
+
+
+### Bug Fixes
+
+* **core:** transpile using esmodule babel preset to be safe ([1445dc4](https://github.com/vime-js/vime/commit/1445dc42a33ef7929aaa137edd818dcb5aa38da6)), closes [#156](https://github.com/vime-js/vime/issues/156)
+
+
+
 ## 5.0.26 (2021-01-06)
 
 
