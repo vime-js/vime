@@ -1,6 +1,6 @@
 {
   "name": "@vime/svelte",
-  "version": "5.0.25",
+  "version": "5.0.26",
   "description": "Svelte bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -28,7 +28,7 @@
     "lint": ""
   },
   "dependencies": {
-    "@vime/core": "5.0.25"
+    "@vime/core": "5.0.26"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",

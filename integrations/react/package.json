@@ -1,6 +1,6 @@
 {
   "name": "@vime/react",
-  "version": "5.0.25",
+  "version": "5.0.26",
   "description": "React bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@seznam/compose-react-refs": "^1.0.4",
-    "@vime/core": "5.0.25"
+    "@vime/core": "5.0.26"
   },
   "devDependencies": {
     "@snowpack/plugin-react-refresh": "^2.3.9",

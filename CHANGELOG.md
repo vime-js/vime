@@ -1,3 +1,12 @@
+## 5.0.26 (2021-01-06)
+
+
+### Bug Fixes
+
+* webpack 4 does not support optional chaining ([cc97914](https://github.com/vime-js/vime/commit/cc97914688a7e74d05c332d87a1d99cd0988db49)), closes [#156](https://github.com/vime-js/vime/issues/156)
+
+
+
 ## 5.0.25 (2021-01-05)
 
 
