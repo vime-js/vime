@@ -29,7 +29,7 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "stencil build && npm run transpile",
+    "build": "stencil build && npm run transpile:es",
     "build:watch": "stencil build --watch",
     "build:themes": "rimraf themes/* && npm run min:theme.default && npm run min:theme.light",
     "min:theme.default": "cleancss -o themes/default.css src/themes/default.css",
@@ -41,7 +41,7 @@
     "lint:eslint": "eslint ./src --quiet --fix --ignore-path ../.gitignore",
     "serve": "stencil build --dev --watch --port 3336 --serve",
     "serve:prod": "sirv --single playground/index.html --cors --port 3444",
-    "transpile": "babel dist/custom-elements/index.js --out-file dist/custom-elements/index.js --plugins=@babel/plugin-proposal-optional-chaining"
+    "transpile:es": "babel dist/custom-elements/index.js --out-file dist/custom-elements/index.js"
   },
   "dependencies": {
     "@stencil/core": "^2.2.0",
@@ -51,6 +51,7 @@
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-optional-chaining": "^7.12.7",
+    "@babel/preset-env": "^7.12.11",
     "@types/hls.js": "^0.13.1",
     "@types/node": "^14.6.3",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
