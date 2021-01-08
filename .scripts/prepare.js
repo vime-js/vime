@@ -119,7 +119,7 @@ function copyAngularReadme(tasks) {
 
 function copyNPMConfigToPackage(package, tasks) {
   const pkg = common.readPkg(package);
-  const configPath = path.resolve(common.rootDir, '.npmrc');
+  const configPath = path.resolve(common.rootDir, '.scripts/.npmrc');
   let pkgPath = common.projectPath(package);
   if (package === 'integrations/angular') pkgPath = path.join(pkgPath, 'dist/vime/angular');
   const pkgConfigPath = path.resolve(pkgPath, '.npmrc');
