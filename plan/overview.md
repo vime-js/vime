@@ -152,6 +152,8 @@ Reference: [createReactCustomElementType.ts](https://github.com/carbon-design-sy
 
 wip.
 
+[Shaka Player - Talking About Language](https://github.com/google/shaka-player/blob/master/docs/design/talking-about-languages.md)
+
 ### Icons
 
 wip.
