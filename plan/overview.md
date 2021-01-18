@@ -138,7 +138,7 @@ module exports for `require` and `import` . This is useful if we decide to provi
 
 ## Architecture
 
-See [architecture.md](./architecture).
+See [architecture.md](./architecture.md).
 
 ### Framework Integrations
 
