@@ -2,63 +2,7 @@
 
 ## Player
 
-```mermaid
-classDiagram
-
-class Player {
-    +identifer: symbol
-    +src: Source[]
-    +paused: boolean
-    +volume: boolean
-    ...
-    +autoAspectRatio: boolean
-    +autoFetchPoster: boolean
-    +heartbeatInterval: number
-    +currentProvider?: MediaProvider~any~
-    #playerStore: PlayerStore
-
-    #handleMediaChange() void
-    #handleProviderChange() void
-    +play() Promise~void~ 
-    +pause() Promise~void~ 
-    +getCaptureStream() MediaStream|undefined
-    +getCurrentPlayerState() PlayerState
-    +subscribe(state => void, debounceMs?: number) Unsubscribe
-}
-
-Player -- ViewType
-Player -- MediaType
-Player "1" --* "0..*" MediaProvider: composition
-
-class PlayerStore
-class Unistore
-<<library>>Unistore
-
-PlayerStore --> Unistore: uses
-Player --> PlayerStore: has
-
-class PlayerState {
-    <<interface>>
-    src: Source[]
-    currentTime: number
-    volume: number
-    trim?: MediaTrim
-    inViewport: boolean
-    ...
-}
-
-Player --> PlayerState: implements
-PlayerStore --> PlayerState: implements
-
-class MediaTrim {
-    <<interface>>
-    startTime: number
-    endTime: number
-    duration: number
-}
-
-PlayerState -- MediaTrim
-```
+[![](https://mermaid.ink/img/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIFBsYXllciB7XG4gICAgK2lkZW50aWZlcjogc3ltYm9sXG4gICAgK3NyYzogU291cmNlW11cbiAgICArcGF1c2VkOiBib29sZWFuXG4gICAgK3ZvbHVtZTogYm9vbGVhblxuICAgIC4uLlxuICAgICthdXRvQXNwZWN0UmF0aW86IGJvb2xlYW5cbiAgICArYXV0b0ZldGNoUG9zdGVyOiBib29sZWFuXG4gICAgK2hlYXJ0YmVhdEludGVydmFsOiBudW1iZXJcbiAgICArY3VycmVudFByb3ZpZGVyPzogTWVkaWFQcm92aWRlcn5hbnl-XG4gICAgI3BsYXllclN0b3JlOiBQbGF5ZXJTdG9yZVxuXG4gICAgI2hhbmRsZU1lZGlhQ2hhbmdlKCkgdm9pZFxuICAgICNoYW5kbGVQcm92aWRlckNoYW5nZSgpIHZvaWRcbiAgICArcGxheSgpIFByb21pc2V-dm9pZH4gXG4gICAgK3BhdXNlKCkgUHJvbWlzZX52b2lkfiBcbiAgICArZ2V0Q2FwdHVyZVN0cmVhbSgpIE1lZGlhU3RyZWFtfHVuZGVmaW5lZFxuICAgICtnZXRDdXJyZW50UGxheWVyU3RhdGUoKSBQbGF5ZXJTdGF0ZVxuICAgICtzdWJzY3JpYmUoc3RhdGUgPT4gdm9pZCwgZGVib3VuY2VNcz86IG51bWJlcikgVW5zdWJzY3JpYmVcbn1cblxuUGxheWVyIC0tIFZpZXdUeXBlXG5QbGF5ZXIgLS0gTWVkaWFUeXBlXG5QbGF5ZXIgXCIxXCIgLS0qIFwiMC4uKlwiIE1lZGlhUHJvdmlkZXI6IGNvbXBvc2l0aW9uXG5cbmNsYXNzIFBsYXllclN0b3JlXG5jbGFzcyBVbmlzdG9yZVxuPDxsaWJyYXJ5Pj5VbmlzdG9yZVxuXG5QbGF5ZXJTdG9yZSAtLT4gVW5pc3RvcmU6IHVzZXNcblBsYXllciAtLT4gUGxheWVyU3RvcmU6IGhhc1xuXG5jbGFzcyBQbGF5ZXJTdGF0ZSB7XG4gICAgPDxpbnRlcmZhY2U-PlxuICAgIHNyYzogU291cmNlW11cbiAgICBjdXJyZW50VGltZTogbnVtYmVyXG4gICAgdm9sdW1lOiBudW1iZXJcbiAgICB0cmltPzogTWVkaWFUcmltXG4gICAgaW5WaWV3cG9ydDogYm9vbGVhblxuICAgIC4uLlxufVxuXG5QbGF5ZXIgLS0-IFBsYXllclN0YXRlOiBpbXBsZW1lbnRzXG5QbGF5ZXJTdG9yZSAtLT4gUGxheWVyU3RhdGU6IGltcGxlbWVudHNcblxuY2xhc3MgTWVkaWFUcmltIHtcbiAgICA8PGludGVyZmFjZT4-XG4gICAgc3RhcnRUaW1lOiBudW1iZXJcbiAgICBlbmRUaW1lOiBudW1iZXJcbiAgICBkdXJhdGlvbjogbnVtYmVyXG59XG5cblBsYXllclN0YXRlIC0tIE1lZGlhVHJpbSIsIm1lcm1haWQiOnt9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIFBsYXllciB7XG4gICAgK2lkZW50aWZlcjogc3ltYm9sXG4gICAgK3NyYzogU291cmNlW11cbiAgICArcGF1c2VkOiBib29sZWFuXG4gICAgK3ZvbHVtZTogYm9vbGVhblxuICAgIC4uLlxuICAgICthdXRvQXNwZWN0UmF0aW86IGJvb2xlYW5cbiAgICArYXV0b0ZldGNoUG9zdGVyOiBib29sZWFuXG4gICAgK2hlYXJ0YmVhdEludGVydmFsOiBudW1iZXJcbiAgICArY3VycmVudFByb3ZpZGVyPzogTWVkaWFQcm92aWRlcn5hbnl-XG4gICAgI3BsYXllclN0b3JlOiBQbGF5ZXJTdG9yZVxuXG4gICAgI2hhbmRsZU1lZGlhQ2hhbmdlKCkgdm9pZFxuICAgICNoYW5kbGVQcm92aWRlckNoYW5nZSgpIHZvaWRcbiAgICArcGxheSgpIFByb21pc2V-dm9pZH4gXG4gICAgK3BhdXNlKCkgUHJvbWlzZX52b2lkfiBcbiAgICArZ2V0Q2FwdHVyZVN0cmVhbSgpIE1lZGlhU3RyZWFtfHVuZGVmaW5lZFxuICAgICtnZXRDdXJyZW50UGxheWVyU3RhdGUoKSBQbGF5ZXJTdGF0ZVxuICAgICtzdWJzY3JpYmUoc3RhdGUgPT4gdm9pZCwgZGVib3VuY2VNcz86IG51bWJlcikgVW5zdWJzY3JpYmVcbn1cblxuUGxheWVyIC0tIFZpZXdUeXBlXG5QbGF5ZXIgLS0gTWVkaWFUeXBlXG5QbGF5ZXIgXCIxXCIgLS0qIFwiMC4uKlwiIE1lZGlhUHJvdmlkZXI6IGNvbXBvc2l0aW9uXG5cbmNsYXNzIFBsYXllclN0b3JlXG5jbGFzcyBVbmlzdG9yZVxuPDxsaWJyYXJ5Pj5VbmlzdG9yZVxuXG5QbGF5ZXJTdG9yZSAtLT4gVW5pc3RvcmU6IHVzZXNcblBsYXllciAtLT4gUGxheWVyU3RvcmU6IGhhc1xuXG5jbGFzcyBQbGF5ZXJTdGF0ZSB7XG4gICAgPDxpbnRlcmZhY2U-PlxuICAgIHNyYzogU291cmNlW11cbiAgICBjdXJyZW50VGltZTogbnVtYmVyXG4gICAgdm9sdW1lOiBudW1iZXJcbiAgICB0cmltPzogTWVkaWFUcmltXG4gICAgaW5WaWV3cG9ydDogYm9vbGVhblxuICAgIC4uLlxufVxuXG5QbGF5ZXIgLS0-IFBsYXllclN0YXRlOiBpbXBsZW1lbnRzXG5QbGF5ZXJTdG9yZSAtLT4gUGxheWVyU3RhdGU6IGltcGxlbWVudHNcblxuY2xhc3MgTWVkaWFUcmltIHtcbiAgICA8PGludGVyZmFjZT4-XG4gICAgc3RhcnRUaW1lOiBudW1iZXJcbiAgICBlbmRUaW1lOiBudW1iZXJcbiAgICBkdXJhdGlvbjogbnVtYmVyXG59XG5cblBsYXllclN0YXRlIC0tIE1lZGlhVHJpbSIsIm1lcm1haWQiOnt9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)
 
 ### Why `PlayerStore`?
 
@@ -79,169 +23,23 @@ new features such as the ability to pass in multiple providers in the DOM at the
 (player can select provider based on who can play current `src`), and it allows different 
 [boot strategies](#boot-strategy) to be used to determine how/when the provider is loaded.
 
-```mermaid
-classDiagram
-
-class YouTube
-class Vimeo
-class Dailymotion
-class Embed
-
-YouTube -- Embed: uses
-Vimeo -- Embed: uses
-Dailymotion -- Embed: uses
-
-class EmbededMediaProvider~ParamsType,MessageType~ {
-    <<abstract>>
-    #embed?: HTMLVmEmbedElement
-    #embedSrc?: string
-
-    getMediaTitle()* string|undefined
-    getOrigin()* string
-    buildParams()* ParamsType
-    getDecoder()* Decoder
-    getPreconnections()*
-    onEmbedLoaded()*
-    onEmbedMessage(CustomEvent~MessageType~ event)*
-    onEmbedSrcChange()*
-}
-
-EmbededMediaProvider <|-- YouTube: extends
-EmbededMediaProvider <|-- Vimeo: extends
-EmbededMediaProvider <|-- Dailymotion: extends
-
-class Video
-class Audio
-class File
-class HLS
-class DASH
-
-class MediaFileProvider {
-    #mediaEl?: HTMLMediaElement
-    +crossOrigin?: true | anonymous | credentials
-    +preload?: true | none | metadata | auto
-    +poster?: string
-    +controlsList?: string
-    +autoPiP?: string
-    +disablePiP?: boolean
-    +disableRemotePlayback?: boolean
-}
-
-File <|-- Audio: extends
-File <|-- Video: extends
-MediaFileProvider <|-- File: extends
-MediaFileProvider <|-- HLS: extends
-MediaFileProvider <|-- DASH: extends
-
-class MediaProvider~InternalPlayerType~ {
-    <<abstract>>
-    #controls: boolean
-    #language: string
-    #playsinline:boolean
-
-    play()* Promise~void~
-    pause()* Promise~void~
-    canPlay(type: string)* void
-    loadMedia(src: Source[])* void
-    getInternalPlayer()* InternalPlayerType
-    getCurrentViewType()* ViewType
-    getCurrentMediaType()* MediaType
-    setCurrentTime(time: number)* void
-    setMuted(muted: boolean)* void
-    setVolume(volume: number)* void
-    canSetPlaybackRate()* boolean
-    setPlaybackRate(rate: number)* void
-    canSetPlaybackQuality()* boolean
-    setPlaybackQuality(quality: string)* void
-    canSetFullscreen()* boolean
-    enterFullscreen(options?: FullscreenOptions)* Promise~void~
-    exitFullscreen()* Promise~void~
-    canSetPiP()* boolean
-    enterPiP()* Promise~void~
-    exitPiP()* Promise~void~
-    setCurrentTextTrack(trackId: number)* void
-    setTextTrackVisibility(isVisible: boolean)* void
-    getMediaTrimming()* MediaTrim|undefined
-    fetchRecommendedAspectRatio()* Promise~string~
-    fetchCurrentPoster()* Promise~string~
-    fetchCurrentMediaTitle()* Promise~string~
-    fetchCurrentMediaDuration()* Promise~number~
-    renderPlayer()* HTMLTemplateString
-    destroy()* void
-    -render() void
-}
-
-MediaProvider <|-- MediaFileProvider
-MediaProvider <|-- EmbededMediaProvider
-
-class MediaType {
-    <<enumeration>>
-    AUDIO
-    VIDEO
-}
-
-class ViewType {
-    <<enumeration>>
-    AUDIO
-    VIDEO
-}
-
-MediaType -- MediaProvider
-ViewType -- MediaProvider
-
-class Player
-
-Player -- MediaType
-Player -- ViewType
-Player "1" --* "0..*" MediaProvider: composition
-```
+[![](https://mermaid.ink/img/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIFlvdVR1YmVcbmNsYXNzIFZpbWVvXG5jbGFzcyBEYWlseW1vdGlvblxuY2xhc3MgRW1iZWRcblxuWW91VHViZSAtLSBFbWJlZDogdXNlc1xuVmltZW8gLS0gRW1iZWQ6IHVzZXNcbkRhaWx5bW90aW9uIC0tIEVtYmVkOiB1c2VzXG5cbmNsYXNzIEVtYmVkZWRNZWRpYVByb3ZpZGVyflBhcmFtc1R5cGUsTWVzc2FnZVR5cGV-IHtcbiAgICA8PGFic3RyYWN0Pj5cbiAgICAjZW1iZWQ_OiBIVE1MVm1FbWJlZEVsZW1lbnRcbiAgICAjZW1iZWRTcmM_OiBzdHJpbmdcblxuICAgIGdldE1lZGlhVGl0bGUoKSogc3RyaW5nfHVuZGVmaW5lZFxuICAgIGdldE9yaWdpbigpKiBzdHJpbmdcbiAgICBidWlsZFBhcmFtcygpKiBQYXJhbXNUeXBlXG4gICAgZ2V0RGVjb2RlcigpKiBEZWNvZGVyXG4gICAgZ2V0UHJlY29ubmVjdGlvbnMoKSpcbiAgICBvbkVtYmVkTG9hZGVkKCkqXG4gICAgb25FbWJlZE1lc3NhZ2UoQ3VzdG9tRXZlbnR-TWVzc2FnZVR5cGV-IGV2ZW50KSpcbiAgICBvbkVtYmVkU3JjQ2hhbmdlKCkqXG59XG5cbkVtYmVkZWRNZWRpYVByb3ZpZGVyIDx8LS0gWW91VHViZTogZXh0ZW5kc1xuRW1iZWRlZE1lZGlhUHJvdmlkZXIgPHwtLSBWaW1lbzogZXh0ZW5kc1xuRW1iZWRlZE1lZGlhUHJvdmlkZXIgPHwtLSBEYWlseW1vdGlvbjogZXh0ZW5kc1xuXG5jbGFzcyBWaWRlb1xuY2xhc3MgQXVkaW9cbmNsYXNzIEZpbGVcbmNsYXNzIEhMU1xuY2xhc3MgREFTSFxuXG5jbGFzcyBNZWRpYUZpbGVQcm92aWRlciB7XG4gICAgI21lZGlhRWw_OiBIVE1MTWVkaWFFbGVtZW50XG4gICAgK2Nyb3NzT3JpZ2luPzogdHJ1ZSB8IGFub255bW91cyB8IGNyZWRlbnRpYWxzXG4gICAgK3ByZWxvYWQ_OiB0cnVlIHwgbm9uZSB8IG1ldGFkYXRhIHwgYXV0b1xuICAgICtwb3N0ZXI_OiBzdHJpbmdcbiAgICArY29udHJvbHNMaXN0Pzogc3RyaW5nXG4gICAgK2F1dG9QaVA_OiBzdHJpbmdcbiAgICArZGlzYWJsZVBpUD86IGJvb2xlYW5cbiAgICArZGlzYWJsZVJlbW90ZVBsYXliYWNrPzogYm9vbGVhblxufVxuXG5GaWxlIDx8LS0gQXVkaW86IGV4dGVuZHNcbkZpbGUgPHwtLSBWaWRlbzogZXh0ZW5kc1xuTWVkaWFGaWxlUHJvdmlkZXIgPHwtLSBGaWxlOiBleHRlbmRzXG5NZWRpYUZpbGVQcm92aWRlciA8fC0tIEhMUzogZXh0ZW5kc1xuTWVkaWFGaWxlUHJvdmlkZXIgPHwtLSBEQVNIOiBleHRlbmRzXG5cbmNsYXNzIE1lZGlhUHJvdmlkZXJ-SW50ZXJuYWxQbGF5ZXJUeXBlfiB7XG4gICAgPDxhYnN0cmFjdD4-XG4gICAgI2NvbnRyb2xzOiBib29sZWFuXG4gICAgI2xhbmd1YWdlOiBzdHJpbmdcbiAgICAjcGxheXNpbmxpbmU6Ym9vbGVhblxuXG4gICAgcGxheSgpKiBQcm9taXNlfnZvaWR-XG4gICAgcGF1c2UoKSogUHJvbWlzZX52b2lkflxuICAgIGNhblBsYXkodHlwZTogc3RyaW5nKSogdm9pZFxuICAgIGxvYWRNZWRpYShzcmM6IFNvdXJjZVtdKSogdm9pZFxuICAgIGdldEludGVybmFsUGxheWVyKCkqIEludGVybmFsUGxheWVyVHlwZVxuICAgIGdldEN1cnJlbnRWaWV3VHlwZSgpKiBWaWV3VHlwZVxuICAgIGdldEN1cnJlbnRNZWRpYVR5cGUoKSogTWVkaWFUeXBlXG4gICAgc2V0Q3VycmVudFRpbWUodGltZTogbnVtYmVyKSogdm9pZFxuICAgIHNldE11dGVkKG11dGVkOiBib29sZWFuKSogdm9pZFxuICAgIHNldFZvbHVtZSh2b2x1bWU6IG51bWJlcikqIHZvaWRcbiAgICBjYW5TZXRQbGF5YmFja1JhdGUoKSogYm9vbGVhblxuICAgIHNldFBsYXliYWNrUmF0ZShyYXRlOiBudW1iZXIpKiB2b2lkXG4gICAgY2FuU2V0UGxheWJhY2tRdWFsaXR5KCkqIGJvb2xlYW5cbiAgICBzZXRQbGF5YmFja1F1YWxpdHkocXVhbGl0eTogc3RyaW5nKSogdm9pZFxuICAgIGNhblNldEZ1bGxzY3JlZW4oKSogYm9vbGVhblxuICAgIGVudGVyRnVsbHNjcmVlbihvcHRpb25zPzogRnVsbHNjcmVlbk9wdGlvbnMpKiBQcm9taXNlfnZvaWR-XG4gICAgZXhpdEZ1bGxzY3JlZW4oKSogUHJvbWlzZX52b2lkflxuICAgIGNhblNldFBpUCgpKiBib29sZWFuXG4gICAgZW50ZXJQaVAoKSogUHJvbWlzZX52b2lkflxuICAgIGV4aXRQaVAoKSogUHJvbWlzZX52b2lkflxuICAgIHNldEN1cnJlbnRUZXh0VHJhY2sodHJhY2tJZDogbnVtYmVyKSogdm9pZFxuICAgIHNldFRleHRUcmFja1Zpc2liaWxpdHkoaXNWaXNpYmxlOiBib29sZWFuKSogdm9pZFxuICAgIGdldE1lZGlhVHJpbW1pbmcoKSogTWVkaWFUcmltfHVuZGVmaW5lZFxuICAgIGZldGNoUmVjb21tZW5kZWRBc3BlY3RSYXRpbygpKiBQcm9taXNlfnN0cmluZ35cbiAgICBmZXRjaEN1cnJlbnRQb3N0ZXIoKSogUHJvbWlzZX5zdHJpbmd-XG4gICAgZmV0Y2hDdXJyZW50TWVkaWFUaXRsZSgpKiBQcm9taXNlfnN0cmluZ35cbiAgICBmZXRjaEN1cnJlbnRNZWRpYUR1cmF0aW9uKCkqIFByb21pc2V-bnVtYmVyflxuICAgIHJlbmRlclBsYXllcigpKiBIVE1MVGVtcGxhdGVTdHJpbmdcbiAgICBkZXN0cm95KCkqIHZvaWRcbiAgICAtcmVuZGVyKCkgdm9pZFxufVxuXG5NZWRpYVByb3ZpZGVyIDx8LS0gTWVkaWFGaWxlUHJvdmlkZXJcbk1lZGlhUHJvdmlkZXIgPHwtLSBFbWJlZGVkTWVkaWFQcm92aWRlclxuXG5jbGFzcyBNZWRpYVR5cGUge1xuICAgIDw8ZW51bWVyYXRpb24-PlxuICAgIEFVRElPXG4gICAgVklERU9cbn1cblxuY2xhc3MgVmlld1R5cGUge1xuICAgIDw8ZW51bWVyYXRpb24-PlxuICAgIEFVRElPXG4gICAgVklERU9cbn1cblxuTWVkaWFUeXBlIC0tIE1lZGlhUHJvdmlkZXJcblZpZXdUeXBlIC0tIE1lZGlhUHJvdmlkZXJcblxuY2xhc3MgUGxheWVyXG5cblBsYXllciAtLSBNZWRpYVR5cGVcblBsYXllciAtLSBWaWV3VHlwZVxuUGxheWVyIFwiMVwiIC0tKiBcIjAuLipcIiBNZWRpYVByb3ZpZGVyOiBjb21wb3NpdGlvbiIsIm1lcm1haWQiOnt9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIFlvdVR1YmVcbmNsYXNzIFZpbWVvXG5jbGFzcyBEYWlseW1vdGlvblxuY2xhc3MgRW1iZWRcblxuWW91VHViZSAtLSBFbWJlZDogdXNlc1xuVmltZW8gLS0gRW1iZWQ6IHVzZXNcbkRhaWx5bW90aW9uIC0tIEVtYmVkOiB1c2VzXG5cbmNsYXNzIEVtYmVkZWRNZWRpYVByb3ZpZGVyflBhcmFtc1R5cGUsTWVzc2FnZVR5cGV-IHtcbiAgICA8PGFic3RyYWN0Pj5cbiAgICAjZW1iZWQ_OiBIVE1MVm1FbWJlZEVsZW1lbnRcbiAgICAjZW1iZWRTcmM_OiBzdHJpbmdcblxuICAgIGdldE1lZGlhVGl0bGUoKSogc3RyaW5nfHVuZGVmaW5lZFxuICAgIGdldE9yaWdpbigpKiBzdHJpbmdcbiAgICBidWlsZFBhcmFtcygpKiBQYXJhbXNUeXBlXG4gICAgZ2V0RGVjb2RlcigpKiBEZWNvZGVyXG4gICAgZ2V0UHJlY29ubmVjdGlvbnMoKSpcbiAgICBvbkVtYmVkTG9hZGVkKCkqXG4gICAgb25FbWJlZE1lc3NhZ2UoQ3VzdG9tRXZlbnR-TWVzc2FnZVR5cGV-IGV2ZW50KSpcbiAgICBvbkVtYmVkU3JjQ2hhbmdlKCkqXG59XG5cbkVtYmVkZWRNZWRpYVByb3ZpZGVyIDx8LS0gWW91VHViZTogZXh0ZW5kc1xuRW1iZWRlZE1lZGlhUHJvdmlkZXIgPHwtLSBWaW1lbzogZXh0ZW5kc1xuRW1iZWRlZE1lZGlhUHJvdmlkZXIgPHwtLSBEYWlseW1vdGlvbjogZXh0ZW5kc1xuXG5jbGFzcyBWaWRlb1xuY2xhc3MgQXVkaW9cbmNsYXNzIEZpbGVcbmNsYXNzIEhMU1xuY2xhc3MgREFTSFxuXG5jbGFzcyBNZWRpYUZpbGVQcm92aWRlciB7XG4gICAgI21lZGlhRWw_OiBIVE1MTWVkaWFFbGVtZW50XG4gICAgK2Nyb3NzT3JpZ2luPzogdHJ1ZSB8IGFub255bW91cyB8IGNyZWRlbnRpYWxzXG4gICAgK3ByZWxvYWQ_OiB0cnVlIHwgbm9uZSB8IG1ldGFkYXRhIHwgYXV0b1xuICAgICtwb3N0ZXI_OiBzdHJpbmdcbiAgICArY29udHJvbHNMaXN0Pzogc3RyaW5nXG4gICAgK2F1dG9QaVA_OiBzdHJpbmdcbiAgICArZGlzYWJsZVBpUD86IGJvb2xlYW5cbiAgICArZGlzYWJsZVJlbW90ZVBsYXliYWNrPzogYm9vbGVhblxufVxuXG5GaWxlIDx8LS0gQXVkaW86IGV4dGVuZHNcbkZpbGUgPHwtLSBWaWRlbzogZXh0ZW5kc1xuTWVkaWFGaWxlUHJvdmlkZXIgPHwtLSBGaWxlOiBleHRlbmRzXG5NZWRpYUZpbGVQcm92aWRlciA8fC0tIEhMUzogZXh0ZW5kc1xuTWVkaWFGaWxlUHJvdmlkZXIgPHwtLSBEQVNIOiBleHRlbmRzXG5cbmNsYXNzIE1lZGlhUHJvdmlkZXJ-SW50ZXJuYWxQbGF5ZXJUeXBlfiB7XG4gICAgPDxhYnN0cmFjdD4-XG4gICAgI2NvbnRyb2xzOiBib29sZWFuXG4gICAgI2xhbmd1YWdlOiBzdHJpbmdcbiAgICAjcGxheXNpbmxpbmU6Ym9vbGVhblxuXG4gICAgcGxheSgpKiBQcm9taXNlfnZvaWR-XG4gICAgcGF1c2UoKSogUHJvbWlzZX52b2lkflxuICAgIGNhblBsYXkodHlwZTogc3RyaW5nKSogdm9pZFxuICAgIGxvYWRNZWRpYShzcmM6IFNvdXJjZVtdKSogdm9pZFxuICAgIGdldEludGVybmFsUGxheWVyKCkqIEludGVybmFsUGxheWVyVHlwZVxuICAgIGdldEN1cnJlbnRWaWV3VHlwZSgpKiBWaWV3VHlwZVxuICAgIGdldEN1cnJlbnRNZWRpYVR5cGUoKSogTWVkaWFUeXBlXG4gICAgc2V0Q3VycmVudFRpbWUodGltZTogbnVtYmVyKSogdm9pZFxuICAgIHNldE11dGVkKG11dGVkOiBib29sZWFuKSogdm9pZFxuICAgIHNldFZvbHVtZSh2b2x1bWU6IG51bWJlcikqIHZvaWRcbiAgICBjYW5TZXRQbGF5YmFja1JhdGUoKSogYm9vbGVhblxuICAgIHNldFBsYXliYWNrUmF0ZShyYXRlOiBudW1iZXIpKiB2b2lkXG4gICAgY2FuU2V0UGxheWJhY2tRdWFsaXR5KCkqIGJvb2xlYW5cbiAgICBzZXRQbGF5YmFja1F1YWxpdHkocXVhbGl0eTogc3RyaW5nKSogdm9pZFxuICAgIGNhblNldEZ1bGxzY3JlZW4oKSogYm9vbGVhblxuICAgIGVudGVyRnVsbHNjcmVlbihvcHRpb25zPzogRnVsbHNjcmVlbk9wdGlvbnMpKiBQcm9taXNlfnZvaWR-XG4gICAgZXhpdEZ1bGxzY3JlZW4oKSogUHJvbWlzZX52b2lkflxuICAgIGNhblNldFBpUCgpKiBib29sZWFuXG4gICAgZW50ZXJQaVAoKSogUHJvbWlzZX52b2lkflxuICAgIGV4aXRQaVAoKSogUHJvbWlzZX52b2lkflxuICAgIHNldEN1cnJlbnRUZXh0VHJhY2sodHJhY2tJZDogbnVtYmVyKSogdm9pZFxuICAgIHNldFRleHRUcmFja1Zpc2liaWxpdHkoaXNWaXNpYmxlOiBib29sZWFuKSogdm9pZFxuICAgIGdldE1lZGlhVHJpbW1pbmcoKSogTWVkaWFUcmltfHVuZGVmaW5lZFxuICAgIGZldGNoUmVjb21tZW5kZWRBc3BlY3RSYXRpbygpKiBQcm9taXNlfnN0cmluZ35cbiAgICBmZXRjaEN1cnJlbnRQb3N0ZXIoKSogUHJvbWlzZX5zdHJpbmd-XG4gICAgZmV0Y2hDdXJyZW50TWVkaWFUaXRsZSgpKiBQcm9taXNlfnN0cmluZ35cbiAgICBmZXRjaEN1cnJlbnRNZWRpYUR1cmF0aW9uKCkqIFByb21pc2V-bnVtYmVyflxuICAgIHJlbmRlclBsYXllcigpKiBIVE1MVGVtcGxhdGVTdHJpbmdcbiAgICBkZXN0cm95KCkqIHZvaWRcbiAgICAtcmVuZGVyKCkgdm9pZFxufVxuXG5NZWRpYVByb3ZpZGVyIDx8LS0gTWVkaWFGaWxlUHJvdmlkZXJcbk1lZGlhUHJvdmlkZXIgPHwtLSBFbWJlZGVkTWVkaWFQcm92aWRlclxuXG5jbGFzcyBNZWRpYVR5cGUge1xuICAgIDw8ZW51bWVyYXRpb24-PlxuICAgIEFVRElPXG4gICAgVklERU9cbn1cblxuY2xhc3MgVmlld1R5cGUge1xuICAgIDw8ZW51bWVyYXRpb24-PlxuICAgIEFVRElPXG4gICAgVklERU9cbn1cblxuTWVkaWFUeXBlIC0tIE1lZGlhUHJvdmlkZXJcblZpZXdUeXBlIC0tIE1lZGlhUHJvdmlkZXJcblxuY2xhc3MgUGxheWVyXG5cblBsYXllciAtLSBNZWRpYVR5cGVcblBsYXllciAtLSBWaWV3VHlwZVxuUGxheWVyIFwiMVwiIC0tKiBcIjAuLipcIiBNZWRpYVByb3ZpZGVyOiBjb21wb3NpdGlvbiIsIm1lcm1haWQiOnt9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)
 
 ## Boot Strategy
 
-```mermaid
-classDiagram
-
-class Player {
-    ...
-    +bootStrategy: click | lazy | immediate | BootStrategy
-}
-
-class BootStrategy
-<<interface>> BootStrategy
-class LazyBootStrategy
-class ClickBootStrategy
-class ImmediateBootStrategy
-
-BootStrategy <-- LazyBootStrategy: implements
-BootStrategy <-- ClickBootStrategy: implements
-BootStrategy <-- ImmediateBootStrategy: implements
-
-Player -- BootStrategy: uses
-```
+[![](https://mermaid.ink/img/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIFBsYXllciB7XG4gICAgLi4uXG4gICAgK2Jvb3RTdHJhdGVneTogY2xpY2sgfCBsYXp5IHwgaW1tZWRpYXRlIHwgQm9vdFN0cmF0ZWd5XG59XG5cbmNsYXNzIEJvb3RTdHJhdGVneVxuPDxpbnRlcmZhY2U-PiBCb290U3RyYXRlZ3lcbmNsYXNzIExhenlCb290U3RyYXRlZ3lcbmNsYXNzIENsaWNrQm9vdFN0cmF0ZWd5XG5jbGFzcyBJbW1lZGlhdGVCb290U3RyYXRlZ3lcblxuQm9vdFN0cmF0ZWd5IDwtLSBMYXp5Qm9vdFN0cmF0ZWd5OiBpbXBsZW1lbnRzXG5Cb290U3RyYXRlZ3kgPC0tIENsaWNrQm9vdFN0cmF0ZWd5OiBpbXBsZW1lbnRzXG5Cb290U3RyYXRlZ3kgPC0tIEltbWVkaWF0ZUJvb3RTdHJhdGVneTogaW1wbGVtZW50c1xuXG5QbGF5ZXIgLS0gQm9vdFN0cmF0ZWd5OiB1c2VzIiwibWVybWFpZCI6e30sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIFBsYXllciB7XG4gICAgLi4uXG4gICAgK2Jvb3RTdHJhdGVneTogY2xpY2sgfCBsYXp5IHwgaW1tZWRpYXRlIHwgQm9vdFN0cmF0ZWd5XG59XG5cbmNsYXNzIEJvb3RTdHJhdGVneVxuPDxpbnRlcmZhY2U-PiBCb290U3RyYXRlZ3lcbmNsYXNzIExhenlCb290U3RyYXRlZ3lcbmNsYXNzIENsaWNrQm9vdFN0cmF0ZWd5XG5jbGFzcyBJbW1lZGlhdGVCb290U3RyYXRlZ3lcblxuQm9vdFN0cmF0ZWd5IDwtLSBMYXp5Qm9vdFN0cmF0ZWd5OiBpbXBsZW1lbnRzXG5Cb290U3RyYXRlZ3kgPC0tIENsaWNrQm9vdFN0cmF0ZWd5OiBpbXBsZW1lbnRzXG5Cb290U3RyYXRlZ3kgPC0tIEltbWVkaWF0ZUJvb3RTdHJhdGVneTogaW1wbGVtZW50c1xuXG5QbGF5ZXIgLS0gQm9vdFN0cmF0ZWd5OiB1c2VzIiwibWVybWFpZCI6e30sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)
 
 ## Player Management
 
-```mermaid
-classDiagram
-
-class PlayerRegistry
-```
+[![](https://mermaid.ink/img/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIFBsYXllclJlZ2lzdHJ5IiwibWVybWFpZCI6e30sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIFBsYXllclJlZ2lzdHJ5IiwibWVybWFpZCI6e30sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)
 
 ## MediaSync
 
-```mermaid
-classDiagram
-
-class MediaSync
-```
+[![](https://mermaid.ink/img/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIE1lZGlhU3luYyIsIm1lcm1haWQiOnt9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIE1lZGlhU3luYyIsIm1lcm1haWQiOnt9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)
 
 ## UI
 
-```mermaid
-classDiagram
-
-class UI
-```
+[![](https://mermaid.ink/img/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIFVJIiwibWVybWFpZCI6e30sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbmNsYXNzIFVJIiwibWVybWFpZCI6e30sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)
 
 ## Player Update Flow
 

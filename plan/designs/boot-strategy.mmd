@@ -1,0 +1,18 @@
+classDiagram
+
+class Player {
+    ...
+    +bootStrategy: click | lazy | immediate | BootStrategy
+}
+
+class BootStrategy
+<<interface>> BootStrategy
+class LazyBootStrategy
+class ClickBootStrategy
+class ImmediateBootStrategy
+
+BootStrategy <-- LazyBootStrategy: implements
+BootStrategy <-- ClickBootStrategy: implements
+BootStrategy <-- ImmediateBootStrategy: implements
+
+Player -- BootStrategy: uses
