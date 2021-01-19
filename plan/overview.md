@@ -125,7 +125,7 @@ Furthermore, [conditional exports](https://nodejs.org/api/packages.html#packages
 will enable multiple entry points depending on certain conditions, such as providing different ES
 module exports for `require` and `import` . This is useful if we decide to provide SSR friendly bundles.
 
-### Component Anatomy
+### Component Package Anatomy
 
 - _{component-name}_
   - index.ts
