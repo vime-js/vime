@@ -30,7 +30,7 @@ the player to control when a provider is rendered we can open new features such 
 
 ## Boot Strategy
 
-**Default Strategy: LazyBootStrategy**
+**Default Strategy:** `LazyBootStrategy`
 
 A boot [strategy](https://en.wikipedia.org/wiki/Strategy_pattern) controls when/how a player
 is loaded the first time. The player implements the `Bootable` interface and registers
@@ -42,7 +42,7 @@ if it's available, otherwise it'll default to `<slot name="booting" />`.
 
 ## Media Load Strategy
 
-**Default Strategy: FirstCanPlayMediaLoadStrategy**
+**Default Strategy:** `FirstCanPlayMediaLoadStrategy`
 
 The media load [strategy](https://en.wikipedia.org/wiki/Strategy_pattern) controls which source/s
 are loaded and by which provider.
