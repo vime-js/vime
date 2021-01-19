@@ -1,0 +1,32 @@
+classDiagram
+
+class Player {
+    ...
+    +mediaLoadStrategy: firstCanPlay | MediaLoadStrategy
+}
+
+class MediaLoader {
+    <<interface>>
+    NAME: string
+    canPlay(src: Source[]) boolean
+    loadMedia(src: Source[]) Promise~void~
+}
+
+class MediaLoadStrategy~T extends MediaLoader~ {
+    <<interface>>
+    getCurrentSrcSet() Source[]
+    getCurrentLoader() MediaLoader|undefined
+    register(loader: MediaLoader) Promise~void~
+    deregister(loader: MediaLoader) Promise~void~
+    handleSrcChange(src: Source[]) Promise~void~
+}
+
+class FirstCanPlayMediaLoadStrategy
+
+MediaLoadStrategy <-- FirstCanPlayMediaLoadStrategy: implements
+MediaLoadStrategy --> MediaLoader
+
+Player -- MediaLoadStrategy: use
+Player "1" --* "0..*" MediaProvider: composition
+
+MediaProvider --> MediaLoader: implements
