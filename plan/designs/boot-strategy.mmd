@@ -5,8 +5,21 @@ class Player {
     +bootStrategy: click | lazy | immediate | BootStrategy
 }
 
-class BootStrategy
-<<interface>> BootStrategy
+class Bootable {
+    <<interface>>
+    bootTarget: HTMLElement
+    boot() Promise~void~
+    renderWhileBooting() TemplateResult
+}
+
+Player --> Bootable: implements
+
+class BootStrategy~T extends Bootable~ {
+    <<interface>>
+    hasBooted: boolean
+    register(bootable: Bootable) Promise~void~
+}
+
 class LazyBootStrategy
 class ClickBootStrategy
 class ImmediateBootStrategy
@@ -14,5 +27,6 @@ class ImmediateBootStrategy
 BootStrategy <-- LazyBootStrategy: implements
 BootStrategy <-- ClickBootStrategy: implements
 BootStrategy <-- ImmediateBootStrategy: implements
+BootStrategy --> Bootable
 
-Player -- BootStrategy: uses
+Player -- BootStrategy: use
