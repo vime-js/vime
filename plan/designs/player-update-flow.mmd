@@ -1,0 +1,20 @@
+sequenceDiagram
+    alt Provider Update
+        rect rgb(0, 255, 0, .1)
+        Provider -->> Player: ProviderPlay Event
+        Player ->> PlayerStore: Update
+        end
+    else UI Update
+        rect rgba(0, 0, 255, .1)
+        UI -->> Player: UIPlay Event
+        Player ->> PlayerStore: Update
+        Player ->> Provider: setPaused(false)
+        end
+    else Dev Update
+        rect rgba(255, 0, 0, .1)
+        Dev ->> Player: paused = false
+        Player ->> Player: paused setter triggered
+        Player ->> PlayerStore: Update
+        Player ->> Provider: setPaused(false)
+        end
+    end
