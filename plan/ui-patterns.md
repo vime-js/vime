@@ -8,7 +8,7 @@ For example, a `ToggleMuteControl` will only contain the logic for toggling the 
 player, and handling ARIA attributes on the button.
 
 Functional components are made possible thanks to the `<slot />` element and CSS classes. Following
-the `ToggleMuteControl` example, it may apply classes such as `vm-pressed` or `vm-focused` to
+the `ToggleMuteControl` example, it may apply classes such as `vmPressed` or `vmFocused` to
 the root element in the light DOM so you can purely style your component with HTML/CSS only.
 
 ### Multiple States
@@ -16,7 +16,7 @@ the root element in the light DOM so you can purely style your component with HT
 If a functional component contains logic for multiple states then multiple `<slot />` elements can
 be used. For example, a Toggle might have a `on` and `off` state which would translate to
 `<slot name="on" />` and `<slot name="off" />`. Both slots should be rendered to enable
-the consumer to style transitions between states. The toggle could apply the `vm-hidden` CSS
+the consumer to style transitions between states. The toggle could apply the `vmHidden` CSS
 class to the root light DOM element in either the `on` or `off` slot depending on which should
 be currently visible.
 

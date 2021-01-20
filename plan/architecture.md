@@ -65,11 +65,11 @@ provider names.
 
 ## Player Sync
 
-WIP.
+**WIP**
 
 ## Media Sync
 
-WIP.
+**WIP**
 
 ## UI
 

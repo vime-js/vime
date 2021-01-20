@@ -13,18 +13,19 @@ components required to easily build and design the player interface.
 - **Modular.** Use only what you need and discard what you don't.
 - **Extendable.** Make it easy to add what we haven't included out of the box, or to transform what
   we give you into what you need.
-- **Markup First.** Most users are simply looking to customize the player interface or mess with
-  component options. Thus, it'd be preferable if users can use HTML/CSS only as much as possible for
-  changing component behaviour and styling without needing to get into JS. However, more advanced
-  options can be made available via JS.
-- **Defaults.** For everyday users wanting to get up and running ASAP there should be clean and
+- **Ergonomic.** Frontend developers who are involved with styling components are typically more 
+comfortable with HTML/CSS than they are with JS, and usually prefer to achieve their styling 
+objectives without it. Offering them an ergonomic declarative way to customize components, 
+and style them without any JS would allow them to achieve their objectives much more efficiently 
+and comfortably.
+- **Ready.** For everyday users wanting to get up and running ASAP there should be clean and
   simple defaults out of the box.
 - **Lightweight.** To avoid delaying page loads or time to first frame for the user, the library
-  should be as light as possible. Preferably less than 30kB.
+  should be as light as possible. Preferably less than ~30kB.
 - **Accessible.** Anyone should be able to use the player at its utmost potential, regardless of
   any external factors such as disabilities or network connection.
-- **Framework Agnostic.** The player should be built to be future-proof and easily integrated into
-  any front-end tech stack.
+- **Universal.** The player should be able to be render on both the client-side (CSR) and 
+server-side (SSR), and it should be integrable with any frontend stack/framework.
 - **Responsive.** The player should function appropriately across all devices and screen sizes.
 - **Modern.** The player should be built for the modern web and avoid bloated polyfills and outdated
   environments as much as possible. This only leads to technical bloat and time wasted. It will not
@@ -33,7 +34,7 @@ components required to easily build and design the player interface.
 - **Testable.** All aspects of the player should be built with testability in mind. A comprehensive
   set of tests covering unit, visual, visual regression and integration are required to minimize bugs
   and regressions.
-- **Syncable/Manageable.** Video players operate in sync to a certain degree. Changes to one player's
+- **Syncable.** Video players operate in sync to a certain degree. Changes to one player's
   volume or muted state might propagate to a stored user preference or to the state of other players
   on the current page (and possibly subsequent pages). The playback position of a video might need to
   be maintained as the user transitions from a listing view to a detail view containing the same video.
@@ -64,9 +65,7 @@ components required to easily build and design the player interface.
   developers to fight the system. In other words provide naked/functional components that the developer
   can do whatever they want with.
 - Rethink integration packages and focus on a strong foundation, considering only what's
-  necessary. The web has evolved and most modern frameworks completely support web components. The
-  integration packages are mostly unnecessary at this early stage and are costing too much time
-  to maintain.
+  necessary. The web has evolved and most modern frameworks completely support web components.
 - Currently there is no way to tell whether an event was initiated by the provider
   or user. To enable devs to build out features like analytics on top of Vime we'll need to
   improve/expand the events API, and clearly differentiate between provider/user initiated events.
@@ -146,13 +145,15 @@ See [ui-patterns.md](./ui-patterns.md).
 
 ### Framework Integrations
 
-wip.
+**WIP**
 
-(only considering react due to poor web components suppport). Care about SSR?
+React only due to poor web component support?
 
 Reference: [createReactCustomElementType.ts](https://github.com/carbon-design-system/carbon-web-components/blob/master/src/globals/wrappers/createReactCustomElementType.ts)
 
 ### SSR
+
+**WIP**
 
 SSR support might be coming to [Lit this quarter](https://twitter.com/justinfagnani/status/1088218448570785797).
 
@@ -166,27 +167,25 @@ That's where this comes in -> [Declarative Shadow DOM](https://web.dev/declarati
 
 ### Internationalization (i18n)
 
-wip.
+**WIP**
 
 [Shaka Player - Talking About Language](https://github.com/google/shaka-player/blob/master/docs/design/talking-about-languages.md)
 
-### Icons
+### Skins
 
-wip.
+**WIP**
 
-### Theming
-
-wip.
+Icons + Themes.
 
 ### Build
 
-wip.
+**WIP**
 
-- [GitPod](https://www.gitpod.io/) for contributors.
+[GitPod](https://www.gitpod.io/) for contributors.
 
 ### Testing
 
-wip.
+**WIP**
 
 - Benchmark - [Tachometer](https://github.com/Polymer/tachometer)
 - Visual Manual - [Storybook](https://storybook.js.org/)
@@ -197,14 +196,14 @@ wip.
 
 ### Documentation
 
-wip.
+**WIP**
 
 ### Examples
 
-wip.
+**WIP**
 
 - [Stackblitz](https://stackblitz.com/)
 
 ### Release
 
-wip.
+**WIP**
