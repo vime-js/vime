@@ -30,6 +30,8 @@ styling they desire.
 
 ## Listening to events on the Player
 
+**WIP**
+
 It's common for some lower level component in the Player subtree wanting to listen to events 
 dispatched on the Player. For example, there might be options on a PlaybackControl to toggle 
 its state when certain keys are pressed. Thus, an event listener needs to be setup on the player 
@@ -63,7 +65,7 @@ export const playerEventListener: Context<PlayerEventListener> = createContext({
 
 There are cases where isolated components need to be aware/communciate with each other.
 
-Examples:
+**Examples:**
 
 - Controls needs to be aware of components such as captions/settings to implement collision detection. 
 - IconLibrary needs to be aware of icons so when the icon library changes all icons can be redrawn.
