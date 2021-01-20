@@ -152,7 +152,11 @@ wip.
 
 Reference: [createReactCustomElementType.ts](https://github.com/carbon-design-system/carbon-web-components/blob/master/src/globals/wrappers/createReactCustomElementType.ts)
 
+### SSR
+
 SSR support might be coming to [Lit this quarter](https://twitter.com/justinfagnani/status/1088218448570785797).
+
+[Declarative Shadow DOM](https://web.dev/declarative-shadow-dom/).
 
 ### Internationalization (i18n)
 
