@@ -24,7 +24,7 @@ components required to easily build and design the player interface.
   should be as light as possible. Preferably less than ~30kB.
 - **Accessible.** Anyone should be able to use the player at its utmost potential, regardless of
   any external factors such as disabilities or network connection.
-- **Universal.** The player should be able to be render on both the client-side (CSR) and
+- **Universal.** The player should be able to be rendered on both the client-side (CSR) and
   server-side (SSR), and it should be integrable with any frontend stack/framework.
 - **Responsive.** The player should function appropriately across all devices and screen sizes.
 - **Modern.** The player should be built for the modern web and avoid bloated polyfills and outdated
