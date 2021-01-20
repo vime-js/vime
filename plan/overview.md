@@ -138,7 +138,11 @@ module exports for `require` and `import` . This is useful if we decide to provi
 
 ## Architecture
 
-See [architecture.md](./architecture.md).
+See [architecture.md](./architecture.md) and [player-api.md](./player-api.md).
+
+### UI Design Patterns
+
+See [ui-patterns.md](./ui-patterns.md).
 
 ### Framework Integrations
 
