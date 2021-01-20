@@ -122,7 +122,8 @@ own name. This means instead of `vime/dist/bundle` we can import via `vime/bundl
 
 Furthermore, [conditional exports](https://nodejs.org/api/packages.html#packages_conditional_exports)
 will enable multiple entry points depending on certain conditions, such as providing different ES
-module exports for `require` and `import` . This is useful if we decide to provide SSR friendly bundles.
+module exports for `require` and `import` . This is primarily useful for providing SSR friendly 
+bundles.
 
 ### Component Package Anatomy
 
