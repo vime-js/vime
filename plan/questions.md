@@ -3,7 +3,6 @@
 - How to handle readonly properties??
 - Strict naming convention? paused vs. isPaused?
 - Show flows between I18N → UI.
-- List all props/events (System/User) for Furf to make sure we've covered everything.
 - Custom UI on IOS using Canvas?
 - Custom PIP mode with Canvas?
 - Stream chunks to indexdb?? Maybe save content as part of a session that can be cleared whenever?
