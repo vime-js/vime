@@ -156,10 +156,13 @@ Reference: [createReactCustomElementType.ts](https://github.com/carbon-design-sy
 
 SSR support might be coming to [Lit this quarter](https://twitter.com/justinfagnani/status/1088218448570785797).
 
-[Declarative Shadow DOM](https://web.dev/declarative-shadow-dom/).
-
 [lit-ssr repo](https://github.com/PolymerLabs/lit-ssr)
 
+> Rendering web components on the server is not possible because there is no way to declaratively
+> represent shadow roots and their content in HTML — or to attach them to a host — without executing
+> imperative JavaScript on the client.
+
+That's where this comes in -> [Declarative Shadow DOM](https://web.dev/declarative-shadow-dom/).
 
 ### Internationalization (i18n)
 
