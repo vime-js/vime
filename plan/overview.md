@@ -13,19 +13,19 @@ components required to easily build and design the player interface.
 - **Modular.** Use only what you need and discard what you don't.
 - **Extendable.** Make it easy to add what we haven't included out of the box, or to transform what
   we give you into what you need.
-- **Ergonomic.** Frontend developers who are involved with styling components are typically more 
-comfortable with HTML/CSS than they are with JS, and usually prefer to achieve their styling 
-objectives without it. Offering them an ergonomic declarative way to customize components, 
-and style them without any JS would allow them to achieve their objectives much more efficiently 
-and comfortably.
+- **Ergonomic.** Frontend developers who are involved with styling components are typically more
+  comfortable with HTML/CSS than they are with JS, and usually prefer to achieve their styling
+  objectives without it. Offering them an ergonomic declarative way to customize components,
+  and style them without any JS would allow them to achieve their objectives much more efficiently
+  and comfortably.
 - **Ready.** For everyday users wanting to get up and running ASAP there should be clean and
   simple defaults out of the box.
 - **Lightweight.** To avoid delaying page loads or time to first frame for the user, the library
   should be as light as possible. Preferably less than ~30kB.
 - **Accessible.** Anyone should be able to use the player at its utmost potential, regardless of
   any external factors such as disabilities or network connection.
-- **Universal.** The player should be able to be render on both the client-side (CSR) and 
-server-side (SSR), and it should be integrable with any frontend stack/framework.
+- **Universal.** The player should be able to be render on both the client-side (CSR) and
+  server-side (SSR), and it should be integrable with any frontend stack/framework.
 - **Responsive.** The player should function appropriately across all devices and screen sizes.
 - **Modern.** The player should be built for the modern web and avoid bloated polyfills and outdated
   environments as much as possible. This only leads to technical bloat and time wasted. It will not
