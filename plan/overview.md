@@ -158,6 +158,9 @@ SSR support might be coming to [Lit this quarter](https://twitter.com/justinfagn
 
 [Declarative Shadow DOM](https://web.dev/declarative-shadow-dom/).
 
+[lit-ssr repo](https://github.com/PolymerLabs/lit-ssr)
+
+
 ### Internationalization (i18n)
 
 wip.
