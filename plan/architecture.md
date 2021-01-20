@@ -87,7 +87,7 @@ import createContext, { Context } from '@wcom/context';
 import { PlayerState } from './PlayerState';
 
 export type PlayerContext = {
-  [p in keyof PlayerState]: Context<PlayerState<P>>;
+  [P in keyof PlayerState]: Context<PlayerState<P>>;
 };
 
 export const playerContext: PlayerContext = {
