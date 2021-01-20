@@ -79,23 +79,21 @@ The following references have been used in determining an adequate project struc
 
 ### Folder Organization
 
-- `packages` → Where each package is stored. A package represents a piece of functionality within
-  the player that can be rendered in the browser or purely used to manage state/data (renderless).
-- `packages/bundle` → The bundle package is the main entry point that exports all the public
+- `src/bundle` → The bundle directory is the main entry point that exports all the public
   entities (classes, interfaces, components, types etc.).
-  - `packages/bundle/index.ts` → Exports all side-effect free code that doesn't register any
+  - `src/bundle/index.ts` → Exports all side-effect free code that doesn't register any
     elements in the `Window` custom elements registry.
-  - `packages/bundle/elements.ts` → Exports all code that is not side-effect free which
+  - `src/bundle/elements.ts` → Exports all code that is not side-effect free which
     registers all elements in the custom elements registry.
-- `packages/core` → This directory contains any functionality that is at the top of the player
+- `src/core` → This directory contains any functionality that is at the top of the player
   hierarchy such as the `Player` component.
-- `packages/providers` → This directory contains components/code that are responsible for
+- `src/providers` → This directory contains components/code that are responsible for
   loading players/media.
-- `packages/ui` → This directory contains components/code that are rendered in the browser
+- `src/ui` → This directory contains components/code that are rendered in the browser
   generally for the end-user to interact with.
-- `packages/skins` → This directory contains components that are an amalgamation of UI components
+- `src/skins` → This directory contains components that are an amalgamation of UI components
   to build an out of the box look/style for the player which includes themes and icons.
-- `packages/utils` → This directory contains common helper functions that are used throughout the player.
+- `src/utils` → This directory contains common helper functions that are used throughout the player.
 
 ### Packaging
 

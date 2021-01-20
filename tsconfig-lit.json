@@ -8,6 +8,6 @@
     "sourceMap": true,
     "outDir": "dist"
   },
-  "include": ["packages/**/*.ts"],
-  "exclude": ["packages/**/*.test.ts", "node_modules/**", "web_modules/**"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts", "node_modules/**", "web_modules/**"]
 }
