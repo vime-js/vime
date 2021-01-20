@@ -7,14 +7,16 @@ sequenceDiagram
     else UI Update
         rect rgba(0, 0, 255, .1)
         UI -->> Player: UIPlay Event
-        Player ->> PlayerStore: Update
         Player ->> Provider: setPaused(false)
+        Provider -->> Player: ProviderPlay Event
+        Player ->> PlayerStore: Update
         end
-    else Dev Update
+    else Consumer Update
         rect rgba(255, 0, 0, .1)
-        Dev ->> Player: paused = false
+        Consumer ->> Player: paused = false
         Player ->> Player: paused setter triggered
-        Player ->> PlayerStore: Update
         Player ->> Provider: setPaused(false)
+        Provider -->> Player: ProviderPlay Event
+        Player ->> PlayerStore: Update
         end
     end
