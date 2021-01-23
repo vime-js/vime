@@ -123,7 +123,7 @@ will enable multiple entry points depending on certain conditions, such as provi
 module exports for `require` and `import` . This is primarily useful for providing SSR friendly 
 bundles.
 
-### Component Package Anatomy
+### Component Anatomy
 
 - _{component-name}_
   - index.ts
