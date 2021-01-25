@@ -18,19 +18,14 @@ class Player {
     +pause() Promise~void~ 
     +getCaptureStream() MediaStream|undefined
     +getCurrentPlayerState() PlayerState
-    +subscribe(state => void, debounceMs?: number) Unsubscribe
 }
 
 Player -- ViewType
 Player -- MediaType
 Player "1" --* "0..*" MediaProvider: composition
 
-class PlayerStore
-class Unistore
-<<library>>Unistore
-
-PlayerStore --> Unistore: uses
-Player --> PlayerStore: has
+class PlayerContext
+Player --> PlayerContext: has
 
 class PlayerState {
     <<interface>>
@@ -43,7 +38,7 @@ class PlayerState {
 }
 
 Player --> PlayerState: implements
-PlayerStore --> PlayerState: implements
+PlayerContext --> PlayerState: implements
 
 class MediaTrim {
     <<interface>>

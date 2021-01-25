@@ -9,7 +9,6 @@ class Bootable {
     <<interface>>
     bootTarget: HTMLElement
     boot() Promise~void~
-    renderWhileBooting() TemplateResult
 }
 
 Player --> Bootable: implements
@@ -18,6 +17,7 @@ class BootStrategy~T extends Bootable~ {
     <<interface>>
     hasBooted: boolean
     register(bootable: Bootable) Promise~void~
+    renderWhileBooting() TemplateResult
 }
 
 class LazyBootStrategy
