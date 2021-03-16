@@ -193,11 +193,11 @@ you need to get started can be found in the [Contributing Guide](./.github/CONTR
 
 A huge thanks to our sponsors who support open-source projects like Vime.
 
-<a href="https://zeit.co">
+<a href="https://vercel.com">
   <img
     width="100%"
-    alt="zeit now"
-    src="./static/sponsors/zeit.png"
+    alt="vercel"
+    src="./static/sponsors/vercel.png"
   />
 </a>
 

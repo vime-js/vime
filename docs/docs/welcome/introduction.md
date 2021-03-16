@@ -193,11 +193,11 @@ you need to get started can be found in the [Contributing Guide](https://github.
 
 A huge thanks to our sponsors who support open-source projects like Vime.
 
-<a href="https://zeit.co">
+<a href="https://vercel.com/">
   <img
     width="100%"
-    alt="zeit now"
-    src="https://github.com/vime-js/vime/blob/master/static/sponsors/zeit.png?raw=true"
+    alt="vercel"
+    src="https://github.com/vime-js/vime/blob/master/static/sponsors/vercel.png?raw=true"
   />
 </a>
 
