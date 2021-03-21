@@ -63,7 +63,7 @@ import IntroPlayer from '../../src/components/players/LoadableIntroPlayer'
 ## 🍭 &nbsp;Examples
 
 :::note
-The examples below are using web components but there are bindings for React, Vue, Svelte, Stencil 
+The examples below are using web components but there are bindings for React, Vue, Svelte, Stencil
 and Angular. If you want to see how they look check out our [Demo](/demo).
 :::
 
@@ -193,7 +193,15 @@ you need to get started can be found in the [Contributing Guide](https://github.
 
 A huge thanks to our sponsors who support open-source projects like Vime.
 
-<a href="https://vercel.com/">
+<a href="https://mux.com">
+  <img
+    width="100%"
+    alt="mux"
+    src="https://github.com/vime-js/vime/blob/master/static/sponsors/mux.png?raw=true"
+  />
+</a>
+
+<a href="https://vercel.com">
   <img
     width="100%"
     alt="vercel"
