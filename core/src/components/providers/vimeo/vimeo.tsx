@@ -125,6 +125,11 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
    */
   @Prop() poster?: string;
 
+  /**
+   * Whether cookies should be enabled on the embed.
+   */
+  @Prop() cookies = true;
+
   @Watch('poster')
   onCustomPosterChange() {
     this.dispatch('currentPoster', this.poster);
@@ -153,9 +158,6 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
 
   /** @internal */
   @Prop() playsinline = false;
-
-  /** @internal */
-  @Prop() cookies = true;
 
   /** @internal */
   @Event() vmLoadStart!: EventEmitter<void>;
