@@ -24,12 +24,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -40,7 +40,6 @@ values={[
   <!-- ... -->
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -59,7 +58,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -85,7 +83,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -100,7 +97,6 @@ function Example() {
   import { Player, Vimeo } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -130,10 +126,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -143,9 +137,9 @@ class Example {
 | `color`                | The hexadecimal color value of the playback controls. The embed settings of the video might override this value. | `string ∣ undefined` | `undefined` |
 | `noAutoAspectRatio`    | Turns off automatically determining the aspect ratio of the current video.                                       | `boolean`            | `false`     |
 | `portrait`             | Whether to display the video owner's portrait.                                                                   | `boolean`            | `true`      |
+| `dnt`                  | Whether cookies should be enabled on the embed.                                                                  | `boolean`            | `false`     |
 | `poster`               | The absolute URL of a custom poster to be used for the current video.                                            | `string ∣ undefined` | `undefined` |
 | `videoId` _(required)_ | The Vimeo resource ID of the video to load.                                                                      | `string`             | `undefined` |
-
 
 ## Events
 
@@ -153,11 +147,8 @@ class Example {
 | --------- | ----------------------------------- | ------------------ |
 | `vmError` | Emitted when an error has occurred. | `CustomEvent<any>` |
 
-
 ## Dependencies
 
 ### Depends on
 
 - [vm-embed](./../core/embed)
-
-

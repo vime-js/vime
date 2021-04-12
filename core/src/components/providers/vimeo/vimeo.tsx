@@ -155,6 +155,9 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
   @Prop() playsinline = false;
 
   /** @internal */
+  @Prop() dnt = false;
+
+  /** @internal */
   @Event() vmLoadStart!: EventEmitter<void>;
 
   /**
@@ -214,6 +217,7 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
       autoplay: this.autoplay,
       muted: this.initialMuted,
       playsinline: this.playsinline,
+      dnt: this.dnt,
     };
   }
 
