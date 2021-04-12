@@ -146,7 +146,7 @@ export interface VimeoParams {
   width?: number;
 
   /**
-   * Whether cookies should be enabled on the embed.
+   * Setting this parameter to "true" will block the player from tracking any session data, including all cookies and analytics. 
    *
    * @default false
    */
