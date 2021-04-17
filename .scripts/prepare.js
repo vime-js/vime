@@ -31,7 +31,7 @@ async function main() {
       console.log(`  git commit -m "chore(release): v${version}"`);
       console.log(`  npm run release\n`);
     }
-  } catch(err) {
+  } catch (err) {
     console.log('\n', red(err), '\n');
     process.exit(1);
   }
@@ -40,7 +40,11 @@ async function main() {
 async function gitCommitRelease(version) {
   console.log(bold(cyan(`Committing release v${version}.`)));
   await execa('git', ['add', '.'], { cwd: common.rootDir });
-  return execa('git', ['commit', '-m', `chore(release): publish v${version} 🥳`], { cwd: common.rootDir });
+  return execa(
+    'git',
+    ['commit', '-m', `chore(release): publish v${version} 🥳`],
+    { cwd: common.rootDir }
+  );
 }
 
 async function preparePackages(packages, version, install) {
@@ -55,7 +59,7 @@ async function preparePackages(packages, version, install) {
 
   // add all the prepare scripts
   // run all these tasks before updating package.json version
-  packages.forEach(package => {
+  packages.forEach((package) => {
     common.preparePackage(tasks, package, version, install);
     copyNPMConfigToPackage(package, tasks);
   });
@@ -73,38 +77,46 @@ async function preparePackages(packages, version, install) {
 }
 
 function validateGit(tasks, version) {
-  tasks.push(
-    {
-      title: `Validate git tag ${dim(`(v${version})`)}`,
-      task: () => execa('git', ['fetch'])
+  tasks.push({
+    title: `Validate git tag ${dim(`(v${version})`)}`,
+    task: () =>
+      execa('git', ['fetch'])
         .then(() => {
           return execa('npm', ['config', 'get', 'tag-version-prefix']);
         })
-        .then(r => r.stdout)
+        .then((r) => r.stdout)
         .then(
-          output => {
+          (output) => {
             tagPrefix = output;
           },
           () => {}
         )
-        .then(() => execa('git', ['rev-parse', '--quiet', '--verify', `refs/tags/${tagPrefix}${version}`]))
-        .then(r => r.stdout)
+        .then(() =>
+          execa('git', [
+            'rev-parse',
+            '--quiet',
+            '--verify',
+            `refs/tags/${tagPrefix}${version}`,
+          ])
+        )
+        .then((r) => r.stdout)
         .then(
-          output => {
+          (output) => {
             if (output) {
-              throw new Error(`Git tag \`${tagPrefix}${version}\` already exists.`);
+              throw new Error(
+                `Git tag \`${tagPrefix}${version}\` already exists.`
+              );
             }
           },
-          err => {
+          (err) => {
             // Command fails with code 1 and no output if the tag does not exist, even though `--quiet` is provided
             // https://github.com/sindresorhus/np/pull/73#discussion_r72385685
             if (err.stdout !== '' || err.stderr !== '') {
               throw err;
             }
           }
-        )
-    },
-  );
+        ),
+  });
 }
 
 function copyAngularReadme(tasks) {
@@ -121,7 +133,8 @@ function copyNPMConfigToPackage(package, tasks) {
   const pkg = common.readPkg(package);
   const configPath = path.resolve(common.rootDir, '.scripts/.npmrc');
   let pkgPath = common.projectPath(package);
-  if (package === 'integrations/angular') pkgPath = path.join(pkgPath, 'dist/vime/angular');
+  if (package === 'integrations/angular')
+    pkgPath = path.join(pkgPath, 'dist/vime/angular');
   const pkgConfigPath = path.resolve(pkgPath, '.npmrc');
 
   tasks.push({

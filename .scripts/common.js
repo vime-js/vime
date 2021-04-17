@@ -52,34 +52,38 @@ function checkGit(tasks) {
     {
       title: 'Check current branch',
       task: () =>
-        execa('git', ['symbolic-ref', '--short', 'HEAD']).then(r => r.stdout).then(branch => {
-          if (branch.indexOf('release') === -1) {
-            throw new Error(`Must be on "release" branch.`);
-          }
-        })
+        execa('git', ['symbolic-ref', '--short', 'HEAD'])
+          .then((r) => r.stdout)
+          .then((branch) => {
+            if (branch.indexOf('release') === -1) {
+              throw new Error(`Must be on "release" branch.`);
+            }
+          }),
     },
-    {
-      title: 'Check local working tree',
-      task: () =>
-        execa('git', ['status', '--porcelain']).then(r => r.stdout).then(status => {
-          if (status !== '') {
-            throw new Error(`Unclean working tree. Commit or stash changes first.`);
-          }
-        })
-    },
+    // {
+    //   title: 'Check local working tree',
+    //   task: () =>
+    //     execa('git', ['status', '--porcelain']).then(r => r.stdout).then(status => {
+    //       if (status !== '') {
+    //         throw new Error(`Unclean working tree. Commit or stash changes first.`);
+    //       }
+    //     })
+    // },
     {
       title: 'Check remote history',
       task: () =>
-        execa('git', ['rev-list', '--count', '--left-only', '@{u}...HEAD']).then(r => r.stdout).then(result => {
-          if (result !== '0') {
-            throw new Error(`Remote history differs. Please pull changes.`);
-          }
-        })
+        execa('git', ['rev-list', '--count', '--left-only', '@{u}...HEAD'])
+          .then((r) => r.stdout)
+          .then((result) => {
+            if (result !== '0') {
+              throw new Error(`Remote history differs. Please pull changes.`);
+            }
+          }),
     }
   );
 }
 
-const isValidVersion = input => Boolean(semver.valid(input));
+const isValidVersion = (input) => Boolean(semver.valid(input));
 
 function preparePackage(tasks, package, version, install) {
   const projectRoot = projectPath(package);
@@ -96,7 +100,7 @@ function preparePackage(tasks, package, version, install) {
             `New version \`${version}\` should be higher than current version \`${pkg.version}\``
           );
         }
-      }
+      },
     });
 
     if (install) {
@@ -105,7 +109,7 @@ function preparePackage(tasks, package, version, install) {
         task: async () => {
           // await fs.remove(path.join(projectRoot, 'node_modules'));
           await execa('npm', ['i', '--legacy-peer-deps'], { cwd: projectRoot });
-        }
+        },
       });
     }
   }
@@ -114,27 +118,31 @@ function preparePackage(tasks, package, version, install) {
     if (package !== 'core') {
       packageTasks.push({
         title: `${pkg.name}: npm link @vime/core`,
-        task: () => execa('npm', ['link', '@vime/core', '--legacy-peer-deps'], { cwd: projectRoot })
+        task: () =>
+          execa('npm', ['link', '@vime/core', '--legacy-peer-deps'], {
+            cwd: projectRoot,
+          }),
       });
     }
 
     if (version) {
       packageTasks.push({
         title: `${pkg.name}: lint`,
-        task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
+        task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot }),
       });
     }
 
     packageTasks.push({
       title: `${pkg.name}: build`,
-      task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
+      task: () => execa('npm', ['run', 'build'], { cwd: projectRoot }),
     });
 
     // link @vime/core for integrations
     if (package === 'core') {
       packageTasks.push({
         title: `${pkg.name}: npm link`,
-        task: () => execa('npm', ['link', '--legacy-peer-deps'], { cwd: projectRoot })
+        task: () =>
+          execa('npm', ['link', '--legacy-peer-deps'], { cwd: projectRoot }),
       });
     }
 
@@ -144,7 +152,7 @@ function preparePackage(tasks, package, version, install) {
         task: () => {
           updateDependency(pkg, '@vime/core', version);
           writePkg(package, pkg);
-        }
+        },
       });
     }
   }
@@ -155,29 +163,31 @@ function preparePackage(tasks, package, version, install) {
       task: () => {
         updateDependency(pkg, '@vime/react', version);
         writePkg(package, pkg);
-      }
+      },
     });
   }
 
   tasks.push({
     title: `Prepare ${bold(pkg.name)}`,
-    task: () => new Listr(packageTasks)
+    task: () => new Listr(packageTasks),
   });
 }
 
 function updatePackageVersions(tasks, packages, version) {
-  packages.forEach(package => {
+  packages.forEach((package) => {
     updatePackageVersion(tasks, package, version);
 
     tasks.push({
-      title: `${package} update @vime/core dependency, if present ${dim(`(${version})`)}`,
+      title: `${package} update @vime/core dependency, if present ${dim(
+        `(${version})`
+      )}`,
       task: async () => {
         if (package !== 'core') {
           const pkg = readPkg(package);
           updateDependency(pkg, '@vime/core', version);
           writePkg(package, pkg);
         }
-      }
+      },
     });
 
     // @vime/angular needs to update the dist version
@@ -187,12 +197,14 @@ function updatePackageVersions(tasks, packages, version) {
       updatePackageVersion(tasks, distPackage, version);
 
       tasks.push({
-        title: `${package} update @vime/core dependency, if present ${dim(`(${version})`)}`,
+        title: `${package} update @vime/core dependency, if present ${dim(
+          `(${version})`
+        )}`,
         task: async () => {
           const pkg = readPkg(distPackage);
           updateDependency(pkg, '@vime/core', version);
           writePkg(distPackage, pkg);
-        }
+        },
       });
     }
   });
@@ -205,13 +217,13 @@ function updatePackageVersion(tasks, package, version) {
     title: `${package}: update package.json ${dim(`(${version})`)}`,
     task: async () => {
       await execa('npm', ['version', version], { cwd: projectRoot });
-    }
+    },
   });
 }
 
 function publishPackages(tasks, packages, version, npmTag = 'latest') {
   // Verify version
-  packages.forEach(package => {
+  packages.forEach((package) => {
     if (package === 'core') return;
 
     tasks.push({
@@ -220,25 +232,27 @@ function publishPackages(tasks, packages, version, npmTag = 'latest') {
         const pkg = readPkg(package);
 
         if (version !== pkg.version) {
-          throw new Error(`${pkg.name} version ${pkg.version} must match ${version}`);
+          throw new Error(
+            `${pkg.name} version ${pkg.version} must match ${version}`
+          );
         }
-      }
+      },
     });
   });
 
   // Publish
-  packages.forEach(package => {
+  packages.forEach((package) => {
     let projectRoot = projectPath(package);
 
     if (package === 'integrations/angular') {
-      projectRoot = path.join(projectRoot, 'dist/vime/angular')
+      projectRoot = path.join(projectRoot, 'dist/vime/angular');
     }
 
     tasks.push({
       title: `${package}: publish to ${npmTag} tag`,
       task: async () => {
         await execa('npm', ['publish', '--tag', npmTag], { cwd: projectRoot });
-      }
+      },
     });
   });
 }
@@ -280,5 +294,5 @@ module.exports = {
   updateDependency,
   updatePackageVersion,
   updatePackageVersions,
-  writePkg
+  writePkg,
 };
