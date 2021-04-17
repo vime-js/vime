@@ -1565,6 +1565,10 @@ export namespace Components {
          */
         "color"?: string;
         "controls": boolean;
+        /**
+          * Whether cookies should be enabled on the embed.
+         */
+        "cookies": boolean;
         "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<HTMLVmEmbedElement>; play: () => Promise<void>; pause: () => Promise<void>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; }>;
         "language": string;
         "logger"?: Logger;
@@ -3722,6 +3726,10 @@ declare namespace LocalJSX {
          */
         "color"?: string;
         "controls"?: boolean;
+        /**
+          * Whether cookies should be enabled on the embed.
+         */
+        "cookies"?: boolean;
         "language"?: string;
         "logger"?: Logger;
         "loop"?: boolean;
