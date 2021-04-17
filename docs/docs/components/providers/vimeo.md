@@ -141,6 +141,7 @@ class Example {
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------- | ----------- |
 | `byline`               | Whether to display the video owner's name.                                                                       | `boolean`            | `true`      |
 | `color`                | The hexadecimal color value of the playback controls. The embed settings of the video might override this value. | `string ∣ undefined` | `undefined` |
+| `cookies`              | Whether cookies should be enabled on the embed.                                                                  | `boolean`            | `true`      |
 | `noAutoAspectRatio`    | Turns off automatically determining the aspect ratio of the current video.                                       | `boolean`            | `false`     |
 | `portrait`             | Whether to display the video owner's portrait.                                                                   | `boolean`            | `true`      |
 | `poster`               | The absolute URL of a custom poster to be used for the current video.                                            | `string ∣ undefined` | `undefined` |
