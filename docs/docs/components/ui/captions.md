@@ -30,12 +30,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -49,7 +49,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -71,7 +70,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -101,7 +99,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -119,7 +116,6 @@ function Example() {
   import { Player, Ui, Captions } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -141,7 +137,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -156,17 +151,14 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
 | Property | Description                                    | Type      | Default |
 | -------- | ---------------------------------------------- | --------- | ------- |
 | `hidden` | Whether the captions should be visible or not. | `boolean` | `false` |
-
 
 ## CSS Custom Properties
 
@@ -182,11 +174,8 @@ class Example {
 | `--vm-captions-text-color`        | The color of the captions text.                           |
 | `--vm-captions-z-index`           | The position in the UI z-axis stack inside the player.    |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-ui](./default-ui)
-
-
+- [vm-default-ui](./default-ui)

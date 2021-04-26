@@ -31,12 +31,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -52,7 +52,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -76,7 +75,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -109,7 +107,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -129,7 +126,6 @@ function Example() {
   import { Player, Ui, Settings, MenuItem } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -153,7 +149,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -170,10 +165,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -190,7 +183,6 @@ class Example {
 | `label` _(required)_ | The label/title of the item.                                                                                                                                                                              | `string`                        | `undefined` |
 | `menu`               | If the item has a popup menu, then this should be a reference to it.                                                                                                                                      | `HTMLVmMenuElement ∣ undefined` | `undefined` |
 
-
 ## Methods
 
 | Method      | Description                          | Signature                        |
@@ -199,14 +191,12 @@ class Example {
 | `focusItem` | Focuses the menu item.               | `focusItem() => Promise<void>`   |
 | `getHeight` | Returns the height of the menu item. | `getHeight() => Promise<number>` |
 
-
 ## Events
 
 | Event     | Description                        | Type                |
 | --------- | ---------------------------------- | ------------------- |
 | `vmBlur`  | Emitted when the item loses focus. | `CustomEvent<void>` |
 | `vmFocus` | Emitted when the item is focused.  | `CustomEvent<void>` |
-
 
 ## CSS Custom Properties
 
@@ -226,17 +216,14 @@ class Example {
 | `--vm-menu-item-padding`         | The padding within each menu item.                                           |
 | `--vm-menu-item-tap-highlight`   | The highlight color when a menu item is tapped.                              |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-settings](./default-settings)
- - [vm-menu-radio](./menu-radio)
- - [vm-submenu](./submenu)
+- [vm-default-settings](./default-settings)
+- [vm-menu-radio](./menu-radio)
+- [vm-submenu](./submenu)
 
 ### Depends on
 
 - [vm-icon](./../icon)
-
-

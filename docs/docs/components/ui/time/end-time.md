@@ -23,12 +23,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -36,7 +36,6 @@ values={[
 ```html
 <vm-end-time />
 ```
-
 
 </TabItem>
 
@@ -50,7 +49,6 @@ function Example() {
   return <EndTime />;
 }
 ```
-
 
 </TabItem>
 
@@ -72,7 +70,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -84,7 +81,6 @@ function Example() {
   import { EndTime } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -98,7 +94,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -107,10 +102,8 @@ class Example {
 <vm-end-time />
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -118,16 +111,13 @@ class Example {
 | ----------------- | --------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
 | `alwaysShowHours` | Whether the time should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`). | `boolean` | `false` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-controls](./../controls/default-controls)
- - [vm-time-progress](./time-progress)
+- [vm-default-controls](./../controls/default-controls)
+- [vm-time-progress](./time-progress)
 
 ### Depends on
 
 - [vm-time](./time)
-
-

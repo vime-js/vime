@@ -24,12 +24,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -51,7 +51,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -88,7 +87,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -136,7 +134,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -170,7 +167,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="stencil">
@@ -199,7 +195,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -222,10 +217,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -238,22 +231,18 @@ class Example {
 | `label` _(required)_ | The title of the radio item displayed to the user.                                                                                                                            | `string`             | `undefined` |
 | `value` _(required)_ | The value associated with this radio item.                                                                                                                                    | `string`             | `undefined` |
 
-
 ## Events
 
 | Event     | Description                                | Type                |
 | --------- | ------------------------------------------ | ------------------- |
 | `vmCheck` | Emitted when the radio button is selected. | `CustomEvent<void>` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-settings](./default-settings)
+- [vm-default-settings](./default-settings)
 
 ### Depends on
 
 - [vm-menu-item](./menu-item)
-
-

@@ -24,12 +24,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -46,7 +46,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -70,7 +69,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -103,7 +101,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -123,7 +120,6 @@ function Example() {
   import { Player, Ui, ClickToPlay, CaptionControl } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -147,7 +143,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -165,10 +160,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -182,17 +175,14 @@ class Example {
 | `tooltipDirection` | The direction in which the tooltip should grow.                                                                                                               | `"left" ∣ "right" ∣ undefined` | `undefined`      |
 | `tooltipPosition`  | Whether the tooltip is positioned above/below the control.                                                                                                    | `"bottom" ∣ "top"`             | `'top'`          |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-controls](./default-controls)
+- [vm-default-controls](./default-controls)
 
 ### Depends on
 
 - [vm-control](./control)
 - [vm-icon](./../icon)
 - [vm-tooltip](./../tooltip)
-
-

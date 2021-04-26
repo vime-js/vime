@@ -27,12 +27,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -49,7 +49,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -73,7 +72,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -106,7 +104,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -126,7 +123,6 @@ function Example() {
   import { Player, Ui, Controls, ScrubberControl } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -150,7 +146,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -168,10 +163,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -180,7 +173,6 @@ class Example {
 | `alwaysShowHours` | Whether the timestamp in the tooltip should show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`). | `boolean` | `false` |
 | `hideTooltip`     | Whether the tooltip should not be displayed.                                                                                       | `boolean` | `false` |
 | `noKeyboard`      | Prevents seeking forward/backward by using the Left/Right arrow keys.                                                              | `boolean` | `false` |
-
 
 ## CSS Custom Properties
 
@@ -191,16 +183,13 @@ class Example {
 | `--vm-scrubber-loading-stripe-size`  | The size of each candystripe displayed when media is buffering.                             |
 | `--vm-scrubber-tooltip-spacing`      | The space between the tooltip and the scrubber.                                             |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-controls](./default-controls)
+- [vm-default-controls](./default-controls)
 
 ### Depends on
 
 - [vm-slider](./../slider)
 - [vm-tooltip](./../tooltip)
-
-

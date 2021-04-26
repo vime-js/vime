@@ -18,12 +18,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -37,7 +37,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -59,7 +58,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -89,7 +87,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -109,7 +106,6 @@ function Example() {
   import { Player, Ui, DefaultControls } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -131,7 +127,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -146,10 +141,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -160,12 +153,11 @@ class Example {
 | `hideWhenPaused`       | Whether the controls should show/hide when paused. Audio players are not effected by this prop.                             | `boolean` | `false` |
 | `waitForPlaybackStart` | Whether the controls should wait for playback to start before being shown. Audio players are not effected by this prop.     | `boolean` | `false` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-ui](./../default-ui)
+- [vm-default-ui](./../default-ui)
 
 ### Depends on
 
@@ -184,5 +176,3 @@ class Example {
 - [vm-control-group](./control-group)
 - [vm-time-progress](./../time/time-progress)
 - [vm-pip-control](./pip-control)
-
-

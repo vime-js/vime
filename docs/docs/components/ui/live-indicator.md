@@ -23,12 +23,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -45,7 +45,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -69,7 +68,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -102,7 +100,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -122,7 +119,6 @@ function Example() {
   import { Player, Ui, Icons, Controls, LiveIndicator } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -146,7 +142,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -164,10 +159,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## CSS Custom Properties
 
@@ -175,11 +168,8 @@ class Example {
 | --------------------------- | ------------------------------------ |
 | `--vm-live-indicator-color` | The color of the live indicator dot. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-controls](./controls/default-controls)
-
-
+- [vm-default-controls](./controls/default-controls)

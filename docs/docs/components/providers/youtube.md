@@ -31,12 +31,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -47,7 +47,6 @@ values={[
   <!-- ... -->
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -66,7 +65,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -92,7 +90,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -107,7 +104,6 @@ function Example() {
   import { Player, Youtube } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -126,7 +122,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -138,10 +133,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -152,11 +145,8 @@ class Example {
 | `showFullscreenControl` | Whether the fullscreen control should be shown.                       | `boolean`            | `true`      |
 | `videoId` _(required)_  | The YouTube resource ID of the video to load.                         | `string`             | `undefined` |
 
-
 ## Dependencies
 
 ### Depends on
 
 - [vm-embed](./../core/embed)
-
-

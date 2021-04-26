@@ -19,12 +19,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -46,7 +46,6 @@ values={[
   });
 </script>
 ```
-
 
 </TabItem>
 
@@ -73,7 +72,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -115,7 +113,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -147,7 +144,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="stencil">
@@ -172,7 +168,6 @@ class Example {
   }
 }
 ```
-
 
 </TabItem>
 
@@ -203,10 +198,8 @@ class Example {
 }
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -219,13 +212,11 @@ class Example {
 | `params`         | The parameters to pass to the embedded player which are appended to the `embedSrc` prop. These can be passed in as a query string or object. | `string ∣ { [x: string]: unknown; }`                 | `''`        |
 | `preconnections` | A collection of URLs to that the browser should immediately start establishing a connection with.                                            | `string[]`                                           | `[]`        |
 
-
 ## Methods
 
 | Method        | Description                                   | Signature                                                                 |
 | ------------- | --------------------------------------------- | ------------------------------------------------------------------------- |
 | `postMessage` | Posts a message to the embedded media player. | `postMessage(message: any, target?: string ∣ undefined) => Promise<void>` |
-
 
 ## Events
 
@@ -235,13 +226,10 @@ class Example {
 | `vmEmbedMessage`   | Emitted when a new message is received from the embedded player via `postMessage`.                                                                 | `CustomEvent<any>`    |
 | `vmEmbedSrcChange` | Emitted when the `embedSrc` or `params` props change. The payload contains the `params` serialized into a query string and appended to `embedSrc`. | `CustomEvent<string>` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-dailymotion](./../providers/dailymotion)
- - [vm-vimeo](./../providers/vimeo)
- - [vm-youtube](./../providers/youtube)
-
-
+- [vm-dailymotion](./../providers/dailymotion)
+- [vm-vimeo](./../providers/vimeo)
+- [vm-youtube](./../providers/youtube)

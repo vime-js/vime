@@ -29,12 +29,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -50,7 +50,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -90,7 +89,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -140,7 +138,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -178,7 +175,6 @@ function Example() {
   };
 </script>
 ```
-
 
 </TabItem>
 
@@ -218,7 +214,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -255,10 +250,8 @@ class Example {
 }
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -269,7 +262,6 @@ class Example {
 | `identifier` _(required)_ | The `id` attribute of the menu.                                                            | `string`                       | `undefined` |
 | `slideInDirection`        | The direction the menu should slide in from.                                               | `"left" ∣ "right" ∣ undefined` | `undefined` |
 
-
 ## Methods
 
 | Method              | Description                                                       | Signature                                                                      |
@@ -279,7 +271,6 @@ class Example {
 | `focusMenu`         | Focuses the menu.                                                 | `focusMenu() => Promise<void>`                                                 |
 | `getActiveMenuItem` | Returns the currently focused menu item.                          | `getActiveMenuItem() => Promise<HTMLVmMenuItemElement ∣ undefined>`            |
 | `setActiveMenuItem` | Sets the currently focused menu item.                             | `setActiveMenuItem(item?: HTMLVmMenuItemElement ∣ undefined) => Promise<void>` |
-
 
 ## Events
 
@@ -293,13 +284,11 @@ class Example {
 | `vmMenuHeightChange`     | Emitted when the height of the menu changes.          | `CustomEvent<number>`                            |
 | `vmOpen`                 | Emitted when the menu is open/active.                 | `CustomEvent<HTMLVmMenuElement>`                 |
 
-
 ## Slots
 
 | Slot | Description                                                                                           |
 | ---- | ----------------------------------------------------------------------------------------------------- |
 |      | Used to pass in the body of the menu which usually contains menu items, radio groups and/or submenus. |
-
 
 ## CSS Custom Properties
 
@@ -312,12 +301,9 @@ class Example {
 | `--vm-menu-transition`  | The CSS transitions applied to the menu.               |
 | `--vm-menu-z-index`     | The position in the UI z-axis stack inside the player. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-settings](./settings)
- - [vm-submenu](./submenu)
-
-
+- [vm-settings](./settings)
+- [vm-submenu](./submenu)

@@ -24,12 +24,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -43,7 +43,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -65,7 +64,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -95,7 +93,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -113,7 +110,6 @@ function Example() {
   import { Player, Ui, Poster } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -135,7 +131,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -150,17 +145,14 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
 | Property | Description                                                                                   | Type                                                               | Default   |
 | -------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | --------- |
 | `fit`    | How the poster image should be resized to fit the container (sets the `object-fit` property). | `"contain" ∣ "cover" ∣ "fill" ∣ "none" ∣ "scale-down" ∣ undefined` | `'cover'` |
-
 
 ## Events
 
@@ -170,18 +162,14 @@ class Example {
 | `vmWillHide` | Emitted when the poster will be hidden. | `CustomEvent<void>` |
 | `vmWillShow` | Emitted when the poster will be shown.  | `CustomEvent<void>` |
 
-
 ## CSS Custom Properties
 
 | Name                  | Description                                            |
 | --------------------- | ------------------------------------------------------ |
 | `--vm-poster-z-index` | The position in the UI z-axis stack inside the player. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-ui](./default-ui)
-
-
+- [vm-default-ui](./default-ui)

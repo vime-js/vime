@@ -43,12 +43,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -59,7 +59,6 @@ values={[
   <vm-default-ui></vm-default-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -78,7 +77,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -104,7 +102,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -119,7 +116,6 @@ function Example() {
   import { Player, DefaultUi } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -138,7 +134,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -150,10 +145,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -168,13 +161,11 @@ class Example {
 | `noSettings`           | Whether the custom default settings menu should not be loaded.        | `boolean` | `false` |
 | `noSpinner`            | Whether the custom spinner UI should not be loaded.                   | `boolean` | `false` |
 
-
 ## Slots
 
 | Slot | Description                                                          |
 | ---- | -------------------------------------------------------------------- |
 |      | Used to extend the default user interface with custom UI components. |
-
 
 ## Dependencies
 
@@ -189,5 +180,3 @@ class Example {
 - [vm-loading-screen](./loading-screen)
 - [vm-default-controls](./controls/default-controls)
 - [vm-default-settings](./settings/default-settings)
-
-

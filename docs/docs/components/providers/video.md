@@ -18,12 +18,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -49,7 +49,6 @@ values={[
   <!-- ... -->
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -83,7 +82,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -124,7 +122,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -154,7 +151,6 @@ function Example() {
   import { Player, Video } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -188,7 +184,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -215,10 +210,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -233,23 +226,19 @@ class Example {
 | `poster`                | A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.                                                                      | `string ∣ undefined`                               | `undefined`  |
 | `preload`               | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" ∣ "auto" ∣ "metadata" ∣ "none" ∣ undefined`    | `'metadata'` |
 
-
 ## Slots
 
 | Slot | Description                                                                  |
 | ---- | ---------------------------------------------------------------------------- |
 |      | Pass `<source>` and `<track>` elements to the underlying HTML5 media player. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-dash](./dash)
- - [vm-hls](./hls)
+- [vm-dash](./dash)
+- [vm-hls](./hls)
 
 ### Depends on
 
 - [vm-file](./file)
-
-

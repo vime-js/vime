@@ -21,12 +21,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -38,7 +38,6 @@ values={[
 <!-- Icon library. -->
 <vm-icon name="pause" library="material" label="Pause"></vm-icon>
 ```
-
 
 </TabItem>
 
@@ -60,7 +59,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -88,7 +86,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -104,7 +101,6 @@ function Example() {
   import { Icon } from '@vime/svelte';
 <script>
 ```
-
 
 </TabItem>
 
@@ -126,7 +122,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -139,10 +134,8 @@ class Example {
 <vm-icon name="play" library="material" label="Play"></vm-icon>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -153,14 +146,12 @@ class Example {
 | `name`    | The name of the icon to draw.                                                                                 | `string ∣ undefined` | `undefined` |
 | `src`     | The absolute URL of an SVG file to load.                                                                      | `string ∣ undefined` | `undefined` |
 
-
 ## Events
 
 | Event     | Description                           | Type                                            |
 | --------- | ------------------------------------- | ----------------------------------------------- |
 | `vmError` | Emitted when the icon failed to load. | `CustomEvent<{ status?: number ∣ undefined; }>` |
 | `vmLoad`  | Emitted when the icon has loaded.     | `CustomEvent<void>`                             |
-
 
 ## CSS Custom Properties
 
@@ -171,17 +162,14 @@ class Example {
 | `--vm-icon-transform`  | Transformations applied to the icon. |
 | `--vm-icon-transition` | Transitions applied to the icon.     |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-caption-control](./controls/caption-control)
- - [vm-fullscreen-control](./controls/fullscreen-control)
- - [vm-menu-item](./settings/menu-item)
- - [vm-mute-control](./controls/mute-control)
- - [vm-pip-control](./controls/pip-control)
- - [vm-playback-control](./controls/playback-control)
- - [vm-settings-control](./controls/settings-control)
-
-
+- [vm-caption-control](./controls/caption-control)
+- [vm-fullscreen-control](./controls/fullscreen-control)
+- [vm-menu-item](./settings/menu-item)
+- [vm-mute-control](./controls/mute-control)
+- [vm-pip-control](./controls/pip-control)
+- [vm-playback-control](./controls/playback-control)
+- [vm-settings-control](./controls/settings-control)

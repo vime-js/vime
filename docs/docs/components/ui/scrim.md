@@ -17,12 +17,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -36,7 +36,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -58,7 +57,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -88,7 +86,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -106,7 +103,6 @@ function Example() {
   import { Player, Ui, Scrim } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -128,7 +124,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -143,17 +138,14 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
 | Property   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Type                        | Default     |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------- | ----------- |
 | `gradient` | If this prop is defined, a dark gradient that smoothly fades out without being noticed will be used instead of a set color. This prop also sets the direction in which the dark end of the gradient should start. If the direction is set to `up`, the dark end of the gradient will start at the bottom of the player and fade out to the center. If the direction is set to `down`, the gradient will start at the top of the player and fade out to the center. | `"down" ∣ "up" ∣ undefined` | `undefined` |
-
 
 ## CSS Custom Properties
 
@@ -162,11 +154,8 @@ class Example {
 | `--vm-scrim-bg`      | The background color of the scrim.                     |
 | `--vm-scrim-z-index` | The position in the UI z-axis stack inside the player. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-controls](./controls/default-controls)
-
-
+- [vm-default-controls](./controls/default-controls)

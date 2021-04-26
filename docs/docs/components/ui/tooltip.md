@@ -24,12 +24,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -47,7 +47,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -73,7 +72,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -109,7 +107,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -131,7 +128,6 @@ function Example() {
   import { Player, Ui, Controls, Control, Tooltip } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -157,7 +153,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -176,10 +171,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -190,13 +183,11 @@ class Example {
 | `hidden`    | Whether the tooltip is displayed or not.                                                                                              | `boolean`                      | `false`     |
 | `position`  | Determines if the tooltip appears on top/bottom of it's parent.                                                                       | `"bottom" ∣ "top"`             | `'top'`     |
 
-
 ## Slots
 
 | Slot | Description                                  |
 | ---- | -------------------------------------------- |
 |      | Used to pass in the contents of the tooltip. |
-
 
 ## CSS Custom Properties
 
@@ -214,17 +205,14 @@ class Example {
 | `--vm-tooltip-spacing`          | The space between the tooltip and its parent when active.        |
 | `--vm-tooltip-z-index`          | The position in the UI z-axis stack inside the player.           |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-caption-control](./controls/caption-control)
- - [vm-fullscreen-control](./controls/fullscreen-control)
- - [vm-mute-control](./controls/mute-control)
- - [vm-pip-control](./controls/pip-control)
- - [vm-playback-control](./controls/playback-control)
- - [vm-scrubber-control](./controls/scrubber-control)
- - [vm-settings-control](./controls/settings-control)
-
-
+- [vm-caption-control](./controls/caption-control)
+- [vm-fullscreen-control](./controls/fullscreen-control)
+- [vm-mute-control](./controls/mute-control)
+- [vm-pip-control](./controls/pip-control)
+- [vm-playback-control](./controls/playback-control)
+- [vm-scrubber-control](./controls/scrubber-control)
+- [vm-settings-control](./controls/settings-control)

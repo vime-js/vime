@@ -19,12 +19,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -39,7 +39,6 @@ values={[
   <!-- ... -->
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -70,7 +69,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -110,7 +108,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -138,7 +135,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="stencil">
@@ -159,7 +155,6 @@ class Example {
   }
 }
 ```
-
 
 </TabItem>
 
@@ -188,10 +183,8 @@ class Example {
 }
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -211,18 +204,14 @@ class Example {
 | `src` _(required)_          | The URL of the `manifest.mpd` file to use.                                                                                                                                                                                                                                         | `string`                                           | `undefined`  |
 | `version`                   | The NPM package version of the `dashjs` library to download and use.                                                                                                                                                                                                               | `string`                                           | `'latest'`   |
 
-
 ## Events
 
 | Event     | Description                         | Type               |
 | --------- | ----------------------------------- | ------------------ |
 | `vmError` | Emitted when an error has occurred. | `CustomEvent<any>` |
 
-
 ## Dependencies
 
 ### Depends on
 
 - [vm-video](./video)
-
-

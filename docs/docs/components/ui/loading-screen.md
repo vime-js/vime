@@ -18,12 +18,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -39,7 +39,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -63,7 +62,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -95,7 +93,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -115,7 +112,6 @@ function Example() {
   import { Player, Ui, LoadingScreen } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -139,7 +135,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -156,10 +151,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -167,13 +160,11 @@ class Example {
 | ---------- | ------------------------------------------- | --------- | ------- |
 | `hideDots` | Whether the loading dots are hidden or not. | `boolean` | `false` |
 
-
 ## Slots
 
 | Slot | Description                                                                                                                                                                                                                        |
 | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |      | Used to pass in any content to be shown above the animated dots while the player is booting or media is loading. Use this as an opportunity to brand your player, similar to how Netflix shows their logo when content is loading. |
-
 
 ## CSS Custom Properties
 
@@ -184,11 +175,8 @@ class Example {
 | `--vm-loading-screen-pulse-duration` | The length of the pulse animation to complete one cycle. |
 | `--vm-loading-screen-z-index`        | The position in the UI z-axis stack inside the player.   |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-ui](./default-ui)
-
-
+- [vm-default-ui](./default-ui)

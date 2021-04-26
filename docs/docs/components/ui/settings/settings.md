@@ -26,12 +26,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -47,7 +47,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -69,7 +68,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -101,7 +99,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -121,7 +118,6 @@ function Example() {
   import { Player, Ui, Settings } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -143,7 +139,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -160,10 +155,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -172,20 +165,17 @@ class Example {
 | `active` | Whether the settings menu is opened/closed.                                                                                                                                                | `boolean`                                               | `false`         |
 | `pin`    | Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio` (always `bottomRight`) and on mobile devices (always bottom sheet). | `"bottomLeft" ∣ "bottomRight" ∣ "topLeft" ∣ "topRight"` | `'bottomRight'` |
 
-
 ## Methods
 
 | Method          | Description                                                             | Signature                                                        |
 | --------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | `setController` | Sets the controller responsible for opening/closing this settings menu. | `setController(controller: SettingsController) => Promise<void>` |
 
-
 ## Slots
 
 | Slot | Description                                                                     |
 | ---- | ------------------------------------------------------------------------------- |
 |      | Used to pass in the body of the settings menu, which usually contains submenus. |
-
 
 ## CSS Custom Properties
 
@@ -201,15 +191,12 @@ class Example {
 | `--vm-settings-transition`         | The CSS transitions for the settings menu.      |
 | `--vm-settings-width`              | The width of the settings menu on desktop.      |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-settings](./default-settings)
+- [vm-default-settings](./default-settings)
 
 ### Depends on
 
 - [vm-menu](./menu)
-
-

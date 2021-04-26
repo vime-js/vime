@@ -24,13 +24,13 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue 2', value: 'vue 2' },
-  { label: 'Vue 3', value: 'vue 3' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue 2', value: 'vue 2' },
+{ label: 'Vue 3', value: 'vue 3' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -49,7 +49,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -87,7 +86,6 @@ function PlaybackControl() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -137,7 +135,6 @@ function PlaybackControl() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="vue 3">
@@ -185,7 +182,6 @@ function PlaybackControl() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -219,7 +215,6 @@ function PlaybackControl() {
   $: tooltip = $paused ? $i18n.play : $i18n.pause;
 </script>
 ```
-
 
 </TabItem>
 
@@ -274,7 +269,6 @@ export class PlaybackControl {
 withPlayerContext(PlaybackControl, ['paused', 'i18n']);
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -322,10 +316,8 @@ class PlaybackControl extends Component {
 }
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -339,14 +331,12 @@ class PlaybackControl extends Component {
 | `menu`               | If the control has a popup menu, then this should be the `id` of said menu. Sets the `aria-controls` property.                                                | `string ∣ undefined`  | `undefined` |
 | `pressed`            | If the control is a toggle, this indicated whether the control is in a "pressed" state or not. Sets the `aria-pressed` property.                              | `boolean ∣ undefined` | `undefined` |
 
-
 ## Methods
 
 | Method         | Description                     | Signature                         |
 | -------------- | ------------------------------- | --------------------------------- |
 | `blurControl`  | Removes focus from the control. | `blurControl() => Promise<void>`  |
 | `focusControl` | Focuses the control.            | `focusControl() => Promise<void>` |
-
 
 ## Events
 
@@ -356,13 +346,11 @@ class PlaybackControl extends Component {
 | `vmFocus`             | Emitted when the control receives focus.                                                       | `CustomEvent<void>`    |
 | `vmInteractionChange` | Emitted when the user is interacting with the control by focusing, touching or hovering on it. | `CustomEvent<boolean>` |
 
-
 ## Slots
 
 | Slot | Description                                                     |
 | ---- | --------------------------------------------------------------- |
 |      | Used to pass in the content of the control (text/icon/tooltip). |
-
 
 ## CSS Custom Properties
 
@@ -379,16 +367,13 @@ class PlaybackControl extends Component {
 | `--vm-control-scale`         | The amount to scale the control up/down by.                                |
 | `--vm-control-tap-highlight` | The highlight color when a control is tapped.                              |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-caption-control](./caption-control)
- - [vm-fullscreen-control](./fullscreen-control)
- - [vm-mute-control](./mute-control)
- - [vm-pip-control](./pip-control)
- - [vm-playback-control](./playback-control)
- - [vm-settings-control](./settings-control)
-
-
+- [vm-caption-control](./caption-control)
+- [vm-fullscreen-control](./fullscreen-control)
+- [vm-mute-control](./mute-control)
+- [vm-pip-control](./pip-control)
+- [vm-playback-control](./playback-control)
+- [vm-settings-control](./settings-control)

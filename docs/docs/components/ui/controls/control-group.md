@@ -24,12 +24,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -52,7 +52,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -90,7 +89,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -140,7 +138,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -176,7 +173,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="stencil">
@@ -205,7 +201,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -230,10 +225,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -241,18 +234,14 @@ class Example {
 | -------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | -------- |
 | `space`  | Determines where to add spacing/margin. The amount of spacing is determined by the CSS variable `--control-group-spacing`. | `"both" ∣ "bottom" ∣ "none" ∣ "top"` | `'none'` |
 
-
 ## CSS Custom Properties
 
 | Name                         | Description                       |
 | ---------------------------- | --------------------------------- |
 | `--vm-control-group-spacing` | The space between control groups. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-controls](./default-controls)
-
-
+- [vm-default-controls](./default-controls)

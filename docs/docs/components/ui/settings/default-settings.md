@@ -26,12 +26,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -45,7 +45,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -67,7 +66,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -97,7 +95,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -115,7 +112,6 @@ function Example() {
   import { Player, Ui, DefaultSettings } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -137,7 +133,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -152,10 +147,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -163,19 +156,17 @@ class Example {
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | --------------- |
 | `pin`    | Pins the settings to the defined position inside the video player. This has no effect when the view is of type `audio`, it will always be `bottomRight`. | `"bottomLeft" ∣ "bottomRight" ∣ "topLeft" ∣ "topRight"` | `'bottomRight'` |
 
-
 ## Slots
 
 | Slot | Description                                                                                    |
 | ---- | ---------------------------------------------------------------------------------------------- |
 |      | Used to extend the settings with additional menu options (see `vm-submenu` or `vm-menu-item`). |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-ui](./../default-ui)
+- [vm-default-ui](./../default-ui)
 
 ### Depends on
 
@@ -184,5 +175,3 @@ class Example {
 - [vm-menu-radio-group](./menu-radio-group)
 - [vm-menu-radio](./menu-radio)
 - [vm-settings](./settings)
-
-

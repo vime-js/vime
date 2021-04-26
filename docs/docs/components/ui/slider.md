@@ -25,12 +25,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -46,7 +46,6 @@ values={[
   });
 </script>
 ```
-
 
 </TabItem>
 
@@ -74,7 +73,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -110,7 +108,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -136,7 +133,6 @@ function Example() {
   };
 </script>
 ```
-
 
 </TabItem>
 
@@ -164,7 +160,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -189,10 +184,8 @@ class Example {
 }
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -205,7 +198,6 @@ class Example {
 | `value`     | The current value.                                                                         | `number`             | `5`         |
 | `valueText` | Human-readable text alternative for the current value. Defaults to `value:max` percentage. | `string ∣ undefined` | `undefined` |
 
-
 ## Events
 
 | Event           | Description                                                     | Type                  |
@@ -213,7 +205,6 @@ class Example {
 | `vmBlur`        | Emitted when the slider loses focus.                            | `CustomEvent<void>`   |
 | `vmFocus`       | Emitted when the slider receives focus.                         | `CustomEvent<void>`   |
 | `vmValueChange` | Emitted when the value of the underlying `input` field changes. | `CustomEvent<number>` |
-
 
 ## CSS Custom Properties
 
@@ -228,12 +219,9 @@ class Example {
 | `--vm-slider-track-height`         | The height of the track.                                          |
 | `--vm-slider-value-color`          | The color of the part of the track filled upto the current value. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-scrubber-control](./controls/scrubber-control)
- - [vm-volume-control](./controls/volume-control)
-
-
+- [vm-scrubber-control](./controls/scrubber-control)
+- [vm-volume-control](./controls/volume-control)

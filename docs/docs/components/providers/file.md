@@ -26,7 +26,6 @@ loading file-based media.
 | `preload`               | Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information. | `"" ∣ "auto" ∣ "metadata" ∣ "none" ∣ undefined`    | `'metadata'`                         |
 | `viewType`              | Whether to use an `audio` or `video` element to play the media.                                                                                                                                                                                                                    | `ViewType.Audio ∣ ViewType.Video ∣ undefined`      | `undefined`                          |
 
-
 ## Events
 
 | Event             | Description                                                | Type                                                           |
@@ -35,19 +34,15 @@ loading file-based media.
 | `vmMediaElChange` | Emitted when the underlying media element changes.         | `CustomEvent<HTMLAudioElement ∣ HTMLVideoElement ∣ undefined>` |
 | `vmSrcSetChange`  | Emitted when the child `<source />` elements are modified. | `CustomEvent<MediaResource[]>`                                 |
 
-
 ## Slots
 
 | Slot | Description                                                                  |
 | ---- | ---------------------------------------------------------------------------- |
 |      | Pass `<source>` and `<track>` elements to the underlying HTML5 media player. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-audio](./audio)
- - [vm-video](./video)
-
-
+- [vm-audio](./audio)
+- [vm-video](./video)

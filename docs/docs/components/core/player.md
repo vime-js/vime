@@ -18,12 +18,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -57,7 +57,6 @@ values={[
   };
 </script>
 ```
-
 
 </TabItem>
 
@@ -110,7 +109,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -178,7 +176,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -231,7 +228,6 @@ function Example() {
   };
 </script>
 ```
-
 
 </TabItem>
 
@@ -286,7 +282,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -338,10 +333,8 @@ class Example {
 }
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -401,7 +394,6 @@ class Example {
 | `viewType` _(readonly)_           | The type of player view that is being used, whether it's an audio player view or video player view. Normally if the media type is of audio then the view is of type audio, but in some cases it might be desirable to show a different view type. For example, when playing audio with a poster. This is subject to the provider allowing it. Defaults to `undefined` when no media has been loaded.                                                                                                                                                                                                                                                                                                                                                                                                                  | `ViewType.Audio ∣ ViewType.Video ∣ undefined`                                                                                           | `undefined` |
 | `volume`                          | An `int` between `0` (silent) and `100` (loudest) indicating the audio volume.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `number`                                                                                                                                | `50`        |
 
-
 ## Methods
 
 | Method                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Signature                                                                                         |
@@ -428,7 +420,6 @@ class Example {
 | `setCurrentAudioTrack`      | Sets the currently active audio track given the index.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `setCurrentAudioTrack(trackId: number) => Promise<void>`                                          |
 | `setCurrentTextTrack`       | Sets the currently active text track given the index. Set to -1 to disable all text tracks.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `setCurrentTextTrack(trackId: number) => Promise<void>`                                           |
 | `setTextTrackVisibility`    | Sets the visibility of the currently active text track.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `setTextTrackVisibility(isVisible: boolean) => Promise<void>`                                     |
-
 
 ## Events
 
@@ -477,13 +468,11 @@ class Example {
 | `vmViewTypeChange`          | Emitted when the `viewType` prop changes value.                                                                                                                                                        | `CustomEvent<ViewType.Audio ∣ ViewType.Video ∣ undefined>`                                                                                           |
 | `vmVolumeChange`            | Emitted when the `volume` prop changes value.                                                                                                                                                          | `CustomEvent<number>`                                                                                                                                |
 
-
 ## Slots
 
 | Slot | Description                                           |
 | ---- | ----------------------------------------------------- |
 |      | Used to pass in providers, plugins and UI components. |
-
 
 ## CSS Custom Properties
 
@@ -495,5 +484,3 @@ class Example {
 | `--vm-player-box-shadow`    | The shadow cast around the player frame.                                                                                   |
 | `--vm-player-font-family`   | A custom font family to be used throughout the player.                                                                     |
 | `--vm-player-theme`         | A custom theme (color) to be used throughout the player. Any valid CSS `color` property (HEX, RGBA, HLS, ...) can be used. |
-
-

@@ -24,12 +24,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -46,7 +46,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -70,7 +69,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -103,7 +101,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -123,7 +120,6 @@ function Example() {
   import { Player, Ui, Controls, MuteControl } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -147,7 +143,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -165,10 +160,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -183,7 +176,6 @@ class Example {
 | `tooltipDirection` | The direction in which the tooltip should grow.                                                                                                               | `"left" ∣ "right" ∣ undefined` | `undefined`     |
 | `tooltipPosition`  | Whether the tooltip is positioned above/below the control.                                                                                                    | `"bottom" ∣ "top"`             | `'top'`         |
 
-
 ## Events
 
 | Event     | Description                              | Type                |
@@ -191,17 +183,14 @@ class Example {
 | `vmBlur`  | Emitted when the control loses focus.    | `CustomEvent<void>` |
 | `vmFocus` | Emitted when the control receives focus. | `CustomEvent<void>` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-volume-control](./volume-control)
+- [vm-volume-control](./volume-control)
 
 ### Depends on
 
 - [vm-control](./control)
 - [vm-icon](./../icon)
 - [vm-tooltip](./../tooltip)
-
-

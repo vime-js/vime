@@ -25,12 +25,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -41,7 +41,6 @@ values={[
   <!-- ... -->
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -60,7 +59,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -86,7 +84,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -101,7 +98,6 @@ function Example() {
   import { Player, Dailymotion } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -120,7 +116,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -132,10 +127,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -151,18 +144,14 @@ class Example {
 | `syndication`          | Forwards your syndication key to the player.                                                                                                    | `string ∣ undefined` | `undefined` |
 | `videoId` _(required)_ | The Dailymotion resource ID of the video to load.                                                                                               | `string`             | `undefined` |
 
-
 ## Events
 
 | Event     | Description                         | Type                              |
 | --------- | ----------------------------------- | --------------------------------- |
 | `vmError` | Emitted when an error has occurred. | `CustomEvent<string ∣ undefined>` |
 
-
 ## Dependencies
 
 ### Depends on
 
 - [vm-embed](./../core/embed)
-
-

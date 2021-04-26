@@ -23,12 +23,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -36,7 +36,6 @@ values={[
 ```html
 <vm-time label="Time" seconds="120" />
 ```
-
 
 </TabItem>
 
@@ -50,7 +49,6 @@ function Example() {
   return <Time label="Time" seconds={120} />;
 }
 ```
-
 
 </TabItem>
 
@@ -72,7 +70,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -87,7 +84,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="stencil">
@@ -100,7 +96,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -109,10 +104,8 @@ class Example {
 <vm-time label="Time" [seconds]="120" />
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -122,7 +115,6 @@ class Example {
 | `label` _(required)_ | The `aria-label` property of the time.                                                                                | `string`  | `undefined` |
 | `seconds`            | The length of time in seconds.                                                                                        | `number`  | `0`         |
 
-
 ## CSS Custom Properties
 
 | Name                    | Description                                 |
@@ -131,12 +123,9 @@ class Example {
 | `--vm-time-font-size`   | The size of the font displaying the time.   |
 | `--vm-time-font-weight` | The weight of the font displaying the time. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-current-time](./current-time)
- - [vm-end-time](./end-time)
-
-
+- [vm-current-time](./current-time)
+- [vm-end-time](./end-time)

@@ -23,12 +23,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -36,7 +36,6 @@ values={[
 ```html
 <vm-time-progress separator="/" />
 ```
-
 
 </TabItem>
 
@@ -50,7 +49,6 @@ function Example() {
   return <TimeProgress separator="/" />;
 }
 ```
-
 
 </TabItem>
 
@@ -72,7 +70,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -84,7 +81,6 @@ function Example() {
   import { TimeProgress } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -98,7 +94,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -107,10 +102,8 @@ class Example {
 <vm-time-progress separator="/" />
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -119,23 +112,19 @@ class Example {
 | `alwaysShowHours` | Whether the times should always show the hours unit, even if the time is less than 1 hour (eg: `20:35` -> `00:20:35`). | `boolean` | `false` |
 | `separator`       | The string used to separate the current time and end time.                                                             | `string`  | `'/'`   |
 
-
 ## CSS Custom Properties
 
 | Name              | Description                                |
 | ----------------- | ------------------------------------------ |
 | `--vm-time-color` | The color of the text displaying the time. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-controls](./../controls/default-controls)
+- [vm-default-controls](./../controls/default-controls)
 
 ### Depends on
 
 - [vm-current-time](./current-time)
 - [vm-end-time](./end-time)
-
-

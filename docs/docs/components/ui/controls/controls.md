@@ -23,12 +23,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -44,7 +44,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -68,7 +67,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -99,7 +97,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -121,7 +118,6 @@ function Example() {
   import { Player, Ui, Controls } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -145,7 +141,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -162,10 +157,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -183,13 +176,11 @@ class Example {
 | `pin`                  | Pins the controls to the defined position inside the video player. This has no effect when the view is of type `audio`.     | `"bottomLeft" ∣ "bottomRight" ∣ "center" ∣ "topLeft" ∣ "topRight"`               | `'bottomLeft'` |
 | `waitForPlaybackStart` | Whether the controls should wait for playback to start before being shown. Audio players are not effected by this prop.     | `boolean`                                                                        | `false`        |
 
-
 ## Slots
 
 | Slot | Description               |
 | ---- | ------------------------- |
 |      | Used to pass in controls. |
-
 
 ## CSS Custom Properties
 
@@ -201,11 +192,8 @@ class Example {
 | `--vm-controls-spacing`       | The space between controls.                            |
 | `--vm-controls-z-index`       | The position in the UI z-axis stack inside the player. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-controls](./default-controls)
-
-
+- [vm-default-controls](./default-controls)

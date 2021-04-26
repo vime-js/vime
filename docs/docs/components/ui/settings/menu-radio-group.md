@@ -24,12 +24,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -51,7 +51,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -95,7 +94,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -152,7 +150,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -195,7 +192,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="stencil">
@@ -234,7 +230,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -270,10 +265,8 @@ class Example {
 }
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -281,13 +274,11 @@ class Example {
 | -------- | ------------------------------------------ | -------------------- | ----------- |
 | `value`  | The current value selected for this group. | `string ∣ undefined` | `undefined` |
 
-
 ## Events
 
 | Event     | Description                                                 | Type                |
 | --------- | ----------------------------------------------------------- | ------------------- |
 | `vmCheck` | Emitted when a new radio button is selected for this group. | `CustomEvent<void>` |
-
 
 ## Slots
 
@@ -295,11 +286,8 @@ class Example {
 | ---- | ------------------------------------------------ |
 |      | Used to pass in radio buttons (`vm-menu-radio`). |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-settings](./default-settings)
-
-
+- [vm-default-settings](./default-settings)

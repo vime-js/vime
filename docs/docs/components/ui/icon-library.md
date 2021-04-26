@@ -30,12 +30,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -55,7 +55,6 @@ values={[
   library.resolver = iconName => `/icons/${iconName}.svg`;
 </script>
 ```
-
 
 </TabItem>
 
@@ -78,7 +77,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -114,7 +112,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -136,7 +133,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="stencil">
@@ -157,7 +153,6 @@ class Example {
   }
 }
 ```
-
 
 </TabItem>
 
@@ -183,10 +178,8 @@ class Example {
 }
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -194,5 +187,3 @@ class Example {
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- | ----------- |
 | `name`     | The name of the icon library to register. Vime provides some default libraries out of the box such as `vime`or `material`.                 | `string ∣ undefined`                     | `undefined` |
 | `resolver` | A function that translates an icon name to a URL where the corresponding SVG file exists. The URL can be local or a CORS-enabled endpoint. | `((name: string) => string) ∣ undefined` | `undefined` |
-
-

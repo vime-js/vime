@@ -25,12 +25,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -48,7 +48,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -72,7 +71,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -107,7 +105,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -129,7 +126,6 @@ function Example() {
   import { Player, Ui, Settings, Submenu } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -153,7 +149,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -172,10 +167,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -186,7 +179,6 @@ class Example {
 | `label` _(required)_ | The title of the submenu.                                                                                                                                                       | `string`                       | `undefined` |
 | `slideInDirection`   | The direction the submenu should slide in from.                                                                                                                                 | `"left" ∣ "right" ∣ undefined` | `'right'`   |
 
-
 ## Methods
 
 | Method                | Description                                               | Signature                                                       |
@@ -195,7 +187,6 @@ class Example {
 | `getControllerHeight` | Returns the height of the submenu controller.             | `getControllerHeight() => Promise<number>`                      |
 | `getMenu`             | Returns the menu (`vm-menu`) for this submenu.            | `getMenu() => Promise<HTMLVmMenuElement ∣ undefined>`           |
 
-
 ## Events
 
 | Event            | Description                                        | Type                                |
@@ -203,23 +194,19 @@ class Example {
 | `vmCloseSubmenu` | Emitted when the submenu has closed/is not active. | `CustomEvent<HTMLVmSubmenuElement>` |
 | `vmOpenSubmenu`  | Emitted when the submenu is open/active.           | `CustomEvent<HTMLVmSubmenuElement>` |
 
-
 ## Slots
 
 | Slot | Description                                                                                                                     |
 | ---- | ------------------------------------------------------------------------------------------------------------------------------- |
 |      | Used to pass in the body of the submenu which is usually a set of choices in the form of a radio group (`vm-menu-radio-group`). |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-settings](./default-settings)
+- [vm-default-settings](./default-settings)
 
 ### Depends on
 
 - [vm-menu-item](./menu-item)
 - [vm-menu](./menu)
-
-

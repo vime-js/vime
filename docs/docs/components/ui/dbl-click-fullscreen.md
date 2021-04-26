@@ -16,12 +16,12 @@ import TabItem from '@theme/TabItem'
 groupId="framework"
 defaultValue="html"
 values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -35,7 +35,6 @@ values={[
   </vm-ui>
 </vm-player>
 ```
-
 
 </TabItem>
 
@@ -57,7 +56,6 @@ function Example() {
   );
 }
 ```
-
 
 </TabItem>
 
@@ -87,7 +85,6 @@ function Example() {
 </script>
 ```
 
-
 </TabItem>
 
 <TabItem value="svelte">
@@ -105,7 +102,6 @@ function Example() {
   import { Player, Ui, DblClickFullscreen } from '@vime/svelte';
 </script>
 ```
-
 
 </TabItem>
 
@@ -127,7 +123,6 @@ class Example {
 }
 ```
 
-
 </TabItem>
 
 <TabItem value="angular">
@@ -142,10 +137,8 @@ class Example {
 </vm-player>
 ```
 
-
 </TabItem>
 </Tabs>
-
 
 ## Properties
 
@@ -153,18 +146,14 @@ class Example {
 | ------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------- |
 | `useOnMobile` | By default this is disabled on mobile to not interfere with playback, set this to `true` to enable it. | `boolean` | `false` |
 
-
 ## CSS Custom Properties
 
 | Name                                | Description                                            |
 | ----------------------------------- | ------------------------------------------------------ |
 | `--vm-dbl-click-fullscreen-z-index` | The position in the UI z-axis stack inside the player. |
 
-
 ## Dependencies
 
 ### Used by
 
- - [vm-default-ui](./default-ui)
-
-
+- [vm-default-ui](./default-ui)
