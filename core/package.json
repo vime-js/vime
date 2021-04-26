@@ -39,6 +39,7 @@
     "lint": "npm run lint:prettier && npm run lint:eslint",
     "lint:prettier": "prettier ./src/**/*.{ts,tsx} --write --ignore-path ../.gitignore",
     "lint:eslint": "eslint ./src --quiet --fix --ignore-path ../.gitignore",
+    "start": "npm run serve",
     "serve": "stencil build --dev --watch --port 3336 --serve",
     "serve:prod": "sirv --single playground/index.html --cors --port 3444",
     "transpile:es": "babel dist/custom-elements/index.js --out-file dist/custom-elements/index.js"
