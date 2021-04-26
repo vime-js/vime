@@ -1,0 +1,255 @@
+vm-player {
+  /*******************************
+   * Colors
+   *******************************/
+
+  --vm-color-dark: #313131;
+
+  --vm-color-gray-100: rgba(0, 0, 0, 0.1);
+  --vm-color-gray-200: rgba(0, 0, 0, 0.27);
+  --vm-color-gray-300: rgba(0, 0, 0, 0.38);
+  /* --vm-color-gray-400: rgba(0, 0, 0, 0.54); */
+  --vm-color-gray-500: rgba(0, 0, 0, 0.64);
+  --vm-color-gray-600: rgba(0, 0, 0, 0.7);
+  /* --vm-color-gray-700: rgba(0, 0, 0, 0.87); */
+
+  --vm-color-white-100: rgba(255, 255, 255, 0.1);
+  --vm-color-white-200: rgba(255, 255, 255, 0.27);
+  /* --vm-color-white-300: rgba(255, 255, 255, 0.38); */
+  /* --vm-color-white-400: rgba(255, 255, 255, 0.54); */
+  /* --vm-color-white-500: rgba(255, 255, 255, 0.64); */
+  /* --vm-color-white-600: rgba(255, 255, 255, 0.7); */
+  --vm-color-white-700: rgba(255, 255, 255, 0.87);
+
+  /*******************************
+   * Transitions
+   *******************************/
+
+  --vm-fade-transition: opacity 0.3s ease-in-out;
+
+  /*******************************
+   * Z-Index
+   *******************************/
+
+  /* Root stack. */
+  --vm-media-z-index: 0;
+  --vm-blocker-z-index: 1;
+  --vm-ui-z-index: 2;
+
+  /* UI stack. */
+  --vm-loading-screen-z-index: 1;
+  --vm-poster-z-index: 5;
+  --vm-scrim-z-index: 10;
+  --vm-click-to-play-z-index: 20;
+  --vm-dbl-click-fullscreen-z-index: 20;
+  --vm-captions-z-index: 30;
+  --vm-spinner-z-index: 40;
+  --vm-controls-z-index: 50;
+  --vm-tooltip-z-index: 60;
+  --vm-menu-z-index: 70;
+  --vm-skeleton-z-index: 100;
+
+  /*******************************
+   * Player
+   *******************************/
+
+  --vm-player-bg: #000;
+  /* --vm-player-theme: #eb7290; */
+  --vm-player-border-radius: 4px;
+  --vm-player-font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial,
+    sans-serif;
+
+  /*******************************
+   * Loading Screen
+   *******************************/
+
+  --vm-loading-screen-dot-size: 12px;
+  --vm-loading-screen-pulse-duration: 1.5s;
+  --vm-loading-screen-dot-color: var(
+    --vm-player-theme,
+    var(--vm-color-white-700)
+  );
+
+  /*******************************
+   * Skeleton
+   *******************************/
+
+  --vm-skeleton-color: hsl(0, 10%, 90%);
+  --vm-skeleton-sheen-color: hsl(0, 10%, 97%);
+
+  /*******************************
+   * Slider
+   *******************************/
+
+  --vm-slider-thumb-width: 13px;
+  --vm-slider-thumb-height: 13px;
+  --vm-slider-thumb-bg: #fff;
+  --vm-slider-thumb-border: 2px solid transparent;
+
+  --vm-slider-track-height: 3px;
+  --vm-slider-track-focused-height: 5px;
+  --vm-slider-track-color: var(--vm-color-white-200);
+  --vm-slider-value-color: var(--vm-player-theme, #fff);
+
+  /*******************************
+   * Tooltip
+   *******************************/
+
+  --vm-tooltip-border-radius: 3px;
+  --vm-tooltip-font-size: 14px;
+  --vm-tooltip-padding: calc(var(--vm-control-spacing) / 1.5);
+  --vm-tooltip-fade-duration: 0.2s;
+  --vm-tooltip-fade-timing-func: ease;
+  --vm-tooltip-spacing: 14px;
+  --vm-tooltip-box-shadow: 0 0 2px var(--vm-color-gray-500);
+  --vm-tooltip-bg: var(--vm-color-dark);
+  --vm-tooltip-color: var(--vm-color-white-700);
+
+  /*******************************
+   * Spinner
+   *******************************/
+
+  --vm-spinner-width: 80px;
+  --vm-spinner-height: 80px;
+  --vm-spinner-thickness: 3px;
+  --vm-spinner-fill-color: #fff;
+  --vm-spinner-track-color: var(--vm-color-white-200);
+  --vm-spinner-spin-duration: 1.1s;
+  --vm-spinner-spin-timing-func: linear;
+
+  /*******************************
+   * Scrim
+   *******************************/
+
+  --vm-scrim-bg: var(--vm-color-gray-300);
+
+  /*******************************
+   * Captions
+   *******************************/
+
+  --vm-captions-text-color: #fff;
+  --vm-captions-font-size: 18px;
+  --vm-captions-font-size-medium: 22px;
+  --vm-captions-font-size-large: 24px;
+  --vm-captions-font-size-xlarge: 28px;
+  --vm-captions-cue-bg-color: var(--vm-color-gray-600);
+  --vm-captions-cue-border-radius: 2px;
+  --vm-captions-cue-padding: 0.2em 0.5em;
+
+  /*******************************
+   * Controls
+   *******************************/
+
+  --vm-controls-bg: transparent;
+  --vm-controls-border-radius: 4px;
+  --vm-controls-padding: var(--vm-control-spacing);
+  --vm-controls-spacing: var(--vm-control-spacing);
+
+  /*******************************
+   * Control Group
+   *******************************/
+
+  --vm-control-group-spacing: var(--vm-control-spacing);
+
+  /*******************************
+   * Control
+   *******************************/
+
+  --vm-control-border: 0;
+  --vm-control-scale: 1;
+  --vm-control-border-radius: 3px;
+  --vm-control-spacing: 8px;
+  --vm-control-padding: 4px;
+  --vm-control-icon-size: 28px;
+  --vm-control-color: #fff;
+  --vm-control-tap-highlight: var(--vm-color-white-200);
+  --vm-control-focus-color: #fff;
+  --vm-control-focus-bg: var(--vm-player-theme, var(--vm-color-white-200));
+
+  /*******************************
+   * Scrubber Control
+   *******************************/
+
+  --vm-scrubber-loading-stripe-size: 25px;
+  --vm-scrubber-buffered-bg: var(--vm-color-white-200);
+  --vm-scrubber-loading-stripe-color: var(--vm-color-white-200);
+  --vm-scrubber-tooltip-spacing: 10px;
+
+  /*******************************
+   * Time
+   *******************************/
+
+  --vm-time-font-size: 14px;
+  --vm-time-font-weight: 400;
+  --vm-time-color: var(--vm-color-white-700);
+
+  /*******************************
+   * Menu
+   *******************************/
+
+  --vm-menu-color: var(--vm-color-white-700);
+  --vm-menu-bg: var(--vm-color-dark);
+  --vm-menu-font-size: 14px;
+  --vm-menu-font-weight: 400;
+  --vm-menu-transition: transform 0.25s ease-out;
+
+  /*******************************
+   * Menu Item
+   *******************************/
+
+  --vm-menu-item-padding: 8px;
+  --vm-menu-item-focus-color: var(--vm-menu-color);
+  --vm-menu-item-focus-bg: var(--vm-color-white-100);
+  --vm-menu-item-tap-highlight: var(--vm-color-white-100);
+
+  --vm-menu-item-hint-color: var(--vm-menu-color);
+  --vm-menu-item-hint-font-size: 13px;
+  --vm-menu-item-hint-opacity: 0.54;
+
+  --vm-menu-item-badge-color: var(--vm-menu-color);
+  --vm-menu-item-badge-bg: transparent;
+  --vm-menu-item-badge-font-size: 10px;
+
+  --vm-menu-item-arrow-color: var(--vm-menu-color);
+
+  --vm-menu-item-check-icon-size: 16px;
+
+  --vm-menu-item-divider-color: var(--vm-color-white-100);
+
+  /*******************************
+   * Settings
+   *******************************/
+
+  --vm-settings-width: 275px;
+  --vm-settings-padding: 8px;
+  --vm-settings-max-height: 75%;
+  --vm-settings-border-radius: 2px;
+  --vm-settings-shadow: 0 0 8px 2px var(--vm-color-gray-100);
+
+  --vm-settings-scroll-width: 10px;
+  --vm-settings-scroll-thumb-color: var(--vm-color-white-200);
+  --vm-settings-scroll-track-color: var(--vm-menu-bg);
+
+  --vm-settings-transition: transform 0.2s cubic-bezier(0, 0, 0.4, 1) 0.16s,
+    opacity 0.2s cubic-bezier(0, 0, 0.4, 1) 0.16s;
+}
+
+vm-player[video] {
+  --vm-tooltip-spacing: 18px;
+}
+
+vm-player[mobile],
+vm-player[touch] {
+  --vm-control-border-radius: 50%;
+}
+
+vm-player[mobile] {
+  --vm-settings-width: 100%;
+  --vm-menu-control-padding: 12px calc(var(--vm-control-padding) * 2);
+}
+
+vm-player[audio] {
+  --vm-controls-bg: var(--vm-color-dark);
+  --vm-settings-max-height: 200px;
+  --vm-tooltip-spacing: 10px;
+}

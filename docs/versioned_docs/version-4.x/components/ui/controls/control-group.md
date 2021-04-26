@@ -12,7 +12,7 @@ a new line.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/control-group/control-group.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/control-group/control-group.png"
   alt="Vime control group component"
 />
 
@@ -55,7 +55,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {6,18-20,22-25}
@@ -92,7 +91,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -142,7 +140,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {6-8,10-13,26} title="example.svelte"
@@ -178,7 +175,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="stencil">
 
 ```tsx {8-10,12-15}
@@ -207,7 +203,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {6-8,10-14}
@@ -233,7 +228,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

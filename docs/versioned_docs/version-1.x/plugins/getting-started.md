@@ -4,7 +4,7 @@ sidebar_label: Getting Started
 ---
 
 Plugins are at the heart of Vime because everything outside of the core is built as one. Basically plugins
-are Svelte components that implement the [plugin interface](../complete/api/plugin.md) and 
+are Svelte components that implement the [plugin interface](../complete/api/plugin.md) and
 add some functionality/feature to the player. Plugins can be interacted with through the props,
 methods and events they expose.
 
@@ -12,7 +12,7 @@ methods and events they expose.
 
 ### Quick
 
-You can get started quickly by simply using the [`Boot`](./api/boot.md) plugin which will install all Vime plugins. It 
+You can get started quickly by simply using the [`Boot`](./api/boot.md) plugin which will install all Vime plugins. It
 also provides the option of turning off plugins you don't need, see the [`Boot`](api/boot.md) plugin page
 for more information.
 
@@ -24,28 +24,25 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
 
 ```js
-import { 
-  Player, ActionDisplay, Keyboard, 
-  Tooltips 
-} from '@vime-js/complete';
+import { Player, ActionDisplay, Keyboard, Tooltips } from '@vime-js/complete';
 
 const target = document.getElementById('player-target');
 
-const player = new Player({ 
+const player = new Player({
   target,
   props: {
-    plugins: [ActionDisplay, Keyboard, Tooltips]
-  }
+    plugins: [ActionDisplay, Keyboard, Tooltips],
+  },
 });
 ```
 
@@ -54,16 +51,10 @@ const player = new Player({
 <TabItem value="svelte">
 
 ```html
-<Player
-  {plugins}
-  bind:this={player} 
-/>
+<Player {plugins} bind:this="{player}" />
 
 <script>
-  import { 
-    Player, ActionDisplay, Keyboard, 
-    Tooltips 
-  } from '@vime-js/complete';
+  import { Player, ActionDisplay, Keyboard, Tooltips } from '@vime-js/complete';
 
   let player;
 
@@ -80,11 +71,11 @@ const player = new Player({
 If you want to dynamically add/remove plugins you can use the [`PluginsManager`](../complete/api/plugins-manager.md).
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
@@ -116,21 +107,15 @@ pluginsManager
 <TabItem value="svelte">
 
 ```html
-<Player
-  on:mount={onPlayerMount}
-  bind:this={player} 
-/>
+<Player on:mount="{onPlayerMount}" bind:this="{player}" />
 
 <script>
-  import { 
-    Player, ActionDisplay, Keyboard, 
-    Tooltips 
-  } from '@vime-js/complete';
+  import { Player, ActionDisplay, Keyboard, Tooltips } from '@vime-js/complete';
 
   let player;
 
   const onPlayerMount = async () => {
-    const pluginsManager = player.getPluginsManager(); 
+    const pluginsManager = player.getPluginsManager();
 
     const [
       actionDisplay,
@@ -157,8 +142,8 @@ You can still do this with the `plugins` prop, but the manager has a much better
 
 ## Interacting with Plugins
 
-All Vime plugins are attached to the player and can be accessed via their plugin `ID`.  All Vime plugins 
-follow the naming convention of `v{PluginName}`. 
+All Vime plugins are attached to the player and can be accessed via their plugin `ID`. All Vime plugins
+follow the naming convention of `v{PluginName}`.
 
 - Keyboard = `vKeyboard`
 - ActionDisplay = `vActionDisplay`
@@ -167,11 +152,11 @@ follow the naming convention of `v{PluginName}`.
 ### Simple Example
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
@@ -189,11 +174,7 @@ player.$on('mount', () => {
 <TabItem value="svelte">
 
 ```html
-<Player
-  {plugins}
-  on:mount={onPlayerMount}
-  bind:this={player}
-/>
+<Player {plugins} on:mount="{onPlayerMount}" bind:this="{player}" />
 
 <script>
   import { Player, Keyboard } from '@vime-js/complete';
@@ -215,11 +196,11 @@ player.$on('mount', () => {
 ### Advanced Example
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
@@ -231,15 +212,15 @@ import { PlayerEvent, Keyboard } from '@vime-js/complete';
 
 player.$on(PlayerEvent.PLUGIN_MOUNT, e => {
   const { id, plugin } = e.detail;
-  
-  if (id === Keyboard.ID) { 
+
+  if (id === Keyboard.ID) {
     // Keyboard plugin mounted.
   }
 });
 
 player.$on(PlayerEvent.PLUGIN_DESTROY, e => {
   const id = e.detail;
-  
+
   if (id === Keyboard.ID) {
     // Keyboard plugin destroyed.
   }
@@ -251,11 +232,7 @@ player.$on(PlayerEvent.PLUGIN_DESTROY, e => {
 <TabItem value="svelte">
 
 ```html
-<Player
-  {plugins}
-  on:mount={onPlayerMount}
-  bind:this={player}
-/>
+<Player {plugins} on:mount="{onPlayerMount}" bind:this="{player}" />
 
 <script>
   import { Player, Keyboard } from '@vime-js/complete';
@@ -270,7 +247,7 @@ player.$on(PlayerEvent.PLUGIN_DESTROY, e => {
   };
 
   /**
-   * Because the registry has a subscribe method, we can 
+   * Because the registry has a subscribe method, we can
    * take advantage of auto-subscriptions.
    **/
   $: keyboardPlugin = $registry && $registry[Keyboard.ID];

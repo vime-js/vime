@@ -7,16 +7,16 @@ _This component was inspired by [Shoelace](https://shoelace.style/)._
 
 **Icon libraries let you register additional icons to be used throughout the player.**
 
-An icon library is a renderless component that registers a custom set of SVG icons. The icon 
-files can exist locally or on a CORS-enabled endpoint (eg: CDN). There is no limit to how many 
-icon libraries you can register, and there is no cost associated with registering them, as 
+An icon library is a renderless component that registers a custom set of SVG icons. The icon
+files can exist locally or on a CORS-enabled endpoint (eg: CDN). There is no limit to how many
+icon libraries you can register, and there is no cost associated with registering them, as
 individual icons are only requested when they're used.
 
-By default, Vime provides the `vime` and `material` icon sets, to register your own icon 
-library create an `<vm-icon-library>` element with a name and resolver function. The resolver 
-function translates an icon name to a URL where its corresponding SVG file exists. 
+By default, Vime provides the `vime` and `material` icon sets, to register your own icon
+library create an `<vm-icon-library>` element with a name and resolver function. The resolver
+function translates an icon name to a URL where its corresponding SVG file exists.
 
-Refer to the examples below and in the [icon](./icon) component to better understand how it all 
+Refer to the examples below and in the [icon](./icon) component to better understand how it all
 works.
 
 <!-- Auto Generated Below -->
@@ -52,7 +52,7 @@ values={[
 
 <script>
   const library = document.querySelector('vm-icon-library[name="my-library"]');
-  library.resolver = (iconName) => `/icons/${iconName}.svg`;
+  library.resolver = iconName => `/icons/${iconName}.svg`;
 </script>
 ```
 
@@ -97,12 +97,12 @@ function Example() {
 </template>
 
 <script>
-  import { Player, Ui, IconLibrary } from "@vime/vue";
+  import { Player, Ui, IconLibrary } from '@vime/vue';
 
   export default {
     data() {
       return {
-        customResolver: (iconName) => `/icons/${iconName}.svg`,
+        customResolver: iconName => `/icons/${iconName}.svg`,
       };
     },
     components: {
@@ -158,6 +158,7 @@ class Example {
 }
 ```
 
+
 </TabItem>
 
 <TabItem value="angular">
@@ -168,7 +169,10 @@ class Example {
   <!-- ... -->
   <vm-ui>
     <!-- Register a custom icon library. -->
-    <vm-icon-library name="my-library" [resolver]="customResolver"></vm-icon-library>
+    <vm-icon-library
+      name="my-library"
+      [resolver]="customResolver"
+    ></vm-icon-library>
   </vm-ui>
 </vm-player>
 ```

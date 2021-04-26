@@ -68,10 +68,10 @@ function Example() {
 ```html {3-6,12,17} title="example.vue"
 <template>
   <Player controls>
-    <Audio>
+    <audio>
       <source data-src="/media/audio.mp3" type="audio/mp3" />
       <!-- <source> and <track> elements are placed here. -->
-    </Audio>
+    </audio>
     <!-- ... -->
   </Player>
 </template>
@@ -95,10 +95,10 @@ function Example() {
 
 ```html {2-5,10} title="example.svelte"
 <Player controls>
-  <Audio>
+  <audio>
     <source data-src="/media/audio.mp3" type="audio/mp3" />
     <!-- <source> and <track> elements are placed here. -->
-  </Audio>
+  </audio>
   <!-- ... -->
 </Player>
 
@@ -127,6 +127,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

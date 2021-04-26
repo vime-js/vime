@@ -19,7 +19,7 @@ the props set.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu-item/menu-item.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/settings/menu-item/menu-item.png"
   alt="Vime settings menu item component"
 />
 
@@ -55,7 +55,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {2,11}
@@ -78,7 +77,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -111,7 +109,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {6,16} title="example.svelte"
@@ -131,7 +128,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="stencil">
 
@@ -155,7 +151,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {6} title="example.html"
@@ -173,7 +168,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

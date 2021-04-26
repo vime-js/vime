@@ -12,9 +12,9 @@ This document is still a work in progress.
 
 ## Lifecycle
 
-Plugins are Svelte components that implement the [plugin interface](../complete/api/plugin.md) and 
-add some functionality/feature to the player. They are managed by the [`PluginsManager`](../complete/api/plugins-manager.md) 
-whose responsible for validating, adding, removing, rendering and registering them. It can be accessed through the player 
+Plugins are Svelte components that implement the [plugin interface](../complete/api/plugin.md) and
+add some functionality/feature to the player. They are managed by the [`PluginsManager`](../complete/api/plugins-manager.md)
+whose responsible for validating, adding, removing, rendering and registering them. It can be accessed through the player
 by calling `player.getPluginsManager()`.
 
 ### Create
@@ -34,14 +34,14 @@ by calling `player.getPluginsManager()`.
 
 ## Registry
 
-Plugins and their child values are registered using a [`Registry`](../complete/api/registry.md). A registry 
-is essentially a container who holds unique id references to values. Majority of time, these values are 
+Plugins and their child values are registered using a [`Registry`](../complete/api/registry.md). A registry
+is essentially a container who holds unique id references to values. Majority of time, these values are
 rendered plugin instances (the result of mounting a Svelte component to the DOM), or other registries (known as subregistries).
 
 ### Problem
 
 The problem that the registry solves is, how do we access and communicate between semi-unrelated
-component trees that are dynamically rendered and removed. Basically, if we create a plugin called 
+component trees that are dynamically rendered and removed. Basically, if we create a plugin called
 `MySuperDuperPlugin`, then how does `OtherSuperDuperPlugin` listen for when it becomes
 available and get a reference to it.
 
@@ -51,7 +51,7 @@ The [registry pattern][wiki-registry-pattern] is the approach used in Vime to so
 
 All you need to know is:
 
-- In Vime, there is a global object called a registry in which all shared values are stored. 
+- In Vime, there is a global object called a registry in which all shared values are stored.
 - These objects can be nested in one another to create subregistries.
 - Subregistries are created by plugins.
 - You access subregistries through the root registry, stored under their respective plugin `ID`.

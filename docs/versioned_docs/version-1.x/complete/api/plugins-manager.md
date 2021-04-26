@@ -5,7 +5,7 @@ sidebar_label: PluginsManager
 
 **ID:** `vPlugin` | **Type:** `Component`
 
-The `PluginsManager` is responsible for validating, adding, removing, rendering and registering 
+The `PluginsManager` is responsible for validating, adding, removing, rendering and registering
 [plugins](./plugin.md).
 
 ## Methods
@@ -20,7 +20,7 @@ Whether there is a plugin with a matching `ID`.
 
 **Parameters:** `(plugin: Plugin)` | **Return Type:** `Promise<Component>`
 
-Adds a new plugin to be validated, rendered and registered. This method returns a `Promise` that 
+Adds a new plugin to be validated, rendered and registered. This method returns a `Promise` that
 resolves with the rendered instance.
 
 ### `addPlugins`
@@ -41,7 +41,7 @@ has completed.
 
 **Parameters:** `(plugins: Plugin[])` | **Return Type:** `Promise<undefined>`
 
-Removes a list of plugins, each plugin is passed to [`removePlugin`](#removeplugin). This method returns a `Promise` 
+Removes a list of plugins, each plugin is passed to [`removePlugin`](#removeplugin). This method returns a `Promise`
 that resolves once the operation has completed.
 
 ### `getPlugins`

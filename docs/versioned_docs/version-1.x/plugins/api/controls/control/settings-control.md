@@ -9,7 +9,7 @@ A control that toggles the visibility state of the settings menu.
 
 ## Relationships
 
-If the [Settings](../../settings/settings.md) plugin is available then this control will automatically 
+If the [Settings](../../settings/settings.md) plugin is available then this control will automatically
 manage opening and closing it.
 
 ## Props

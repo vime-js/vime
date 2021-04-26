@@ -22,7 +22,7 @@
           }
         }
       }
-    }, 
+    },
     "@vime/angular-test": {
       "projectType": "application",
       "root": "test",
@@ -38,12 +38,8 @@
             "polyfills": "test/src/polyfills.ts",
             "tsConfig": "test/tsconfig.json",
             "aot": true,
-            "assets": [
-              "src/favicon.ico"
-            ],
-            "styles": [
-              "test/src/styles.css"
-            ],
+            "assets": ["src/favicon.ico"],
+            "styles": ["test/src/styles.css"],
             "scripts": []
           },
           "configurations": {

@@ -47,7 +47,7 @@ import React from 'react';
 import { EndTime } from '@vime/react';
 
 function Example() {
-  return (<EndTime />);
+  return <EndTime />;
 }
 ```
 
@@ -97,6 +97,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

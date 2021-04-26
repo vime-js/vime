@@ -20,7 +20,7 @@ Identifies the type of media by a number and can contain one of these possible v
 ## Example
 
 ```js
-import { VideoQuality } from '@vime-js/standard'
+import { VideoQuality } from '@vime-js/standard';
 
 if (player.videoQuality === VideoQuality.MAX) {
   console.log('We are in 4k.');

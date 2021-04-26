@@ -7,21 +7,21 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 UI components are visually displayed elements inside the media player that _may_ be interactable
-such as a playback control or slider, or they _may_ be simple visual feedback such as the length 
-of the media (duration). It can be quite time consuming and challenging to setup an entire interface for a 
-video player, so let's start by using the [default UI](../components/ui/default-ui) given to us out 
+such as a playback control or slider, or they _may_ be simple visual feedback such as the length
+of the media (duration). It can be quite time consuming and challenging to setup an entire interface for a
+video player, so let's start by using the [default UI](../components/ui/default-ui) given to us out
 of the box...
 
 <Tabs
-  groupId="framework"
-  defaultValue="html"
-  values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
@@ -30,18 +30,15 @@ of the box...
 <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
 <vm-player>
   <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
+    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <track
+      default
+      kind="subtitles"
+      src="https://media.vimejs.com/subs/english.vtt"
+      srclang="en"
+      label="English"
     />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </vm-video> 
+  </vm-video>
 
   <!-- We've replaced the `<vm-ui>` element. -->
   <!-- We can also turn off any features we don't want via properties. -->
@@ -64,18 +61,18 @@ function Player() {
     {/* Notice we turned off controls? We're supplying our own, so we hide the native ones. */}
     <Player>
       <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
-        <source 
-          data-src="https://media.vimejs.com/720p.mp4" 
-          type="video/mp4" 
+        <source
+          data-src="https://media.vimejs.com/720p.mp4"
+          type="video/mp4"
         />
-        <track 
-          default 
-          kind="subtitles" 
-          src="https://media.vimejs.com/subs/english.vtt" 
-          srcLang="en" 
-          label="English" 
+        <track
+          default
+          kind="subtitles"
+          src="https://media.vimejs.com/subs/english.vtt"
+          srcLang="en"
+          label="English"
         />
-      </Video> 
+      </Video>
 
       {/* We've replaced the `<Ui />` component. */}
       {/* We can turn off any features we don't want via properties. */}
@@ -95,19 +92,16 @@ function Player() {
 <template>
   <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
   <Player>
-    <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
-      <source 
-        data-src="https://media.vimejs.com/720p.mp4" 
-        type="video/mp4" 
+    <video crossorigin="" poster="https://media.vimejs.com/poster.png">
+      <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+      <track
+        default
+        kind="subtitles"
+        src="https://media.vimejs.com/subs/english.vtt"
+        srclang="en"
+        label="English"
       />
-      <track 
-        default 
-        kind="subtitles" 
-        src="https://media.vimejs.com/subs/english.vtt" 
-        srclang="en" 
-        label="English" 
-      />
-    </Video> 
+    </video>
 
     <!-- We've replaced the `<Ui />` component. -->
     <!-- We can turn off any features we don't want via properties. -->
@@ -137,19 +131,16 @@ function Player() {
 ```html {19-21} title="Player.svelte"
 <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
 <Player>
-  <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
+  <video crossorigin="" poster="https://media.vimejs.com/poster.png">
+    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <track
+      default
+      kind="subtitles"
+      src="https://media.vimejs.com/subs/english.vtt"
+      srclang="en"
+      label="English"
     />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </Video> 
+  </video>
 
   <!-- We've replaced the `<Ui />` component. -->
   <!-- We can turn off any features we don't want via properties. -->
@@ -176,16 +167,16 @@ class Player {
       {/* Notice we turned off controls? We're supplying our own, so we hide the native ones. */}
       <vm-player>
         <vm-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
-          <source 
-            data-src="https://media.vimejs.com/720p.mp4" 
-            type="video/mp4" 
+          <source
+            data-src="https://media.vimejs.com/720p.mp4"
+            type="video/mp4"
           />
-          <track 
-            default 
-            kind="subtitles" 
-            src="https://media.vimejs.com/subs/english.vtt" 
-            srclang="en" 
-            label="English" 
+          <track
+            default
+            kind="subtitles"
+            src="https://media.vimejs.com/subs/english.vtt"
+            srclang="en"
+            label="English"
           />
         </vm-video>
 
@@ -208,18 +199,15 @@ class Player {
 <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
 <vm-player>
   <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
+    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <track
+      default
+      kind="subtitles"
+      src="https://media.vimejs.com/subs/english.vtt"
+      srclang="en"
+      label="English"
     />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </vm-video> 
+  </vm-video>
 
   <!-- We've replaced the `<vm-ui>` element. -->
   <!-- We can also turn off any features we don't want via properties. -->
@@ -237,9 +225,9 @@ Glorious! Here's the result so far 🥁 ...
 
 import BasicPlayer from '../src/components/players/LoadableBasicPlayer'
 
-<BasicPlayer 
-  showDefaultUi 
-  defaultUiProps={{ noClickToPlay: true }} 
+<BasicPlayer
+showDefaultUi
+defaultUiProps={{ noClickToPlay: true }}
 />
 <br />
 
@@ -247,37 +235,42 @@ import BasicPlayer from '../src/components/players/LoadableBasicPlayer'
 Remember to load the default player theme or you might see something you regret 😱
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/default.css" />
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/default.css"
+/>
 ```
+
 :::
 
-Just like that we've setup an interface for audio/video/live media that looks good on both 
+Just like that we've setup an interface for audio/video/live media that looks good on both
 mobile/desktop and is ARIA friendly... not bad 😎 &nbsp;
 
-What if we want to put together our own UI? We can easily achieve this by mixing together predefined 
-components by Vime and creating our own. Let's say we only wanted to be able to click the player to toggle 
+What if we want to put together our own UI? We can easily achieve this by mixing together predefined
+components by Vime and creating our own. Let's say we only wanted to be able to click the player to toggle
 playback, and to able to tap the sides to seek forward/backward. If we look through the components
-in the `Components > UI` section in the sidebar (on your left), we see there is a 
-[`ClickToPlay`](../components/ui/click-to-play) component which solves our first requirement, but 
-nothing seems to match our second requirement. This calls for a custom component, so let's see 
+in the `Components > UI` section in the sidebar (on your left), we see there is a
+[`ClickToPlay`](../components/ui/click-to-play) component which solves our first requirement, but
+nothing seems to match our second requirement. This calls for a custom component, so let's see
 how we can go about putting this together...
 
 <Tabs
-  groupId="framework"
-  defaultValue="html"
-  values={[
-  { label: 'HTML', value: 'html' },
-  { label: 'React', value: 'react' },
-  { label: 'Vue', value: 'vue' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Stencil', value: 'stencil' },
-  { label: 'Angular', value: 'angular' }
+groupId="framework"
+defaultValue="html"
+values={[
+{ label: 'HTML', value: 'html' },
+{ label: 'React', value: 'react' },
+{ label: 'Vue', value: 'vue' },
+{ label: 'Svelte', value: 'svelte' },
+{ label: 'Stencil', value: 'stencil' },
+{ label: 'Angular', value: 'angular' }
 ]}>
 
 <TabItem value="html">
 
 :::caution
-The following HTML example is not complete, feel free to contribute by helping us complete it 🙂 
+
+The following HTML example is not complete, feel free to contribute by helping us complete it 🙂
 
 Here's some links for you to learn about web components:
 
@@ -285,23 +278,21 @@ Here's some links for you to learn about web components:
 - [MDN - Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
 - [CSS Tricks - Introduction to Web Components](https://css-tricks.com/an-introduction-to-web-components/)
 - [Robinwieruch - Web Component Tutorial for Beginners](https://www.robinwieruch.de/web-components-tutorial)
+
 :::
 
 ```html {16-22} title="player.html"
 <vm-player>
   <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
+    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <track
+      default
+      kind="subtitles"
+      src="https://media.vimejs.com/subs/english.vtt"
+      srclang="en"
+      label="English"
     />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </vm-video> 
+  </vm-video>
 
   <vm-ui>
     <!-- Vime components. -->
@@ -323,31 +314,22 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 
 ```tsx {28-34} title="Player.tsx"
 import React from 'react';
-import { 
-  Player, 
-  Video, 
-  Ui, 
-  ClickToPlay,
-  Spinner,
-} from '@vime/react';
+import { Player, Video, Ui, ClickToPlay, Spinner } from '@vime/react';
 import TapSidesToSeek from './TapSidesToSeek';
 
 function Player() {
   return (
     <Player>
       <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
-        <source 
-          data-src="https://media.vimejs.com/720p.mp4" 
-          type="video/mp4" 
+        <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+        <track
+          default
+          kind="subtitles"
+          src="https://media.vimejs.com/subs/english.vtt"
+          srcLang="en"
+          label="English"
         />
-        <track 
-          default 
-          kind="subtitles" 
-          src="https://media.vimejs.com/subs/english.vtt" 
-          srcLang="en" 
-          label="English" 
-        />
-      </Video> 
+      </Video>
 
       <Ui>
         {/* Vime components. */}
@@ -373,19 +355,16 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 <template>
   <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
   <Player>
-    <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
-      <source 
-        data-src="https://media.vimejs.com/720p.mp4" 
-        type="video/mp4" 
+    <video crossorigin="" poster="https://media.vimejs.com/poster.png">
+      <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+      <track
+        default
+        kind="subtitles"
+        src="https://media.vimejs.com/subs/english.vtt"
+        srclang="en"
+        label="English"
       />
-      <track 
-        default 
-        kind="subtitles" 
-        src="https://media.vimejs.com/subs/english.vtt" 
-        srclang="en" 
-        label="English" 
-      />
-    </Video> 
+    </video>
 
     <Ui>
       <!-- Vime components. -->
@@ -398,13 +377,7 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 </template>
 
 <script>
-  import { 
-    Player, 
-    Video, 
-    Ui, 
-    ClickToPlay,
-    Spinner,
-  } from '@vime/vue';
+  import { Player, Video, Ui, ClickToPlay, Spinner } from '@vime/vue';
   import TapSidesToSeek from './TapSidesToSeek.vue';
 
   export default {
@@ -430,19 +403,16 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 
 ```html {16-22} title="Player.svelte"
 <Player>
-  <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
+  <video crossorigin="" poster="https://media.vimejs.com/poster.png">
+    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <track
+      default
+      kind="subtitles"
+      src="https://media.vimejs.com/subs/english.vtt"
+      srclang="en"
+      label="English"
     />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </Video> 
+  </video>
 
   <Ui>
     <!-- Vime components. -->
@@ -454,13 +424,7 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 </Player>
 
 <script lang="ts">
-  import { 
-    Player, 
-    Video, 
-    Ui, 
-    ClickToPlay, 
-    Spinner, 
-  } from '@vime/svelte';
+  import { Player, Video, Ui, ClickToPlay, Spinner } from '@vime/svelte';
   import TapSidesToSeek from './TapSidesToSeek.svelte';
 </script>
 ```
@@ -481,16 +445,16 @@ class Player {
     return (
       <vm-player>
         <vm-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
-          <source 
-            data-src="https://media.vimejs.com/720p.mp4" 
-            type="video/mp4" 
+          <source
+            data-src="https://media.vimejs.com/720p.mp4"
+            type="video/mp4"
           />
-          <track 
-            default 
-            kind="subtitles" 
-            src="https://media.vimejs.com/subs/english.vtt" 
-            srclang="en" 
-            label="English" 
+          <track
+            default
+            kind="subtitles"
+            src="https://media.vimejs.com/subs/english.vtt"
+            srclang="en"
+            label="English"
           />
         </vm-video>
 
@@ -518,18 +482,15 @@ You can view the custom `<tap-sides-to-seek>` component [here](https://github.co
 ```html {16-22} title="player.html"
 <vm-player>
   <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
+    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <track
+      default
+      kind="subtitles"
+      src="https://media.vimejs.com/subs/english.vtt"
+      srclang="en"
+      label="English"
     />
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srclang="en" 
-      label="English" 
-    />
-  </vm-video> 
+  </vm-video>
 
   <vm-ui>
     <!-- Vime components. -->
@@ -550,16 +511,16 @@ Glorious! Here's the result 🥁 ...
 import ClickPlayer from '../src/components/players/LoadableClickPlayer';
 
 :::tip
-Click the player anywhere in the center region to toggle playback, and click to the sides to 
+Click the player anywhere in the center region to toggle playback, and click to the sides to
 seek forwards and backwards.
 :::
 
 <ClickPlayer />
 <br />
 
-So far we've seen how to setup our player and provider, load the default Vime interface and 
-how to put together our own. It's important to keep in mind, that the examples so far have been 
-kept simple on purpose, as they are focused mainly on getting you up and running... what you 
+So far we've seen how to setup our player and provider, load the default Vime interface and
+how to put together our own. It's important to keep in mind, that the examples so far have been
+kept simple on purpose, as they are focused mainly on getting you up and running... what you
 create and how far you take it is up to you.
 
 🚂 &nbsp;Let's move onto [controls!](./controls)

@@ -1,8 +1,9 @@
 import { ComponentPublicInstance, h } from 'vue';
 
 export function define(tagName: string, clazz: any) {
-  const isClient = (typeof window !== 'undefined');
-  if (isClient && !customElements.get(tagName)) customElements.define(tagName, clazz);
+  const isClient = typeof window !== 'undefined';
+  if (isClient && !customElements.get(tagName))
+    customElements.define(tagName, clazz);
 }
 
 export function method(name: string) {
@@ -11,9 +12,15 @@ export function method(name: string) {
   };
 }
 
-function listen(node: HTMLElement, event: string, handler: (...args: any[]) => void) {
+function listen(
+  node: HTMLElement,
+  event: string,
+  handler: (...args: any[]) => void,
+) {
   node.addEventListener(event, handler);
-  return () => { node.removeEventListener(event, handler); };
+  return () => {
+    node.removeEventListener(event, handler);
+  };
 }
 
 export function render(tagName: string, events: string[]) {
@@ -25,18 +32,24 @@ export function render(tagName: string, events: string[]) {
       this.$emit(event, detail);
     };
 
-    return h(tagName, {
-      ref: 'ref',
-      ...this.$props,
-      onVnodeMounted(vnode) {
-        events.forEach((event) => {
-          dispose.push(listen(vnode.el! as HTMLElement, event, forwardEvent(event)));
-        });
+    return h(
+      tagName,
+      {
+        ref: 'ref',
+        ...this.$props,
+        onVnodeMounted(vnode) {
+          events.forEach(event => {
+            dispose.push(
+              listen(vnode.el! as HTMLElement, event, forwardEvent(event)),
+            );
+          });
+        },
+        onVnodeBeforeUnmount() {
+          dispose.forEach(fn => fn());
+          dispose = [];
+        },
       },
-      onVnodeBeforeUnmount() {
-        dispose.forEach((fn) => fn());
-        dispose = [];
-      },
-    }, this.$slots.default?.());
+      this.$slots.default?.(),
+    );
   };
 }

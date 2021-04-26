@@ -20,11 +20,12 @@ const unsubscribe = player.getRegistry().subscribe(records => {
 
 unsubscribe();
 ```
+
 :::
 
 ## Defaults
 
-By default there are no groups/controls, but you can install an additional `DefaultControls` plugin to 
+By default there are no groups/controls, but you can install an additional `DefaultControls` plugin to
 get started with the Vime defaults.
 
 The default controls depend on:
@@ -39,11 +40,11 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  groupId="plugins"
-  defaultValue="basic"
-  values={[
-  { label: 'Basic', value: 'basic' },
-  { label: 'Manager', value: 'advanced' },
+groupId="plugins"
+defaultValue="basic"
+values={[
+{ label: 'Basic', value: 'basic' },
+{ label: 'Manager', value: 'advanced' },
 ]}>
 
 <TabItem value="basic">
@@ -56,8 +57,8 @@ import { Player, Controls, DefaultControls } from '@vime-js/complete';
 const player = new Player({
   target,
   props: {
-    plugins: [Controls, DefaultControls]
-  }
+    plugins: [Controls, DefaultControls],
+  },
 });
 ```
 
@@ -87,22 +88,23 @@ player
 ### Create Group
 
 ```js
-import { PlaybackControl, VolumeControl, ScrubberControl } from '@vime-js/complete';
+import {
+  PlaybackControl,
+  VolumeControl,
+  ScrubberControl,
+} from '@vime-js/complete';
 
-player
-  .vControls
-  .createGroup('lowerGroup')
-  .then(controlGroup => {
-    /**
-     * $set is part of the Svelte component API, you 
-     * can individually set these props as well.
-     **/
-    controlGroup.$set({
-      controls: [PlaybackControl, VolumeControl, ScrubberControl],
-      shouldFill: true,
-      position: 'flex-end:flex-start'
-    });
+player.vControls.createGroup('lowerGroup').then(controlGroup => {
+  /**
+   * $set is part of the Svelte component API, you
+   * can individually set these props as well.
+   **/
+  controlGroup.$set({
+    controls: [PlaybackControl, VolumeControl, ScrubberControl],
+    shouldFill: true,
+    position: 'flex-end:flex-start',
   });
+});
 ```
 
 :::info
@@ -119,12 +121,9 @@ controlGroup.isActive = true;
 ### Delete Group
 
 ```js
-player
-  .vControls
-  .removeGroup('lowerGroup')
-  .then(() => {
-    // ...
-  });
+player.vControls.removeGroup('lowerGroup').then(() => {
+  // ...
+});
 ```
 
 ### Access Group via Event
@@ -181,7 +180,7 @@ The rendered `ControlGroup` instance for the given `id`.
 
 **Parameters:** `(id: string)` | **Return Type:** `Promise<ControlGroup>`
 
-Creates and renders a `ControlGroup` component and returns a `Promise` that will resolve with the 
+Creates and renders a `ControlGroup` component and returns a `Promise` that will resolve with the
 rendered instance.
 
 ### `createGroups`

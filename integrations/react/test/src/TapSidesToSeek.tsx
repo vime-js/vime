@@ -25,28 +25,19 @@ function TapSidesToSeek() {
   };
 
   const onSeekForward = () => {
-    if (currentTime > (duration - 5)) return;
+    if (currentTime > duration - 5) return;
     setCurrentTime(currentTime + 5);
   };
 
   if (!isVideoView || !isPlaybackReady) return null;
 
   return (
-    <div
-      ref={ref}
-      className="tapSidesToSeek"
-    >
-      <div
-        className="tapTarget"
-        onClick={onSeekBackward}
-      />
+    <div ref={ref} className="tapSidesToSeek">
+      <div className="tapTarget" onClick={onSeekBackward} />
 
       <div style={{ flex: 1 }} />
 
-      <div
-        className="tapTarget"
-        onClick={onSeekForward}
-      />
+      <div className="tapTarget" onClick={onSeekForward} />
     </div>
   );
 }

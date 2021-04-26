@@ -1,8 +1,8 @@
 import React from 'react';
-import { 
+import {
   Player,
-  Video, 
-  DefaultUi, 
+  Video,
+  DefaultUi,
   Scrim,
   Controls,
   ControlSpacer,
@@ -14,18 +14,15 @@ import {
 const CustomControlsPlayer = () => (
   <Player>
     <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
-      <source 
-        data-src="https://media.vimejs.com/720p.mp4" 
-        type="video/mp4" 
+      <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+      <track
+        default
+        kind="subtitles"
+        src="https://media.vimejs.com/subs/english.vtt"
+        srcLang="en"
+        label="English"
       />
-      <track 
-        default 
-        kind="subtitles" 
-        src="https://media.vimejs.com/subs/english.vtt" 
-        srcLang="en" 
-        label="English" 
-      />
-    </Video> 
+    </Video>
 
     <DefaultUi noControls>
       <Scrim />
@@ -39,7 +36,7 @@ const CustomControlsPlayer = () => (
         {/* @ts-ignore */}
         <PlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />
       </Controls>
-      
+
       <Controls fullWidth pin="bottomLeft">
         <ControlSpacer />
         <TimeProgress />

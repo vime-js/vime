@@ -7,7 +7,5 @@
       "@vime/core": "Vime"
     }
   },
-  "whitelistedNonPeerDependencies": [
-    "@vime/core"
-  ]
+  "whitelistedNonPeerDependencies": ["@vime/core"]
 }

@@ -37,7 +37,7 @@ Whether the menu and controller should be rendered in the DOM or not.
 
 **Type:** `boolean` | **Default:** `false`
 
-Whether the menu is rendered or not. The menu controller responsible for opening/closing the 
+Whether the menu is rendered or not. The menu controller responsible for opening/closing the
 submenu is visible.
 
 ### `hideController`

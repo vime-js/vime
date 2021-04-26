@@ -1,8 +1,4 @@
-import {
-  useCallback,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import {
   PlayerProps,
   createDispatcher,
@@ -21,7 +17,7 @@ export const usePlayer = (ref: React.RefObject<HTMLElement | null>) => {
 
   useLayoutEffect(() => {
     async function find() {
-      setPlayer((ref.current ? (await findPlayer(ref.current)) : null));
+      setPlayer(ref.current ? (await findPlayer(ref.current)) ?? null : null);
     }
 
     find();
@@ -32,7 +28,9 @@ export const usePlayer = (ref: React.RefObject<HTMLElement | null>) => {
 
 export type PropBinding<P extends keyof PlayerProps> = [
   value: PlayerProps[P],
-  setValue: P extends keyof WritableProps ? ((value: PlayerProps[P]) => void) : undefined,
+  setValue: P extends keyof WritableProps
+    ? (value: PlayerProps[P]) => void
+    : undefined,
 ];
 
 /**
@@ -51,13 +49,15 @@ export const usePlayerContext = <P extends keyof PlayerProps>(
   const [value, setValue] = useState(defaultValue);
 
   const dispatch = useCallback(
-    (ref.current === null) ? noop : createDispatcher(ref.current),
+    ref.current === null ? noop : createDispatcher(ref.current),
     [ref.current],
   );
 
   const setter = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    (value: PlayerProps[P]) => { dispatch(prop as any, value); },
+    (value: PlayerProps[P]) => {
+      dispatch(prop as any, value);
+    },
     [dispatch, prop],
   );
 
@@ -67,16 +67,16 @@ export const usePlayerContext = <P extends keyof PlayerProps>(
     let cleanup: () => void;
 
     async function connect() {
-      cleanup = await useContext(
-        ref.current!,
-        [prop],
-        (_, newValue) => { setValue(newValue as any); },
-      );
+      cleanup = await useContext(ref.current!, [prop], (_, newValue) => {
+        setValue(newValue as any);
+      });
     }
 
     connect();
-    return () => { cleanup?.(); };
+    return () => {
+      cleanup?.();
+    };
   }, [ref.current, prop]);
 
-  return [value, (setter as any)];
+  return [value, setter as any];
 };

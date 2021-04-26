@@ -1,0 +1,24 @@
+/**
+  * @prop --vm-dbl-click-fullscreen-z-index: The position in the UI z-axis stack inside the player.
+  */
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: var(--vm-dbl-click-fullscreen-z-index);
+}
+
+.dblClickFullscreen {
+  display: none;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.dblClickFullscreen.enabled {
+  display: inline-block;
+  pointer-events: auto;
+}

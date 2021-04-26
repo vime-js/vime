@@ -1,0 +1,3 @@
+:host {
+  z-index: var(--vm-menu-z-index);
+}

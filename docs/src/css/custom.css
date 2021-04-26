@@ -6,7 +6,7 @@
  * work well for content-centric websites.
  */
 
- @import "./admonitions.css";
+@import './admonitions.css';
 
 :root {
   --ifm-color-primary: #da2b56;
@@ -23,7 +23,7 @@
   --ifm-table-cell-padding: 8px;
 }
 
-:root[data-theme="dark"] {
+:root[data-theme='dark'] {
   --ifm-color-primary: #e86c8b;
   --ifm-color-primary-dark: #e34f74;
   --ifm-color-primary-darker: #e14068;
@@ -78,18 +78,18 @@ html[data-theme='dark'] .header-github-link:before {
   flex-direction: column;
 }
 
-div[role="banner"] {
+div[role='banner'] {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-html[data-theme='light'] div[role="banner"] {
+html[data-theme='light'] div[role='banner'] {
   color: white !important;
   background-color: #212121 !important;
 }
 
-html[data-theme='dark'] div[role="banner"] {
+html[data-theme='dark'] div[role='banner'] {
   background-color: #fff !important;
 }
 
@@ -98,7 +98,7 @@ code {
   background-color: var(--ifm-code-background) !important;
 }
 
-:root[data-theme="light"] div[class*="editorPanel"] {
+:root[data-theme='light'] div[class*='editorPanel'] {
   --tp-fg-color: rgba(0, 0, 0, 0.87);
   --tp-bg-color: hsl(0, 0%, 95%);
   --tp-active-color: hsl(0, 0%, 90%);
@@ -121,7 +121,7 @@ code {
   --tp-button-foreground-color: var(--tp-fg-color);
 }
 
-:root[data-theme="dark"] div[class*="editorPanel"] {
+:root[data-theme='dark'] div[class*='editorPanel'] {
   --tp-fg-color: rgba(255, 255, 255, 0.9);
   --tp-bg-color: hsl(0, 0%, 24%);
   --tp-active-color: hsl(0, 0%, 29%);

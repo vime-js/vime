@@ -20,11 +20,12 @@ const unsubscribe = player.getRegistry().subscribe(records => {
 
 unsubscribe();
 ```
+
 :::
 
 ## Defaults
 
-By default there are no shortcuts, but you can install an additional `DefaultKeyboard` plugin to get 
+By default there are no shortcuts, but you can install an additional `DefaultKeyboard` plugin to get
 started with the Vime defaults.
 
 - `togglePlayback`: `space/k` to toggle playback.
@@ -41,11 +42,11 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  groupId="plugins"
-  defaultValue="basic"
-  values={[
-  { label: 'Basic', value: 'basic' },
-  { label: 'Manager', value: 'advanced' },
+groupId="plugins"
+defaultValue="basic"
+values={[
+{ label: 'Basic', value: 'basic' },
+{ label: 'Manager', value: 'advanced' },
 ]}>
 
 <TabItem value="basic">
@@ -58,8 +59,8 @@ import { Player, Keyboard, DefaultKeyboard } from '@vime-js/complete';
 const player = new Player({
   target,
   props: {
-    plugins: [Keyboard, DefaultKeyboard]
-  }
+    plugins: [Keyboard, DefaultKeyboard],
+  },
 });
 ```
 
@@ -95,7 +96,7 @@ player.vKeyboard.addShortcut('togglePlayback', {
   action: () => {
     if (!player.canInteract) return;
     player.paused = !player.paused;
-  }
+  },
 });
 ```
 
@@ -104,7 +105,7 @@ player.vKeyboard.addShortcut('togglePlayback', {
 ```js
 player.vKeyboard.updateShortcut('togglePlayback', {
   hint: 'space',
-  keys: [32]
+  keys: [32],
 });
 ```
 
@@ -119,7 +120,7 @@ player.vKeyboard.removeShortcut('togglePlayback');
 ```js
 player.vKeyboard.$on('register', registration => {
   const { id, value: shortcut } = registration;
-  
+
   if (id === 'togglePlayback') {
     // ...
   }
@@ -131,7 +132,7 @@ player.vKeyboard.$on('register', registration => {
 ```js
 player.vKeyboard.getRegistry().subscribe(shortcuts => {
   const shortcut = shortcuts.togglePlayback;
-  
+
   if (shortcut) {
     // ...
   }
@@ -142,27 +143,27 @@ player.vKeyboard.getRegistry().subscribe(shortcuts => {
 
 ### ActionDisplay
 
-If the [ActionDisplay](../action-display.md) plugin is available then all key presses will emit an 
+If the [ActionDisplay](../action-display.md) plugin is available then all key presses will emit an
 icon/value in the middle of the player to display the action taken.
 
 ### Tooltips
 
-If the [Tooltips](../tooltips/tooltips.md) plugin is available, then the `Keyboard` plugin will look 
-for any registered `Tooltip` with a matching `id` to a keyboard shortcut, if found it will set the `hint` 
+If the [Tooltips](../tooltips/tooltips.md) plugin is available, then the `Keyboard` plugin will look
+for any registered `Tooltip` with a matching `id` to a keyboard shortcut, if found it will set the `hint`
 prop to the keyboard shortcut `hint`. For example, if a title is "play", it will become "play (space / k)".
 
 ## Props
 
 ### `autopilot`
 
-**Type:** `boolean`  | **Default:** `true`
+**Type:** `boolean` | **Default:** `true`
 
-In autopilot mode the plugin will control certain properties automatically. Set this to `false` if you'd like to 
+In autopilot mode the plugin will control certain properties automatically. Set this to `false` if you'd like to
 control them yourself. Properties below contain an 'Auto' descriptor if they are part of this system.
 
 ### `isEnabled`
 
-**Type:** `boolean`  | **Default:** `true` | **Auto:** `true`
+**Type:** `boolean` | **Default:** `true` | **Auto:** `true`
 
 Whether the plugin is enabled or not.
 

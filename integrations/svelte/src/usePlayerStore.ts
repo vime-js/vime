@@ -1,27 +1,30 @@
 import {
-  PlayerProp, usePlayerContext, PlayerProps,
-  Dispatcher, createDispatcher, findPlayer,
-  WritableProps, isWritableProp, initialState,
+  PlayerProp,
+  usePlayerContext,
+  PlayerProps,
+  Dispatcher,
+  createDispatcher,
+  findPlayer,
+  WritableProps,
+  isWritableProp,
+  initialState,
 } from '@vime/core';
 import { onMount } from 'svelte';
-import {
-  writable, get as unwrap, Writable, Readable,
-} from 'svelte/store';
+import { writable, get as unwrap, Writable, Readable } from 'svelte/store';
 
-type PropStoreType<P extends keyof PlayerProps> =
-  P extends keyof WritableProps
-    ? Writable<PlayerProps[P]>
-    : Readable<PlayerProps[P]>;
+type PropStoreType<P extends keyof PlayerProps> = P extends keyof WritableProps
+  ? Writable<PlayerProps[P]>
+  : Readable<PlayerProps[P]>;
 
 type PlayerStore = {
   [P in keyof PlayerProps]: PropStoreType<P>;
 };
 
 interface SvelteWebComponent<T extends HTMLElement> {
-  getWebComponent: T | undefined
+  getWebComponent: T | undefined;
 }
 
-type Ref<T extends HTMLElement> = (() => T | SvelteWebComponent<T>);
+type Ref<T extends HTMLElement> = () => T | SvelteWebComponent<T>;
 
 /**
  * This function will take the given `ref` and climb up the DOM tree until it finds the first
@@ -38,6 +41,7 @@ export const usePlayer = <T extends HTMLElement>(
     let el: any = ref();
     if (el.$$) el = el.getWebComponent();
     const player = await findPlayer(el);
+    if (!player) return;
     callback(player);
   });
 };
@@ -66,20 +70,29 @@ export const usePlayer = <T extends HTMLElement>(
  *  $: console.log($currentTime);*
  * </script>
  */
-export const usePlayerStore = <T extends HTMLElement>(ref: Ref<T>): PlayerStore => {
+export const usePlayerStore = <T extends HTMLElement>(
+  ref: Ref<T>,
+): PlayerStore => {
   let dispatch: Dispatcher = () => {};
   const internalStoreRef: Map<PlayerProp, Writable<any>> = new Map();
 
   const mountedQueue: (() => void)[] = [];
-  const onPlayerMounted = () => { mountedQueue.forEach((fn) => fn()); };
+  const onPlayerMounted = () => {
+    mountedQueue.forEach(fn => fn());
+  };
 
-  const vimeable = <P extends keyof PlayerProps>(prop: P, initialValue: PlayerProps[P]) => {
+  const vimeable = <P extends keyof PlayerProps>(
+    prop: P,
+    initialValue: PlayerProps[P],
+  ) => {
     const store = writable(initialValue);
     const canWrite = isWritableProp(prop);
 
     const set = (value: PlayerProps[P]) => {
       if (!unwrap(internalStoreRef.get('ready')!)) {
-        mountedQueue.push(() => { dispatch(prop as any, value); });
+        mountedQueue.push(() => {
+          dispatch(prop as any, value);
+        });
       } else {
         dispatch(prop as any, value);
       }
@@ -98,24 +111,30 @@ export const usePlayerStore = <T extends HTMLElement>(ref: Ref<T>): PlayerStore 
     };
   };
 
-  const store = (Object.keys(initialState) as PlayerProp[])
-    .reduce((prev, prop) => ({
+  const store = (Object.keys(initialState) as PlayerProp[]).reduce(
+    (prev, prop) => ({
       ...prev,
       [prop]: vimeable(prop, initialState[prop]),
-    }), {});
+    }),
+    {},
+  );
 
   onMount(async () => {
     let el: any = ref();
     if (el.$$) el = el.getWebComponent();
 
     const player = await findPlayer(el);
+    if (!player) return;
+
     dispatch = createDispatcher(el);
     internalStoreRef.get('ready')!.set(player.ready);
 
     const disconnect = await usePlayerContext(
       el,
-      (Object.keys(initialState) as PlayerProp[]),
-      (prop, value) => { internalStoreRef.get(prop as PlayerProp)!.set(value); },
+      Object.keys(initialState) as PlayerProp[],
+      (prop, value) => {
+        internalStoreRef.get(prop as PlayerProp)!.set(value);
+      },
       player,
     );
 

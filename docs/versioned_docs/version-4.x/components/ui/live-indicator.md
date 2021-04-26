@@ -11,7 +11,7 @@ This can be used to indicate to the user that the current media is being streame
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/live-indicator/live-indicator.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/live-indicator/live-indicator.png"
   alt="Vime live indicator component"
 />
 
@@ -48,7 +48,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {6,16}
@@ -76,7 +75,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -114,7 +112,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {6,17} title="example.svelte"
@@ -141,7 +138,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="stencil">
 
 ```tsx {9}
@@ -164,7 +160,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {7} title="example.html"
@@ -183,7 +178,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## CSS Custom Properties
 

@@ -1,0 +1,75 @@
+/**
+  * @prop --vm-captions-text-color: The color of the captions text.
+  * @prop --vm-captions-font-size: Font size of captions when device screen size is <768px.
+  * @prop --vm-captions-font-size-medium: Font size of captions when device screen size is >768px.
+  * @prop --vm-captions-font-size-large: Font size of captions when device screen size is >992px.
+  * @prop --vm-captions-font-size-xlarge: Font size of captions when device screen size is >1200px.
+  * @prop --vm-captions-cue-bg-color: The background color of active cues.
+  * @prop --vm-captions-cue-border-radius: The border radius of active cues.
+  * @prop --vm-captions-cue-padding: The padding around active cues.
+  * @prop --vm-captions-z-index: The position in the UI z-axis stack inside the player.
+  */
+:host {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: var(--vm-captions-z-index);
+}
+
+.captions {
+  width: 100%;
+  text-align: center;
+  color: var(--vm-captions-text-color);
+  font-size: var(--vm-captions-font-size);
+  padding: $control-spacing;
+  display: none;
+  pointer-events: none;
+  transition: transform 0.4s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.captions.enabled {
+  display: inline-block;
+}
+
+.captions.hidden {
+  display: none !important;
+}
+
+.captions.inactive {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.captions.fontMd {
+  font-size: var(--vm-captions-font-size-medium);
+}
+
+.captions.fontLg {
+  font-size: var(--vm-captions-font-size-large);
+}
+
+.captions.fontXl {
+  font-size: var(--vm-captions-font-size-xlarge);
+}
+
+.cue {
+  display: inline-block;
+  background: var(--vm-captions-cue-bg-color);
+  border-radius: var(--vm-captions-cue-border-radius);
+  box-decoration-break: clone;
+  line-height: 185%;
+  padding: var(--vm-captions-cue-padding);
+  white-space: pre-wrap;
+  pointer-events: none;
+}
+
+/* Firefox adds a <div> when using getCueAsHTML(). */
+.cue > div {
+  display: inline;
+}
+
+.cue:empty {
+  display: none;
+}

@@ -1,0 +1,11 @@
+.settingsControl.hidden {
+  display: none;
+}
+
+.settingsControl {
+  --vm-icon-transition: transform 0.3s ease;
+}
+
+.settingsControl.active {
+  --vm-icon-transform: rotate(90deg);
+}

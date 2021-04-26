@@ -17,21 +17,21 @@ shown here for the sake of brevity.
 ### Audio
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--audio.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/default-ui/default-ui--audio.png"
   alt="Vime default audio player"
 />
 
 ### Desktop Video
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--desktop.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/default-ui/default-ui--desktop.png"
   alt="Vime default desktop video player"
 />
 
 ### Mobile Video
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--mobile.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/default-ui/default-ui--mobile.png"
   alt="Vime default desktop mobile player"
 />
 
@@ -62,7 +62,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {2,8}
@@ -80,7 +79,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -106,7 +104,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {3,7} title="example.svelte"
@@ -121,7 +118,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="stencil">
 
@@ -140,7 +136,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {3} title="example.html"
@@ -153,7 +148,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

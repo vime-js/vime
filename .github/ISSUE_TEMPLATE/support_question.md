@@ -8,5 +8,5 @@ assignees: ''
 
 # Support Question
 
-Please do not submit support requests or "How to" questions here. Instead, please use the community 
-Discord support channel: https://discord.gg/feZ6cAE 
+Please do not submit support requests or "How to" questions here. Instead, please use the community
+Discord support channel: https://discord.gg/feZ6cAE

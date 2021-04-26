@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
+import { h, Host, Component, Prop } from '@stencil/core';
 import {
-  h, Host, Component, Prop,
-} from '@stencil/core';
-import {
-  createDispatcher, Dispatcher, PlayerProps, withPlayerContext,
+  createDispatcher,
+  Dispatcher,
+  PlayerProps,
+  withPlayerContext,
 } from '@vime/core';
 
 @Component({
@@ -33,30 +34,21 @@ export class TapSidesToSeek {
   }
 
   private onSeekForward() {
-    if (this.currentTime > (this.duration - 5)) return;
+    if (this.currentTime > this.duration - 5) return;
     this.dispatch('currentTime', this.currentTime + 5);
   }
 
   render() {
     return (
       <Host>
-        <div
-          class="tapTarget"
-          onClick={this.onSeekBackward.bind(this)}
-        />
+        <div class="tapTarget" onClick={this.onSeekBackward.bind(this)} />
 
         <div class="spacer" />
 
-        <div
-          class="tapTarget"
-          onClick={this.onSeekForward.bind(this)}
-        />
+        <div class="tapTarget" onClick={this.onSeekForward.bind(this)} />
       </Host>
     );
   }
 }
 
-withPlayerContext(TapSidesToSeek, [
-  'currentTime',
-  'duration',
-]);
+withPlayerContext(TapSidesToSeek, ['currentTime', 'duration']);

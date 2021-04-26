@@ -47,7 +47,7 @@ import React from 'react';
 import { CurrentTime } from '@vime/react';
 
 function Example() {
-  return (<CurrentTime />);
+  return <CurrentTime />;
 }
 ```
 
@@ -97,6 +97,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

@@ -11,7 +11,7 @@ Responsible for positioning and laying out individual/groups of controls.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/controls/controls.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/controls/controls.png"
   alt="Vime controls component"
 />
 
@@ -47,7 +47,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {2,10-12}
@@ -70,7 +69,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -101,7 +99,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```tsx {5-7}
@@ -123,7 +120,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="stencil">
 
@@ -147,7 +143,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {5-7} title="example.html"
@@ -165,7 +160,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

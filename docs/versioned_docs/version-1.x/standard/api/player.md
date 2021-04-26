@@ -6,7 +6,7 @@ sidebar_label: Player
 **Type:** `Component`
 
 This component is at the heart of Vime. It's responsible for rendering providers, providing an interface
-to interact with them, and assisting in normalizing cross-browser and provider differences. It's internally used by 
+to interact with them, and assisting in normalizing cross-browser and provider differences. It's internally used by
 the Complete Player.
 
 :::info
@@ -15,9 +15,9 @@ See the [notes](../notes.md) page for more information on provider specifics.
 
 ## Store
 
-All props below are powered behind the scenes by a [store][svelte-store]. They are plain JS objects that 
-contain a `subscribe` function and an optional `set` function. You can subscribe to receive updates 
-of some value as it changes over time. The `subscribe` function returns an `unsubscribe` function that 
+All props below are powered behind the scenes by a [store][svelte-store]. They are plain JS objects that
+contain a `subscribe` function and an optional `set` function. You can subscribe to receive updates
+of some value as it changes over time. The `subscribe` function returns an `unsubscribe` function that
 you can call to stop listening.
 
 [svelte-store]: https://svelte.dev/docs#svelte_store
@@ -59,7 +59,7 @@ Whether the current provider supports setting a custom poster.
 
 **Type:** `string|null` | **Default:** `null`
 
-A custom poster to load if a provider supports it. You can check [`canSetPoster`](#cansetposter) 
+A custom poster to load if a provider supports it. You can check [`canSetPoster`](#cansetposter)
 before you try setting this property.
 
 ### `providers`
@@ -129,7 +129,7 @@ via the controls parameter which requires the embed to reload.
 
 **Type:** `boolean` | **Default:** `false` | **Readonly**: `true`
 
-Whether you can interact with the player. If `true` then the player is ready for playback and it's 
+Whether you can interact with the player. If `true` then the player is ready for playback and it's
 not currently rebuilding.
 
 ### `useNativeView`
@@ -265,7 +265,7 @@ Whether to show or hide controls.
 
 **Type:** `boolean` | **Default:** `true`
 
-Whether the the controls are currently visible or not. 
+Whether the the controls are currently visible or not.
 
 ### `state`
 
@@ -289,7 +289,7 @@ The list of available playback rates.
 
 **Type:** `double` | **Default:** `1`
 
-The current playback rate of the media. You can check [`canSetPlaybackRate`](#cansetplaybackrate) 
+The current playback rate of the media. You can check [`canSetPlaybackRate`](#cansetplaybackrate)
 before you try setting this property.
 
 ### `canSetVideoQuality`
@@ -339,7 +339,7 @@ const progress = {
   buffered: {
     seconds: 45,
     percent: 37.5,
-  }
+  },
 };
 ```
 
@@ -353,7 +353,7 @@ Whether the current provider supports setting tracks/captions.
 
 **Type:** `object[]` | **Default:** `[]`
 
-A list of tracks to be loaded. Each track is represented as a `object` that contains any valid 
+A list of tracks to be loaded. Each track is represented as a `object` that contains any valid
 [TextTrackElement][mdn-text-track] property.
 
 [mdn-text-track]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track
@@ -386,7 +386,7 @@ If captions are currently visible or not. This is `false` if `currentTrackIndex`
 
 **Type:** `boolean` | **Default:** `false` | **Readonly:** `true`
 
-Whether the current provider supports picture-in-picture (PiP). 
+Whether the current provider supports picture-in-picture (PiP).
 
 :::caution
 This doesn't guarantee that the player will enter PiP. It determines whether the request can be made.
@@ -432,7 +432,7 @@ The aspect ratio of the player expressed as `width:height`.
 
 **Type:** `boolean` | **Default:** `true`
 
-When the player begins playback on mobile, whether it should play inline or go fullscreen. If 
+When the player begins playback on mobile, whether it should play inline or go fullscreen. If
 `autoplay` is true then this will be forced to be `true`.
 
 ### `canAutoplay`
@@ -445,17 +445,17 @@ Whether playback can begin immediately. This assumes [`playsinline`](#playsinlin
 
 **Type:** `boolean` | **Default:** `false` | **Readonly:** `true`
 
-Whether playback can begin immediately if the volume is muted. This assumes [`playsinline`](#playsinline) 
+Whether playback can begin immediately if the volume is muted. This assumes [`playsinline`](#playsinline)
 is true.
 
 ### `autoplay`
 
 **Type:** `boolean` | **Default:** `false`
 
-Whether playback should begin as soon as it's ready. 
+Whether playback should begin as soon as it's ready.
 
 :::info
-This will automatically fallback to `muting` if [`canAutoplay`](#canautoplay) returns `false`. In addition, 
+This will automatically fallback to `muting` if [`canAutoplay`](#canautoplay) returns `false`. In addition,
 the [`playsinline`](#playsinline) property will be forced to be `true`.
 :::
 
@@ -471,7 +471,7 @@ Whether playback should start over from the beginning when it reaches the end.
 
 **Return Type:** `object`
 
-Returns an `object` where each `key` is a prop listed above, and the corresponding `value` is a 
+Returns an `object` where each `key` is a prop listed above, and the corresponding `value` is a
 [Svelte store](#store).
 
 ### `tick`
@@ -484,9 +484,9 @@ Returns a `Promise` that will resolve once all pending player state changes are 
 
 **Return Type:** `Promise<string|undefined>`
 
-Requests the player to enter picture-in-picture (PiP) mode. Returns a `Promise` that will resolve if the 
+Requests the player to enter picture-in-picture (PiP) mode. Returns a `Promise` that will resolve if the
 request is made, or reject with a reason for failure. A resolved `Promise` doesn't gurantee that it was successful.
-To know when it is active or not, you can subscribe to [`isPiPActive`](#ispipactive). You can also call 
+To know when it is active or not, you can subscribe to [`isPiPActive`](#ispipactive). You can also call
 [`canSetPiP`](#cansetpip) to see if the current provider supports it.
 
 **Possible Rejection Reasons**
@@ -519,7 +519,7 @@ unsubscribe();
 
 **Return Type:** `Promise<string|undefined>`
 
-Requests the player to exit picture-in-picture (PiP) mode. Returns a `Promise` that will resolve if the 
+Requests the player to exit picture-in-picture (PiP) mode. Returns a `Promise` that will resolve if the
 request is made, or reject with a reason for failure. See [`requestPiP`](#requestpip) for more information.
 
 **Possible Rejection Reasons**
@@ -531,7 +531,7 @@ request is made, or reject with a reason for failure. See [`requestPiP`](#reques
 
 **Return Type:** `Promise<string|undefined>`
 
-Requests the player to enter fullscreen mode. Returns a `Promise` that will resolve if the 
+Requests the player to enter fullscreen mode. Returns a `Promise` that will resolve if the
 request is made, or reject with a reason for failure. A resolved `Promise` doesn't gurantee that it was successful.
 To know when it is active or not, you can subscribe to [`isFullscreenActive`](#isfullscreenactive).
 You can also call [`canSetFullscreen`](#cansetfullscreen) to see if it is supported or not.
@@ -567,7 +567,7 @@ unsubscribe();
 
 **Return Type:** `Promise<string|undefined>`
 
-Requests the player to exit fullscreen mode. Returns a `Promise` that will resolve if the 
+Requests the player to exit fullscreen mode. Returns a `Promise` that will resolve if the
 request is made, or reject with a reason for failure. See [`requestFullscreen`](#requestfullscreen)
 for more information.
 

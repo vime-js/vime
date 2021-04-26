@@ -120,12 +120,7 @@ function Example() {
 </Player>
 
 <script lang="ts">
-  import {
-    Player,
-    Ui,
-    Controls,
-    MuteControl,
-  } from '@vime/svelte';
+  import { Player, Ui, Controls, MuteControl } from '@vime/svelte';
 </script>
 ```
 
@@ -151,6 +146,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

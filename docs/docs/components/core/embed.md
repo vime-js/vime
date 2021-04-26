@@ -40,7 +40,7 @@ values={[
 <script>
   const embed = document.querySelector('vm-embed');
 
-  embed.addEventListener('vmEmbedMessage', (e) => {
+  embed.addEventListener('vmEmbedMessage', e => {
     const message = e.detail;
     // ...
   });
@@ -81,7 +81,7 @@ function Example() {
 
 ```html {2-8,12,16} title="example.vue"
 <template>
-  <Embed
+  <embed
     embedSrc="https://www.youtube-nocookie.com/embed/DyTCOwB0DVw"
     mediaTitle="Agent 327: Operation Barbershop"
     origin="https://www.youtube-nocookie.com"
@@ -173,6 +173,7 @@ class Example {
 }
 ```
 
+
 </TabItem>
 
 <TabItem value="angular">
@@ -209,14 +210,14 @@ class Example {
 
 ## Properties
 
-| Property         | Description                                                                                                                                  | Type                                                              | Default     |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ----------- |
-| `decoder`        | A function which accepts the raw message received from the embedded media player via `postMessage` and converts it into a POJO.              | `((data: string) => Record<string, any> ∣ undefined) ∣ undefined` | `undefined` |
-| `embedSrc`       | A URL that will load the external player and media (Eg: https://www.youtube.com/embed/DyTCOwB0DVw).                                          | `string`                                                          | `''`        |
-| `mediaTitle`     | The title of the current media so it can be set on the inner `iframe` for screen readers.                                                    | `string`                                                          | `''`        |
-| `origin`         | Where the src request had originated from without any path information.                                                                      | `string ∣ undefined`                                              | `undefined` |
-| `params`         | The parameters to pass to the embedded player which are appended to the `embedSrc` prop. These can be passed in as a query string or object. | `string ∣ { [x: string]: any; }`                                  | `''`        |
-| `preconnections` | A collection of URLs to that the browser should immediately start establishing a connection with.                                            | `string[]`                                                        | `[]`        |
+| Property         | Description                                                                                                                                  | Type                                                 | Default     |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ----------- |
+| `decoder`        | A function which accepts the raw message received from the embedded media player via `postMessage` and converts it into a POJO.              | `((data: string) => Params ∣ undefined) ∣ undefined` | `undefined` |
+| `embedSrc`       | A URL that will load the external player and media (Eg: https://www.youtube.com/embed/DyTCOwB0DVw).                                          | `string`                                             | `''`        |
+| `mediaTitle`     | The title of the current media so it can be set on the inner `iframe` for screen readers.                                                    | `string`                                             | `''`        |
+| `origin`         | Where the src request had originated from without any path information.                                                                      | `string ∣ undefined`                                 | `undefined` |
+| `params`         | The parameters to pass to the embedded player which are appended to the `embedSrc` prop. These can be passed in as a query string or object. | `string ∣ { [x: string]: unknown; }`                 | `''`        |
+| `preconnections` | A collection of URLs to that the browser should immediately start establishing a connection with.                                            | `string[]`                                           | `[]`        |
 
 
 ## Methods

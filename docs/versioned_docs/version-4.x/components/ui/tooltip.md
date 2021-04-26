@@ -12,7 +12,7 @@ is to provide a description about the function of that element.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/tooltip/tooltip.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/tooltip/tooltip.png"
   alt="Vime tooltip component"
 />
 
@@ -50,7 +50,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {7,18}
@@ -81,7 +80,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -123,7 +121,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {7,19} title="example.svelte"
@@ -152,7 +149,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="stencil">
 
 ```tsx {10}
@@ -177,7 +173,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {7} title="example.html"
@@ -197,7 +192,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

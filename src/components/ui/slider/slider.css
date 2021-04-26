@@ -1,0 +1,202 @@
+/**
+  * @prop --vm-slider-thumb-bg: The background color of the slider thumb.
+  * @prop --vm-slider-thumb-width: The width of the slider thumb.
+  * @prop --vm-slider-thumb-height: The height of the slider thumb.
+  * @prop --vm-slider-thumb-shadow: The shadow cast around the slider thumb.
+  * @prop --vm-slider-track-height: The height of the track.
+  * @prop --vm-slider-track-focused-height: The height of the track when it is focused.
+  * @prop --vm-slider-track-color: The color of the track.
+  * @prop --vm-slider-value-color: The color of the part of the track filled upto the current value.
+  */
+:host {
+  width: 100%;
+}
+
+.slider {
+  width: 100%;
+}
+
+input {
+  width: 100%;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: calc(var(--vm-slider-thumb-height) * 2);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+  /* Color is used in JS to populate lower fill for WebKit */
+  color: var(--vm-slider-value-color);
+  display: block;
+  height: var(--vm-slider-track-height);
+  margin: 0;
+  padding: 0;
+  transition: box-shadow 0.3s ease;
+}
+
+input::-webkit-slider-runnable-track {
+  background: transparent;
+  border: 0;
+  border-radius: calc(var(--vm-slider-track-height) / 2);
+  height: var(--vm-slider-track-height);
+  transition: box-shadow 0.3s ease;
+  user-select: none;
+  background-image: linear-gradient(
+    to right,
+    currentColor var(--vm-value, 0%),
+    transparent var(--vm-value, 0%)
+  );
+  background-color: var(--vm-slider-track-color);
+}
+
+input::-webkit-slider-thumb {
+  opacity: 0;
+  background: var(--vm-slider-thumb-bg);
+  border: 0;
+  border-radius: 100%;
+  position: relative;
+  transition: all 0.2s ease;
+  width: var(--vm-slider-thumb-width);
+  height: var(--vm-slider-thumb-height);
+  box-shadow: var(--vm-slider-thumb-shadow);
+  -webkit-appearance: none;
+  margin-top: calc(
+    0px -
+      calc(
+        calc(var(--vm-slider-thumb-height) - var(--vm-slider-track-height)) / 2
+      )
+  );
+}
+
+input::-moz-range-track {
+  background: transparent;
+  border: 0;
+  border-radius: calc(var(--vm-slider-track-height) / 2);
+  height: var(--vm-slider-track-height);
+  transition: box-shadow 0.3s ease;
+  user-select: none;
+  background-color: var(--vm-slider-track-color);
+}
+
+input::-moz-range-thumb {
+  opacity: 0;
+  background: var(--vm-slider-thumb-bg);
+  border: 0;
+  border-radius: 100%;
+  position: relative;
+  transition: all 0.2s ease;
+  width: var(--vm-slider-thumb-width);
+  height: var(--vm-slider-thumb-height);
+  box-shadow: var(--vm-slider-thumb-shadow);
+}
+
+input::-moz-range-progress {
+  background: currentColor;
+  border-radius: calc(var(--vm-slider-track-height) / 2);
+  height: var(--vm-slider-track-height);
+}
+
+input::-ms-track {
+  border: 0;
+  border-radius: calc(var(--vm-slider-track-height) / 2);
+  height: var(--vm-slider-track-height);
+  transition: box-shadow 0.3s ease;
+  user-select: none;
+  color: transparent;
+  background-color: var(--vm-slider-track-color);
+}
+
+input::-ms-fill-upper {
+  background: transparent;
+  border: 0;
+  border-radius: calc(var(--vm-slider-track-height) / 2);
+  height: var(--vm-slider-track-height);
+  transition: box-shadow 0.3s ease;
+  user-select: none;
+}
+
+input::-ms-fill-lower {
+  border: 0;
+  border-radius: calc(var(--vm-slider-track-height) / 2);
+  height: var(--vm-slider-track-height);
+  transition: box-shadow 0.3s ease;
+  user-select: none;
+  background: currentColor;
+}
+
+input::-ms-thumb {
+  opacity: 0;
+  background: var(--vm-slider-thumb-bg);
+  border: 0;
+  border-radius: 100%;
+  position: relative;
+  transition: all 0.2s ease;
+  width: var(--vm-slider-thumb-width);
+  height: var(--vm-slider-thumb-height);
+  box-shadow: var(--vm-slider-thumb-shadow);
+  /* For some reason, Edge uses the -webkit margin above */
+  margin-top: 0;
+}
+
+input::-ms-tooltip {
+  display: none;
+}
+
+input:hover::-webkit-slider-runnable-track {
+  height: var(--vm-slider-track-focused-height);
+}
+
+input:hover::-moz-range-track {
+  height: var(--vm-slider-track-focused-height);
+}
+
+input:hover::-ms-track {
+  height: var(--vm-slider-track-focused-height);
+}
+
+input:hover::-ms-fill-upper {
+  height: var(--vm-slider-track-focused-height);
+}
+
+input:hover::-ms-fill-lower {
+  height: var(--vm-slider-track-focused-height);
+}
+
+input:hover::-webkit-slider-thumb {
+  opacity: 1;
+}
+
+input:hover::-moz-range-thumb {
+  opacity: 1;
+}
+
+input:hover::-ms-thumb {
+  opacity: 1;
+}
+
+input:focus {
+  outline: 0;
+}
+
+input:focus::-webkit-slider-runnable-track {
+  outline: 0;
+  height: var(--vm-slider-track-focused-height);
+}
+
+input:focus::-moz-range-track {
+  outline: 0;
+  height: var(--vm-slider-track-focused-height);
+}
+
+input:focus::-ms-track {
+  outline: 0;
+  height: var(--vm-slider-track-focused-height);
+}
+
+input::-moz-focus-outer {
+  border: 0;
+}

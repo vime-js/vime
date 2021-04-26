@@ -1,0 +1,62 @@
+/**
+  * @prop --vm-menu-color: The text color within the menu.
+  * @prop --vm-menu-bg: The background color the menu.
+  * @prop --vm-menu-font-size: The font size of text within the menu.
+  * @prop --vm-menu-font-weight: The font weight of text within the menu.
+  * @prop --vm-menu-z-index: The position in the UI z-axis stack inside the player.
+  * @prop --vm-menu-transition: The CSS transitions applied to the menu.
+  */
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: var(--vm-menu-z-index);
+}
+
+:host([active]) {
+  pointer-events: auto;
+  z-index: calc(var(--vm-menu-z-index) + 1);
+}
+
+.menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  transition: var(--vm-menu-transition);
+}
+
+.menu.slideIn {
+  transform: translateX(0);
+}
+
+.menu[aria-hidden='true'].slideInFromLeft {
+  transform: translateX(-100%);
+}
+
+.menu[aria-hidden='true'].slideInFromRight {
+  transform: translateX(100%);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  text-align: left;
+  width: 100%;
+  height: 100%;
+  color: var(--vm-menu-color);
+  background: var(--vm-menu-bg);
+  font-size: var(--vm-menu-font-size);
+  font-weight: var(--vm-menu-font-weight);
+}
+
+.menu:focus {
+  outline: 0;
+}

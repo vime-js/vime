@@ -41,7 +41,7 @@ values={[
 <script>
   const slider = document.querySelector('vm-slider');
 
-  slider.addEventListener('vmValueChange', (event) => {
+  slider.addEventListener('vmValueChange', event => {
     const newValue = event.detail;
   });
 </script>
@@ -148,7 +148,7 @@ class Example {
 
   private onValueChange(event: CustomEvent<number>) {
     this.value = event.detail;
-  };
+  }
 
   render() {
     return (
@@ -163,6 +163,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

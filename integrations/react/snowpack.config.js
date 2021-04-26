@@ -2,8 +2,11 @@
 module.exports = {
   plugins: [
     '@snowpack/plugin-react-refresh',
-    ['@snowpack/plugin-typescript', {
-      args: '--project tsconfig.snowpack.json',
-    }],
+    [
+      '@snowpack/plugin-typescript',
+      {
+        args: '--project tsconfig.snowpack.json',
+      },
+    ],
   ],
 };

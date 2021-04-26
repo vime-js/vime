@@ -9,11 +9,11 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
@@ -28,8 +28,8 @@ const player = new Player({
   target,
   props: {
     src: 'youtube/R6MlUcmOul8',
-    providers: [YouTubeProvider]
-  }
+    providers: [YouTubeProvider],
+  },
 });
 
 // We receive updates on the state of the player here.
@@ -66,8 +66,8 @@ player.$destroy();
 <Player
   src="youtube/R6MlUcmOul8"
   providers{[YouTubeProvider]}
-  on:data={onData}
-  bind:this={player} 
+  on:data="{onData}"
+  bind:this="{player}"
 />
 
 <script>
@@ -86,7 +86,7 @@ player.$destroy();
   });
 
   // We receive updates on the state of the player here.
-  const onData = e  => {
+  const onData = e => {
     const { info } = e.detail;
 
     /**
@@ -111,11 +111,11 @@ For all available commands see the [YouTube API Reference][youtube-api].
 ## Vimeo
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
@@ -130,12 +130,12 @@ const player = new Player({
   target,
   props: {
     src: 'vimeo/154225711',
-    providers: [VimeoProvider]
-  }
+    providers: [VimeoProvider],
+  },
 });
 
 /**
- * To get updates from the player we must call the following 
+ * To get updates from the player we must call the following
  * for each event we want to listen to.
  **/
 player.sendCommand('addEventListener', 'timeupdate');
@@ -185,9 +185,9 @@ player.$destroy();
 ```html
 <Player
   src="vimeo/154225711"
-  providers=[[VimeoProvider]]
-  on:data={onData}
-  bind:this={player} 
+  providers="[[VimeoProvider]]"
+  on:data="{onData}"
+  bind:this="{player}"
 />
 
 <script>
@@ -199,7 +199,7 @@ player.$destroy();
   // We interact with the embed via commands.
   onMount(() => {
     /**
-     * To get updates from the player we must call the following 
+     * To get updates from the player we must call the following
      * for each event we want to listen to.
      **/
     player.sendCommand('addEventListener', 'timeupdate');
@@ -215,7 +215,7 @@ player.$destroy();
   });
 
   // We receive updates on the state of the player here.
-  const onData = e  => {
+  const onData = e => {
     const data = e.detail;
     if (!data) return;
 
@@ -241,14 +241,15 @@ player.$destroy();
 </Tabs>
 
 :::caution
-For some reason the event name you pass to the `addEventListener` call is not the same as the 
+For some reason the event name you pass to the `addEventListener` call is not the same as the
 name that comes through the `data` event. You can use `console.log` to figure it out.
 :::
 
 :::info
-* For all available commands see the [Vimeo API Reference][vimeo-api].
-* For all available events see the [Vimeo Events Reference][vimeo-events].
-:::
+
+- For all available commands see the [Vimeo API Reference][vimeo-api].
+- For all available events see the [Vimeo Events Reference][vimeo-events].
+  :::
 
 [vimeo-events]: https://developer.vimeo.com/player/sdk/reference#events-for-playback-controls
 [vimeo-api]: https://developer.vimeo.com/player/sdk/reference#methods-for-playback-controls
@@ -256,11 +257,11 @@ name that comes through the `data` event. You can use `console.log` to figure it
 ## Dailymotion
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
@@ -275,8 +276,8 @@ const player = new Player({
   target,
   props: {
     src: 'dailymotion/x3a9qe6',
-    providers: [DailymotionProvider]
-  }
+    providers: [DailymotionProvider],
+  },
 });
 
 // We receive updates on the state of the player here.
@@ -284,8 +285,8 @@ const off = player.$on('data', e => {
   const data = e.detail;
   const event = data && data.event;
   if (!event) return;
-   
-   /**
+
+  /**
    * Data is an object that contains additional info regarding the event.
    * If we're listening for timeupdates then data.time would have the
    * current time.
@@ -315,9 +316,9 @@ player.$destroy();
 ```html
 <Player
   src="dailymotion/x3a9qe6"
-  providers={[DailymotionProvider]}
-  on:data={onData}
-  bind:this={player} 
+  providers="{[DailymotionProvider]}"
+  on:data="{onData}"
+  bind:this="{player}"
 />
 
 <script>
@@ -336,11 +337,11 @@ player.$destroy();
   });
 
   // We receive updates on the state of the player here.
-  const onData = e  => {
+  const onData = e => {
     const data = e.detail;
     const event = data && data.event;
     if (!event) return;
-    
+
     /**
      * Data is an object that contains additional info regarding the event.
      * If we're listening for timeupdates then data.time would have the
@@ -356,9 +357,10 @@ player.$destroy();
 </Tabs>
 
 :::info
-* For all available commands see the [Dailymotion API Reference][dailymotion-api].
-* For all available events see the [Dailymotion Events Reference][dailymotion-events].
-:::
+
+- For all available commands see the [Dailymotion API Reference][dailymotion-api].
+- For all available events see the [Dailymotion Events Reference][dailymotion-events].
+  :::
 
 [dailymotion-api]: https://developer.dailymotion.com/player/#player-api-properties
 [dailymotion-events]: https://developer.dailymotion.com/player/#player-api-events

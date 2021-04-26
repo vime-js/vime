@@ -20,12 +20,13 @@ const unsubscribe = player.getRegistry().subscribe(records => {
 
 unsubscribe();
 ```
+
 :::
 
 ## Defaults
 
 By default there are no submenus, but you can install an additional `DefaultSettings` plugin to
-get started with the Vime defaults. The default Vime settings includes submenus for setting the 
+get started with the Vime defaults. The default Vime settings includes submenus for setting the
 playback rate, video quality and captions/subtitles.
 
 ## Setup
@@ -34,11 +35,11 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  groupId="plugins"
-  defaultValue="basic"
-  values={[
-  { label: 'Basic', value: 'basic' },
-  { label: 'Manager', value: 'advanced' },
+groupId="plugins"
+defaultValue="basic"
+values={[
+{ label: 'Basic', value: 'basic' },
+{ label: 'Manager', value: 'advanced' },
 ]}>
 
 <TabItem value="basic">
@@ -51,8 +52,8 @@ import { Player, Settings, DefaultSettings } from '@vime-js/complete';
 const player = new Player({
   target,
   props: {
-    plugins: [Settings, DefaultSettings]
-  }
+    plugins: [Settings, DefaultSettings],
+  },
 });
 ```
 
@@ -84,25 +85,24 @@ player
 ```js
 import { SelectSubmenu } from '@vime-js/complete';
 
-player
-  .vSettings
+player.vSettings
   .createSubmenu('playbackRateMenu', SelectSubmenu)
   .then(submenu => {
-    const options = player.playbackRates.map((rate) => ({
-      title: (rate === 1) ? player.i18n.normal : rate,
+    const options = player.playbackRates.map(rate => ({
+      title: rate === 1 ? player.i18n.normal : rate,
       value: rate,
     }));
 
     /**
-     * $set is part of the Svelte component API, you can 
+     * $set is part of the Svelte component API, you can
      * individually set these props as well.
      **/
     submenu.$set({
       title: player.i18n.speed,
       value: player.playbackRate,
-      options: (player.playbackRates.length === 1) ? [] : options,
+      options: player.playbackRates.length === 1 ? [] : options,
       emptyHint: player.i18n.normal,
-      isLocked: !player.canSetPlaybackRate || (player.playbackRates.length === 0),
+      isLocked: !player.canSetPlaybackRate || player.playbackRates.length === 0,
     });
 
     submenu.$on('valuechange', e => {
@@ -131,12 +131,9 @@ playbackRate.subscribe(rate => {
 ### Remove a Submenu
 
 ```js
-player
-  .vSettings
-  .removeSubmenu('playbackRateMenu')
-  .then(() => {
-    // ...
-  });
+player.vSettings.removeSubmenu('playbackRateMenu').then(() => {
+  // ...
+});
 ```
 
 ### Access Submenu via Event
@@ -184,7 +181,7 @@ Whether the root settings menu is visible or not.
 
 **Type:** `string|null` | **Default:** `null`
 
-The `id` of the currently active submenu.  If it is `null` then no submenu is active.
+The `id` of the currently active submenu. If it is `null` then no submenu is active.
 
 ## Methods
 
@@ -241,7 +238,7 @@ The rendered submenu instance for the given `id`.
 
 **Parameters:** `(id: string, type: Component = Submenu)` | **Return Type:** `Promise<Submenu>`
 
-Creates and renders a `Submenu` component and returns a `Promise` that will resolve with the 
+Creates and renders a `Submenu` component and returns a `Promise` that will resolve with the
 rendered instance. The `type` field can be used to pass in a component that extends the base `Submenu`.
 
 ### `createSubmenus`
@@ -294,6 +291,3 @@ Fired with the id of the submenu that's visible.
 **Data Type:** `string`
 
 Fired with the id of the submenu that's hidden.
-
-
-

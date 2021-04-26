@@ -10,23 +10,24 @@ that identifies a `value` (which can be anything, including another `Registry` w
 Each `id` is unique so it can only be registered once, unless it is deregistered and registered again.
 
 :::info
+
 - Registries are an integral part of the Vime plugin system.
 - If a registry is created within a Plugin (aka Svelte component), it will automatically destroy itself when the component does.
 - If a registered value is a Svelte component, it will automatically be deregistered when the component is destroyed.
-:::
+  :::
 
 ## Setup
 
 **Constructor:** `new Registry(id: string, validator: ((id: string, value: any) => boolean)?)`
 
 ```js
-import { Registry } from "@vime-js/complete";
+import { Registry } from '@vime-js/complete';
 
-const id = "myRegistry";
+const id = 'myRegistry';
 
 /**
- * Values are not registered if they fail validation. This 
- * should log a message so developers are aware of why a 
+ * Values are not registered if they fail validation. This
+ * should log a message so developers are aware of why a
  * particular registration failed.
  **/
 const optionalValidator = (id, value) => true;
@@ -41,7 +42,7 @@ registry.destroy();
 
 ## Store
 
-A registry is powered by a [store][svelte-store]. Thus, you can subscribe to the `Registry` and 
+A registry is powered by a [store][svelte-store]. Thus, you can subscribe to the `Registry` and
 be updated of any changes to its records.
 
 ```js

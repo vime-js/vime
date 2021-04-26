@@ -92,7 +92,7 @@ function Example() {
 ```html {3-18,24,29} title="example.vue"
 <template>
   <Player controls>
-    <Video>
+    <video>
       <source data-src="/media/video.mp4" type="video/mp4" />
       <track
         default
@@ -107,7 +107,7 @@ function Example() {
         srclang="es"
         label="Spanish"
       />
-    </Video>
+    </video>
     <!-- ... -->
   </Player>
 </template>
@@ -131,7 +131,7 @@ function Example() {
 
 ```html {2-17,22} title="example.svelte"
 <Player controls>
-  <Video videoId="411652396">
+  <video videoId="411652396">
     <source data-src="/media/video.mp4" type="video/mp4" />
     <track
       default
@@ -146,7 +146,7 @@ function Example() {
       srclang="es"
       label="Spanish"
     />
-  </Video>
+  </video>
   <!-- ... -->
 </Player>
 
@@ -187,6 +187,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

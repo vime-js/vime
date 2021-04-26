@@ -1,5 +1,8 @@
 import {
-  createDispatcher, PlayerProp, usePlayerContext, findPlayer,
+  createDispatcher,
+  PlayerProp,
+  usePlayerContext,
+  findPlayer,
 } from '@vime/core';
 
 export const Mixin = (props: PlayerProp[]) => ({
@@ -8,16 +11,19 @@ export const Mixin = (props: PlayerProp[]) => ({
       player: null,
       playerDispatch: () => {},
       unbindPlayerContext: undefined,
-      ...(props.reduce((prev, prop) => ({ ...prev, [prop]: undefined }), {})),
+      ...props.reduce((prev, prop) => ({ ...prev, [prop]: undefined }), {}),
     };
   },
 
-  watch: props.reduce((prev, prop) => ({
-    ...prev,
-    [prop](value) {
-      (this as any).playerDispatch(prop, value);
-    },
-  }), {}),
+  watch: props.reduce(
+    (prev, prop) => ({
+      ...prev,
+      [prop](value) {
+        (this as any).playerDispatch(prop, value);
+      },
+    }),
+    {},
+  ),
 
   async mounted(this: any) {
     this.playerDispatch = () => {};
@@ -28,7 +34,9 @@ export const Mixin = (props: PlayerProp[]) => ({
     this.unbindPlayerContext = await usePlayerContext(
       this.$el,
       props,
-      ((prop, value) => { this[prop] = value; }),
+      (prop, value) => {
+        this[prop] = value;
+      },
       this.player,
     );
   },

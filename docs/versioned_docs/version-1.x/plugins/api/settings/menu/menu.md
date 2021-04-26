@@ -5,8 +5,8 @@ sidebar_label: Menu
 
 **Type:** `Component`
 
-A menu is a container for a list of choices. A choice is an interactable that performs some action. 
-It is represented in the DOM as a `button` with a role of `menuitem` or `menuitemradio`. Choices can 
+A menu is a container for a list of choices. A choice is an interactable that performs some action.
+It is represented in the DOM as a `button` with a role of `menuitem` or `menuitemradio`. Choices can
 be grouped together by nesting menus, hence creating [submenus](./submenu/submenu.md).
 
 :::info
@@ -27,7 +27,7 @@ Whether the menu is visible or not.
 
 **Return Type:** `HTMLElement`
 
-The root HTML element of the component. 
+The root HTML element of the component.
 
 ### `getChoices`
 

@@ -7,7 +7,7 @@ Vime provides various packages that can be used to quickly get started depending
 library/framework you're using, scroll down to the section that is relevant to you.
 
 :::note
-If you have any issues or struggles with the installation steps below please 
+If you have any issues or struggles with the installation steps below please
 [raise an issue](https://github.com/vime-js/vime/issues/new) 🐛
 :::
 
@@ -41,8 +41,8 @@ And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move 
 
 ## Rollup / Webpack
 
-A [custom elements bundle](https://stenciljs.com/docs/custom-elements) is available so you can 
-import components and register them individually. This is a more flexible alternative to the 
+A [custom elements bundle](https://stenciljs.com/docs/custom-elements) is available so you can
+import components and register them individually. This is a more flexible alternative to the
 lazy loading approach used by the [CDN](#CDN).
 
 Let's install the `@vime/core` package by running the following in our terminal...
@@ -52,9 +52,9 @@ npm i @vime/core
 ```
 
 Now let's first load the CSS for the player themes, which are small files that only contain a bunch of
-CSS variables for styling the player. You can either load them from the [CDN](#cdn), or bundle them 
-into your project directly (this will require a plugin). See our example configurations for 
-[Rollup](https://github.com/vime-js/vime/tree/master/examples/rollup/rollup.config.js) and 
+CSS variables for styling the player. You can either load them from the [CDN](#cdn), or bundle them
+into your project directly (this will require a plugin). See our example configurations for
+[Rollup](https://github.com/vime-js/vime/tree/master/examples/rollup/rollup.config.js) and
 [Webpack](https://github.com/vime-js/vime/tree/master/examples/webpack/webpack.config.js).
 
 ```js
@@ -65,11 +65,11 @@ import '@vime/core/themes/default.css';
 import '@vime/core/themes/light.css';
 ```
 
-Now you can can start bundling Vime by importing the components you require **and their dependencies** 
+Now you can can start bundling Vime by importing the components you require **and their dependencies**
 into your project, and registering them in the custom elements registry like so...
 
 :::info
-All components list their dependencies inside their API documentation under the `##Dependencies` 
+All components list their dependencies inside their API documentation under the `##Dependencies`
 section. See the [Video](../components/providers/video#dependencies) component as an example.
 :::
 
@@ -85,20 +85,20 @@ And ... we're all done 🎉 &nbsp; Let's move onto [setting up our player](./pla
 
 ## Stencil
 
-Luckily for you Vime is built with [Stencil](https://stenciljs.com) so it works out of the box 
+Luckily for you Vime is built with [Stencil](https://stenciljs.com) so it works out of the box
 very easily.
 
 Let's first load the CSS for the player themes, which are small files that only contain a bunch of
-CSS variables for styling the player. You can either load them from the [CDN](#cdn), or if 
-you're using the Shadow DOM throughout your application, add the following (after adjusting paths) to 
+CSS variables for styling the player. You can either load them from the [CDN](#cdn), or if
+you're using the Shadow DOM throughout your application, add the following (after adjusting paths) to
 the component that is wrapping the player...
 
 ```css title="[component].css"
 /* Default theme. ~960B */
-@import "../../../node_modules/@vime/core/themes/default.css";
+@import '../../../node_modules/@vime/core/themes/default.css';
 
 /* Optional light theme (extends default). ~400B */
-@import "../../../node_modules/@vime/core/themes/light.css";
+@import '../../../node_modules/@vime/core/themes/light.css';
 ```
 
 Now let's install the `@vime/core` package by running the following in our terminal...
@@ -117,12 +117,12 @@ And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move 
 
 ## Svelte
 
-You have two options with Svelte due to it having perfect 
-[web components support](https://custom-elements-everywhere.com/#svelte). You can either follow the 
-instructions for loading it from the [CDN](#cdn) and use the Vime web components in their natural 
-form, or you can use the Svelte bindings from the `@vime/svelte` package, which wraps all the web 
-components inside Svelte components so you can feel right at home. Some other advantages for using 
-`@vime/svelte` include typed + documented components, and additional helpers for extending Vime with 
+You have two options with Svelte due to it having perfect
+[web components support](https://custom-elements-everywhere.com/#svelte). You can either follow the
+instructions for loading it from the [CDN](#cdn) and use the Vime web components in their natural
+form, or you can use the Svelte bindings from the `@vime/svelte` package, which wraps all the web
+components inside Svelte components so you can feel right at home. Some other advantages for using
+`@vime/svelte` include typed + documented components, and additional helpers for extending Vime with
 custom components.
 
 Let's first load the CSS for the player themes, which are small files that only contain a bunch of
@@ -191,10 +191,10 @@ installation instructions.
 Vime now supports both Vue 2 (`@vime/vue`) and Vue 3 (`@vime/vue-next`) 🚀
 :::
 
-You have two options with Vue due to it having perfect 
-[web components support](https://custom-elements-everywhere.com/#vue). You can either follow the 
-instructions [here](https://stenciljs.com/docs/vue) for loading the web components in their natural 
-form, or you can use the Vue bindings from Vime, which wrap all the web components 
+You have two options with Vue due to it having perfect
+[web components support](https://custom-elements-everywhere.com/#vue). You can either follow the
+instructions [here](https://stenciljs.com/docs/vue) for loading the web components in their natural
+form, or you can use the Vue bindings from Vime, which wrap all the web components
 inside Vue components so you can feel right at home.
 
 Let's first load the CSS for the player themes, which are small files that only contain a bunch of
@@ -223,11 +223,11 @@ And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move 
 
 ## &nbsp;Angular
 
-> Are you a [🥕 &nbsp;farmer](https://twitter.com/search?q=angular%20(from%3Abenawad))?
+> Are you a [🥕 &nbsp;farmer](<https://twitter.com/search?q=angular%20(from%3Abenawad)>)?
 
-You have two options with Angular due to it having perfect [web components support](https://custom-elements-everywhere.com/#angular). You can either follow the instructions [here](https://stenciljs.com/docs/angular) for 
-loading the web components in their natural form which can be slightly tedious, or you can use 
-the `@vime/angular` package to make the installation a breeze. 
+You have two options with Angular due to it having perfect [web components support](https://custom-elements-everywhere.com/#angular). You can either follow the instructions [here](https://stenciljs.com/docs/angular) for
+loading the web components in their natural form which can be slightly tedious, or you can use
+the `@vime/angular` package to make the installation a breeze.
 
 Let's first load the CSS for the player themes, which are small files that only contain a bunch of
 CSS variables for styling the player. Add the following to the root of your application styles...
@@ -247,7 +247,7 @@ package by running the following in our terminal...
 npm i @vime/angular
 ```
 
-For the last step we simply need to import the `Module` into our application, you can do this 
+For the last step we simply need to import the `Module` into our application, you can do this
 at the root `AppModule` or wherever makes the most sense:
 
 ```ts title="app.module.ts"
@@ -255,9 +255,7 @@ import { NgModule } from '@angular/core';
 import { Module } from '@vime/angular';
 
 @NgModule({
-  imports: [
-    Module,
-  ],
+  imports: [Module],
 })
 export class AppModule {
   // ...

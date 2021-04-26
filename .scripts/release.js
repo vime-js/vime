@@ -26,12 +26,16 @@ async function main() {
 
     const NPM_TAG = 'latest';
 
-    if(!dryRun) {
+    if (!dryRun) {
       // Copy license
-      common.packages.forEach(package => { copyLicenseToPackage(package, tasks); });
+      common.packages.forEach(package => {
+        copyLicenseToPackage(package, tasks);
+      });
 
       // copy changelog
-      common.packages.forEach(package => { copyChangelogToPackage(package, tasks); });
+      common.packages.forEach(package => {
+        copyChangelogToPackage(package, tasks);
+      });
 
       // publish each package in NPM
       common.publishPackages(tasks, common.packages, version, NPM_TAG);
@@ -46,7 +50,9 @@ async function main() {
     // Dry run doesn't publish to npm or git
     if (dryRun) {
       console.log(`
-        \n${yellow('Did not publish. Remove the "--dry-run" flag to publish:')}\n${green(version)} to ${cyan(NPM_TAG)}\n
+        \n${yellow(
+          'Did not publish. Remove the "--dry-run" flag to publish:',
+        )}\n${green(version)} to ${cyan(NPM_TAG)}\n
       `);
     } else {
       console.log(`\nvime ${version} published to ${NPM_TAG}!! 🎉\n`);
@@ -72,20 +78,21 @@ function publishGit(tasks, version, changelog, npmTag) {
   tasks.push(
     {
       title: `Tag latest commit ${dim(`(${gitTag})`)}`,
-      task: () => execa('git', ['tag', `${gitTag}`], { cwd: common.rootDir })
+      task: () => execa('git', ['tag', `${gitTag}`], { cwd: common.rootDir }),
     },
     {
       title: 'Push branches to remote',
-      task: () => execa('git', ['push'], { cwd: common.rootDir })
+      task: () => execa('git', ['push'], { cwd: common.rootDir }),
     },
     {
       title: 'Push tags to remove',
-      task: () => execa('git', ['push', '--follow-tags'], { cwd: common.rootDir })
+      task: () =>
+        execa('git', ['push', '--follow-tags'], { cwd: common.rootDir }),
     },
     {
       title: 'Publish Github release',
-      task: () => publishGithub(version, gitTag, changelog, npmTag)
-    }
+      task: () => publishGithub(version, gitTag, changelog, npmTag),
+    },
   );
 }
 
@@ -93,7 +100,10 @@ function copyLicenseToPackage(package, tasks) {
   const pkg = common.readPkg(package);
   const licenseFileName = 'LICENSE';
   const licensePath = path.resolve(common.rootDir, licenseFileName);
-  const pkgLicensePath = path.resolve(common.projectPath(package), licenseFileName);
+  const pkgLicensePath = path.resolve(
+    common.projectPath(package),
+    licenseFileName,
+  );
 
   tasks.push({
     title: `copying license to ${pkg.name}`,
@@ -105,7 +115,10 @@ function copyChangelogToPackage(package, tasks) {
   const pkg = common.readPkg(package);
   const changelogFileName = 'CHANGELOG.md';
   const changelogPath = path.resolve(common.rootDir, changelogFileName);
-  const pkgChangelogPath = path.resolve(common.projectPath(package), changelogFileName);
+  const pkgChangelogPath = path.resolve(
+    common.projectPath(package),
+    changelogFileName,
+  );
 
   tasks.push({
     title: `copying changelog to ${pkg.name}`,
@@ -130,7 +143,7 @@ function findChangelog() {
     }
   }
 
-  if(start === -1 || end === -1) {
+  if (start === -1 || end === -1) {
     throw new Error('changelog diff was not found');
   }
 
@@ -142,7 +155,7 @@ async function publishGithub(version, gitTag, changelog, npmTag) {
   const prerelease = npmTag === 'next' ? true : false;
 
   const octokit = new Octokit({
-    auth: process.env.GH_TOKEN
+    auth: process.env.GH_TOKEN,
   });
 
   let branch = (await execa('git', ['symbolic-ref', '--short', 'HEAD'])).stdout;
@@ -158,7 +171,7 @@ async function publishGithub(version, gitTag, changelog, npmTag) {
     tag_name: gitTag,
     name: version,
     body: changelog,
-    prerelease: prerelease
+    prerelease: prerelease,
   });
 }
 

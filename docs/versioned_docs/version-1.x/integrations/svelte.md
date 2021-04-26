@@ -3,8 +3,8 @@ title: Svelte Integration
 sidebar_label: Svelte
 ---
 
-If you're using the `@vime-js/complete` package inside Svelte then you'll need to do a little extra 
-setting up. For all other packages you don't need to do anything special, compile it the same as you'd 
+If you're using the `@vime-js/complete` package inside Svelte then you'll need to do a little extra
+setting up. For all other packages you don't need to do anything special, compile it the same as you'd
 compile any other Svelte component.
 
 There are setup instructions below for:
@@ -22,16 +22,16 @@ If you want to start an application quickly then checkout the [official Svelte R
 
 [svelte-rollup-template]: https://github.com/sveltejs/template
 
-### Install 
+### Install
 
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  defaultValue="npm"
-  values={[
-  { label: 'NPM', value: 'npm' },
-  { label: 'Yarn', value: 'yarn' },
+defaultValue="npm"
+values={[
+{ label: 'NPM', value: 'npm' },
+{ label: 'Yarn', value: 'yarn' },
 ]}>
 
 <TabItem value="npm">
@@ -80,13 +80,13 @@ If you want to start an application quickly then checkout the [official Svelte W
 
 [svelte-webpack-template]: https://github.com/sveltejs/template-webpack
 
-### Install 
+### Install
 
 <Tabs
-  defaultValue="npm"
-  values={[
-  { label: 'NPM', value: 'npm' },
-  { label: 'Yarn', value: 'yarn' },
+defaultValue="npm"
+values={[
+{ label: 'NPM', value: 'npm' },
+{ label: 'Yarn', value: 'yarn' },
 ]}>
 
 <TabItem value="npm">
@@ -127,18 +127,18 @@ module.exports = {
           loader: 'svelte-loader',
           options: {
             // ...
-            preprocess: sveltePreprocess()
+            preprocess: sveltePreprocess(),
           },
         },
       },
       // ...
-    ]
+    ],
   },
   plugins: [
     new EnvironmentPlugin({
-      NODE_ENV: 'development'
+      NODE_ENV: 'development',
     }),
     // ...
-  ]
-}
+  ],
+};
 ```

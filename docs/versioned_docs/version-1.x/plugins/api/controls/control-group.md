@@ -5,7 +5,7 @@ sidebar_label: ControlGroup
 
 **Type:** `Component`
 
-Manages rendering and laying out a group of [controls](control/control-interface). The layout is 
+Manages rendering and laying out a group of [controls](control/control-interface). The layout is
 managed via [CSS Flexbox][css-flexbox] properties.
 
 [css-flexbox]: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
@@ -34,14 +34,14 @@ Whether the group is visible or not.
 
 **Type:** `boolean` | **Defaut:** `false`
 
-Whether the group should take up all available space in its container by setting `flex: 1` on the 
+Whether the group should take up all available space in its container by setting `flex: 1` on the
 root component element.
 
 ### `flow`
 
 **Type:** `string|null` | **Defaut:** `null`
 
-Sets the `flex-flow` CSS property of the group (see [W3 Schools - flex-flow property][css-flex-flow]. 
+Sets the `flex-flow` CSS property of the group (see [W3 Schools - flex-flow property][css-flex-flow].
 By default the `flex-flow` is `row wrap`.
 
 [css-flex-flow]: https://www.w3schools.com/cssref/css3_pr_flex-flow.asp
@@ -50,7 +50,7 @@ By default the `flex-flow` is `row wrap`.
 
 **Type:** `string|null` | **Defaut:** `null`
 
-Sets the `align-items` and `justify-content` CSS properties of the group. This property is written 
+Sets the `align-items` and `justify-content` CSS properties of the group. This property is written
 as `(align-items):(justify-content)`. For example, `flex-center:flex-start`.
 
 ## Methods

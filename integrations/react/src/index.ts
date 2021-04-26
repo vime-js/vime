@@ -1,8 +1,4 @@
-export {
-  ViewType,
-  Provider,
-  watchComponentRegistry,
-} from '@vime/core';
+export { ViewType, Provider, watchComponentRegistry } from '@vime/core';
 
 export type {
   PlayerProp,

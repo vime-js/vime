@@ -9,9 +9,9 @@ import {
   Vimeo,
   Dailymotion,
   Audio,
-  Hls, 
+  Hls,
   Dash,
-  DefaultUi, 
+  DefaultUi,
   usePlayerContext,
 } from '../../src';
 
@@ -41,11 +41,7 @@ function App() {
 
   return (
     <div id="container">
-      <Player
-        playsinline
-        ref={player}
-        onVmPlaybackReady={onPlaybackReady}
-      >
+      <Player playsinline ref={player} onVmPlaybackReady={onPlaybackReady}>
         {/* YOUTUBE */}
         {/* <Youtube videoId="DyTCOwB0DVw" /> */}
 

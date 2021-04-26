@@ -53,7 +53,7 @@ A function which accepts a message received from `postmessage` and converts it i
 
 **Return Type:** `string|null`
 
-Reflects the `id` attribute of the root `iframe`. This is auto-generated in the form `vime-embed-{count}` 
+Reflects the `id` attribute of the root `iframe`. This is auto-generated in the form `vime-embed-{count}`
 where count is an integer that is incremented for each embed instance.
 
 ### `getIframe`

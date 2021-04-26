@@ -26,11 +26,11 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  groupId="plugins"
-  defaultValue="basic"
-  values={[
-  { label: 'Basic', value: 'basic' },
-  { label: 'Manager', value: 'advanced' },
+groupId="plugins"
+defaultValue="basic"
+values={[
+{ label: 'Basic', value: 'basic' },
+{ label: 'Manager', value: 'advanced' },
 ]}>
 
 <TabItem value="basic">
@@ -43,8 +43,8 @@ import { Player, Boot } from '@vime-js/complete';
 const player = new Player({
   target,
   props: {
-    plugins: [Boot]
-  }
+    plugins: [Boot],
+  },
 });
 ```
 
@@ -60,7 +60,7 @@ import { Player, Boot } from '@vime-js/complete';
 player
   .getPluginsManager()
   .addPlugin(Boot)
-  .then((boot) => {
+  .then(boot => {
     // ...
   });
 ```
@@ -83,11 +83,11 @@ their `ID` with the `v` prefix removed and first letter lowercased.
 - `vClickToPlay` = `clickToPlay`
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
@@ -100,15 +100,15 @@ const target = document.getElementById('player-target');
 const player = new Player({
   target,
   props: {
-    plugins: [Boot]
-  }
+    plugins: [Boot],
+  },
 });
 
 const off = player.$on('mount', () => {
   player.vBoot.manifest = {
     controls: false,
     actionDisplay: false,
-    clickToPlay: false
+    clickToPlay: false,
   };
 });
 ```
@@ -118,11 +118,7 @@ const off = player.$on('mount', () => {
 <TabItem value="svelte">
 
 ```html
-<Player
-  plugins={[Boot]}
-  on:mount={onPlayerMount}
-  bind:this={player} 
-/>
+<Player plugins="{[Boot]}" on:mount="{onPlayerMount}" bind:this="{player}" />
 
 <script>
   import { Player, Boot } from '@vime-js/complete';
@@ -133,7 +129,7 @@ const off = player.$on('mount', () => {
     player.vBoot.manifest = {
       controls: false,
       actionDisplay: false,
-      clickToPlay: false
+      clickToPlay: false,
     };
   };
 </script>

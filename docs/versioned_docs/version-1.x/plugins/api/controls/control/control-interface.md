@@ -17,7 +17,7 @@ Don't confuse this with the [`Control`](./control.md) component.
 
 **Type:** `string|null`
 
-The [`ControlGroup`](./../control-group.md) uses this string (if available) to register the rendered 
+The [`ControlGroup`](./../control-group.md) uses this string (if available) to register the rendered
 [`default`](#default) instance in it's registry.
 
 ### `LABEL`

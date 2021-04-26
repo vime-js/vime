@@ -10,7 +10,7 @@ sidebar_label: Install
 [![tweet-badge]][tweet]
 
 The Standard Player is used to interact with a provider/embed through the [core Vime player interface](./api/player.md).
-If you'd like to know what features it includes and how it compares to other options then see 
+If you'd like to know what features it includes and how it compares to other options then see
 the [getting started](../welcome/getting-started.md) page.
 
 [package]: https://www.npmjs.com/package/@vime-js/standard
@@ -30,12 +30,12 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  groupId="packageManager"
-  defaultValue="npm"
-  values={[
-  { label: 'NPM', value: 'npm' },
-  { label: 'Yarn', value: 'yarn' },
-  { label: 'JSDELIVR', value: 'jsdelivr' },
+groupId="packageManager"
+defaultValue="npm"
+values={[
+{ label: 'NPM', value: 'npm' },
+{ label: 'Yarn', value: 'yarn' },
+{ label: 'JSDELIVR', value: 'jsdelivr' },
 ]}>
 
 <TabItem value="npm">
@@ -72,9 +72,11 @@ The `dist` folder inside the package contains multiple exports:
 - `standard.esm.min.js` is an ESM production build that can be used directly in modern browsers via the `<script type="module">` tag.
 
 :::info
-* UMD builds are exported under the `Vime` namespace.
-* If you're using a bundler then it will automatically pull in the correct files.
-* If you're using [svelte-loader][svelte-loader] or [rollup-plugin-svelte][svelte-rollup] then you'll receive the uncompiled components.
+
+- UMD builds are exported under the `Vime` namespace.
+- If you're using a bundler then it will automatically pull in the correct files.
+- If you're using [svelte-loader][svelte-loader] or [rollup-plugin-svelte][svelte-rollup] then you'll receive the uncompiled components.
+
 :::
 
 [webpack]: https://webpack.js.org
@@ -85,11 +87,11 @@ The `dist` folder inside the package contains multiple exports:
 ## Setup
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
@@ -106,8 +108,8 @@ const player = new Player({
   // If you'd like to initialize any props on setup, you can do so here.
   props: {
     src: '/media/my-video.mp4',
-    providers: [FileProvider, YouTubeProvider]
-  }
+    providers: [FileProvider, YouTubeProvider],
+  },
 });
 
 // ...
@@ -127,11 +129,7 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 <TabItem value="svelte">
 
 ```html
-<Player
-  src="/media/my-video.mp4"
-  {providers}
-  bind:this={player} 
-/>
+<Player src="/media/my-video.mp4" {providers} bind:this="{player}" />
 
 <script>
   import { onMount } from 'svelte';
@@ -144,7 +142,7 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 
   onMount(() => {
     /**
-     * If you need to call any methods, you have access 
+     * If you need to call any methods, you have access
      * to the player instance here.
      **/
   });
@@ -157,6 +155,6 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 
 ## Where to next?
 
-- See the [provider notes](./notes.md) page for any provider specific issues or features, and then go to 
-the [API](./api/player.md) section to find out how to interact with the player.
+- See the [provider notes](./notes.md) page for any provider specific issues or features, and then go to
+  the [API](./api/player.md) section to find out how to interact with the player.
 - See the [loading media](../guides/loading-media.md) guide to see how you can set the `src` prop.

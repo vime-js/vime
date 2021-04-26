@@ -3,12 +3,7 @@
   "compilerOptions": {
     "noEmit": true,
     "module": "ES2020",
-    "declaration": false,
+    "declaration": false
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "test/**/*.ts",
-    "test/**/*.tsx",
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx"]
 }

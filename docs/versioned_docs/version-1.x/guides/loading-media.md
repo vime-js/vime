@@ -38,10 +38,7 @@ player.src = { src: '/media/video.mp4', type: 'video/mp4' };
 ### Array
 
 ```js
-player.src = [
-  '/media/video.mp4',
-  '/media/video.ogg'
-];
+player.src = ['/media/video.mp4', '/media/video.ogg'];
 ```
 
 ### Array of Objects
@@ -49,24 +46,30 @@ player.src = [
 This also demonstrates how to pass in qualities which are optional.
 
 ```js
-player.src = [{ 
-  src: '/media/video-1080.mp4', 
-  type: 'video/mp4',
-  quality: 1080
-}, { 
-  src: '/media/video-1080.ogg', 
-  type: 'video/ogg',
-  quality: 1080
-}, { 
-  src: '/media/video-720.mp4', 
-  type: 'video/mp4',
-  quality: 720
-}, { 
-  src: '/media/video-720.ogg', 
-  type: 'video/ogg',
-  quality: 720
-}];
+player.src = [
+  {
+    src: '/media/video-1080.mp4',
+    type: 'video/mp4',
+    quality: 1080,
+  },
+  {
+    src: '/media/video-1080.ogg',
+    type: 'video/ogg',
+    quality: 1080,
+  },
+  {
+    src: '/media/video-720.mp4',
+    type: 'video/mp4',
+    quality: 720,
+  },
+  {
+    src: '/media/video-720.ogg',
+    type: 'video/ogg',
+    quality: 720,
+  },
+];
 ```
+
 ## YouTube
 
 ### Empty

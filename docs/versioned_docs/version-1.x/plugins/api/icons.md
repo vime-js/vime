@@ -31,11 +31,11 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  groupId="plugins"
-  defaultValue="basic"
-  values={[
-  { label: 'Basic', value: 'basic' },
-  { label: 'Manager', value: 'advanced' },
+groupId="plugins"
+defaultValue="basic"
+values={[
+{ label: 'Basic', value: 'basic' },
+{ label: 'Manager', value: 'advanced' },
 ]}>
 
 <TabItem value="basic">
@@ -48,8 +48,8 @@ import { Player, Icons } from '@vime-js/complete';
 const player = new Player({
   target,
   props: {
-    plugins: [Icons]
-  }
+    plugins: [Icons],
+  },
 });
 ```
 
@@ -65,7 +65,7 @@ import { Player, Icons } from '@vime-js/complete';
 player
   .getPluginsManager()
   .addPlugin(Icons)
-  .then((icons) => {
+  .then(icons => {
     // ...
   });
 ```

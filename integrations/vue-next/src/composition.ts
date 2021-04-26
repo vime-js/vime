@@ -1,8 +1,10 @@
+import { onMounted, readonly, Ref, ref, watch } from 'vue';
 import {
-  onMounted, readonly, Ref, ref, watch,
-} from 'vue';
-import {
-  createDispatcher, Dispatcher, findPlayer, PlayerProps, WritableProps,
+  createDispatcher,
+  Dispatcher,
+  findPlayer,
+  PlayerProps,
+  WritableProps,
   usePlayerContext as useVimeContext,
   isWritableProp,
 } from '@vime/core';
@@ -16,7 +18,7 @@ export const usePlayer = <T extends HTMLElement>(el: Ref<T | null>) => {
   const player = ref<HTMLVmPlayerElement | null>(null);
 
   const find = async () => {
-    player.value = el.value ? (await findPlayer(el.value)) : null;
+    player.value = el.value ? (await findPlayer(el.value)) ?? null : null;
   };
 
   onMounted(find);
@@ -25,7 +27,9 @@ export const usePlayer = <T extends HTMLElement>(el: Ref<T | null>) => {
   return readonly(player) as Readonly<Ref<HTMLVmPlayerElement | null>>;
 };
 
-export type PropBinding<P extends keyof PlayerProps> = P extends keyof WritableProps
+export type PropBinding<
+  P extends keyof PlayerProps
+> = P extends keyof WritableProps
   ? Ref<PlayerProps[P]>
   : Readonly<Ref<PlayerProps[P]>>;
 
@@ -37,7 +41,10 @@ export type PropBinding<P extends keyof PlayerProps> = P extends keyof WritableP
  * @param prop The property to bind to.
  * @param defaultValue The initial value of the property until the the player context is bound.
  */
-export const usePlayerContext = <T extends HTMLElement, P extends keyof PlayerProps>(
+export const usePlayerContext = <
+  T extends HTMLElement,
+  P extends keyof PlayerProps
+>(
   el: Ref<T | null>,
   prop: P,
   defaultValue: PlayerProps[P],
@@ -57,14 +64,10 @@ export const usePlayerContext = <T extends HTMLElement, P extends keyof PlayerPr
 
   watch(el, async (_a, _b, onInvalidate) => {
     if (!el.value) return;
-    const off = await useVimeContext(
-      el.value,
-      [prop],
-      (_, newValue) => {
-        binding.value = newValue as any;
-        prevValue = newValue as any;
-      },
-    );
+    const off = await useVimeContext(el.value, [prop], (_, newValue) => {
+      binding.value = newValue as any;
+      prevValue = newValue as any;
+    });
     onInvalidate(off);
   });
 

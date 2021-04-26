@@ -17,7 +17,6 @@ const packages = [
   'integrations/svelte',
   'integrations/vue',
   'integrations/vue-next',
-  // 'docs',
 ];
 
 function readPkg(project) {
@@ -32,11 +31,11 @@ function writePkg(project, pkg) {
 }
 
 function packagePath(project) {
-  return path.join(rootDir, project, 'package.json');
+  return path.join(rootDir, project === 'core' ? '' : project, 'package.json');
 }
 
 function projectPath(project) {
-  return path.join(rootDir, project);
+  return path.join(rootDir, project === 'core' ? '' : project);
 }
 
 async function getNewVersion(step) {
@@ -53,37 +52,28 @@ function checkGit(tasks) {
       title: 'Check current branch',
       task: () =>
         execa('git', ['symbolic-ref', '--short', 'HEAD'])
-          .then((r) => r.stdout)
-          .then((branch) => {
+          .then(r => r.stdout)
+          .then(branch => {
             if (branch.indexOf('release') === -1) {
               throw new Error(`Must be on "release" branch.`);
             }
           }),
     },
-    // {
-    //   title: 'Check local working tree',
-    //   task: () =>
-    //     execa('git', ['status', '--porcelain']).then(r => r.stdout).then(status => {
-    //       if (status !== '') {
-    //         throw new Error(`Unclean working tree. Commit or stash changes first.`);
-    //       }
-    //     })
-    // },
     {
       title: 'Check remote history',
       task: () =>
         execa('git', ['rev-list', '--count', '--left-only', '@{u}...HEAD'])
-          .then((r) => r.stdout)
-          .then((result) => {
+          .then(r => r.stdout)
+          .then(result => {
             if (result !== '0') {
               throw new Error(`Remote history differs. Please pull changes.`);
             }
           }),
-    }
+    },
   );
 }
 
-const isValidVersion = (input) => Boolean(semver.valid(input));
+const isValidVersion = input => Boolean(semver.valid(input));
 
 function preparePackage(tasks, package, version, install) {
   const projectRoot = projectPath(package);
@@ -97,7 +87,7 @@ function preparePackage(tasks, package, version, install) {
       task: () => {
         if (!isVersionGreater(pkg.version, version)) {
           throw new Error(
-            `New version \`${version}\` should be higher than current version \`${pkg.version}\``
+            `New version \`${version}\` should be higher than current version \`${pkg.version}\``,
           );
         }
       },
@@ -128,7 +118,13 @@ function preparePackage(tasks, package, version, install) {
     if (version) {
       packageTasks.push({
         title: `${pkg.name}: lint`,
-        task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot }),
+        task: () => {
+          try {
+            execa('npm', ['run', 'format'], { cwd: projectRoot });
+          } catch (e) {
+            // ...
+          }
+        },
       });
     }
 
@@ -174,12 +170,12 @@ function preparePackage(tasks, package, version, install) {
 }
 
 function updatePackageVersions(tasks, packages, version) {
-  packages.forEach((package) => {
+  packages.forEach(package => {
     updatePackageVersion(tasks, package, version);
 
     tasks.push({
       title: `${package} update @vime/core dependency, if present ${dim(
-        `(${version})`
+        `(${version})`,
       )}`,
       task: async () => {
         if (package !== 'core') {
@@ -198,7 +194,7 @@ function updatePackageVersions(tasks, packages, version) {
 
       tasks.push({
         title: `${package} update @vime/core dependency, if present ${dim(
-          `(${version})`
+          `(${version})`,
         )}`,
         task: async () => {
           const pkg = readPkg(distPackage);
@@ -223,7 +219,7 @@ function updatePackageVersion(tasks, package, version) {
 
 function publishPackages(tasks, packages, version, npmTag = 'latest') {
   // Verify version
-  packages.forEach((package) => {
+  packages.forEach(package => {
     if (package === 'core') return;
 
     tasks.push({
@@ -233,7 +229,7 @@ function publishPackages(tasks, packages, version, npmTag = 'latest') {
 
         if (version !== pkg.version) {
           throw new Error(
-            `${pkg.name} version ${pkg.version} must match ${version}`
+            `${pkg.name} version ${pkg.version} must match ${version}`,
           );
         }
       },
@@ -241,7 +237,7 @@ function publishPackages(tasks, packages, version, npmTag = 'latest') {
   });
 
   // Publish
-  packages.forEach((package) => {
+  packages.forEach(package => {
     let projectRoot = projectPath(package);
 
     if (package === 'integrations/angular') {

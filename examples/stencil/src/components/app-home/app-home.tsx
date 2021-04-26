@@ -19,10 +19,15 @@ export class AppHome {
         <vm-player
           playsinline
           onVmPlaybackReady={this.onPlaybackReady.bind(this)}
-          ref={(el) => { this.player = el; }}
+          ref={el => {
+            this.player = el;
+          }}
         >
           <vm-video poster="https://media.vimejs.com/poster.png">
-            <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+            <source
+              data-src="https://media.vimejs.com/720p.mp4"
+              type="video/mp4"
+            />
           </vm-video>
 
           <vm-default-ui>

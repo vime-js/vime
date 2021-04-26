@@ -12,7 +12,7 @@ can be selected at the same time.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu-radio-group/menu-radio-group.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/settings/menu-radio-group/menu-radio-group.png"
   alt="Vime settings menu radio group component"
 />
 
@@ -53,7 +53,6 @@ values={[
 ```
 
 </TabItem>
-
 
 <TabItem value="react">
 
@@ -97,7 +96,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -154,7 +152,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```tsx {7-11}
@@ -197,7 +194,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="stencil">
 
 ```tsx {17-24}
@@ -236,7 +232,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {7-11} title="example.html"
@@ -273,7 +268,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

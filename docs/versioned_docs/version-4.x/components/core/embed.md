@@ -40,7 +40,7 @@ values={[
 <script>
   const embed = document.querySelector('vime-embed');
 
-  embed.addEventListener('vEmbedMessage', (e) => {
+  embed.addEventListener('vEmbedMessage', e => {
     const message = e.detail;
     // ...
   });
@@ -48,7 +48,6 @@ values={[
 ```
 
 </TabItem>
-
 
 <TabItem value="react">
 
@@ -75,7 +74,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -117,7 +115,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```tsx
@@ -149,7 +146,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="stencil">
 
 ```tsx
@@ -174,7 +170,6 @@ class Example {
 ```
 
 </TabItem>
-
 
 <TabItem value="angular">
 
@@ -206,7 +201,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

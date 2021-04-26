@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "jsxFactory": "h",
+    "jsx": "react"
+  },
+  "include": ["src", "types/jsx.d.ts"]
+}

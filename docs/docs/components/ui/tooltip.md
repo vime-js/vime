@@ -55,13 +55,7 @@ values={[
 
 ```tsx {7,18}
 import React from 'react';
-import {
-  Player,
-  Ui,
-  Controls,
-  Control,
-  Tooltip,
-} from '@vime/react';
+import { Player, Ui, Controls, Control, Tooltip } from '@vime/react';
 
 function Example() {
   return (
@@ -101,13 +95,7 @@ function Example() {
 </template>
 
 <script>
-  import {
-    Player,
-    Ui,
-    Controls,
-    Control,
-    Tooltip,
-  } from '@vime/vue';
+  import { Player, Ui, Controls, Control, Tooltip } from '@vime/vue';
 
   export default {
     components: {
@@ -140,13 +128,7 @@ function Example() {
 </Player>
 
 <script lang="ts">
-  import {
-    Player,
-    Ui,
-    Controls,
-    Control,
-    Tooltip,
-  } from '@vime/svelte';
+  import { Player, Ui, Controls, Control, Tooltip } from '@vime/svelte';
 </script>
 ```
 
@@ -174,6 +156,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

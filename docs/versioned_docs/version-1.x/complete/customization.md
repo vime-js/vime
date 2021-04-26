@@ -3,7 +3,7 @@ title: Customization
 sidebar_label: Customization
 ---
 
-This page will guide you on how to extend or customize the player. Refer to the [Player API](./api/player.md) 
+This page will guide you on how to extend or customize the player. Refer to the [Player API](./api/player.md)
 for what props/methods/events are available and how to interact with them.
 
 ## Loading Providers
@@ -16,11 +16,11 @@ import { Player, FileProvider, YouTubeProvider } from '@vime-js/complete';
 
 // ...
 
-const player = new Player({ 
+const player = new Player({
   target,
   props: {
-    providers: [FileProvider, YouTubeProvider]
-  }
+    providers: [FileProvider, YouTubeProvider],
+  },
 });
 ```
 
@@ -30,7 +30,7 @@ Checkout the [provider notes](../standard/notes.md) for any provider specific is
 
 ## Loading Plugins
 
-Plugins are loaded via the `plugins` prop, see the plugins [getting started](../plugins/getting-started.md) 
+Plugins are loaded via the `plugins` prop, see the plugins [getting started](../plugins/getting-started.md)
 page for more information.
 
 ```js
@@ -38,18 +38,18 @@ import { Player, Boot } from '@vime-js/complete';
 
 // ...
 
-const player = new Player({ 
+const player = new Player({
   target,
   props: {
     // The Boot plugin installs all Vime plugins.
-    plugins: [Boot]
-  }
+    plugins: [Boot],
+  },
 });
 ```
 
 ## Loading Icons
 
-Icons are set via the `icons` prop. 
+Icons are set via the `icons` prop.
 
 ### Vime Icons
 
@@ -64,7 +64,7 @@ player.plugins = [Icons];
 
 ### Custom Icons
 
-Create an SVG sprite and insert it into the head of the document. You can then override the 
+Create an SVG sprite and insert it into the head of the document. You can then override the
 following default icons.
 
 - play
@@ -101,7 +101,7 @@ player.languages = {
     play: '播放视频',
     pause: '暂停影片',
     // ...
-  }
+  },
 };
 
 // Change the locale.
@@ -142,8 +142,8 @@ player.theme = {
   fontWeightLight: '300',
   fontWeightRegular: '400',
   fontWeightBold: '500',
-  baseLineHeight: '1.7'
-}
+  baseLineHeight: '1.7',
+};
 ```
 
 [mdn-css-custom-props]: https://developer.mozilla.org/en-US/docs/Web/CSS/--*

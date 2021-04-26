@@ -47,7 +47,7 @@ import React from 'react';
 import { TimeProgress } from '@vime/react';
 
 function Example() {
-  return (<TimeProgress separator="/" />);
+  return <TimeProgress separator="/" />;
 }
 ```
 
@@ -97,6 +97,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

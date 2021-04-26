@@ -57,12 +57,7 @@ values={[
 
 ```tsx {3,24-33}
 import React, { useMemo, useRef } from 'react';
-import {
-  Control,
-  Icon,
-  Tooltip,
-  usePlayerContext,
-} from '@vime/react';
+import { Control, Icon, Tooltip, usePlayerContext } from '@vime/react';
 
 function PlaybackControl() {
   const ref = useRef(null);
@@ -70,12 +65,12 @@ function PlaybackControl() {
   const [i18n] = usePlayerContext(ref, 'i18n', {});
   const icon = useMemo(() => (paused ? 'play' : 'pause'), [paused]);
   const tooltip = useMemo(() => (paused ? i18n.play : i18n.pause), [
-    paused, 
+    paused,
     i18n,
   ]);
-  
-  const onClick = () => { 
-    setPaused(false); 
+
+  const onClick = () => {
+    setPaused(false);
   };
 
   return (
@@ -100,12 +95,7 @@ function PlaybackControl() {
 
 ```html {2-10,16,24} title="playback-control.vue"
 <template>
-  <Control
-    keys="k"
-    :label="i18n.playback"
-    :pressed="paused"
-    @click="onClick"
-  >
+  <Control keys="k" :label="i18n.playback" :pressed="paused" @click="onClick">
     <Icon :name="icon" />
     <Tooltip>{{tooltip}} (k)</Tooltip>
   </Control>
@@ -155,12 +145,7 @@ function PlaybackControl() {
 ```html {2-10,19,27} title="playback-control.vue"
 <template>
   <div ref="domRef">
-    <Control
-      keys="k"
-      :label="i18n.playback"
-      :pressed="paused"
-      @click="onClick"
-    >
+    <Control keys="k" :label="i18n.playback" :pressed="paused" @click="onClick">
       <Icon :name="icon" />
       <Tooltip>{{tooltip}} (k)</Tooltip>
     </Control>
@@ -168,38 +153,35 @@ function PlaybackControl() {
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue';
-import {
-  usePlayerContext,
-  Control,
-  Icon,
-  Tooltip,
-} from '@vime/vue-next';
+  import { defineComponent, ref, computed } from 'vue';
+  import { usePlayerContext, Control, Icon, Tooltip } from '@vime/vue-next';
 
-export default defineComponent({
-  name: 'PlaybackControl',
-  components: {
-    Control,
-    Icon,
-    Tooltip,
-  },
-  setup() {
-    const domRef = ref(null);
-
-    const paused = usePlayerContext(domRef, 'paused', true);
-    const i18n = usePlayerContext(domRef, 'i18n', {});
-
-    const icon = computed(() => paused.value ? 'play' : 'pause');
-    const tooltip = computed(() => paused.value ? i18n.value.play : i18n.value.pause);
-
-    return { domRef, paused, i18n, icon, tooltip };
-  },
-  methods: {
-    onClick() {
-      this.paused = !this.paused;
+  export default defineComponent({
+    name: 'PlaybackControl',
+    components: {
+      Control,
+      Icon,
+      Tooltip,
     },
-  },
-});
+    setup() {
+      const domRef = ref(null);
+
+      const paused = usePlayerContext(domRef, 'paused', true);
+      const i18n = usePlayerContext(domRef, 'i18n', {});
+
+      const icon = computed(() => (paused.value ? 'play' : 'pause'));
+      const tooltip = computed(() =>
+        paused.value ? i18n.value.play : i18n.value.pause,
+      );
+
+      return { domRef, paused, i18n, icon, tooltip };
+    },
+    methods: {
+      onClick() {
+        this.paused = !this.paused;
+      },
+    },
+  });
 </script>
 ```
 
@@ -223,12 +205,7 @@ export default defineComponent({
 
 ```html {4}
 <script lang="ts">
-  import {
-    usePlayerStore,
-    Control,
-    Icon,
-    Tooltip,
-  } from '@vime/svelte';
+  import { usePlayerStore, Control, Icon, Tooltip } from '@vime/svelte';
 
   let ref: Control;
 
@@ -250,11 +227,11 @@ export default defineComponent({
 
 ```tsx {35-45}
 import { h, Component, Prop } from '@stencil/core';
-import { 
-  Dispatcher, 
-  createDispatcher, 
-  PlayerProps, 
-  withPlayerContext 
+import {
+  Dispatcher,
+  createDispatcher,
+  PlayerProps,
+  withPlayerContext,
 } from '@vime/core';
 
 @Component({
@@ -296,6 +273,7 @@ export class PlaybackControl {
 
 withPlayerContext(PlaybackControl, ['paused', 'i18n']);
 ```
+
 
 </TabItem>
 

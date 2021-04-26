@@ -20,10 +20,14 @@ function serve() {
     writeBundle() {
       if (server) return;
       // eslint-disable-next-line global-require
-      server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
-        stdio: ['ignore', 'inherit', 'inherit'],
-        shell: true,
-      });
+      server = require('child_process').spawn(
+        'npm',
+        ['run', 'start', '--', '--dev'],
+        {
+          stdio: ['ignore', 'inherit', 'inherit'],
+          shell: true,
+        },
+      );
 
       process.on('SIGTERM', toExit);
       process.on('exit', toExit);
@@ -43,7 +47,10 @@ export default {
     css({
       output(styles) {
         if (!existsSync(`${OUTPUT_DIR}`)) mkdirSync(`${OUTPUT_DIR}`);
-        writeFileSync(`${OUTPUT_DIR}/app.css`, production ? (new CleanCSS().minify(styles).styles) : styles);
+        writeFileSync(
+          `${OUTPUT_DIR}/app.css`,
+          production ? new CleanCSS().minify(styles).styles : styles,
+        );
       },
     }),
     !production && serve(),

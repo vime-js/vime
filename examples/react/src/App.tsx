@@ -12,7 +12,7 @@ import '@vime/core/themes/default.css';
 import TapSidesToSeek from './TapSidesToSeek';
 
 function App() {
-	// Obtain a ref if you need to call any methods.
+  // Obtain a ref if you need to call any methods.
   const player = useRef<HTMLVmPlayerElement>(null);
 
   const onPlaybackReady = () => {
@@ -28,13 +28,12 @@ function App() {
 
   return (
     <div id="container">
-      <Player
-        playsinline 
-        ref={player}
-        onVmPlaybackReady={onPlaybackReady}
-      >
+      <Player playsinline ref={player} onVmPlaybackReady={onPlaybackReady}>
         <Video poster="https://media.vimejs.com/poster.png">
-          <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+          <source
+            data-src="https://media.vimejs.com/720p.mp4"
+            type="video/mp4"
+          />
         </Video>
 
         <DefaultUi>

@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
-import { 
-  Player as VmPlayer, 
-  Video as VmVideo, 
-  DefaultUi as VmDefaultUi, 
-  Youtube as VmYoutube, 
+import {
+  Player as VmPlayer,
+  Video as VmVideo,
+  DefaultUi as VmDefaultUi,
+  Youtube as VmYoutube,
   Vimeo as VmVimeo,
   Dailymotion as VmDailymotion,
   Dash as VmDash,
@@ -13,27 +13,30 @@ import {
 
 const poster = 'https://media.vimejs.com/poster.png';
 
-const YouTube = () => (<VmYoutube videoId="DyTCOwB0DVw" />);
-const Vimeo = () => (<VmVimeo videoId="411652396" />);
-const Dailymotion = () => (<VmDailymotion videoId="k3b11PemcuTrmWvYe0q" />);
+const YouTube = () => <VmYoutube videoId="DyTCOwB0DVw" />;
+const Vimeo = () => <VmVimeo videoId="411652396" />;
+const Dailymotion = () => <VmDailymotion videoId="k3b11PemcuTrmWvYe0q" />;
 
 const Tracks = () => (
   <Fragment>
-    <track 
-      default 
-      kind="subtitles" 
-      src="https://media.vimejs.com/subs/english.vtt" 
-      srcLang="en" 
-      label="English" 
+    <track
+      default
+      kind="subtitles"
+      src="https://media.vimejs.com/subs/english.vtt"
+      srcLang="en"
+      label="English"
     />
   </Fragment>
 );
 
 const Hls = () => (
   <VmHls crossOrigin="" poster={poster}>
-    <source data-src="https://media.vimejs.com/hls/index.m3u8" type="application/x-mpegURL" />
+    <source
+      data-src="https://media.vimejs.com/hls/index.m3u8"
+      type="application/x-mpegURL"
+    />
     <Tracks />
-  </VmHls>  
+  </VmHls>
 );
 
 const Dash = () => (
@@ -48,12 +51,9 @@ const Audio = () => (
 
 const Video = () => (
   <VmVideo crossOrigin="" poster={poster}>
-    <source 
-      data-src="https://media.vimejs.com/720p.mp4" 
-      type="video/mp4" 
-    />
+    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
     <Tracks />
-  </VmVideo> 
+  </VmVideo>
 );
 
 const ProviderMap = {
@@ -72,11 +72,11 @@ let prevShowDefaultUi = false;
 
 const genKey = (provider, showDefaultUi) => {
   if (provider === prevProvider && prevShowDefaultUi === showDefaultUi) return;
-  key += 1
+  key += 1;
   prevProvider = provider;
   prevShowDefaultUi = showDefaultUi;
   return key;
-}
+};
 
 const DemoPlayer = ({
   color,
@@ -84,10 +84,10 @@ const DemoPlayer = ({
   provider = 'video',
   showDefaultUi = false,
 }) => (
-  <VmPlayer 
+  <VmPlayer
     key={genKey(provider, showDefaultUi)}
-    theme={theme} 
-    style={{ '--vm-player-theme': color }} 
+    theme={theme}
+    style={{ '--vm-player-theme': color }}
     controls={!showDefaultUi}
     noSkeleton
   >

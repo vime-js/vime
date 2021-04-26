@@ -102,7 +102,7 @@ function Example() {
     <!-- ... -->
     <Ui>
       <!-- ... -->
-      <Menu
+      <menu
         identifer="menu-id"
         controller="menu-controller-id"
         :active="isMenuActive"
@@ -110,7 +110,7 @@ function Example() {
         @vmClose="onClose"
       >
         <!-- ... -->
-      </Menu>
+      </menu>
     </Ui>
   </Player>
 </template>
@@ -217,6 +217,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

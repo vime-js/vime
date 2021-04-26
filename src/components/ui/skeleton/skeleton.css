@@ -1,0 +1,56 @@
+/**
+  * @prop --vm-skeleton-color: The color of the skeleton.
+  * @prop --vm-skeleton-sheen-color: The sheen color when the skeleton is in its loading state.
+  * @prop --vm-skeleton-z-index: The position in the UI z-axis stack inside the player.
+  */
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: var(--vm-skeleton-z-index);
+}
+
+@keyframes sheen {
+  0% {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  min-height: 1rem;
+  pointer-events: auto;
+}
+
+.sheen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--vm-fade-transition);
+  pointer-events: none;
+}
+
+.indicator {
+  flex: 1 1 auto;
+  background: var(--vm-skeleton-color);
+}
+
+.skeleton.sheen .indicator {
+  background: linear-gradient(
+    270deg,
+    var(--vm-skeleton-sheen-color),
+    var(--vm-skeleton-color),
+    var(--vm-skeleton-color),
+    var(--vm-skeleton-sheen-color)
+  );
+  background-size: 400% 100%;
+  background-size: 400% 100%;
+  animation: sheen 8s ease-in-out infinite;
+}

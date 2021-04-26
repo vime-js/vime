@@ -13,7 +13,7 @@ import TabItem from '@theme/TabItem'
 [![tweet-badge]][tweet]
 
 Preview is used to display a thumbnail. If your `src` points to an external provider then the
-thumbnail is automatically loaded. If you'd like to know how it compares to other options then see 
+thumbnail is automatically loaded. If you'd like to know how it compares to other options then see
 the [getting started](../welcome/getting-started.md) page.
 
 [package]: https://www.npmjs.com/package/@vime-js/preview
@@ -30,12 +30,12 @@ the [getting started](../welcome/getting-started.md) page.
 ## Installation
 
 <Tabs
-  groupId="packageManager"
-  defaultValue="npm"
-  values={[
-  { label: 'NPM', value: 'npm' },
-  { label: 'Yarn', value: 'yarn' },
-  { label: 'JSDELIVR', value: 'jsdelivr' },
+groupId="packageManager"
+defaultValue="npm"
+values={[
+{ label: 'NPM', value: 'npm' },
+{ label: 'Yarn', value: 'yarn' },
+{ label: 'JSDELIVR', value: 'jsdelivr' },
 ]}>
 
 <TabItem value="npm">
@@ -72,9 +72,11 @@ The `dist` folder inside the package contains multiple exports:
 - `preview.esm.min.js` is an ESM production build that can be used directly in modern browsers via the `<script type="module">` tag.
 
 :::info
-* UMD builds are exported under the `Vime` namespace.
-* If you're using a bundler then it will automatically pull in the correct files.
-* If you're using [svelte-loader][svelte-loader] or [rollup-plugin-svelte][svelte-rollup] then you'll receive the uncompiled components.
+
+- UMD builds are exported under the `Vime` namespace.
+- If you're using a bundler then it will automatically pull in the correct files.
+- If you're using [svelte-loader][svelte-loader] or [rollup-plugin-svelte][svelte-rollup] then you'll receive the uncompiled components.
+
 :::
 
 [webpack]: https://webpack.js.org
@@ -85,11 +87,11 @@ The `dist` folder inside the package contains multiple exports:
 ## Setup
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
@@ -100,10 +102,10 @@ import { Preview } from '@vime-js/preview';
 const target = document.getElementById('preview-target');
 
 // Mount
-const preview = new Preview({ 
+const preview = new Preview({
   target,
   // If you'd like to initialize any props on setup, you can do so here.
-  props: {}
+  props: {},
 });
 
 // ...
@@ -123,7 +125,7 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 <TabItem value="svelte">
 
 ```html
-<Preview bind:this={preview} />
+<Preview bind:this="{preview}" />
 
 <script>
   import { onMount } from 'svelte';
@@ -133,7 +135,7 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 
   onMount(() => {
     /**
-     * If you need to call any methods, you have access 
+     * If you need to call any methods, you have access
      * to the preview instance here.
      **/
   });
@@ -146,5 +148,5 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 
 ## Where to next?
 
-Go to the [API](./api.md) page to see what props/methods/events are exposed and how you can interact 
-with them. 
+Go to the [API](./api.md) page to see what props/methods/events are exposed and how you can interact
+with them.

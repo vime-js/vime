@@ -5,8 +5,8 @@ sidebar_label: Player
 
 **Type:** `Component`
 
-This component extends the Standard Player and exposes its [API](../../standard/api/player.md) so it can be 
-accessed directly from this component. 
+This component extends the Standard Player and exposes its [API](../../standard/api/player.md) so it can be
+accessed directly from this component.
 
 **Standard Player API Differences**
 
@@ -15,15 +15,15 @@ accessed directly from this component.
 
 ## Store
 
-All props below are powered behind the scenes by a [store][svelte-store]. They are plain JS objects that 
-contain a `subscribe` function and an optional `set` function. You can subscribe to receive updates 
-of some value as it changes over time. The `subscribe` function returns an `unsubscribe` function that 
+All props below are powered behind the scenes by a [store][svelte-store]. They are plain JS objects that
+contain a `subscribe` function and an optional `set` function. You can subscribe to receive updates
+of some value as it changes over time. The `subscribe` function returns an `unsubscribe` function that
 you can call to stop listening.
 
 [svelte-store]: https://svelte.dev/docs#svelte_store
 
 :::info
-In addition to the props listed below, all props listed in the [Standard Player API](../../standard/api/player.md#props) 
+In addition to the props listed below, all props listed in the [Standard Player API](../../standard/api/player.md#props)
 are also available via `getStore`.
 :::
 
@@ -60,14 +60,14 @@ Translation maps that the player uses when the `locale` changes.
 
 **Type:** `{ [id]: string }` | **Default:** english map
 
-Contains the current language map. It's basically `languages[locale]` under the hood. If the current 
+Contains the current language map. It's basically `languages[locale]` under the hood. If the current
 `locale` has no language map, it'll fallback to `en`.
 
 ### `icons`
 
 **Type:** `{ [id]: string }` | **Default:** `{}`
 
-Icons are expected to be loaded as an SVG sprite that is inserted into the 
+Icons are expected to be loaded as an SVG sprite that is inserted into the
 head of the document. The `icons` prop is a collection of icon identifiers and the value
 of the corresponding SVG elements `id` attribute.
 
@@ -76,7 +76,7 @@ of the corresponding SVG elements `id` attribute.
 **Type:** `string|object|null` | **Default:** `null`
 
 Used to style the player, under the hood it uses CSS custom properties. It can be a `string`
-to set the primary color of the player, or an `object` that contains a collection of 
+to set the primary color of the player, or an `object` that contains a collection of
 [available CSS vars](../customization.md#css-vars) and their corresponding values.
 
 ### `class`
@@ -101,21 +101,21 @@ Whether the player is in debug mode or not. If `true`, messages are sent to the 
 
 **Type:** `boolean` | **Default:** `false`
 
-Whether the player is in mobile mode or not. This is `true` if the device is determined to be a 
+Whether the player is in mobile mode or not. This is `true` if the device is determined to be a
 mobile device via the User-Agent.
 
 ### `isTouch`
 
 **Type:** `boolean` | **Default:** `false` | **Readonly:** `true`
 
-Whether the user is currently using touch input. This is actively updated by listening to the `touchstart` 
+Whether the user is currently using touch input. This is actively updated by listening to the `touchstart`
 and `mousemove` events.
 
 ### `isContextMenuEnabled`
 
 **Type:** `boolean` | **Default:** `false`
 
-Whether the context menu (right click on player) can be opened or not. In development mode this is 
+Whether the context menu (right click on player) can be opened or not. In development mode this is
 enabled regardless of what value this is set to.
 
 ### `currentPoster`
@@ -173,7 +173,7 @@ The core `PluginsManager`.
 
 **Return Type:** [`Registry`](./registry.md)
 
-The `Registry` owned by the `PluginsManager`. 
+The `Registry` owned by the `PluginsManager`.
 
 :::info
 Alternative to `player.getPluginsManager().getRegistry()`.
@@ -189,26 +189,26 @@ Calls the provided cleanup `function` when the player is being destroyed.
 
 **Parameters:** `(id: string)` | **Return Type:** [`Registry`](./registry.md)
 
-Creates a new `Registry`, registers it with the root player registry and returns it. This method 
+Creates a new `Registry`, registers it with the root player registry and returns it. This method
 is generally used by plugins.
 
 ### `createLogger`
 
 **Parameters:** `(id: string)` | **Return Type:** `{ log: fn, warn: fn, error: fn }`
 
-Returns an object with functions that format and forward messages to the respective `console` method. 
+Returns an object with functions that format and forward messages to the respective `console` method.
 This method is generally used by plugins.
 
 ## Events
 
 :::info
-Vime only has some basic events below because state change updates are received via stores. Whether it's `currentTime` changes, 
+Vime only has some basic events below because state change updates are received via stores. Whether it's `currentTime` changes,
 fullscreen changes, or for any player state change, we subscribe to the respective [store](#store) for updates.
 :::
 
 ```js
 // Start listening.
-const off = player.$on("someEvent", e => {
+const off = player.$on('someEvent', e => {
   const data = e.detail;
 });
 

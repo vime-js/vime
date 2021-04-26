@@ -13,7 +13,7 @@ sidebar_label: KeyboardShortcut
 
 Text that helps the user understand what key to press to use this shortcut.
 
-### `keys` 
+### `keys`
 
 **Type:** `int[]`
 
@@ -21,7 +21,7 @@ The [JS key codes][js-keycodes] to listen to.
 
 [js-keycodes]: https://keycode.info
 
-### `action` 
+### `action`
 
 **Type:** `() => void`
 

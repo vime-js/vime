@@ -1,5 +1,5 @@
 /* Default theme. */
-@import "../../../node_modules/@vime/core/themes/default.css";
+@import '../../../node_modules/@vime/core/themes/default.css';
 
 /* Optional light theme (extends default). */
 /* @import "../../../node_modules/@vime/core/themes/light.css"; */

@@ -12,7 +12,7 @@ currently set.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/caption-control/caption-control.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/caption-control/caption-control.png"
   alt="Vime caption control component"
 />
 
@@ -49,7 +49,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {6,16}
@@ -77,7 +76,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -115,7 +113,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {6,16} title="example.svelte"
@@ -141,7 +138,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="stencil">
 
 ```tsx {9}
@@ -164,7 +160,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {7} title="example.html"
@@ -183,7 +178,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

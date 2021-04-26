@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { usePlayerContext } from "@vime/react";
+import React, { useRef } from 'react';
+import { usePlayerContext } from '@vime/react';
 // @ts-ignore
 import styles from './TapSidesToSeek.module.css';
 
@@ -15,26 +15,17 @@ export const TapSidesToSeek = () => {
   };
 
   const onSeekForward = () => {
-    if (currentTime > (duration - 5)) return;
+    if (currentTime > duration - 5) return;
     setCurrentTime(currentTime + 5);
   };
 
   return (
-    <div 
-      ref={ref}
-      className={styles.tapSidesToSeek}
-    >
-      <div 
-        className={styles.tapTarget}
-        onClick={onSeekBackward}
-      />
+    <div ref={ref} className={styles.tapSidesToSeek}>
+      <div className={styles.tapTarget} onClick={onSeekBackward} />
 
       <div style={{ flex: 1 }} />
 
-      <div 
-        className={styles.tapTarget}
-        onClick={onSeekForward}
-      />
+      <div className={styles.tapTarget} onClick={onSeekForward} />
     </div>
   );
-}
+};

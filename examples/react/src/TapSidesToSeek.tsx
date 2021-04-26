@@ -1,10 +1,10 @@
-import { useRef } from "react";
-import { usePlayerContext } from "@vime/react";
+import { useRef } from 'react';
+import { usePlayerContext } from '@vime/react';
 import './TapSidesToSeek.css';
 
 function TapSidesToSeek() {
   /**
-   * We need a reference to a DOM element so the Vime hooks work as they rely on dispatching 
+   * We need a reference to a DOM element so the Vime hooks work as they rely on dispatching
    * custom DOM events.
    */
   const ref = useRef(null);
@@ -24,28 +24,19 @@ function TapSidesToSeek() {
   };
 
   const onSeekForward = () => {
-    if (currentTime > (duration - 5)) return;
+    if (currentTime > duration - 5) return;
     setCurrentTime(currentTime + 5);
   };
 
   if (!isVideoView || !isPlaybackReady) return null;
 
   return (
-    <div 
-      ref={ref}
-      className="tapSidesToSeek"
-    >
-      <div 
-        className="tapTarget"
-        onClick={onSeekBackward}
-      />
+    <div ref={ref} className="tapSidesToSeek">
+      <div className="tapTarget" onClick={onSeekBackward} />
 
       <div style={{ flex: 1 }} />
 
-      <div 
-        className="tapTarget"
-        onClick={onSeekForward}
-      />
+      <div className="tapTarget" onClick={onSeekForward} />
     </div>
   );
 }

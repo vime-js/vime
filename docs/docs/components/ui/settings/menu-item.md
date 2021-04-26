@@ -89,7 +89,7 @@ function Example() {
     <Ui>
       <!-- ... -->
       <Settings>
-        <MenuItem label="Playback Quality" hint="Auto" />
+        <menuitem label="Playback Quality" hint="Auto" />
       </Settings>
     </Ui>
   </Player>
@@ -120,7 +120,7 @@ function Example() {
   <Ui>
     <!-- ... -->
     <Settings>
-      <MenuItem label="Playback Quality" hint="Auto" />
+      <menuitem label="Playback Quality" hint="Auto" />
     </Settings>
   </Ui>
 </Player>
@@ -152,6 +152,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

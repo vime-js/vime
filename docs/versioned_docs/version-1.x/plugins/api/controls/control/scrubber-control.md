@@ -12,7 +12,7 @@ the user to seek to a new time.
 
 ### Tooltips
 
-If the [Tooltips](../../tooltips/tooltips.md) plugin is available then the control will render a tooltip 
+If the [Tooltips](../../tooltips/tooltips.md) plugin is available then the control will render a tooltip
 and register it under its `LABEL`. The tooltip displays the time the user's mouse pointer is hovering over on the scrubber.
 
 ## Methods

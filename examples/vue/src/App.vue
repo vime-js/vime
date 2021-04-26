@@ -1,13 +1,12 @@
 <template>
   <div id="app">
     <div id="container">
-      <Player
-        playsinline 
-        ref="player"
-        @vPlaybackReady="onPlaybackReady"
-      >
+      <Player playsinline ref="player" @vPlaybackReady="onPlaybackReady">
         <Video poster="https://media.vimejs.com/poster.png">
-          <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4">
+          <source
+            data-src="https://media.vimejs.com/720p.mp4"
+            type="video/mp4"
+          />
         </Video>
 
         <DefaultUi>

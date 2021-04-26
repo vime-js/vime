@@ -41,7 +41,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {2,8}
@@ -59,7 +58,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -87,7 +85,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {3-5,9} title="example.svelte"
@@ -104,7 +101,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="stencil">
 
@@ -123,7 +119,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {3-5} title="example.html"
@@ -138,7 +133,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Slots
 

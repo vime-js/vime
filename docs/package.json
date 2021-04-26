@@ -6,14 +6,15 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
+    "build:api": "npm run build --prefix ../",
     "swizzle": "docusaurus swizzle",
     "serve": "docusaurus serve"
   },
   "dependencies": {
     "@babel/core": "^7.11.5",
-    "@docusaurus/core": "^2.0.0-alpha.66",
-    "@docusaurus/plugin-pwa": "^2.0.0-alpha.66",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.66",
+    "@docusaurus/core": "^2.0.0-alpha.73",
+    "@docusaurus/plugin-pwa": "^2.0.0-alpha.73",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.73",
     "@loadable/component": "^5.14.1",
     "@mdx-js/react": "^1.6.16",
     "@vime/react": "^5.0.15",
@@ -23,6 +24,7 @@
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-draggable": "^4.4.3",
+    "react-toggle": "^4.1.2",
     "tweakpane": "^1.5.4",
     "workbox-routing": "^5.1.3",
     "workbox-strategies": "^5.1.3"

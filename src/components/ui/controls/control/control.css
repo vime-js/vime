@@ -1,0 +1,53 @@
+/**
+  * @prop --vm-control-border-radius: The border radius of the control.
+  * @prop --vm-control-bg: The background of the control.
+  * @prop --vm-control-scale: The amount to scale the control up/down by.
+  * @prop --vm-control-icon-size: The size of the icon in pixels.
+  * @prop --vm-control-border: The border of the control.
+  * @prop --vm-control-padding: The padding inside the control.
+  * @prop --vm-control-color: The text color of the control.
+  * @prop --vm-control-focus-bg: The background colour of a control when it is being hovered on or 
+  * focused.
+  * @prop --vm-control-focus-color: The text colour of a control when it is being hovered on or 
+  * focused.
+  * @prop --vm-control-tap-highlight: The highlight color when a control is tapped.
+  */
+button {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border: var(--vm-control-border);
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: var(--vm-control-icon-size);
+  color: var(--vm-control-color);
+  background: var(--vm-control-bg, transparent);
+  border-radius: var(--vm-control-border-radius);
+  padding: var(--vm-control-padding);
+  position: relative;
+  pointer-events: auto;
+  transition: all 0.3s ease;
+  transform: scale(var(--vm-control-scale, 1));
+  touch-action: manipulation;
+  box-sizing: border-box;
+}
+
+button.hidden {
+  display: none;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button.tapHighlight {
+  background: var(--vm-control-tap-highlight);
+}
+
+button.notTouch:focus,
+button.notTouch:hover,
+button.notTouch[aria-expanded='true'] {
+  background: var(--vm-control-focus-bg);
+  color: var(--vm-control-focus-color);
+  transform: scale(calc(var(--vm-control-scale, 1) + 0.06));
+}

@@ -13,7 +13,7 @@ sections/options together that can be navigated to by the user.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/submenu/submenu.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/settings/submenu/submenu.png"
   alt="Vime submenu component"
 />
 
@@ -51,7 +51,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {2,11}
@@ -74,7 +73,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -109,7 +107,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {6-8,18} title="example.svelte"
@@ -131,7 +128,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="stencil">
 
@@ -155,7 +151,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {6-8} title="example.html"
@@ -175,7 +170,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

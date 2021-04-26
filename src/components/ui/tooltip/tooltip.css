@@ -1,0 +1,67 @@
+/**
+  * @prop --vm-tooltip-bg: The background color of the tooltip.
+  * @prop --vm-tooltip-color: The text color of the tooltip.
+  * @prop --vm-tooltip-left: The left offset of the tooltip.
+  * @prop --vm-tooltip-box-shadow: The box shadow cast around the tooltip.
+  * @prop --vm-tooltip-border-radius: The border radius of the tooltip.
+  * @prop --vm-tooltip-font-size: The font size of the tooltip text.
+  * @prop --vm-tooltip-padding: The padding inside the tooltip.
+  * @prop --vm-tooltip-spacing: The space between the tooltip and its parent when active.
+  * @prop --vm-tooltip-fade-duration: The length in seconds that the tooltip will take to fade in/out.
+  * @prop --vm-tooltip-fade-timing-func: The transition timing function for fading in and out.
+  * @prop --vm-tooltip-z-index: The position in the UI z-axis stack inside the player.
+  */
+:host {
+  display: contents;
+  z-index: var(--vm-tooltip-z-index);
+}
+
+.tooltip {
+  left: var(--vm-tooltip-left, 50%);
+  transform: translateX(-50%);
+  line-height: 1.3;
+  pointer-events: none;
+  position: absolute;
+  opacity: 0;
+  white-space: nowrap;
+  visibility: hidden;
+  background: var(--vm-tooltip-bg);
+  border-radius: var(--vm-tooltip-border-radius);
+  box-sizing: border-box;
+  box-shadow: var(--vm-tooltip-box-shadow);
+  color: var(--vm-tooltip-color);
+  font-size: var(--vm-tooltip-font-size);
+  padding: var(--vm-tooltip-padding);
+  transition: opacity var(--vm-tooltip-fade-duration)
+    var(--vm-tooltip-fade-timing-func);
+}
+
+.tooltip[aria-hidden='false'] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tooltip.hidden {
+  display: none;
+}
+
+.tooltip.onTop {
+  bottom: 100%;
+  margin-bottom: var(--vm-tooltip-spacing);
+}
+
+.tooltip.onBottom {
+  top: 100%;
+  margin-top: var(--vm-tooltip-spacing);
+}
+
+.tooltip.growLeft {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.tooltip.growRight {
+  left: 0;
+  transform: none;
+}

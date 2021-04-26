@@ -12,7 +12,7 @@ of related options). Only one radio button in a group can be selected at the sam
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu-radio/menu-radio.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/settings/menu-radio/menu-radio.png"
   alt="Vime settings menu radio component"
 />
 
@@ -54,7 +54,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {8,20-22}
@@ -90,7 +89,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -138,7 +136,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {8-10,24} title="example.svelte"
@@ -172,7 +169,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="stencil">
 
 ```tsx {11-13}
@@ -201,7 +197,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {8-10} title="example.html"
@@ -225,7 +220,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

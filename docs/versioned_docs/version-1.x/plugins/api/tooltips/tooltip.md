@@ -5,7 +5,7 @@ sidebar_label: Tooltip
 
 **Type:** `Component`
 
-A tooltip is a small pop-up box that appears when a user moves their mouse over an element. Their main 
+A tooltip is a small pop-up box that appears when a user moves their mouse over an element. Their main
 purpose is to provide the user with a description about that element.
 
 ## Props
@@ -50,7 +50,7 @@ Whether to show or hide the `hint` text.
 
 **Type:** `boolean` | **Default:** `false`
 
-Whether the tooltip should stop checking if the its outside the players boundaries and 
+Whether the tooltip should stop checking if the its outside the players boundaries and
 changing direction of its content to stay inside.
 
 ## Methods

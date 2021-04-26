@@ -72,31 +72,6 @@ $: git branch --set-upstream-to=upstream/master master
 $: git pull
 ```
 
-All your work will mainly take place in the [`core`](../core) package so we can simply 
-`cd` into it.
-
-```bash
-$: cd packages/core
-
-$: npm install
-```
-
-## 🖌️ Code Style
-
-### TypeScript + TSX
-
-This project relies on [ESLint](https://eslint.org) for formatting/styling TypeScript and TSX
-code. We use the [`eslint-config-airbnb-typescript`](https://www.npmjs.com/package/eslint-config-airbnb-typescript)
-preset which contains a pretty comprehensive set of linting rules, so you don't need to think about
-formatting your code, as long as your editor is setup to catch and auto-fix linting errors.
-
-Alternatively, you can run the `lint` script from the core package.
-
-### CSS
-
-There are no styling or formatting rules, simply refer to other files to maintain some
-consistency, and don't use any special naming conventions such as BEM. 
-
 ## 🏗️ Architecture
 
 For how Vime works in general see the [Architecture](./ARCHITECTURE.md) document.

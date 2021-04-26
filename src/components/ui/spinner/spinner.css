@@ -1,0 +1,75 @@
+/**
+  * @prop --vm-spinner-width: The width of the spinner.
+  * @prop --vm-spinner-height: The height of the spinner.
+  * @prop --vm-spinner-thickness: The thickness of the spinner in px.
+  * @prop --vm-spinner-track-color: The color of the track the spinner is rotating in.
+  * @prop --vm-spinner-fill-color: The color of the progress within the track.
+  * @prop --vm-spinner-spin-duration: How long it takes the spinner to complete a full rotation.
+  * @prop --vm-spinner-spin-timing-func: The animation timing function to use for the spin.
+  * @prop --vm-spinner-z-index: The position in the UI z-axis stack inside the player.
+  */
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: var(--vm-spinner-z-index);
+}
+
+.spinner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: var(--vm-fade-transition);
+}
+
+.spinner.hidden {
+  display: none;
+}
+
+.spinner.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  background: transparent;
+  margin: 60px auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  pointer-events: none;
+  border-top: var(--vm-spinner-thickness) solid var(--vm-spinner-fill-color);
+  border-left: var(--vm-spinner-thickness) solid var(--vm-spinner-fill-color);
+  border-right: var(--vm-spinner-thickness) solid var(--vm-spinner-track-color);
+  border-bottom: var(--vm-spinner-thickness) solid var(--vm-spinner-track-color);
+  transform: translateZ(0);
+}
+
+.spin.active {
+  animation: spin var(--vm-spinner-spin-duration) infinite
+    var(--vm-spinner-spin-timing-func);
+}
+
+.spin,
+.spin::after {
+  border-radius: 50%;
+  width: var(--vm-spinner-width);
+  height: var(--vm-spinner-height);
+}

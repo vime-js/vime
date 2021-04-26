@@ -8,19 +8,19 @@ When creating new components you need to be aware of if it'll be displayed in an
 player. Hide/show and position it accordingly, and if it's inside a video player then be aware of
 the `z-index` and `pointer-events` css properties of any elements that are positioned absolutely,
 such as a container that stretches out the entire video player. We don't want to block other
-components and prevent them from being interacted with. Open the 
-[default theme](../core/src/themes/default.css), and go to the `Z-Index` section 
+components and prevent them from being interacted with. Open the
+[default theme](../src/themes/default.css), and go to the `Z-Index` section
 to see existing z-index levels.
 
 If you're creating any new CSS variables then make sure to document them (see existing components on
-how to do so), and set the values inside the [default theme](../core/src/themes/default.css)
+how to do so), and set the values inside the [default theme](../src/themes/default.css)
 CSS file. If the component also has a light theme, set the variable values inside the
-[light theme](../core/src/themes/light.css) CSS file.
+[light theme](../src/themes/light.css) CSS file.
 
 After we wrap up all our testing and we're satisfied, the final steps are:
 
-1. Create a `usage` directory inside the component directory and add examples for the same frameworks 
-that are listed for all other components.
+1. Create a `usage` directory inside the component directory and add examples for the same frameworks
+   that are listed for all other components.
 2. Run the build script `npm run build`.
 3. Add small description about the component to the auto-generated [component documentation](../docs/docs/components/ui)
    (above the `<-- Auto Generated Below -->` comment). See other components as an example.

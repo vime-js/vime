@@ -3,14 +3,14 @@ import codeBuilder from './codeBuilder';
 import Prism from './Prism';
 
 const TabItem = ({ title, active = false, onClick }) => (
-  <li 
+  <li
     className={`tabs__item ${active ? 'tabs__item--active' : ''}`}
     onClick={onClick}
   >
     {title}
   </li>
 );
- 
+
 const languageTitle = {
   html: 'HTML',
   react: 'React',
@@ -26,7 +26,7 @@ const languageFileType = {
   vue: 'html',
   svelte: 'html',
   stencil: 'tsx',
-  angular: 'html'
+  angular: 'html',
 };
 
 let urlParams;
@@ -36,27 +36,25 @@ if (typeof URLSearchParams !== 'undefined') {
 
 const lib = urlParams && urlParams.get('lib');
 
-const CodePreview = (props) => {
+const CodePreview = props => {
   let [currentLanguage, setCurrentLanguage] = useState(lib || 'html');
 
   return (
     <Fragment>
       <ul className="tabs">
-        {
-          Object.keys(languageFileType)
-            .map(language => (
-              <TabItem
-                key={language} 
-                title={languageTitle[language]} 
-                active={currentLanguage === language} 
-                onClick={() => setCurrentLanguage(language)} />
-            ))
-        }
+        {Object.keys(languageFileType).map(language => (
+          <TabItem
+            key={language}
+            title={languageTitle[language]}
+            active={currentLanguage === language}
+            onClick={() => setCurrentLanguage(language)}
+          />
+        ))}
       </ul>
-      
-      <Prism 
-        code={codeBuilder({ ...props, language: currentLanguage })}  
-        language={languageFileType[currentLanguage]} 
+
+      <Prism
+        code={codeBuilder({ ...props, language: currentLanguage })}
+        language={languageFileType[currentLanguage]}
       />
     </Fragment>
   );

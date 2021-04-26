@@ -217,8 +217,8 @@ class Example {
           {/* ... */}
           <vm-settings>
             <vm-submenu label="Playback Rate">
-              <vm-menu-radio-group 
-                value={this.value} 
+              <vm-menu-radio-group
+                value={this.value}
                 onVmCheck={this.onValueChange.bind(this)}
               >
                 <vm-menu-radio label="0.5" value="0.5" />
@@ -233,6 +233,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

@@ -2,7 +2,8 @@ const path = require('path');
 
 module.exports = {
   title: 'Vime',
-  tagline: 'A customizable, extensible, accessible and framework agnostic media player.',
+  tagline:
+    'A customizable, extensible, accessible and framework agnostic media player.',
   url: 'https://vimejs.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -15,7 +16,8 @@ module.exports = {
   ],
   themeConfig: {
     announcementBar: {
-      content: '⭐️ &nbsp;If you like Vime, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime">GitHub</a>!&nbsp;⭐️',
+      content:
+        '⭐️ &nbsp;If you like Vime, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime">GitHub</a>!&nbsp;⭐️',
     },
     algolia: {
       apiKey: '94e7d7e6c8d755cc7c07513981e18e66',
@@ -56,9 +58,7 @@ module.exports = {
         },
       ],
     },
-    footer: {
-      links: [],
-    },
+    footer: undefined,
     prism: {
       // eslint-disable-next-line global-require
       theme: require('prism-react-renderer/themes/oceanicNext'),

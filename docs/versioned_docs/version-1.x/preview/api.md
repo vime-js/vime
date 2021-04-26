@@ -57,7 +57,7 @@ The URL for the poster of the current `src`. If `poster` is set before setting `
 
 ```js
 // Start listening.
-const off = preview.$on("someEvent", e => {
+const off = preview.$on('someEvent', e => {
   const data = e.detail;
 });
 

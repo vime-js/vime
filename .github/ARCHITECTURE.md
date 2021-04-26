@@ -1,6 +1,6 @@
 # 🏗️ Architecture
 
-At the root of Vime we always have the [`vm-player`](../core/src/components/core/player/player.tsx)
+At the root of Vime we always have the [`vm-player`](../src/components/core/player/player.tsx)
 component, which maintains the current state of the player and keeps plugins, providers and UI components
 in sync. Properties are passed down from the player to update child components through a context
 provider (exactly like `React.ContextProvider`), and updates are sent to the player by dispatching
@@ -9,7 +9,7 @@ Any "special" properties that require calling a method on the provider are watch
 automatically. For example, updating the `currentTime` property will trigger a call to the provider's
 `setCurrentTime` method.
 
-It's important to note that changes don't happen immediately but rather asynchronously, 
+It's important to note that changes don't happen immediately but rather asynchronously,
 they are processed and queued to happen in the next render cycle.
 
 There are only "two" simple functions that matter when creating a new Vime component and interacting
@@ -18,7 +18,7 @@ with the player. Let's go through them briefly one at a time.
 The `withPlayerContext` (`withProviderContext` for providers) function simply behaves as
 `Context.Consumer` in React. It wraps the component class and enables properties to be passed down
 from the player directly to components, bypassing any parent components in the tree. You can refer
-to existing Vime components to see its usage. A separate context function is used for providers 
+to existing Vime components to see its usage. A separate context function is used for providers
 simply as a shorthand, because all providers require the same subset of player properties.
 
 The `createDispatcher` (`createProviderDispatcher` for providers) function creates an event dispatcher

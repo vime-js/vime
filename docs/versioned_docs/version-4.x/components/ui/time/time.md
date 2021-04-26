@@ -11,7 +11,7 @@ Formats and displays a length of time provided in seconds.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/time/time.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/time/time/time.png"
   alt="Vime time component"
 />
 
@@ -39,7 +39,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {2,5}
@@ -52,7 +51,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -74,7 +72,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```tsx
@@ -89,7 +86,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="stencil">
 
 ```tsx {3}
@@ -102,7 +98,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html title="example.html"
@@ -112,7 +107,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

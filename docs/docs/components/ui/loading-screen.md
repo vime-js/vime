@@ -3,8 +3,8 @@ title: vm-loading-screen
 sidebar_label: LoadingScreen
 ---
 
-The view that is displayed while the player is booting or media is loading. By default there 
-are animated dots that are shown below the `<slot />` to indicate to the user content is being 
+The view that is displayed while the player is booting or media is loading. By default there
+are animated dots that are shown below the `<slot />` to indicate to the user content is being
 loaded. The default `<slot />` is your opportunity to brand the player with your logo.
 
 <!-- Auto Generated Below -->
@@ -138,6 +138,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

@@ -3,7 +3,9 @@ build/
 www/
 loader/
 
-core/.npmrc
+/icons/
+/themes/
+
 integrations/*/.npmrc
 integrations/angular/projects/vime/angular/src/VimeModule.ts
 integrations/angular/projects/vime/angular/src/components/

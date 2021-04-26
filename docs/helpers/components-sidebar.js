@@ -17,22 +17,24 @@ function* getComponents(dir = resolve(__dirname, '../docs/components')) {
   }
 }
 
-const formatSidebarLabel = (name) => name
-  .toLowerCase()
-  .replace('vm-', '')
-  .replace(/(?:^|-)\w/g, (match) => match.toUpperCase())
-  .replace(/-/g, '')
-  .replace('Ui', 'UI');
+const formatSidebarLabel = name =>
+  name
+    .toLowerCase()
+    .replace('vm-', '')
+    .replace(/(?:^|-)\w/g, match => match.toUpperCase())
+    .replace(/-/g, '')
+    .replace('Ui', 'UI');
 
-const extractSubPath = (component) => /(?:components\/)(.+)/.exec(component)[1];
+const extractSubPath = component => /(?:components\/)(.+)/.exec(component)[1];
 
-const extractCategory = (component) => {
+const extractCategory = component => {
   const path = extractSubPath(component);
   return path.substr(0, path.lastIndexOf('/'));
 };
 
 // slice .md off
-const extractId = (component) => `components/${extractSubPath(component).slice(0, -3)}`;
+const extractId = component =>
+  `components/${extractSubPath(component).slice(0, -3)}`;
 
 const buildComponentsSideBarItems = () => {
   const sidebarItems = [];
@@ -47,7 +49,7 @@ const buildComponentsSideBarItems = () => {
       const subcategoryId = hierarchy.pop();
       const label = formatSidebarLabel(subcategoryId);
 
-      let subcategory = pointer.find((c) => c.label === label);
+      let subcategory = pointer.find(c => c.label === label);
       if (subcategory === undefined) {
         subcategory = {
           type: 'category',

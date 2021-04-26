@@ -17,7 +17,7 @@ you want an easier starting point see [`vime-default-settings`](default-settings
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu/menu.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/settings/menu/menu.png"
   alt="Vime settings menu component"
 />
 
@@ -52,7 +52,6 @@ values={[
 ```
 
 </TabItem>
-
 
 <TabItem value="react">
 
@@ -92,7 +91,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -142,7 +140,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```tsx {5-13}
@@ -180,7 +177,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="stencil">
 
@@ -220,7 +216,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {5-13} title="example.html"
@@ -258,7 +253,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

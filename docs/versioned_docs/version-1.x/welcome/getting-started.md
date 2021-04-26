@@ -5,34 +5,34 @@ sidebar_label: Getting Started
 
 The following 4 options are available:
 
-* **Preview** for displaying custom or provider loaded thumbnails. These are loaded lazily, have an 
-optional play icon and a few other treats.
+- **Preview** for displaying custom or provider loaded thumbnails. These are loaded lazily, have an
+  optional play icon and a few other treats.
 
-* **Lite** lightweight and super powerful media embed. The difference between Lite and traditional methods
+- **Lite** lightweight and super powerful media embed. The difference between Lite and traditional methods
   for embedding media is:
-  
-  * **Loaded lazily**. See the benefits of lazy loading [here][lazy-loading-benefits].
-  
-  * Utilizes **preconnections** for an approximately [224x faster load][preconnections-benchmark].
-  
-  * **Lighter than provider SDK's**. Lite comes in at ~ 6 kB which is on average 50% lighter than provider built
-  player SDK's. Furthermore, each additional provider added only increases the total cost by about ~ 300 bytes. For 
-  example, if you normally wanted to embed media from YouTube, Dailymotion and Vimeo, the total 
-  player SDK cost would be ~25 kB. In contrast, with Vime it'll be ~ 6.5 kB.
 
-  * **Multi-provider support.** One interface for multiple providers. If you want to switch from YouTube 
+  - **Loaded lazily**. See the benefits of lazy loading [here][lazy-loading-benefits].
+
+  - Utilizes **preconnections** for an approximately [224x faster load][preconnections-benchmark].
+
+  - **Lighter than provider SDK's**. Lite comes in at ~ 6 kB which is on average 50% lighter than provider built
+    player SDK's. Furthermore, each additional provider added only increases the total cost by about ~ 300 bytes. For
+    example, if you normally wanted to embed media from YouTube, Dailymotion and Vimeo, the total
+    player SDK cost would be ~25 kB. In contrast, with Vime it'll be ~ 6.5 kB.
+
+  - **Multi-provider support.** One interface for multiple providers. If you want to switch from YouTube
     to Vimeo, no problem. If you want to support both, no problem. All you really need to know is
     the media you want to embed, we take care of the rest.
-  
-  * You send commands and receive messages from the embed via [`postmessage`][mdn-postmessage]. However, 
-  we take the pain out of it by storing your commands and sending them when the player is ready for playback,
-  and we decode any messages received into a POJO.
 
-* **Standard** for when you want all Lite features but you want to interact with the provider/embed through the 
-  [core Vime player interface](../standard/api/player.md) (not via `postmessage`). Thus, you avoid browser/provider 
+  - You send commands and receive messages from the embed via [`postmessage`][mdn-postmessage]. However,
+    we take the pain out of it by storing your commands and sending them when the player is ready for playback,
+    and we decode any messages received into a POJO.
+
+- **Standard** for when you want all Lite features but you want to interact with the provider/embed through the
+  [core Vime player interface](../standard/api/player.md) (not via `postmessage`). Thus, you avoid browser/provider
   differences and get access to the store.
 
-* **Complete** for when you want all Lite and Standard features + the ability to completely customize 
+- **Complete** for when you want all Lite and Standard features + the ability to completely customize
   the player with plugins.
 
 [lazy-loading-benefits]: https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video
@@ -69,7 +69,7 @@ optional play icon and a few other treats.
 
 ## Where to next?
 
-If you're not using good old HTML/CSS/JS and are interested in any specific library/framework integration, 
+If you're not using good old HTML/CSS/JS and are interested in any specific library/framework integration,
 you can follow one of these guides:
 
 - [Svelte](../integrations/svelte.md)

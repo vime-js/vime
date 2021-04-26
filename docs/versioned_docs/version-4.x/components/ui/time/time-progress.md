@@ -11,7 +11,7 @@ Formats and displays the progression of playback as `currentTime (separator) end
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/time-progress/time-progress.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/time/time-progress/time-progress.png"
   alt="Vime time progress component"
 />
 
@@ -39,7 +39,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {2,5}
@@ -52,7 +51,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -74,7 +72,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {1,4} title="example.svelte"
@@ -86,7 +83,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="stencil">
 
@@ -100,7 +96,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html title="example.html"
@@ -110,7 +105,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

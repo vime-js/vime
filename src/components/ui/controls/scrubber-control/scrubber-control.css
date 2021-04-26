@@ -1,0 +1,107 @@
+/**
+  * @prop --vm-scrubber-loading-stripe-size: The size of each candystripe displayed when media is 
+  * buffering.
+  * @prop --vm-scrubber-loading-stripe-color: The color of each candystripe displayed when media is 
+  * buffering.
+  * @prop --vm-scrubber-buffered-bg: The background color of the section that indicates how much 
+  * of the media has been buffered.
+  * @prop --vm-scrubber-tooltip-spacing: The space between the tooltip and the scrubber.
+  */
+:host {
+  --vm-tooltip-spacing: var(--vm-scrubber-tooltip-spacing);
+
+  flex: 1;
+  position: relative;
+  cursor: pointer;
+  pointer-events: auto;
+  box-sizing: border-box;
+  left: calc(var(--vm-slider-thumb-width) / 2);
+  margin-right: var(--vm-slider-thumb-width);
+  margin-bottom: var(--vm-slider-track-height);
+}
+
+@keyframes progress {
+  to {
+    background-position: var(--vm-scrubber-loading-stripe-size) 0;
+  }
+}
+
+.scrubber {
+  position: relative;
+  width: 100%;
+}
+
+vm-slider,
+progress {
+  margin-left: calc(calc(var(--vm-slider-thumb-width) / 2) * -1);
+  margin-right: calc(calc(var(--vm-slider-thumb-width) / 2) * -1);
+  width: calc(100% + var(--vm-slider-thumb-width));
+  height: var(--vm-slider-track-height);
+}
+
+vm-slider:hover,
+progress:hover {
+  cursor: pointer;
+}
+
+vm-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+progress {
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 100px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  padding: 0;
+  color: var(--vm-scrubber-buffered-bg);
+  height: var(--vm-slider-track-height);
+}
+
+progress::-webkit-progress-bar {
+  background: transparent;
+}
+
+progress::-webkit-progress-value {
+  background: currentColor;
+  border-radius: 100px;
+  min-width: var(--vm-slider-track-height);
+  transition: width 0.2s ease;
+}
+
+progress::-moz-progress-bar {
+  background: currentColor;
+  border-radius: 100px;
+  min-width: var(--vm-slider-track-height);
+  transition: width 0.2s ease;
+}
+
+progress::-ms-fill {
+  border-radius: 100px;
+  transition: width 0.2s ease;
+}
+
+progress.loading {
+  animation: progress 1s linear infinite;
+  background-image: linear-gradient(
+    -45deg,
+    var(--vm-scrubber-loading-stripe-color) 25%,
+    transparent 25%,
+    transparent 50%,
+    var(--vm-scrubber-loading-stripe-color) 50%,
+    var(--vm-scrubber-loading-stripe-color) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-repeat: repeat-x;
+  background-size: var(--vm-scrubber-loading-stripe-size)
+    var(--vm-scrubber-loading-stripe-size);
+  color: transparent;
+  background-color: transparent;
+}

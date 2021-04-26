@@ -11,7 +11,7 @@ Used to space controls out vertically/horizontally. Under the hood it's simply `
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/control-spacer/control-spacer.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/control-spacer/control-spacer.png"
   alt="Vime control spacer component"
 />
 
@@ -50,7 +50,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {8,20}
@@ -83,7 +82,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -129,7 +127,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {8,21} title="example.svelte"
@@ -161,7 +158,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="stencil">
 
 ```tsx {11}
@@ -187,7 +183,6 @@ class Example {
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html {8} title="example.html"
@@ -208,7 +203,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Dependencies
 

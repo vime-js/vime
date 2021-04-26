@@ -1,0 +1,12 @@
+/**
+  * @prop --vm-time-color: The color of the text displaying the time.
+  * @prop --vm-time-font-size: The size of the font displaying the time.
+  * @prop --vm-time-font-weight: The weight of the font displaying the time.
+  */
+.time {
+  display: flex;
+  align-items: center;
+  color: var(--vm-time-color);
+  font-size: var(--vm-time-font-size);
+  font-weight: var(--vm-time-font-weight);
+}

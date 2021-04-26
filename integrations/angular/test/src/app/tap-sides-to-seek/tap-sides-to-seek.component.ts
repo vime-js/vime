@@ -27,10 +27,7 @@ export class TapSidesToSeekComponent extends VimeComponent {
    */
   constructor(protected ref: ElementRef) {
     // Pass in the properties you'd like to bind to this component.
-    super([
-      'currentTime',
-      'duration',
-    ]);
+    super(['currentTime', 'duration']);
 
     // There is a player ref if you need to call any methods.
     // this.player
@@ -42,7 +39,7 @@ export class TapSidesToSeekComponent extends VimeComponent {
   }
 
   onSeekForward() {
-    if (this.currentTime > (this.duration - 5)) return;
+    if (this.currentTime > this.duration - 5) return;
     this.currentTime += 5;
   }
 }

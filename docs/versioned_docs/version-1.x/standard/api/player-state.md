@@ -17,7 +17,7 @@ Identifies the state of the player by a number and can contain one of these poss
 ## Example
 
 ```js
-import { PlayerState } from '@vime-js/standard'
+import { PlayerState } from '@vime-js/standard';
 
 const { state } = player.getStore();
 
@@ -35,5 +35,5 @@ const { playing } = player.getStore();
 playing.subscribe(isPlaying => {
   if (!isPlaying) return;
   console.log('playing');
-})
+});
 ```

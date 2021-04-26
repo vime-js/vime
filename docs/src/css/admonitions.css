@@ -1,5 +1,5 @@
 .admonition-icon {
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .admonition.admonition-tip,
@@ -9,7 +9,7 @@
   background-color: #f9f9f9;
   color: #444;
   border: none;
-  border-left: .4rem solid #666;
+  border-left: 0.4rem solid #666;
   border-radius: 0;
 }
 
@@ -30,25 +30,24 @@
   fill: #444;
 }
 
-html[data-theme="dark"] .admonition.admonition-note .admonition-icon svg,
-html[data-theme="dark"] .admonition.admonition-note .admonition-heading {
+html[data-theme='dark'] .admonition.admonition-note .admonition-icon svg,
+html[data-theme='dark'] .admonition.admonition-note .admonition-heading {
   color: #888;
   fill: #888;
 }
 
-
-html[data-theme="dark"] .admonition.admonition-tip,
-html[data-theme="dark"] .admonition.admonition-note,
-html[data-theme="dark"] .admonition.admonition-info,
-html[data-theme="dark"] .admonition.admonition-caution {
+html[data-theme='dark'] .admonition.admonition-tip,
+html[data-theme='dark'] .admonition.admonition-note,
+html[data-theme='dark'] .admonition.admonition-info,
+html[data-theme='dark'] .admonition.admonition-caution {
   color: #eee;
   background-color: #303030;
 }
 
-html[data-theme="dark"] .admonition.admonition-tip a,
-html[data-theme="dark"] .admonition.admonition-note a,
-html[data-theme="dark"] .admonition.admonition-info a,
-html[data-theme="dark"] .admonition.admonition-caution a{
+html[data-theme='dark'] .admonition.admonition-tip a,
+html[data-theme='dark'] .admonition.admonition-note a,
+html[data-theme='dark'] .admonition.admonition-info a,
+html[data-theme='dark'] .admonition.admonition-caution a {
   color: #eee;
 }
 

@@ -54,8 +54,8 @@ import BasicPlayer from '../src/components/players/LoadableBasicPlayer'
 
 [accessibility]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA
 [css-vars]: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
-[light-theme]: https://github.com/vime-js/vime/blob/master/packages/core/src/globals/themes/light.css
-[dark-theme]: https://github.com/vime-js/vime/blob/master/packages/core/src/globals/themes/default.css
+[light-theme]: https://github.com/vime-js/vime/blob/src/globals/themes/light.css
+[dark-theme]: https://github.com/vime-js/vime/blob/src/globals/themes/default.css
 [player-api]: https://vimejs.com/components/core/player
 [preconnections]: https://css-tricks.com/using-relpreconnect-to-establish-network-connections-early-and-increase-performance
 [lazy-loading]: https://www.imperva.com/learn/performance/lazy-loading
@@ -63,7 +63,7 @@ import BasicPlayer from '../src/components/players/LoadableBasicPlayer'
 ## 🍭 &nbsp;Examples
 
 :::note
-The examples below are using web components but there are bindings for React, Vue, Svelte, Stencil 
+The examples below are using web components but there are bindings for React, Vue, Svelte, Stencil
 and Angular. If you want to see how they look check out our [Demo](/demo).
 :::
 

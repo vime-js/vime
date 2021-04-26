@@ -14,9 +14,7 @@ const buildEditorPanel = ({
     container,
   });
 
-  pane
-    .addInput({ color: '#e86c8b' }, 'color')
-    .on('change', onColorChange);
+  pane.addInput({ color: '#e86c8b' }, 'color').on('change', onColorChange);
 
   pane
     .addInput({ theme: 'dark' }, 'theme', {

@@ -5,8 +5,8 @@ sidebar_label: Captions
 
 **ID:** `vCaptions` | **ROLE:** `CAPTIONS` | **Type:** [`Plugin`](../../complete/api/plugin.md)
 
-This plugin renders and displays captions/subtitles that are set in the `tracks` prop. The current track 
-is set by the `currentTrackIndex` and `locale` props. If you don't want `locale` changes to affect the 
+This plugin renders and displays captions/subtitles that are set in the `tracks` prop. The current track
+is set by the `currentTrackIndex` and `locale` props. If you don't want `locale` changes to affect the
 captions, see the [`useLocale`](#uselocale) prop below.
 
 ## Setup
@@ -15,11 +15,11 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  groupId="plugins"
-  defaultValue="basic"
-  values={[
-  { label: 'Basic', value: 'basic' },
-  { label: 'Manager', value: 'advanced' },
+groupId="plugins"
+defaultValue="basic"
+values={[
+{ label: 'Basic', value: 'basic' },
+{ label: 'Manager', value: 'advanced' },
 ]}>
 
 <TabItem value="basic">
@@ -32,8 +32,8 @@ import { Player, Captions } from '@vime-js/complete';
 const player = new Player({
   target,
   props: {
-    plugins: [Captions]
-  }
+    plugins: [Captions],
+  },
 });
 ```
 
@@ -49,7 +49,7 @@ import { Player, Captions } from '@vime-js/complete';
 player
   .getPluginsManager()
   .addPlugin(Captions)
-  .then((captions) => {
+  .then(captions => {
     // ...
   });
 ```
@@ -100,7 +100,7 @@ The current cue ([`VTTCue`][mdn-vtt-cue]).
 
 **Type:** `VTTCue[]` | **Default:** `[]` | **Readonly:** `true`
 
-The cues ([`VTTCue`][mdn-vtt-cue]) that are currently active. Cues are active if the `currentTime` is between the cues' 
+The cues ([`VTTCue`][mdn-vtt-cue]) that are currently active. Cues are active if the `currentTime` is between the cues'
 `startTime` and `endTime`.
 
 ## Store

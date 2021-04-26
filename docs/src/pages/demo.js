@@ -19,7 +19,9 @@ function Demo() {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = 'visible'; };
+    return () => {
+      document.body.style.overflow = 'visible';
+    };
   }, []);
 
   useEffect(() => {
@@ -31,19 +33,21 @@ function Demo() {
       onProviderChange: setProvider,
     });
 
-    const inputs = editorPanel.current.querySelectorAll('input,canvas,button,select');
-    inputs.forEach((input) => { input.classList.add('editor-input') });
+    const inputs = editorPanel.current.querySelectorAll(
+      'input,canvas,button,select',
+    );
+    inputs.forEach(input => {
+      input.classList.add('editor-input');
+    });
 
-    return () => pane.dispose()
+    return () => pane.dispose();
   }, []);
 
   return (
-    <Layout
-      title={'Demo'}
-    >
+    <Layout title={'Demo'}>
       <div className={styles.container}>
         <div className={styles.codePreview}>
-          <CodePreview 
+          <CodePreview
             color={color}
             theme={theme}
             provider={provider}
@@ -52,14 +56,14 @@ function Demo() {
         </div>
         <div className={styles.playerContainer}>
           <div className={styles.player}>
-            <DemoPlayer 
+            <DemoPlayer
               color={color}
               theme={theme}
               provider={provider}
               showDefaultUi={showDefaultUi}
             />
           </div>
-          
+
           <Draggable enableUserSelectHack={false} cancel=".editor-input">
             <div className={styles.editorPanel} ref={editorPanel} />
           </Draggable>

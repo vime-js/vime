@@ -43,7 +43,7 @@ async function gitCommitRelease(version) {
   return execa(
     'git',
     ['commit', '-m', `chore(release): publish v${version} 🥳`],
-    { cwd: common.rootDir }
+    { cwd: common.rootDir },
   );
 }
 
@@ -59,7 +59,7 @@ async function preparePackages(packages, version, install) {
 
   // add all the prepare scripts
   // run all these tasks before updating package.json version
-  packages.forEach((package) => {
+  packages.forEach(package => {
     common.preparePackage(tasks, package, version, install);
     copyNPMConfigToPackage(package, tasks);
   });
@@ -84,12 +84,12 @@ function validateGit(tasks, version) {
         .then(() => {
           return execa('npm', ['config', 'get', 'tag-version-prefix']);
         })
-        .then((r) => r.stdout)
+        .then(r => r.stdout)
         .then(
-          (output) => {
+          output => {
             tagPrefix = output;
           },
-          () => {}
+          () => {},
         )
         .then(() =>
           execa('git', [
@@ -97,24 +97,24 @@ function validateGit(tasks, version) {
             '--quiet',
             '--verify',
             `refs/tags/${tagPrefix}${version}`,
-          ])
+          ]),
         )
-        .then((r) => r.stdout)
+        .then(r => r.stdout)
         .then(
-          (output) => {
+          output => {
             if (output) {
               throw new Error(
-                `Git tag \`${tagPrefix}${version}\` already exists.`
+                `Git tag \`${tagPrefix}${version}\` already exists.`,
               );
             }
           },
-          (err) => {
+          err => {
             // Command fails with code 1 and no output if the tag does not exist, even though `--quiet` is provided
             // https://github.com/sindresorhus/np/pull/73#discussion_r72385685
             if (err.stdout !== '' || err.stderr !== '') {
               throw err;
             }
-          }
+          },
         ),
   });
 }

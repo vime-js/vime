@@ -12,7 +12,7 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/control/control.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/control/control.png"
   alt="Vime control component"
 />
 
@@ -51,7 +51,6 @@ values={[
 ```
 
 </TabItem>
-
 
 <TabItem value="react">
 
@@ -94,7 +93,6 @@ function PlaybackControl() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue 2">
 
@@ -149,7 +147,6 @@ function PlaybackControl() {
 
 </TabItem>
 
-
 <TabItem value="vue 3">
 
 ```html {2-10,19,27} title="playback-control.vue"
@@ -190,10 +187,10 @@ function PlaybackControl() {
       const i18n = usePlayerContext(domRef, 'i18n', {});
 
       const icon = computed(() =>
-        paused.value ? '#vime-play' : '#vime-pause'
+        paused.value ? '#vime-play' : '#vime-pause',
       );
       const tooltip = computed(() =>
-        paused.value ? i18n.value.play : i18n.value.pause
+        paused.value ? i18n.value.play : i18n.value.pause,
       );
 
       return { domRef, paused, i18n, icon, tooltip };
@@ -208,7 +205,6 @@ function PlaybackControl() {
 ```
 
 </TabItem>
-
 
 <TabItem value="svelte">
 
@@ -248,7 +244,6 @@ function PlaybackControl() {
 ```
 
 </TabItem>
-
 
 <TabItem value="stencil">
 
@@ -307,7 +302,6 @@ withPlayerContext(PlaybackControl, ['paused', 'i18n']);
 
 </TabItem>
 
-
 <TabItem value="angular">
 
 ```html title="playback-control.html"
@@ -356,7 +350,6 @@ class PlaybackControl extends VimeComponent {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

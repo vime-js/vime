@@ -47,7 +47,7 @@ import React from 'react';
 import { Time } from '@vime/react';
 
 function Example() {
-  return (<Time label="Time" seconds={120} />);
+  return <Time label="Time" seconds={120} />;
 }
 ```
 
@@ -58,7 +58,7 @@ function Example() {
 
 ```html {2,6,10} title="example.vue"
 <template>
-  <Time label="Time" :seconds="120" />
+  <time label="Time" :seconds="120" />
 </template>
 
 <script>
@@ -99,6 +99,7 @@ class Example {
   }
 }
 ```
+
 
 </TabItem>
 

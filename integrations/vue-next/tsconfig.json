@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig-base.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "strict": true,
     "declaration": true,
@@ -8,11 +8,9 @@
     "declarationDir": "dist/types",
     "skipLibCheck": true,
     "inlineSources": true,
-    "jsx": "preserve",
+    "jsx": "preserve"
   },
-  "include": [
-    "src/**/*.ts",
-  ],
+  "include": ["src/**/*.ts"],
   "compileOnSave": false,
   "buildOnSave": false
 }

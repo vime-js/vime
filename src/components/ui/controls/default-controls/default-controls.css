@@ -1,0 +1,5 @@
+:host {
+  display: contents;
+  pointer-events: none;
+  z-index: var(--vm-controls-z-index);
+}

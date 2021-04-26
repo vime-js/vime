@@ -29,12 +29,12 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 <Tabs
-  groupId="packageManager"
-  defaultValue="npm"
-  values={[
-  { label: 'NPM', value: 'npm' },
-  { label: 'Yarn', value: 'yarn' },
-  { label: 'JSDELIVR', value: 'jsdelivr' },
+groupId="packageManager"
+defaultValue="npm"
+values={[
+{ label: 'NPM', value: 'npm' },
+{ label: 'Yarn', value: 'yarn' },
+{ label: 'JSDELIVR', value: 'jsdelivr' },
 ]}>
 
 <TabItem value="npm">
@@ -71,9 +71,11 @@ The `dist` folder inside the package contains multiple exports:
 - `lite.esm.min.js` is an ESM production build that can be used directly in modern browsers via the `<script type="module">` tag.
 
 :::info
-* UMD builds are exported under the `Vime` namespace.
-* If you're using a bundler then it will automatically pull in the correct files.
-* If you're using [svelte-loader][svelte-loader] or [rollup-plugin-svelte][svelte-rollup] then you'll receive the uncompiled components.
+
+- UMD builds are exported under the `Vime` namespace.
+- If you're using a bundler then it will automatically pull in the correct files.
+- If you're using [svelte-loader][svelte-loader] or [rollup-plugin-svelte][svelte-rollup] then you'll receive the uncompiled components.
+
 :::
 
 [webpack]: https://webpack.js.org
@@ -84,11 +86,11 @@ The `dist` folder inside the package contains multiple exports:
 ## Setup
 
 <Tabs
-  groupId="framework"
-  defaultValue="js"
-  values={[
-  { label: 'JavaScript', value: 'js' },
-  { label: 'Svelte', value: 'svelte' },
+groupId="framework"
+defaultValue="js"
+values={[
+{ label: 'JavaScript', value: 'js' },
+{ label: 'Svelte', value: 'svelte' },
 ]}>
 
 <TabItem value="js">
@@ -102,8 +104,7 @@ const target = document.getElementById('player-target');
 const player = new Player({
   target,
   // If you'd like to initialize any props on setup, you can do so here.
-  props: {
-  }
+  props: {},
 });
 
 // ...
@@ -123,7 +124,7 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 <TabItem value="svelte">
 
 ```html
-<Player bind:this={player} />
+<Player bind:this="{player}" />
 
 <script>
   import { onMount } from 'svelte';
@@ -133,7 +134,7 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 
   onMount(() => {
     /**
-     * If you need to call any methods, you have access 
+     * If you need to call any methods, you have access
      * to the player instance here.
      **/
   });
@@ -146,5 +147,5 @@ See the [client-side component API][svelte-client-api] for the complete set of c
 
 ## Where to next?
 
-The [usage](./usage.md) page will guide you on how to get started with any provider, after that go to the 
+The [usage](./usage.md) page will guide you on how to get started with any provider, after that go to the
 [API](./api/player.md) page to see what props/methods/events are exposed and how you can interact with them.

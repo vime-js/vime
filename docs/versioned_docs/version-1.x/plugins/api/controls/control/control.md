@@ -15,7 +15,7 @@ Don't confuse this with the [`Control`](./control-interface.md) interface.
 
 ### Tooltips
 
-If the [Tooltips](./../../tooltips/tooltips.md) plugin is available then the control will render a 
+If the [Tooltips](./../../tooltips/tooltips.md) plugin is available then the control will render a
 tooltip and register it under the `label` prop value.
 
 ## Props
@@ -85,4 +85,4 @@ Fired when the button is focused and a key is pressed down.
 
 **Data Type:** `boolean` (Whether the control is focused or not)
 
-Fired when the button's focused state changes. 
+Fired when the button's focused state changes.

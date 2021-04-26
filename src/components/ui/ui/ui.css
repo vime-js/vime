@@ -1,0 +1,22 @@
+/**
+  * @prop --vm-ui-z-index: The position in the root z-axis stack inside the player.
+  */
+:host {
+  z-index: var(--vm-ui-z-index);
+}
+
+.ui {
+  width: 100%;
+  pointer-events: none;
+}
+
+.ui.hidden {
+  display: none;
+}
+
+.ui.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}

@@ -42,7 +42,6 @@ values={[
 
 </TabItem>
 
-
 <TabItem value="react">
 
 ```tsx {2,14-19}
@@ -72,7 +71,6 @@ function Example() {
 ```
 
 </TabItem>
-
 
 <TabItem value="vue">
 
@@ -112,7 +110,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="svelte">
 
 ```html {2-7,12} title="example.svelte"
@@ -140,7 +137,6 @@ function Example() {
 
 </TabItem>
 
-
 <TabItem value="stencil">
 
 ```tsx {5-9}
@@ -161,7 +157,6 @@ class Example {
 ```
 
 </TabItem>
-
 
 <TabItem value="angular">
 
@@ -191,7 +186,6 @@ class Example {
 </TabItem>
     
 </Tabs>
-
 
 ## Properties
 

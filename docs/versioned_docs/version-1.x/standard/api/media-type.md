@@ -14,9 +14,9 @@ Identifies the type of media by a number and can contain one of these possible v
 ## Example
 
 ```js
-import { MediaType } from '@vime-js/standard'
+import { MediaType } from '@vime-js/standard';
 
-let isAudio = (player.mediaType === MediaType.AUDIO);
+let isAudio = player.mediaType === MediaType.AUDIO;
 ```
 
 You don't need to do this because we've done it for you.
