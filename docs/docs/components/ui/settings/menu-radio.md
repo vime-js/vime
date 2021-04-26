@@ -9,7 +9,7 @@ of related options). Only one radio button in a group can be selected at the sam
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu-radio/menu-radio.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/menu-radio/menu-radio.png"
   alt="Vime settings menu radio component"
 />
 

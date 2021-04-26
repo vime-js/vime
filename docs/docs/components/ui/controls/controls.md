@@ -8,7 +8,7 @@ Responsible for positioning and laying out individual/groups of controls.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/controls/controls.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/controls/controls.png"
   alt="Vime controls component"
 />
 

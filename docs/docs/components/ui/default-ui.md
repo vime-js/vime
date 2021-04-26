@@ -14,21 +14,21 @@ shown here for the sake of brevity.
 ### Audio
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--audio.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/default-ui/default-ui--audio.png"
   alt="Vime default audio player"
 />
 
 ### Desktop Video
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--desktop.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/default-ui/default-ui--desktop.png"
   alt="Vime default desktop video player"
 />
 
 ### Mobile Video
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/default-ui/default-ui--mobile.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/default-ui/default-ui--mobile.png"
   alt="Vime default desktop mobile player"
 />
 

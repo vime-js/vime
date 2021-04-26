@@ -8,7 +8,7 @@ Displays a loading indicator when the video is `buffering`.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/spinner/spinner.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/spinner/spinner.png"
   alt="Vime spinner component"
 />
 

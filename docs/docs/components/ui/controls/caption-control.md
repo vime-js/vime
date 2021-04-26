@@ -9,7 +9,7 @@ currently set.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/caption-control/caption-control.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/caption-control/caption-control.png"
   alt="Vime caption control component"
 />
 

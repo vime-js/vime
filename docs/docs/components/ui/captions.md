@@ -15,7 +15,7 @@ to be used in combination with the native HTML5 player controls.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/captions/captions.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/captions/captions.png"
   alt="Vime captions component"
 />
 

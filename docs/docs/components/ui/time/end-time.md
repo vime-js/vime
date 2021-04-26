@@ -8,7 +8,7 @@ Formats and displays the duration of the current media.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/end-time/end-time.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/time/end-time/end-time.png"
   alt="Vime end time component"
 />
 

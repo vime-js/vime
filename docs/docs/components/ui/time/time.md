@@ -8,7 +8,7 @@ Formats and displays a length of time provided in seconds.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/time/time.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/time/time/time.png"
   alt="Vime time component"
 />
 

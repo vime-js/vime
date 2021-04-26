@@ -10,7 +10,7 @@ at https://github.com/sampotts/rangetouch).
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/slider/slider.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/slider/slider.png"
   alt="Vime slider component"
 />
 

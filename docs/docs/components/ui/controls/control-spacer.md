@@ -8,7 +8,7 @@ Used to space controls out vertically/horizontally. Under the hood it's simply `
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/control-spacer/control-spacer.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/control-spacer/control-spacer.png"
   alt="Vime control spacer component"
 />
 

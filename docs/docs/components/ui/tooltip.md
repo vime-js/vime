@@ -9,7 +9,7 @@ is to provide a description about the function of that element.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/tooltip/tooltip.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/tooltip/tooltip.png"
   alt="Vime tooltip component"
 />
 

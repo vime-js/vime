@@ -8,7 +8,7 @@ Formats and displays the progression of playback as `currentTime (separator) end
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/time-progress/time-progress.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/time/time-progress/time-progress.png"
   alt="Vime time progress component"
 />
 

@@ -14,7 +14,7 @@ you want an easier starting point see [`vime-default-settings`](default-settings
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu/menu.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/menu/menu.png"
   alt="Vime settings menu component"
 />
 
