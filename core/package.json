@@ -44,7 +44,7 @@
     "transpile:es": "babel dist/custom-elements/index.js --out-file dist/custom-elements/index.js"
   },
   "dependencies": {
-    "@stencil/core": "^2.2.0",
+    "@stencil/core": "^2.5.2",
     "stencil-wormhole": "^3.2.2"
   },
   "devDependencies": {
