@@ -1,3 +1,10 @@
+## [5.0.30](https://github.com/vime-js/vime/compare/v5.0.28...v5.0.30) (2021-05-24)
+
+### Bug Fixes
+
+- fullscreen not working ([#199](https://github.com/vime-js/vime/issues/199)) ([7e6648e](https://github.com/vime-js/vime/commit/7e6648efbf072db23925a8790517d9fb7a94f401))
+- presentation controller event listener not reattached ([2b7350e](https://github.com/vime-js/vime/commit/2b7350e5321a9dff0420743ba2cd89d1b250e08b))
+
 ## 5.0.28 (2021-04-17)
 
 ### Features
