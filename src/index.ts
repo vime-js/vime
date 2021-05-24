@@ -1,4 +1,3 @@
-export { Components, JSX } from './components.d';
 export { findPlayer } from './components/core/player/findPlayer';
 export { Translation } from './components/core/player/lang/Translation';
 export { MediaPlayer } from './components/core/player/MediaPlayer';
