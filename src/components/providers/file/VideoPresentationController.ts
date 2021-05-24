@@ -8,7 +8,6 @@ import { isFunction, isNil, noop } from '../../../utils/unit';
 
 export interface VideoPresentationControllerHost extends HTMLStencilElement {
   readonly mediaEl: HTMLMediaElement | undefined;
-  componentDidLoad?: () => void;
   disconnectedCallback?: () => void;
 }
 
@@ -27,12 +26,6 @@ export class VideoPresentationController {
   protected emitter = mitt();
 
   constructor(protected host: VideoPresentationControllerHost) {
-    const componentDidLoad = host.componentDidLoad;
-    host.componentDidLoad = async () => {
-      this.addPresentationModeChangeEventListener();
-      componentDidLoad?.call(host);
-    };
-
     const disconnectedCallback = host.disconnectedCallback;
     host.disconnectedCallback = async () => {
       await this.destroy();
@@ -116,7 +109,7 @@ export class VideoPresentationController {
     this.disposal.empty();
   }
 
-  protected addPresentationModeChangeEventListener(): () => void {
+  addPresentationModeChangeEventListener(): () => void {
     if (!this.isSupported || isNil(this.videoElement)) return noop;
     return listen(
       this.videoElement,

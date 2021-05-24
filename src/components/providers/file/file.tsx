@@ -241,6 +241,7 @@ export class File
     if (this.prevMediaEl !== this.mediaEl) {
       this.prevMediaEl = this.mediaEl;
       this.vmMediaElChange.emit(this.mediaEl);
+      this.presentationController.addPresentationModeChangeEventListener();
     }
   }
 
