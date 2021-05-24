@@ -9,7 +9,7 @@
     "build:watch": "ng build @vime/angular --watch"
   },
   "dependencies": {
-    "@vime/core": "5.0.29"
+    "@vime/core": "5.0.30"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.4",
