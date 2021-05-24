@@ -17,6 +17,25 @@ import { withComponentRegistry } from '../../../core/player/withComponentRegistr
 import { menuItemHunter } from './menuItemHunter';
 
 /**
+ * A multi-purpose interactable element inside a menu. The behaviour and style of the item depends
+ * on the props set.
+ *
+ * - **Default:** By default, the menu item only contains a label and optional hint/badge text that is
+ * displayed on the right-hand side of the item.
+ *
+ * - **Navigation:** If the `menu` prop is set, the item behaves as a navigational control and displays
+ * arrows to indicate whether clicking the control will navigate forwards/backwards.
+ *
+ * - **Radio:** If the `checked` prop is set, the item behaves as a radio button and displays a
+ * checkmark icon to indicate whether it is checked or not.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/menu-item/menu-item.png"
+ *   alt="Vime settings menu item component"
+ * />
+ *
  * @slot - Used to pass in the body of the menu which usually contains menu items, radio groups
  * and/or submenus.
  */

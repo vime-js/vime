@@ -4,6 +4,16 @@ import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
 
+/**
+ * Formats and displays the duration of the current media.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/time/end-time/end-time.png"
+ *   alt="Vime end time component"
+ * />
+ */
 @Component({
   tag: 'vm-end-time',
   styleUrl: 'end-time.css',

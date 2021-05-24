@@ -1,6 +1,18 @@
-import { h, Component, Element, Prop } from '@stencil/core';
+import { Component, Element, h, Prop } from '@stencil/core';
+
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
+/**
+ * A simple container that enables player controls to be organized into groups. Each group starts on
+ * a new line.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/control-group/control-group.png"
+ *   alt="Vime control group component"
+ * />
+ */
 @Component({
   tag: 'vm-control-group',
   styleUrl: 'control-group.css',

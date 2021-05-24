@@ -28,6 +28,14 @@ import {
 } from '../ProviderDispatcher';
 
 /**
+ * Enables loading, playing and controlling [HLS](https://en.wikipedia.org/wiki/HTTP_Live_Streaming)
+ * based media. If the [browser does not support HLS](https://caniuse.com/#search=hls) then the
+ * [`hls.js`](https://github.com/video-dev/hls.js) library is downloaded and used as a fallback to
+ * play the stream.
+ *
+ * > You don't interact with this component for passing player properties, controlling playback,
+ * listening to player events and so on, that is all done through the `vime-player` component.
+ *
  * @slot - Pass `<source>` elements to the underlying HTML5 media player.
  */
 @Component({

@@ -49,6 +49,10 @@ import { SafeAdapterCall, withPlayerScheduler } from './withPlayerScheduler';
 let idCount = 0;
 
 /**
+ * The root component that encapsulates all providers, plugins and UI components. This is the
+ * primary component you will interact with to set properties on the player, listen for events
+ * and call methods.
+ *
  * @slot - Used to pass in providers, plugins and UI components.
  */
 @Component({

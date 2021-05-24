@@ -2,6 +2,16 @@ import { Component, h, Prop } from '@stencil/core';
 
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
+/**
+ * Formats and displays a length of time provided in seconds.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/time/time/time.png"
+ *   alt="Vime time component"
+ * />
+ */
 @Component({
   tag: 'vm-time-progress',
   styleUrl: 'time-progress.css',

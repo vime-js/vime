@@ -11,7 +11,7 @@ export const vueNextOutputTarget = (): OutputTargetCustom => ({
   type: 'custom',
   name: 'vue-next-library',
   async generator(_, compilerCtx, buildCtx) {
-    const timespan = buildCtx.createTimeSpan('generate vue-next started', true);
+    const timespan = buildCtx.createTimeSpan('vue-next [start]', true);
 
     const output = await generateVueNextFiles(
       sortComponents(buildCtx.components),
@@ -30,6 +30,6 @@ export const vueNextOutputTarget = (): OutputTargetCustom => ({
       }),
     );
 
-    timespan.finish('generate vue-next finished');
+    timespan.finish('vue-next [end]');
   },
 });

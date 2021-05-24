@@ -15,6 +15,17 @@ import { withComponentRegistry } from '../../../core/player/withComponentRegistr
 let idCount = 0;
 
 /**
+ * A menu that is to be nested inside another menu. A submenu is closed by default and it provides a
+ * menu item that will open/close it. It's main purpose is to organize a menu by grouping related
+ * sections/options together that can be navigated to by the user.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/submenu/submenu.png"
+ *   alt="Vime submenu component"
+ * />
+ *
  * @slot - Used to pass in the body of the submenu which is usually a set of choices in the form
  * of a radio group (`vm-menu-radio-group`).
  */

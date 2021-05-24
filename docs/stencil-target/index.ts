@@ -1,6 +1,7 @@
 import { JsonDocs, JsonDocsComponent } from '@stencil/core/internal';
 import fs from 'fs';
 import { resolve } from 'path';
+import { dashToPascalCase } from '../../src/utils/string';
 
 import { stylesToMarkdown } from './markdown/markdown-css-props';
 import { depsToMarkdown } from './markdown/markdown-dependencies';
@@ -13,16 +14,19 @@ import { usageToMarkdown } from './markdown/markdown-usage';
 const OUTPUT_ROOT = resolve(__dirname, '../docs');
 const AUTO_GEN_COMMENT = '<!-- Auto Generated Below -->';
 
-const getDefaultReadme = (component: JsonDocsComponent) =>
-  [`# ${component.tag}`, '', '', ''].join('\n');
-
 const generateMarkdown = (
-  userContent: string,
   component: JsonDocsComponent,
   allComponents: JsonDocsComponent[],
 ) =>
   [
-    userContent,
+    '---',
+    `title: ${component.tag}`,
+    // Slice off {Vm}*
+    `sidebar_label: ${dashToPascalCase(component.tag).slice(2)}`,
+    '---',
+    '',
+    component.docs,
+    '',
     AUTO_GEN_COMMENT,
     '',
     ...usageToMarkdown(component.usage),
@@ -43,35 +47,20 @@ const generateComponentDoc = async (
     component.dirPath!.match(/components\/.+/)![0]
   }.md`;
   const outputPath = resolve(OUTPUT_ROOT, outputPathFromRoot);
-  const isUpdate = fs.existsSync(outputPath);
-  const originalFileContent = isUpdate
-    ? fs.readFileSync(outputPath).toString()
-    : getDefaultReadme(component);
-  const userContent = originalFileContent.substr(
-    0,
-    originalFileContent.indexOf(`\n${AUTO_GEN_COMMENT}`),
-  );
-  const newContent = generateMarkdown(userContent, component, allComponents);
-  const hasContentChanged = !isUpdate || originalFileContent !== newContent;
+  const content = generateMarkdown(component, allComponents);
 
-  if (!hasContentChanged) return;
+  fs.mkdirSync(outputPath.substr(0, outputPath.lastIndexOf('/')), {
+    recursive: true,
+  });
 
-  if (!isUpdate) {
-    fs.mkdirSync(outputPath.substr(0, outputPath.lastIndexOf('/')), {
-      recursive: true,
-    });
-    fs.writeFileSync(outputPath, newContent);
-    console.log(`created doc: ${outputPathFromRoot}`);
-  } else {
-    fs.writeFileSync(outputPath, newContent);
-    console.log(`updated doc: ${outputPathFromRoot}`);
-  }
+  fs.writeFileSync(outputPath, content);
 };
 
 export const siteDocsOutputTarget = async (docs: JsonDocs) => {
   if (!fs.existsSync(OUTPUT_ROOT)) {
     fs.mkdirSync(OUTPUT_ROOT);
   }
+
   await Promise.all(
     docs.components.map(component =>
       generateComponentDoc(component, docs.components),

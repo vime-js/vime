@@ -1,14 +1,26 @@
-import { h, Component, Prop, State, Watch, Host } from '@stencil/core';
-import { PlayerProps } from '../../../core/player/PlayerProps';
-import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
-import { KeyboardControl } from '../control/KeyboardControl';
+import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
+
 import { isUndefined } from '../../../../utils/unit';
-import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import {
   getPlayerFromRegistry,
   withComponentRegistry,
 } from '../../../core/player/withComponentRegistry';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
+import { KeyboardControl } from '../control/KeyboardControl';
 
+/**
+ * A control for toggling fullscreen mode. This control is not displayed if fullscreen cannot be
+ * requested (checked via the `canSetFullscreen()` player method).
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/fullscreen-control/fullscreen-control.png"
+ *   alt="Vime fullscreen control component"
+ * />
+ */
 @Component({
   tag: 'vm-fullscreen-control',
   styleUrl: 'fullscreen-control.css',

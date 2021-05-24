@@ -1,15 +1,27 @@
-import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
-import { PlayerProps } from '../../../core/player/PlayerProps';
-import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
+
+import { isUndefined } from '../../../../utils/unit';
 import {
-  Dispatcher,
   createDispatcher,
+  Dispatcher,
 } from '../../../core/player/PlayerDispatcher';
+import { PlayerProps } from '../../../core/player/PlayerProps';
+import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
-import { isUndefined } from '../../../../utils/unit';
-import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
+/**
+ * A control for toggling whether there is audio output or not. In other words the muted state of
+ * the player.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/mute-control/mute-control.png"
+ *   alt="Vime mute control component"
+ * />
+ */
 @Component({
   tag: 'vm-mute-control',
   shadow: true,

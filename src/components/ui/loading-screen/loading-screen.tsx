@@ -4,6 +4,10 @@ import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../core/player/withPlayerContext';
 
 /**
+ * The view that is displayed while the player is booting or media is loading. By default there
+ * are animated dots that are shown below the `<slot />` to indicate to the user content is being
+ * loaded. The default `<slot />` is your opportunity to brand the player with your logo.
+ *
  * @slot - Used to pass in any content to be shown above the animated dots while the player
  * is booting or media is loading. Use this as an opportunity to brand your player, similar to
  * how Netflix shows their logo when content is loading.

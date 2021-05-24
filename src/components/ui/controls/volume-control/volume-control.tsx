@@ -13,6 +13,16 @@ import { withComponentRegistry } from '../../../core/player/withComponentRegistr
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 
+/**
+ * A control for adjusting the volume of the player and toggling the muted state.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/volume-control/volume-control.png"
+ *   alt="Vime volume control component"
+ * />
+ */
 @Component({
   tag: 'vm-volume-control',
   styleUrl: 'volume-control.css',

@@ -15,6 +15,19 @@ import {
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
 
 /**
+ * Creates a settings menu with options for changing the audio track, playback rate, quality and
+ * captions of the current media. This component is provider aware. For example, it will only show
+ * options for changing the playback rate if the current provider allows changing it
+ * (`player.canSetPlaybackRate()`).  In addition, you can extend the settings with more options
+ * via the default `slot`.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/default-settings/default-settings.png"
+ *   alt="Vime default settings component"
+ * />
+ *
  * @slot - Used to extend the settings with additional menu options (see `vm-submenu` or
  * `vm-menu-item`).
  */

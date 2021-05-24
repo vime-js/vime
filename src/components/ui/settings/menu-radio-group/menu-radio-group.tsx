@@ -12,6 +12,21 @@ import {
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
 /**
+ * This component is responsible for containing and managing menu items and submenus. The menu is
+ * ARIA friendly by ensuring the correct ARIA properties are set, and enabling keyboard navigation
+ * when it is focused.
+ *
+ * You can use this component if you'd like to build out a custom settings menu. If you're looking
+ * to only customize the content of the settings see [`vime-settings`](settings.md), and if you
+ * want an easier starting point see [`vime-default-settings`](default-settings.md).
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/menu/menu.png"
+ *   alt="Vime settings menu component"
+ * />
+ *
  * @slot - Used to pass in radio buttons (`vm-menu-radio`).
  */
 @Component({

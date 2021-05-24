@@ -56,6 +56,14 @@ import {
 import { WebkitPresentationMode } from './WebkitPresentationMode';
 
 /**
+ * Enables loading, playing and controlling media files via the
+ * HTML5 [MediaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement) API.
+ * This is used internally by the [`vime-audio`](audio.md) and [`vime-video`](video.md) components,
+ * which are the preferred components to use for loading file-based media.
+ *
+ * > You don't interact with this component for passing player properties, controlling playback,
+ * listening to player events and so on, that is all done through the `vime-player` component.
+ *
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
  */
 @Component({

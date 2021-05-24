@@ -1,8 +1,14 @@
-import { h, Component, Prop, Fragment } from '@stencil/core';
+import { Component, Fragment, h, Prop } from '@stencil/core';
+
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
-import { PlayerProps } from '../../../core/player/PlayerProps';
 
+/**
+ * Default set of controls for when you're in a hurry. The controls displayed depend on whether the
+ * media is audio/video/live, and whether the device is mobile/desktop. See
+ * [`vime-default-ui`](../default-ui.md) for visuals.
+ */
 @Component({
   tag: 'vm-default-controls',
   styleUrl: 'default-controls.css',

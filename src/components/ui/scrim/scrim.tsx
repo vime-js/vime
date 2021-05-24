@@ -5,6 +5,10 @@ import { PlayerProps } from '../../core/player/PlayerProps';
 import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../core/player/withPlayerContext';
 
+/**
+ * A darkened overlay or gradient that covers the current video to enable controls placed on it to
+ * be more visible.
+ */
 @Component({
   tag: 'vm-scrim',
   styleUrl: 'scrim.css',

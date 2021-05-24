@@ -36,6 +36,12 @@ import { YouTubePlayerState } from './YouTubePlayerState';
 
 const posterCache = new Map<string, string>();
 
+/**
+ * Enables loading, playing and controlling videos from [YouTube](https://www.youtube.com).
+ *
+ * > You don't interact with this component for passing player properties, controlling playback,
+ * listening to player events and so on, that is all done through the `vime-player` component.
+ */
 @Component({
   tag: 'vm-youtube',
   styleUrl: 'youtube.css',

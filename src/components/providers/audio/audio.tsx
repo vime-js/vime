@@ -12,6 +12,12 @@ import { audioRegex } from '../file/utils';
 import { withProviderConnect } from '../ProviderConnect';
 
 /**
+ * Enables loading, playing and controlling audio via the
+ * HTML5 [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) element.
+ *
+ * > You don't interact with this component for passing player properties, controlling playback,
+ * listening to player events and so on, that is all done through the `vime-player` component.
+ *
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
  */
 @Component({
@@ -55,6 +61,7 @@ export class Audio implements MediaFileProvider<HTMLMediaElement> {
 
   render() {
     return (
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       <vm-file
         noConnect

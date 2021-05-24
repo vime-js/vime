@@ -2,6 +2,17 @@ import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
+/**
+ * Menu radio buttons are presented in radio groups (a collection of radio buttons describing a set
+ * of related options). Only one radio button in a group can be selected at the same time.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/menu-radio/menu-radio.png"
+ *   alt="Vime settings menu radio component"
+ * />
+ */
 @Component({
   tag: 'vm-menu-radio',
   shadow: true,

@@ -9,6 +9,11 @@ import {
 
 import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
+/**
+ * A custom styled and ARIA friendly `input[type="range"]` component for inputting numeric values.
+ * In addition, there are optimizations made for improved touch support (more information can be
+ * found at https://github.com/sampotts/rangetouch).
+ */
 @Component({
   tag: 'vm-slider',
   styleUrl: 'slider.css',

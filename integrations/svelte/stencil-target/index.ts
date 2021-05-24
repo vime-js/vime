@@ -19,7 +19,7 @@ export const svelteOutputTarget = (
   type: 'custom',
   name: 'svelte-library',
   async generator(_, compilerCtx, buildCtx) {
-    const timespan = buildCtx.createTimeSpan('generate svelte started', true);
+    const timespan = buildCtx.createTimeSpan('svelte [start]', true);
 
     const output = await generateSvelteFiles(
       outputTarget,
@@ -58,6 +58,6 @@ export const svelteOutputTarget = (
       }),
     );
 
-    timespan.finish('generate svelte finished');
+    timespan.finish('svelte [end]');
   },
 });

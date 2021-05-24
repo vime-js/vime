@@ -38,6 +38,12 @@ interface VideoInfo {
 
 const videoInfoCache = new Map<string, VideoInfo>();
 
+/**
+ * Enables loading, playing and controlling videos from [Dailymotion](https://www.dailymotion.com).
+ *
+ * > You don't interact with this component for passing player properties, controlling playback,
+ * listening to player events and so on, that is all done through the `vime-player` component.
+ */
 @Component({
   tag: 'vm-dailymotion',
   styleUrl: 'dailymotion.css',

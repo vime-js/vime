@@ -13,6 +13,21 @@ import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
 
+/**
+ * A control that displays the progression of playback and the amount buffered on a horizontal
+ * timeline. The timeline is a slider (`input[type="range"]`) that can be used to change the
+ * current playback time.
+ *
+ * If the player is buffering, the scrubber will display an animated candystripe in the porition
+ * of the timeline that has not buffered.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/scrubber-control/scrubber-control.png"
+ *   alt="Vime scrubber control component"
+ * />
+ */
 @Component({
   tag: 'vm-scrubber-control',
   styleUrl: 'scrubber-control.css',

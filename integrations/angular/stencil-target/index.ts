@@ -12,7 +12,7 @@ export const angularOutputTarget = (): OutputTargetCustom => ({
   type: 'custom',
   name: 'angular-library',
   async generator(_, compilerCtx, buildCtx) {
-    const timespan = buildCtx.createTimeSpan('generate angular started', true);
+    const timespan = buildCtx.createTimeSpan('angular [start]', true);
 
     const output = await generateAngularFiles(
       sortComponents(buildCtx.components),
@@ -32,6 +32,6 @@ export const angularOutputTarget = (): OutputTargetCustom => ({
       }),
     );
 
-    timespan.finish('generate angular finished');
+    timespan.finish('angular [end]');
   },
 });

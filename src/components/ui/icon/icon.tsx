@@ -24,6 +24,23 @@ import { requestIcon } from './requestIcon';
 
 const parser = new DOMParser();
 
+/**
+ * _This component was inspired by [Shoelace](https://shoelace.style/)._
+ *
+ * **Icon libraries let you register additional icons to be used throughout the player.**
+ *
+ * An icon library is a renderless component that registers a custom set of SVG icons. The icon
+ * files can exist locally or on a CORS-enabled endpoint (eg: CDN). There is no limit to how many
+ * icon libraries you can register, and there is no cost associated with registering them, as
+ * individual icons are only requested when they're used.
+ *
+ * By default, Vime provides the `vime` and `material` icon sets, to register your own icon
+ * library create an `<vm-icon-library>` element with a name and resolver function. The resolver
+ * function translates an icon name to a URL where its corresponding SVG file exists.
+ *
+ * Refer to the examples below and in the [icon](./icon) component to better understand how it all
+ * works.
+ */
 @Component({
   tag: 'vm-icon',
   styleUrl: 'icon.css',

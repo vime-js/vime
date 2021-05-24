@@ -1,23 +1,35 @@
 import {
-  h,
   Component,
-  Prop,
   Element,
-  Watch,
-  State,
+  h,
   Method,
+  Prop,
+  State,
+  Watch,
 } from '@stencil/core';
-import { withPlayerContext } from '../../../core/player/withPlayerContext';
-import { PlayerProps } from '../../../core/player/PlayerProps';
-import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
+
 import { isUndefined } from '../../../../utils/unit';
+import { PlayerProps } from '../../../core/player/PlayerProps';
 import {
   watchComponentRegistry,
   withComponentRegistry,
 } from '../../../core/player/withComponentRegistry';
+import { withPlayerContext } from '../../../core/player/withPlayerContext';
+import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 
 let idCount = 0;
 
+/**
+ * A control for toggling the visiblity of the settings menu. This control is not displayed if no
+ * settings (`vime-settings`) has been provided for the current player.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/settings-control/settings-control.png"
+ *   alt="Vime settings control component"
+ * />
+ */
 @Component({
   tag: 'vm-settings-control',
   styleUrl: 'settings-control.css',

@@ -9,6 +9,16 @@ import { TooltipDirection, TooltipPosition } from './types';
 let tooltipIdCount = 0;
 
 /**
+ * A small pop-up box that appears when a user moves their mouse over an element. Their main purpose
+ * is to provide a description about the function of that element.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/tooltip/tooltip.png"
+ *   alt="Vime tooltip component"
+ * />
+ *
  * @slot - Used to pass in the contents of the tooltip.
  */
 @Component({

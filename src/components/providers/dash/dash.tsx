@@ -30,6 +30,14 @@ import {
   ProviderDispatcher,
 } from '../ProviderDispatcher';
 
+/**
+ * Enables loading, playing and controlling
+ * [MPEG DASH](https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP) based media. It
+ * uses [`dashjs`](https://github.com/Dash-Industry-Forum/dash.js.md) under the hood.
+ *
+ * > You don't interact with this component for passing player properties, controlling playback,
+ * listening to player events and so on, that is all done through the `vime-player` component.
+ */
 @Component({
   tag: 'vm-dash',
   styleUrl: 'dash.css',

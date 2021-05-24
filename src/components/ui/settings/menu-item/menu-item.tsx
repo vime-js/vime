@@ -14,6 +14,17 @@ import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
 
+/**
+ * A collection of radio buttons describing a set of related options. Only one radio button in a
+ * group can be selected at the same time.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/menu-radio-group/menu-radio-group.png"
+ *   alt="Vime settings menu radio group component"
+ * />
+ */
 @Component({
   tag: 'vm-menu-item',
   styleUrl: 'menu-item.css',

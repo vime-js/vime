@@ -10,6 +10,17 @@ import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
 import { KeyboardControl } from '../control/KeyboardControl';
 
+/**
+ * A control for toggling the visibility of captions. This control is not displayed if there's no
+ * track currently set.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/caption-control/caption-control.png"
+ *   alt="Vime caption control component"
+ * />
+ */
 @Component({
   tag: 'vm-caption-control',
   styleUrl: 'caption-control.css',

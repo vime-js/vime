@@ -14,6 +14,14 @@ import {
   registerIconLibrary,
 } from './IconRegistry';
 
+/**
+ * _This component was inspired by [Shoelace](https://shoelace.style/)._
+ *
+ * Loads and renders an SVG icon. The icon be loaded from an [icon library](./icon-library) or from
+ * an absolute URL via the `src` property. Only SVGs on a local or CORS-enabled endpoint are
+ * supported. If you're using more than one custom icon, it might make sense to register a custom
+ * [icon library](./icon-library).
+ */
 @Component({
   tag: 'vm-icon-library',
   shadow: true,

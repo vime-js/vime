@@ -1,7 +1,37 @@
-import { h, Component, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
+
 import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 
 /**
+ * This component is a shorthand way to setup the entire default vime user interface, such as
+ * controls, settings, captions and so on.
+ *
+ * ## Visuals
+ *
+ * There are also alternative interfaces for live media, and the light player theme, but they're not
+ * shown here for the sake of brevity.
+ *
+ * ### Audio
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/default-ui/default-ui--audio.png"
+ *   alt="Vime default audio player"
+ * />
+ *
+ * ### Desktop Video
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/default-ui/default-ui--desktop.png"
+ *   alt="Vime default desktop video player"
+ * />
+ *
+ * ### Mobile Video
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/default-ui/default-ui--mobile.png"
+ *   alt="Vime default desktop mobile player"
+ * />
+ *
  * @slot - Used to extend the default user interface with custom UI components.
  */
 @Component({

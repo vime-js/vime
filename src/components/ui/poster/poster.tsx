@@ -15,6 +15,17 @@ import { PlayerProps } from '../../core/player/PlayerProps';
 import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../core/player/withPlayerContext';
 
+/**
+ * Loads the poster set in the player prop `currentPoster` and displays it. The poster will automatically
+ * dissapear once playback starts.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/poster/poster.png"
+ *   alt="Vime poster component"
+ * />
+ */
 @Component({
   tag: 'vm-poster',
   styleUrl: 'poster.css',

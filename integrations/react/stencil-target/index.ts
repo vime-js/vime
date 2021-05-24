@@ -11,7 +11,7 @@ export const reactOutputTarget = (): OutputTargetCustom => ({
   type: 'custom',
   name: 'react-library',
   async generator(_, compilerCtx, buildCtx) {
-    const timespan = buildCtx.createTimeSpan('generate react started', true);
+    const timespan = buildCtx.createTimeSpan('react [start]', true);
 
     const output = await generateReactFiles(
       sortComponents(buildCtx.components),
@@ -30,6 +30,6 @@ export const reactOutputTarget = (): OutputTargetCustom => ({
       }),
     );
 
-    timespan.finish('generate react finished');
+    timespan.finish('react [end]');
   },
 });

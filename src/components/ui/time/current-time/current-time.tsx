@@ -4,6 +4,16 @@ import { PlayerProps } from '../../../core/player/PlayerProps';
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../../core/player/withPlayerContext';
 
+/**
+ * Formats and displays the current time of playback.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/time/current-time/current-time.png"
+ *   alt="Vime current time component"
+ * />
+ */
 @Component({
   tag: 'vm-current-time',
   styleUrl: 'current-time.css',

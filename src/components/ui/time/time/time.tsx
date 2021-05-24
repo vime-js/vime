@@ -3,6 +3,16 @@ import { Component, h, Prop } from '@stencil/core';
 import { formatTime } from '../../../../utils/formatters';
 import { withComponentRegistry } from '../../../core/player/withComponentRegistry';
 
+/**
+ * Formats and displays the progression of playback as `currentTime (separator) endTime`.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/time/time-progress/time-progress.png"
+ *   alt="Vime time progress component"
+ * />
+ */
 @Component({
   tag: 'vm-time',
   styleUrl: 'time.css',

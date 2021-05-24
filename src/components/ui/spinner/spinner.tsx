@@ -13,6 +13,16 @@ import { withComponentRegistry } from '../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../core/player/withPlayerContext';
 import { Provider } from '../../providers/Provider';
 
+/**
+ * Displays a loading indicator when the video is `buffering`.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/spinner/spinner.png"
+ *   alt="Vime spinner component"
+ * />
+ */
 @Component({
   tag: 'vm-spinner',
   styleUrl: 'spinner.css',

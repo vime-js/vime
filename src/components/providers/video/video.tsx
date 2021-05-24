@@ -10,6 +10,12 @@ import {
 import { withProviderConnect } from '../ProviderConnect';
 
 /**
+ * Enables loading, playing and controlling videos via the
+ * HTML5 [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video) element.
+ *
+ * > You don't interact with this component for passing player properties, controlling playback,
+ * listening to player events and so on, that is all done through the `vime-player` component.
+ *
  * @slot - Pass `<source>` and `<track>` elements to the underlying HTML5 media player.
  */
 @Component({

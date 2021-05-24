@@ -9,6 +9,9 @@ import {
 } from '../../core/player/withComponentRegistry';
 import { withPlayerContext } from '../../core/player/withPlayerContext';
 
+/**
+ * Enables toggling fullscreen mode by double clicking the player.
+ */
 @Component({
   tag: 'vm-dbl-click-fullscreen',
   styleUrl: 'dbl-click-fullscreen.css',

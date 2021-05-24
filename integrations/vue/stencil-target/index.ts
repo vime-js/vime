@@ -11,7 +11,7 @@ export const vueOutputTarget = (): OutputTargetCustom => ({
   type: 'custom',
   name: 'vue-library',
   async generator(_, compilerCtx, buildCtx) {
-    const timespan = buildCtx.createTimeSpan('generate vue started', true);
+    const timespan = buildCtx.createTimeSpan('vue [start]', true);
 
     const output = await generateVueFiles(sortComponents(buildCtx.components));
 
@@ -28,6 +28,6 @@ export const vueOutputTarget = (): OutputTargetCustom => ({
       }),
     );
 
-    timespan.finish('generate vue finished');
+    timespan.finish('vue [end]');
   },
 });

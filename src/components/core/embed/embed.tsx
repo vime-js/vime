@@ -20,6 +20,13 @@ import { withComponentRegistry } from '../player/withComponentRegistry';
 let idCount = 0;
 const connected = new Set();
 
+/**
+ * Embeds an external media player and enables interacting with it via `postMessage`. This is
+ * generally used internally by other providers, but you could use it if your requirements are
+ * simple. You'll also get the benefits of preconnections and lazy-loading. Refer
+ * to [existing providers](#used-by) to see what params you can pass in, how to send commands
+ * to the player, and how to listen to events.
+ */
 @Component({
   tag: 'vm-embed',
   styleUrl: 'embed.css',

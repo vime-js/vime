@@ -1,13 +1,16 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
-import { h, Component, Prop, Method } from '@stencil/core';
+import { Component, h, Method, Prop } from '@stencil/core';
+
 import {
   createDispatcher,
   Dispatcher,
 } from '../../core/player/PlayerDispatcher';
 import { PlayerProps } from '../../core/player/PlayerProps';
-import { withPlayerContext } from '../../core/player/withPlayerContext';
 import { withComponentRegistry } from '../../core/player/withComponentRegistry';
+import { withPlayerContext } from '../../core/player/withPlayerContext';
 
+/**
+ * Enables toggling playback by clicking the player.
+ */
 @Component({
   tag: 'vm-click-to-play',
   styleUrl: 'click-to-play.css',

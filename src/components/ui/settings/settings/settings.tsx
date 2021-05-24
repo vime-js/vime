@@ -24,6 +24,18 @@ import { SettingsController } from './SettingsController';
 let idCount = 0;
 
 /**
+ * A container for a collection of submenus and options for the player. On desktop, the settings
+ * is displayed as a small popup menu (scroll appears if `height >= maxHeight`) on the bottom
+ * right-hand side of a video player, or slightly above the right-hand side of an audio player. On
+ * mobile, the settings is displayed as a [bottom sheet](https://material.io/components/sheets-bottom).
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/settings/settings.png"
+ *   alt="Vime settings component"
+ * />
+ *
  * @slot - Used to pass in the body of the settings menu, which usually contains submenus.
  */
 @Component({

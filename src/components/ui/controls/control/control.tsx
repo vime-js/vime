@@ -20,6 +20,16 @@ import { withPlayerContext } from '../../../core/player/withPlayerContext';
 import { KeyboardControl } from './KeyboardControl';
 
 /**
+ * A generic player control that is designed to work with both touch and mouse devices. It also
+ * seamlessly works with `vime-tooltip`, which can be passed in via the default `slot`.
+ *
+ * ## Visual
+ *
+ * <img
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/control/control.png"
+ *   alt="Vime control component"
+ * />
+ *
  * @slot - Used to pass in the content of the control (text/icon/tooltip).
  */
 @Component({

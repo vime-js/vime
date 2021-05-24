@@ -32,7 +32,7 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "run-s clean:build clean:docs build:icons build:themes build:stencil docs:format",
+    "build": "run-s clean:build clean:docs build:icons build:themes build:stencil",
     "build:stencil": "stencil build",
     "build:watch": "stencil build --watch",
     "build:icons": "cpy src/icons icons",
@@ -40,12 +40,11 @@
     "build:theme:default": "cleancss -o themes/default.css src/themes/default.css",
     "build:theme:light": "cleancss -o themes/light.css src/themes/light.css",
     "clean": "run-p clean:*",
-    "clean:build": "rimraf dist loader www icons themes",
+    "clean:build": "rimraf dist loader www icons themes src/components.d.ts",
     "clean:docs": "rimraf docs/.docusaurus docs/build docs/docs/components",
     "docs:install": "npm install --prefix docs",
     "docs:build": "npm run build --prefix docs",
     "docs:start": "npm start --prefix docs",
-    "docs:format": "npm run format:generated --prefix docs",
     "lint": "run-s lint:*",
     "lint:eslint": "eslint --ext .ts --quiet . --ignore-path .gitignore",
     "lint:prettier": "prettier . --check --ignore-path .gitignore --loglevel warn",
