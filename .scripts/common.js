@@ -98,7 +98,7 @@ function preparePackage(tasks, package, version, install) {
         title: `${pkg.name}: install npm dependencies`,
         task: async () => {
           // await fs.remove(path.join(projectRoot, 'node_modules'));
-          await execa('npm', ['i', '--legacy-peer-deps'], { cwd: projectRoot });
+          await execa('npm', ['ci'], { cwd: projectRoot });
         },
       });
     }
@@ -109,7 +109,7 @@ function preparePackage(tasks, package, version, install) {
       packageTasks.push({
         title: `${pkg.name}: npm link @vime/core`,
         task: () =>
-          execa('npm', ['link', '@vime/core', '--legacy-peer-deps'], {
+          execa('npm', ['link', '@vime/core'], {
             cwd: projectRoot,
           }),
       });
@@ -137,8 +137,7 @@ function preparePackage(tasks, package, version, install) {
     if (package === 'core') {
       packageTasks.push({
         title: `${pkg.name}: npm link`,
-        task: () =>
-          execa('npm', ['link', '--legacy-peer-deps'], { cwd: projectRoot }),
+        task: () => execa('npm', ['link'], { cwd: projectRoot }),
       });
     }
 
@@ -170,6 +169,18 @@ function preparePackage(tasks, package, version, install) {
 }
 
 function updatePackageVersions(tasks, packages, version) {
+  tasks.push({
+    title: 'git commit @vime/core version bumps',
+    task: async () => {
+      await execa('git', ['add', '.']);
+      await execa('git', [
+        'commit',
+        '-m',
+        'chore(integrations): bump `@vime/core`',
+      ]);
+    },
+  });
+
   packages.forEach(package => {
     updatePackageVersion(tasks, package, version);
 

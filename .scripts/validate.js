@@ -32,7 +32,7 @@ function validatePackage(tasks, package) {
     title: `${pkg.name}: install npm dependencies`,
     task: async () => {
       // await fs.remove(path.join(projectRoot, 'node_modules'));
-      await execa('npm', ['i', '--legacy-peer-deps'], { cwd: projectRoot });
+      await execa('npm', ['ci'], { cwd: projectRoot });
     },
   });
 
@@ -40,7 +40,7 @@ function validatePackage(tasks, package) {
     validationTasks.push({
       title: `${pkg.name}: npm link @vime/core`,
       task: () =>
-        execa('npm', ['link', '@vime/core', '--legacy-peer-deps'], {
+        execa('npm', ['link', '@vime/core'], {
           cwd: projectRoot,
         }),
     });
@@ -66,8 +66,7 @@ function validatePackage(tasks, package) {
   if (package === 'core') {
     validationTasks.push({
       title: `${pkg.name}: npm link`,
-      task: () =>
-        execa('npm', ['link', '--legacy-peer-deps'], { cwd: projectRoot }),
+      task: () => execa('npm', ['link'], { cwd: projectRoot }),
     });
   }
 

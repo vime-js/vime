@@ -42,7 +42,7 @@
     "clean": "run-p clean:*",
     "clean:build": "rimraf dist loader www icons themes",
     "clean:docs": "rimraf docs/.docusaurus docs/build docs/docs/components",
-    "docs:install": "npm install --prefix docs",
+    "docs:install": "npm ci --prefix docs",
     "docs:build": "npm run build --prefix docs",
     "docs:start": "npm start --prefix docs",
     "lint": "run-s lint:*",
