@@ -1,6 +1,6 @@
 {
   "name": "@vime/svelte",
-  "version": "5.0.28",
+  "version": "5.0.29",
   "description": "Svelte bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -27,7 +27,7 @@
     "build:esm": "tsc --target es6 --module es6 --outDir dist/esm"
   },
   "dependencies": {
-    "@vime/core": "5.0.28"
+    "@vime/core": "5.0.29"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",
