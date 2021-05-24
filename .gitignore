@@ -6,7 +6,6 @@ loader/
 /icons/
 /themes/
 
-src/components.d.ts
 docs/docs/components
 
 integrations/*/.npmrc
