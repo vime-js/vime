@@ -14,7 +14,6 @@ import {
 import { Disposal } from '../../../utils/Disposal';
 import { listen } from '../../../utils/dom';
 import {
-  canFullscreenVideo,
   canUsePiP,
   canUsePiPInChrome,
   canUsePiPInSafari,
@@ -49,6 +48,11 @@ import {
 } from './MediaFileProvider';
 import { MediaResource } from './MediaResource';
 import { audioRegex, hlsRegex, videoRegex } from './utils';
+import { VideoFullscreenController } from './VideoFullscreenController';
+import {
+  VideoPresentationController,
+  VideoPresentationControllerHost,
+} from './VideoPresentationController';
 import { WebkitPresentationMode } from './WebkitPresentationMode';
 
 /**
@@ -233,6 +237,14 @@ export class File
 
   componentDidLoad() {
     this.onViewTypeChange();
+
+    this.presentationController.on('change', mode => {
+      this.dispatch('isPiPActive', mode === WebkitPresentationMode.PiP);
+      this.dispatch(
+        'isFullscreenActive',
+        mode === WebkitPresentationMode.Fullscreen,
+      );
+    });
   }
 
   disconnectedCallback() {
@@ -445,25 +457,6 @@ export class File
     throw new Error('PiP API is not available.');
   }
 
-  private async toggleFullscreen(toggle: boolean) {
-    if (!(this.mediaEl as any)?.webkitSupportsFullscreen) {
-      throw new Error('Fullscreen API is not available.');
-    }
-
-    return toggle
-      ? (this.mediaEl as any)?.webkitEnterFullscreen()
-      : (this.mediaEl as any)?.webkitExitFullscreen();
-  }
-
-  private onPresentationModeChange() {
-    const mode = (this.mediaEl as any)?.webkitPresentationMode;
-    this.dispatch('isPiPActive', mode === WebkitPresentationMode.PiP);
-    this.dispatch(
-      'isFullscreenActive',
-      mode === WebkitPresentationMode.Fullscreen,
-    );
-  }
-
   private onEnterPiP() {
     this.dispatch('isPiPActive', true);
   }
@@ -471,6 +464,15 @@ export class File
   private onLeavePiP() {
     this.dispatch('isPiPActive', false);
   }
+
+  protected presentationController = new VideoPresentationController(
+    (this as unknown) as VideoPresentationControllerHost,
+  );
+
+  protected fullscreenController = new VideoFullscreenController(
+    (this as unknown) as HTMLElement,
+    this.presentationController,
+  );
 
   /** @internal */
   @Method()
@@ -497,9 +499,9 @@ export class File
       canSetPiP: async () => canUsePiP(),
       enterPiP: () => this.togglePiP(true),
       exitPiP: () => this.togglePiP(false),
-      canSetFullscreen: async () => canFullscreenVideo(),
-      enterFullscreen: () => this.toggleFullscreen(true),
-      exitFullscreen: () => this.toggleFullscreen(false),
+      canSetFullscreen: async () => this.fullscreenController.isSupported,
+      enterFullscreen: () => this.fullscreenController.requestFullscreen(),
+      exitFullscreen: () => this.fullscreenController.exitFullscreen(),
       setCurrentTextTrack: async (trackId: number) => {
         if (trackId !== this.currentTextTrack)
           this.toggleTextTrackModes(trackId);
@@ -698,10 +700,8 @@ export class File
       <video
         class="lazy"
         {...mediaProps}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        onwebkitpresentationmodechanged={this.onPresentationModeChange.bind(
-          this,
-        )}
         onenterpictureinpicture={this.onEnterPiP.bind(this)}
         onleavepictureinpicture={this.onLeavePiP.bind(this)}
       >

@@ -77,7 +77,6 @@ export class Video implements MediaFileProvider<HTMLMediaElement> {
 
   render() {
     return (
-      // @ts-ignore
       <vm-file
         noConnect
         willAttach={this.willAttach}
