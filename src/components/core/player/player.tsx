@@ -30,7 +30,7 @@ import {
 import { Provider } from '../../providers/Provider';
 import { withProviderHost } from '../../providers/ProviderConnect';
 import { withFindPlayer } from './findPlayer';
-import { Fullscreen } from './fullscreen/Fullscreen';
+import { FullscreenController } from './fullscreen/FullscreenController';
 import { en } from './lang/en';
 import { Translation } from './lang/Translation';
 import { MediaPlayer } from './MediaPlayer';
@@ -65,7 +65,7 @@ export class Player implements MediaPlayer {
 
   private safeAdapterCall: SafeAdapterCall;
 
-  private fullscreen!: Fullscreen;
+  private fullscreenController!: FullscreenController;
 
   private disposal = new Disposal();
 
@@ -75,11 +75,19 @@ export class Player implements MediaPlayer {
 
   @Watch('container')
   onContainerChange() {
-    this.fullscreen?.destroy();
+    this.fullscreenController?.destroy();
+
     if (isUndefined(this.container)) return;
-    this.fullscreen = new Fullscreen(this.container, isActive => {
-      this.isFullscreenActive = isActive;
-      this.rotateDevice();
+
+    this.fullscreenController = new FullscreenController(this.container);
+
+    this.fullscreenController.on('change', isActive => {
+      this.isFullscreenActive = isActive!;
+      if (isActive) this.rotateDevice();
+    });
+
+    this.fullscreenController.on('error', error => {
+      this.vmError.emit(error);
     });
   }
 
@@ -609,7 +617,7 @@ export class Player implements MediaPlayer {
   @Method()
   async canSetFullscreen() {
     return (
-      this.fullscreen!.isSupported ||
+      this.fullscreenController.isSupported ||
       ((await this.adapter)?.canSetFullscreen?.() ?? false)
     );
   }
@@ -617,20 +625,32 @@ export class Player implements MediaPlayer {
   /** @inheritDoc */
   @Method()
   async enterFullscreen(options?: FullscreenOptions) {
-    if (!this.isVideoView)
+    if (!this.isVideoView) {
       throw Error('Cannot enter fullscreen on an audio player view.');
-    if (this.fullscreen!.isSupported)
-      return this.fullscreen!.enterFullscreen(options);
-    if (await (await this.adapter)?.canSetFullscreen?.()) {
-      return (await this.adapter)?.enterFullscreen?.(options);
     }
+
+    if (this.fullscreenController.isSupported) {
+      return this.fullscreenController.requestFullscreen();
+    }
+
+    const adapter = await this.adapter;
+    const canProviderSetFullscreen =
+      (await adapter?.canSetFullscreen?.()) ?? false;
+
+    if (canProviderSetFullscreen) {
+      return adapter?.enterFullscreen?.(options);
+    }
+
     throw Error('Fullscreen API is not available.');
   }
 
   /** @inheritDoc */
   @Method()
   async exitFullscreen() {
-    if (this.fullscreen!.isSupported) return this.fullscreen!.exitFullscreen();
+    if (this.fullscreenController.isSupported) {
+      return this.fullscreenController.exitFullscreen();
+    }
+
     return (await this.adapter)?.exitFullscreen?.();
   }
 
@@ -741,7 +761,7 @@ export class Player implements MediaPlayer {
   }
 
   disconnectedCallback() {
-    this.fullscreen?.destroy();
+    this.fullscreenController?.destroy();
     this.disposal.empty();
   }
 

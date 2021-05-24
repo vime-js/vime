@@ -62,6 +62,9 @@
   },
   "dependencies": {
     "@stencil/core": "^2.5.2",
+    "@types/fscreen": "^1.0.1",
+    "fscreen": "^1.2.0",
+    "mitt": "^2.1.0",
     "stencil-wormhole": "^3.2.2"
   },
   "devDependencies": {
