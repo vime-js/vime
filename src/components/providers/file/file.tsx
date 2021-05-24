@@ -226,6 +226,7 @@ export class File
     this.onViewTypeChange();
     this.onPosterChange();
     this.onMediaTitleChange();
+    this.addPresentationControllerListeners();
   }
 
   componentDidRender() {
@@ -237,14 +238,6 @@ export class File
 
   componentDidLoad() {
     this.onViewTypeChange();
-
-    this.presentationController.on('change', mode => {
-      this.dispatch('isPiPActive', mode === WebkitPresentationMode.PiP);
-      this.dispatch(
-        'isFullscreenActive',
-        mode === WebkitPresentationMode.Fullscreen,
-      );
-    });
   }
 
   disconnectedCallback() {
@@ -468,6 +461,16 @@ export class File
   protected presentationController = new VideoPresentationController(
     (this as unknown) as VideoPresentationControllerHost,
   );
+
+  protected addPresentationControllerListeners(): void {
+    this.presentationController.on('change', mode => {
+      this.dispatch('isPiPActive', mode === WebkitPresentationMode.PiP);
+      this.dispatch(
+        'isFullscreenActive',
+        mode === WebkitPresentationMode.Fullscreen,
+      );
+    });
+  }
 
   protected fullscreenController = new VideoFullscreenController(
     (this as unknown) as HTMLElement,
