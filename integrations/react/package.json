@@ -1,6 +1,6 @@
 {
   "name": "@vime/react",
-  "version": "5.0.29",
+  "version": "5.0.30",
   "description": "React bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@vime/angular",
-  "version": "5.0.29",
+  "version": "5.0.30",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
