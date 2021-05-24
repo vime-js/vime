@@ -76,11 +76,10 @@ function publishGit(tasks, version, changelog, npmTag) {
   const gitTag = `v${version}`;
 
   tasks.push(
-    // Already done by NPM.
-    // {
-    //   title: `Tag latest commit ${dim(`(${gitTag})`)}`,
-    //   task: () => execa('git', ['tag', `${gitTag}`], { cwd: common.rootDir }),
-    // },
+    {
+      title: `Tag latest commit ${dim(`(${gitTag})`)}`,
+      task: () => execa('git', ['tag', `${gitTag}`], { cwd: common.rootDir }),
+    },
     {
       title: 'Push branches to remote',
       task: () => execa('git', ['push'], { cwd: common.rootDir }),

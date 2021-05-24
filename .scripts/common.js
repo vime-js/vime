@@ -223,7 +223,9 @@ function updatePackageVersion(tasks, package, version) {
   tasks.push({
     title: `${package}: update package.json ${dim(`(${version})`)}`,
     task: async () => {
-      await execa('npm', ['version', version], { cwd: projectRoot });
+      await execa('npm', ['version', version, '--no-git-tag-version'], {
+        cwd: projectRoot,
+      });
     },
   });
 }
