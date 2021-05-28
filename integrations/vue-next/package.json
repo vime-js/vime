@@ -1,6 +1,6 @@
 {
   "name": "@vime/vue-next",
-  "version": "5.0.30",
+  "version": "5.0.31",
   "description": "Vue 3 bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",

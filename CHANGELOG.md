@@ -1,3 +1,12 @@
+## 5.0.31 (2021-05-28)
+
+
+### Bug Fixes
+
+* export `Components` from root index `d.ts` file ([18c5848](https://github.com/vime-js/vime/commit/18c58487007e7947e32ac1965217c19810b93af1)), closes [#202](https://github.com/vime-js/vime/issues/202)
+
+
+
 ## [5.0.30](https://github.com/vime-js/vime/compare/v5.0.28...v5.0.30) (2021-05-24)
 
 ### Bug Fixes

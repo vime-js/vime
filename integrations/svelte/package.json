@@ -1,6 +1,6 @@
 {
   "name": "@vime/svelte",
-  "version": "5.0.30",
+  "version": "5.0.31",
   "description": "Svelte bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
