@@ -14,8 +14,8 @@
     "experimentalDecorators": true,
     "lib": ["DOM", "ES2017"],
     "moduleResolution": "node",
-    "module": "ESNext",
-    "target": "ESNext",
+    "module": "ES6",
+    "target": "ES6",
     "jsx": "react",
     "jsxFactory": "h"
   },
