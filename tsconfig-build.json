@@ -3,7 +3,8 @@
   "compilerOptions": {
     "module": "ESNext",
     "jsxFactory": "h",
-    "jsx": "react"
+    "jsx": "react",
+    "target": "ES2017",
   },
   "include": ["src", "types/jsx.d.ts"]
 }
