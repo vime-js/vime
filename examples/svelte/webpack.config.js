@@ -24,14 +24,15 @@ module.exports = {
   mode,
   devtool: prod ? false : 'source-map',
   devServer: {
-    static: './public',
-    public: '/build',
+    contentBase: './public',
+    publicPath: '/build',
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
+        exclude: /node_modules/,
       },
       {
         test: /\.svelte$/,
