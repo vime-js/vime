@@ -41,7 +41,11 @@ function App() {
 
   return (
     <div id="container">
-      <Player playsinline ref={player} onVmPlaybackReady={onPlaybackReady}>
+      <Player
+        playsinline={true}
+        ref={player}
+        onVmPlaybackReady={onPlaybackReady}
+      >
         {/* YOUTUBE */}
         {/* <Youtube videoId="DyTCOwB0DVw" /> */}
 
