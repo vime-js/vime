@@ -9,7 +9,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "jsxFactory": "React.createElement"
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
