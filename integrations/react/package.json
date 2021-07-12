@@ -23,8 +23,8 @@
     "build": "rimraf dist && npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc --target es5 --module commonjs --outDir dist/cjs --project tsconfig.build.json",
     "build:esm": "tsc --target es6 --module es6 --outDir dist/esm --project tsconfig.build.json",
-    "serve": "concurrently vite \"npm run lint\"",
-    "lint": "tsc --project tsconfig.json --watch"
+    "serve": "concurrently vite \"npm run serve:typecheck\"",
+    "serve:typecheck": "tsc --project tsconfig.json --watch"
   },
   "dependencies": {
     "@seznam/compose-react-refs": "^1.0.4",
