@@ -35,9 +35,11 @@ jobs:
             ./packages/vue-next/node_modules
           key: ${{ runner.os }}-${{ hashFiles('packages/*/package-lock.json') }}
 
-      - name: Install Root Dependencies
+      - name: Install Dependencies
         if: steps.rootDeps.outputs.cache-hit != 'true'
-        run: npm run bootstrap
+        run: |
+          npm install
+          npm run bootstrap
 
       - name: Build
         run: npm run build
