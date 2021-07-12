@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "jsx": "preserve",
+    "module": "ES2020",
+    "noUnusedLocals": false,
+    "outDir": "dist",
+    "removeComments": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "ES6"
+  },
+  "include": ["src"]
+}

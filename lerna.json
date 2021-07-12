@@ -1,0 +1,12 @@
+{
+  "version": "5.0.31",
+  "npmClient": "npm",
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore(release): publish %s",
+      "registry": "https://registry.npmjs.org"
+    }
+  },
+  "packages": ["packages/*"]
+}

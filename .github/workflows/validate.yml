@@ -13,63 +13,28 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2-beta
         with:
-          node-version: 15
+          node-version: 16
 
-      - name: Cache Root Dependencies
-        id: rootDeps
+      - name: Cache Dependencies
+        id: deps
         uses: actions/cache@v2
         with:
-          path: './node_modules'
-          key: deps-${{ hashFiles('package-lock.json') }}
+          path: |
+            ./node_modules
+            ./packages/angular/node_modules
+            ./packages/core/node_modules
+            ./packages/react/node_modules
+            ./packages/svelte/node_modules
+            ./packages/vue/node_modules
+            ./packages/vue-next/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('packages/*/package-lock.json') }}
 
       - name: Install Root Dependencies
         if: steps.rootDeps.outputs.cache-hit != 'true'
-        run: npm install
+        run: npm run bootstrap
 
-      - name: Cache Angular Dependencies
-        id: angularDeps
-        uses: actions/cache@v2
-        with:
-          path: 'integrations/angular/node_modules'
-          key: deps-${{ hashFiles('integrations/angular/package-lock.json') }}
+      - name: Build
+        run: npm run build
 
-      - name: Cache React Dependencies
-        id: reactDeps
-        uses: actions/cache@v2
-        with:
-          path: 'integrations/react/node_modules'
-          key: deps-${{ hashFiles('integrations/react/package-lock.json') }}
-
-      - name: Cache Svelte Dependencies
-        id: svelteDeps
-        uses: actions/cache@v2
-        with:
-          path: 'integrations/svelte/node_modules'
-          key: deps-${{ hashFiles('integrations/svelte/package-lock.json') }}
-
-      - name: Cache Vue Dependencies
-        id: vueDeps
-        uses: actions/cache@v2
-        with:
-          path: 'integrations/vue/node_modules'
-          key: deps-${{ hashFiles('integrations/vue/package-lock.json') }}
-
-      - name: Cache VueNext Dependencies
-        id: vueNextDeps
-        uses: actions/cache@v2
-        with:
-          path: 'integrations/vue-next/node_modules'
-          key: deps-${{ hashFiles('integrations/vue-next/package-lock.json') }}
-
-      - name: Setup Git Identity
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Validate Packages
-        run: npm run validate
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint
+        run: npm run lint
