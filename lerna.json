@@ -1,5 +1,5 @@
 {
-  "version": "5.0.31",
+  "version": "5.0.32",
   "npmClient": "npm",
   "command": {
     "publish": {
@@ -8,5 +8,7 @@
       "registry": "https://registry.npmjs.org"
     }
   },
-  "packages": ["packages/*"]
+  "packages": [
+    "packages/*"
+  ]
 }
