@@ -38,7 +38,7 @@ jobs:
       - name: Install Dependencies
         if: steps.rootDeps.outputs.cache-hit != 'true'
         run: |
-          npm install
+          npm ci
           npm run bootstrap
 
       - name: Build
