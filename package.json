@@ -13,7 +13,7 @@
   "collection:main": "dist/collection/index.js",
   "types": "dist/custom-elements/index.d.ts",
   "engines": {
-    "node": "12 || 14"
+    "node": "12 || 14 || 15 || 16"
   },
   "files": [
     "dist/",
