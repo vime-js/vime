@@ -44,9 +44,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Release
-        run: npm run release:ci
-
       - name: Setup Git Identity
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -54,6 +51,9 @@ jobs:
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release
+        run: npm run release:ci
 
       - name: Push Commits
         run: git push origin main
