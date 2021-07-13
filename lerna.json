@@ -8,8 +8,5 @@
       "registry": "https://registry.npmjs.org"
     }
   },
-  "packages": [
-    "packages/*",
-    "examples/*"
-  ]
+  "packages": ["packages/*", "examples/*"]
 }
