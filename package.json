@@ -4,8 +4,9 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
+    "bootstrap": "lerna bootstrap --no-private",
+    "bootstrap:all": "lerna bootstrap",
+    "build": "lerna run --no-private build",
     "clean": "lerna run clean",
     "core:build": "npm run build --prefix packages/core",
     "core:install": "npm install --prefix packages/core",

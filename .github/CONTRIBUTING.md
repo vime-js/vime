@@ -72,6 +72,33 @@ $: git branch --set-upstream-to=upstream/master master
 $: git pull
 ```
 
+### Build
+
+Vime is structured as a [Lerna](https://github.com/lerna/lerna) monorepo.
+
+First, we need to install packages and then bootstrap the repo with Lerna. This sets up and creates links between the internal packages. For example, the local `@vime/react` package will point directly at the local `@vime/core` package rather than using an already-published version.
+
+```bash
+$: npm install
+$: npm run bootstrap
+```
+
+To build all the packages:
+
+```bash
+$: npm run build
+```
+
+### Testing with examples
+
+If you are modifying Vime and want to test out your updated code using one of the examples, you can also use Lerna to link the local packages into them:
+
+```bash
+$: npm run bootstrap:all
+```
+
+Note: this does not apply to the `html` example, which loads the published version directly from a CDN.
+
 ## 🏗️ Architecture
 
 For how Vime works in general see the [Architecture](./ARCHITECTURE.md) document.
