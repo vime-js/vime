@@ -29,10 +29,9 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "scripts": {
-    "build": "run-s clean build:icons build:themes build:stencil",
+    "build": "run-s clean build:themes build:stencil",
     "build:stencil": "stencil build",
     "build:watch": "stencil build --watch",
-    "build:icons": "cpy src/icons icons",
     "build:themes": "rimraf themes && mkdir themes && run-s build:theme:*",
     "build:theme:default": "cleancss -o themes/default.css src/themes/default.css",
     "build:theme:light": "cleancss -o themes/light.css src/themes/light.css",
@@ -50,7 +49,6 @@
   "devDependencies": {
     "@types/hls.js": "^0.13.1",
     "clean-css-cli": "^4.3.0",
-    "cpy-cli": "^3.1.1",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2",
     "svelte": "^3.24.1",
