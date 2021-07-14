@@ -7,6 +7,7 @@ import { Component, h } from '@stencil/core';
 })
 export class AppHome {
   // Obtain a ref if you need to call any methods.
+  // @ts-expect-error
   private player!: HTMLVmPlayerElement;
 
   private onPlaybackReady() {

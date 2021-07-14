@@ -4,7 +4,8 @@
     "module": "ESNext",
     "jsxFactory": "h",
     "jsx": "react",
-    "target": "ES6"
+    "target": "ES6",
+    "lib": ["DOM", "ES2017"]
   },
-  "include": ["src", "types/jsx.d.ts"]
+  "include": ["src"]
 }

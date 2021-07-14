@@ -11,6 +11,12 @@ export const config: Config = {
       type: 'www',
       serviceWorker: null,
       baseUrl: 'https://myapp.local/',
+      copy: [
+        {
+          src: '../node_modules/@vime/core/icons',
+          dest: 'icons',
+        },
+      ],
     },
   ],
 };
