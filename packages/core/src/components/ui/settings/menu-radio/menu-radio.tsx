@@ -9,7 +9,7 @@ import { withComponentRegistry } from '../../../core/player/withComponentRegistr
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/menu-radio/menu-radio.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/menu-radio/menu-radio.png"
  *   alt="Vime settings menu radio component"
  * />
  */

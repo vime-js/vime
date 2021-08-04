@@ -10,7 +10,7 @@ import { withPlayerContext } from '../../../core/player/withPlayerContext';
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/time/current-time/current-time.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/time/current-time/current-time.png"
  *   alt="Vime current time component"
  * />
  */

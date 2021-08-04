@@ -24,7 +24,7 @@ import { withPlayerContext } from '../../../core/player/withPlayerContext';
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/default-settings/default-settings.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/default-settings/default-settings.png"
  *   alt="Vime default settings component"
  * />
  *

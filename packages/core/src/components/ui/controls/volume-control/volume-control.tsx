@@ -19,7 +19,7 @@ import { TooltipDirection, TooltipPosition } from '../../tooltip/types';
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/volume-control/volume-control.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/volume-control/volume-control.png"
  *   alt="Vime volume control component"
  * />
  */
