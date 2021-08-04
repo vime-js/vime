@@ -22,7 +22,7 @@ let idCount = 0;
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/submenu/submenu.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/submenu/submenu.png"
  *   alt="Vime submenu component"
  * />
  *

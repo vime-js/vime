@@ -22,7 +22,7 @@ import { withPlayerContext } from '../../core/player/withPlayerContext';
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/poster/poster.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/poster/poster.png"
  *   alt="Vime poster component"
  * />
  */

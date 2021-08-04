@@ -10,7 +10,7 @@ import { withPlayerContext } from '../../core/player/withPlayerContext';
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/live-indicator/live-indicator.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/live-indicator/live-indicator.png"
  *   alt="Vime live indicator component"
  * />
  */

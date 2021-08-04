@@ -9,7 +9,7 @@ import { withComponentRegistry } from '../../../core/player/withComponentRegistr
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/control-group/control-group.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/control-group/control-group.png"
  *   alt="Vime control group component"
  * />
  */

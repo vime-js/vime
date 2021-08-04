@@ -32,7 +32,7 @@ let idCount = 0;
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/settings/settings/settings.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/settings/settings/settings.png"
  *   alt="Vime settings component"
  * />
  *

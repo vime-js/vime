@@ -26,7 +26,7 @@ import { withControlsCollisionDetection } from '../controls/controls/withControl
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/captions/captions.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/captions/captions.png"
  *   alt="Vime captions component"
  * />
  */

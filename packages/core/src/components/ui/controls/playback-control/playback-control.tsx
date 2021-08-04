@@ -17,7 +17,7 @@ import { KeyboardControl } from '../control/KeyboardControl';
  * ## Visual
  *
  * <img
- *   src="https://raw.githubusercontent.com/vime-js/vime/master/src/components/ui/controls/playback-control/playback-control.png"
+ *   src="https://raw.githubusercontent.com/vime-js/vime/master/packages/core/src/components/ui/controls/playback-control/playback-control.png"
  *   alt="Vime playback control component"
  * />
  */
