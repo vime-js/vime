@@ -774,6 +774,77 @@ export namespace Components {
          */
         "value"?: string;
     }
+    interface VmMpegts {
+        /**
+          * **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.
+          * @inheritdoc
+         */
+        "autoPiP"?: boolean;
+        /**
+          * The `mpegts.js` mediaDataSource configuration.
+         */
+        "config"?: any;
+        /**
+          * Determines what controls to show on the media element whenever the browser shows its own set of controls (e.g. when the controls attribute is specified).
+          * @inheritdoc
+         */
+        "controlsList"?: string;
+        /**
+          * Whether to use CORS to fetch the related image. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more information.
+          * @inheritdoc
+         */
+        "crossOrigin"?: MediaCrossOriginOption;
+        /**
+          * **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.
+          * @inheritdoc
+         */
+        "disablePiP"?: boolean;
+        /**
+          * **EXPERIMENTAL:** Whether to disable the capability of remote playback in devices that are attached using wired (HDMI, DVI, etc.) and wireless technologies (Miracast, Chromecast, DLNA, AirPlay, etc).
+          * @inheritdoc
+         */
+        "disableRemotePlayback"?: boolean;
+        "getAdapter": () => Promise<{ getInternalPlayer: () => Promise<any>; play: () => Promise<void | undefined>; pause: () => Promise<void | undefined>; canPlay: (type: any) => Promise<boolean>; setCurrentTime: (time: number) => Promise<void>; setMuted: (muted: boolean) => Promise<void>; setVolume: (volume: number) => Promise<void>; canSetPlaybackRate: () => Promise<boolean>; setPlaybackRate: (rate: number) => Promise<void>; canSetPiP: () => Promise<boolean>; enterPiP: () => Promise<any>; exitPiP: () => Promise<any>; canSetFullscreen: () => Promise<boolean>; enterFullscreen: () => Promise<void>; exitFullscreen: () => Promise<void>; setCurrentTextTrack: (trackId: number) => Promise<void>; setTextTrackVisibility: (isVisible: boolean) => Promise<void>; }>;
+        /**
+          * Indicates whether the data source is a live stream
+         */
+        "isLive"?: boolean;
+        /**
+          * The URL where the `mpegts.js` library source can be found. If this property is used, then the `version` property is ignored.
+         */
+        "libSrc"?: string;
+        /**
+          * The title of the current media.
+         */
+        "mediaTitle"?: string;
+        /**
+          * The `mpegts.js` optional configuration.
+         */
+        "optionalConfig"?: any;
+        "playbackReady": boolean;
+        /**
+          * A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.
+          * @inheritdoc
+         */
+        "poster"?: string;
+        /**
+          * Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information.
+          * @inheritdoc
+         */
+        "preload"?: MediaPreloadOption;
+        /**
+          * Indicates media URL, can be starts with 'https(s)' or 'ws(s)' (WebSocket)
+         */
+        "src"?: string;
+        /**
+          * Indicates media type, 'mse', 'mpegts', 'm2ts', 'flv' or 'mp4'
+         */
+        "type"?: string;
+        /**
+          * The NPM package version of the `mpegts.js` library to download supported.
+         */
+        "version": string;
+    }
     interface VmMuteControl {
         /**
           * Whether the tooltip should not be displayed.
@@ -1830,6 +1901,12 @@ declare global {
         prototype: HTMLVmMenuRadioGroupElement;
         new (): HTMLVmMenuRadioGroupElement;
     };
+    interface HTMLVmMpegtsElement extends Components.VmMpegts, HTMLStencilElement {
+    }
+    var HTMLVmMpegtsElement: {
+        prototype: HTMLVmMpegtsElement;
+        new (): HTMLVmMpegtsElement;
+    };
     interface HTMLVmMuteControlElement extends Components.VmMuteControl, HTMLStencilElement {
     }
     var HTMLVmMuteControlElement: {
@@ -1985,6 +2062,7 @@ declare global {
         "vm-menu-item": HTMLVmMenuItemElement;
         "vm-menu-radio": HTMLVmMenuRadioElement;
         "vm-menu-radio-group": HTMLVmMenuRadioGroupElement;
+        "vm-mpegts": HTMLVmMpegtsElement;
         "vm-mute-control": HTMLVmMuteControlElement;
         "vm-pip-control": HTMLVmPipControlElement;
         "vm-playback-control": HTMLVmPlaybackControlElement;
@@ -2815,6 +2893,81 @@ declare namespace LocalJSX {
           * The current value selected for this group.
          */
         "value"?: string;
+    }
+    interface VmMpegts {
+        /**
+          * **EXPERIMENTAL:** Whether the browser should automatically toggle picture-in-picture mode as the user switches back and forth between this document and another document or application.
+          * @inheritdoc
+         */
+        "autoPiP"?: boolean;
+        /**
+          * The `mpegts.js` mediaDataSource configuration.
+         */
+        "config"?: any;
+        /**
+          * Determines what controls to show on the media element whenever the browser shows its own set of controls (e.g. when the controls attribute is specified).
+          * @inheritdoc
+         */
+        "controlsList"?: string;
+        /**
+          * Whether to use CORS to fetch the related image. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) for more information.
+          * @inheritdoc
+         */
+        "crossOrigin"?: MediaCrossOriginOption;
+        /**
+          * **EXPERIMENTAL:** Prevents the browser from suggesting a picture-in-picture context menu or to request picture-in-picture automatically in some cases.
+          * @inheritdoc
+         */
+        "disablePiP"?: boolean;
+        /**
+          * **EXPERIMENTAL:** Whether to disable the capability of remote playback in devices that are attached using wired (HDMI, DVI, etc.) and wireless technologies (Miracast, Chromecast, DLNA, AirPlay, etc).
+          * @inheritdoc
+         */
+        "disableRemotePlayback"?: boolean;
+        /**
+          * Indicates whether the data source is a live stream
+         */
+        "isLive"?: boolean;
+        /**
+          * The URL where the `mpegts.js` library source can be found. If this property is used, then the `version` property is ignored.
+         */
+        "libSrc"?: string;
+        /**
+          * The title of the current media.
+         */
+        "mediaTitle"?: string;
+        /**
+          * Emitted when an error has occurred.
+         */
+        "onVmError"?: (event: CustomEvent<any>) => void;
+        "onVmLoadStart"?: (event: CustomEvent<void>) => void;
+        /**
+          * The `mpegts.js` optional configuration.
+         */
+        "optionalConfig"?: any;
+        "playbackReady"?: boolean;
+        /**
+          * A URL for an image to be shown while the video is downloading. If this attribute isn't specified, nothing is displayed until the first frame is available, then the first frame is shown as the poster frame.
+          * @inheritdoc
+         */
+        "poster"?: string;
+        /**
+          * Provides a hint to the browser about what the author thinks will lead to the best user experience with regards to what content is loaded before the video is played. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attr-preload) for more information.
+          * @inheritdoc
+         */
+        "preload"?: MediaPreloadOption;
+        /**
+          * Indicates media URL, can be starts with 'https(s)' or 'ws(s)' (WebSocket)
+         */
+        "src"?: string;
+        /**
+          * Indicates media type, 'mse', 'mpegts', 'm2ts', 'flv' or 'mp4'
+         */
+        "type"?: string;
+        /**
+          * The NPM package version of the `mpegts.js` library to download supported.
+         */
+        "version"?: string;
     }
     interface VmMuteControl {
         /**
@@ -3854,6 +4007,7 @@ declare namespace LocalJSX {
         "vm-menu-item": VmMenuItem;
         "vm-menu-radio": VmMenuRadio;
         "vm-menu-radio-group": VmMenuRadioGroup;
+        "vm-mpegts": VmMpegts;
         "vm-mute-control": VmMuteControl;
         "vm-pip-control": VmPipControl;
         "vm-playback-control": VmPlaybackControl;
@@ -3909,6 +4063,7 @@ declare module "@stencil/core" {
             "vm-menu-item": LocalJSX.VmMenuItem & JSXBase.HTMLAttributes<HTMLVmMenuItemElement>;
             "vm-menu-radio": LocalJSX.VmMenuRadio & JSXBase.HTMLAttributes<HTMLVmMenuRadioElement>;
             "vm-menu-radio-group": LocalJSX.VmMenuRadioGroup & JSXBase.HTMLAttributes<HTMLVmMenuRadioGroupElement>;
+            "vm-mpegts": LocalJSX.VmMpegts & JSXBase.HTMLAttributes<HTMLVmMpegtsElement>;
             "vm-mute-control": LocalJSX.VmMuteControl & JSXBase.HTMLAttributes<HTMLVmMuteControlElement>;
             "vm-pip-control": LocalJSX.VmPipControl & JSXBase.HTMLAttributes<HTMLVmPipControlElement>;
             "vm-playback-control": LocalJSX.VmPlaybackControl & JSXBase.HTMLAttributes<HTMLVmPlaybackControlElement>;
