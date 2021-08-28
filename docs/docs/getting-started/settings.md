@@ -335,9 +335,9 @@ function Player() {
 
     <DefaultUi noSettings>
       <Settings>
-        <menuitem label="Menu Item 1" badge="BADGE" @click="onMenuItem1Click" />
+        <MenuItem label="Menu Item 1" badge="BADGE" @click="onMenuItem1Click" />
 
-        <menuitem label="Menu Item 2" hint="Hint" @click="onMenuItem2Click" />
+        <MenuItem label="Menu Item 2" hint="Hint" @click="onMenuItem2Click" />
 
         <Submenu label="Submenu 1" :hint="value">
           <MenuRadioGroup :value="value" @vCheck="onCheck">
@@ -403,13 +403,13 @@ function Player() {
 
   <DefaultUi noSettings>
     <Settings>
-      <menuitem
+      <MenuItem
         label="Menu Item 1"
         badge="BADGE"
         on:click="{onMenuItem1Click}"
       />
 
-      <menuitem label="Menu Item 2" hint="Hint" on:click="{onMenuItem2Click}" />
+      <MenuItem label="Menu Item 2" hint="Hint" on:click="{onMenuItem2Click}" />
 
       <Submenu label="Submenu 1" hint="{value}">
         <MenuRadioGroup {value} on:vCheck="{onCheck}">
