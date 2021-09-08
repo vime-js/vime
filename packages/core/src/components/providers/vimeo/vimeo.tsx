@@ -239,7 +239,7 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
       .then(response => response.json())
       .then(data => {
         const thumnailRegex = /vimeocdn\.com\/video\/([0-9]+)/;
-        const thumbnailId = data?.thumbnail_url.match(thumnailRegex)[1];
+        const thumbnailId = data?.thumbnail_url?.match(thumnailRegex)[1];
         const poster = `https://i.vimeocdn.com/video/${thumbnailId}_1920x1080.jpg`;
         const info = { poster, width: data?.width, height: data?.height };
         videoInfoCache.set(this.videoId, info);
