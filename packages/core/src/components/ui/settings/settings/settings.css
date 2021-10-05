@@ -22,7 +22,7 @@
 .settings {
   position: absolute;
   opacity: 0;
-  pointer-events: auto;
+  pointer-events: none;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: var(--vm-menu-bg);
@@ -68,6 +68,7 @@
 .settings.active {
   transform: translateY(0);
   opacity: 1;
+  pointer-events: auto;
   visibility: visible !important;
 }
 
