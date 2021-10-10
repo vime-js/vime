@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.34](https://github.com/vime-js/vime/compare/v5.0.33...v5.0.34) (2021-10-10)
+
+
+### Bug Fixes
+
+*  vimeo thumbnail_url missing for private videos ([#247](https://github.com/vime-js/vime/issues/247)) ([7056a9c](https://github.com/vime-js/vime/commit/7056a9c8a6186d52d5c3eb6cb65ca955dd88c97c))
+* Enable the example projects to use locally linked versions of the Vime packages ([#227](https://github.com/vime-js/vime/issues/227)) ([fac1f7c](https://github.com/vime-js/vime/commit/fac1f7ce20df80da596198acb504650fd1463c1a))
+* set pointer-events to none when settings menu is not visible ([#255](https://github.com/vime-js/vime/issues/255)) ([ab19d01](https://github.com/vime-js/vime/commit/ab19d01d08f00fabbf7cb9d5de652c0fe70c4e24))
+
+
+
+
+
 ## [5.0.33](https://github.com/vime-js/vime/compare/v5.0.32...v5.0.33) (2021-07-12)
 
 ### Bug Fixes

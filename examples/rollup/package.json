@@ -1,6 +1,6 @@
 {
   "name": "@vime/rollup-example",
-  "version": "0.0.0",
+  "version": "5.0.34",
   "private": true,
   "scripts": {
     "build": "rollup -c",
@@ -8,7 +8,7 @@
     "start": "sirv public"
   },
   "dependencies": {
-    "@vime/core": "^5.0.0"
+    "@vime/core": "^5.0.34"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^10.0.0",
