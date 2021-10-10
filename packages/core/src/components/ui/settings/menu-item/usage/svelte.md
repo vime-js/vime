@@ -4,7 +4,7 @@
   <Ui>
     <!-- ... -->
     <Settings>
-      <menuitem label="Playback Quality" hint="Auto" />
+      <MenuItem label="Playback Quality" hint="Auto" />
     </Settings>
   </Ui>
 </Player>
