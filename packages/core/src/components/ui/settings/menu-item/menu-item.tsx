@@ -72,14 +72,14 @@ export class MenuItem {
   /**
    * This can provide additional context about some underlying state of the item. For example, if
    * the menu item opens/closes a submenu with options, the hint could be the currently selected
-   * option.
+   * option. If `checked` is defined, `hint` is not shown.
    */
   @Prop() hint?: string;
 
   /**
    * This can provide additional context about the value of a menu item. For example, if the item
    * is a radio button for a set of video qualities, the badge could describe whether the quality
-   * is UHD, HD etc.
+   * is UHD, HD etc. If `hint` is shown, `badge` is not shown.
    */
   @Prop() badge?: string;
 
