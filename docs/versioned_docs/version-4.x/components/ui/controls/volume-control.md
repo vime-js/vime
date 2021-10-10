@@ -11,7 +11,7 @@ A control for adjusting the volume of the player and toggling the muted state.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/volume-control/volume-control.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/controls/volume-control/volume-control.png"
   alt="Vime volume control component"
 />
 

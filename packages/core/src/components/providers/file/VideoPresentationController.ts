@@ -94,6 +94,7 @@ export class VideoPresentationController {
     type: EventType,
     handler: Handler<VideoPresentationEventPayload[EventType]>,
   ): void {
+    // @ts-expect-error - not typed yet.
     this.emitter.on(type, handler);
   }
 
@@ -101,6 +102,7 @@ export class VideoPresentationController {
     type: EventType,
     handler: Handler<VideoPresentationEventPayload[EventType]>,
   ): void {
+    // @ts-expect-error - not typed yet.
     this.emitter.off(type, handler);
   }
 

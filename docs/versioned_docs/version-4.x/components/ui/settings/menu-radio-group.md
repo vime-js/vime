@@ -12,7 +12,7 @@ can be selected at the same time.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/settings/menu-radio-group/menu-radio-group.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/settings/menu-radio-group/menu-radio-group.png"
   alt="Vime settings menu radio group component"
 />
 

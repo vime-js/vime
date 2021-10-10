@@ -12,7 +12,7 @@ the player.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/mute-control/mute-control.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/controls/mute-control/mute-control.png"
   alt="Vime mute control component"
 />
 

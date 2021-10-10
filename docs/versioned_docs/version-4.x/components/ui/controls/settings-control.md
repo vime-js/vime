@@ -12,7 +12,7 @@ settings (`vime-settings`) has been provided for the current player.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/settings-control/settings-control.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/controls/settings-control/settings-control.png"
   alt="Vime settings control component"
 />
 

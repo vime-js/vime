@@ -11,7 +11,7 @@ Formats and displays a length of time provided in seconds.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/time/time/time.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/time/time/time.png"
   alt="Vime time component"
 />
 

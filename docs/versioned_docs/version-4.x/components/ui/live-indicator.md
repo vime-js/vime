@@ -11,7 +11,7 @@ This can be used to indicate to the user that the current media is being streame
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/live-indicator/live-indicator.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/live-indicator/live-indicator.png"
   alt="Vime live indicator component"
 />
 

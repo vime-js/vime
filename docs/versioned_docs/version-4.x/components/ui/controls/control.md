@@ -12,7 +12,7 @@ seamlessly works with `vime-tooltip`, which can be passed in via the default `sl
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/control/control.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/controls/control/control.png"
   alt="Vime control component"
 />
 

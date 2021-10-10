@@ -11,7 +11,7 @@ Formats and displays the current time of playback.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/time/current-time/current-time.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/time/current-time/current-time.png"
   alt="Vime current time component"
 />
 

@@ -64,6 +64,7 @@ export class FullscreenController {
     type: EventType,
     handler: Handler<FullscreenEventPayload[EventType]>,
   ): void {
+    // @ts-expect-error - not typed yet.
     this.emitter.on(type, handler);
   }
 
@@ -71,6 +72,7 @@ export class FullscreenController {
     type: EventType,
     handler: Handler<FullscreenEventPayload[EventType]>,
   ): void {
+    // @ts-expect-error - not typed yet.
     this.emitter.off(type, handler);
   }
 

@@ -13,7 +13,7 @@ sections/options together that can be navigated to by the user.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/settings/submenu/submenu.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/settings/submenu/submenu.png"
   alt="Vime submenu component"
 />
 

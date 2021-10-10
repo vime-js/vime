@@ -11,7 +11,7 @@ Used to space controls out vertically/horizontally. Under the hood it's simply `
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/control-spacer/control-spacer.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/controls/control-spacer/control-spacer.png"
   alt="Vime control spacer component"
 />
 

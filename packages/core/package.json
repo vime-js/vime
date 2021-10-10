@@ -40,19 +40,19 @@
     "clean:docs": "npm run clean --prefix ../../docs"
   },
   "dependencies": {
-    "@stencil/core": "^2.5.2",
+    "@stencil/core": "^2.8.1",
     "@types/fscreen": "^1.0.1",
     "fscreen": "^1.2.0",
-    "mitt": "^2.1.0",
-    "stencil-wormhole": "^3.2.2"
+    "mitt": "^3.0.0",
+    "stencil-wormhole": "^3.4.1"
   },
   "devDependencies": {
-    "@types/node": "^16.3.1",
-    "clean-css-cli": "^4.3.0",
+    "@types/node": "^16.10.3",
+    "clean-css-cli": "^5.4.1",
     "hls.js": "latest",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2",
-    "svelte": "^3.24.1"
+    "svelte": "^3.43.1"
   },
   "publishConfig": {
     "access": "public"

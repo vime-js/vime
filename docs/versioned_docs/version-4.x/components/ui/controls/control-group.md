@@ -12,7 +12,7 @@ a new line.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/control-group/control-group.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/controls/control-group/control-group.png"
   alt="Vime control group component"
 />
 

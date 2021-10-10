@@ -12,7 +12,7 @@ be requested (checked via the `canSetPiP()` player method).
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/pip-control/pip-control.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/controls/pip-control/pip-control.png"
   alt="Vime mute control component"
 />
 

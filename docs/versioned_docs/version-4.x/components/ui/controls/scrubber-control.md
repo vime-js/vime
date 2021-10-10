@@ -15,7 +15,7 @@ timeline that has not buffered.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/scrubber-control/scrubber-control.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/controls/scrubber-control/scrubber-control.png"
   alt="Vime scrubber control component"
 />
 

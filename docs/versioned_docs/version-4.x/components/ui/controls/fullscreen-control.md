@@ -12,7 +12,7 @@ requested (checked via the `canSetFullscreen()` player method).
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/controls/fullscreen-control/fullscreen-control.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/controls/fullscreen-control/fullscreen-control.png"
   alt="Vime fullscreen control component"
 />
 

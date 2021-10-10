@@ -12,7 +12,7 @@ dissapear once playback starts.
 ## Visual
 
 <img
-  src="https://raw.githubusercontent.com/vime-js/vime/src/components/ui/poster/poster.png"
+  src="https://raw.githubusercontent.com/vime-js/vime/main/packages/core/src/components/ui/poster/poster.png"
   alt="Vime poster component"
 />
 
