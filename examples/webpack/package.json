@@ -1,13 +1,13 @@
 {
   "name": "@vime/webpack-example",
-  "version": "5.0.34",
+  "version": "5.0.35",
   "private": true,
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "serve": "webpack serve --open true"
   },
   "dependencies": {
-    "@vime/core": "^5.0.34"
+    "@vime/core": "^5.0.35"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",

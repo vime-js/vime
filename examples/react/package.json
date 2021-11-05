@@ -1,10 +1,10 @@
 {
   "name": "@vime/react-example",
-  "version": "5.0.34",
+  "version": "5.0.35",
   "private": true,
   "dependencies": {
-    "@vime/core": "^5.0.34",
-    "@vime/react": "^5.0.34",
+    "@vime/core": "^5.0.35",
+    "@vime/react": "^5.0.35",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "^4.0.3",
