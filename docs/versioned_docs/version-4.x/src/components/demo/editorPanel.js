@@ -1,4 +1,4 @@
-import { Pane } from 'tweakpane';
+import TweakPane from 'tweakpane';
 
 const buildEditorPanel = ({
   container,
@@ -9,7 +9,7 @@ const buildEditorPanel = ({
 }) => {
   if (typeof container === 'undefined') return null;
 
-  const pane = new Pane({
+  const pane = new TweakPane({
     title: 'Editor',
     container,
   });

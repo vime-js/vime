@@ -27,7 +27,7 @@
     "react-draggable": "^4.4.4",
     "react-toggle": "^4.1.2",
     "rimraf": "^3.0.2",
-    "tweakpane": "^3.0.5",
+    "tweakpane": "^1.5.4",
     "workbox-routing": "^6.3.0",
     "workbox-strategies": "^6.3.0"
   },
