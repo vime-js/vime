@@ -10,7 +10,7 @@
     "@vime/core": "^5.0.34"
   },
   "devDependencies": {
-    "@stencil/core": "^2.0.0",
+    "@stencil/core": "2.5.2",
     "@stencil/router": "^1.0.1"
   }
 }

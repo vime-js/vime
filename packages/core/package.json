@@ -40,7 +40,7 @@
     "clean:docs": "npm run clean --prefix ../../docs"
   },
   "dependencies": {
-    "@stencil/core": "^2.8.1",
+    "@stencil/core": "2.5.2",
     "@types/fscreen": "^1.0.1",
     "fscreen": "^1.2.0",
     "mitt": "^3.0.0",
