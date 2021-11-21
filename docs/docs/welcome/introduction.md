@@ -197,7 +197,7 @@ A huge thanks to our sponsors who support open-source projects like Vime.
   <img
     width="100%"
     alt="mux"
-    src="https://github.com/vime-js/vime/blob/master/static/sponsors/mux.png?raw=true"
+    src="https://github.com/vime-js/vime/blob/main/static/sponsors/mux.png?raw=true"
   />
 </a>
 
@@ -205,7 +205,7 @@ A huge thanks to our sponsors who support open-source projects like Vime.
   <img
     width="100%"
     alt="vercel"
-    src="https://github.com/vime-js/vime/blob/master/static/sponsors/vercel.png?raw=true"
+    src="https://github.com/vime-js/vime/blob/main/static/sponsors/vercel.png?raw=true"
   />
 </a>
 
@@ -214,7 +214,7 @@ A huge thanks to our sponsors who support open-source projects like Vime.
     width="100%"
     alt="cypress"
     src="./static/sponsors/cypress.png"
-    src="https://github.com/vime-js/vime/blob/master/static/sponsors/cypress.png?raw=true"
+    src="https://github.com/vime-js/vime/blob/main/static/sponsors/cypress.png?raw=true"
   />
 </a>
 
