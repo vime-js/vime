@@ -45,9 +45,9 @@ let __mounted = false;
 
 const dispatch = createEventDispatcher();
 
-let className;
+let className = '';
 
-export let style;
+export let style = '';
 export { className as class };
 
 ${properties

@@ -8,8 +8,8 @@ export const generateSvelteTypings = (meta: ComponentCompilerMeta) => {
 
   const types = `
 interface ${name}Props {
-  class: string
-  style: string
+  class?: string
+  style?: string
   ${meta.properties
     .map(
       prop =>

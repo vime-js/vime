@@ -52,7 +52,7 @@ export class FullscreenController {
       // Throws in iOS Safari...
       return this.host.matches(
         // Property `fullscreenPseudoClass` is missing from `@types/fscreen`.
-        ((fscreen as unknown) as { fullscreenPseudoClass: string })
+        (fscreen as unknown as { fullscreenPseudoClass: string })
           .fullscreenPseudoClass,
       );
     } catch (error) {
@@ -91,7 +91,7 @@ export class FullscreenController {
     if (!this.isSupported) return noop;
 
     return listen(
-      (fscreen as unknown) as EventTarget,
+      fscreen as unknown as EventTarget,
       'fullscreenchange',
       handler,
     );
@@ -103,7 +103,7 @@ export class FullscreenController {
     if (!this.isSupported) return noop;
 
     return listen(
-      (fscreen as unknown) as EventTarget,
+      fscreen as unknown as EventTarget,
       'fullscreenerror',
       handler,
     );
