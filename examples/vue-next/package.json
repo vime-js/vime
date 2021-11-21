@@ -1,14 +1,14 @@
 {
   "name": "@vime/vue-next-example",
-  "version": "5.0.35",
+  "version": "5.3.0",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@vime/core": "^5.0.35",
-    "@vime/vue-next": "^5.0.35",
+    "@vime/core": "5.3.0",
+    "@vime/vue-next": "5.3.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0"
   },

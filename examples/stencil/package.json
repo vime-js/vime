@@ -1,13 +1,13 @@
 {
   "name": "@vime/stencil-example",
-  "version": "5.0.35",
+  "version": "5.3.0",
   "private": true,
   "scripts": {
     "dev": "stencil build --dev --watch --serve",
     "build": "stencil build"
   },
   "dependencies": {
-    "@vime/core": "^5.0.35"
+    "@vime/core": "5.3.0"
   },
   "devDependencies": {
     "@stencil/core": "2.5.2",
