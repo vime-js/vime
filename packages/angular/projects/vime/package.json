@@ -25,15 +25,16 @@
     "postinstall": "node ./.scripts/validate.cjs"
   },
   "peerDependencies": {
+    "@vime/core": "^5.0.0",
     "@angular/common": "^11.0.4",
     "@angular/core": "^11.0.4",
     "rxjs": "^6.6.2"
   },
   "dependencies": {
-    "@vime/core": "^5.0.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
+    "@vime/core": "^5.0.0",
     "rxjs": "^6.6.2"
   },
   "publishConfig": {

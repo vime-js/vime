@@ -236,17 +236,20 @@ async function publishPackage(pkgName, version, runIfNotDry) {
 
   step(`Publishing ${pkgName}...`);
 
+  const publishDir = pkg.publishConfig?.directory;
+
   try {
     await runIfNotDry(
       // use of yarn is intentional here as we rely on its publishing behavior.
       'yarn',
       [
-        'publish',
+        ...(publishDir ? ['publish', publishDir] : ['publish']),
         '--new-version',
         version,
         ...(releaseTag ? ['--tag', releaseTag] : []),
         '--access',
         'public',
+        ...(publishDir ? ['--no-git-tag-version'] : []),
       ],
       {
         cwd: pkgRoot,
