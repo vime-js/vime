@@ -450,6 +450,10 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
   }
 
   private adjustPosition() {
+    if (this.controls) {
+      return {};
+    }
+
     const [aw, ah] = this.aspectRatio.split(':').map(r => parseInt(r, 10));
     const height = 240;
     const padding = (100 / aw) * ah;
