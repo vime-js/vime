@@ -10,10 +10,8 @@
     "prepublishOnly": "node .scripts/prepublish.mjs",
     "ng": "ng"
   },
-  "dependencies": {
-    "@vime/core": "workspace:*"
-  },
   "devDependencies": {
+    "@vime/core": "workspace:*",
     "@angular-devkit/build-angular": "v11-lts",
     "@angular/cli": "v11-lts",
     "@angular/common": "v11-lts",
@@ -29,6 +27,9 @@
     "tslib": "^2.0.0",
     "typescript": "~4.0.2",
     "zone.js": "~0.10.2"
+  },
+  "peerDependencies": {
+    "@vime/core": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

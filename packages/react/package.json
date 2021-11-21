@@ -7,7 +7,8 @@
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    ".scripts/"
   ],
   "contributors": [
     "Rahim Alwer <rahim.alwer@gmail.com>"
@@ -25,13 +26,14 @@
     "build:esm": "tsc --outDir dist/esm",
     "build:watch": "npm run build:esm -- --watch --incremental",
     "clean": "rimraf dist src/components",
-    "clean:build": "rimraf dist"
+    "clean:build": "rimraf dist",
+    "postinstall": "node ./.scripts/validate.cjs"
   },
   "dependencies": {
-    "@seznam/compose-react-refs": "^1.0.4",
-    "@vime/core": "workspace:*"
+    "@seznam/compose-react-refs": "^1.0.4"
   },
   "devDependencies": {
+    "@vime/core": "workspace:*",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
     "npm-run-all": "^4.1.5",
@@ -41,6 +43,7 @@
     "typescript": "^4.3.5"
   },
   "peerDependencies": {
+    "@vime/core": "workspace:*",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },

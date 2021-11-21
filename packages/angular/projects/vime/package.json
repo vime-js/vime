@@ -21,6 +21,9 @@
     "*.d.ts",
     "vime-angular.metadata.json"
   ],
+  "scripts": {
+    "postinstall": "node ./.scripts/validate.cjs"
+  },
   "peerDependencies": {
     "@angular/common": "^11.0.4",
     "@angular/core": "^11.0.4",

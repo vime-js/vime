@@ -66,8 +66,6 @@ importers:
       tslib: ^2.0.0
       typescript: ~4.0.2
       zone.js: ~0.10.2
-    dependencies:
-      '@vime/core': link:../core
     devDependencies:
       '@angular-devkit/build-angular': 0.1102.15_c77989d242cf3586230ab38ba5d4fbc3
       '@angular/cli': 11.2.15
@@ -77,6 +75,7 @@ importers:
       '@angular/core': 11.2.14_rxjs@6.6.7+zone.js@0.10.3
       '@angular/platform-browser': 11.2.14_fdd764655c71a68a8cf886ddd9a243b9
       '@angular/platform-browser-dynamic': 11.2.14_85d62dd5beb851f0d1c066e080f8fa0d
+      '@vime/core': link:../core
       ng-packagr: 11.2.4_246f8f2707d20d38e3365923f86631a9
       npm-run-all: 4.1.5
       rimraf: 3.0.2
@@ -125,10 +124,10 @@ importers:
       typescript: ^4.3.5
     dependencies:
       '@seznam/compose-react-refs': 1.0.6
-      '@vime/core': link:../core
     devDependencies:
       '@types/react': 17.0.35
       '@types/react-dom': 17.0.11
+      '@vime/core': link:../core
       npm-run-all: 4.1.5
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -142,9 +141,8 @@ importers:
       rimraf: ^3.0.2
       svelte: ^3.24.1
       typescript: ^4.0.2
-    dependencies:
-      '@vime/core': link:../core
     devDependencies:
+      '@vime/core': link:../core
       npm-run-all: 4.1.5
       rimraf: 3.0.2
       svelte: 3.44.2
@@ -157,9 +155,8 @@ importers:
       rimraf: ^3.0.2
       typescript: ^4.0.2
       vue: ^2.6.11
-    dependencies:
-      '@vime/core': link:../core
     devDependencies:
+      '@vime/core': link:../core
       npm-run-all: 4.1.5
       rimraf: 3.0.2
       typescript: 4.5.2
@@ -172,9 +169,8 @@ importers:
       rimraf: ^3.0.2
       typescript: ^4.0.2
       vue: ^3.0.0
-    dependencies:
-      '@vime/core': link:../core
     devDependencies:
+      '@vime/core': link:../core
       npm-run-all: 4.1.5
       rimraf: 3.0.2
       typescript: 4.5.2

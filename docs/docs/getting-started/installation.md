@@ -149,7 +149,7 @@ CSS variables for styling the player. Add the following to the `<head>` element 
 Now let's install the `@vime/svelte` package by running the following in our terminal...
 
 ```bash
-npm i @vime/svelte
+npm i @vime/core @vime/svelte
 ```
 
 And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move onto [setting up our player](./player).
@@ -176,7 +176,7 @@ Alternatively, you can load the themes from the [CDN](#cdn). Now let's install t
 package by running the following in our terminal...
 
 ```bash
-npm i @vime/react
+npm i @vime/core @vime/react
 ```
 
 And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move onto [setting up our player](./player).
@@ -217,10 +217,10 @@ by running the following in our terminal...
 
 ```bash
 # Vue 2
-npm i @vime/vue
+npm i @vime/core @vime/vue
 
 # Vue 3
-npm i @vime/vue-next
+npm i @vime/core @vime/vue-next
 ```
 
 And ... we're all done 🎉 &nbsp; That was anticlimactic 😞 &nbsp;Let's move onto [setting up our player](./player).
@@ -248,7 +248,7 @@ Alternatively, you can load the themes from the [CDN](#cdn). Now let's install t
 package by running the following in our terminal...
 
 ```bash
-npm i @vime/angular
+npm i @vime/core @vime/angular
 ```
 
 For the last step we simply need to import the `Module` into our application, you can do this
