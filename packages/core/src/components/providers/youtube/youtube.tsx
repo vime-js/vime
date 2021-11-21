@@ -152,7 +152,8 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
   /** @internal */
   @Method()
   async getAdapter() {
-    const canPlayRegex = /(?:youtu\.be|youtube|youtube\.com|youtube-nocookie\.com)\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|)((?:\w|-){11})/;
+    const canPlayRegex =
+      /(?:youtu\.be|youtube|youtube\.com|youtube-nocookie\.com)\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|)((?:\w|-){11})/;
 
     return {
       getInternalPlayer: async () => this.embed,
@@ -164,7 +165,9 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
       },
       canPlay: async (type: any) => isString(type) && canPlayRegex.test(type),
       setCurrentTime: async (time: number) => {
-        this.remoteControl(YouTubeCommand.Seek, time);
+        if (time !== this.internalState.currentTime) {
+          this.remoteControl(YouTubeCommand.Seek, time);
+        }
       },
       setMuted: async (muted: boolean) => {
         muted

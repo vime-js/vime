@@ -352,7 +352,8 @@ export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
   /** @internal */
   @Method()
   async getAdapter() {
-    const canPlayRegex = /(?:dai\.ly|dailymotion|dailymotion\.com)\/(?:video\/|embed\/|)(?:video\/|)((?:\w)+)/;
+    const canPlayRegex =
+      /(?:dai\.ly|dailymotion|dailymotion\.com)\/(?:video\/|embed\/|)(?:video\/|)((?:\w)+)/;
 
     return {
       getInternalPlayer: async () => this.embed,
@@ -364,8 +365,10 @@ export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
       },
       canPlay: async (type: any) => isString(type) && canPlayRegex.test(type),
       setCurrentTime: async (time: number) => {
-        this.internalState.currentTime = time;
-        this.remoteControl(DailymotionCommand.Seek, time);
+        if (time !== this.internalState.currentTime) {
+          this.internalState.currentTime = time;
+          this.remoteControl(DailymotionCommand.Seek, time);
+        }
       },
       setMuted: async (muted: boolean) => {
         this.internalState.muted = muted;

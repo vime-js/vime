@@ -477,7 +477,9 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
       canPlay: async (type: any) =>
         isString(type) && !fileRegex.test(type) && canPlayRegex.test(type),
       setCurrentTime: async (time: number) => {
-        this.remoteControl(VimeoCommand.SetCurrentTime, time);
+        if (time !== this.internalState.currentTime) {
+          this.remoteControl(VimeoCommand.SetCurrentTime, time);
+        }
       },
       setMuted: async (muted: boolean) => {
         if (!muted) this.volume = this.volume > 0 ? this.volume : 30;
