@@ -216,6 +216,7 @@ export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
     return {
       autoplay: this.autoplay,
       mute: this.initialMuted,
+      controls: this.controls,
       'queue-autoplay-next': this.shouldAutoplayQueue,
       'queue-enable': this.showUpNextQueue,
       'sharing-enable': this.showShareButtons,
