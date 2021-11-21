@@ -9,7 +9,7 @@ is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static websit
 ```bash
 $: npm install
 
-$: npm start
+$: npm run dev
 ```
 
 The `start` command starts a local development server and opens up a browser window. Most changes

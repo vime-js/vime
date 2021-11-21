@@ -15,5 +15,5 @@ $: cd vime/examples/vue
 
 $: npm install
 
-$: npm run serve
+$: npm run dev
 ```

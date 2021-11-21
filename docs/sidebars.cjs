@@ -1,4 +1,6 @@
-const { buildComponentsSideBarItems } = require('./helpers/components-sidebar');
+const {
+  buildComponentsSideBarItems,
+} = require('./helpers/components-sidebar.cjs');
 
 module.exports = {
   docs: [

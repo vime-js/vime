@@ -4,8 +4,8 @@
   "version": "5.0.35",
   "scripts": {
     "ng": "ng",
-    "build": "ng build",
-    "serve": "ng serve"
+    "dev": "ng serve",
+    "build": "ng build"
   },
   "dependencies": {
     "@angular/animations": "v11-lts",

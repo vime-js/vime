@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "docusaurus start",
     "build": "docusaurus build",
     "build:api": "npm run build --prefix ../packages/core",
+    "preview": "docusaurus serve",
     "clean": "rimraf .docusaurus build docs/components",
     "docusaurus": "docusaurus",
-    "swizzle": "docusaurus swizzle",
-    "serve": "docusaurus serve",
-    "start": "docusaurus start"
+    "swizzle": "docusaurus swizzle"
   },
   "dependencies": {
     "@babel/core": "^7.15.8",

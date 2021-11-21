@@ -17,5 +17,5 @@ $: cd vime/examples/svelte
 
 $: npm install
 
-$: npm run serve
+$: npm run dev
 ```

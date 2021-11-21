@@ -14,5 +14,5 @@ $: cd vime/examples/rollup
 
 $: npm install
 
-$: npm run serve
+$: npm run dev
 ```

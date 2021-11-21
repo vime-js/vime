@@ -11,7 +11,7 @@
     "ng": "ng"
   },
   "dependencies": {
-    "@vime/core": "^5.0.35"
+    "@vime/core": "workspace:*"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "v11-lts",

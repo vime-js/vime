@@ -3,45 +3,57 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
+  "type": "module",
+  "volta": {
+    "node": "16.10.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "bootstrap": "lerna bootstrap --no-private",
-    "bootstrap:all": "lerna bootstrap",
-    "build": "lerna run --no-private build",
-    "clean": "lerna run clean",
-    "core:build": "npm run build --prefix packages/core",
-    "core:install": "npm install --prefix packages/core",
-    "docs:install": "npm ci --prefix docs",
-    "docs:build": "npm run build --prefix docs",
-    "docs:start": "npm start --prefix docs",
-    "docs:now": "run-s clean core:install core:build docs:install docs:build",
-    "lint": "run-s lint:*",
-    "lint:eslint": "eslint --ext .js --ext .ts",
-    "lint:prettier": "prettier . --check --loglevel warn",
+    "build": "node .scripts/run-build.js",
+    "build:all": "pnpm build --filter ./packages",
+    "clean": "pnpm clean --filter ./packages",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "docs:build": "pnpm build --filter ./docs",
+    "docs:dev": "pnpm start --filter ./docs",
+    "docs:preview": "pnpm serve --filter ./docs",
+    "example": "node .scripts/run-example.js",
     "format": "run-s format:*",
     "format:eslint": "npm run lint:eslint -- --fix",
     "format:prettier": "npm run lint:prettier -- --write",
-    "nuke": "lerna clean",
+    "lint": "run-s lint:*",
+    "lint:eslint": "eslint --ext .js,.jsx,.ts,.tsx . --ignore-path .gitignore",
+    "lint:prettier": "prettier . --check --ignore-path .gitignore --loglevel warn",
+    "preinstall": "node .scripts/preinstall.js",
+    "postinstall": "npm i --prefix docs",
     "prepare": "husky install",
-    "start": "npm run serve",
-    "serve": "",
-    "release": "lerna publish",
-    "release:ci": "lerna publish --yes"
+    "sandbox": "node .scripts/run-sandbox.js",
+    "sandbox:create": "node .scripts/sandbox-create.js",
+    "release": "pnpm test:node-esm && node .scripts/release.js"
   },
   "devDependencies": {
     "@types/node": "^16.10.3",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
+    "conventional-changelog-cli": "^2.1.1",
+    "enquirer": "^2.3.6",
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "execa": "^6.0.0",
     "husky": "^7.0.2",
-    "lerna": "^4.0.0",
+    "kleur": "^4.1.4",
     "lint-staged": "^11.2.2",
+    "minimist": "^1.2.5",
     "npm-run-all": "^4.1.5",
     "prettier": "2.4.1",
+    "prompts": "^2.4.2",
     "react": "^17.0.2",
     "rimraf": "^3.0.2",
-    "typescript": "^4.4.3"
+    "semver": "^7.3.5",
+    "typescript": "^4.4.3",
+    "upath": "^2.0.1"
   },
   "prettier": {
     "singleQuote": true,
@@ -50,6 +62,7 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint --cache --fix",
-    "*.{ts,md,json}": "prettier --write"
-  }
+    "*.{js,ts,md,json}": "prettier --write"
+  },
+  "packageManager": "pnpm@6.22.0"
 }

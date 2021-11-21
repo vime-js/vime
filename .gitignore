@@ -3,6 +3,9 @@ build/
 www/
 loader/
 
+sandbox/*
+!sandbox/.gitkeep
+
 packages/core/icons/
 packages/core/themes/
 

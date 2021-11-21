@@ -1,62 +1,39 @@
-# Contributing
+# Contributing Guide
 
-First off, thank you for taking the time to contribute to Vime ❤️
-
-This document will guide you on how to go from zero to PR!
-
-## 💭 Knowledge
-
-### TypeScript
-
-It's important to note early on that this project is written with
-[TypeScript](https://www.typescriptlang.org/). If you're unfamiliar with it or any strongly typed
-languages such as Java then this may be a slight roadblock. However, there's never a truly perfect
-time to start learning it, so ... why not today! You can always reach out on our Discord if
-you get stuck.
-
-### Stencil
-
-This project relies on [Stencil](https://stenciljs.com) to build and distribute
-[Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). As a contributor
-you don't really need to worry about much other then how to simply
-[build components](https://stenciljs.com/docs/decorators). If you're already familiar with
-ES6 classes, decorators and JSX then this will all be a walk in the park. There's really not much
-more to it. You can always refer to existing components in Vime to see how to accomplish certain
-tasks.
+First off, thank you for taking the time to contribute to Vime. You'll find instructions below
+on how to get yourself up and running so you can create your first PR.
 
 ## 🎒 Getting Started
 
-### Install
+### Prerequisites
 
 Let's setup our machine. The only software you'll need to install is:
 
-- [node](https://nodejs.org/en/download/)
+- [node](https://nodejs.org/en/download)
 - [git](https://git-scm.com/downloads)
+- [pnpm](https://pnpm.io/installation)
+- [volta](https://docs.volta.sh/guide) or [nvm](https://github.com/nvm-sh/nvm)
+  (we recommend volta)
 
 They're very easy to install, just follow the links and you should be up and running in no time.
 
-### Fork + Clone
+### Fork & Clone
 
-Now we need to fork and clone the repository, install all the projects dependencies, and create
-a separate branch to work on our feature/fix. We can name the branch by the
-[issue](https://github.com/vime-js/vime/issues) number on GitHub such as `issue-64`. It's always
-best to create an issue before submitting a PR. If you haven't, then you can simply name the branch
-whatever you want, no wrong answers here.
-
-Head over to the [Vime repository](https://github.com/vime-js/vime) on GitHub and click the `Fork`
-button in the top right corner. After the project has been forked, run the following commands in
-your terminal:
+Next, head over to the [Vime repository on GitHub](https://github.com/vime-js/vime) and click the
+`Fork` button in the top right corner. After the project has been forked, run the following
+commands in your terminal...
 
 ```bash
-$: git clone https://github.com/{my-github-username}/vime --depth=1
+# Replace {github-username} with your GitHub username.
+$: git clone https://github.com/{github-username}/vime --depth=1
 
 $: cd vime
 
-$: git checkout -b {issue-64}
+$: pnpm install
 ```
 
-Now it'll help if we keep our `master` branch pointing at the original repository and you make pull
-requests from branches on your fork.
+**OPTIONAL:** Now it'll help if we keep our `main` branch pointing at the original repository and
+make pull requests from the forked branch.
 
 ```bash
 # Add the original repository as a "remote" called "upstream".
@@ -65,39 +42,94 @@ $: git remote add upstream git@github.com:vime-js/vime.git
 # Fetch the git information from the remote.
 $: git fetch upstream
 
-# Set your local master branch to use the upstream master branch whenver you run `git pull`.
-$: git branch --set-upstream-to=upstream/master master
+# Set your local main branch to use the upstream main branch whenver you run `git pull`.
+$: git branch --set-upstream-to=upstream/main main
 
-# Run this when we want to update our version of master.
+# Run this when we want to update our version of main.
 $: git pull
 ```
 
-### Build
+### Node
 
-Vime is structured as a [Lerna](https://github.com/lerna/lerna) monorepo.
+Once you're done simply set your Node version to match the required version by Vime. If you've
+installed `volta` then it will automatically pin it, and if you're using `nvm` simply run `nvm use`
+from the project root.
 
-First, we need to install packages and then bootstrap the repo with Lerna. This sets up and creates links between the internal packages. For example, the local `@vime/react` package will point directly at the local `@vime/core` package rather than using an already-published version.
-
-```bash
-$: npm install
-$: npm run bootstrap
-```
-
-To build all the packages:
+## 💼 Package Manager (PNPM)
 
 ```bash
-$: npm run build
+# Install all dependenices and symlink packages in the workspace (see `pnpm-workspace.yaml`).
+$: pnpm install
+
+# Install dependency for a single package.
+$: pnpm install typescript --filter @vime/core
+
+# Update a dependency for a single package.
+$: pnpm up typescript@4.4.0 --filter @vime/core
+
+# Update a dependency for all packages.
+$: pnpm up typescript@4.4.0 -r
 ```
 
-### Testing with examples
-
-If you are modifying Vime and want to test out your updated code using one of the examples, you can also use Lerna to link the local packages into them:
+## 💻 Scripts
 
 ```bash
-$: npm run bootstrap:all
+# Run eslint and prettier to lint files and look for any code type/style/format issues.
+$: pnpm lint
+
+# Run eslint and prettier to lint files and also auto-fix any issues.
+$: pnpm format
+
+# Run build in any of the packages in the `packages/` directory.
+$: pnpm build core
+
+# Run build and watch for changes to rebuild in any of the packages in the `packages/` directory.
+$: pnpm build core -- --watch
+
+# Build all packages in the `packages/` directory.
+$: pnpm build:all
+
+# Run a script located inside an example in the `examples/` directory.
+$: pnpm example
+
+# Shorthand without running through prompts.
+$: pnpm example svelte -- --script dev
+
+# Run a script located inside a sandbox application in the `sandbox/` directory.
+$: pnpm sandbox
+
+# Shorthand without running through prompts.
+$: pnpm sandbox svelte -- --script dev
 ```
 
-Note: this does not apply to the `html` example, which loads the published version directly from a CDN.
+## 🧪 Sandbox
+
+The `sandbox/` directory at the root of the Vime project is where we build and test Vime
+applications locally. It's safe to include anything inside of this directory as it's ignored
+by Git.
+
+We can quickly scaffold applications for local development via the `pnpm sandbox:create` command
+which can also handle symlinking the `@vime/*` packages.
+
+> We're using either NPM or Yarn in the example below because, Vime uses a PNPM workspace which
+> will only get in the way when running commands inside the sandbox.
+
+```bash
+# 1. make sure all local packages are built.
+$: pnpm build:all
+
+# 2. scaffold an application for local development.
+$: pnpm sandbox:create svelte -- --template svelte
+
+# 3. install dependenices in sandbox using yarn (^ reason above).
+$: yarn --cwd sandbox/svelte
+
+# 4. run sandbox dev envinroment using yarn.
+$: yarn dev --cwd sandbox/svelte
+
+# 5. run in another terminal session/window if we need to hack on a package.
+$: pnpm build core -- --watch
+```
 
 ## 🏗️ Architecture
 
@@ -111,33 +143,54 @@ For how to add new UI components or work on them in general see the [UI](./UI.md
 
 For how to add new providers or work on them in general see the [Providers](./PROVIDERS.md) document.
 
-## 📖 Documentation
+## 📝 Documentation Site
 
 The documentation website is created with [Docusaurus](https://v2.docusaurus.io) and can be found
 in the [`docs`](../docs) directory at the root. To start writing documentation simply follow the
 instructions over in said directory.
 
+```bash
+# run development environment
+$: pnpm docs:dev
+
+# build for production
+$: pnpm docs:build
+
+# preview production site
+$: pnpm docs:preview
+```
+
 ## ✍️ Commit
 
-We commit our changes by running `git commit -m 'commit message'`.
+This project uses [semantic commit messages][semantic-commit-style] to automate generating
+changelogs and releases. Simply refer to the link, and also see existing commits to get an idea
+of how to write your message.
 
-This project uses [semantic commit messages](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
-to automate package releases. Simply refer to the link, and also see existing commits to get an
-idea of how to write your message.
+If you've made changes to a specific package, simply include the package name without the
+`@vime` prefix in the commit scope (see example below).
+
+```bash
+# Commit general changes.
+$: git commit -m 'chore: your commit message'
+
+# Commit changes made to a specific package (eg: @vime/core).
+$: git commit -m 'fix(core): your commit message identifying fix'
+```
 
 ## 🎉 Pull Request
 
-When you're all done, push your changes up to GitHub and head over to the
-[Vime repository](https://github.com/vime-js/vime). To create a pull request, click the big
-green `Compare & Pull Request` button that should appear after you've pushed your changes.
+**Working on your first Pull Request?** You can learn how from this free series
+[How to Contribute to an Open Source Project on GitHub][pr-beginner-series].
 
-Don't expect your PR to be accepted immediately or even accepted at all. Give the community time
-to vet it and see if it should be merged into Vime. One of the following events will happen:
+Preferably create an issue first on GitHub, and then checkout a branch matching the issue number
+(see example below). Once you're done, commit your changes, push to your forked repo, and create
+a PR (see link above for more information if it's your first time).
 
-1. You listen to feedback/reviews and make the necessary changes for it to be approved.
-2. The changes are rejected by the community and you can try to understand why, or ask more questions
-   to clarify.
-3. Your changes are approved and merged into Vime.
+```bash
+# Create a branch for your PR, replace {issue-no} with the GitHub issue number.
+$: git checkout -b issue-{issue-no}
+```
 
-Please don't be disheartened if it's not accepted. Your contribution is appreciated more then you can
-imagine, and even a failed PR can teach us a lot ❤️
+[npm]: https://www.npmjs.com
+[semantic-commit-style]: https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
+[pr-beginner-series]: https://app.egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github

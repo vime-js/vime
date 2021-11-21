@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@seznam/compose-react-refs": "^1.0.4",
-    "@vime/core": "^5.0.35"
+    "@vime/core": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^17.0.14",

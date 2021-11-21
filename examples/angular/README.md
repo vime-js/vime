@@ -14,5 +14,5 @@ $: cd vime/examples/angular
 
 $: npm install
 
-$: npm run serve
+$: npm run dev
 ```

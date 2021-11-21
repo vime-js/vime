@@ -15,5 +15,5 @@ $: cd vime/examples/vue-next
 
 $: npm install
 
-$: npm run serve
+$: npm run dev
 ```

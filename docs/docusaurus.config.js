@@ -70,7 +70,7 @@ module.exports = {
       {
         docs: {
           routeBasePath: '/',
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve('./sidebars.cjs'),
           lastVersion: 'current',
           versions: {
             current: {

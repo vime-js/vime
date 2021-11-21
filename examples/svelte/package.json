@@ -3,9 +3,9 @@
   "version": "5.0.35",
   "private": true,
   "scripts": {
+    "dev": "webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack",
-    "validate": "svelte-check",
-    "serve": "webpack-dev-server"
+    "validate": "svelte-check"
   },
   "dependencies": {
     "@vime/core": "^5.0.35",

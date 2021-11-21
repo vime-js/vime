@@ -3,8 +3,8 @@
   "version": "5.0.35",
   "private": true,
   "scripts": {
-    "build": "stencil build",
-    "serve": "stencil build --dev --watch --serve"
+    "dev": "stencil build --dev --watch --serve",
+    "build": "stencil build"
   },
   "dependencies": {
     "@vime/core": "^5.0.35"

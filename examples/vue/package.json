@@ -3,8 +3,8 @@
   "version": "5.0.35",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build",
-    "serve": "vue-cli-service serve"
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "@vime/core": "^5.0.35",

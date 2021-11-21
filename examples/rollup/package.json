@@ -3,9 +3,9 @@
   "version": "5.0.35",
   "private": true,
   "scripts": {
+    "dev": "rollup -c -w",
     "build": "rollup -c",
-    "serve": "rollup -c -w",
-    "start": "sirv public"
+    "preview": "sirv public"
   },
   "dependencies": {
     "@vime/core": "^5.0.35"

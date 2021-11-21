@@ -21,5 +21,5 @@ $: cd vime/examples/stencil
 
 $: npm install
 
-$: npm run serve
+$: npm run dev
 ```

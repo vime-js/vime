@@ -16,9 +16,9 @@
     "@types/react-dom": "^17.0.0"
   },
   "scripts": {
-    "build": "craco build",
     "eject": "react-scripts eject",
-    "serve": "craco start"
+    "dev": "craco start",
+    "build": "craco build"
   },
   "eslintConfig": {
     "extends": "react-app"

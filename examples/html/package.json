@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "serve": "sirv --dev --port 4444"
+    "dev": "sirv --dev --port 4444"
   },
   "dependencies": {
     "sirv-cli": "^1.0.6"
