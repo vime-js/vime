@@ -186,9 +186,12 @@ export class Dailymotion implements MediaProvider<HTMLVmEmbedElement> {
     this.dispatch = createProviderDispatcher(this);
     this.dispatch('viewType', ViewType.Video);
     this.onVideoIdChange();
-    this.initialMuted = this.muted;
     this.internalState.muted = this.muted;
     this.defaultInternalState = { ...this.internalState };
+  }
+
+  componentDidLoad() {
+    this.initialMuted = this.muted;
   }
 
   private getOrigin() {
