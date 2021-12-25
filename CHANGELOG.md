@@ -1,3 +1,12 @@
+## [5.3.1](https://github.com/vime-js/vime/compare/v5.3.0...v5.3.1) (2021-12-25)
+
+
+### Bug Fixes
+
+* update discord server links ([5cf9b73](https://github.com/vime-js/vime/commit/5cf9b7348227c836bf6cf0bc610dff62aa225234))
+
+
+
 # [5.3.0](https://github.com/vime-js/vime/compare/v5.0.35...v5.3.0) (2021-11-21)
 
 
