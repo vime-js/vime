@@ -11,5 +11,5 @@ package contains the [Vue 3][vue] bindings that wrap around the web components i
 ## Related
 
 - [GitHub](https://github.com/vime-js/vime)
-- [Discord](https://discord.gg/feZ6cAE)
+- [Discord](https://discord.com/invite/7RGU7wvsu9)
 - [Documentation](https://vimejs.com)

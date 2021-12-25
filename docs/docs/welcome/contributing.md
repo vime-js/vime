@@ -35,7 +35,7 @@ a few ideas to get started:
 
 ### Join our Discord channel
 
-Join the [#contributors](https://discord.gg/feZ6cAE) channel to discuss ideas and get help.
+Join the [Discord](https://discord.com/invite/7RGU7wvsu9) server to discuss ideas and get help.
 
 ## Development Process
 
