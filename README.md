@@ -1,4 +1,8 @@
 <div align="center">
+🎉 &nbsp;Vime is becoming Vidstack! <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime/issues/273">Read more</a>&nbsp;🎉
+</div>
+
+<div align="center">
 <img
   width="150"
   src="https://raw.githubusercontent.com/vime-js/vime/master/static/identity/vime.png"
