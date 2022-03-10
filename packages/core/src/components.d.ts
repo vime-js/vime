@@ -190,6 +190,7 @@ export namespace Components {
         "justify": | 'start'
     | 'center'
     | 'end'
+    | 'flex-end'
     | 'space-around'
     | 'space-between'
     | 'space-evenly';
@@ -2181,6 +2182,7 @@ declare namespace LocalJSX {
         "justify"?: | 'start'
     | 'center'
     | 'end'
+    | 'flex-end'
     | 'space-around'
     | 'space-between'
     | 'space-evenly';
