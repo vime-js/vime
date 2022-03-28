@@ -109,7 +109,7 @@ vm-player[theme='light'] {
 }
 ```
 
-[default-theme]: https://github.com/vime-js/vime/blob/src/themes/default.css
+[default-theme]: https://github.com/vime-js/vime/blob/main/packages/core/src/themes/default.css
 
 ## Icons
 
