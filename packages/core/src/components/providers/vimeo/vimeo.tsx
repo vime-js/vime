@@ -187,7 +187,7 @@ export class Vimeo implements MediaProvider<HTMLVmEmbedElement> {
     this.defaultInternalState = { ...this.internalState };
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.initialMuted = this.muted;
   }
 
