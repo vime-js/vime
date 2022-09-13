@@ -148,7 +148,7 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
     this.defaultInternalState = { ...this.internalState };
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.initialMuted = this.muted;
   }
 
