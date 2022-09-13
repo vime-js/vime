@@ -1,3 +1,12 @@
+## [5.3.3](https://github.com/vime-js/vime/compare/v5.3.1...v5.3.3) (2022-09-13)
+
+
+### Bug Fixes
+
+* **react:** InitialMuted set on componentWillLoad ([#322](https://github.com/vime-js/vime/issues/322)) ([cc0b3c8](https://github.com/vime-js/vime/commit/cc0b3c8897f1f8f1c019638d8af8ebda08463297))
+
+
+
 ## [5.3.1](https://github.com/vime-js/vime/compare/v5.3.0...v5.3.1) (2021-12-25)
 
 
