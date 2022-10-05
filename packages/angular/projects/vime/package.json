@@ -1,5 +1,5 @@
 {
-  "name": "@vime/angular",
+  "name": "@javieracrich/vime-angular",
   "version": "0.0.0",
   "description": "Angular bindings for the Vime media player.",
   "license": "MIT",
@@ -26,16 +26,16 @@
   },
   "peerDependencies": {
     "@vime/core": "^5.0.0",
-    "@angular/common": "^11.0.4",
-    "@angular/core": "^11.0.4",
-    "rxjs": "^6.6.2"
+    "@angular/common": ">=11.x",
+    "@angular/core": ">=11.x",
+    "rxjs": ">=7.x"
   },
   "dependencies": {
     "tslib": "^2.0.0"
   },
   "devDependencies": {
     "@vime/core": "^5.0.0",
-    "rxjs": "^6.6.2"
+    "rxjs": ">=7.x"
   },
   "publishConfig": {
     "access": "public"
