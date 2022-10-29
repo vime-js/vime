@@ -140,7 +140,7 @@ function Player() {
 ```html {3-14} title="Player.svelte"
 <!-- By default there are no controls so let's turn them on. -->
 <Player controls>
-  <video crossorigin="" poster="https://media.vimejs.com/poster.png">
+  <Video crossorigin="" poster="https://media.vimejs.com/poster.png">
     <!-- These are passed directly to the underlying HTML5 `<video>` element. -->
     <!-- Why `data-src`? Lazy loading, you can always use `src` if you prefer.  -->
     <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
@@ -151,7 +151,7 @@ function Player() {
       srclang="en"
       label="English"
     />
-  </video>
+  </Video>
 
   <!-- ... -->
 </Player>
