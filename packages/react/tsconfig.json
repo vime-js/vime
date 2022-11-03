@@ -9,7 +9,7 @@
     "outDir": "dist",
     "removeComments": false,
     "skipLibCheck": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "target": "ES6"
   },
   "include": ["src"]
