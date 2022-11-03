@@ -85,6 +85,11 @@ export class SettingsControl {
   /** @internal */
   @Prop() i18n: PlayerProps['i18n'] = {};
 
+  /**
+   * Whether the tooltip should not be displayed.
+   */
+  @Prop() hideTooltip = false;
+
   constructor() {
     withComponentRegistry(this);
     withPlayerContext(this, ['i18n']);
@@ -138,7 +143,7 @@ export class SettingsControl {
           <vm-icon name={this.icon} library={this.icons} />
 
           <vm-tooltip
-            hidden={this.expanded}
+            hidden={this.hideTooltip || this.expanded}
             position={this.tooltipPosition}
             direction={this.tooltipDirection}
           >
