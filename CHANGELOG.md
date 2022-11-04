@@ -1,3 +1,18 @@
+# [5.4.0](https://github.com/vime-js/vime/compare/v5.3.3...v5.4.0) (2022-11-04)
+
+
+### Bug Fixes
+
+* add `flex-end` to controls `justify` prop  ([#295](https://github.com/vime-js/vime/issues/295)) ([7f6986b](https://github.com/vime-js/vime/commit/7f6986b1cd309ec7790e013c7f83f6f99954e167))
+* missing sourcemap warnings in webpack  ([#340](https://github.com/vime-js/vime/issues/340)) ([690d8df](https://github.com/vime-js/vime/commit/690d8df18c38ddec7f26eea898e0688501cac264))
+
+
+### Features
+
+* new `hideTooltip` option for settings control ([#339](https://github.com/vime-js/vime/issues/339)) ([ca3fa30](https://github.com/vime-js/vime/commit/ca3fa306d3e6a0d5f86f98b7e50ce267676cea34))
+
+
+
 ## [5.3.3](https://github.com/vime-js/vime/compare/v5.3.1...v5.3.3) (2022-09-13)
 
 

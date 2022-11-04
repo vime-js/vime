@@ -1,6 +1,6 @@
 {
   "name": "@vime/angular",
-  "version": "5.3.3",
+  "version": "5.4.0",
   "license": "MIT",
   "scripts": {
     "build": "ng build --prod",
@@ -29,7 +29,7 @@
     "zone.js": "~0.10.2"
   },
   "peerDependencies": {
-    "@vime/core": "5.3.3"
+    "@vime/core": "5.4.0"
   },
   "publishConfig": {
     "access": "public",

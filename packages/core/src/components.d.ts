@@ -1366,6 +1366,10 @@ export namespace Components {
           * Focuses the control.
          */
         "focusControl": () => Promise<void>;
+        /**
+          * Whether the tooltip should not be displayed.
+         */
+        "hideTooltip": boolean;
         "i18n": PlayerProps['i18n'];
         /**
           * The name of the settings icon to resolve from the icon library.
@@ -3513,6 +3517,10 @@ declare namespace LocalJSX {
           * Whether the settings menu this control manages is open.
          */
         "expanded"?: boolean;
+        /**
+          * Whether the tooltip should not be displayed.
+         */
+        "hideTooltip"?: boolean;
         "i18n"?: PlayerProps['i18n'];
         /**
           * The name of the settings icon to resolve from the icon library.
