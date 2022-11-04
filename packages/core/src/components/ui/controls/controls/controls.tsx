@@ -79,6 +79,7 @@ export class Controls {
     | 'start'
     | 'center'
     | 'end'
+    | 'flex-end'
     | 'space-around'
     | 'space-between'
     | 'space-evenly' = 'start';
