@@ -407,7 +407,7 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 
 ```html {13-20} title="Player.svelte"
 <Player>
-  <video crossorigin="" poster="https://media.vimejs.com/poster.png">
+  <Video crossorigin="" poster="https://media.vimejs.com/poster.png">
     <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
     <track
       default
@@ -416,7 +416,7 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
       srclang="en"
       label="English"
     />
-  </video>
+  </Video>
 
   <Ui>
     <!-- Vime components. -->
