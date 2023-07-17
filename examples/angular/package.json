@@ -1,7 +1,7 @@
 {
   "name": "@vime/angular-example",
   "private": true,
-  "version": "5.4.0",
+  "version": "5.4.1",
   "scripts": {
     "ng": "ng",
     "dev": "ng serve",
@@ -16,8 +16,8 @@
     "@angular/platform-browser": "v11-lts",
     "@angular/platform-browser-dynamic": "v11-lts",
     "@angular/router": "v11-lts",
-    "@vime/angular": "5.4.0",
-    "@vime/core": "5.4.0",
+    "@vime/angular": "5.4.1",
+    "@vime/core": "5.4.1",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.1",
     "zone.js": "~0.10.3"

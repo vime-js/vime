@@ -1,3 +1,12 @@
+## [5.4.1](https://github.com/vime-js/vime/compare/v5.4.0...v5.4.1) (2023-07-17)
+
+
+### Bug Fixes
+
+* update package.json to allow for Svelte 4 ([#373](https://github.com/vime-js/vime/issues/373)) ([dc801c1](https://github.com/vime-js/vime/commit/dc801c18fd3449ec0aefc3c28aa282d2852454c5))
+
+
+
 # [5.4.0](https://github.com/vime-js/vime/compare/v5.3.3...v5.4.0) (2022-11-04)
 
 

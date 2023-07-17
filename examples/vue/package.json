@@ -1,14 +1,14 @@
 {
   "name": "@vime/vue-example",
-  "version": "5.4.0",
+  "version": "5.4.1",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@vime/core": "5.4.0",
-    "@vime/vue": "5.4.0",
+    "@vime/core": "5.4.1",
+    "@vime/vue": "5.4.1",
     "tslib": "^2.0.1",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.5",

@@ -1,6 +1,6 @@
 {
   "name": "@vime/vue",
-  "version": "5.4.0",
+  "version": "5.4.1",
   "description": "Vue 2 bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -37,7 +37,7 @@
     "vue": "^2.6.11"
   },
   "peerDependencies": {
-    "@vime/core": "5.4.0",
+    "@vime/core": "5.4.1",
     "vue": "^2.6.11"
   },
   "publishConfig": {
