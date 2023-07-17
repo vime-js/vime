@@ -40,7 +40,7 @@
   },
   "peerDependencies": {
     "@vime/core": "5.4.0",
-    "svelte": "^3.0.0"
+    "svelte": "^3.0.0 || ^4.0.0"
   },
   "publishConfig": {
     "access": "public"
