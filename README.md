@@ -1,5 +1,5 @@
 <div align="center">
-🎉 &nbsp;Vime is merging into Vidstack! <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime/issues/280">Read more</a>&nbsp;🎉
+⚠️ &nbsp;Vime will be deprecated soon! <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime/issues/376">Read more</a>&nbsp;⚠️
 </div>
 
 <div align="center">

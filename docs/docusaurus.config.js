@@ -17,7 +17,7 @@ module.exports = {
   themeConfig: {
     announcementBar: {
       content:
-        '🎉 &nbsp;Vime is merging into Vidstack! <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime/issues/280">Read more</a>&nbsp;🎉',
+        '⚠️&nbsp;Vime will be deprecated soon! <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime/issues/376">Read more</a>&nbsp;⚠️',
     },
     algolia: {
       apiKey: '94e7d7e6c8d755cc7c07513981e18e66',
