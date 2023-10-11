@@ -108,11 +108,20 @@ export const parseQueryString = <T>(qs?: string): T => {
       ? tryDecodeURIComponent(match[2].replace(/\+/g, ' '), match[2])
       : '';
 
-    const currValue = params[name];
+    // Check if the key contains '[' and ']' indicating it's an array entry
+    if (name.includes('[') && name.includes(']')) {
+      const baseName = name.split('[')[0];
+      if (!params[baseName]) {
+        params[baseName] = [];
+      }
+      params[baseName].push(value);
+    } else {
+      const currValue = params[name];
 
-    if (currValue && !isArray(currValue)) params[name] = [currValue];
-
-    currValue ? params[name].push(value) : (params[name] = value);
+      if (currValue && !isArray(currValue)) params[name] = [currValue];
+      
+      isArray(params[name]) ? params[name].push(value) : (params[name] = value);
+    }
   }
 
   return params;
