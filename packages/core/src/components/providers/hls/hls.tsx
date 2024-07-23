@@ -121,12 +121,19 @@ export class HLS implements MediaFileProvider {
     this.destroyHls();
   }
 
+  _hlsSrc: string | undefined;
   get src(): string | undefined {
     if (isNil(this.videoProvider)) return undefined;
     const sources = this.videoProvider.querySelectorAll('source');
     const currSource = Array.from(sources).find(
-      source => hlsRegex.test(source.src) || hlsTypeRegex.test(source.type),
+      source => hlsRegex.test(source.src) || hlsTypeRegex.test(source.type)
     );
+    if (!isNil(currSource) && !currSource?.src?.startsWith('blob:')) {
+      this._hlsSrc = currSource?.src;
+    } else if (isNil(currSource)) {
+      return this._hlsSrc;
+    }
+    
     return currSource?.src;
   }
 
