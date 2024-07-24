@@ -75,6 +75,10 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
   @State() mediaTitle = '';
 
   /**
+   * YouTube params to overwrite
+   */
+  @Prop() params?: YouTubeParams = {};
+  /**
    * Whether cookies should be enabled on the embed.
    */
   @Prop() cookies = false;
@@ -227,6 +231,7 @@ export class YouTube implements MediaProvider<HTMLVmEmbedElement> {
       mute: this.initialMuted ? 1 : 0,
       playsinline: this.playsinline ? 1 : 0,
       autoplay: this.autoplay ? 1 : 0,
+      ...this.params,
     };
   }
 
