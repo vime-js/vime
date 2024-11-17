@@ -1,14 +1,14 @@
 /* eslint-disable */
 
-const poster = 'https://media.vimejs.com/poster.png';
+const poster = 'https://files.vidstack.io/agent-327/poster.png';
 
 const track = `
-      <track 
-        default 
-        kind="subtitles" 
-        src="https://media.vimejs.com/subs/english.vtt" 
-        srclang="en" 
-        label="English" 
+      <track
+        default
+        kind="subtitles"
+        src="https://files.vidstack.io/agent-327/subs/english.vtt"
+        srclang="en"
+        label="English"
       />
 `.trim();
 
@@ -18,8 +18,8 @@ const isStencil = lib => lib === 'stencil';
 const audio = (jsx = false) =>
   `
     <${jsx ? 'Audio' : 'vm-audio'}>
-      <source 
-        data-src="https://media.vimejs.com/audio.mp3" 
+      <source
+        data-src="https://files.vidstack.io/agent-327/audio.mp3"
         type="video/mp4"
       />
     </${jsx ? 'Audio' : 'vm-audio'}>
@@ -31,8 +31,8 @@ const video = (jsx = false, lib) =>
       ${jsx || isStencil(lib) ? 'crossOrigin' : 'cross-origin'}
       poster="${poster}"
     >
-      <source 
-        data-src="https://media.vimejs.com/720p.mp4" 
+      <source
+        data-src="https://files.vidstack.io/agent-327/720p.mp4"
         type="video/mp4"
       />
       ${track}
@@ -66,17 +66,17 @@ const hls = (jsx = false, lib) =>
       ${jsx || isStencil(lib) ? 'crossOrigin' : 'cross-origin'}
       poster="${poster}"
     >
-      <source 
-        data-src="https://media.vimejs.com/hls/index.m3u8" 
-        type="application/x-mpegURL" 
+      <source
+        data-src="https://files.vidstack.io/agent-327/hls/stream.m3u8"
+        type="application/x-mpegURL"
       />
-    </${jsx ? 'Hls' : 'vm-hls'}>  
+    </${jsx ? 'Hls' : 'vm-hls'}>
 `.trim();
 
 const dash = (jsx = false, lib) =>
   `
-    <${jsx ? 'Dash' : 'vm-dash'} 
-      src="https://media.vimejs.com/mpd/manifest.mpd" 
+    <${jsx ? 'Dash' : 'vm-dash'}
+      src="https://files.vidstack.io/agent-327/dash/stream.m3u8"
       poster="${poster}"
     ${jsx || isStencil(lib) ? '/>' : '><vm-dash>'}
 `.trim();

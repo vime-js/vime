@@ -11,7 +11,7 @@ import {
   Audio as VmAudio,
 } from '@vime/react';
 
-const poster = 'https://media.vimejs.com/poster.png';
+const poster = 'https://files.vidstack.io/agent-327/poster.png';
 
 const YouTube = () => <VmYoutube videoId="DyTCOwB0DVw" />;
 const Vimeo = () => <VmVimeo videoId="411652396" />;
@@ -22,7 +22,7 @@ const Tracks = () => (
     <track
       default
       kind="subtitles"
-      src="https://media.vimejs.com/subs/english.vtt"
+      src="https://files.vidstack.io/agent-327/subs/english.vtt"
       srcLang="en"
       label="English"
     />
@@ -32,7 +32,7 @@ const Tracks = () => (
 const Hls = () => (
   <VmHls crossOrigin="" poster={poster}>
     <source
-      data-src="https://media.vimejs.com/hls/index.m3u8"
+      data-src="https://files.vidstack.io/agent-327/hls/stream.m3u8"
       type="application/x-mpegURL"
     />
     <Tracks />
@@ -40,18 +40,27 @@ const Hls = () => (
 );
 
 const Dash = () => (
-  <VmDash src="https://media.vimejs.com/mpd/manifest.mpd" poster={poster} />
+  <VmDash
+    src="https://files.vidstack.io/agent-327/dash/stream.m3u8"
+    poster={poster}
+  />
 );
 
 const Audio = () => (
   <VmAudio crossOrigin="">
-    <source data-src="https://media.vimejs.com/audio.mp3" type="audio/mp3" />
+    <source
+      data-src="https://files.vidstack.io/agent-327/audio.mp3"
+      type="audio/mp3"
+    />
   </VmAudio>
 );
 
 const Video = () => (
   <VmVideo crossOrigin="" poster={poster}>
-    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <source
+      data-src="https://files.vidstack.io/agent-327/720p.mp4"
+      type="video/mp4"
+    />
     <Tracks />
   </VmVideo>
 );

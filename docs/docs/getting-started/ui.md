@@ -29,12 +29,18 @@ values={[
 ```html {16-18} title="player.html"
 <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
 <vm-player>
-  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+  <vm-video
+    cross-origin="true"
+    poster="https://files.vidstack.io/agent-327/poster.png"
+  >
+    <source
+      data-src="https://files.vidstack.io/agent-327/720p.mp4"
+      type="video/mp4"
+    />
     <track
       default
       kind="subtitles"
-      src="https://media.vimejs.com/subs/english.vtt"
+      src="https://files.vidstack.io/agent-327/subs/english.vtt"
       srclang="en"
       label="English"
     />
@@ -60,15 +66,15 @@ function Player() {
   return (
     {/* Notice we turned off controls? We're supplying our own, so we hide the native ones. */}
     <Player>
-      <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+      <Video crossOrigin="" poster="https://files.vidstack.io/agent-327/poster.png">
         <source
-          data-src="https://media.vimejs.com/720p.mp4"
+          data-src="https://files.vidstack.io/agent-327/720p.mp4"
           type="video/mp4"
         />
         <track
           default
           kind="subtitles"
-          src="https://media.vimejs.com/subs/english.vtt"
+          src="https://files.vidstack.io/agent-327/subs/english.vtt"
           srcLang="en"
           label="English"
         />
@@ -92,12 +98,18 @@ function Player() {
 <template>
   <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
   <Player>
-    <video crossorigin="" poster="https://media.vimejs.com/poster.png">
-      <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <video
+      crossorigin=""
+      poster="https://files.vidstack.io/agent-327/poster.png"
+    >
+      <source
+        data-src="https://files.vidstack.io/agent-327/720p.mp4"
+        type="video/mp4"
+      />
       <track
         default
         kind="subtitles"
-        src="https://media.vimejs.com/subs/english.vtt"
+        src="https://files.vidstack.io/agent-327/subs/english.vtt"
         srclang="en"
         label="English"
       />
@@ -131,12 +143,15 @@ function Player() {
 ```html {16-18} title="Player.svelte"
 <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
 <Player>
-  <video crossorigin="" poster="https://media.vimejs.com/poster.png">
-    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+  <video crossorigin="" poster="https://files.vidstack.io/agent-327/poster.png">
+    <source
+      data-src="https://files.vidstack.io/agent-327/720p.mp4"
+      type="video/mp4"
+    />
     <track
       default
       kind="subtitles"
-      src="https://media.vimejs.com/subs/english.vtt"
+      src="https://files.vidstack.io/agent-327/subs/english.vtt"
       srclang="en"
       label="English"
     />
@@ -166,15 +181,15 @@ class Player {
     return (
       {/* Notice we turned off controls? We're supplying our own, so we hide the native ones. */}
       <vm-player>
-        <vm-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+        <vm-video crossOrigin="" poster="https://files.vidstack.io/agent-327/poster.png">
           <source
-            data-src="https://media.vimejs.com/720p.mp4"
+            data-src="https://files.vidstack.io/agent-327/720p.mp4"
             type="video/mp4"
           />
           <track
             default
             kind="subtitles"
-            src="https://media.vimejs.com/subs/english.vtt"
+            src="https://files.vidstack.io/agent-327/subs/english.vtt"
             srclang="en"
             label="English"
           />
@@ -198,12 +213,18 @@ class Player {
 ```html {16-18} title="player.html"
 <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
 <vm-player>
-  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+  <vm-video
+    cross-origin="true"
+    poster="https://files.vidstack.io/agent-327/poster.png"
+  >
+    <source
+      data-src="https://files.vidstack.io/agent-327/720p.mp4"
+      type="video/mp4"
+    />
     <track
       default
       kind="subtitles"
-      src="https://media.vimejs.com/subs/english.vtt"
+      src="https://files.vidstack.io/agent-327/subs/english.vtt"
       srclang="en"
       label="English"
     />
@@ -283,12 +304,18 @@ Here's some links for you to learn about web components:
 
 ```html {13-20} title="player.html"
 <vm-player>
-  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+  <vm-video
+    cross-origin="true"
+    poster="https://files.vidstack.io/agent-327/poster.png"
+  >
+    <source
+      data-src="https://files.vidstack.io/agent-327/720p.mp4"
+      type="video/mp4"
+    />
     <track
       default
       kind="subtitles"
-      src="https://media.vimejs.com/subs/english.vtt"
+      src="https://files.vidstack.io/agent-327/subs/english.vtt"
       srclang="en"
       label="English"
     />
@@ -321,12 +348,18 @@ import TapSidesToSeek from './TapSidesToSeek';
 function Player() {
   return (
     <Player>
-      <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
-        <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+      <Video
+        crossOrigin=""
+        poster="https://files.vidstack.io/agent-327/poster.png"
+      >
+        <source
+          data-src="https://files.vidstack.io/agent-327/720p.mp4"
+          type="video/mp4"
+        />
         <track
           default
           kind="subtitles"
-          src="https://media.vimejs.com/subs/english.vtt"
+          src="https://files.vidstack.io/agent-327/subs/english.vtt"
           srcLang="en"
           label="English"
         />
@@ -357,12 +390,18 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 <template>
   <!-- Notice we turned off controls? We're supplying our own, so we hide the native ones. -->
   <Player>
-    <video crossorigin="" poster="https://media.vimejs.com/poster.png">
-      <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <video
+      crossorigin=""
+      poster="https://files.vidstack.io/agent-327/poster.png"
+    >
+      <source
+        data-src="https://files.vidstack.io/agent-327/720p.mp4"
+        type="video/mp4"
+      />
       <track
         default
         kind="subtitles"
-        src="https://media.vimejs.com/subs/english.vtt"
+        src="https://files.vidstack.io/agent-327/subs/english.vtt"
         srclang="en"
         label="English"
       />
@@ -407,16 +446,19 @@ You can view the custom `TapSidesToSeek` component [here](https://github.com/vim
 
 ```html {13-20} title="Player.svelte"
 <Player>
-  <Video crossorigin="" poster="https://media.vimejs.com/poster.png">
-    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+  <video crossorigin="" poster="https://files.vidstack.io/agent-327/poster.png">
+    <source
+      data-src="https://files.vidstack.io/agent-327/720p.mp4"
+      type="video/mp4"
+    />
     <track
       default
       kind="subtitles"
-      src="https://media.vimejs.com/subs/english.vtt"
+      src="https://files.vidstack.io/agent-327/subs/english.vtt"
       srclang="en"
       label="English"
     />
-  </Video>
+  </video>
 
   <Ui>
     <!-- Vime components. -->
@@ -456,15 +498,18 @@ class Player {
   render() {
     return (
       <vm-player>
-        <vm-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+        <vm-video
+          crossOrigin=""
+          poster="https://files.vidstack.io/agent-327/poster.png"
+        >
           <source
-            data-src="https://media.vimejs.com/720p.mp4"
+            data-src="https://files.vidstack.io/agent-327/720p.mp4"
             type="video/mp4"
           />
           <track
             default
             kind="subtitles"
-            src="https://media.vimejs.com/subs/english.vtt"
+            src="https://files.vidstack.io/agent-327/subs/english.vtt"
             srclang="en"
             label="English"
           />
@@ -494,12 +539,18 @@ You can view the custom `<tap-sides-to-seek>` component [here](https://github.co
 
 ```html {13-20} title="player.html"
 <vm-player>
-  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+  <vm-video
+    cross-origin="true"
+    poster="https://files.vidstack.io/agent-327/poster.png"
+  >
+    <source
+      data-src="https://files.vidstack.io/agent-327/720p.mp4"
+      type="video/mp4"
+    />
     <track
       default
       kind="subtitles"
-      src="https://media.vimejs.com/subs/english.vtt"
+      src="https://files.vidstack.io/agent-327/subs/english.vtt"
       srclang="en"
       label="English"
     />

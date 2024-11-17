@@ -45,14 +45,20 @@ values={[
 ```html {3-14} title="player.html"
 <!-- By default there are no controls so let's turn them on. -->
 <vm-player controls>
-  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
+  <vm-video
+    cross-origin="true"
+    poster="https://files.vidstack.io/agent-327/poster.png"
+  >
     <!-- These are passed directly to the underlying HTML5 `<video>` element. -->
     <!-- Why `data-src`? Lazy loading, you can always use `src` if you prefer.  -->
-    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <source
+      data-src="https://files.vidstack.io/agent-327/720p.mp4"
+      type="video/mp4"
+    />
     <track
       default
       kind="subtitles"
-      src="https://media.vimejs.com/subs/english.vtt"
+      src="https://files.vidstack.io/agent-327/subs/english.vtt"
       srclang="en"
       label="English"
     />
@@ -74,17 +80,17 @@ function Player() {
   return (
     {/* By default there are no controls so let's turn them on. */}
     <Player controls>
-      <Video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+      <Video crossOrigin="" poster="https://files.vidstack.io/agent-327/poster.png">
         {/* These are passed directly to the underlying HTML5 `<video>` element. */}
         {/* Why `data-src`? Lazy loading, you can always use `src` if you prefer.  */}
         <source
-          data-src="https://media.vimejs.com/720p.mp4"
+          data-src="https://files.vidstack.io/agent-327/720p.mp4"
           type="video/mp4"
         />
         <track
           default
           kind="subtitles"
-          src="https://media.vimejs.com/subs/english.vtt"
+          src="https://files.vidstack.io/agent-327/subs/english.vtt"
           srcLang="en"
           label="English"
         />
@@ -104,14 +110,20 @@ function Player() {
 <template>
   <!-- By default there are no controls so let's turn them on. -->
   <Player controls>
-    <video crossorigin="" poster="https://media.vimejs.com/poster.png">
+    <video
+      crossorigin=""
+      poster="https://files.vidstack.io/agent-327/poster.png"
+    >
       <!-- These are passed directly to the underlying HTML5 `<video>` element. -->
       <!-- Why `data-src`? Lazy loading, you can always use `src` if you prefer.  -->
-      <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+      <source
+        data-src="https://files.vidstack.io/agent-327/720p.mp4"
+        type="video/mp4"
+      />
       <track
         default
         kind="subtitles"
-        src="https://media.vimejs.com/subs/english.vtt"
+        src="https://files.vidstack.io/agent-327/subs/english.vtt"
         srclang="en"
         label="English"
       />
@@ -140,18 +152,21 @@ function Player() {
 ```html {3-14} title="Player.svelte"
 <!-- By default there are no controls so let's turn them on. -->
 <Player controls>
-  <Video crossorigin="" poster="https://media.vimejs.com/poster.png">
+  <video crossorigin="" poster="https://files.vidstack.io/agent-327/poster.png">
     <!-- These are passed directly to the underlying HTML5 `<video>` element. -->
     <!-- Why `data-src`? Lazy loading, you can always use `src` if you prefer.  -->
-    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <source
+      data-src="https://files.vidstack.io/agent-327/720p.mp4"
+      type="video/mp4"
+    />
     <track
       default
       kind="subtitles"
-      src="https://media.vimejs.com/subs/english.vtt"
+      src="https://files.vidstack.io/agent-327/subs/english.vtt"
       srclang="en"
       label="English"
     />
-  </Video>
+  </video>
 
   <!-- ... -->
 </Player>
@@ -173,17 +188,17 @@ class Player {
     return (
       {/* By default there are no controls so let's turn them on. */}
       <vm-player controls>
-        <vm-video crossOrigin="" poster="https://media.vimejs.com/poster.png">
+        <vm-video crossOrigin="" poster="https://files.vidstack.io/agent-327/poster.png">
           {/* These are passed directly to the underlying HTML5 `<video>` element. */}
           {/* Why `data-src`? Lazy loading, you can always use `src` if you prefer.  */}
           <source
-            data-src="https://media.vimejs.com/720p.mp4"
+            data-src="https://files.vidstack.io/agent-327/720p.mp4"
             type="video/mp4"
           />
           <track
             default
             kind="subtitles"
-            src="https://media.vimejs.com/subs/english.vtt"
+            src="https://files.vidstack.io/agent-327/subs/english.vtt"
             srclang="en"
             label="English"
           />
@@ -201,14 +216,20 @@ class Player {
 ```html {3-14} title="player.html"
 <!-- By default there are no controls so let's turn them on. -->
 <vm-player controls>
-  <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
+  <vm-video
+    cross-origin="true"
+    poster="https://files.vidstack.io/agent-327/poster.png"
+  >
     <!-- These are passed directly to the underlying HTML5 `<video>` element. -->
     <!-- Why `data-src`? Lazy loading, you can always use `src` if you prefer.  -->
-    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <source
+      data-src="https://files.vidstack.io/agent-327/720p.mp4"
+      type="video/mp4"
+    />
     <track
       default
       kind="subtitles"
-      src="https://media.vimejs.com/subs/english.vtt"
+      src="https://files.vidstack.io/agent-327/subs/english.vtt"
       srclang="en"
       label="English"
     />

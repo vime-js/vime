@@ -1,17 +1,23 @@
 <div id="container">
   <vm-player #player playsinline (vPlaybackReady)="onPlaybackReady()">
-    <vm-video cross-origin="true" poster="https://media.vimejs.com/poster.png">
-      <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+    <vm-video
+      cross-origin="true"
+      poster="https://files.vidstack.io/agent-327/poster.png"
+    >
+      <source
+        data-src="https://files.vidstack.io/agent-327/720p.mp4"
+        type="video/mp4"
+      />
       <track
         default
         kind="subtitles"
-        src="https://media.vimejs.com/subs/english.vtt"
+        src="https://files.vidstack.io/agent-327/subs/english.vtt"
         srclang="en"
         label="English"
       />
       <track
         kind="subtitles"
-        src="https://media.vimejs.com/subs/spanish.vtt"
+        src="https://files.vidstack.io/agent-327/subs/spanish.vtt"
         srclang="es"
         label="Spanish"
       />

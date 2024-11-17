@@ -29,9 +29,9 @@ function App() {
   return (
     <div id="container">
       <Player playsinline ref={player} onVmPlaybackReady={onPlaybackReady}>
-        <Video poster="https://media.vimejs.com/poster.png">
+        <Video poster="https://files.vidstack.io/agent-327/poster.png">
           <source
-            data-src="https://media.vimejs.com/720p.mp4"
+            data-src="https://files.vidstack.io/agent-327/720p.mp4"
             type="video/mp4"
           />
         </Video>
