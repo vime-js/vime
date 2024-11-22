@@ -136,7 +136,7 @@ export class HLS implements MediaFileProvider {
     try {
       const url =
         this.libSrc ||
-        `https://cdn.jsdelivr.net/npm/hls.js@${this.version}/dist/hls.min.js`;
+        `https://unpkg.com/hls.js@${this.version}/dist/hls.min.js`;
 
       const Hls = (await loadSDK(url, 'Hls')) as any;
 

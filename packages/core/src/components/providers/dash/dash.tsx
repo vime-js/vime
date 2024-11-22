@@ -189,7 +189,7 @@ export class Dash implements MediaFileProvider<any> {
     try {
       const url =
         this.libSrc ||
-        `https://cdn.jsdelivr.net/npm/dashjs@${this.version}/dist/dash.all.min.js`;
+        `https://unpkg.com/dashjs@${this.version}/dist/dash.all.min.js`;
 
       const DashSDK = (await loadSDK(url, 'dashjs')) as any;
 
