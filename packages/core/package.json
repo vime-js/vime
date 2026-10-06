@@ -1,7 +1,7 @@
 {
   "name": "@vime/core",
   "version": "5.4.1",
-  "description": "Customizable, extensible, accessible and framework agnostic media player.",
+  "description": "Deprecated in favour of Video.js 10 (https://videojs.org); no longer maintained. Customizable, extensible, accessible and framework agnostic media player.",
   "license": "MIT",
   "sideEffects": false,
   "main": "dist/index.cjs.js",
@@ -13,6 +13,7 @@
   "collection:main": "dist/collection/index.js",
   "types": "dist/custom-elements/index.d.ts",
   "files": [
+    "AGENTS.md",
     "dist/",
     "loader/",
     "icons/",
@@ -58,6 +59,8 @@
     "access": "public"
   },
   "keywords": [
+    "video.js",
+    "videojs",
     "vime",
     "player",
     "media",

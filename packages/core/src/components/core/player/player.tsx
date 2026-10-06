@@ -1,4 +1,5 @@
 import {
+  Build,
   Component,
   Element,
   Event,
@@ -54,6 +55,8 @@ let idCount = 0;
  * and call methods.
  *
  * @slot - Used to pass in providers, plugins and UI components.
+ * @deprecated Vime is no longer maintained, including security fixes. Use Video.js 10
+ * (https://videojs.org/docs/guides/installation/html) instead.
  */
 @Component({
   tag: 'vm-player',
@@ -740,6 +743,7 @@ export class Player implements MediaPlayer {
   }
 
   connectedCallback() {
+    logDeprecationNotice();
     this.onPausedChange();
     this.onCurrentTimeChange();
     this.onVolumeChange();
@@ -892,3 +896,17 @@ export class Player implements MediaPlayer {
     );
   }
 }
+
+let hasLoggedDeprecationNotice = false;
+
+// Logged once per page whatever the log level, so developers and coding agents reading the console
+// see it.
+function logDeprecationNotice() {
+  if (!Build.isBrowser || hasLoggedDeprecationNotice) return;
+  hasLoggedDeprecationNotice = true;
+  // eslint-disable-next-line no-console
+  console.info(
+    '[vime] Vime is no longer maintained, including security fixes. Use Video.js 10, from the teams behind Vime, Vidstack, Plyr, Media Chrome, and Video.js: https://videojs.org/docs/guides/installation/html (React: https://videojs.org/docs/guides/installation/react)',
+  );
+}
+
