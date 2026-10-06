@@ -3,6 +3,12 @@ title: Installation
 sidebar_label: Installation
 ---
 
+:::caution Vime is no longer maintained
+Vime gets no fixes, including security fixes, and its repository is archived. The teams behind Vime, Vidstack, Plyr, Media Chrome, and Video.js now work on [Video.js 10](https://videojs.org?utm_source=vime).
+
+Start with the Video.js 10 installation guide for [React](https://videojs.org/docs/guides/installation/react?utm_source=vime) or [web components and other frameworks](https://videojs.org/docs/guides/installation/html?utm_source=vime); each has an AI Quickstart prompt for coding agents. There's no Vime-specific migration guide, but the Vidstack guide covers the closest concepts: [React](https://videojs.org/docs/framework/react/guides/migrate-from-vidstack?utm_source=vime) · [web components and other frameworks](https://videojs.org/docs/framework/html/guides/migrate-from-vidstack?utm_source=vime).
+:::
+
 Vime provides various packages that can be used to quickly get started depending on the
 library/framework you're using, scroll down to the section that is relevant to you.
 

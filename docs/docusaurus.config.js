@@ -17,7 +17,7 @@ module.exports = {
   themeConfig: {
     announcementBar: {
       content:
-        '⚠️&nbsp;Vime will be deprecated soon! <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime/issues/376">Read more</a>&nbsp;⚠️',
+        '⚠️&nbsp;Vime is no longer maintained. Its new home is Video.js 10. <a target="_blank" rel="noopener noreferrer" href="https://videojs.org/docs/guides/installation?utm_source=vime">Get started</a>&nbsp;⚠️',
     },
     algolia: {
       apiKey: '94e7d7e6c8d755cc7c07513981e18e66',
