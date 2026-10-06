@@ -1,6 +1,10 @@
-<div align="center">
-⚠️ &nbsp;Vime will be deprecated soon! <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime/issues/376">Read more</a>&nbsp;⚠️
-</div>
+> [!IMPORTANT]
+>
+> **Vime is no longer maintained.** It receives no fixes, including security fixes, and this repository is archived. The teams behind Vime, Vidstack, Plyr, Media Chrome, and Video.js now work on [Video.js 10](https://videojs.org?utm_source=vime).
+>
+> - **Get started with Video.js 10:** [React](https://videojs.org/docs/guides/installation/react?utm_source=vime) · [Web components and other frameworks](https://videojs.org/docs/guides/installation/html?utm_source=vime). Each installation guide has an AI Quickstart prompt for coding agents.
+> - **Map Vime concepts:** there's no Vime-specific guide. Vidstack succeeded Vime, so the Vidstack migration guide covers the closest concepts: [React](https://videojs.org/docs/framework/react/guides/migrate-from-vidstack?utm_source=vime) · [Web components and other frameworks](https://videojs.org/docs/framework/html/guides/migrate-from-vidstack?utm_source=vime).
+> - **Questions:** [videojs/v10 discussions](https://github.com/videojs/v10/discussions)
 
 <div align="center">
 <img

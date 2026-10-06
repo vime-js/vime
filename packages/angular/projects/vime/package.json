@@ -1,7 +1,7 @@
 {
   "name": "@vime/angular",
   "version": "0.0.0",
-  "description": "Angular bindings for the Vime media player.",
+  "description": "Deprecated in favour of Video.js 10 (https://videojs.org); no longer maintained. Angular bindings for the Vime media player.",
   "license": "MIT",
   "contributors": [
     "Rahim Alwer <rahim.alwer@gmail.com>"
@@ -14,6 +14,7 @@
     "url": "https://github.com/vime-js/vime/issues"
   },
   "files": [
+    "AGENTS.md",
     "bundles",
     "components",
     "esm2015",
@@ -41,6 +42,8 @@
     "access": "public"
   },
   "keywords": [
+    "video.js",
+    "videojs",
     "vime",
     "player",
     "media",

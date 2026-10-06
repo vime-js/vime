@@ -1,12 +1,13 @@
 {
   "name": "@vime/react",
   "version": "5.4.1",
-  "description": "React bindings for the Vime media player.",
+  "description": "Deprecated in favour of Video.js 10 (https://videojs.org); no longer maintained. React bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
+    "AGENTS.md",
     "dist/",
     ".scripts/"
   ],
@@ -51,6 +52,8 @@
     "access": "public"
   },
   "keywords": [
+    "video.js",
+    "videojs",
     "vime",
     "player",
     "media",

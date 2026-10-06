@@ -7,5 +7,6 @@
       "@vime/core": "Vime"
     }
   },
-  "allowedNonPeerDependencies": ["@vime/core"]
+  "allowedNonPeerDependencies": ["@vime/core"],
+  "assets": ["AGENTS.md"]
 }

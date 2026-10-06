@@ -1,3 +1,10 @@
+// Docusaurus 2 beta's webpack hashes with md4, which OpenSSL 3 (Node 17+, what Vercel builds
+// with) no longer provides. Swap in sha256 so the site builds on current Node versions.
+const crypto = require('crypto');
+const createHash = crypto.createHash;
+crypto.createHash = (algorithm, ...args) =>
+  createHash(algorithm === 'md4' ? 'sha256' : algorithm, ...args);
+
 const path = require('path');
 
 module.exports = {
@@ -17,7 +24,7 @@ module.exports = {
   themeConfig: {
     announcementBar: {
       content:
-        '⚠️&nbsp;Vime will be deprecated soon! <a target="_blank" rel="noopener noreferrer" href="https://github.com/vime-js/vime/issues/376">Read more</a>&nbsp;⚠️',
+        '⚠️&nbsp;Vime is no longer maintained. Its new home is Video.js 10. <a target="_blank" rel="noopener noreferrer" href="https://videojs.org/docs/guides/installation?utm_source=vime">Get started</a>&nbsp;⚠️',
     },
     algolia: {
       apiKey: '94e7d7e6c8d755cc7c07513981e18e66',
