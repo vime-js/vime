@@ -10,9 +10,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "engines": {
-    "node": "22.x"
-  },
   "scripts": {
     "build": "node .scripts/run-build.js",
     "build:all": "pnpm -F \"./packages/**\" build",
