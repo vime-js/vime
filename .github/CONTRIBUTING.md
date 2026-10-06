@@ -1,6 +1,7 @@
 # Contributing Guide
 
 > [!NOTE]
+>
 > Vime is no longer maintained and this repository is archived, so it doesn't accept contributions. New work happens on [Video.js 10](https://videojs.org?utm_source=vime) in [videojs/v10](https://github.com/videojs/v10).
 
 First off, thank you for taking the time to contribute to Vime. You'll find instructions below

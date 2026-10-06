@@ -1,4 +1,5 @@
 > [!IMPORTANT]
+>
 > **Vime is no longer maintained.** It receives no fixes, including security fixes, and this repository is archived. The teams behind Vime, Vidstack, Plyr, Media Chrome, and Video.js now work on [Video.js 10](https://videojs.org?utm_source=vime).
 >
 > - **Get started with Video.js 10:** [React](https://videojs.org/docs/guides/installation/react?utm_source=vime) · [Web components and other frameworks](https://videojs.org/docs/guides/installation/html?utm_source=vime). Each installation guide has an AI Quickstart prompt for coding agents.

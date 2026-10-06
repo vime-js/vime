@@ -909,4 +909,3 @@ function logDeprecationNotice() {
     '[vime] Vime is no longer maintained, including security fixes. Use Video.js 10, from the teams behind Vime, Vidstack, Plyr, Media Chrome, and Video.js: https://videojs.org/docs/guides/installation/html (React: https://videojs.org/docs/guides/installation/react)',
   );
 }
-

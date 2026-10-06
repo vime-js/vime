@@ -1,6 +1,7 @@
 # @vime/react
 
 > [!IMPORTANT]
+>
 > **Vime is no longer maintained**, including security fixes, and is succeeded by [Video.js 10](https://videojs.org?utm_source=vime). Use `@videojs/react`: follow the [installation guide](https://videojs.org/docs/guides/installation/react?utm_source=vime), whose AI Quickstart section has a prompt for coding agents.
 
 Vime is a customizable, extensible, accessible and framework agnostic media player. The `@vime/react`

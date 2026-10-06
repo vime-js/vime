@@ -1,6 +1,7 @@
 # @vime/vue
 
 > [!IMPORTANT]
+>
 > **Vime is no longer maintained**, including security fixes, and is succeeded by [Video.js 10](https://videojs.org?utm_source=vime). Use `@videojs/html`: follow the [installation guide](https://videojs.org/docs/guides/installation/html?utm_source=vime), whose AI Quickstart section has a prompt for coding agents.
 
 Vime is a customizable, extensible, accessible and framework agnostic media player. The `@vime/vue`
