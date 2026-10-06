@@ -1,6 +1,6 @@
 {
   "name": "@vime/vue-next",
-  "version": "5.4.1",
+  "version": "5.4.2",
   "description": "Deprecated in favour of Video.js 10 (https://videojs.org); no longer maintained. Vue 3 bindings for the Vime media player.",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -38,7 +38,7 @@
     "vue": "^3.0.0"
   },
   "peerDependencies": {
-    "@vime/core": "5.4.1",
+    "@vime/core": "5.4.2",
     "vue": "^3.0.0"
   },
   "publishConfig": {

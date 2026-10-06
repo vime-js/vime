@@ -1,6 +1,6 @@
 {
   "name": "@vime/core",
-  "version": "5.4.1",
+  "version": "5.4.2",
   "description": "Deprecated in favour of Video.js 10 (https://videojs.org); no longer maintained. Customizable, extensible, accessible and framework agnostic media player.",
   "license": "MIT",
   "sideEffects": false,

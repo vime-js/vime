@@ -1,6 +1,6 @@
 {
   "name": "@vime/svelte-example",
-  "version": "5.4.1",
+  "version": "5.4.2",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server",
@@ -8,8 +8,8 @@
     "validate": "svelte-check"
   },
   "dependencies": {
-    "@vime/core": "5.4.1",
-    "@vime/svelte": "5.4.1"
+    "@vime/core": "5.4.2",
+    "@vime/svelte": "5.4.2"
   },
   "devDependencies": {
     "@tsconfig/svelte": "^1.0.10",

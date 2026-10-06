@@ -1,3 +1,7 @@
+## [5.4.2](https://github.com/vime-js/vime/compare/v5.4.1...v5.4.2) (2026-10-06)
+
+
+
 ## [5.4.1](https://github.com/vime-js/vime/compare/v5.4.0...v5.4.1) (2023-07-17)
 
 
