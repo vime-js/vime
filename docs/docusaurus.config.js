@@ -1,3 +1,10 @@
+// Docusaurus 2 beta's webpack hashes with md4, which OpenSSL 3 (Node 17+, what Vercel builds
+// with) no longer provides. Swap in sha256 so the site builds on current Node versions.
+const crypto = require('crypto');
+const createHash = crypto.createHash;
+crypto.createHash = (algorithm, ...args) =>
+  createHash(algorithm === 'md4' ? 'sha256' : algorithm, ...args);
+
 const path = require('path');
 
 module.exports = {
