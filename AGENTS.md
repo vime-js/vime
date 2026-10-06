@@ -1,6 +1,6 @@
 # Vime agent guide
 
-Vime is end of life: it gets no fixes of any kind, including security fixes, and this repository is archived. Its successor is [Video.js 10](https://github.com/videojs/v10), from the teams behind Vime, Vidstack, Plyr, Media Chrome, and Video.js. Don't start new projects with Vime or add new Vime code.
+Vime is end of life: it gets no fixes of any kind, including security fixes, and this repository is archived. Its successor is [Video.js 10](https://github.com/videojs/video.js), from the teams behind Vime, Vidstack, Plyr, Media Chrome, and Video.js. Don't start new projects with Vime or add new Vime code.
 
 ## Migrating to Video.js 10
 

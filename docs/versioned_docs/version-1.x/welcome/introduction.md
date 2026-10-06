@@ -110,7 +110,7 @@ The main issue with alternative solutions like [Videojs][github-videojs] and [Pl
   like [Svelte](https://svelte.dev), [Stencil](https://stenciljs.com/) and [Ember](https://emberjs.com/)
   are reducing the costs of choosing to use a framework. Two examples of how not using a framework affects Videojs and Plyr is:
 
-  - Videojs decided to design its own [Component](https://github.com/videojs/video.js/blob/master/src/js/component.js) class
+  - Videojs decided to design its own [Component](https://github.com/videojs/videojs-v8/blob/main/src/js/component.js) class
     for managing UI state. Besides the fact that it's 1700 lines of code, it's hard to build anything meaningful with it.
     If you're intending on building complex UI components/plugins for your player, then you simply need to find your own recipe for
     making it happen.

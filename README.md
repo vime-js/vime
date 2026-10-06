@@ -4,7 +4,7 @@
 >
 > - **Get started with Video.js 10:** [React](https://videojs.org/docs/guides/installation/react?utm_source=vime) · [Web components and other frameworks](https://videojs.org/docs/guides/installation/html?utm_source=vime). Each installation guide has an AI Quickstart prompt for coding agents.
 > - **Map Vime concepts:** there's no Vime-specific guide. Vidstack succeeded Vime, so the Vidstack migration guide covers the closest concepts: [React](https://videojs.org/docs/framework/react/guides/migrate-from-vidstack?utm_source=vime) · [Web components and other frameworks](https://videojs.org/docs/framework/html/guides/migrate-from-vidstack?utm_source=vime).
-> - **Questions:** [videojs/v10 discussions](https://github.com/videojs/v10/discussions)
+> - **Questions:** [videojs/video.js discussions](https://github.com/videojs/video.js/discussions)
 
 <div align="center">
 <img
